@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.comple
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
 
@@ -39,7 +38,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"
   })
-  public void testComplete_Success() {
+  void completeSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-complete"
@@ -53,7 +52,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"
   })
-  public void testComplete_Failure() {
+  void completeFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-complete"
@@ -69,7 +68,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"
   })
-  public void testComplete_WithVariables_Success() {
+  void completeWithVariablesSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-complete"
@@ -83,7 +82,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"
   })
-  public void testComplete_WithVariables_Failure() {
+  void completeWithVariablesFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-complete"

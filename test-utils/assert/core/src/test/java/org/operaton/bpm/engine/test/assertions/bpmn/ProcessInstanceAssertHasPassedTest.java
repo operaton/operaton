@@ -20,13 +20,12 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
 
@@ -36,7 +35,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassed.bpmn"
   })
-  public void testHasPassed_OnlyActivity_RunningInstance_Success() {
+  void hasPassedOnlyActivityRunningInstanceSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassed"
@@ -50,7 +49,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassed.bpmn"
   })
-  public void testHasPassed_OnlyActivity_RunningInstance_Failure() {
+  void hasPassedOnlyActivityRunningInstanceFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassed"
@@ -62,7 +61,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassed.bpmn"
   })
-  public void testHasPassed_ParallelActivities_RunningInstance_Success() {
+  void hasPassedParallelActivitiesRunningInstanceSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassed"
@@ -82,7 +81,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassed.bpmn"
   })
-  public void testHasPassed_ParallelActivities_RunningInstance_Failure() {
+  void hasPassedParallelActivitiesRunningInstanceFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassed"
@@ -99,7 +98,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassed.bpmn"
   })
-  public void testHasPassed_SeveralActivities_RunningInstance_Success() {
+  void hasPassedSeveralActivitiesRunningInstanceSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassed"
@@ -123,7 +122,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassed.bpmn"
   })
-  public void testHasPassed_SeveralActivities_RunningInstance_Failure() {
+  void hasPassedSeveralActivitiesRunningInstanceFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassed"
@@ -141,7 +140,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassed.bpmn"
   })
-  public void testHasPassed_SeveralActivities_HistoricInstance_Success() {
+  void hasPassedSeveralActivitiesHistoricInstanceSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassed"
@@ -169,7 +168,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassed.bpmn"
   })
-  public void testHasPassed_SeveralActivities_HistoricInstance_Failure() {
+  void hasPassedSeveralActivitiesHistoricInstanceFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassed"
@@ -189,7 +188,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
-  public void testHasPassed_Null_Error() {
+  void hasPassedNullError() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt"

@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.manuallyStart;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
 
@@ -44,8 +43,8 @@ public class ProcessTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsTerminatedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsTerminated_Success() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsTerminatedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isTerminatedSuccess() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     ProcessTaskAssert processTask = assertThat(caseInstance).processTask(TASK_B);
@@ -58,8 +57,8 @@ public class ProcessTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsTerminatedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsTerminated_Failure() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsTerminatedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isTerminatedFailure() {
     // Given
     // When
     final CaseInstance caseInstance = givenCaseIsCreated();

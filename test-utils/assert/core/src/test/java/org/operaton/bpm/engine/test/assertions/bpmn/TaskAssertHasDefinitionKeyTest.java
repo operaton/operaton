@@ -18,13 +18,12 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
 
@@ -34,7 +33,7 @@ public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDefinitionKey.bpmn"
   })
-  public void testHasDefinitionKey_Success() {
+  void hasDefinitionKeySuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDefinitionKey"
@@ -46,7 +45,7 @@ public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDefinitionKey.bpmn"
   })
-  public void testHasDefinitionKey_Failure() {
+  void hasDefinitionKeyFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDefinitionKey"
@@ -58,7 +57,7 @@ public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDefinitionKey.bpmn"
   })
-  public void testHasDefinitionKey_Null_Failure() {
+  void hasDefinitionKeyNullFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDefinitionKey"

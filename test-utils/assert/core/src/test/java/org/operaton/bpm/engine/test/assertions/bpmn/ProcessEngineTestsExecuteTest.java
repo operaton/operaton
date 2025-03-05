@@ -20,14 +20,13 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.execute;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.job;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessEngineTestsExecuteTest extends ProcessAssertTestCase {
 
@@ -37,7 +36,7 @@ public class ProcessEngineTestsExecuteTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-execute.bpmn"
   })
-  public void testExecute_Success() {
+  void executeSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-execute"
@@ -57,7 +56,7 @@ public class ProcessEngineTestsExecuteTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-execute.bpmn"
   })
-  public void testExecute_Failure() {
+  void executeFailure() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-execute"

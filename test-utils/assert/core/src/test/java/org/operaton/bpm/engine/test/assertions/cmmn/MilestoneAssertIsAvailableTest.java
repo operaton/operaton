@@ -20,14 +20,13 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 @Deployment(resources = "cmmn/MilestoneAssertIsAvailableTest.cmmn")
 public class MilestoneAssertIsAvailableTest extends ProcessAssertTestCase {
@@ -36,14 +35,14 @@ public class MilestoneAssertIsAvailableTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  public void test_isAvailable_Success() {
+  void is_available_success() {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey("MilestoneAssertIsAvailableTest");
 
     assertThat(caseInstance).milestone("Milestone").isAvailable();
   }
 
   @Test
-  public void test_isAvailable_Fail() {
+  void is_available_fail() {
     final CaseInstance caseInstance = caseService().createCaseInstanceByKey("MilestoneAssertIsAvailableTest");
 
     complete(caseExecution("PI_TaskA", caseInstance));

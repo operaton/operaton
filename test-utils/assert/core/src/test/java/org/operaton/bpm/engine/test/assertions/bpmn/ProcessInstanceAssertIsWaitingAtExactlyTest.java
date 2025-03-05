@@ -20,13 +20,12 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTestCase {
 
@@ -36,7 +35,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
-  public void testIsWaitingAtExactly_Only_Activity_Success() {
+  void isWaitingAtExactlyOnlyActivitySuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt"
@@ -48,7 +47,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
-  public void testIsWaitingAtExactly_Only_Activity_Failure() {
+  void isWaitingAtExactlyOnlyActivityFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt"
@@ -60,7 +59,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
-  public void testIsWaitingAtExactly_Non_Existing_Activity_Failure() {
+  void isWaitingAtExactlyNonExistingActivityFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt"
@@ -72,7 +71,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
-  public void testIsWaitingAtExactly_Two_Activities_Success() {
+  void isWaitingAtExactlyTwoActivitiesSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt"
@@ -88,7 +87,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
-  public void testIsWaitingAtExactly_Two_Activities_Failure() {
+  void isWaitingAtExactlyTwoActivitiesFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt"
@@ -104,7 +103,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
-  public void testIsWaitingAtExactly_Null_Error() {
+  void isWaitingAtExactlyNullError() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt"

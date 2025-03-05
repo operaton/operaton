@@ -18,13 +18,12 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertHasBusinessKeyTest extends ProcessAssertTestCase {
 
@@ -33,7 +32,7 @@ public class ProcessInstanceAssertHasBusinessKeyTest extends ProcessAssertTestCa
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasBusinessKey.bpmn"})
-  public void testHasBusinessKey_Success_With_String() {
+  void hasBusinessKeySuccessWithString() {
     // When
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasBusinessKey",
@@ -45,7 +44,7 @@ public class ProcessInstanceAssertHasBusinessKeyTest extends ProcessAssertTestCa
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasBusinessKey.bpmn"})
-  public void testHasBusinessKey_Success_With_Null() {
+  void hasBusinessKeySuccessWithNull() {
     // When
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasBusinessKey"
@@ -56,7 +55,7 @@ public class ProcessInstanceAssertHasBusinessKeyTest extends ProcessAssertTestCa
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasBusinessKey.bpmn"})
-  public void testHasBusinessKey_Failure() {
+  void hasBusinessKeyFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasBusinessKey",

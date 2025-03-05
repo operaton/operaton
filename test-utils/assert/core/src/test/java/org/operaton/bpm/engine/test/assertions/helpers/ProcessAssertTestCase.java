@@ -21,11 +21,11 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.reset;
 
 import org.assertj.core.util.Lists;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 
 public abstract class ProcessAssertTestCase {
 
-  @After
+  @AfterEach
   public void tearDown() {
     reset();
   }

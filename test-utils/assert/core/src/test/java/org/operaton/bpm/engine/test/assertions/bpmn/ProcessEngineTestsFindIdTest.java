@@ -18,12 +18,11 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.findId;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
@@ -32,7 +31,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
-  public void testFindPlainTaskByName() {
+  void findPlainTaskByName() {
     // Given
     // Process model deployed
     // When
@@ -43,7 +42,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
-  public void testFindEndEventByName() {
+  void findEndEventByName() {
     // Given
     // Process model deployed
     // When
@@ -54,7 +53,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
-  public void testFindAttachedEventByName() {
+  void findAttachedEventByName() {
     // Given
     // Process model deployed
     // When
@@ -65,7 +64,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
-  public void testFindGatewayByName() {
+  void findGatewayByName() {
     // Given
     // process model deployed
     // When
@@ -76,7 +75,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
-  public void testNameNotFound() {
+  void nameNotFound() {
     // Given
     // Process model deployed
     // When
@@ -87,7 +86,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
-  public void testNameNull() {
+  void nameNull() {
     // Given
     // Process model deployed
     // When
@@ -98,7 +97,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
-  public void testFindAllElements() {
+  void findAllElements() {
     // Given
     // Process model deployed
     // When
@@ -123,7 +122,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findInTwoPools.bpmn")
-  public void testFindInTwoPoolsInPool1() {
+  void findInTwoPoolsInPool1() {
     // Given
     // Process model with two pools deployed
     // When
@@ -134,7 +133,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findInTwoPools.bpmn")
-  public void testFindTwoPoolsInPool2() {
+  void findTwoPoolsInPool2() {
     // Given
     // Process model with two pools deployed
     // When
@@ -145,7 +144,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-findTest.bpmn", "bpmn/ProcessEngineTests-findInTwoPools.bpmn"})
-  public void testFindOneInEachOfTwoDiagrams() {
+  void findOneInEachOfTwoDiagrams() {
     // Given
     // Two process models deployed
     // When
@@ -164,7 +163,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNames.bpmn")
-  public void testProcessWithDuplicateNames() {
+  void processWithDuplicateNames() {
     // Given
     // Process model with duplicate task names deployed
     // When
@@ -179,7 +178,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNamesOnTaskAndGateway.bpmn")
-  public void testProcessWithDuplicateNamesOnDifferentElementsTypes() {
+  void processWithDuplicateNamesOnDifferentElementsTypes() {
     // Given
     // Process model with same name on task and gateway deployed
     // When
@@ -190,7 +189,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNamesOnTaskAndGateway.bpmn")
-  public void testProcessWithDuplicateNamesBindTheUniqueOnly() {
+  void processWithDuplicateNamesBindTheUniqueOnly() {
     // Given
     // Process model with two pools and a mix of duplicate and unique names deployed
     // When

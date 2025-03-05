@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.disable;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessTaskAssertIsEnabledTest extends ProcessAssertTestCase {
 
@@ -44,8 +43,8 @@ public class ProcessTaskAssertIsEnabledTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsEnabledTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsEnabled_Success() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsEnabledTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isEnabledSuccess() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
@@ -55,8 +54,8 @@ public class ProcessTaskAssertIsEnabledTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsEnabledTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsEnabled_Failure() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsEnabledTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isEnabledFailure() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When

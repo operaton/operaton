@@ -20,13 +20,12 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertIsEndedTest extends ProcessAssertTestCase {
 
@@ -36,7 +35,7 @@ public class ProcessInstanceAssertIsEndedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isEnded.bpmn"
   })
-  public void testIsEnded_Success() {
+  void isEndedSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isEnded"
@@ -50,7 +49,7 @@ public class ProcessInstanceAssertIsEndedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isEnded.bpmn"
   })
-  public void testIsEnded_Failure() {
+  void isEndedFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isEnded"

@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.proces
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessTaskAssertIsAvailableTest extends ProcessAssertTestCase {
 
@@ -42,8 +41,8 @@ public class ProcessTaskAssertIsAvailableTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsAvailableTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsAvailable_Success() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsAvailableTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isAvailableSuccess() {
     // Given
     // case model is deployed
     // When
@@ -53,8 +52,8 @@ public class ProcessTaskAssertIsAvailableTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsAvailableTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsAvailable_Failure() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsAvailableTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isAvailableFailure() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When

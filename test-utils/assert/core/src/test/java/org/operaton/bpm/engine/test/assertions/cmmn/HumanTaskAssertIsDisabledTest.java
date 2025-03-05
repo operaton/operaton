@@ -20,14 +20,13 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.disable;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class HumanTaskAssertIsDisabledTest extends ProcessAssertTestCase {
 
@@ -38,8 +37,8 @@ public class HumanTaskAssertIsDisabledTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssertIsDisabledTest.cmmn" })
-  public void testIsDisabled_Success() {
+  @Deployment(resources = {"cmmn/HumanTaskAssertIsDisabledTest.cmmn"})
+  void isDisabledSuccess() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     HumanTaskAssert humanTask = assertThat(caseInstance).humanTask(TASK_A);
@@ -50,8 +49,8 @@ public class HumanTaskAssertIsDisabledTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssertIsDisabledTest.cmmn" })
-  public void testIsDisabled_Failure() {
+  @Deployment(resources = {"cmmn/HumanTaskAssertIsDisabledTest.cmmn"})
+  void isDisabledFailure() {
     // Given
     // When
     final CaseInstance caseInstance = givenCaseIsCreated();

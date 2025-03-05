@@ -18,13 +18,12 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestCase {
 
@@ -34,7 +33,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingFor.bpmn"
   })
-  public void testIsNotWaitingFor_One_Message_Success() {
+  void isNotWaitingForOneMessageSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isNotWaitingFor"
@@ -48,7 +47,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingFor-2.bpmn"
   })
-  public void testIsNotWaitingFor_Two_Messages_Success() {
+  void isNotWaitingForTwoMessagesSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isNotWaitingFor-2"
@@ -64,7 +63,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingFor-2.bpmn"
   })
-  public void testIsNotWaitingFor_One_Of_Two_Messages_Success() {
+  void isNotWaitingForOneOfTwoMessagesSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isNotWaitingFor-2"
@@ -80,7 +79,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingFor.bpmn"
   })
-  public void testIsNotWaitingFor_One_Message_Failure() {
+  void isNotWaitingForOneMessageFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isNotWaitingFor"
@@ -92,7 +91,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingFor.bpmn"
   })
-  public void testIsNotWaitingFor_Not_Waiting_For_One_Of_One_Success() {
+  void isNotWaitingForNotWaitingForOneOfOneSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isNotWaitingFor"
@@ -104,7 +103,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingFor.bpmn"
   })
-  public void testIsNotWaitingFor_Not_Waiting_For_One_Of_Two_Failure() {
+  void isNotWaitingForNotWaitingForOneOfTwoFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isNotWaitingFor"
@@ -116,7 +115,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingFor.bpmn"
   })
-  public void testIsNotWaitingFor_Null_Error() {
+  void isNotWaitingForNullError() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isNotWaitingFor"

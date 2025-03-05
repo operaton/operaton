@@ -20,14 +20,13 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class HumanTaskAssertIsActiveTest extends ProcessAssertTestCase {
 
@@ -38,8 +37,8 @@ public class HumanTaskAssertIsActiveTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssertIsActiveTest.cmmn" })
-  public void testIsActive_Success() {
+  @Deployment(resources = {"cmmn/HumanTaskAssertIsActiveTest.cmmn"})
+  void isActiveSuccess() {
     // Given
     // case model is deployed
     // When
@@ -49,8 +48,8 @@ public class HumanTaskAssertIsActiveTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssertIsActiveTest.cmmn" })
-  public void testIsActive_Failure() {
+  @Deployment(resources = {"cmmn/HumanTaskAssertIsActiveTest.cmmn"})
+  void isActiveFailure() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When

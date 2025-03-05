@@ -18,13 +18,12 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class TaskAssertHasDescriptionTest extends ProcessAssertTestCase {
 
@@ -34,7 +33,7 @@ public class TaskAssertHasDescriptionTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDescription.bpmn"
   })
-  public void testHasDescription_Success() {
+  void hasDescriptionSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDescription"
@@ -46,7 +45,7 @@ public class TaskAssertHasDescriptionTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDescription.bpmn"
   })
-  public void testHasDescription_Failure() {
+  void hasDescriptionFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDescription"
@@ -58,7 +57,7 @@ public class TaskAssertHasDescriptionTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDescription.bpmn"
   })
-  public void testHasDescription_Null_Failure() {
+  void hasDescriptionNullFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDescription"

@@ -21,12 +21,11 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQue
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processDefinitionQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processInstanceQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class JobAssertHasDeploymentIdTest extends ProcessAssertTestCase {
 
@@ -36,7 +35,7 @@ public class JobAssertHasDeploymentIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasDeploymentId.bpmn"
   })
-  public void testHasDeploymentId_Success() {
+  void hasDeploymentIdSuccess() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasDeploymentId"
@@ -50,7 +49,7 @@ public class JobAssertHasDeploymentIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasDeploymentId.bpmn"
   })
-  public void testHasDeploymentId_Failure() {
+  void hasDeploymentIdFailure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasDeploymentId"
@@ -64,7 +63,7 @@ public class JobAssertHasDeploymentIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasDeploymentId.bpmn"
   })
-  public void testHasDeploymentId_Error_Null() {
+  void hasDeploymentIdErrorNull() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasDeploymentId"

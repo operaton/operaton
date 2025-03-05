@@ -18,13 +18,12 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase {
 
@@ -34,7 +33,7 @@ public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isSuspended.bpmn"
   })
-  public void testIsSuspended_Success() {
+  void isSuspendedSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isSuspended"
@@ -48,7 +47,7 @@ public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isSuspended.bpmn"
   })
-  public void testIsSuspended_AfterStart_Failure() {
+  void isSuspendedAfterStartFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isSuspended"
@@ -60,7 +59,7 @@ public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isSuspended.bpmn"
   })
-  public void testIsSuspended_AfterActivation_Failure() {
+  void isSuspendedAfterActivationFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isSuspended"

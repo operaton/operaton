@@ -20,13 +20,12 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTestCase {
 
@@ -36,7 +35,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
-  public void testHasPassedInOrder_OnlyActivity_RunningInstance_Success() {
+  void hasPassedInOrderOnlyActivityRunningInstanceSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder"
@@ -50,7 +49,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
-  public void testHasPassedInOrder_OnlyActivity_RunningInstance_Failure() {
+  void hasPassedInOrderOnlyActivityRunningInstanceFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder"
@@ -62,7 +61,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
-  public void testHasPassedInOrder_ParallelActivities_RunningInstance_Success() {
+  void hasPassedInOrderParallelActivitiesRunningInstanceSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder"
@@ -82,7 +81,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
-  public void testHasPassedInOrder_ParallelActivities_RunningInstance_Failure() {
+  void hasPassedInOrderParallelActivitiesRunningInstanceFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder"
@@ -104,7 +103,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
-  public void testHasPassedInOrder_SeveralActivities_RunningInstance_Success() {
+  void hasPassedInOrderSeveralActivitiesRunningInstanceSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder"
@@ -138,7 +137,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
-  public void testHasPassedInOrder_SeveralActivities_RunningInstance_Failure() {
+  void hasPassedInOrderSeveralActivitiesRunningInstanceFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder"
@@ -160,7 +159,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
-  public void testHasPassedInOrder_SeveralActivities_HistoricInstance_Success() {
+  void hasPassedInOrderSeveralActivitiesHistoricInstanceSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder"
@@ -190,7 +189,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
-  public void testHasPassedInOrder_SeveralActivities_HistoricInstance_Failure() {
+  void hasPassedInOrderSeveralActivitiesHistoricInstanceFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder"
@@ -216,7 +215,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
-  public void testHasPassedInOrder_Null_Error() {
+  void hasPassedInOrderNullError() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt"

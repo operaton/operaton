@@ -22,13 +22,12 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.execut
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.job;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertIsWaitingAtActivityTreeTests extends ProcessAssertTestCase {
 
@@ -38,7 +37,7 @@ public class ProcessInstanceAssertIsWaitingAtActivityTreeTests extends ProcessAs
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt-ActivityTreeTests.bpmn"
   })
-  public void testIsWaitingAt_AsyncBefore() {
+  void isWaitingAtAsyncBefore() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingAt-ActivityTreeTests"
@@ -49,7 +48,7 @@ public class ProcessInstanceAssertIsWaitingAtActivityTreeTests extends ProcessAs
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt-ActivityTreeTests.bpmn"})
-  public void testIsWaitingAt_Subprocess() {
+  void isWaitingAtSubprocess() {
     // When
     final ProcessInstance processInstance = runtimeService()
         .createProcessInstanceByKey("ProcessInstanceAssert-isWaitingAt-ActivityTreeTests")
@@ -61,7 +60,7 @@ public class ProcessInstanceAssertIsWaitingAtActivityTreeTests extends ProcessAs
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt-Subprocesses.bpmn"})
-  public void testIsWaitingAtNestedUserTask() {
+  void isWaitingAtNestedUserTask() {
     // When
     final ProcessInstance processInstance = runtimeService()
         .startProcessInstanceByKey("ProcessInstanceAssert-isWaitingAt-Subprocesses");
@@ -72,7 +71,7 @@ public class ProcessInstanceAssertIsWaitingAtActivityTreeTests extends ProcessAs
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt-AsyncUserTask.bpmn"})
-  public void testIsWaitingAtAsyncUserTask() {
+  void isWaitingAtAsyncUserTask() {
     // When
     ProcessInstance processInstance = runtimeService()
         .startProcessInstanceByKey("ProcessInstanceAssert-isWaitingAt-AsyncUserTask");

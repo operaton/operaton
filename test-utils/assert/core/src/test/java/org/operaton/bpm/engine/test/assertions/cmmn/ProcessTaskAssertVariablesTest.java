@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.proces
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
 
@@ -42,8 +41,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testVariables_Success() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void variablesSuccess() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -71,8 +70,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testVariables_Success_No_Variables() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void variablesSuccessNoVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -85,8 +84,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testVariables_Failure_ProcessTask_Completed() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void variablesFailureProcessTaskCompleted() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -103,8 +102,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testHasVariables_Success() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void hasVariablesSuccess() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -122,8 +121,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testHasVariables_Failure() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void hasVariablesFailure() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -139,8 +138,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testHasNoVariables_Success() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void hasNoVariablesSuccess() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -151,8 +150,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testHasNoVariables_Failure() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void hasNoVariablesFailure() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -169,8 +168,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testVariables_Success_NoProcessTaskVariables() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void variablesSuccessNoProcessTaskVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstanceWithVariable();
 
@@ -181,8 +180,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testVariables_Failure_NoProcessTaskVariables() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void variablesFailureNoProcessTaskVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstanceWithVariable();
 
@@ -198,8 +197,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testHasNoVariables_Success_NoProcessTaskVariables() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void hasNoVariablesSuccessNoProcessTaskVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstanceWithVariable();
 
@@ -210,8 +209,8 @@ public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testHasVariables_Failure_NoProcessTaskVariables() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void hasVariablesFailureNoProcessTaskVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstanceWithVariable();
 

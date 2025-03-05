@@ -19,12 +19,11 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class JobAssertHasRetriesTest extends ProcessAssertTestCase {
 
@@ -34,7 +33,7 @@ public class JobAssertHasRetriesTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasRetries.bpmn"
   })
-  public void testHasRetries_Success() {
+  void hasRetriesSuccess() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasRetries"
@@ -48,7 +47,7 @@ public class JobAssertHasRetriesTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasRetries.bpmn"
   })
-  public void testHasRetries_Failure() {
+  void hasRetriesFailure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasRetries"

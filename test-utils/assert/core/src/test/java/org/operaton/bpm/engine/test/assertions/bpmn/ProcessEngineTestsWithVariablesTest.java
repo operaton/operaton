@@ -27,18 +27,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(value = Parameterized.class)
 public class ProcessEngineTestsWithVariablesTest {
 
   List<Object> keys;
   List<Object> values;
   Map<String, Object> expectedMap;
 
-  public ProcessEngineTestsWithVariablesTest(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+  public void initProcessEngineTestsWithVariablesTest(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
 
     expectedMap = new HashMap<>();
     if (key1 != null)
@@ -66,7 +64,6 @@ public class ProcessEngineTestsWithVariablesTest {
 
   }
 
-  @Parameterized.Parameters
   public static Collection<Object[]> data() {
     Object[][] data = new Object[][] {
       { "key1", 1   , null  , null, null  , null },
@@ -77,16 +74,20 @@ public class ProcessEngineTestsWithVariablesTest {
     return Arrays.asList(data);
   }
 
-  @Test
-  public void testWithVariables() {
+  @MethodSource("data")
+  @ParameterizedTest
+  public void withVariables(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+    initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
     // When we simply constuct the map with the given data
     Map<String, Object> returnedMap = returnedMap(keys, values);
     // Then we expect to find the expected Map
     assertThat(returnedMap).isEqualTo(expectedMap);
   }
 
-  @Test
-  public void testWithVariables_NoStringKeys() {
+  @MethodSource("data")
+  @ParameterizedTest
+  public void withVariablesNoStringKeys(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+    initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
     // Given we replace the last key with its integer value
     keys.set(keys.size() - 1, values.get(values.size() - 1));
     // When we construct the variables map
@@ -100,8 +101,10 @@ public class ProcessEngineTestsWithVariablesTest {
     fail("IllegalArgumentException or AssertionError expected!");
   }
 
-  @Test
-  public void testWithVariables_NullKeys() {
+  @MethodSource("data")
+  @ParameterizedTest
+  public void withVariablesNullKeys(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+    initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
     // Given we replace the last key with a null pointer
     keys.set(keys.size() - 1, null);
     // When we construct the variables map
@@ -115,8 +118,10 @@ public class ProcessEngineTestsWithVariablesTest {
     fail("IllegalArgumentException expected!");
   }
 
-  @Test
-  public void testWithVariables_NullValues() {
+  @MethodSource("data")
+  @ParameterizedTest
+  public void withVariablesNullValues(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+    initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
     // Given we replace all values with a null pointer
     int idx = values.size();
     while (idx > 0)

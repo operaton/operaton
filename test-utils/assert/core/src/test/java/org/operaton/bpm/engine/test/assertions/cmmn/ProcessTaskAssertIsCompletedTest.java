@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.proces
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessTaskAssertIsCompletedTest extends ProcessAssertTestCase {
 
@@ -41,8 +40,8 @@ public class ProcessTaskAssertIsCompletedTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsCompletedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsCompleted_Success() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsCompletedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isCompletedSuccess() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     ProcessTaskAssert processTask = assertThat(caseInstance).processTask(TASK_A);
@@ -53,8 +52,8 @@ public class ProcessTaskAssertIsCompletedTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsCompletedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsCompleted_Failure() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsCompletedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isCompletedFailure() {
     // Given
     // case model is deployed
     // When

@@ -21,13 +21,12 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.comple
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertHasPassedInOrderLoopTest extends ProcessAssertTestCase {
 
@@ -37,7 +36,7 @@ public class ProcessInstanceAssertHasPassedInOrderLoopTest extends ProcessAssert
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder-loop.bpmn"
   })
-  public void testHasPassedInOrder_SeveralActivities_HistoricInstance() {
+  void hasPassedInOrderSeveralActivitiesHistoricInstance() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasPassedInOrder-loop",

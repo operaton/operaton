@@ -21,14 +21,13 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.comple
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
 
@@ -38,7 +37,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_OnlyActivity_Success() {
+  void taskOnlyActivitySuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -56,7 +55,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_OnlyActivity_Failure() {
+  void taskOnlyActivityFailure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -72,7 +71,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_TwoActivities_Failure() {
+  void taskTwoActivitiesFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -92,7 +91,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskDefinitionKey_OnlyActivity_Success() {
+  void taskTaskDefinitionKeyOnlyActivitySuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -110,7 +109,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskDefinitionKey_TwoActivities_Success() {
+  void taskTaskDefinitionKeyTwoActivitiesSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -131,7 +130,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskDefinitionKey_OnlyActivity_Failure() {
+  void taskTaskDefinitionKeyOnlyActivityFailure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -147,7 +146,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskQuery_OnlyActivity_Success() {
+  void taskTaskQueryOnlyActivitySuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -165,7 +164,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskQuery_OnlyActivity_Failure() {
+  void taskTaskQueryOnlyActivityFailure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -181,7 +180,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskQuery_TwoActivities_Success() {
+  void taskTaskQueryTwoActivitiesSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -202,7 +201,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskQuery_TwoActivities_Failure() {
+  void taskTaskQueryTwoActivitiesFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -222,7 +221,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_processInstance_OnlyActivity_Success() {
+  void taskProcessInstanceOnlyActivitySuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -238,7 +237,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_TwoActivities_processInstance_Failure() {
+  void taskTwoActivitiesProcessInstanceFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -256,7 +255,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskDefinitionKey_processInstance_OnlyActivity_Success() {
+  void taskTaskDefinitionKeyProcessInstanceOnlyActivitySuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -272,7 +271,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskDefinitionKey_processInstance_TwoActivities_Success() {
+  void taskTaskDefinitionKeyProcessInstanceTwoActivitiesSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -292,7 +291,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskQuery_processInstance_OnlyActivity_Success() {
+  void taskTaskQueryProcessInstanceOnlyActivitySuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -308,7 +307,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskQuery_processInstance_TwoActivities_Success() {
+  void taskTaskQueryProcessInstanceTwoActivitiesSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"
@@ -328,7 +327,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
-  public void testTask_taskQuery_processInstance_TwoActivities_Failure() {
+  void taskTaskQueryProcessInstanceTwoActivitiesFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-task"

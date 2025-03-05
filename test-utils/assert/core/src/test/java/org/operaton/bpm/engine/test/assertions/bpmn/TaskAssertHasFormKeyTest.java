@@ -18,13 +18,12 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
 
@@ -34,7 +33,7 @@ public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasFormKey.bpmn"
   })
-  public void testHasFormKey_Success() {
+  void hasFormKeySuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasFormKey"
@@ -46,7 +45,7 @@ public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasFormKey.bpmn"
   })
-  public void testHasFormKey_Failure() {
+  void hasFormKeyFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasFormKey"
@@ -58,7 +57,7 @@ public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasFormKey.bpmn"
   })
-  public void testHasFormKey_Null_Failure() {
+  void hasFormKeyNullFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasFormKey"

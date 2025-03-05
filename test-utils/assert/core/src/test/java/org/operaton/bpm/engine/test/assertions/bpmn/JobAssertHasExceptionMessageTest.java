@@ -21,13 +21,12 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.managementService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
 
@@ -37,7 +36,7 @@ public class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasExceptionMessage.bpmn"
   })
-  public void testHasExceptionMessage_Success() {
+  void hasExceptionMessageSuccess() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasExceptionMessage"
@@ -58,7 +57,7 @@ public class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasExceptionMessage.bpmn"
   })
-  public void testHasExceptionMessage_Failure() {
+  void hasExceptionMessageFailure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasExceptionMessage"

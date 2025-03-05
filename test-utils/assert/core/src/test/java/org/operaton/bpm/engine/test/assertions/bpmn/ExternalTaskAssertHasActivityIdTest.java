@@ -19,12 +19,11 @@ package org.operaton.bpm.engine.test.assertions.bpmn;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.externalTaskQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ExternalTaskAssertHasActivityIdTest extends ProcessAssertTestCase {
 
@@ -32,8 +31,8 @@ public class ExternalTaskAssertHasActivityIdTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-hasActivityId.bpmn" })
-  public void testHasActivityId_Success() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-hasActivityId.bpmn"})
+  void hasActivityIdSuccess() {
     // When
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-hasActivityId");
     // Then
@@ -43,8 +42,8 @@ public class ExternalTaskAssertHasActivityIdTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-hasActivityId.bpmn" })
-  public void testHasActivityId_Failure() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-hasActivityId.bpmn"})
+  void hasActivityIdFailure() {
     // When
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-hasActivityId");
     // Then
@@ -54,8 +53,8 @@ public class ExternalTaskAssertHasActivityIdTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-hasActivityId.bpmn" })
-  public void testHasActivityId_Error_Null() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-hasActivityId.bpmn"})
+  void hasActivityIdErrorNull() {
     // When
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-hasActivityId");
     // Then

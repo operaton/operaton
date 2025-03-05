@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.execute;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.operaton.bpm.engine.test.mock.Mocks;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
 
@@ -40,7 +39,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_Single_Success() {
+  void jobSingleSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -52,7 +51,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_NullQuery_Failure() {
+  void jobNullQueryFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -69,7 +68,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_SingleWithQuery_Success() {
+  void jobSingleWithQuerySuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -81,7 +80,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_MultipleWithQuery_Success() {
+  void jobMultipleWithQuerySuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -101,7 +100,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_NotYet_Failure() {
+  void jobNotYetFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -113,7 +112,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_Passed_Failure() {
+  void jobPassedFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -129,7 +128,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_MultipleWithQuery_Failure() {
+  void jobMultipleWithQueryFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -144,7 +143,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_MultipleWithTaskDefinitionKey_Success() {
+  void jobMultipleWithTaskDefinitionKeySuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -161,7 +160,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
-  public void testJob_MultipleWithTaskDefinitionKey_Failure() {
+  void jobMultipleWithTaskDefinitionKeyFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-job"
@@ -181,7 +180,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-jobEventSubprocess.bpmn"})
-  public void testJob_MultipleAsyncAndEventSubprocessTimerStartWithActivityId_Success() {
+  void jobMultipleAsyncAndEventSubprocessTimerStartWithActivityIdSuccess() {
     // When
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
         "ProcessInstanceAssert-jobEventSubprocess"

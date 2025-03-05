@@ -22,13 +22,13 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseEx
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 
@@ -37,9 +37,9 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 	@Rule
 	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-	@Test
-	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
-	public void testReturnsCaseTaskAssertForCompletedTasks() {
+  @Test
+  @Deployment(resources = {"cmmn/TaskTest.cmmn"})
+  void returnsCaseTaskAssertForCompletedTasks() {
 		// Given
 		CaseInstance caseInstance = aStartedCase();
 		CaseExecution taskA = caseExecution(TASK_A, caseInstance);
@@ -51,9 +51,9 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 		assertThat(caseInstance).isCompleted();
 	}
 
-	@Test
-	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
-	public void testReturnsHumanTaskAssertForGivenActivityId() {
+  @Test
+  @Deployment(resources = {"cmmn/TaskTest.cmmn"})
+  void returnsHumanTaskAssertForGivenActivityId() {
 		// Given
 		CaseInstance caseInstance = aStartedCase();
 		CaseExecution pi_taskA = caseService()
@@ -73,9 +73,9 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 				.isEqualToComparingOnlyGivenFields(pi_taskA, "id");
 	}
 
-	@Test
-  @Deployment(resources = { "cmmn/TaskTest.cmmn" })
-  public void testIsCaseInstance() {
+  @Test
+  @Deployment(resources = {"cmmn/TaskTest.cmmn"})
+  void isCaseInstance() {
     // Given
     CaseInstance caseInstance = aStartedCase();
     // Then

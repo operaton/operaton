@@ -23,8 +23,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.container.impl.deployment.scanning.ProcessApplicationScanningUtil;
-import org.junit.Test;
 
 
 /**

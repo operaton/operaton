@@ -21,16 +21,16 @@ import static org.assertj.core.api.Assertions.entry;
 
 import java.util.Map;
 
-import ch.qos.logback.classic.Level;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+
+import ch.qos.logback.classic.Level;
 
 public class BatchInvocationsPerJobByBatchTypeConfigTest {
 
@@ -39,25 +39,15 @@ public class BatchInvocationsPerJobByBatchTypeConfigTest {
 
   protected static final String CONFIG_LOGGER = "org.operaton.bpm.engine.cfg";
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
       .watch(CONFIG_LOGGER)
       .level(Level.WARN);
 
-  protected ProcessEngine processEngine;
-  protected ProcessEngineConfigurationImpl engineConfiguration;
+  ProcessEngine processEngine;
+  ProcessEngineConfigurationImpl engineConfiguration;
 
-  @Before
-  public void setup() {
-    processEngine = ProcessEngineConfiguration
-        .createProcessEngineConfigurationFromResource(PROCESS_ENGINE_CONFIG)
-        .buildProcessEngine();
-
-    engineConfiguration =
-        (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-  }
-
-  @After
+  @AfterEach
   public void teardown() {
     processEngine.close();
   }
@@ -65,6 +55,7 @@ public class BatchInvocationsPerJobByBatchTypeConfigTest {
   @Test
   public void shouldSetInvocationsPerJobByBatchType() {
     // when
+    initEngine();
     Map<String, Integer> invocationsPerBatchJobByBatchType =
         engineConfiguration.getInvocationsPerBatchJobByBatchType();
 
@@ -79,10 +70,19 @@ public class BatchInvocationsPerJobByBatchTypeConfigTest {
 
   @Test
   public void shouldWriteLogWhenBatchTypeIsUnknown() {
+    initEngine();
     // then
     assertThat(loggingRule.getFilteredLog("ENGINE-12014 The configuration property " +
         "'invocationsPerJobByBatchType' contains an invalid batch type 'custom-batch-operation' " +
         "which is neither a custom nor a built-in batch type")).hasSize(1);
+  }
+
+  private void initEngine() {
+    processEngine = ProcessEngineConfiguration
+      .createProcessEngineConfigurationFromResource(PROCESS_ENGINE_CONFIG)
+      .buildProcessEngine();
+    engineConfiguration =
+      (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 
 }

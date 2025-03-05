@@ -18,18 +18,20 @@ package org.operaton.bpm.engine.impl.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+
+import ch.qos.logback.classic.Level;
 
 public class PropertiesUtilTest {
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
+                                                           .watch("org.operaton.bpm.engine.util")
+                                                           .level(Level.DEBUG);
 
   @Test
-  @WatchLogger(loggerNames = {"org.operaton.bpm.engine.util"}, level = "DEBUG")
   public void shouldLogMissingFile() {
     // given
     String invalidFile = "/missingProps.properties";

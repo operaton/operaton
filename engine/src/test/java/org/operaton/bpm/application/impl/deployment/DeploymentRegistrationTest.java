@@ -42,10 +42,10 @@ public class DeploymentRegistrationTest {
   protected static final String PROCESS_KEY = "process-1";
   protected static final String BPMN_RESOURCE = "path/to/my/process1.bpmn";
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected RepositoryService repositoryService;
-  protected ManagementService managementService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
 
   @Test
   public void testNoRegistrationCheckIfNoProcessApplicationIsDeployed() {

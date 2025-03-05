@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
 
 public class ImmutablePairTest {
 

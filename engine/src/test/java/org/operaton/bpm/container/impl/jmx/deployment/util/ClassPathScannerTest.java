@@ -26,19 +26,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.container.impl.deployment.scanning.ClassPathProcessApplicationScanner;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
 
 /**
  * @author Falko Menge
  * @author Daniel Meyer
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class ClassPathScannerTest {
 
   private final String url;
@@ -62,7 +61,7 @@ public class ClassPathScannerTest {
     this.url = url;
   }
   
-  @BeforeClass
+  @BeforeAll
   public static void setup() {
     scanner = new ClassPathProcessApplicationScanner();
   }
@@ -71,7 +70,7 @@ public class ClassPathScannerTest {
    * Test method for {@link org.operaton.bpm.container.impl.deployment.scanning.ClassPathProcessApplicationScanner#scanClassPath(java.lang.ClassLoader)}.
    * @throws MalformedURLException 
    */
-  @Test
+  @TestTemplate
   public void testScanClassPath() throws MalformedURLException {
     
     URLClassLoader classLoader = getClassloader();
@@ -89,7 +88,7 @@ public class ClassPathScannerTest {
     }
   }
   
-  @Test
+  @TestTemplate
   public void testScanClassPathWithNonExistingRootPath_relativeToPa() throws MalformedURLException {
 
     URLClassLoader classLoader = getClassloader();
@@ -102,7 +101,7 @@ public class ClassPathScannerTest {
     assertThat(scanResult).isEmpty();
   }
   
-  @Test
+  @TestTemplate
   public void testScanClassPathWithNonExistingRootPath_nonRelativeToPa() throws MalformedURLException {
     
     URLClassLoader classLoader = getClassloader();
@@ -115,7 +114,7 @@ public class ClassPathScannerTest {
     assertThat(scanResult).isEmpty();
   }
 
-  @Test
+  @TestTemplate
   public void testScanClassPathWithExistingRootPath_relativeToPa() throws MalformedURLException {
 
     URLClassLoader classLoader = getClassloader();
@@ -134,7 +133,7 @@ public class ClassPathScannerTest {
     }
   }
   
-  @Test
+  @TestTemplate
   public void testScanClassPathWithExistingRootPath_nonRelativeToPa() throws MalformedURLException {
     
     URLClassLoader classLoader = getClassloader();
@@ -153,7 +152,7 @@ public class ClassPathScannerTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testScanClassPathWithAdditionalResourceSuffixes() throws MalformedURLException {
     URLClassLoader classLoader = getClassloader();
 

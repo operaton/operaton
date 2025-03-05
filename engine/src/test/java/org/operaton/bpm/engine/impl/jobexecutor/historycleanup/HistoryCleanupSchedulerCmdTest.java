@@ -16,13 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
@@ -32,14 +40,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class HistoryCleanupSchedulerCmdTest {
 
@@ -65,7 +65,7 @@ public class HistoryCleanupSchedulerCmdTest {
     Long METRICS_VALUE = 123L;
     private AutoCloseable closeable;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
 
@@ -83,7 +83,7 @@ public class HistoryCleanupSchedulerCmdTest {
         mockedHistoryCleanupHelper.when(() -> HistoryCleanupHelper.isWithinBatchWindow(any(Date.class), any(ProcessEngineConfigurationImpl.class))).thenReturn(false);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         closeable.close();
     }

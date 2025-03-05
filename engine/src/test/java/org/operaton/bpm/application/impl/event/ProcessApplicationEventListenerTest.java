@@ -23,11 +23,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -42,8 +41,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Daniel Meyer
@@ -51,45 +49,40 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
  */
 public class ProcessApplicationEventListenerTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/application/impl/event/pa.event.listener.operaton.cfg.xml");
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+       .configurationResource("org/operaton/bpm/application/impl/event/pa.event.listener.operaton.cfg.xml")
+       .build();
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected RepositoryService repositoryService;
-  protected TaskService taskService;
-  protected ManagementService managementService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+  ManagementService managementService;
 
-  protected String deploymentId;
-
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     runtimeService = engineRule.getRuntimeService();
     repositoryService = engineRule.getRepositoryService();
     taskService = engineRule.getTaskService();
     managementService = engineRule.getManagementService();
-    deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
   }
 
-  @After
+  @AfterEach
   public void closeDownProcessEngine() {
-    managementService.unregisterProcessApplication(deploymentId, false);
+    managementService.unregisterProcessApplication(engineRule.getDeploymentId(), false);
   }
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/application/impl/event/ProcessApplicationEventListenerTest.testExecutionListener.bpmn20.xml" })
   public void testExecutionListenerNull() {
-
     // this test verifies that the process application can return a 'null'
     // execution listener
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 
     // register app so that it receives events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
     // I can start a process event though the process app does not provide an
     // event listener.
     ProcessInstance process = runtimeService.startProcessInstanceByKey("startToEnd");
@@ -115,7 +108,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it receives events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // Start process instance.
     runtimeService.startProcessInstanceByKey("startToEnd");
@@ -141,7 +134,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it receives events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // Start process instance.
     runtimeService.startProcessInstanceByKey("startToEnd");
@@ -163,7 +156,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it is notified about events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // start process instance
     runtimeService.startProcessInstanceByKey("startToEnd");
@@ -185,7 +178,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it is notified about events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // 1. (start)startEvent(end) -(take)-> (start)serviceTask(end) -(take)-> (start)endEvent(end) (8 Events)
 
@@ -218,7 +211,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it is notified about events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // 1. (start)startEvent(end) -(take)-> (start)userTask(end) -(take)-> (start)endEvent(end) (8 Events)
 
@@ -259,7 +252,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it is notified about events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // 1. (start)startEvent(end) -(take)-> (start)userTask(end) -(take)-> (start)endEvent(end) (8 Events)
 
@@ -305,7 +298,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it is notified about events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
 
     // start process instance
@@ -324,7 +317,6 @@ public class ProcessApplicationEventListenerTest {
   @Test
   @Deployment
   public void testTaskListener() {
-
     final List<String> events = new ArrayList<>();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -335,7 +327,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it is notified about events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // start process instance
     ProcessInstance taskListenerProcess = runtimeService.startProcessInstanceByKey("taskListenerProcess");
@@ -368,7 +360,6 @@ public class ProcessApplicationEventListenerTest {
   @Test
   @Deployment
   public void testIntermediateTimerEvent() {
-
     // given
     final List<String> timerEvents = new ArrayList<>();
 
@@ -387,7 +378,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it is notified about events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // when
     runtimeService.startProcessInstanceByKey("process");
@@ -407,7 +398,6 @@ public class ProcessApplicationEventListenerTest {
   @Test
   @Deployment
   public void testIntermediateSignalEvent() {
-
     // given
     final List<String> timerEvents = new ArrayList<>();
 
@@ -426,7 +416,7 @@ public class ProcessApplicationEventListenerTest {
     };
 
     // register app so that it is notified about events
-    managementService.registerProcessApplication(deploymentId, processApplication.getReference());
+    managementService.registerProcessApplication(engineRule.getDeploymentId(), processApplication.getReference());
 
     // when
     runtimeService.startProcessInstanceByKey("process");

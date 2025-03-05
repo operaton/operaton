@@ -22,33 +22,41 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import java.util.List;
 import java.util.Set;
 
-import ch.qos.logback.classic.Level;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.repository.Resource;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 
-import org.junit.*;
+import ch.qos.logback.classic.Level;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class EmbeddedProcessApplicationTest {
 
   protected static final String CONFIG_LOGGER = "org.operaton.bpm.application";
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
-                                                    .watch(CONFIG_LOGGER)
-                                                    .level(Level.WARN);
-
+  
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch(CONFIG_LOGGER).level(Level.WARN);
+  
+  ProcessEngine processEngine;
+  RepositoryService repositoryService;
+  
   protected RuntimeContainerDelegate runtimeContainerDelegate = RuntimeContainerDelegate.INSTANCE.get();
   protected boolean defaultEngineRegistered;
 
@@ -57,12 +65,12 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     defaultEngineRegistered = true;
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
     defaultEngineRegistered = false;
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     if (defaultEngineRegistered) {
       runtimeContainerDelegate.unregisterProcessEngine(processEngine);

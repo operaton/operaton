@@ -18,26 +18,34 @@ package org.operaton.bpm.application.impl.el;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ProcessApplicationElResolverTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class ProcessApplicationElResolverTest {
 
   RuntimeContainerDelegate runtimeContainerDelegate = null;
 
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  TaskService taskService;
   CallingProcessApplication callingApp;
   CalledProcessApplication calledApp;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     runtimeContainerDelegate = RuntimeContainerDelegate.INSTANCE.get();
     runtimeContainerDelegate.registerProcessEngine(processEngine);
@@ -49,7 +57,7 @@ public class ProcessApplicationElResolverTest extends PluggableProcessEngineTest
     calledApp.deploy();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
 
     callingApp.undeploy();

@@ -16,23 +16,17 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+
+import org.junit.jupiter.api.Test;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isStarted.bpmn"

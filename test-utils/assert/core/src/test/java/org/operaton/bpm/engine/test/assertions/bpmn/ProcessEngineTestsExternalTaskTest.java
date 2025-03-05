@@ -16,27 +16,19 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.externalTask;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.externalTaskQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+
+import org.junit.jupiter.api.Test;
 
 public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
 
   private static final String EXTERNAL_TASK_3 = "ExternalTask_3";
   private static final String EXTERNAL_TASK_2 = "ExternalTask_2";
   private static final String EXTERNAL_TASK_1 = "ExternalTask_1";
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-externalTask.bpmn"})

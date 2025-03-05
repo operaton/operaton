@@ -16,7 +16,14 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.exception.NotFoundException;
+import org.operaton.bpm.engine.externaltask.ExternalTask;
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.DEFAULT_WORKER_EXTERNAL_TASK;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
@@ -29,22 +36,12 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVa
 
 import java.util.Collections;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.exception.NotFoundException;
-import org.operaton.bpm.engine.externaltask.ExternalTask;
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})

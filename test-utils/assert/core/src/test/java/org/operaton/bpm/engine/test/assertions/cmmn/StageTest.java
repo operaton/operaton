@@ -31,9 +31,7 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
 
 public class StageTest extends ProcessAssertTestCase {
 
@@ -44,9 +42,6 @@ public class StageTest extends ProcessAssertTestCase {
   public static final String STAGE_S2  = "PI_S_S2";
   public static final String STAGE_S3  = "PI_S_S3";
   public static final String USER_TASK = "UserTask_1";
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"cmmn/StageTest.cmmn"})

@@ -16,24 +16,16 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.execute;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.job;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.operaton.bpm.engine.test.mock.Mocks;
-import org.junit.Rule;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+
+import org.junit.jupiter.api.Test;
 
 public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"

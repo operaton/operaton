@@ -16,26 +16,22 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
+
+import org.junit.jupiter.api.Test;
 
 public class CaseTaskAssertVariablesTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String CASE_KEY = "Case_CaseTaskAssert-variables";
   public static final String TASK_B = "PI_TaskB";
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"cmmn/CaseTaskAssert-variables.cmmn"})

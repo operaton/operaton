@@ -25,17 +25,12 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
 
 public class StageWithSentryTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_HT_A";
   public static final String STAGE_S = "PI_StageS";
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   /**
    * Introduces: stage.isAvailable()

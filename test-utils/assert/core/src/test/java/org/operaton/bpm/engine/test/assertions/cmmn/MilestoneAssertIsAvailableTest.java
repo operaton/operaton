@@ -16,23 +16,16 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
+
+import org.junit.jupiter.api.Test;
 
 @Deployment(resources = "cmmn/MilestoneAssertIsAvailableTest.cmmn")
 public class MilestoneAssertIsAvailableTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   void is_available_success() {

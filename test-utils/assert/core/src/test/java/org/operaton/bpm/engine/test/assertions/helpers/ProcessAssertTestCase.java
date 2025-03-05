@@ -17,12 +17,18 @@
 package org.operaton.bpm.engine.test.assertions.helpers;
 
 
+import org.operaton.bpm.engine.test.junit5.DeploymentExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.reset;
 
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(ProcessEngineExtension.class)
+@ExtendWith(DeploymentExtension.class)
 public abstract class ProcessAssertTestCase {
 
   @AfterEach

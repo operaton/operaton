@@ -16,19 +16,15 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class ProcessEngineTestsWithVariablesTest {
 
@@ -48,37 +44,37 @@ public class ProcessEngineTestsWithVariablesTest {
 
     keys = new ArrayList<>();
     if (key1 != null)
-    keys.add(key1);
+      keys.add(key1);
     if (key2 != null)
-    keys.add(key2);
+      keys.add(key2);
     if (key3 != null)
-    keys.add(key3);
+      keys.add(key3);
 
     values = new ArrayList<>();
     if (key1 != null)
-    values.add(value1);
+      values.add(value1);
     if (key2 != null)
-    values.add(value2);
+      values.add(value2);
     if (key3 != null)
-    values.add(value3);
+      values.add(value3);
 
   }
 
   public static Collection<Object[]> data() {
-    Object[][] data = new Object[][] {
-      { "key1", 1   , null  , null, null  , null },
-      { "key1", 1   , "key2", 2   , null  , null },
-      { null  , null, "key2", 2   , null  , null },
-      { "key1", 1   , "key2", 2   , "key3", 3    }
+    Object[][] data = new Object[][]{
+      {"key1", 1, null, null, null, null},
+      {"key1", 1, "key2", 2, null, null},
+      {null, null, "key2", 2, null, null},
+      {"key1", 1, "key2", 2, "key3", 3}
     };
     return Arrays.asList(data);
   }
 
   @MethodSource("data")
   @ParameterizedTest
-  public void withVariables(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+  void testWithVariables(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
     initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
-    // When we simply constuct the map with the given data
+    // When we simply construct the map with the given data
     Map<String, Object> returnedMap = returnedMap(keys, values);
     // Then we expect to find the expected Map
     assertThat(returnedMap).isEqualTo(expectedMap);
@@ -86,14 +82,14 @@ public class ProcessEngineTestsWithVariablesTest {
 
   @MethodSource("data")
   @ParameterizedTest
-  public void withVariablesNoStringKeys(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+  void withVariablesNoStringKeys(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
     initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
     // Given we replace the last key with its integer value
     keys.set(keys.size() - 1, values.get(values.size() - 1));
     // When we construct the variables map
     try {
       returnedMap(keys, values);
-    // Then we expect an exception to be thrown
+      // Then we expect an exception to be thrown
     } catch (Throwable t) {
       assertThat(t).isInstanceOfAny(ClassCastException.class, IllegalArgumentException.class, AssertionError.class);
       return;
@@ -103,14 +99,14 @@ public class ProcessEngineTestsWithVariablesTest {
 
   @MethodSource("data")
   @ParameterizedTest
-  public void withVariablesNullKeys(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+  void withVariablesNullKeys(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
     initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
     // Given we replace the last key with a null pointer
     keys.set(keys.size() - 1, null);
     // When we construct the variables map
     try {
       returnedMap(keys, values);
-    // Then we expect an exception to be thrown
+      // Then we expect an exception to be thrown
     } catch (Throwable t) {
       assertThat(t).isInstanceOfAny(IllegalArgumentException.class, AssertionError.class);
       return;
@@ -120,7 +116,7 @@ public class ProcessEngineTestsWithVariablesTest {
 
   @MethodSource("data")
   @ParameterizedTest
-  public void withVariablesNullValues(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
+  void withVariablesNullValues(String key1, Object value1, String key2, Object value2, String key3, Object value3) {
     initProcessEngineTestsWithVariablesTest(key1, value1, key2, value2, key3, value3);
     // Given we replace all values with a null pointer
     int idx = values.size();

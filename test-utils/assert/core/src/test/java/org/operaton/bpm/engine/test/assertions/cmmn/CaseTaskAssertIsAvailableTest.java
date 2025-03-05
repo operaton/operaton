@@ -16,17 +16,13 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
+
+import org.junit.jupiter.api.Test;
 
 public class CaseTaskAssertIsAvailableTest extends ProcessAssertTestCase {
 
@@ -35,9 +31,6 @@ public class CaseTaskAssertIsAvailableTest extends ProcessAssertTestCase {
   public static final String HTASK_B = "PI_TaskB_HT";
   public static final String CASE_KEY = "Case_CaseTaskAssertIsAvailableTest";
   public static final String CASE_KEY_B = "Case_CaseTaskAssertIsAvailableTest_CaseB";
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"cmmn/CaseTaskAssertIsAvailableTest.cmmn"})

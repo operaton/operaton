@@ -16,24 +16,16 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.calledProcessInstance;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processInstanceQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.fail;
 
 public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"

@@ -24,17 +24,12 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
 
 public class TaskTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String CASE_KEY = "Case_TaskTests";
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   /**
    * Introduces:

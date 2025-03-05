@@ -22,18 +22,13 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseSe
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
 
 public class TaskWithSentryTest extends ProcessAssertTestCase {
 
 	public static final String TASK_A = "PI_HT_A";
 	public static final String TASK_B = "PI_HT_B";
 	public static final String CASE_KEY = "Case_TaskWithSentryTests";
-
-	@Rule
-	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})

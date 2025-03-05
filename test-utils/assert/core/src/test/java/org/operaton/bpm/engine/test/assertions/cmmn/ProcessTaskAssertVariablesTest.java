@@ -16,29 +16,25 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
+import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
+import org.operaton.bpm.engine.runtime.CaseInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.Failure;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processInstanceQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
+
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
 
 public class ProcessTaskAssertVariablesTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String USER_TASK = "UserTask_1";
   public static final String CASE_KEY = "Case_ProcessTaskAssert-variables";
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
   @Deployment(resources = {"cmmn/ProcessTaskAssert-variables.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})

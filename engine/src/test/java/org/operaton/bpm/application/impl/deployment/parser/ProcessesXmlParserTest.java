@@ -16,22 +16,22 @@
  */
 package org.operaton.bpm.application.impl.deployment.parser;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.application.impl.metadata.ProcessesXmlParse;
 import org.operaton.bpm.application.impl.metadata.ProcessesXmlParser;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * <p>The testcases for the {@link ProcessesXmlParser}</p>
@@ -43,7 +43,7 @@ public class ProcessesXmlParserTest {
 
   private ProcessesXmlParser parser;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     parser = new ProcessesXmlParser();
   }
@@ -189,7 +189,6 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  @SuppressWarnings("java:S5961")
   public void testParseProcessesXmlTwoArchivesAndTwoEngines() {
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_two_archives_two_engines.xml"))
@@ -268,7 +267,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  @Ignore("FIXME")
+  @Disabled("FIXME")
   public void testParseProcessesXmlClassLineBreak() {
     ProcessesXml processesXml = parser.createParse()
         .sourceUrl(getStreamUrl("process_xml_one_archive_with_line_break.xml"))

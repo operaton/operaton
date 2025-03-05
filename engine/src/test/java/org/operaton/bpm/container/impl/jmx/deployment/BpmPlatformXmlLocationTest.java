@@ -16,26 +16,31 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep;
-import org.springframework.mock.jndi.SimpleNamingContext;
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_FILE;
 import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_LOCATION;
 import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_SYSTEM_PROPERTY;
 import static org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep.CATALINA_HOME;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.Hashtable;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.naming.spi.InitialContextFactory;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+//import org.junit.Rule;
+//import org.junit.Test;
+import org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep;
+import org.springframework.mock.jndi.SimpleNamingContext;
 
 /**
  * Checks the correct retrieval of bpm-platform.xml file through JNDI,
@@ -61,9 +66,18 @@ public class BpmPlatformXmlLocationTest {
   private static final String BPM_PLATFORM_XML_LOCATION_URL_HTTP_PROTOCOL = "http://localhost:8080/operaton/" + BPM_PLATFORM_XML_FILE;
   private static final String BPM_PLATFORM_XML_LOCATION_URL_HTTPS_PROTOCOL = "https://localhost:8080/operaton/" + BPM_PLATFORM_XML_FILE;
 
-  @Rule
-  public MockInitialContextRule initialContextRule = new MockInitialContextRule(new SimpleNamingContext());
-
+  @BeforeEach
+  public void setUp() {
+    System.setProperty(Context.INITIAL_CONTEXT_FACTORY, MockContextFactory.class.getName());
+    MockContextFactory.setCurrentContext(new SimpleNamingContext());
+  }
+  
+  @AfterEach
+  public void tearDown() {
+    System.clearProperty(Context.INITIAL_CONTEXT_FACTORY);
+    MockContextFactory.clearCurrentContext();
+  }
+  
   @Test
   public void checkValidBpmPlatformXmlResourceLocationForUrl() throws MalformedURLException {
     TomcatParseBpmPlatformXmlStep tomcatParseBpmPlatformXmlStep = new TomcatParseBpmPlatformXmlStep();
@@ -202,4 +216,21 @@ public class BpmPlatformXmlLocationTest {
         + BpmPlatformXmlLocationTest.class.getPackage().getName().replace(".", File.separator);
   }
 
+  public static class MockContextFactory implements InitialContextFactory {
+	  private static final ThreadLocal<Context> currentContext = new ThreadLocal<>();
+	  
+	  @Override
+	  public Context getInitialContext(Hashtable<?, ?> environment) throws NamingException {
+		  return currentContext.get();
+	  }
+	  
+	  public static void setCurrentContext(Context context) {
+		  currentContext.set(context);
+	  }
+	  
+	  public static void clearCurrentContext() {
+		  currentContext.remove();
+	  }
+  }
 }
+

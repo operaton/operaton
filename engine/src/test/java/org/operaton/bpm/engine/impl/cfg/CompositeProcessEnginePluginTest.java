@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.operaton.bpm.engine.ProcessEngine;

@@ -22,6 +22,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -32,31 +35,17 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+@ExtendWith(ProcessEngineExtension.class)
 public class BatchInvocationsPerJobByBatchTypeTest {
 
-  @Rule
-  public ProvidedProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
+  ManagementService managementService;
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  ProcessEngineConfigurationImpl engineConfiguration;
 
-  protected ManagementService managementService;
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected ProcessEngineConfigurationImpl engineConfiguration;
-
-  @Before
-  public void assignServices() {
-    managementService = processEngineRule.getManagementService();
-    runtimeService = processEngineRule.getRuntimeService();
-    historyService = processEngineRule.getHistoryService();
-    engineConfiguration = processEngineRule.getProcessEngineConfiguration();
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     int defaultInvocationsPerJob =
         ProcessEngineConfigurationImpl.DEFAULT_INVOCATIONS_PER_BATCH_JOB;

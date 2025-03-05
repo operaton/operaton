@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.impl.incident;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.runtime.Incident;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.internal.verification.Times;
 
 import java.util.ArrayList;

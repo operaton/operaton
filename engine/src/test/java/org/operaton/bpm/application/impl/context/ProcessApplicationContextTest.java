@@ -52,8 +52,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 @ExtendWith(ProcessEngineExtension.class)
 public class ProcessApplicationContextTest {
 
-  protected ProcessEngine processEngine;
   protected TestApplicationWithoutEngine pa;
+  ProcessEngine processEngine;
 
   @BeforeEach
   public void setUp() {

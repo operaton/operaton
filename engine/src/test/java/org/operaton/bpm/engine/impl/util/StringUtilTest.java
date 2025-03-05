@@ -18,19 +18,21 @@ package org.operaton.bpm.engine.impl.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
 
 /**
  * @author Tobias Metzke
  *
  */
+@ExtendWith(ProcessEngineExtension.class)
 public class StringUtilTest {
+	
+  ProcessEngine processEngine;
   
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
   @Test
   public void shouldAllowTrimToMaximumLength() {
     // given
@@ -49,7 +51,7 @@ public class StringUtilTest {
     byte[] bytes = message.getBytes();
 
     // when
-    String stringFromBytes = StringUtil.fromBytes(bytes, engineRule.getProcessEngine());
+    String stringFromBytes = StringUtil.fromBytes(bytes, processEngine);
 
     // then
     assertThat(stringFromBytes).isEqualTo(message);
@@ -61,7 +63,7 @@ public class StringUtilTest {
     byte[] bytes = null;
 
     // when
-    String stringFromBytes = StringUtil.fromBytes(bytes, engineRule.getProcessEngine());
+    String stringFromBytes = StringUtil.fromBytes(bytes, processEngine);
 
     // then
     assertThat(stringFromBytes).isEmpty();

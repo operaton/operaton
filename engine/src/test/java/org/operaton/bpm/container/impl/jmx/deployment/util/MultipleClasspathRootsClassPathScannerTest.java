@@ -24,8 +24,8 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.container.impl.deployment.scanning.ClassPathProcessApplicationScanner;
-import org.junit.Test;
 
 
 /**

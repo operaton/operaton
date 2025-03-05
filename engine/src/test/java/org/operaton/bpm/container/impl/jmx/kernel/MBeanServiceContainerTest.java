@@ -19,12 +19,15 @@ package org.operaton.bpm.container.impl.jmx.kernel;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-
 import java.util.List;
 import java.util.Set;
 
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.container.impl.jmx.MBeanServiceContainer;
 import org.operaton.bpm.container.impl.jmx.kernel.util.FailingDeploymentOperationStep;
 import org.operaton.bpm.container.impl.jmx.kernel.util.StartServiceDeploymentOperationStep;
@@ -32,9 +35,6 @@ import org.operaton.bpm.container.impl.jmx.kernel.util.StopServiceDeploymentOper
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestService;
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestServiceType;
 import org.operaton.bpm.container.impl.spi.PlatformService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Testcases for the {@link MBeanServiceContainer} Kernel.
@@ -61,12 +61,12 @@ public class MBeanServiceContainerTest {
   private final TestService service3 = new TestService();
   private final TestService service4 = new TestService();
 
-  @Before
+  @BeforeEach
   public void setUp() {
     serviceContainer = new MBeanServiceContainer();
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     // make sure all MBeans are removed after each test
     MBeanServer mBeanServer = serviceContainer.getmBeanServer();

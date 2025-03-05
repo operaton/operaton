@@ -68,12 +68,12 @@ public class RedeploymentProcessApplicationTest {
   protected static final String DRD_RESOURCE_1 = "org/operaton/bpm/engine/test/dmn/deployment/drdScore.dmn11.xml";
   protected static final String DRD_RESOURCE_2 = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
 
-  protected static ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected static RepositoryService repositoryService;
-  protected static RuntimeService runtimeService;
-  protected static CaseService caseService;
-  protected static DecisionService decisionService;
-  protected static ManagementService managementService;
+  static ProcessEngineConfigurationImpl processEngineConfiguration;
+  static RepositoryService repositoryService;
+  static RuntimeService runtimeService;
+  static CaseService caseService;
+  static DecisionService decisionService;
+  static ManagementService managementService;
 
   @Parameter(0)
   public String resource1;

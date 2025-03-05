@@ -64,9 +64,9 @@ public class RedeploymentRegistrationTest {
 
   protected EmbeddedProcessApplication processApplication;
 
-  protected RepositoryService repositoryService;
-  protected ManagementService managementService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  ManagementService managementService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Parameter(0)
   public String resource1;

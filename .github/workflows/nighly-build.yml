@@ -15,27 +15,22 @@ on:
           - '["21"]'
           - '["17", "21"]'
       skip_build:
-        description: 'Skip the normal build, e.g. when running integration tests only'
+        description: 'Build: Set to false to skip the normal build, e.g. when running integration tests only'
         type: boolean
         required: true
-        default: false
-      dry_run:
-        description: 'Dry-Run: Skips remote operations when true'
-        type: boolean
-        required: true
-        default: false
+        default: true
       skip_tests:
-        description: 'Skip test execution for faster build'
+        description: 'Build: Skip test execution for faster build'
         type: boolean
         required: true
         default: true
       integration_tests:
-        description: 'Run integration tests'
+        description: 'Integration Tests: Enable/Disable'
         type: boolean
         required: true
         default: true
       testsuite:
-        description: 'Integration test suite to run'
+        description: 'Integration Tests: Test suite to run'
         type: choice
         required: true
         default: '["engine"]'
@@ -44,7 +39,7 @@ on:
           - '["webapps"]'
           - '["engine", "webapps"]'
       container:
-        description: 'Container to use for integration tests'
+        description: 'Integration Tests: Container to use'
         type: choice
         required: true
         default: '["tomcat", "wildfly"]'
@@ -53,7 +48,7 @@ on:
           - '["wildfly"]'
           - '["tomcat", "wildfly"]'
       database:
-        description: 'Database to use for integration tests'
+        description: 'Integration Tests: Database to use'
         type: choice
         required: true
         default: '["h2"]'
@@ -61,6 +56,11 @@ on:
           - '["h2"]'
           - '["postgresql"]'
           - '["h2", "postgresql"]'
+      dry_run:
+        description: 'Release: Skips remote operations when true'
+        type: boolean
+        required: true
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

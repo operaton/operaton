@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
+import jakarta.ws.rs.core.Response;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import java.util.Arrays;

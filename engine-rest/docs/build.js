@@ -28,7 +28,7 @@ async function generateDocs() {
         join(dirname(require.resolve("redoc")), "redoc.standalone.js")
     );
 
-    const state = await store.toJS()
+    const state = await store.toJS();
 
     const operatonVersion = require('./package.json').version;
 

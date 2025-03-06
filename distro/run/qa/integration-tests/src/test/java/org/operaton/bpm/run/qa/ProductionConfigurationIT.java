@@ -18,7 +18,7 @@ package org.operaton.bpm.run.qa;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.is;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

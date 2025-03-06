@@ -18,16 +18,16 @@ package org.operaton.bpm.container.impl.threading.ra.inflow;
 
 import java.io.Serializable;
 
-import javax.resource.spi.Activation;
-import javax.resource.spi.ActivationSpec;
-import javax.resource.spi.InvalidPropertyException;
-import javax.resource.spi.ResourceAdapter;
+import jakarta.resource.spi.Activation;
+import jakarta.resource.spi.ActivationSpec;
+import jakarta.resource.spi.InvalidPropertyException;
+import jakarta.resource.spi.ResourceAdapter;
 
 
 
 
 /**
- * 
+ *
  * @author Daniel Meyer
  */
 @Activation(
@@ -36,7 +36,7 @@ import javax.resource.spi.ResourceAdapter;
 public class JobExecutionHandlerActivationSpec implements ActivationSpec, Serializable {
 
   private static final long serialVersionUID = 1L;
-  
+
   private ResourceAdapter ra;
   /** Please check #CAM-9811  */
   private String dummyPojo;

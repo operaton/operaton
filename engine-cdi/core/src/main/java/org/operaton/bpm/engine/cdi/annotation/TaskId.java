@@ -21,7 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 import org.operaton.bpm.engine.task.Task;
 
@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.task.Task;
  * <pre>
  * {@code @Inject} @TaskId String currentTaskId
  * </pre>
- * 
+ *
  * Note that the current {@link Task} is also available for injection:
  * <pre>
  * {@code @Inject} Task task;

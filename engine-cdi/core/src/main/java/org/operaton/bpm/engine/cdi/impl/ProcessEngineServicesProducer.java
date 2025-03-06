@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.impl;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Named;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.engine.AuthorizationService;

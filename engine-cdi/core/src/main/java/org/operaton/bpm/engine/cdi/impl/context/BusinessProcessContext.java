@@ -20,11 +20,11 @@ import java.lang.annotation.Annotation;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.spi.Context;
-import javax.enterprise.context.spi.Contextual;
-import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.context.spi.Context;
+import jakarta.enterprise.context.spi.Contextual;
+import jakarta.enterprise.context.spi.CreationalContext;
+import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.BeanManager;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
@@ -32,14 +32,14 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 
 /**
  * Implementation of the BusinessProcessContext-scope.
- * 
+ *
  * @author Daniel Meyer
  */
 @SuppressWarnings("unchecked")
 public class BusinessProcessContext implements Context {
 
   static final Logger logger = Logger.getLogger(BusinessProcessContext.class.getName());
-  
+
   protected BeanManager beanManager;
 
   public BusinessProcessContext() {
@@ -126,9 +126,9 @@ public class BusinessProcessContext implements Context {
 
   @Override
   public boolean isActive() {
-    // we assume the business process is always 'active'. If no task/execution is 
-    // associated, temporary instances of @BusinessProcesScoped beans are cached in the 
-    // conversation / request 
+    // we assume the business process is always 'active'. If no task/execution is
+    // associated, temporary instances of @BusinessProcesScoped beans are cached in the
+    // conversation / request
     return true;
   }
 

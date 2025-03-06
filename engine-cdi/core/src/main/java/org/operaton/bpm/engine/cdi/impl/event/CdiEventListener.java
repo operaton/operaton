@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.cdi.impl.event;
 
 import java.lang.annotation.Annotation;
-import javax.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.BeanManager;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
@@ -35,7 +35,7 @@ public class CdiEventListener extends AbstractCdiEventListener {
 
   @Override
   protected void fireEvent(BusinessProcessEvent event, Annotation[] qualifiers) {
-    getBeanManager().fireEvent(event, qualifiers);
+    getBeanManager().getEvent().select(qualifiers).fire(event);
   }
 
   protected BeanManager getBeanManager() {

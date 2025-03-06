@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm;
 
-import com.sun.jersey.api.client.ClientResponse;
+import jakarta.ws.rs.core.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -42,8 +42,8 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    Response response = client.resource(appBasePath + TASKLIST_PATH)
+        .get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());
@@ -58,8 +58,8 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    Response response = client.resource(appBasePath + TASKLIST_PATH)
+        .get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());
@@ -74,8 +74,8 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    Response response = client.resource(appBasePath + TASKLIST_PATH)
+        .get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());
@@ -90,25 +90,25 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    Response response = client.resource(appBasePath + TASKLIST_PATH)
+        .get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());
-    MultivaluedMap<String, String> headers = response.getHeaders();
-    List<String> values = headers.get("Strict-Transport-Security");
+    MultivaluedMap<String, Object> headers = response.getHeaders();
+    List<Object> values = headers.get("Strict-Transport-Security");
     assertNull(values);
 
     // cleanup
     response.close();
   }
 
-  protected void assertHeaderPresent(String expectedName, String expectedValue, ClientResponse response) {
-    MultivaluedMap<String, String> headers = response.getHeaders();
+  protected void assertHeaderPresent(String expectedName, String expectedValue, Response response) {
+    MultivaluedMap<String, Object> headers = response.getHeaders();
 
-    List<String> values = headers.get(expectedName);
-    for (String value : values) {
-      if (value.matches(expectedValue)) {
+    List<Object> values = headers.get(expectedName);
+    for (Object value : values) {
+      if (value.toString().matches(expectedValue)) {
         return;
       }
     }

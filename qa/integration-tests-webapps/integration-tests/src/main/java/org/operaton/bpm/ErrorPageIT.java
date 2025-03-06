@@ -19,13 +19,12 @@ package org.operaton.bpm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.jersey.api.client.ClientResponse;
 
 public class ErrorPageIT extends AbstractWebIntegrationTest {
 
@@ -37,13 +36,13 @@ public class ErrorPageIT extends AbstractWebIntegrationTest {
   @Test
   public void shouldCheckNonFoundResponse() {
     // when
-    ClientResponse response = client.resource(appBasePath + "nonexisting")
-        .get(ClientResponse.class);
+    Response response = client.resource(appBasePath + "nonexisting")
+        .get(Response.class);
 
     // then
     assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
-    assertTrue(response.getType().toString().startsWith(MediaType.TEXT_HTML));
-    String responseEntity = response.getEntity(String.class);
+    assertTrue(response.getMediaType().toString().startsWith(MediaType.TEXT_HTML));
+    String responseEntity = response.getEntity().toString();
     assertTrue(responseEntity.contains("Operaton"));
     assertTrue(responseEntity.contains("Not Found"));
 

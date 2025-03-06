@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm;
 
-import com.sun.jersey.api.client.ClientResponse;
+import jakarta.ws.rs.core.Response;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.List;
 
@@ -40,8 +40,8 @@ public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    Response response = client.resource(appBasePath + TASKLIST_PATH)
+        .get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());
@@ -51,13 +51,13 @@ public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
     response.close();
   }
 
-  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, ClientResponse response) {
-    MultivaluedMap<String, String> headers = response.getHeaders();
+  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {
+    MultivaluedMap<String, Object> headers = response.getHeaders();
 
-    List<String> values = headers.get("Set-Cookie");
-    for (String value : values) {
-      if (value.startsWith("JSESSIONID=")) {
-        return value.contains(expectedHeaderValue);
+    List<Object> values = headers.get("Set-Cookie");
+    for (Object value : values) {
+      if (value.toString().startsWith("JSESSIONID=")) {
+        return value.toString().contains(expectedHeaderValue);
       }
     }
 

@@ -17,12 +17,12 @@
 package org.operaton.bpm.engine.cdi.annotation.event;
 
 
-import javax.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 public class TakeTransitionLiteral extends AnnotationLiteral<TakeTransition> implements TakeTransition {
-  
-  protected final String transitionName;   
-  
+
+  protected final String transitionName;
+
   public TakeTransitionLiteral(String transitionName) {
     this.transitionName = transitionName;
   }

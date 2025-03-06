@@ -16,32 +16,31 @@
  */
 package org.operaton.bpm.application.impl.web;
 
-import javax.ejb.EJB;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.ejb.EJB;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 
-
 /**
- * <p>Sets the ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH property if this is 
+ * <p>Sets the ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH property if this is
  * deployed as part of a WebApplication.</p>
- * 
+ *
  * @author Daniel Meyer
- * 
+ *
  */
 public class ProcessArchiveServletContextListener implements ServletContextListener {
-  
+
   @EJB
   private ProcessApplicationInterface defaultEjbProcessApplication;
 
   public void contextInitialized(ServletContextEvent contextEvent) {
 
     String contextPath = contextEvent.getServletContext().getContextPath();
-    
+
     defaultEjbProcessApplication.getProperties().put(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH, contextPath);
-    
+
   }
 
   public void contextDestroyed(ServletContextEvent arg0) {

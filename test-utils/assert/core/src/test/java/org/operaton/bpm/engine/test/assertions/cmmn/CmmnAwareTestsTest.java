@@ -20,12 +20,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVa
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.assertj.core.api.Assertions;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -85,10 +80,10 @@ public class CmmnAwareTestsTest {
     cmmnAwareTestsMockedStatic = mockStatic(CmmnAwareTests.class, CALLS_REAL_METHODS);
     abstractAssertionsMockedStatic = mockStatic(AbstractAssertions.class);
     abstractAssertionsMockedStatic.when(AbstractAssertions::processEngine).thenReturn(processEngine);
-    when(processEngine.getCaseService()).thenReturn(caseService);
+    lenient().when(processEngine.getCaseService()).thenReturn(caseService);
 
     caseExecutionQuery = mock(CaseExecutionQuery.class, new CaseExecutionQueryFluentAnswer());
-    when(caseService.createCaseExecutionQuery()).thenReturn(caseExecutionQuery);
+    lenient().when(caseService.createCaseExecutionQuery()).thenReturn(caseExecutionQuery);
   }
 
   @AfterEach

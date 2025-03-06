@@ -21,7 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
@@ -29,17 +29,17 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  * Qualifier annotation for injecting the id of the current process instance.
  * <p />
  * Example:
- * 
+ *
  * <pre>
  * {@code @Inject} @ProcessInstanceId String pid;
  * </pre>
  * <p />
  * Note that the {@link ProcessInstance} is also available for injection:
- * 
+ *
  * <pre>
  * {@code @Inject} ProcessInstance pi;
  * </pre>
- * 
+ *
  * @author Daniel Meyer
  */
 @Qualifier

@@ -18,10 +18,10 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.SimpleEmail;
+import org.apache.commons.mail2.core.EmailException;
+import org.apache.commons.mail2.jakarta.Email;
+import org.apache.commons.mail2.jakarta.HtmlEmail;
+import org.apache.commons.mail2.jakarta.SimpleEmail;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -179,7 +179,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     int port = processEngineConfiguration.getMailServerPort();
     email.setSmtpPort(port);
 
-    email.setTLS(processEngineConfiguration.getMailServerUseTLS());
+    email.setStartTLSEnabled(processEngineConfiguration.getMailServerUseTLS());
 
     String user = processEngineConfiguration.getMailServerUsername();
     String password = processEngineConfiguration.getMailServerPassword();
@@ -187,13 +187,13 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
       email.setAuthentication(user, password);
     }
   }
-  
+
   protected void setCharset(Email email, String charSetStr) {
     if (charset != null) {
       email.setCharset(charSetStr);
     }
   }
-  
+
   protected String[] splitAndTrim(String str) {
     if (str != null) {
       String[] splittedStrings = str.split(",");

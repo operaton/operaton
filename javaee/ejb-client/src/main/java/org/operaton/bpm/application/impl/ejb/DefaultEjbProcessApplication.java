@@ -19,31 +19,31 @@ package org.operaton.bpm.application.impl.ejb;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.*;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.ejb.*;
 
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 
 
 /**
- * 
+ *
  * @author Daniel Meyer
  * @author Roman Smirnov
- * 
+ *
  */
 @Singleton
 @Startup
-@ConcurrencyManagement(ConcurrencyManagementType.BEAN) 
+@ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @ProcessApplication
 @Local(ProcessApplicationInterface.class)
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
 public class DefaultEjbProcessApplication extends org.operaton.bpm.application.impl.EjbProcessApplication {
-  
+
   protected Map<String, String> properties = new HashMap<>();
-  
+
   @PostConstruct
   public void start() {
     deploy();
@@ -58,5 +58,5 @@ public class DefaultEjbProcessApplication extends org.operaton.bpm.application.i
   public Map<String, String> getProperties() {
     return properties;
   }
-    
+
 }

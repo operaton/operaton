@@ -32,7 +32,7 @@
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
-        <version>${weld.version}</version>
+        <version>6.0.1.Final</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -52,11 +52,24 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.jboss.spec</groupId>
-      <artifactId>${javaee.spec}</artifactId>
-      <version>${javaee.spec.version}</version>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+      <version>10.0.0</version>
       <type>pom</type>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.inject</groupId>
+      <artifactId>jakarta.inject-api</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>jakarta.interceptor</groupId>
+      <artifactId>jakarta.interceptor-api</artifactId>
+      <version>2.2.0</version>
     </dependency>
 
     <dependency>

@@ -21,14 +21,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.resource.NotSupportedException;
-import javax.resource.ResourceException;
-import javax.resource.spi.ConnectionEvent;
-import javax.resource.spi.ConnectionEventListener;
-import javax.resource.spi.ConnectionRequestInfo;
-import javax.resource.spi.LocalTransaction;
-import javax.resource.spi.ManagedConnection;
-import javax.resource.spi.ManagedConnectionMetaData;
+import jakarta.resource.NotSupportedException;
+import jakarta.resource.ResourceException;
+import jakarta.resource.spi.ConnectionEvent;
+import jakarta.resource.spi.ConnectionEventListener;
+import jakarta.resource.spi.ConnectionRequestInfo;
+import jakarta.resource.spi.LocalTransaction;
+import jakarta.resource.spi.ManagedConnection;
+import jakarta.resource.spi.ManagedConnectionMetaData;
 import javax.security.auth.Subject;
 import javax.transaction.xa.XAResource;
 
@@ -38,9 +38,9 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 
 
 /**
- * 
+ *
  * @author Daniel Meyer
- * 
+ *
  */
 public class JcaExecutorServiceManagedConnection implements ManagedConnection {
 
@@ -49,9 +49,9 @@ public class JcaExecutorServiceManagedConnection implements ManagedConnection {
   protected JcaExecutorServiceManagedConnectionFactory mcf;
   protected List<ConnectionEventListener> listeners;
   protected JcaExecutorServiceConnectionImpl connection;
-  
+
   protected ExecutorService delegate;
-  
+
   public JcaExecutorServiceManagedConnection() {
   }
 

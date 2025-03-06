@@ -31,9 +31,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 
+import jakarta.ws.rs.core.Response;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -43,13 +44,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import org.codehaus.jettison.json.JSONObject;
 import org.operaton.bpm.AbstractWebIntegrationTest;
 import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.jersey.api.client.ClientResponse;
 
 public class RestJaxRs2IT extends AbstractWebIntegrationTest {
 
@@ -68,12 +67,12 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
 
-    ClientResponse response = client.resource(appBasePath + FETCH_AND_LOCK_PATH).accept(MediaType.APPLICATION_JSON)
-      .entity(payload, MediaType.APPLICATION_JSON_TYPE)
-      .post(ClientResponse.class);
+    Response response = client.resource(appBasePath + FETCH_AND_LOCK_PATH).accept(MediaType.APPLICATION_JSON)
+      .entity(payload, String.valueOf(MediaType.APPLICATION_JSON_TYPE))
+      .post(Response.class);
 
     assertEquals(400, response.getStatus());
-    String responseMessage = response.getEntity(JSONObject.class).get("message").toString();
+    String responseMessage = ((JSONObject) response.getEntity()).get("message").toString();
     assertTrue(responseMessage.equals("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds"));
     response.close();
   }

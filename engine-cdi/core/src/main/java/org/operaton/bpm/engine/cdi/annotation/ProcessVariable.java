@@ -20,8 +20,8 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.enterprise.util.Nonbinding;
-import javax.inject.Qualifier;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
 
 
 /**
@@ -34,20 +34,20 @@ import javax.inject.Qualifier;
  * In both cases, the process variable with the name 'accountNumber' is
  * injected. NOTE: injection points must be of type 'object'.
  * <p />
- * 
+ *
  * Can also be used to declare bean-properties to hold process variables in
- * combination with the {@link StartProcess} annotation: 
+ * combination with the {@link StartProcess} annotation:
  * <pre>
  * {@code @ProcessVariable }
- * String accountNumber;  // will be added as a process 
+ * String accountNumber;  // will be added as a process
  *                        // variable to the 'billingProcess'
- * 
+ *
  * {@code @StartProcess("billingProcess")}
  * public void startBillingProcess() {
  *  ...
- * } 
+ * }
  * </pre>
- * 
+ *
  * @author Daniel Meyer
  */
 @Qualifier

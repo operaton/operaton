@@ -17,12 +17,12 @@
 package org.operaton.bpm.engine.cdi.annotation.event;
 
 
-import javax.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 public class StartActivityLiteral extends AnnotationLiteral<StartActivity> implements StartActivity {
-  
-  protected final String activityId;    
-  
+
+  protected final String activityId;
+
   public StartActivityLiteral(String activityId) {
     this.activityId = activityId;
   }

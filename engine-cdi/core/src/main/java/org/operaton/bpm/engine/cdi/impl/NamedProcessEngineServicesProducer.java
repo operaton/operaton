@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.impl;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.spi.InjectionPoint;
 
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;

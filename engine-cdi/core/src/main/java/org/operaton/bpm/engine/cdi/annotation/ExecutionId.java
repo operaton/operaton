@@ -21,7 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 import org.operaton.bpm.engine.runtime.Execution;
 
@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.runtime.Execution;
  * <pre>
  * {@code @Inject} @ExecutionId String currentExecutionId
  * </pre>
- * 
+ *
  * Note that the current {@link Execution} is also available for injection:
  * <pre>
  * {@code @Inject} Execution execution;

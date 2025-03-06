@@ -20,8 +20,8 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.enterprise.util.Nonbinding;
-import javax.inject.Qualifier;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
 
 
 /**
@@ -34,7 +34,7 @@ import javax.inject.Qualifier;
  * In both cases, the local process variable with the name 'accountNumber' is
  * injected. NOTE: injection points must be of type 'object'.
  * <p />
- * 
+ *
  * @author Michael Scholz
  */
 @Qualifier

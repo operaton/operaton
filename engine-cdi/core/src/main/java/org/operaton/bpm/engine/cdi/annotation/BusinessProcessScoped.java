@@ -22,16 +22,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ConversationScoped;
+import jakarta.enterprise.context.RequestScoped;
 
 /**
  * Declare a bean to be BusinessProcessScoped. Instances of
  * BusinessProcessScoped beans are stored as process variables in a
  * ProcessInstance.
  * <p />
- * Note: {@code @BusinessProcessScoped} bean instances must be "passivation capable", 
- *       meaning the bean defining classes must implement the {@link Serializable} 
+ * Note: {@code @BusinessProcessScoped} bean instances must be "passivation capable",
+ *       meaning the bean defining classes must implement the {@link Serializable}
  *       interface and their references (dependencies) must be "passivation capable" as well.
  * <p />
  * Note: BusinessProcessScoped is not capable of managing local process variables,
@@ -54,7 +54,7 @@ import javax.enterprise.context.RequestScoped;
  *    ...
  * }
  * </pre>
- * 
+ *
  * @author Daniel Meyer
  */
 @Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })

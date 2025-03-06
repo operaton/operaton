@@ -18,14 +18,14 @@ package org.operaton.bpm.container.impl.ejb;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.annotation.Resource;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.resource.ResourceException;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.annotation.Resource;
+import jakarta.ejb.Local;
+import jakarta.ejb.Stateless;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
+import jakarta.resource.ResourceException;
 
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.threading.ra.outbound.JcaExecutorServiceConnection;
@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 
 /**
  * Bean exposing the JCA implementation of the {@link ExecutorService} as Stateless Bean.
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -43,10 +43,10 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 @Local(ExecutorService.class)
 @TransactionAttribute(TransactionAttributeType.SUPPORTS)
 public class ExecutorServiceBean implements ExecutorService {
-  
+
   @Resource(mappedName="eis/JcaExecutorServiceConnectionFactory")
   protected JcaExecutorServiceConnectionFactory executorConnectionFactory;
-  
+
   protected JcaExecutorServiceConnection executorConnection;
 
   @PostConstruct
@@ -55,9 +55,9 @@ public class ExecutorServiceBean implements ExecutorService {
       executorConnection = executorConnectionFactory.getConnection();
     } catch (ResourceException e) {
       throw new ProcessEngineException("Could not open connection to executor service connection factory ", e);
-    } 
+    }
   }
-  
+
   @PreDestroy
   protected void closeConnection() {
     if(executorConnection != null) {
@@ -68,9 +68,9 @@ public class ExecutorServiceBean implements ExecutorService {
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
     return executorConnection.schedule(runnable, isLongRunning);
   }
-  
+
   public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
     return executorConnection.getExecuteJobsRunnable(jobIds, processEngine);
   }
-  
+
 }

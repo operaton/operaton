@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.cockpit.impl.web.bootstrap;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;

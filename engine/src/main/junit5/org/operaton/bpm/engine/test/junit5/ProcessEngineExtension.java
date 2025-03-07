@@ -187,22 +187,6 @@ public class ProcessEngineExtension implements TestWatcher,
     decisionService = processEngine.getDecisionService();
   }
 
-  protected void clearServiceReferences() {
-    processEngineConfiguration = null;
-    repositoryService = null;
-    runtimeService = null;
-    taskService = null;
-    formService = null;
-    historyService = null;
-    identityService = null;
-    managementService = null;
-    authorizationService = null;
-    caseService = null;
-    filterService = null;
-    externalTaskService = null;
-    decisionService = null;
-  }
-
   // TEST EXECUTION
 
   @Override
@@ -242,9 +226,6 @@ public class ProcessEngineExtension implements TestWatcher,
     final String testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set")).getName();
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
-    processEngine.getRuntimeService().createExecutionQuery().active().list().stream().forEach(execution ->
-            processEngine.getRuntimeService().deleteProcessInstance(execution.getProcessInstanceId(), "Test shutdown"));
-
    TestHelper.annotationDeploymentTearDown(processEngine, deploymentId, testClass, testMethod);
    deploymentId = null;
    for (String additionalDeployment : additionalDeployments) {
@@ -265,10 +246,6 @@ public class ProcessEngineExtension implements TestWatcher,
   @Override
   public void afterAll(ExtensionContext context) {
     deleteHistoryCleanupJob();
-    processEngine.close();
-    ProcessEngines.unregister(processEngine);
-    processEngine = null;
-    clearServiceReferences();
   }
 
   private void deleteHistoryCleanupJob() {

@@ -33,3 +33,9 @@ out/jreleaser
 !.mvn/wrapper/*
 *.log
 .jython_cache
+*.jar
+*.war
+*.gz
+*.class
+*.zip
+

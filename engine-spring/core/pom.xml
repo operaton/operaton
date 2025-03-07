@@ -12,7 +12,6 @@
 
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
@@ -24,11 +23,10 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-framework-bom</artifactId>
-        <version>6.2.2</version>
+        <version>${version.spring.framework6}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
 
@@ -40,17 +38,16 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
-      <version>3.4.1</version>
     </dependency>
 
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
-      <version>3.4.1</version>
     </dependency>
 
     <dependency>
@@ -58,28 +55,24 @@
       <artifactId>jakarta.validation-api</artifactId>
     </dependency>
 
-    <!-- If using Java 8+, you might also need this -->
-    <!--<dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>jakarta.el</artifactId>
-      <version>5.0.0</version>
-    </dependency>-->
-
     <dependency>
       <groupId>org.eclipse</groupId>
       <artifactId>yasson</artifactId>
       <version>3.0.3</version>
     </dependency>
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
@@ -94,7 +87,6 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
       <!--  do not expose -->
-      <version>6.2.2</version>
       <scope>provided</scope>
     </dependency>
 
@@ -108,7 +100,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>6.2.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -159,7 +150,6 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.5.3.Final</version>
       <scope>test</scope>
       <exclusions>
         <!-- hibernate uses an older slf4j version -->

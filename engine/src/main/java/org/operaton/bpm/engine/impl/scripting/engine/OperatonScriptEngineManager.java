@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
-import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import java.util.List;

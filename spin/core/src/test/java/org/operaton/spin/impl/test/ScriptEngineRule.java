@@ -22,11 +22,9 @@ import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * A JUnit 5 extension to define and create a {@link ScriptEngine}

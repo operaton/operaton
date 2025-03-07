@@ -64,6 +64,7 @@ class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
   @AfterEach
   void tearDown() {
     processEngineConfiguration.setAutoStoreScriptVariables(false);
+    runtimeService.deleteProcessInstance(processInstance.getId(), "Test shutdown");
   }
 
   @Test

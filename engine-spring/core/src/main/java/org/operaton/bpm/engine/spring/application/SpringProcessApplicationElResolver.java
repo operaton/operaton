@@ -61,7 +61,7 @@ public class SpringProcessApplicationElResolver implements ProcessApplicationElR
     if (processApplication instanceof SpringProcessApplication springProcessApplication) {
       return new ApplicationContextElResolver(springProcessApplication.getApplicationContext());
 
-    } else if (processApplication instanceof org.operaton.bpm.application.impl.ServletProcessApplication servletProcessApplication) {
+    } else if (processApplication instanceof org.operaton.bpm.application.impl.JakartaServletProcessApplication servletProcessApplication) {
       // Using fully-qualified class name instead of import statement to allow for automatic transformation
 
       if(!ClassUtils.isPresent("org.springframework.web.context.support.WebApplicationContextUtils", processApplication.getProcessApplicationClassloader())) {

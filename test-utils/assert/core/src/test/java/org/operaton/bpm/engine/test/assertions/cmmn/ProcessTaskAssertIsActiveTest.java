@@ -16,20 +16,18 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
+import org.operaton.bpm.engine.runtime.CaseInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.Failure;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processInstanceQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
 
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ProcessTaskAssertIsActiveTest extends ProcessAssertTestCase {
 
@@ -37,12 +35,9 @@ public class ProcessTaskAssertIsActiveTest extends ProcessAssertTestCase {
   public static final String USER_TASK = "UserTask_1";
   public static final String CASE_KEY = "Case_ProcessTaskAssertIsActiveTest";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsActiveTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsActive_Success() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsActiveTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isActiveSuccess() {
     // Given
     // case model is deployed
     // When
@@ -52,8 +47,8 @@ public class ProcessTaskAssertIsActiveTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/ProcessTaskAssertIsActiveTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testIsActive_Failure() {
+  @Deployment(resources = {"cmmn/ProcessTaskAssertIsActiveTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void isActiveFailure() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When

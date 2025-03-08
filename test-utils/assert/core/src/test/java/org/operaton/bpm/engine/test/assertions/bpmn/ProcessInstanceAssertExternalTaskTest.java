@@ -16,35 +16,31 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.externalTask;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.externalTaskQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase {
 
   private static final String TASK1 = "ExternalTask_1";
   private static final String TASK2 = "ExternalTask_2";
   private static final String TASK3 = "ExternalTask_3";
   private static final String TASK4 = "ExternalTask_4";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testNoArgsForSingleTask_Success() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void noArgsForSingleTaskSuccess() {
     // When
     final ProcessInstance processInstance = startProcess();
     // Then
@@ -52,8 +48,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testNoArgsForMultipleTasks_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void noArgsForMultipleTasksFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -69,8 +65,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testNullQuery_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void nullQueryFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -85,8 +81,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testEmptyQueryForSingleTask_Success() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void emptyQueryForSingleTaskSuccess() {
     // When
     final ProcessInstance processInstance = startProcess();
     // Then
@@ -94,8 +90,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testEmptyQueryForMultipleTasks_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void emptyQueryForMultipleTasksFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -111,8 +107,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testNarrowedQuery_Success() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void narrowedQuerySuccess() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -125,8 +121,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testNarrowedQuery_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void narrowedQueryFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -142,8 +138,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testNotYetQuery_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void notYetQueryFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -152,8 +148,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testAlreadyPassedQuery_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void alreadyPassedQueryFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask(externalTaskQuery().activityId(TASK1)).isNotNull();
@@ -163,8 +159,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testNullId_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void nullIdFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -179,8 +175,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testIdForSingleTask_Success() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void idForSingleTaskSuccess() {
     // When
     final ProcessInstance processInstance = startProcess();
     // Then
@@ -188,8 +184,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testIdForSingleTask_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void idForSingleTaskFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     try {
@@ -203,8 +199,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testIdForMultipleTasks_Success() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void idForMultipleTasksSuccess() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -217,8 +213,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testIdForMultipleTasks_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void idForMultipleTasksFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -228,8 +224,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testNotYetId_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void notYetIdFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
@@ -238,8 +234,8 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessInstanceAssert-externalTask.bpmn" })
-  public void testAlreadyPassedId_Failure() {
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-externalTask.bpmn"})
+  void alreadyPassedIdFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask(externalTaskQuery().activityId(TASK1)).isNotNull();

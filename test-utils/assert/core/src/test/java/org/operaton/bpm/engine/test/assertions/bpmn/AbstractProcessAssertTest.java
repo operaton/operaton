@@ -26,13 +26,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 @SuppressWarnings("unchecked")
-public class AbstractProcessAssertTest {
+class AbstractProcessAssertTest {
 
   ProcessEngine processEngine;
   Class<AbstractProcessAssert<?, ?>> anAssertClass;
@@ -41,8 +41,8 @@ public class AbstractProcessAssertTest {
 
   Iterator<Class<AbstractProcessAssert<?, ?>>> allAsserts;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     processEngine = Mockito.mock(ProcessEngine.class);
     AbstractAssertions.init(processEngine);
     allAsserts = Arrays.asList((Class<AbstractProcessAssert<?, ?>>[]) new Class[] {
@@ -53,13 +53,13 @@ public class AbstractProcessAssertTest {
     }).iterator();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     AbstractAssertions.reset();
   }
 
   @Test
-  public void testConstructorPattern() {
+  void constructorPattern() {
     while(allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> newInstanceFromExpectedConstructor = newInstanceFromExpectedConstructor();
@@ -68,7 +68,7 @@ public class AbstractProcessAssertTest {
   }
 
   @Test
-  public void testFactoryMethodPattern() {
+  void factoryMethodPattern() {
     while(allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> newInstanceFromExpectedFactoryMethod = newInstanceFromExpectedFactoryMethod();
@@ -77,7 +77,7 @@ public class AbstractProcessAssertTest {
   }
 
   @Test
-  public void testLastAssert_BeforeFirstAssert() {
+  void lastAssertBeforeFirstAssert() {
     while(allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       assertThat(AbstractProcessAssert.getLastAssert(anAssertClass)).isNull();
@@ -85,7 +85,7 @@ public class AbstractProcessAssertTest {
   }
 
   @Test
-  public void testLastAssert_AfterFirstAssert() {
+  void lastAssertAfterFirstAssert() {
     while(allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> assertInstance = newInstanceFromExpectedFactoryMethod();
@@ -95,7 +95,7 @@ public class AbstractProcessAssertTest {
   }
 
   @Test
-  public void testLastAssert_AfterSecondAssert() {
+  void lastAssertAfterSecondAssert() {
     while(allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> assertInstance1 = newInstanceFromExpectedFactoryMethod();

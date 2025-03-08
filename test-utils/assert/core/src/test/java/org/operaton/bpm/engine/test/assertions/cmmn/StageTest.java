@@ -26,15 +26,12 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseSe
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.disable;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.manuallyStart;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class StageTest extends ProcessAssertTestCase {
 
@@ -46,12 +43,9 @@ public class StageTest extends ProcessAssertTestCase {
   public static final String STAGE_S3  = "PI_S_S3";
   public static final String USER_TASK = "UserTask_1";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   @Test
-  @Deployment(resources = { "cmmn/StageTest.cmmn" })
-  public void testCaseIsActiveAndStageIsEnabled() {
+  @Deployment(resources = {"cmmn/StageTest.cmmn"})
+  void caseIsActiveAndStageIsEnabled() {
     // Given
     // case model is deployed
     // When
@@ -61,8 +55,8 @@ public class StageTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/StageTest.cmmn" })
-  public void testStageIsActiveAndTaskIsEnabled() {
+  @Deployment(resources = {"cmmn/StageTest.cmmn"})
+  void stageIsActiveAndTaskIsEnabled() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
@@ -72,8 +66,8 @@ public class StageTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/StageTest.cmmn" })
-  public void testStageAndTaskAreActive() {
+  @Deployment(resources = {"cmmn/StageTest.cmmn"})
+  void stageAndTaskAreActive() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreatedAndStageSActive();
     // When
@@ -83,8 +77,8 @@ public class StageTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/StageTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
-  public void testCaseIsCompletedWhenTasksAreCompleted() {
+  @Deployment(resources = {"cmmn/StageTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn"})
+  void caseIsCompletedWhenTasksAreCompleted() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreatedAndStageSActiveAndTaskAActive();
     StageAssert stage = assertThat(caseInstance).stage(STAGE_S);
@@ -108,8 +102,8 @@ public class StageTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/StageTest.cmmn" })
-  public void testStageAndTaskAreDisabled() {
+  @Deployment(resources = {"cmmn/StageTest.cmmn"})
+  void stageAndTaskAreDisabled() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     StageAssert stage = assertThat(caseInstance).stage(STAGE_S);
@@ -123,8 +117,8 @@ public class StageTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/StageTest.cmmn" })
-  public void testStageIsTerminated() {
+  @Deployment(resources = {"cmmn/StageTest.cmmn"})
+  void stageIsTerminated() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreatedAndStageSActive();
     StageAssert stage = assertThat(caseInstance).stage(STAGE_S);

@@ -16,29 +16,24 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
+
+import org.junit.jupiter.api.Test;
 
 public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String CASE_KEY = "Case_HumanTaskAssert-variables";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testVariables_Success() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void variablesSuccess() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -66,8 +61,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testVariables_Success_No_Variables() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void variablesSuccessNoVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -80,8 +75,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testVariables_Failure_HumanTask_Completed() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void variablesFailureHumanTaskCompleted() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -98,8 +93,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testHasVariables_Success() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void hasVariablesSuccess() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -117,8 +112,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testHasVariables_Failure() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void hasVariablesFailure() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -134,8 +129,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testHasNoVariables_Success() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void hasNoVariablesSuccess() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -146,8 +141,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testHasNoVariables_Failure() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void hasNoVariablesFailure() {
     // Given
     final CaseInstance caseInstance = createCaseInstance();
 
@@ -164,8 +159,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testVariables_Success_NoHumanTaskVariables() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void variablesSuccessNoHumanTaskVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstanceWithVariable();
 
@@ -176,8 +171,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testVariables_Failure_NoHumanTaskVariables() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void variablesFailureNoHumanTaskVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstanceWithVariable();
 
@@ -193,8 +188,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testHasNoVariables_Success_NoHumanTaskVariables() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void hasNoVariablesSuccessNoHumanTaskVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstanceWithVariable();
 
@@ -205,8 +200,8 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
-  public void testHasVariables_Failure_NoHumanTaskVariables() {
+  @Deployment(resources = {"cmmn/HumanTaskAssert-variables.cmmn"})
+  void hasVariablesFailureNoHumanTaskVariables() {
     // Given
     final CaseInstance caseInstance = createCaseInstanceWithVariable();
 

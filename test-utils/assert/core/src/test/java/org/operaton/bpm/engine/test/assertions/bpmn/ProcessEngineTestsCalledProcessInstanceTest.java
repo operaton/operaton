@@ -16,30 +16,21 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.calledProcessInstance;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processInstanceQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import static org.junit.Assert.fail;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+import static org.assertj.core.api.Assertions.fail;
+
+class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstanceNoArgs_CalledTooEarly_Failure() {
+  void calledProcessInstanceNoArgsCalledTooEarlyFailure() {
     // Given
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     runtimeService().startProcessInstanceByKey(processDefinitionKey);
@@ -50,7 +41,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstanceArgProcessInstance_CalledTooEarly_Success() {
+  void calledProcessInstanceArgProcessInstanceCalledTooEarlySuccess() {
     // Given
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(processDefinitionKey);
@@ -61,7 +52,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstanceArgProcessInstanceQuery_CalledTooEarly_Failure() {
+  void calledProcessInstanceArgProcessInstanceQueryCalledTooEarlyFailure() {
     // Given
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     runtimeService().startProcessInstanceByKey(processDefinitionKey);
@@ -72,7 +63,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstanceArgProcessDefinitionKey_CalledTooEarly_Failure() {
+  void calledProcessInstanceArgProcessDefinitionKeyCalledTooEarlyFailure() {
     // Given
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     runtimeService().startProcessInstanceByKey(processDefinitionKey);
@@ -83,7 +74,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstanceArgProcessDefinitionKeyAndProcessInstance_CalledTooEarly_Success() {
+  void calledProcessInstanceArgProcessDefinitionKeyAndProcessInstanceCalledTooEarlySuccess() {
     // Given
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     final String subProcessDefinitionKey = "ProcessEngineTests-calledProcessInstance-subProcess1";
@@ -95,7 +86,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstanceArgProcessInstanceQueryAndProcessInstance_CalledTooEarly_Success() {
+  void calledProcessInstanceArgProcessInstanceQueryAndProcessInstanceCalledTooEarlySuccess() {
     // Given
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     final String subProcessDefinitionKey = "ProcessEngineTests-calledProcessInstance-subProcess1";
@@ -117,7 +108,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_FirstOfTwoSequential_Success() {
+  void calledProcessInstanceFirstOfTwoSequentialSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-calledProcessInstance-superProcess1"
@@ -154,7 +145,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_SecondOfTwoSequential_Success() {
+  void calledProcessInstanceSecondOfTwoSequentialSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-calledProcessInstance-superProcess1"
@@ -193,7 +184,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_SecondOfTwoSequential_Failure() {
+  void calledProcessInstanceSecondOfTwoSequentialFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-calledProcessInstance-superProcess1"
@@ -226,7 +217,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_TwoOfTwoParallel_Success() {
+  void calledProcessInstanceTwoOfTwoParallelSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-calledProcessInstance-superProcess2"
@@ -248,7 +239,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_TwoOfTwoParallel_Failure() {
+  void calledProcessInstanceTwoOfTwoParallelFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-calledProcessInstance-superProcess2"

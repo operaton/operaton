@@ -16,26 +16,21 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TaskAssertHasIdTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class TaskAssertHasIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasId.bpmn"
   })
-  public void testHasId_Success() {
+  void hasIdSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasId"
@@ -47,7 +42,7 @@ public class TaskAssertHasIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasId.bpmn"
   })
-  public void testHasId_Failure() {
+  void hasIdFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasId"
@@ -59,7 +54,7 @@ public class TaskAssertHasIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasId.bpmn"
   })
-  public void testHasId_Null_Failure() {
+  void hasIdNullFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasId"

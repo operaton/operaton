@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.calledProcessInstance;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
@@ -24,23 +27,16 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.proces
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAssertTestCase {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_FirstOfTwoSequential_Success() {
+  void calledProcessInstanceFirstOfTwoSequentialSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-calledProcessInstance-superProcess1"
@@ -66,7 +62,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_SecondOfTwoSequential_Success() {
+  void calledProcessInstanceSecondOfTwoSequentialSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-calledProcessInstance-superProcess1"
@@ -94,7 +90,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_SecondOfTwoSequential_Failure() {
+  void calledProcessInstanceSecondOfTwoSequentialFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-calledProcessInstance-superProcess1"
@@ -117,7 +113,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_TwoOfTwoParallel_Success() {
+  void calledProcessInstanceTwoOfTwoParallelSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-calledProcessInstance-superProcess2"
@@ -143,7 +139,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_TwoOfTwoParallel_Failure() {
+  void calledProcessInstanceTwoOfTwoParallelFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-calledProcessInstance-superProcess2"
@@ -157,7 +153,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
-  public void testCalledProcessInstance_NullQuery_Failure() {
+  void calledProcessInstanceNullQueryFailure() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
         "ProcessInstanceAssert-calledProcessInstance-superProcess2"

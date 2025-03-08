@@ -20,25 +20,17 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class TaskTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String CASE_KEY = "Case_TaskTests";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
-  @Test
-  @Deployment(resources = { "cmmn/TaskTest.cmmn" })
   /**
    * Introduces:
    * assertThat(CaseInstance)
@@ -46,7 +38,9 @@ public class TaskTest extends ProcessAssertTestCase {
    * caseInstance.activity(id)
    * task.isActive()
    */
-  public void case_and_task_should_be_active() {
+  @Test
+  @Deployment(resources = {"cmmn/TaskTest.cmmn"})
+  void case_and_task_should_be_active() {
     // Given
     // case model is deployed
     // When
@@ -55,8 +49,6 @@ public class TaskTest extends ProcessAssertTestCase {
     assertThat(caseInstance).isActive().humanTask(TASK_A).isActive();
   }
 
-  @Test
-  @Deployment(resources = { "cmmn/TaskTest.cmmn" })
   /**
    * Introduces:
    * caseExecution(id, caseInstance)
@@ -64,7 +56,9 @@ public class TaskTest extends ProcessAssertTestCase {
    * caseInstance.isCompleted()
    * task.isCompleted()
    */
-  public void case_should_complete_when_task_is_completed() {
+  @Test
+  @Deployment(resources = {"cmmn/TaskTest.cmmn"})
+  void case_should_complete_when_task_is_completed() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When

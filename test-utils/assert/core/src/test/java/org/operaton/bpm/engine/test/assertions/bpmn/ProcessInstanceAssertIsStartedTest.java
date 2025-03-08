@@ -16,29 +16,22 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+
+import org.junit.jupiter.api.Test;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
-
-public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isStarted.bpmn"
   })
-  public void testIsStarted_AndActive_Success() {
+  void isStartedAndActiveSuccess() {
     // When
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isStarted"
@@ -50,7 +43,7 @@ public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isStarted.bpmn"
   })
-  public void testIsStarted_AndEnded_Success() {
+  void isStartedAndEndedSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isStarted"
@@ -64,7 +57,7 @@ public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isStarted.bpmn"
   })
-  public void testIsStarted_Failure() {
+  void isStartedFailure() {
     // When
     final ProcessInstance processInstance = mock(ProcessInstance.class);
     // And

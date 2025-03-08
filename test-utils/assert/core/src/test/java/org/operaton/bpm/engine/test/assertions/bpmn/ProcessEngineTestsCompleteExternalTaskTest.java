@@ -16,7 +16,14 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.exception.NotFoundException;
+import org.operaton.bpm.engine.externaltask.ExternalTask;
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.DEFAULT_WORKER_EXTERNAL_TASK;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
@@ -30,26 +37,15 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVa
 import java.util.Collections;
 import java.util.List;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.exception.NotFoundException;
-import org.operaton.bpm.engine.externaltask.ExternalTask;
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_TaskOnly_Success() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeTaskOnlySuccess() {
     // Given
     ProcessInstance processInstance = getProcessInstanceStarted();
     assertThat(processInstance).hasNotPassed("ExternalTask_1");
@@ -63,8 +59,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_TaskOnly_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeTaskOnlyFailure() {
     // Given
     final ProcessInstance processInstance = getProcessInstanceStarted();
     // And
@@ -76,8 +72,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_NullTaskOnly_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeNullTaskOnlyFailure() {
     // Given
     getProcessInstanceStarted();
     // Then
@@ -85,8 +81,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_TaskOnlyMultiplePerTopic_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeTaskOnlyMultiplePerTopicFailure() {
     // Given
     final ProcessInstance processInstance = getProcessInstanceStarted();
     getProcessInstanceStarted();
@@ -101,8 +97,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_WithVariables_Success() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeWithVariablesSuccess() {
     // Given
     ProcessInstance processInstance = getProcessInstanceStarted();
     // When
@@ -114,8 +110,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_WithVariables_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeWithVariablesFailure() {
     // Given
     final ProcessInstance processInstance = getProcessInstanceStarted();
     // And
@@ -127,8 +123,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_WithVariablesNullTask_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeWithVariablesNullTaskFailure() {
     // Given
     getProcessInstanceStarted();
     // Then
@@ -136,8 +132,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_WithNullVariables_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeWithNullVariablesFailure() {
     // Given
     final ProcessInstance processInstance = getProcessInstanceStarted();
     // And
@@ -147,8 +143,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_LockedTask_Success() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeLockedTaskSuccess() {
     // Given
     ProcessInstance processInstance = getProcessInstanceStarted();
     assertThat(processInstance).hasNotPassed("ExternalTask_1");
@@ -165,8 +161,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_LockedTask_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeLockedTaskFailure() {
     // Given
     final ProcessInstance processInstance = getProcessInstanceStarted();
     // And
@@ -180,8 +176,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_NullLockedTask_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeNullLockedTaskFailure() {
     // Given
     getProcessInstanceStarted();
     // Then
@@ -189,8 +185,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_LockedTaskWithVariables_Success() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeLockedTaskWithVariablesSuccess() {
     // Given
     ProcessInstance processInstance = getProcessInstanceStarted();
     assertThat(processInstance).hasNotPassed("ExternalTask_1");
@@ -207,8 +203,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_LockedTaskWithVariables_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeLockedTaskWithVariablesFailure() {
     // Given
     final ProcessInstance processInstance = getProcessInstanceStarted();
     // And
@@ -222,8 +218,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_NullLockedTaskWithVariables_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeNullLockedTaskWithVariablesFailure() {
     // Given
     getProcessInstanceStarted();
     // Then
@@ -231,8 +227,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-completeExternalTask.bpmn" })
-  public void testComplete_LockedTaskWithNullVariables_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})
+  void completeLockedTaskWithNullVariablesFailure() {
     // Given
     ProcessInstance processInstance = getProcessInstanceStarted();
     // And
@@ -245,8 +241,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-localVariables.bpmn" })
-  public void testComplete_LockedTaskWithLocalVariables_Success() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-localVariables.bpmn"})
+  void completeLockedTaskWithLocalVariablesSuccess() {
     // Given
     ProcessInstance pi = runtimeService().startProcessInstanceByKey("ExternalTaskAssert-localVariables");
 
@@ -271,8 +267,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-localVariables.bpmn" })
-  public void testComplete_LockedTaskWithLocalVariables_Failure() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-localVariables.bpmn"})
+  void completeLockedTaskWithLocalVariablesFailure() {
     // Given
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-localVariables");
 
@@ -288,8 +284,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-localVariables.bpmn" })
-  public void testCompleteTaskWithLocalVariables_Success() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-localVariables.bpmn"})
+  void completeTaskWithLocalVariablesSuccess() {
     // Given
     ProcessInstance pi = runtimeService().startProcessInstanceByKey("ExternalTaskAssert-localVariables");
 
@@ -311,8 +307,8 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-localVariables.bpmn" })
-  public void testCompleteTaskWithoutLocalVariables_Failure() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-localVariables.bpmn"})
+  void completeTaskWithoutLocalVariablesFailure() {
     // Given
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-localVariables");
 

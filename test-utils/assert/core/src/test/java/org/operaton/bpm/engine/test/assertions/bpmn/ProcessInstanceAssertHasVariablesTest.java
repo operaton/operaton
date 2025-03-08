@@ -16,28 +16,19 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
-  public void testHasVariables_One_Success() {
+  void hasVariablesOneSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasVariables", withVariables("aVariable", "aValue")
@@ -57,7 +48,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
-  public void testHasVariables_One_Failure() {
+  void hasVariablesOneFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasVariables", withVariables("aVariable", "aValue")
@@ -77,7 +68,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
-  public void testHasVariables_Two_Success() {
+  void hasVariablesTwoSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasVariables", withVariables("firstVariable", "firstValue", "secondVariable", "secondValue")
@@ -109,7 +100,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
-  public void testHasVariables_Two_Failure() {
+  void hasVariablesTwoFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasVariables", withVariables("firstVariable", "firstValue", "secondVariable", "secondValue")
@@ -137,7 +128,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
-  public void testHasVariables_None_Failure() {
+  void hasVariablesNoneFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasVariables"

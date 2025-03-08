@@ -16,28 +16,19 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVariables;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNoVariables.bpmn"
   })
-  public void testHasNoVariables_None_Success() {
+  void hasNoVariablesNoneSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasNoVariables"
@@ -53,7 +44,7 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNoVariables.bpmn"
   })
-  public void testHasNoVariables_One_Failure() {
+  void hasNoVariablesOneFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasNoVariables", withVariables("aVariable", "aValue")
@@ -69,7 +60,7 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNoVariables.bpmn"
   })
-  public void testHasNoVariables_Two_Failure() {
+  void hasNoVariablesTwoFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasNoVariables", withVariables("firstVariable", "firstValue", "secondVariable", "secondValue")

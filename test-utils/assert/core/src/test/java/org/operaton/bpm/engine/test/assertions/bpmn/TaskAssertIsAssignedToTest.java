@@ -16,29 +16,20 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.claim;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
-  public void testIsAssignedTo_Success() {
+  void isAssignedToSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-isAssignedTo"
@@ -52,7 +43,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
-  public void testIsAssignedTo_NotAssigned_Failure() {
+  void isAssignedToNotAssignedFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-isAssignedTo"
@@ -64,7 +55,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
-  public void testIsAssignedTo_OtherAssignee_Failure() {
+  void isAssignedToOtherAssigneeFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-isAssignedTo"
@@ -78,7 +69,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
-  public void testIsAssignedTo_Null_Failure() {
+  void isAssignedToNullFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-isAssignedTo"
@@ -92,7 +83,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
-  public void testIsAssignedTo_NonExistingTask_Failure() {
+  void isAssignedToNonExistingTaskFailure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "TaskAssert-isAssignedTo"

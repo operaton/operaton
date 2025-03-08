@@ -16,32 +16,23 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
+
+class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestCase {
 
   private static final String CANDIDATE_USER = "candidateUser";
   private static final String ASSIGNEE = "assignee";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociatedPreDefined_Success() {
+  void hasCandidateUserAssociatedPreDefined_Success() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -53,7 +44,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_PreDefined_Failure() {
+  void hasCandidateUserAssociated_PreDefined_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -67,7 +58,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_Predefined_Removed_Failure() {
+  void hasCandidateUserAssociated_Predefined_Removed_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -81,7 +72,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_PreDefined_Other_Failure() {
+  void hasCandidateUserAssociated_PreDefined_Other_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -95,7 +86,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_ExplicitlySet_Success() {
+  void hasCandidateUserAssociated_ExplicitlySet_Success() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -111,7 +102,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_ExplicitlySet_Failure() {
+  void hasCandidateUserAssociated_ExplicitlySet_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -125,7 +116,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_ExplicitlySet_Removed_Failure() {
+  void hasCandidateUserAssociated_ExplicitlySet_Removed_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -143,7 +134,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_ExplicitlySet_Other_Failure() {
+  void hasCandidateUserAssociated_ExplicitlySet_Other_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -160,7 +151,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_MoreThanOne_Success() {
+  void hasCandidateUserAssociated_MoreThanOne_Success() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -176,7 +167,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_MoreThanOne_Failure() {
+  void hasCandidateUserAssociated_MoreThanOne_Failure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -190,7 +181,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_Null_Failure() {
+  void hasCandidateUserAssociated_Null_Failure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -202,7 +193,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_NonExistingTask_Failure() {
+  void hasCandidateUserAssociated_NonExistingTask_Failure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -217,7 +208,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_Assigned_Success() {
+  void hasCandidateUserAssociated_Assigned_Success() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"
@@ -232,7 +223,7 @@ public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestC
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void hasCandidateUserAssociated_Assigned_Failure() {
+  void hasCandidateUserAssociated_Assigned_Failure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUserAssociated"

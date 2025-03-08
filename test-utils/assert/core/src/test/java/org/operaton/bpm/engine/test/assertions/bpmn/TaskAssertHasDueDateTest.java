@@ -16,30 +16,22 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
-
-import java.util.Date;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
+import java.util.Date;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+import org.junit.jupiter.api.Test;
+
+class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDueDate.bpmn"
   })
-  public void testHasDueDate_Success() {
+  void hasDueDateSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDueDate"
@@ -55,7 +47,7 @@ public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDueDate.bpmn"
   })
-  public void testHasDueDate_Failure() {
+  void hasDueDateFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDueDate"
@@ -69,7 +61,7 @@ public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDueDate.bpmn"
   })
-  public void testHasDueDate_Null_Failure() {
+  void hasDueDateNullFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasDueDate"

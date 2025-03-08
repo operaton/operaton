@@ -16,27 +16,19 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.claim;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"
   })
-  public void testClaim_Success() {
+  void claimSuccess() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-claim"
@@ -50,7 +42,7 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"
   })
-  public void testClaimNoTask_Failure() {
+  void claimNoTaskFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-claim"
@@ -62,7 +54,7 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"
   })
-  public void testClaimNoUser_Failure() {
+  void claimNoUserFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-claim"

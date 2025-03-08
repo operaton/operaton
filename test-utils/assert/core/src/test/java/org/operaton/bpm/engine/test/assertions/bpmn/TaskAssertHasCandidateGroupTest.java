@@ -16,34 +16,23 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.claim;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
+
+class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
 
   private static final String CANDIDATE_GROUP = "candidateGroup";
   private static final String ASSIGNEE = "assignee";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_PreDefined_Success() {
+  void hasCandidateGroupPreDefinedSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -55,7 +44,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_PreDefined_Failure() {
+  void hasCandidateGroupPreDefinedFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -69,7 +58,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_Predefined_Removed_Failure() {
+  void hasCandidateGroupPredefinedRemovedFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -83,7 +72,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_PreDefined_Other_Failure() {
+  void hasCandidateGroupPreDefinedOtherFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -97,7 +86,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_ExplicitlySet_Success() {
+  void hasCandidateGroupExplicitlySetSuccess() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -113,7 +102,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_ExplicitlySet_Failure() {
+  void hasCandidateGroupExplicitlySetFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -127,7 +116,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_ExplicitlySet_Removed_Failure() {
+  void hasCandidateGroupExplicitlySetRemovedFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -145,7 +134,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_ExplicitlySet_Other_Failure() {
+  void hasCandidateGroupExplicitlySetOtherFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -162,7 +151,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_MoreThanOne_Success() {
+  void hasCandidateGroupMoreThanOneSuccess() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -178,7 +167,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_MoreThanOne_Failure() {
+  void hasCandidateGroupMoreThanOneFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -192,7 +181,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_Null_Failure() {
+  void hasCandidateGroupNullFailure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -204,7 +193,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_NonExistingTask_Failure() {
+  void hasCandidateGroupNonExistingTaskFailure() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateGroup"
@@ -219,7 +208,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  public void testHasCandidateGroup_Assigned_Failure() {
+  void hasCandidateGroupAssignedFailure() {
     // Given
     final ProcessInstance pi = runtimeService().startProcessInstanceByKey(
         "TaskAssert-hasCandidateGroup"

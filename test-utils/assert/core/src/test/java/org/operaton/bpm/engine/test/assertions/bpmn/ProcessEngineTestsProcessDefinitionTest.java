@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processDefinition;
@@ -24,27 +27,20 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.proces
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCase {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCase {
 
   @Test
-  public void testProcessDefinition_No_Definition() {
+  void processDefinitionNoDefinition() {
     // Then
     expect(BpmnAwareTests::processDefinition, IllegalStateException.class);
   }
 
   @Test
-  public void testProcessDefinition_No_Definition_Via_ProcessDefinitionKey() {
+  void processDefinitionNoDefinitionViaProcessDefinitionKey() {
     // Then
     assertThat(processDefinition("nonExistingKey")).isNull();
   }
@@ -52,7 +48,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
-  public void testProcessDefinition_One_Definition() {
+  void processDefinitionOneDefinition() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition"
@@ -71,7 +67,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
-  public void testProcessDefinition_One_Definition_Via_ProcessInstance() {
+  void processDefinitionOneDefinitionViaProcessInstance() {
     // When
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition"
@@ -86,7 +82,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
-  public void testProcessDefinition_One_Definition_Via_ProcessDefinitionKey() {
+  void processDefinitionOneDefinitionViaProcessDefinitionKey() {
     // When
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition"
@@ -103,7 +99,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
-  public void testProcessDefinition_One_Definition_Via_ProcessDefinitionQuery() {
+  void processDefinitionOneDefinitionViaProcessDefinitionQuery() {
     // When
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition"
@@ -120,7 +116,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
-  public void testProcessDefinition_One_Definition_Instance_Ended() {
+  void processDefinitionOneDefinitionInstanceEnded() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition"
@@ -139,7 +135,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn", "bpmn/ProcessEngineTests-processDefinition2.bpmn"
   })
-  public void testProcessDefinition_Two_Definitions() {
+  void processDefinitionTwoDefinitions() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition2"
@@ -159,7 +155,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn", "bpmn/ProcessEngineTests-processDefinition2.bpmn"
   })
-  public void testProcessDefinition_Two_Definitions_Via_ProcessInstance() {
+  void processDefinitionTwoDefinitionsViaProcessInstance() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition"
@@ -183,7 +179,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn", "bpmn/ProcessEngineTests-processDefinition2.bpmn"
   })
-  public void testProcessDefinition_Two_Definitions_Via_ProcessDefinitionKey() {
+  void processDefinitionTwoDefinitionsViaProcessDefinitionKey() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition"
@@ -209,7 +205,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn", "bpmn/ProcessEngineTests-processDefinition2.bpmn"
   })
-  public void testProcessDefinition_Two_Definitions_Via_ProcessDefinitionQuery() {
+  void processDefinitionTwoDefinitionsViaProcessDefinitionQuery() {
     // Given
     runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-processDefinition"

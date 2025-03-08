@@ -16,29 +16,20 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.processDefinitionQuery;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
-  public void testHasActiveInstances_One_Started_Success() {
+  void hasActiveInstancesOneStartedSuccess() {
     // Given
     final ProcessDefinition processDefinition =
       processDefinitionQuery().processDefinitionKey("ProcessDefinitionAssert-hasActiveInstances").singleResult();
@@ -53,7 +44,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   @Test
   @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
-  public void testHasActiveInstances_One_Started_Failure() {
+  void hasActiveInstancesOneStartedFailure() {
     // Given
     final ProcessDefinition processDefinition =
       processDefinitionQuery().processDefinitionKey("ProcessDefinitionAssert-hasActiveInstances").singleResult();
@@ -70,7 +61,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   @Test
   @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
-  public void testHasActiveInstances_Two_Started_Success() {
+  void hasActiveInstancesTwoStartedSuccess() {
     // Given
     final ProcessDefinition processDefinition =
       processDefinitionQuery().processDefinitionKey("ProcessDefinitionAssert-hasActiveInstances").singleResult();
@@ -89,7 +80,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   @Test
   @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
-  public void testHasActiveInstances_Two_Started_Failure() {
+  void hasActiveInstancesTwoStartedFailure() {
     // Given
     final ProcessDefinition processDefinition =
       processDefinitionQuery().processDefinitionKey("ProcessDefinitionAssert-hasActiveInstances").singleResult();
@@ -112,7 +103,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   @Test
   @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
-  public void testHasActiveInstances_Two_Started_One_Ended_Success() {
+  void hasActiveInstancesTwoStartedOneEndedSuccess() {
     // Given
     final ProcessDefinition processDefinition =
       processDefinitionQuery().processDefinitionKey("ProcessDefinitionAssert-hasActiveInstances").singleResult();
@@ -133,7 +124,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   @Test
   @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
-  public void testHasActiveInstances_Two_Started_One_Ended_Failure() {
+  void hasActiveInstancesTwoStartedOneEndedFailure() {
     // Given
     final ProcessDefinition processDefinition =
       processDefinitionQuery().processDefinitionKey("ProcessDefinitionAssert-hasActiveInstances").singleResult();

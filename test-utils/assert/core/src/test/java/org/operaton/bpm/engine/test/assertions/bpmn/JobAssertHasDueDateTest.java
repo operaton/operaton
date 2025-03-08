@@ -16,26 +16,21 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
+import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 
-import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class JobAssertHasDueDateTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasDueDate.bpmn"
   })
-  public void testHasDueDate_Success() {
+  void hasDueDateSuccess() {
     // When
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasDueDate"
@@ -49,7 +44,7 @@ public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasDueDate.bpmn"
   })
-  public void testHasDueDate_Failure() {
+  void hasDueDateFailure() {
     // When
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasDueDate"
@@ -63,7 +58,7 @@ public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasDueDate.bpmn"
   })
-  public void testHasDueDate_Error_Null() {
+  void hasDueDateErrorNull() {
     // When
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasDueDate"

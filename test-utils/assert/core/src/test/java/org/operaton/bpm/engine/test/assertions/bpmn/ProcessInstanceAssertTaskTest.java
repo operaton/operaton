@@ -16,30 +16,26 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.task.TaskQuery;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_Single_Success() {
+  void taskSingleSuccess() {
     // When
     final ProcessInstance processInstance = startProcess();
     // Then
@@ -49,7 +45,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_NullQuery_Failure() {
+  void taskNullQueryFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     try {
@@ -64,7 +60,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_SingleWithQuery_Success() {
+  void taskSingleWithQuerySuccess() {
     // When
     final ProcessInstance processInstance = startProcess();
     // Then
@@ -74,7 +70,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_MultipleWithQuery_Success() {
+  void taskMultipleWithQuerySuccess() {
     // When
     final ProcessInstance processInstance = startProcess();
     // And
@@ -88,7 +84,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_NotYet_Failure() {
+  void taskNotYetFailure() {
     // When
     final ProcessInstance processInstance = startProcess();
     // Then
@@ -98,7 +94,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_Passed_Failure() {
+  void taskPassedFailure() {
     // Given
     final ProcessInstance processInstance = startProcess();
     // When
@@ -110,7 +106,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_MultipleWithQuery_Failure() {
+  void taskMultipleWithQueryFailure() {
     // When
     final ProcessInstance processInstance = startProcess();
     // And
@@ -126,7 +122,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_MultipleWithTaskDefinitionKey_Success() {
+  void taskMultipleWithTaskDefinitionKeySuccess() {
     // When
     final ProcessInstance processInstance = startProcess();
     // And
@@ -140,7 +136,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_MultipleWithTaskDefinitionKey_Failure() {
+  void taskMultipleWithTaskDefinitionKeyFailure() {
     // When
     final ProcessInstance processInstance = startProcess();
     // And
@@ -157,7 +153,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
-  public void testTask_notWaitingAtTaskDefinitionKey() {
+  void taskNotWaitingAtTaskDefinitionKey() {
     final ProcessInstance processInstance = startProcess();
     expect(() -> assertThat(processInstance).task("UserTask_2").isNotNull());
   }

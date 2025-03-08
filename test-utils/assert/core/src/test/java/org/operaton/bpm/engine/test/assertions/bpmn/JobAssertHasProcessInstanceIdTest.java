@@ -16,26 +16,21 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.jobQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasProcessInstanceId.bpmn"
   })
-  public void testHasProcessInstanceId_Success() {
+  void hasProcessInstanceIdSuccess() {
     // When
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "JobAssert-hasProcessInstanceId"
@@ -49,7 +44,7 @@ public class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasProcessInstanceId.bpmn"
   })
-  public void testHasProcessInstanceId_Failure() {
+  void hasProcessInstanceIdFailure() {
     // When
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasProcessInstanceId"
@@ -63,7 +58,7 @@ public class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasProcessInstanceId.bpmn"
   })
-  public void testHasProcessInstanceId_Error_Null() {
+  void hasProcessInstanceIdErrorNull() {
     // When
     runtimeService().startProcessInstanceByKey(
       "JobAssert-hasProcessInstanceId"

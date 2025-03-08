@@ -16,29 +16,25 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.DEFAULT_WORKER_EXTERNAL_TASK;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.fetchAndLock;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 
 import java.util.List;
 
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-fetchAndLock.bpmn" })
-  public void testFetchAndLock_Success() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-fetchAndLock.bpmn"})
+  void fetchAndLockSuccess() {
     // Given
     getProcessInstanceStarted();
     // When
@@ -50,8 +46,8 @@ public class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-fetchAndLock.bpmn" })
-  public void testFetchAndLock_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-fetchAndLock.bpmn"})
+  void fetchAndLockFailure() {
     // Given
     getProcessInstanceStarted();
     // When
@@ -61,8 +57,8 @@ public class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-fetchAndLock.bpmn" })
-  public void testFetchAndLock_NullTopic_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-fetchAndLock.bpmn"})
+  void fetchAndLockNullTopicFailure() {
     // Given
     getProcessInstanceStarted();
     // Then
@@ -70,8 +66,8 @@ public class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ProcessEngineTests-fetchAndLock.bpmn" })
-  public void testFetchAndLock_NullWorker_Failure() {
+  @Deployment(resources = {"bpmn/ProcessEngineTests-fetchAndLock.bpmn"})
+  void fetchAndLockNullWorkerFailure() {
     // Given
     getProcessInstanceStarted();
     // Then

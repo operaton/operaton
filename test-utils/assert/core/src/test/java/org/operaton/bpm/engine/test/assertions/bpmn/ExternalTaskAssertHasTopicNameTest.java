@@ -16,24 +16,19 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.externalTaskQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ExternalTaskAssertHasTopicNameTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ExternalTaskAssertHasTopicNameTest extends ProcessAssertTestCase {
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-hasTopicName.bpmn" })
-  public void testHasTopicName_Success() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-hasTopicName.bpmn"})
+  void hasTopicNameSuccess() {
     // When
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-hasTopicName");
     // Then
@@ -43,8 +38,8 @@ public class ExternalTaskAssertHasTopicNameTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-hasTopicName.bpmn" })
-  public void testHasTopicName_Failure() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-hasTopicName.bpmn"})
+  void hasTopicNameFailure() {
     // When
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-hasTopicName");
     // Then
@@ -54,8 +49,8 @@ public class ExternalTaskAssertHasTopicNameTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "bpmn/ExternalTaskAssert-hasTopicName.bpmn" })
-  public void testHasTopicName_Error_Null() {
+  @Deployment(resources = {"bpmn/ExternalTaskAssert-hasTopicName.bpmn"})
+  void hasTopicNameErrorNull() {
     // When
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-hasTopicName");
     // Then

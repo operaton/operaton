@@ -21,14 +21,11 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assert
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.manuallyStart;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class StageWithSentryExitCriteriaTest extends ProcessAssertTestCase {
 
@@ -36,15 +33,12 @@ public class StageWithSentryExitCriteriaTest extends ProcessAssertTestCase {
   public static final String TASK_B = "PI_HT_B";
   public static final String STAGE_S = "PI_StageS";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   /**
    * Introduces:
    */
   @Test
-  @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })
-  public void case_is_active_and_task_a_and_task_b_should_be_enabled() {
+  @Deployment(resources = {"cmmn/StageWithSentryTestExitCriteria.cmmn"})
+  void case_is_active_and_task_a_and_task_b_should_be_enabled() {
     // Given
     // case model is deployed
     // When
@@ -58,8 +52,8 @@ public class StageWithSentryExitCriteriaTest extends ProcessAssertTestCase {
    * Introduces:
    */
   @Test
-  @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })
-  public void case_is_active_and_stage_s_should_be_active_and_task_a_and_task_b_enabled() {
+  @Deployment(resources = {"cmmn/StageWithSentryTestExitCriteria.cmmn"})
+  void case_is_active_and_stage_s_should_be_active_and_task_a_and_task_b_enabled() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
@@ -73,8 +67,8 @@ public class StageWithSentryExitCriteriaTest extends ProcessAssertTestCase {
    * Introduces:
    */
   @Test
-  @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })
-  public void case_is_active_and_stage_s_and_task_a_should_be_active_and_task_b_enabled() {
+  @Deployment(resources = {"cmmn/StageWithSentryTestExitCriteria.cmmn"})
+  void case_is_active_and_stage_s_and_task_a_should_be_active_and_task_b_enabled() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreatedAndStageSActive();
     // When
@@ -88,8 +82,8 @@ public class StageWithSentryExitCriteriaTest extends ProcessAssertTestCase {
    * Introduces: stage.isTerminated()
    */
   @Test
-  @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })
-  public void case_is_active_and_stage_s_and_task_a_should_be_terminated_and_task_b_active() {
+  @Deployment(resources = {"cmmn/StageWithSentryTestExitCriteria.cmmn"})
+  void case_is_active_and_stage_s_and_task_a_should_be_terminated_and_task_b_active() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreatedAndStageSActiveAndTaskAActive();
     CaseExecution taskA = caseExecution(TASK_A, caseInstance);

@@ -16,27 +16,19 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
-
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
+
+import org.junit.jupiter.api.Test;
 
 @Deployment(resources = "cmmn/MilestoneAssertIsTerminatedTest.cmmn")
-public class MilestoneAssertIsTerminatedTest extends ProcessAssertTestCase {
-
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class MilestoneAssertIsTerminatedTest extends ProcessAssertTestCase {
 
   @Test
-  public void test_IsTerminated_Success() {
+  void is_terminated_success() {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey("MilestoneAssertIsTerminatedTest");
     MilestoneAssert milestoneAssert = assertThat(caseInstance).stage("Stage").milestone("Milestone");
 
@@ -46,7 +38,7 @@ public class MilestoneAssertIsTerminatedTest extends ProcessAssertTestCase {
   }
 
   @Test
-  public void test_IsTerminated_Fail() {
+  void is_terminated_fail() {
     final CaseInstance caseInstance = caseService().createCaseInstanceByKey("MilestoneAssertIsTerminatedTest");
 
     expect(new Failure() {

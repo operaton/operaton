@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.processEngine;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.reset;
@@ -35,7 +36,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQuery;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
@@ -46,7 +46,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.HistoryService;
@@ -72,35 +72,34 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseDefinitionAssert;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseExecutionAssert;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ProcessEngineTestsTest {
+@ExtendWith(MockitoExtension.class)
+class ProcessEngineTestsTest {
 
   ProcessEngine processEngine;
   MockedStatic<ProcessEngines> processEnginesMockedStatic;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     processEngine = mock(ProcessEngine.class);
     processEnginesMockedStatic = mockStatic(ProcessEngines.class, CALLS_REAL_METHODS);
     init(processEngine);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     reset();
     processEnginesMockedStatic.close();
   }
 
   @Test
-  public void testProcessEngine() {
+  void testProcessEngine() {
     // When
     ProcessEngine returnedEngine = processEngine();
     // Then
@@ -108,7 +107,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testNoProcessEngine_Failure() {
+  void noProcessEngineFailure() {
     // Given
     processEnginesMockedStatic.when(ProcessEngines::getProcessEngines).thenReturn(new HashMap<String,ProcessEngine>());
     reset();
@@ -123,7 +122,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testMultipleProcessEngine_Failure() {
+  void multipleProcessEngineFailure() {
     // Given
     Map<String,ProcessEngine> multipleEnginesMap = new HashMap<>();
     multipleEnginesMap.put("test1", mock(ProcessEngine.class));
@@ -141,7 +140,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testInit() {
+  void testInit() {
     // Given
     reset();
     // When
@@ -151,7 +150,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testReset() {
+  void testReset() {
     // When
     reset();
     // Then
@@ -159,7 +158,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_ProcessDefinition() {
+  void assertThatProcessDefinition() {
     // Given
     ProcessDefinition processDefinition = Mockito.mock(ProcessDefinition.class);
     // When
@@ -171,7 +170,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_ProcessInstance() {
+  void assertThatProcessInstance() {
     // Given
     ProcessInstance processInstance = Mockito.mock(ProcessInstance.class);
     // When
@@ -183,7 +182,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_Task() {
+  void assertThatTask() {
     // Given
     Task task = Mockito.mock(Task.class);
     // When
@@ -195,7 +194,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_Job() {
+  void assertThatJob() {
     // Given
     Job job = Mockito.mock(Job.class);
     // When
@@ -207,7 +206,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_CaseInstance() {
+  void assertThatCaseInstance() {
     //Given
     CaseInstance caseInstance = Mockito.mock(CaseInstance.class);
     // When
@@ -217,7 +216,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_CaseExecution() {
+  void assertThatCaseExecution() {
     //Given
     CaseExecution caseExecution = Mockito.mock(CaseExecution.class);
     // When
@@ -227,7 +226,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_CaseDefinition() {
+  void assertThatCaseDefinition() {
     //Given
     CaseDefinition caseDefinition = Mockito.mock(CaseDefinition.class);
     // When
@@ -237,7 +236,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testRuntimeService() {
+  void testRuntimeService() {
     // Given
     RuntimeService runtimeService = mock(RuntimeService.class);
     when(processEngine.getRuntimeService()).thenReturn(runtimeService);
@@ -250,7 +249,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAuthorizationService() {
+  void testAuthorizationService() {
     // Given
     AuthorizationService authorizationService = mock(AuthorizationService.class);
     when(processEngine.getAuthorizationService()).thenReturn(authorizationService);
@@ -263,7 +262,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testFormService() {
+  void testFormService() {
     // Given
     FormService formService = mock(FormService.class);
     when(processEngine.getFormService()).thenReturn(formService);
@@ -276,7 +275,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testHistoryService() {
+  void testHistoryService() {
     // Given
     HistoryService historyService = mock(HistoryService.class);
     when(processEngine.getHistoryService()).thenReturn(historyService);
@@ -289,7 +288,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testIdentityService() {
+  void testIdentityService() {
     // Given
     IdentityService identityService = mock(IdentityService.class);
     when(processEngine.getIdentityService()).thenReturn(identityService);
@@ -302,7 +301,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testManagementService() {
+  void testManagementService() {
     // Given
     ManagementService managementService = mock(ManagementService.class);
     when(processEngine.getManagementService()).thenReturn(managementService);
@@ -315,7 +314,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testRepositoryService() {
+  void testRepositoryService() {
     // Given
     RepositoryService repositoryService = mock(RepositoryService.class);
     when(processEngine.getRepositoryService()).thenReturn(repositoryService);
@@ -328,7 +327,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testTaskService() {
+  void testTaskService() {
     // Given
     TaskService taskService = mock(TaskService.class);
     when(processEngine.getTaskService()).thenReturn(taskService);
@@ -341,7 +340,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testTaskQuery() {
+  void testTaskQuery() {
     // Given
     TaskService taskService = mock(TaskService.class);
     TaskQuery taskQuery = mock(TaskQuery.class);
@@ -356,7 +355,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testJobQuery() {
+  void testJobQuery() {
     // Given
     ManagementService managementService = mock(ManagementService.class);
     JobQuery jobQuery = mock(JobQuery.class);
@@ -371,7 +370,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testProcessInstanceQuery() {
+  void testProcessInstanceQuery() {
     // Given
     RuntimeService runtimeService = mock(RuntimeService.class);
     ProcessInstanceQuery processInstanceQuery = mock(ProcessInstanceQuery.class);
@@ -386,7 +385,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testProcessDefinitionQuery() {
+  void testProcessDefinitionQuery() {
     // Given
     RepositoryService repositoryService = mock(RepositoryService.class);
     ProcessDefinitionQuery processDefinitionQuery = mock(ProcessDefinitionQuery.class);
@@ -401,7 +400,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testExecutionQuery() {
+  void testExecutionQuery() {
     // Given
     RuntimeService runtimeService = mock(RuntimeService.class);
     ExecutionQuery executionQuery = mock(ExecutionQuery.class);

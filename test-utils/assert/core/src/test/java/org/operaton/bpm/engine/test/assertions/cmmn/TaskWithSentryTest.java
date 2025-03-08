@@ -19,13 +19,10 @@ package org.operaton.bpm.engine.test.assertions.cmmn;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class TaskWithSentryTest extends ProcessAssertTestCase {
 
@@ -33,12 +30,9 @@ public class TaskWithSentryTest extends ProcessAssertTestCase {
 	public static final String TASK_B = "PI_HT_B";
 	public static final String CASE_KEY = "Case_TaskWithSentryTests";
 
-	@Rule
-	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
-	@Test
-	@Deployment(resources = { "cmmn/TaskWithSentryTest.cmmn" })
-	public void task_b_should_be_available() {
+  @Test
+  @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
+  void task_b_should_be_available() {
 		// Given
 		CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
 		// Then

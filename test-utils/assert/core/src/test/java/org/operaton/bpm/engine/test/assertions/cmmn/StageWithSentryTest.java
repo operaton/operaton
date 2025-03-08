@@ -21,29 +21,23 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseEx
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.manuallyStart;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class StageWithSentryTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_HT_A";
   public static final String STAGE_S = "PI_StageS";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   /**
    * Introduces: stage.isAvailable()
    */
   @Test
-  @Deployment(resources = { "cmmn/StageWithSentryTest.cmmn" })
-  public void stage_t_should_be_available() {
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  void stage_t_should_be_available() {
     // Given
     // When
     CaseInstance caseInstance = givenCaseIsCreated();
@@ -56,8 +50,8 @@ public class StageWithSentryTest extends ProcessAssertTestCase {
    * Introduces:
    */
   @Test
-  @Deployment(resources = { "cmmn/StageWithSentryTest.cmmn" })
-  public void stage_t_should_be_enabled() {
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  void stage_t_should_be_enabled() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When

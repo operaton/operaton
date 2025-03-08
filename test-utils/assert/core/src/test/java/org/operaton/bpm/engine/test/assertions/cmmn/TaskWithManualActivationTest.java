@@ -21,26 +21,20 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseEx
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.disable;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.manuallyStart;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class TaskWithManualActivationTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String CASE_KEY = "Case_TaskTests";
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
   @Test
-  @Deployment(resources = { "cmmn/TaskWithManualActivationTest.cmmn" })
-  public void task_should_be_enabled() {
+  @Deployment(resources = {"cmmn/TaskWithManualActivationTest.cmmn"})
+  void task_should_be_enabled() {
     // Given
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
     // Then
@@ -48,8 +42,8 @@ public class TaskWithManualActivationTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/TaskWithManualActivationTest.cmmn" })
-  public void task_should_be_active_when_manually_started() {
+  @Deployment(resources = {"cmmn/TaskWithManualActivationTest.cmmn"})
+  void task_should_be_active_when_manually_started() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
@@ -64,8 +58,8 @@ public class TaskWithManualActivationTest extends ProcessAssertTestCase {
    * task.isDisabled()
    */
   @Test
-  @Deployment(resources = { "cmmn/TaskWithManualActivationTest.cmmn" })
-  public void task_should_be_disabed() {
+  @Deployment(resources = {"cmmn/TaskWithManualActivationTest.cmmn"})
+  void task_should_be_disabed() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When

@@ -16,26 +16,18 @@
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.complete;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
-public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTestCase {
+import org.junit.jupiter.api.Test;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")
-  public void testIsWaitingForJoinAt() {
+  void isWaitingForJoinAt() {
     // given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingForJoinAt"
@@ -51,7 +43,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")
-  public void testIsNotWaitingForJoin() {
+  void isNotWaitingForJoin() {
     // when
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingForJoinAt"
@@ -63,7 +55,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt2.bpmn")
-  public void testNestedJoinGateways() {
+  void nestedJoinGateways() {
     // given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingForJoinAt2"
@@ -88,7 +80,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt3.bpmn")
-  public void testNestedInclusiveGatewaysAll() {
+  void nestedInclusiveGatewaysAll() {
     // given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingForJoinAt3"
@@ -110,7 +102,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")
-  public void testIsNotWaitingForJoinFails() {
+  void isNotWaitingForJoinFails() {
     // given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingForJoinAt"
@@ -124,7 +116,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")
-  public void testIsWaitingForJoinAtNull() {
+  void isWaitingForJoinAtNull() {
     // given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingForJoinAt");
@@ -135,7 +127,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")
-  public void testIsWaitingForJoinAtWrongActivityId() {
+  void isWaitingForJoinAtWrongActivityId() {
     // given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingForJoinAt"
@@ -150,7 +142,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")
-  public void testProcessWithJoinInCompletedProcessInstance() {
+  void processWithJoinInCompletedProcessInstance() {
     // given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isWaitingForJoinAt"

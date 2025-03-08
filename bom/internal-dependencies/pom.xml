@@ -13,7 +13,11 @@
   <packaging>pom</packaging>
   <name>Operaton - Core - Internal Dependencies</name>
 
-  <description>Operaton core internal bill of material for dependencies</description>
+  <description>
+    This is a Bill of Materials (BOM) for internal dependencies of Operaton.
+    All modules should import this BOM to ensure consistent versions of dependencies.
+    By using this BOM, you can omit the version tag in dependency declarations.
+  </description>
 
   <properties>
     <version.junit5>5.11.3</version.junit5>
@@ -22,6 +26,20 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>${version.spring.framework6}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-bom</artifactId>
+        <version>${version.jakarta-ee-spec}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>jakarta.platform</groupId>
         <artifactId>jakarta.jakartaee-bom</artifactId>
@@ -119,12 +137,6 @@
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>
         <version>2.5</version>
-      </dependency>
-      <dependency>
-        <groupId>jakarta.el</groupId>
-        <artifactId>jakarta.el-api</artifactId>
-        <version>4.0.0</version>
-        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.hibernate.javax.persistence</groupId>
@@ -410,12 +422,6 @@
         <artifactId>wsdl4j</artifactId>
         <version>1.6.2</version>
       </dependency>
-      <!-- Camel integration -->
-      <dependency>
-        <groupId>org.apache.camel</groupId>
-        <artifactId>camel-spring</artifactId>
-        <version>2.10.0</version>
-      </dependency>
       <!-- Mule integration -->
       <dependency>
         <groupId>org.safehaus.jug</groupId>
@@ -436,13 +442,6 @@
         <artifactId>jboss-javaee-web-6.0</artifactId>
         <version>${version.jboss-javaee-spec}</version>
         <type>pom</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-test</artifactId>
-        <version>6.2.1</version>
-        <scope>test</scope>
       </dependency>
 
       <dependency>

@@ -54,7 +54,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-spring-6</artifactId>
+      <artifactId>operaton-engine-spring</artifactId>
     </dependency>
 
     <dependency>

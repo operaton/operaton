@@ -32,13 +32,13 @@ import org.operaton.bpm.container.impl.ejb.deployment.EjbJarParsePlatformXmlStep
 import org.operaton.bpm.container.impl.ejb.deployment.StartJcaExecutorServiceStep;
 import org.operaton.bpm.container.impl.ejb.deployment.StopJcaExecutorServiceStep;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

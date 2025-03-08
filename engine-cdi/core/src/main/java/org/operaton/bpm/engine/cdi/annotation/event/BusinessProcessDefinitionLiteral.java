@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-import javax.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 public class BusinessProcessDefinitionLiteral extends AnnotationLiteral<BusinessProcessDefinition> implements BusinessProcessDefinition {
-  
-  protected final String key;   
-  
+
+  protected final String key;
+
   public BusinessProcessDefinitionLiteral(String key) {
     this.key = key;
   }
-  
+
   @Override
   public String value() {
     return key;

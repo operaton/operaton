@@ -19,17 +19,17 @@ package org.operaton.bpm.engine.cdi.annotation.event;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 /**
  * Can be used to qualify events fired when an activity is started
- * 
+ *
  * <pre>
  * public void beforeCreditAccount(@Observes @StartActivity(&quot;creditAccount&quot;) BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
- * 
+ *
  * @author Daniel Meyer
  */
 @Retention(RetentionPolicy.RUNTIME)

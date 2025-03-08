@@ -19,10 +19,10 @@ package org.operaton.bpm.engine.cdi.impl.annotation;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-import javax.inject.Inject;
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.Interceptor;
-import javax.interceptor.InvocationContext;
+import jakarta.inject.Inject;
+import jakarta.interceptor.AroundInvoke;
+import jakarta.interceptor.Interceptor;
+import jakarta.interceptor.InvocationContext;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.ProcessEngineCdiException;
@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.cdi.annotation.CompleteTask;
 
 /**
  * {@link Interceptor} for handling the {@link CompleteTask}-Annotation
- * 
+ *
  * @author Daniel Meyer
  */
 @Interceptor
@@ -47,8 +47,8 @@ public class CompleteTaskInterceptor implements Serializable {
       Object result = ctx.proceed();
 
       CompleteTask completeTaskAnnotation = ctx.getMethod().getAnnotation(CompleteTask.class);
-      boolean endConversation = completeTaskAnnotation.endConversation();    
-      businessProcess.completeTask(endConversation);     
+      boolean endConversation = completeTaskAnnotation.endConversation();
+      businessProcess.completeTask(endConversation);
 
       return result;
     } catch (InvocationTargetException e) {

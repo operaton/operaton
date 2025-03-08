@@ -21,8 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.enterprise.util.Nonbinding;
-import javax.interceptor.InterceptorBinding;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.interceptor.InterceptorBinding;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 
@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
  * {@link BusinessProcess#setVariable(String, Object)} within this
  * conversation is flushed to the process instance at process instantiation. The
  * same is true for instances of {@link BusinessProcessScoped} beans.
- * 
+ *
  * @author Daniel Meyer
  */
 @InterceptorBinding

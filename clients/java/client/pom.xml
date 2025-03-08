@@ -164,6 +164,11 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>4.0.2</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -281,6 +286,10 @@
                 <file>${project.basedir}/src/it/resources/tomcat/bpm-platform.xml</file>
                 <tofile>conf/bpm-platform.xml</tofile>
                 <overwrite>true</overwrite>
+              </copy>
+              <copy>
+                <file>${project.basedir}/src/resources/jakarta.xml.bind-api-4.0.2.jar</file>
+                <todir>lib</todir>
               </copy>
             </files>
           </configuration>

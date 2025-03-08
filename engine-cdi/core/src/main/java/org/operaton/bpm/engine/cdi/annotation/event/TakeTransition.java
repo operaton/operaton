@@ -19,17 +19,17 @@ package org.operaton.bpm.engine.cdi.annotation.event;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 /**
  * Can be used to qualify events fired when a transition is taken
- * 
+ *
  * <pre>
  * public void onTakeT1(@Observes @TakeTransition(&quot;t1&quot;) BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
- * 
+ *
  * @author Daniel Meyer
  */
 @Retention(RetentionPolicy.RUNTIME)

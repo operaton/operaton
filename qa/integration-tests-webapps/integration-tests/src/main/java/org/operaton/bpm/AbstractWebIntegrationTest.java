@@ -19,14 +19,14 @@ package org.operaton.bpm;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
+import jakarta.ws.rs.core.Response;
 import org.operaton.bpm.util.TestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
-import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.client.apache4.ApacheHttpClient4;
@@ -41,15 +41,15 @@ import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
 public abstract class AbstractWebIntegrationTest {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractWebIntegrationTest.class.getName());
-  
+
   protected static final String TASKLIST_PATH = "app/tasklist/default/";
-  
+
   protected static final String COOKIE_HEADER = "Cookie";
   protected static final String X_XSRF_TOKEN_HEADER = "X-XSRF-TOKEN";
 
   protected static final String JSESSIONID_IDENTIFIER = "JSESSIONID=";
   protected static final String XSRF_TOKEN_IDENTIFIER = "XSRF-TOKEN=";
-  
+
   protected static final String HOST_NAME = "localhost";
 
   protected String appBasePath;
@@ -61,7 +61,7 @@ public abstract class AbstractWebIntegrationTest {
 
   protected ApacheHttpClient4 client;
   protected String httpPort;
-  
+
   protected String csrfToken;
   protected String sessionId;
 
@@ -89,71 +89,71 @@ public abstract class AbstractWebIntegrationTest {
 
   protected void getTokens() {
     // first request, first set of cookies
-    ClientResponse clientResponse = client.resource(appBasePath + TASKLIST_PATH).get(ClientResponse.class);
-    List<String> cookieValues = getCookieHeaders(clientResponse);
+    Response clientResponse = client.resource(appBasePath + TASKLIST_PATH).get(Response.class);
+    List<Object> cookieValues = getCookieHeaders(clientResponse);
     clientResponse.close();
 
     String startCsrfCookie = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
     String startSessionCookie = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
-    
+
     // login with user, update session cookie
     clientResponse = client.resource(appBasePath + "api/admin/auth/user/default/login/cockpit")
-        .entity("username=demo&password=demo", MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+        .entity("username=demo&password=demo", String.valueOf(MediaType.APPLICATION_FORM_URLENCODED_TYPE))
         .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, startSessionCookie))
         .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
         .accept(MediaType.APPLICATION_JSON)
-        .post(ClientResponse.class);
+        .post(Response.class);
     cookieValues = clientResponse.getHeaders().get("Set-Cookie");
     clientResponse.close();
-    
+
     sessionId = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
-    
+
     // update CSRF cookie
     clientResponse = client.resource(appBasePath + "api/engine/engine")
         .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, sessionId))
         .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
-        .get(ClientResponse.class);
-    
+        .get(Response.class);
+
     cookieValues = getCookieHeaders(clientResponse);
     clientResponse.close();
-    
+
     csrfToken = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
   }
 
-  protected List<String> getCookieHeaders(ClientResponse response) {
+  protected List<Object> getCookieHeaders(Response response) {
     return response.getHeaders().get("Set-Cookie");
   }
-  
-  protected String getCookie(List<String> cookieValues, String cookieName) {
+
+  protected String getCookie(List<Object> cookieValues, String cookieName) {
     String cookieValue = getCookieValue(cookieValues, cookieName);
     int valueEnd = cookieValue.contains(";") ? cookieValue.indexOf(';') : cookieValue.length() - 1;
     return cookieValue.substring(cookieName.length(), valueEnd);
   }
-  
+
   protected String createCookieHeader() {
     return createCookieHeader(csrfToken, sessionId);
   }
-  
+
   protected String createCookieHeader(String csrf, String session) {
     return XSRF_TOKEN_IDENTIFIER + csrf + "; " + JSESSIONID_IDENTIFIER + session;
   }
 
-  protected String getXsrfTokenHeader(ClientResponse response) {
-    return response.getHeaders().getFirst(X_XSRF_TOKEN_HEADER);
+  protected String getXsrfTokenHeader(Response response) {
+    return response.getHeaders().getFirst(X_XSRF_TOKEN_HEADER).toString();
   }
 
-  protected String getXsrfCookieValue(ClientResponse response) {
+  protected String getXsrfCookieValue(Response response) {
     return getCookieValue(response, XSRF_TOKEN_IDENTIFIER);
   }
-  
-  protected String getCookieValue(ClientResponse response, String cookieName) {
+
+  protected String getCookieValue(Response response, String cookieName) {
     return getCookieValue(getCookieHeaders(response), cookieName);
   }
 
-  protected String getCookieValue(List<String> cookies, String cookieName) {
-    for (String cookie : cookies) {
-      if (cookie.startsWith(cookieName)) {
-        return cookie;
+  protected String getCookieValue(List<Object> cookies, String cookieName) {
+    for (Object cookie : cookies) {
+      if (cookie.toString().startsWith(cookieName)) {
+        return cookie.toString();
       }
     }
 

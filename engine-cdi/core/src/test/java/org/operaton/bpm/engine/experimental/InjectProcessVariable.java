@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.experimental;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 
 import org.operaton.bpm.engine.cdi.annotation.ProcessVariable;
 
@@ -26,5 +26,5 @@ public class InjectProcessVariable {
 
   @Inject @ProcessVariable public Object testKeyString;
   @Inject @ProcessVariable("testKeyString") public Object someBeanProperty;
-    
+
 }

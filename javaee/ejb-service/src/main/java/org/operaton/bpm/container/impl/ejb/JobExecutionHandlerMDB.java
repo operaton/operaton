@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.container.impl.ejb;
 
-import javax.ejb.MessageDriven;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import jakarta.ejb.MessageDriven;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 
 import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandler;
 import org.operaton.bpm.engine.impl.cmd.ExecuteJobsCmd;

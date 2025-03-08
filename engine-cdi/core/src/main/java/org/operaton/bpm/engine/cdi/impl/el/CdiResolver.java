@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import jakarta.el.ELResolver;
 
-import javax.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.BeanManager;
 import java.beans.FeatureDescriptor;
 import java.util.Iterator;
 
@@ -38,24 +38,24 @@ public class CdiResolver extends ELResolver {
     return BeanManagerLookup.getBeanManager();
   }
 
-  protected javax.el.ELResolver getWrappedResolver() {
+  protected ELResolver getWrappedResolver() {
     BeanManager beanManager = getBeanManager();
     return beanManager.getELResolver();
   }
 
   @Override
   public Class< ? > getCommonPropertyType(ELContext context, Object base) {
-    return getWrappedResolver().getCommonPropertyType(wrapContext(context), base);
+    return getWrappedResolver().getCommonPropertyType(context, base);
   }
 
   @Override
   public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
-    return getWrappedResolver().getFeatureDescriptors(wrapContext(context), base);
+    return getWrappedResolver().getFeatureDescriptors(context, base);
   }
 
   @Override
   public Class< ? > getType(ELContext context, Object base, Object property) {
-    return getWrappedResolver().getType(wrapContext(context), base, property);
+    return getWrappedResolver().getType(context, base, property);
   }
 
   @Override
@@ -74,21 +74,17 @@ public class CdiResolver extends ELResolver {
 
   @Override
   public boolean isReadOnly(ELContext context, Object base, Object property) {
-    return getWrappedResolver().isReadOnly(wrapContext(context), base, property);
+    return getWrappedResolver().isReadOnly(context, base, property);
   }
 
   @Override
   public void setValue(ELContext context, Object base, Object property, Object value) {
-    getWrappedResolver().setValue(wrapContext(context), base, property, value);
+    getWrappedResolver().setValue(context, base, property, value);
   }
 
   @Override
   public Object invoke(ELContext context, Object base, Object method, java.lang.Class< ? >[] paramTypes, Object[] params) {
-    return getWrappedResolver().invoke(wrapContext(context), base, method, paramTypes, params);
-  }
-
-  protected javax.el.ELContext wrapContext(ELContext context) {
-    return new ElContextDelegate(context, getWrappedResolver());
+    return getWrappedResolver().invoke(context, base, method, paramTypes, params);
   }
 
 }

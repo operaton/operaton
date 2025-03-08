@@ -16,19 +16,19 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
  * Can be used to qualify events fired when a task is deleted.
- * 
+ *
  * <pre>
  * public void onApproveRegistrationTaskDelete(@Observes @DeleteTask("approveRegistration") BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
- * 
+ *
  * @author Daniel Meyer
  * @author Sebastian Menski
  */

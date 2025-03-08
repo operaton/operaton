@@ -16,16 +16,15 @@
  */
 package org.operaton.bpm.util;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.operaton.bpm.TestProperties;
 import org.operaton.bpm.engine.rest.dto.identity.UserCredentialsDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
 
-import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
@@ -70,16 +69,13 @@ public class TestUtil {
     user.setProfile(profile);
 
     WebResource webResource = client.resource(testProperties.getApplicationPath("/operaton/api/admin/setup/default/user/create"));
-    ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).post(ClientResponse.class, user);
-    try {
+    try (Response clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).post(Response.class, user)) {
       if (clientResponse.getStatus() != Response.Status.NO_CONTENT.getStatusCode()) {
         throw new WebApplicationException(clientResponse.getStatus());
       }
-    } finally {
-      clientResponse.close();
     }
   }
-  
+
   public void deleteUser(String id) {
     // delete admin user
     WebResource webResource = client.resource(testProperties.getApplicationPath("/engine-rest/user/admin"));

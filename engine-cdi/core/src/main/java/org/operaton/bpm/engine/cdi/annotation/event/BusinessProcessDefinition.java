@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.cdi.annotation.event;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 

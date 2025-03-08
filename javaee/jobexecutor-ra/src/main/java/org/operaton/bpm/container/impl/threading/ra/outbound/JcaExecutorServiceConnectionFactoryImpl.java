@@ -17,14 +17,14 @@
 package org.operaton.bpm.container.impl.threading.ra.outbound;
 
 import javax.naming.Reference;
-import javax.resource.ResourceException;
-import javax.resource.spi.ConnectionManager;
+import jakarta.resource.ResourceException;
+import jakarta.resource.spi.ConnectionManager;
 
 
 
 
 /**
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -35,10 +35,10 @@ public class JcaExecutorServiceConnectionFactoryImpl implements JcaExecutorServi
   protected Reference reference;
   protected JcaExecutorServiceManagedConnectionFactory mcf;
   protected ConnectionManager connectionManager;
-  
+
   public JcaExecutorServiceConnectionFactoryImpl() {
   }
-  
+
   public JcaExecutorServiceConnectionFactoryImpl(JcaExecutorServiceManagedConnectionFactory mcf, ConnectionManager cxManager) {
     this.mcf = mcf;
     this.connectionManager = cxManager;

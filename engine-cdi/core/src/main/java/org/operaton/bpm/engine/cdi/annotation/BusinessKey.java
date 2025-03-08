@@ -21,14 +21,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 /**
  * Qualifier annotation for injecting a business key:
  * <pre>
  *  {@code @Inject} {@code @BusinessKey} String bky;
  * </pre>
- * 
+ *
  * @author Daniel Meyer
  */
 @Qualifier

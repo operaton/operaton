@@ -22,8 +22,9 @@ import static org.junit.Assert.fail;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
+import jakarta.ws.rs.core.Response;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -31,12 +32,10 @@ import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
-
 public class DateSerializationIT extends AbstractWebIntegrationTest {
-  
+
   private static final String SCHEMA_LOG_PATH = "api/engine/engine/default/schema/log";
-  
+
   @Before
   public void createClient() throws Exception {
     preventRaceConditions();
@@ -47,15 +46,15 @@ public class DateSerializationIT extends AbstractWebIntegrationTest {
   @Test
   public void shouldSerializeDateWithDefinedFormat() throws JSONException {
     // when
-    ClientResponse response = client
+    Response response = client
       .resource(appBasePath + SCHEMA_LOG_PATH)
       .accept(MediaType.APPLICATION_JSON)
       .header(X_XSRF_TOKEN_HEADER, csrfToken)
       .header(COOKIE_HEADER, createCookieHeader())
-      .get(ClientResponse.class);
+      .get(Response.class);
     // then
     assertEquals(200, response.getStatus());
-    JSONObject logElement = response.getEntity(JSONArray.class).getJSONObject(0);
+    JSONObject logElement = ((JSONArray)response.getEntity()).getJSONObject(0);
     response.close();
     String timestamp = logElement.getString("timestamp");
     try {

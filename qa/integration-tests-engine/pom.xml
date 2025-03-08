@@ -14,7 +14,6 @@
     <!-- Needs to be updated after a new WildFly release -->
     <wildfly.container.adapter.groupId>org.wildfly.arquillian</wildfly.container.adapter.groupId>
     <wildfly.container.adapter.version>5.0.1.Final</wildfly.container.adapter.version>
-    <version.spring.framework>${version.spring.framework6}</version.spring.framework>
 
     <version.arquillian>1.9.3.Final</version.arquillian>
 
@@ -28,6 +27,14 @@
     DO NOT CHANGE ordering, because we want shrinkwrap versions to be newer -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
       <dependency>
         <groupId>org.jboss.shrinkwrap.resolver</groupId>
         <artifactId>shrinkwrap-resolver-bom</artifactId>
@@ -69,14 +76,6 @@
         <groupId>jakarta.platform</groupId>
         <artifactId>jakarta.jakartaee-bom</artifactId>
         <version>${version.jakarta-ee-spec}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-framework-bom</artifactId>
-        <version>${version.spring.framework}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

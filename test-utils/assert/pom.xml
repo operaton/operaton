@@ -26,9 +26,9 @@
            to load spring-beans with Spring 5.
            Can be removed if operaton-engine supports Spring 6 -->
       <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-framework-bom</artifactId>
-        <version>${version.spring.framework}</version>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -38,13 +38,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
         <version>${version.spring-boot}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>

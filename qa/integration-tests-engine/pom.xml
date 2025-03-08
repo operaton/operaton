@@ -213,7 +213,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-spring-6</artifactId>
+      <artifactId>operaton-engine-spring</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
       <exclusions>

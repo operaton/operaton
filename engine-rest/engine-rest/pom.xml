@@ -18,6 +18,18 @@
     <surefire.memArgs>-Xmx2g</surefire.memArgs>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>commons-fileupload</groupId>
@@ -177,7 +189,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>${version.spring.framework6}</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>

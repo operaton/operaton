@@ -107,7 +107,6 @@
       <!--  do not expose -->
       <scope>provided</scope>
     </dependency>
-
     <!-- servlet API -->
     <dependency>
       <groupId>jakarta.servlet</groupId>

@@ -19,7 +19,6 @@
 
     <version.resteasy>6.2.8.Final</version.resteasy>
     <version.jersey3>3.1.1</version.jersey3>
-    <version.spring.framework>${version.spring.framework6}</version.spring.framework>
 
     <web.resources.override>${jakarta.runtime}/default/webapp</web.resources.override>
     <java.resources.override>${jakarta.runtime}/default/resources</java.resources.override>
@@ -33,6 +32,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-engine-rest-core-jakarta</artifactId>
@@ -124,14 +130,12 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>${version.spring.framework}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>${version.spring.framework}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

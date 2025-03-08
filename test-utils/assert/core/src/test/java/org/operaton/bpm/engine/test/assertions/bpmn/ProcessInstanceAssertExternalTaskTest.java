@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase {
+class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase {
 
   private static final String TASK1 = "ExternalTask_1";
   private static final String TASK2 = "ExternalTask_2";

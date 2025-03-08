@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase {
+class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNotPassed.bpmn"

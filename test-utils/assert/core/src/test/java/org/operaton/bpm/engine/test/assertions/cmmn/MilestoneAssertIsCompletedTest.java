@@ -25,7 +25,7 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 import org.junit.jupiter.api.Test;
 
 @Deployment(resources = "cmmn/MilestoneAssertIsCompletedTest.cmmn")
-public class MilestoneAssertIsCompletedTest extends ProcessAssertTestCase {
+class MilestoneAssertIsCompletedTest extends ProcessAssertTestCase {
 
   @Test
   void is_completed_success() {

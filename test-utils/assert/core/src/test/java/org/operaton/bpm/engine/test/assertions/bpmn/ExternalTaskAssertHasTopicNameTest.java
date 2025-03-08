@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 
 import org.junit.jupiter.api.Test;
 
-public class ExternalTaskAssertHasTopicNameTest extends ProcessAssertTestCase {
+class ExternalTaskAssertHasTopicNameTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ExternalTaskAssert-hasTopicName.bpmn"})

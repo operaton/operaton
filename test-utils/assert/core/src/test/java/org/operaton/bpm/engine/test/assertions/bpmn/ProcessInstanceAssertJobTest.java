@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
+class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"

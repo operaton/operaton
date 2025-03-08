@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
+class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"

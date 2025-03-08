@@ -25,7 +25,7 @@ import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 import org.junit.jupiter.api.Test;
 
 @Deployment(resources = "cmmn/MilestoneAssertIsAvailableTest.cmmn")
-public class MilestoneAssertIsAvailableTest extends ProcessAssertTestCase {
+class MilestoneAssertIsAvailableTest extends ProcessAssertTestCase {
 
   @Test
   void is_available_success() {

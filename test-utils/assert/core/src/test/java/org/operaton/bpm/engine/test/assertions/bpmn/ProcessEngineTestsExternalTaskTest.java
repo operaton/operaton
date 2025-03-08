@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
+class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
 
   private static final String EXTERNAL_TASK_3 = "ExternalTask_3";
   private static final String EXTERNAL_TASK_2 = "ExternalTask_2";

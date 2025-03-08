@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
+class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
 
   private static final String CANDIDATE_USER = "candidateUser";
   private static final String ASSIGNEE = "assignee";

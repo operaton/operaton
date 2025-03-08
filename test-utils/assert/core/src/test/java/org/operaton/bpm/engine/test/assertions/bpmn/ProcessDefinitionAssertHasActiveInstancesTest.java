@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssertTestCase {
+class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"

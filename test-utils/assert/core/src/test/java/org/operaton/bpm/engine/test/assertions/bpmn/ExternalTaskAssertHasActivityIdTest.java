@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class ExternalTaskAssertHasActivityIdTest extends ProcessAssertTestCase {
+class ExternalTaskAssertHasActivityIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ExternalTaskAssert-hasActivityId.bpmn"})

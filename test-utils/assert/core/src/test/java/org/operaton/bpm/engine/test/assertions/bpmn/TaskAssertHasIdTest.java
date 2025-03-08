@@ -25,7 +25,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQu
 
 import org.junit.jupiter.api.Test;
 
-public class TaskAssertHasIdTest extends ProcessAssertTestCase {
+class TaskAssertHasIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasId.bpmn"

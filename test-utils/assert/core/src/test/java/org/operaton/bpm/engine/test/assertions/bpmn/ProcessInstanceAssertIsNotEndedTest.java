@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-public class ProcessInstanceAssertIsNotEndedTest extends ProcessAssertTestCase {
+class ProcessInstanceAssertIsNotEndedTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isEnded.bpmn"

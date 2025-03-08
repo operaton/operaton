@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
-public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
+class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"

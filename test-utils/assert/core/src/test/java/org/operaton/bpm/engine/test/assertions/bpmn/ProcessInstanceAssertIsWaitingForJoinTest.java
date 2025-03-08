@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTestCase {
+class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")

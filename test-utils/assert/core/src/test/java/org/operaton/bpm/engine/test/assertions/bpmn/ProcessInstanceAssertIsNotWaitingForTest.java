@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 
 import org.junit.jupiter.api.Test;
 
-public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestCase {
+class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingFor.bpmn"

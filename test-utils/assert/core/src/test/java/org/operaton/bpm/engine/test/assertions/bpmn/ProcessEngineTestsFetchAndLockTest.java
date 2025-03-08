@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
+class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-fetchAndLock.bpmn"})

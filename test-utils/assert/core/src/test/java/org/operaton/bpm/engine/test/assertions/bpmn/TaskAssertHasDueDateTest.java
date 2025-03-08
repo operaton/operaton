@@ -26,7 +26,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
+class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasDueDate.bpmn"

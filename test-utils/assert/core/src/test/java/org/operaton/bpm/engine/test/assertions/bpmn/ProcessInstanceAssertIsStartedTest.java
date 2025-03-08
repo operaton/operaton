@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
+class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-isStarted.bpmn"

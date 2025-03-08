@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.jupiter.api.Test;
 
-public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
+class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"

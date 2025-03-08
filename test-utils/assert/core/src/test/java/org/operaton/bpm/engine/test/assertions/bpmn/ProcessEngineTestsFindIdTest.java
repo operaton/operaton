@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
+class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")

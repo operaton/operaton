@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 
 import org.junit.jupiter.api.Test;
 
-public class ProcessInstanceAssertHasProcessDefinitionKeyTest extends ProcessAssertTestCase {
+class ProcessInstanceAssertHasProcessDefinitionKeyTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasProcessDefinitionKey-1.bpmn", "bpmn/ProcessInstanceAssert-hasProcessDefinitionKey-2.bpmn"

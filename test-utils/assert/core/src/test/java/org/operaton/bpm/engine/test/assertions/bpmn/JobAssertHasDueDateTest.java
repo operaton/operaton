@@ -25,7 +25,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 
 import org.junit.jupiter.api.Test;
 
-public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
+class JobAssertHasDueDateTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasDueDate.bpmn"

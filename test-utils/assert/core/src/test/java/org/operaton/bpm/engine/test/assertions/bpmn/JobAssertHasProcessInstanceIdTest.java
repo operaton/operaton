@@ -25,7 +25,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 
 import org.junit.jupiter.api.Test;
 
-public class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
+class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasProcessInstanceId.bpmn"

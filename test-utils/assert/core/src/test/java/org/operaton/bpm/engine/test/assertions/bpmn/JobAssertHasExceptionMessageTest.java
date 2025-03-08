@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.fail;
 
-public class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
+class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/JobAssert-hasExceptionMessage.bpmn"

@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
+class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-completeExternalTask.bpmn"})

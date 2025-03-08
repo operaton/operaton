@@ -64,11 +64,6 @@
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-engine-spring-6</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-engine-rest-core</artifactId>
         <version>${project.version}</version>
       </dependency>

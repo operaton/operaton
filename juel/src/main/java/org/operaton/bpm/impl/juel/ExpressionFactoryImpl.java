@@ -404,7 +404,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 	}
 
 	@Override
-	public Object coerceToType(Object obj, Class<?> targetType) {
+	public <T> T coerceToType(Object obj, Class<T> targetType) {
 		return converter.convert(obj, targetType);
 	}
 

@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.spring.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationElResolver;
 import org.operaton.bpm.application.impl.EjbProcessApplication;
@@ -61,7 +61,7 @@ public class SpringProcessApplicationElResolver implements ProcessApplicationElR
     if (processApplication instanceof SpringProcessApplication springProcessApplication) {
       return new ApplicationContextElResolver(springProcessApplication.getApplicationContext());
 
-    } else if (processApplication instanceof org.operaton.bpm.application.impl.ServletProcessApplication servletProcessApplication) {
+    } else if (processApplication instanceof org.operaton.bpm.application.impl.JakartaServletProcessApplication servletProcessApplication) {
       // Using fully-qualified class name instead of import statement to allow for automatic transformation
 
       if(!ClassUtils.isPresent("org.springframework.web.context.support.WebApplicationContextUtils", processApplication.getProcessApplicationClassloader())) {

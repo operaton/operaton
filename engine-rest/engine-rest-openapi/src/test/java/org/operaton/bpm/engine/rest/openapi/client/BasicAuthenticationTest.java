@@ -44,8 +44,8 @@ public class BasicAuthenticationTest {
 
   ProcessInstanceApi api;
 
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(8080);
+ @Rule
+public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
 
   @Before
   public void clientWithValidCredentials() {

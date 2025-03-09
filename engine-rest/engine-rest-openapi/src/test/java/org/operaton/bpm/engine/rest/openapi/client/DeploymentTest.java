@@ -41,7 +41,7 @@ public class DeploymentTest {
   final DeploymentApi api = new DeploymentApi();
 
   @Rule
-  public WireMockRule wireMockRule = new WireMockRule(8080);
+public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
 
   @Test
   public void shouldCreateDeployment() throws ApiException {

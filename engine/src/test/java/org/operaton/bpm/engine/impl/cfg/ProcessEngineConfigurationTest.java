@@ -42,7 +42,7 @@ public class ProcessEngineConfigurationTest {
   public static final ProcessEngineException EXPECTED_EXCEPTION = CONFIG_LOGGER.invalidTransactionIsolationLevel(SERIALIZABLE_NAME);
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     this.engineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResourceDefault();
     this.logger = mock(ConfigurationLogger.class);
     when(logger.invalidTransactionIsolationLevel(SERIALIZABLE_NAME)).thenReturn(EXPECTED_EXCEPTION);
@@ -51,12 +51,12 @@ public class ProcessEngineConfigurationTest {
   }
 
   @AfterAll
-  public static void cleanUp() {
+  static void cleanUp() {
     ProcessEngineConfigurationImpl.LOG = CONFIG_LOGGER;
   }
 
   @Test
-  public void shouldEnableStandaloneTasksByDefault() {
+  void shouldEnableStandaloneTasksByDefault() {
     // when
     ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
 
@@ -65,7 +65,7 @@ public class ProcessEngineConfigurationTest {
   }
 
   @Test
-  public void shouldEnableImplicitUpdatesDetectionByDefault() {
+  void shouldEnableImplicitUpdatesDetectionByDefault() {
     // when
     ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
     // then
@@ -73,7 +73,7 @@ public class ProcessEngineConfigurationTest {
   }
 
   @Test
-  public void validIsolationLevel() {
+  void validIsolationLevel() {
     // given
     ((PooledDataSource) engineConfiguration.getDataSource()).setDefaultTransactionIsolationLevel(Connection.TRANSACTION_READ_COMMITTED);
     // when
@@ -81,7 +81,7 @@ public class ProcessEngineConfigurationTest {
   }
 
   @Test
-  public void invalidIsolationLevelWithSkipFlagDisabled() {
+  void invalidIsolationLevelWithSkipFlagDisabled() {
     // given
     ((PooledDataSource) engineConfiguration.getDataSource()).setDefaultTransactionIsolationLevel(SERIALIZABLE_VALUE);
     // when then
@@ -91,7 +91,7 @@ public class ProcessEngineConfigurationTest {
   }
 
   @Test
-  public void invalidIsolationLevelWithSkipFlagEnabled() {
+  void invalidIsolationLevelWithSkipFlagEnabled() {
     // given
     ((PooledDataSource) engineConfiguration.getDataSource()).setDefaultTransactionIsolationLevel(SERIALIZABLE_VALUE);
     engineConfiguration.setSkipIsolationLevelCheck(true);
@@ -102,7 +102,7 @@ public class ProcessEngineConfigurationTest {
   }
 
   @Test
-  public void validIsolationLevelPropertyFromFileIsSetCorrectly() {
+  void validIsolationLevelPropertyFromFileIsSetCorrectly() {
     // given
     ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("operaton.cfg.skipIsolationLevelCheckEnabled.xml");

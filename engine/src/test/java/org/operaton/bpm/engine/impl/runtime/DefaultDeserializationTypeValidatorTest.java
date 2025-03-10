@@ -25,7 +25,7 @@ import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class DefaultDeserializationTypeValidatorTest {
+class DefaultDeserializationTypeValidatorTest {
 
   private static final String ANOTHER_CLASS = "another.class.Class";
   private static final String ANOTHER_PACKAGE = "another.class";
@@ -35,14 +35,14 @@ public class DefaultDeserializationTypeValidatorTest {
   protected DefaultDeserializationTypeValidator validator;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     validator = new DefaultDeserializationTypeValidator();
   }
 
   // SETTERS
 
   @Test
-  public void shouldAcceptNullListOfAllowedClasses() {
+  void shouldAcceptNullListOfAllowedClasses() {
     // when
     validator.setAllowedClasses(null);
     // then
@@ -50,7 +50,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptEmptyListOfAllowedClasses() {
+  void shouldAcceptEmptyListOfAllowedClasses() {
     // when
     validator.setAllowedClasses("");
     // then
@@ -58,7 +58,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptListOfEmptyAllowedClasses() {
+  void shouldAcceptListOfEmptyAllowedClasses() {
     // when
     validator.setAllowedClasses("\r\n  , \t , ,,\n,\r");
     // then
@@ -66,7 +66,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptSingleStringOfAllowedClasses() {
+  void shouldAcceptSingleStringOfAllowedClasses() {
     // when
     validator.setAllowedClasses("some.Class");
     // then
@@ -74,7 +74,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptStringListOfAllowedClasses() {
+  void shouldAcceptStringListOfAllowedClasses() {
     // when
     validator.setAllowedClasses("  some.class.Class , another.class.Class  ");
     // then
@@ -82,7 +82,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldOverrideAllowedClasses() {
+  void shouldOverrideAllowedClasses() {
     // given
     validator.setAllowedClasses(SOME_CLASS);
     // when
@@ -92,7 +92,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldClearAllowedClasses() {
+  void shouldClearAllowedClasses() {
     // given
     validator.setAllowedClasses(SOME_CLASS);
     // when
@@ -102,7 +102,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptNullListOfAllowedPackages() {
+  void shouldAcceptNullListOfAllowedPackages() {
     // when
     validator.setAllowedPackages(null);
     // then
@@ -110,7 +110,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptEmptyListOfAllowedPackages() {
+  void shouldAcceptEmptyListOfAllowedPackages() {
     // when
     validator.setAllowedPackages("");
     // then
@@ -118,7 +118,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptListOfEmptyAllowedPackages() {
+  void shouldAcceptListOfEmptyAllowedPackages() {
     // when
     validator.setAllowedPackages("\r\n  , \t , ,,\n,\r");
     // then
@@ -126,7 +126,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptSingleStringOfAllowedPackages() {
+  void shouldAcceptSingleStringOfAllowedPackages() {
     // when
     validator.setAllowedPackages("some.");
     // then
@@ -134,7 +134,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAcceptStringListOfAllowedPackages() {
+  void shouldAcceptStringListOfAllowedPackages() {
     // when
     validator.setAllowedPackages("  some.class , another.class  ");
     // then
@@ -142,7 +142,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldOverrideAllowedPackages() {
+  void shouldOverrideAllowedPackages() {
     // given
     validator.setAllowedPackages(SOME_PACKAGE);
     // when
@@ -152,7 +152,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldClearAllowedPackages() {
+  void shouldClearAllowedPackages() {
     // given
     validator.setAllowedPackages(SOME_PACKAGE);
     // when
@@ -164,19 +164,19 @@ public class DefaultDeserializationTypeValidatorTest {
   // EMPTY WHITELIST
 
   @Test
-  public void shouldForbidUnknownClassOnEmptyWhitelist() {
+  void shouldForbidUnknownClassOnEmptyWhitelist() {
     // then
     assertThat(validator.validate(SOME_CLASS)).isFalse();
   }
 
   @Test
-  public void shouldAllowJavaLangClassOnEmptyWhitelist() {
+  void shouldAllowJavaLangClassOnEmptyWhitelist() {
     // then
     assertThat(validator.validate(Number.class.getName())).isTrue();
   }
 
   @Test
-  public void shouldAllowJavaUtilContainerClassesOnEmptyWhitelist() {
+  void shouldAllowJavaUtilContainerClassesOnEmptyWhitelist() {
     // then
     assertThat(validator.validate(ArrayList.class.getName())).isTrue();
     assertThat(validator.validate(HashMap.class.getName())).isTrue();
@@ -186,7 +186,7 @@ public class DefaultDeserializationTypeValidatorTest {
   // ALLOWED CLASS(ES)
 
   @Test
-  public void shouldAllowClassOnWhitelistedClass() {
+  void shouldAllowClassOnWhitelistedClass() {
     // given
     validator.setAllowedClasses(SOME_CLASS);
     // then
@@ -194,7 +194,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAllowClassOnWhitelistedClasses() {
+  void shouldAllowClassOnWhitelistedClasses() {
     // given
     validator.setAllowedClasses(SOME_CLASS + "," + ANOTHER_CLASS);
     // then
@@ -202,7 +202,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldForbidClassOnNonWhitelistedClass() {
+  void shouldForbidClassOnNonWhitelistedClass() {
     // given
     validator.setAllowedClasses(SOME_CLASS);
     // then
@@ -210,7 +210,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldForbidClassOnNonWhitelistedClasses() {
+  void shouldForbidClassOnNonWhitelistedClasses() {
     // given
     validator.setAllowedClasses(SOME_CLASS + "," + ANOTHER_CLASS);
     // then
@@ -218,7 +218,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldForbidClassOnEmptyClasses() {
+  void shouldForbidClassOnEmptyClasses() {
     // given
     validator.setAllowedClasses(",  ,,");
     // then
@@ -228,7 +228,7 @@ public class DefaultDeserializationTypeValidatorTest {
   // ALLOWED PACKAGE(S)
 
   @Test
-  public void shouldAllowClassOnWhitelistedPackage() {
+  void shouldAllowClassOnWhitelistedPackage() {
     // given
     validator.setAllowedPackages(SOME_PACKAGE);
     // then
@@ -236,7 +236,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAllowClassOnWhitelistedPackages() {
+  void shouldAllowClassOnWhitelistedPackages() {
     // given
     validator.setAllowedPackages(SOME_PACKAGE + "," + ANOTHER_PACKAGE);
     // then
@@ -244,7 +244,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldForbidClassOnNonWhitelistedPackage() {
+  void shouldForbidClassOnNonWhitelistedPackage() {
     // given
     validator.setAllowedPackages(SOME_PACKAGE);
     // then
@@ -252,7 +252,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldForbidClassOnNonWhitelistedPackages() {
+  void shouldForbidClassOnNonWhitelistedPackages() {
     // given
     validator.setAllowedPackages(SOME_PACKAGE + "," + ANOTHER_PACKAGE);
     // then
@@ -260,7 +260,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldForbidClassOnEmptyPackages() {
+  void shouldForbidClassOnEmptyPackages() {
     // given
     validator.setAllowedPackages(",  ,,");
     // then
@@ -270,7 +270,7 @@ public class DefaultDeserializationTypeValidatorTest {
   // ALLOWED CLASS(ES) AND PACKAGE(S)
 
   @Test
-  public void shouldAllowClassOnWhitelistedClassAndNonWhitelistedPackage() {
+  void shouldAllowClassOnWhitelistedClassAndNonWhitelistedPackage() {
     // given
     validator.setAllowedClasses(SOME_CLASS);
     validator.setAllowedPackages(ANOTHER_PACKAGE);
@@ -279,7 +279,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldAllowClassOnNonWhitelistedClassAndWhitelistedPackage() {
+  void shouldAllowClassOnNonWhitelistedClassAndWhitelistedPackage() {
     // given
     validator.setAllowedClasses(ANOTHER_CLASS);
     validator.setAllowedPackages(SOME_PACKAGE);
@@ -288,7 +288,7 @@ public class DefaultDeserializationTypeValidatorTest {
   }
 
   @Test
-  public void shouldForbidClassOnNonWhitelistedClassAndNonWhitelistedPackage() {
+  void shouldForbidClassOnNonWhitelistedClassAndNonWhitelistedPackage() {
     // given
     validator.setAllowedPackages(SOME_PACKAGE);
     validator.setAllowedClasses(SOME_CLASS);

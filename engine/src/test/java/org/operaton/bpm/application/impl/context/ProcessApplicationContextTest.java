@@ -50,24 +50,24 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class ProcessApplicationContextTest {
+class ProcessApplicationContextTest {
 
   protected TestApplicationWithoutEngine pa;
   ProcessEngine processEngine;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     pa = new TestApplicationWithoutEngine();
     pa.deploy();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     pa.undeploy();
   }
 
   @Test
-  public void testSetPAContextByName() throws ProcessApplicationUnavailableException {
+  void testSetPAContextByName() throws ProcessApplicationUnavailableException {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
@@ -82,7 +82,7 @@ public class ProcessApplicationContextTest {
   }
 
   @Test
-  public void testExecutionInPAContextByName() throws Exception {
+  void testExecutionInPAContextByName() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     ProcessApplicationReference contextPA = withProcessApplicationContext(this::getCurrentContextApplication, pa.getName());
@@ -93,7 +93,7 @@ public class ProcessApplicationContextTest {
   }
 
   @Test
-  public void testSetPAContextByReference() throws ProcessApplicationUnavailableException {
+  void testSetPAContextByReference() throws ProcessApplicationUnavailableException {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
@@ -108,7 +108,7 @@ public class ProcessApplicationContextTest {
   }
 
   @Test
-  public void testExecutionInPAContextByReference() throws Exception {
+  void testExecutionInPAContextByReference() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     ProcessApplicationReference contextPA = withProcessApplicationContext(this::getCurrentContextApplication, pa.getReference());
@@ -119,7 +119,7 @@ public class ProcessApplicationContextTest {
   }
 
   @Test
-  public void testSetPAContextByRawPA() throws ProcessApplicationUnavailableException {
+  void testSetPAContextByRawPA() throws ProcessApplicationUnavailableException {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
@@ -134,7 +134,7 @@ public class ProcessApplicationContextTest {
   }
 
   @Test
-  public void testExecutionInPAContextByRawPA() throws Exception {
+  void testExecutionInPAContextByRawPA() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     ProcessApplicationReference contextPA = withProcessApplicationContext(this::getCurrentContextApplication, pa);
@@ -145,7 +145,7 @@ public class ProcessApplicationContextTest {
   }
 
   @Test
-  public void testCannotSetUnregisteredProcessApplicationName() {
+  void testCannotSetUnregisteredProcessApplicationName() {
     String nonExistingName = pa.getName() + pa.getName();
 
     try {
@@ -165,7 +165,7 @@ public class ProcessApplicationContextTest {
   }
 
   @Test
-  public void testCannotExecuteInUnregisteredPaContext() {
+  void testCannotExecuteInUnregisteredPaContext() {
     String nonExistingName = pa.getName() + pa.getName();
     Callable<Void> callable = () -> {
       getCurrentContextApplication();
@@ -179,7 +179,7 @@ public class ProcessApplicationContextTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testExecuteWithInvocationContext() throws Exception {
+  void testExecuteWithInvocationContext() throws Exception {
     // given a process application which extends the default one
     // - using a spy for verify the invocations
     TestApplicationWithoutEngine processApplication = spy(pa);

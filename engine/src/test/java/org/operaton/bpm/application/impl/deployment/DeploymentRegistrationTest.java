@@ -35,7 +35,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class DeploymentRegistrationTest {
+class DeploymentRegistrationTest {
 
   protected static final String DEPLOYMENT_NAME = "my-deployment";
 
@@ -48,7 +48,7 @@ public class DeploymentRegistrationTest {
   ManagementService managementService;
 
   @Test
-  public void testNoRegistrationCheckIfNoProcessApplicationIsDeployed() {
+  void testNoRegistrationCheckIfNoProcessApplicationIsDeployed() {
 
     // create two deployments; both contain a process with the same key
     Deployment deployment1 = repositoryService

@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 /**
  * @author Thorben Lindhauer
  */
-public class PropertyHelperTest {
+class PropertyHelperTest {
 
   // process engine properties
   protected static final String JOB_EXECUTOR_DEPLOYMENT_AWARE_PROP = "jobExecutorDeploymentAware";
@@ -67,7 +67,7 @@ public class PropertyHelperTest {
    * Assert that String, int and boolean properties can be set.
    */
   @Test
-  public void testProcessEngineConfigurationProperties() {
+  void testProcessEngineConfigurationProperties() {
     ProcessEngineConfiguration engineConfiguration = new StandaloneProcessEngineConfiguration();
 
     Map<String, String> propertiesToSet = new HashMap<>();
@@ -87,7 +87,7 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void testJobExecutorConfigurationProperties() {
+  void testJobExecutorConfigurationProperties() {
     // given
     JobExecutor jobExecutor = new DefaultJobExecutor();
 
@@ -112,7 +112,7 @@ public class PropertyHelperTest {
    * and not on the field name.
    */
   @Test
-  public void testConfigurationPropertiesWithMismatchingFieldAndSetter() {
+  void testConfigurationPropertiesWithMismatchingFieldAndSetter() {
     ProcessEngineConfigurationImpl engineConfiguration = new StandaloneProcessEngineConfiguration();
 
     Map<String, String> propertiesToSet = new HashMap<>();
@@ -128,7 +128,7 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void testNonExistingPropertyForProcessEngineConfiguration() {
+  void testNonExistingPropertyForProcessEngineConfiguration() {
     ProcessEngineConfiguration engineConfiguration = new StandaloneProcessEngineConfiguration();
     Map<String, String> propertiesToSet = new HashMap<>();
     propertiesToSet.put("aNonExistingProperty", "someValue");
@@ -142,7 +142,7 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void testResolvePropertyForExistingProperty() {
+  void testResolvePropertyForExistingProperty() {
     Properties source = new Properties();
     source.put("operaton.test.someKey", "1234");
     String result = PropertyHelper.resolveProperty(source, "${operaton.test.someKey}");
@@ -150,7 +150,7 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void testResolvePropertyWhitespaceAndMore() {
+  void testResolvePropertyWhitespaceAndMore() {
     Properties source = new Properties();
     source.put("operaton.test.someKey", "1234");
     String result = PropertyHelper.resolveProperty(source, " -${ operaton.test.someKey }- ");
@@ -158,7 +158,7 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void testResolvePropertyForMultipleProperties() {
+  void testResolvePropertyForMultipleProperties() {
     Properties source = new Properties();
     source.put("operaton.test.oneKey", "1234");
     source.put("operaton.test.anotherKey", "5678");
@@ -167,14 +167,14 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void testResolvePropertyForMissingProperty() {
+  void testResolvePropertyForMissingProperty() {
     Properties source = new Properties();
     String result = PropertyHelper.resolveProperty(source, "${operaton.test.someKey}");
     assertThat(result).isEmpty();
   }
 
   @Test
-  public void testResolvePropertyNoTemplate() {
+  void testResolvePropertyNoTemplate() {
     Properties source = new Properties();
     source.put("operaton.test.someKey", "1234");
     String result = PropertyHelper.resolveProperty(source, "operaton.test.someKey");
@@ -182,7 +182,7 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void shouldResolveKebabCaseProperties() {
+  void shouldResolveKebabCaseProperties() {
     // given
     ProcessEngineConfigurationImpl engineConfiguration = new StandaloneProcessEngineConfiguration();
     JobExecutor jobExecutor = new DefaultJobExecutor();
@@ -207,7 +207,7 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void shouldResolveSnakeCaseProperties() {
+  void shouldResolveSnakeCaseProperties() {
     // given
     ProcessEngineConfigurationImpl engineConfiguration = new StandaloneProcessEngineConfiguration();
     JobExecutor jobExecutor = new DefaultJobExecutor();

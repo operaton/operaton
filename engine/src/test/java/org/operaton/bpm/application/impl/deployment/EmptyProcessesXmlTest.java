@@ -31,10 +31,10 @@ import org.operaton.bpm.engine.repository.ResumePreviousBy;
  * @author Daniel Meyer
  *
  */
-public class EmptyProcessesXmlTest {
+class EmptyProcessesXmlTest {
 
   @Test
-  public void testDefaultValues() {
+  void testDefaultValues() {
 
     ProcessesXml emptyProcessesXml = ProcessesXml.EMPTY_PROCESSES_XML;
     assertThat(emptyProcessesXml).isNotNull();

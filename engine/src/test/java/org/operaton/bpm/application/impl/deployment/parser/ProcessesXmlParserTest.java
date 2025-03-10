@@ -39,12 +39,12 @@ import org.operaton.bpm.engine.ProcessEngineException;
  * @author Daniel Meyer
  *
  */
-public class ProcessesXmlParserTest {
+class ProcessesXmlParserTest {
 
   private ProcessesXmlParser parser;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     parser = new ProcessesXmlParser();
   }
 
@@ -53,7 +53,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlOneEngine() {
+  void testParseProcessesXmlOneEngine() {
 
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_one_engine.xml"))
@@ -80,7 +80,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlTwoEngines() {
+  void testParseProcessesXmlTwoEngines() {
 
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_two_engines.xml"))
@@ -116,7 +116,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlOneArchive() {
+  void testParseProcessesXmlOneArchive() {
 
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_one_archive.xml"))
@@ -146,7 +146,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlTwoArchives() {
+  void testParseProcessesXmlTwoArchives() {
 
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_two_archives.xml"))
@@ -189,7 +189,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlTwoArchivesAndTwoEngines() {
+  void testParseProcessesXmlTwoArchivesAndTwoEngines() {
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_two_archives_two_engines.xml"))
       .execute()
@@ -255,7 +255,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlEngineNoName() {
+  void testParseProcessesXmlEngineNoName() {
 
     // this test is to make sure that XML Schema Validation works.
     ProcessesXmlParse processesXmlParse = parser
@@ -268,7 +268,7 @@ public class ProcessesXmlParserTest {
 
   @Test
   @Disabled("FIXME")
-  public void testParseProcessesXmlClassLineBreak() {
+  void testParseProcessesXmlClassLineBreak() {
     ProcessesXml processesXml = parser.createParse()
         .sourceUrl(getStreamUrl("process_xml_one_archive_with_line_break.xml"))
         .execute()
@@ -284,7 +284,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlNsPrefix() {
+  void testParseProcessesXmlNsPrefix() {
 
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_ns_prefix.xml"))
@@ -299,7 +299,7 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlTenantId() {
+  void testParseProcessesXmlTenantId() {
 
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_tenant_id.xml"))

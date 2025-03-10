@@ -32,10 +32,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CompositeIncidentHandlerTest {
+class CompositeIncidentHandlerTest {
 
   @Test
-  public void shouldUseCompositeIncidentHandlerWithMainIncidentHandlerAddNullHandler() {
+  void shouldUseCompositeIncidentHandlerWithMainIncidentHandlerAddNullHandler() {
     CompositeIncidentHandler compositeIncidentHandler = new CompositeIncidentHandler(new DefaultIncidentHandler(""));
 
     assertThatThrownBy(() -> compositeIncidentHandler.add(null))
@@ -44,14 +44,14 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullMainHandler() {
+  void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullMainHandler() {
     assertThatThrownBy(() -> new CompositeIncidentHandler(null))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("Incident handler is null");
   }
 
   @Test
-  public void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullVarargs() {
+  void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullVarargs() {
     IncidentHandler incidentHandler = null;
     assertThatThrownBy(() -> new CompositeIncidentHandler(null, incidentHandler))
       .isInstanceOf(NullValueException.class)
@@ -59,7 +59,7 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullList() {
+  void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullList() {
     List<IncidentHandler> incidentHandler = null;
     assertThatThrownBy(() -> new CompositeIncidentHandler(null, incidentHandler))
       .isInstanceOf(NullValueException.class)
@@ -67,7 +67,7 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullVarargValue() {
+  void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullVarargValue() {
     IncidentHandler mainIncidentHandler = new DefaultIncidentHandler("failedJob");
     IncidentHandler incidentHandler = null;
     assertThatThrownBy(() -> new CompositeIncidentHandler(mainIncidentHandler, incidentHandler))
@@ -76,7 +76,7 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullVarargs() {
+  void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullVarargs() {
     IncidentHandler mainIncidentHandler = new DefaultIncidentHandler("failedJob");
     IncidentHandler[] incidentHandler = null;
 
@@ -86,7 +86,7 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullList() {
+  void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullList() {
     IncidentHandler mainIncidentHandler = new DefaultIncidentHandler("failedJob");
     List<IncidentHandler> incidentHandler = null;
 
@@ -96,7 +96,7 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndListWithNulls() {
+  void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndListWithNulls() {
     IncidentHandler mainIncidentHandler = new DefaultIncidentHandler("failedJob");
 
     List<IncidentHandler> incidentHandler = new ArrayList<>();
@@ -109,7 +109,7 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldUseCompositeIncidentHandlerWithAnotherIncidentType() {
+  void shouldUseCompositeIncidentHandlerWithAnotherIncidentType() {
     CompositeIncidentHandler compositeIncidentHandler = new CompositeIncidentHandler(new DefaultIncidentHandler("failedJob"));
     DefaultIncidentHandler incidentHandler = new DefaultIncidentHandler("failedExternalTask");
 
@@ -118,7 +118,7 @@ public class CompositeIncidentHandlerTest {
         .hasMessageContaining("Incorrect incident type handler in composite handler with type: failedJob");  }
 
   @Test
-  public void shouldCallAllHandlersWhenCreatingIncident() {
+  void shouldCallAllHandlersWhenCreatingIncident() {
     IncidentHandler mainHandler = mock(IncidentHandler.class);
     Incident incident = mock(Incident.class);
 
@@ -149,7 +149,7 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldCallAllHandlersWhenDeletingIncident() {
+  void shouldCallAllHandlersWhenDeletingIncident() {
     IncidentHandler mainHandler = mock(IncidentHandler.class);
 
     when(mainHandler.getIncidentHandlerType()).thenReturn("failedJob");
@@ -171,7 +171,7 @@ public class CompositeIncidentHandlerTest {
   }
 
   @Test
-  public void shouldCallAllHandlersWhenResolvingIncident() {
+  void shouldCallAllHandlersWhenResolvingIncident() {
     IncidentHandler mainHandler = mock(IncidentHandler.class);
 
     when(mainHandler.getIncidentHandlerType()).thenReturn("failedJob");

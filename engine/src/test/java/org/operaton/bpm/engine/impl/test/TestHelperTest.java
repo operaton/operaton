@@ -20,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class TestHelperTest {
+class TestHelperTest {
 
   @Test
-  public void shouldGetPublicMethod() throws NoSuchMethodException {
+  void shouldGetPublicMethod() throws NoSuchMethodException {
     // WHEN we call get method to retrieve a method with public accessor, no exception should be thrown
     Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithPublicAccessor", new Class[0]);
     assertThat(methodName).hasToString("public void org.operaton.bpm.engine.impl.test" +
@@ -31,35 +31,35 @@ public class TestHelperTest {
   }
 
   @Test
-  public void shouldGetPublicMethodFromSuperClass() throws NoSuchMethodException {
+  void shouldGetPublicMethodFromSuperClass() throws NoSuchMethodException {
     // WHEN we call get method to retrieve a method with public accessor, no exception should be thrown
     Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithPublicAccessor", new Class[0]);
     assertThat(methodName).hasToString("public void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithPublicAccessor()");
   }
 
   @Test
-  public void shouldGetPackagePrivateMethod() throws NoSuchMethodException {
+  void shouldGetPackagePrivateMethod() throws NoSuchMethodException {
     // WHEN we call get method to retrieve a method with package private accessor, no exception should be thrown
     Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithPackagePrivateAccessor", new Class[0]);
     assertThat(methodName).hasToString("void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithPackagePrivateAccessor()");
   }
 
   @Test
-  public void shouldGetPackagePrivateMethodFromSuperClass() throws NoSuchMethodException {
+  void shouldGetPackagePrivateMethodFromSuperClass() throws NoSuchMethodException {
     // WHEN we call get method to retrieve a method with package private accessor, no exception should be thrown
     Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithPackagePrivateAccessor", new Class[0]);
     assertThat(methodName).hasToString("void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithPackagePrivateAccessor()");
   }
 
   @Test
-  public void shouldGetProtectedMethod() throws NoSuchMethodException {
+  void shouldGetProtectedMethod() throws NoSuchMethodException {
     // WHEN we call get method to retrieve a method with protected accessor, no exception should be thrown
     Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithProtected", new Class[0]);
     assertThat(methodName).hasToString("protected void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithProtected()");
   }
 
   @Test
-  public void shouldGetProtectedMethodFromSuperClass() throws NoSuchMethodException {
+  void shouldGetProtectedMethodFromSuperClass() throws NoSuchMethodException {
     // WHEN we call get method to retrieve a method with protected accessor, no exception should be thrown
     Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithProtected", new Class[0]);
     assertThat(methodName).hasToString("protected void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithProtected()");

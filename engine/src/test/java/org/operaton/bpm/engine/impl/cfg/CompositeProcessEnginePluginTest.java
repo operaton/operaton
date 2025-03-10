@@ -26,7 +26,7 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class CompositeProcessEnginePluginTest {
+class CompositeProcessEnginePluginTest {
 
   private static final ProcessEnginePlugin PLUGIN_A = processEnginePlugin("PluginA");
   private static final ProcessEnginePlugin PLUGIN_B = processEnginePlugin("PluginB");
@@ -36,7 +36,7 @@ public class CompositeProcessEnginePluginTest {
   private static final ProcessEngine ENGINE = mock(ProcessEngine.class);
 
   @Test
-  public void addPlugin() {
+  void addPlugin() {
     CompositeProcessEnginePlugin composite = new CompositeProcessEnginePlugin(PLUGIN_A);
 
     assertThat(composite.getPlugins()).hasSize(1);
@@ -49,7 +49,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void addPlugins() {
+  void addPlugins() {
     CompositeProcessEnginePlugin composite = new CompositeProcessEnginePlugin(PLUGIN_A);
     composite.addProcessEnginePlugins(Arrays.asList(PLUGIN_B));
 
@@ -60,7 +60,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void allPluginsOnPreInit() {
+  void allPluginsOnPreInit() {
     new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B).preInit(CONFIGURATION);
 
     ORDER.verify(PLUGIN_A).preInit(CONFIGURATION);
@@ -68,7 +68,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void allPluginsOnPostInit() {
+  void allPluginsOnPostInit() {
     new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B).postInit(CONFIGURATION);
 
     ORDER.verify(PLUGIN_A).postInit(CONFIGURATION);
@@ -76,7 +76,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void allPluginsOnPostProcessEngineBuild() {
+  void allPluginsOnPostProcessEngineBuild() {
     new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B).postProcessEngineBuild(ENGINE);
 
     ORDER.verify(PLUGIN_A).postProcessEngineBuild(ENGINE);
@@ -84,7 +84,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void verifyToString() {
+  void verifyToString() {
     assertThat(new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B)).hasToString("CompositeProcessEnginePlugin[PluginA, PluginB]");
   }
 

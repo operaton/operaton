@@ -105,12 +105,12 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @BeforeEach
-  public void init() {
+  void init() {
     enforceHistoryTimeToLive = processEngineConfiguration.isEnforceHistoryTimeToLive();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setEnforceHistoryTimeToLive(enforceHistoryTimeToLive);
 
     if (!deploymentsToCleanup.isEmpty()) {

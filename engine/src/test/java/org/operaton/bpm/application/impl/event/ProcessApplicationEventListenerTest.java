@@ -47,7 +47,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationEventListenerTest {
+class ProcessApplicationEventListenerTest {
 
   @RegisterExtension
   ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -61,7 +61,7 @@ public class ProcessApplicationEventListenerTest {
   ManagementService managementService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     runtimeService = engineRule.getRuntimeService();
     repositoryService = engineRule.getRepositoryService();
@@ -70,13 +70,13 @@ public class ProcessApplicationEventListenerTest {
   }
 
   @AfterEach
-  public void closeDownProcessEngine() {
+  void closeDownProcessEngine() {
     managementService.unregisterProcessApplication(engineRule.getDeploymentId(), false);
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/application/impl/event/ProcessApplicationEventListenerTest.testExecutionListener.bpmn20.xml" })
-  public void testExecutionListenerNull() {
+  @Deployment(resources = {"org/operaton/bpm/application/impl/event/ProcessApplicationEventListenerTest.testExecutionListener.bpmn20.xml"})
+  void testExecutionListenerNull() {
     // this test verifies that the process application can return a 'null'
     // execution listener
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
@@ -92,8 +92,8 @@ public class ProcessApplicationEventListenerTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/application/impl/event/ProcessApplicationEventListenerTest.testExecutionListener.bpmn20.xml" })
-  public void testShouldInvokeExecutionListenerOnStartAndEndOfProcessInstance() {
+  @Deployment(resources = {"org/operaton/bpm/application/impl/event/ProcessApplicationEventListenerTest.testExecutionListener.bpmn20.xml"})
+  void testShouldInvokeExecutionListenerOnStartAndEndOfProcessInstance() {
     final AtomicInteger processDefinitionEventCount = new AtomicInteger();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -118,8 +118,8 @@ public class ProcessApplicationEventListenerTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/application/impl/event/ProcessApplicationEventListenerTest.testExecutionListener.bpmn20.xml" })
-  public void testShouldNotIncrementExecutionListenerCountOnStartAndEndOfProcessInstance() {
+  @Deployment(resources = {"org/operaton/bpm/application/impl/event/ProcessApplicationEventListenerTest.testExecutionListener.bpmn20.xml"})
+  void testShouldNotIncrementExecutionListenerCountOnStartAndEndOfProcessInstance() {
     final AtomicInteger eventCount = new AtomicInteger();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -144,7 +144,7 @@ public class ProcessApplicationEventListenerTest {
 
   @Test
   @Deployment
-  public void testExecutionListener() {
+  void testExecutionListener() {
     final AtomicInteger eventCount = new AtomicInteger();
     
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -167,7 +167,7 @@ public class ProcessApplicationEventListenerTest {
 
   @Test
   @Deployment
-  public void testExecutionListenerWithErrorBoundaryEvent() {
+  void testExecutionListenerWithErrorBoundaryEvent() {
     final AtomicInteger eventCount = new AtomicInteger();
     
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -200,7 +200,7 @@ public class ProcessApplicationEventListenerTest {
 
   @Test
   @Deployment
-  public void testExecutionListenerWithTimerBoundaryEvent() {
+  void testExecutionListenerWithTimerBoundaryEvent() {
     final AtomicInteger eventCount = new AtomicInteger();
     
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -241,7 +241,7 @@ public class ProcessApplicationEventListenerTest {
 
   @Test
   @Deployment
-  public void testExecutionListenerWithSignalBoundaryEvent() {
+  void testExecutionListenerWithSignalBoundaryEvent() {
     final AtomicInteger eventCount = new AtomicInteger();
     
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -281,7 +281,7 @@ public class ProcessApplicationEventListenerTest {
 
   @Test
   @Deployment
-  public void testExecutionListenerWithMultiInstanceBody() {
+  void testExecutionListenerWithMultiInstanceBody() {
     final AtomicInteger eventCountForMultiInstanceBody = new AtomicInteger();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -316,7 +316,7 @@ public class ProcessApplicationEventListenerTest {
 
   @Test
   @Deployment
-  public void testTaskListener() {
+  void testTaskListener() {
     final List<String> events = new ArrayList<>();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
@@ -359,7 +359,7 @@ public class ProcessApplicationEventListenerTest {
 
   @Test
   @Deployment
-  public void testIntermediateTimerEvent() {
+  void testIntermediateTimerEvent() {
     // given
     final List<String> timerEvents = new ArrayList<>();
 
@@ -397,7 +397,7 @@ public class ProcessApplicationEventListenerTest {
 
   @Test
   @Deployment
-  public void testIntermediateSignalEvent() {
+  void testIntermediateSignalEvent() {
     // given
     final List<String> timerEvents = new ArrayList<>();
 

@@ -26,10 +26,10 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 
-public class ExceptionUtilTest {
+class ExceptionUtilTest {
 
   @Test
-  public void checkValueTooLongException() {
+  void checkValueTooLongException() {
     assertThat(ExceptionUtil.checkValueTooLongException(mock(SQLException.class))).isFalse();
 
     SQLException tooLong = mock(SQLException.class);
@@ -38,7 +38,7 @@ public class ExceptionUtilTest {
   }
 
   @Test
-  public void checkConstraintViolationException() {
+  void checkConstraintViolationException() {
     assertThat(ExceptionUtil.checkConstraintViolationException(new ProcessEngineException(new PersistenceException(mock(SQLException.class))))).isFalse();
 
     SQLException constraintViolation = mock(SQLException.class);
@@ -47,7 +47,7 @@ public class ExceptionUtilTest {
   }
 
   @Test
-  public void checkForeignKeyConstraintViolation() {
+  void checkForeignKeyConstraintViolation() {
     assertThat(ExceptionUtil.checkForeignKeyConstraintViolation(mock(SQLException.class))).isFalse();
 
     SQLException constraintViolation = mock(SQLException.class);
@@ -56,7 +56,7 @@ public class ExceptionUtilTest {
   }
 
   @Test
-  public void checkVariableIntegrityViolation() {
+  void checkVariableIntegrityViolation() {
     assertThat(ExceptionUtil.checkVariableIntegrityViolation(new PersistenceException(mock(SQLException.class)))).isFalse();
 
     SQLException integrityViolation = mock(SQLException.class);
@@ -66,7 +66,7 @@ public class ExceptionUtilTest {
   }
 
   @Test
-  public void checkDeadlockException() {
+  void checkDeadlockException() {
     assertThat(ExceptionUtil.checkDeadlockException(mock(SQLException.class))).isFalse();
 
     SQLException deadlock = mock(SQLException.class);

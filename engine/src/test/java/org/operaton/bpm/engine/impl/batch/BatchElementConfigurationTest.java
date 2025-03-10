@@ -24,10 +24,10 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 
-public class BatchElementConfigurationTest {
+class BatchElementConfigurationTest {
 
   @Test
-  public void shouldProduceListOfIdsSortedByKey() {
+  void shouldProduceListOfIdsSortedByKey() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
     configuration.addDeploymentMappings(Arrays.asList(
@@ -40,7 +40,7 @@ public class BatchElementConfigurationTest {
   }
 
   @Test
-  public void shouldProduceListOfMappingsSortedByKey() {
+  void shouldProduceListOfMappingsSortedByKey() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
     configuration.addDeploymentMappings(Arrays.asList(
@@ -52,7 +52,7 @@ public class BatchElementConfigurationTest {
   }
 
   @Test
-  public void shouldIncludeNullMappings() {
+  void shouldIncludeNullMappings() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
     configuration.addDeploymentMappings(Arrays.asList(
@@ -66,7 +66,7 @@ public class BatchElementConfigurationTest {
   }
 
   @Test
-  public void shouldRecalculateMappingsWhenNewElementsAdded() {
+  void shouldRecalculateMappingsWhenNewElementsAdded() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
     configuration.addDeploymentMappings(Arrays.asList(
@@ -85,7 +85,7 @@ public class BatchElementConfigurationTest {
   }
 
   @Test
-  public void shouldIncludeNullMappingForUnmappedIds() {
+  void shouldIncludeNullMappingForUnmappedIds() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
     configuration.addDeploymentMappings(
@@ -100,7 +100,7 @@ public class BatchElementConfigurationTest {
   }
 
   @Test
-  public void shouldAddToNullMappingsForUnmappedIds() {
+  void shouldAddToNullMappingsForUnmappedIds() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
     configuration.addDeploymentMappings(

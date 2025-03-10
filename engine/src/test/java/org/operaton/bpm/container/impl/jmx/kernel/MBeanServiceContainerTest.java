@@ -42,7 +42,7 @@ import org.operaton.bpm.container.impl.spi.PlatformService;
  * @author Daniel Meyer
  *
  */
-public class MBeanServiceContainerTest {
+class MBeanServiceContainerTest {
 
   private MBeanServiceContainer serviceContainer;
 
@@ -62,12 +62,12 @@ public class MBeanServiceContainerTest {
   private final TestService service4 = new TestService();
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     serviceContainer = new MBeanServiceContainer();
   }
 
   @AfterEach
-  public void tearDown() throws Exception {
+  void tearDown() throws Exception {
     // make sure all MBeans are removed after each test
     MBeanServer mBeanServer = serviceContainer.getmBeanServer();
     if(mBeanServer.isRegistered(service1ObjectName)) {
@@ -85,7 +85,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testStartService() {
+  void testStartService() {
 
     // initially the service is not present:
     assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
@@ -111,7 +111,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testStopService() {
+  void testStopService() {
 
     // start some service
     serviceContainer.startService(service1Name, service1);
@@ -133,7 +133,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testGetServicesByType() {
+  void testGetServicesByType() {
 
     serviceContainer.startService(service1Name, service1);
     serviceContainer.startService(service2Name, service2);
@@ -156,7 +156,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testGetServiceValuesByType() {
+  void testGetServiceValuesByType() {
 
     // start some services
     serviceContainer.startService(service1Name, service1);
@@ -181,7 +181,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testGetServiceNames() {
+  void testGetServiceNames() {
 
     // start some services
     serviceContainer.startService(service1Name, service1);
@@ -206,7 +206,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testDeploymentOperation() {
+  void testDeploymentOperation() {
 
     serviceContainer.createDeploymentOperation("test op")
       .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
@@ -220,7 +220,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testFailingDeploymentOperation() {
+  void testFailingDeploymentOperation() {
     var deploymentOperationBuilder = serviceContainer.createDeploymentOperation("test failing op")
         .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
         .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
@@ -263,7 +263,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testUndeploymentOperation() {
+  void testUndeploymentOperation() {
 
     // let's first start some services:
     serviceContainer.startService(service1Name, service1);
@@ -282,7 +282,7 @@ public class MBeanServiceContainerTest {
   }
 
   @Test
-  public void testFailingUndeploymentOperation() {
+  void testFailingUndeploymentOperation() {
 
     // let's first start some services:
     serviceContainer.startService(service1Name, service1);

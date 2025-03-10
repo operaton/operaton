@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
 
-public class HistoryCleanupSchedulerCmdTest {
+class HistoryCleanupSchedulerCmdTest {
 
     @Mock
     private CommandContext commandContext;
@@ -65,8 +65,8 @@ public class HistoryCleanupSchedulerCmdTest {
     Long METRICS_VALUE = 123L;
     private AutoCloseable closeable;
 
-    @BeforeEach
-    public void setUp() {
+  @BeforeEach
+  void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
 
         when(commandContext.getProcessEngineConfiguration()).thenReturn(engineConfigurationSpy);
@@ -83,13 +83,13 @@ public class HistoryCleanupSchedulerCmdTest {
         mockedHistoryCleanupHelper.when(() -> HistoryCleanupHelper.isWithinBatchWindow(any(Date.class), any(ProcessEngineConfigurationImpl.class))).thenReturn(false);
     }
 
-    @AfterEach
-    public void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
         closeable.close();
     }
 
-    @Test
-    public void shouldReportMetricsIfEnabled() {
+  @Test
+  void shouldReportMetricsIfEnabled() {
         // given
         engineConfigurationSpy.setMetricsEnabled(true);
         engineConfigurationSpy.setHistoryCleanupMetricsEnabled(true);
@@ -102,8 +102,8 @@ public class HistoryCleanupSchedulerCmdTest {
         verify(dbMetricsReporter, times(reports.size())).reportValueAtOnce(METRICS_KEY, METRICS_VALUE);
     }
 
-    @Test
-    public void shouldNotReportMetricsIfMetricsDisabled() {
+  @Test
+  void shouldNotReportMetricsIfMetricsDisabled() {
         // given
         engineConfigurationSpy.setMetricsEnabled(false);
         engineConfigurationSpy.setHistoryCleanupMetricsEnabled(true);
@@ -117,8 +117,8 @@ public class HistoryCleanupSchedulerCmdTest {
         verify(dbMetricsReporter, never()).reportValueAtOnce(anyString(), anyLong());
     }
 
-    @Test
-    public void shouldNotReportMetricsIfHistoryCleanupMetricsDisabled() {
+  @Test
+  void shouldNotReportMetricsIfHistoryCleanupMetricsDisabled() {
         // given
         engineConfigurationSpy.setMetricsEnabled(true);
         engineConfigurationSpy.setHistoryCleanupMetricsEnabled(false);

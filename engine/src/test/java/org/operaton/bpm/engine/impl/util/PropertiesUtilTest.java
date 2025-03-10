@@ -32,7 +32,7 @@ public class PropertiesUtilTest {
                                                            .level(Level.DEBUG);
 
   @Test
-  public void shouldLogMissingFile() {
+  void shouldLogMissingFile() {
     // given
     String invalidFile = "/missingProps.properties";
 

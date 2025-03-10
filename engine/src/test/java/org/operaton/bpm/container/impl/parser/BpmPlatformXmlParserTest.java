@@ -37,12 +37,12 @@ import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
  * @author Daniel Meyer
  *
  */
-public class BpmPlatformXmlParserTest {
+class BpmPlatformXmlParserTest {
 
   private BpmPlatformXmlParser parser;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     parser = new BpmPlatformXmlParser();
   }
 
@@ -51,7 +51,7 @@ public class BpmPlatformXmlParserTest {
   }
 
   @Test
-  public void testParseBpmPlatformXmlNoEngine() {
+  void testParseBpmPlatformXmlNoEngine() {
 
     BpmPlatformXml bpmPlatformXml = parser.createParse()
       .sourceUrl(getStreamUrl("bpmplatform_xml_no_engine.xml"))
@@ -74,7 +74,7 @@ public class BpmPlatformXmlParserTest {
   }
 
   @Test
-  public void testParseBpmPlatformXmlOneEngine() {
+  void testParseBpmPlatformXmlOneEngine() {
 
     BpmPlatformXml bpmPlatformXml = parser.createParse()
       .sourceUrl(getStreamUrl("bpmplatform_xml_one_engine.xml"))
@@ -108,7 +108,7 @@ public class BpmPlatformXmlParserTest {
   }
 
   @Test
-  public void testParseBpmPlatformXmlEnginePlugin() {
+  void testParseBpmPlatformXmlEnginePlugin() {
 
     BpmPlatformXml bpmPlatformXml = parser.createParse()
       .sourceUrl(getStreamUrl("bpmplatform_xml_engine_plugin.xml"))
@@ -141,7 +141,7 @@ public class BpmPlatformXmlParserTest {
   }
 
   @Test
-  public void testParseBpmPlatformXmlMultipleEnginePlugins() {
+  void testParseBpmPlatformXmlMultipleEnginePlugins() {
 
     BpmPlatformXml bpmPlatformXml = parser.createParse()
       .sourceUrl(getStreamUrl("bpmplatform_xml_multiple_engine_plugins.xml"))
@@ -161,7 +161,7 @@ public class BpmPlatformXmlParserTest {
   }
 
   @Test
-  public void testParseProcessesXmlAntStyleProperties() {
+  void testParseProcessesXmlAntStyleProperties() {
 
     BpmPlatformXml platformXml = parser.createParse()
         .sourceUrl(getStreamUrl("bpmplatform_xml_ant_style_properties.xml"))

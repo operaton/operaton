@@ -60,9 +60,9 @@ public class ClassPathScannerTest {
   public ClassPathScannerTest(String url) {
     this.url = url;
   }
-  
+
   @BeforeAll
-  public static void setup() {
+  static void setup() {
     scanner = new ClassPathProcessApplicationScanner();
   }
   

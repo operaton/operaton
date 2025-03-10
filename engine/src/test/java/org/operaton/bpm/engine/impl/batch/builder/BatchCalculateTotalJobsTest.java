@@ -20,32 +20,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class BatchCalculateTotalJobsTest {
+class BatchCalculateTotalJobsTest {
 
   protected BatchBuilder batchBuilder = new BatchBuilder(null);
-  
+
   @Test
-  public void shouldReturnCorrectSizeUneven() {
+  void shouldReturnCorrectSizeUneven() {
     testConfiguration(2, 5, 3);
   }
 
   @Test
-  public void shouldReturnCorrectSizeZeroBatchSize() {
+  void shouldReturnCorrectSizeZeroBatchSize() {
     testConfiguration(0, 2, 0);
   }
 
   @Test
-  public void shouldReturnCorrectSizeEven() {
+  void shouldReturnCorrectSizeEven() {
     testConfiguration(2, 4, 2);
   }
 
   @Test
-  public void shouldReturnCorrectSizeZeroInstances() {
+  void shouldReturnCorrectSizeZeroInstances() {
     testConfiguration(2, 0, 0);
   }
 
   @Test
-  public void shouldReturnCorrectSizeZeroInstancesZeroBatchSize() {
+  void shouldReturnCorrectSizeZeroInstancesZeroBatchSize() {
     testConfiguration(0, 0, 0);
   }
   

@@ -48,7 +48,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  * @author Ronny Bräunlich
  *
  */
-public class StartManagedThreadPoolStepTest {
+class StartManagedThreadPoolStepTest {
 
   private final MBeanServiceContainer container = new MBeanServiceContainer();
 
@@ -61,7 +61,7 @@ public class StartManagedThreadPoolStepTest {
   private StartManagedThreadPoolStep step;
 
   @BeforeEach
-  public void setUp(){
+  void setUp(){
     step = new StartManagedThreadPoolStep();
     deploymentOperation = new DeploymentOperation("name", container, Collections.<DeploymentOperationStep> emptyList());
     jobExecutorXml = new JobExecutorXmlImpl();
@@ -70,12 +70,12 @@ public class StartManagedThreadPoolStepTest {
   }
 
   @AfterEach
-  public void tearDown(){
+  void tearDown(){
     container.stopService(ServiceTypes.BPM_PLATFORM, RuntimeContainerDelegateImpl.SERVICE_NAME_EXECUTOR);
   }
 
   @Test
-  public void performOperationStepWithDefaultProperties() {
+  void performOperationStepWithDefaultProperties() {
     Map<String, String> properties = new HashMap<>();
     jobExecutorXml.setProperties(properties);
     step.performOperationStep(deploymentOperation);
@@ -91,7 +91,7 @@ public class StartManagedThreadPoolStepTest {
   }
 
   @Test
-  public void performOperationStepWithPropertiesInXml() {
+  void performOperationStepWithPropertiesInXml() {
     Map<String, String> properties = new HashMap<>();
     String queueSize = "5";
     String corePoolSize = "12";

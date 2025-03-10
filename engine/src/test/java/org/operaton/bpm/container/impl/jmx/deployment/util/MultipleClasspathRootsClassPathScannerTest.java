@@ -32,10 +32,10 @@ import org.operaton.bpm.container.impl.deployment.scanning.ClassPathProcessAppli
  * @author Falko Menge
  * @author Daniel Meyer
  */
-public class MultipleClasspathRootsClassPathScannerTest {
+class MultipleClasspathRootsClassPathScannerTest {
 
   @Test
-  public void testScanClassPath_multipleRoots() throws MalformedURLException {
+  void testScanClassPath_multipleRoots() throws MalformedURLException {
 
     // define a classloader with multiple roots.
     URLClassLoader classLoader = new URLClassLoader(

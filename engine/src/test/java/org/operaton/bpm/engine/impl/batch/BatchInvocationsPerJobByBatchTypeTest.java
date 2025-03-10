@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class BatchInvocationsPerJobByBatchTypeTest {
+class BatchInvocationsPerJobByBatchTypeTest {
 
   ManagementService managementService;
   RuntimeService runtimeService;
@@ -46,7 +46,7 @@ public class BatchInvocationsPerJobByBatchTypeTest {
   ProcessEngineConfigurationImpl engineConfiguration;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     int defaultInvocationsPerJob =
         ProcessEngineConfigurationImpl.DEFAULT_INVOCATIONS_PER_BATCH_JOB;
 
@@ -61,7 +61,7 @@ public class BatchInvocationsPerJobByBatchTypeTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldFallbackToDefaultConfigurationWhenBatchTypeIsNotConfigured() {
+  void shouldFallbackToDefaultConfigurationWhenBatchTypeIsNotConfigured() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -77,7 +77,7 @@ public class BatchInvocationsPerJobByBatchTypeTest {
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldFallbackToGlobalConfigurationWhenBatchTypeIsNotConfigured() {
+  void shouldFallbackToGlobalConfigurationWhenBatchTypeIsNotConfigured() {
     // given
     Map<String, Integer> invocationsPerBatchJobByBatchType =
         Collections.singletonMap(Batch.TYPE_PROCESS_INSTANCE_DELETION, 10);

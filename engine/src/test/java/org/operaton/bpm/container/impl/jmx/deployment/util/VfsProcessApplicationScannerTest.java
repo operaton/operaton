@@ -30,10 +30,10 @@ import org.operaton.bpm.container.impl.deployment.scanning.ProcessApplicationSca
 /**
  * @author Clint Manning
  */
-public class VfsProcessApplicationScannerTest {
+class VfsProcessApplicationScannerTest {
 
   @Test
-  public void testScanProcessArchivePathForResources() throws MalformedURLException {
+  void testScanProcessArchivePathForResources() throws MalformedURLException {
 
     // given: scanning the relative test resource root
     URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:")});
@@ -48,7 +48,7 @@ public class VfsProcessApplicationScannerTest {
   }
 
   @Test
-  public void testScanProcessArchivePathForCmmnResources() throws MalformedURLException {
+  void testScanProcessArchivePathForCmmnResources() throws MalformedURLException {
 
     // given: scanning the relative test resource root
     URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:")});
@@ -63,7 +63,7 @@ public class VfsProcessApplicationScannerTest {
   }
 
   @Test
-  public void testScanProcessArchivePathWithAdditionalResourceSuffixes() throws MalformedURLException {
+  void testScanProcessArchivePathWithAdditionalResourceSuffixes() throws MalformedURLException {
     URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:")});
     String processRootPath = "classpath:org/operaton/bpm/container/impl/jmx/deployment/script/";
     String[] additionalResourceSuffixes = new String[] { "py", "groovy", "rb" };

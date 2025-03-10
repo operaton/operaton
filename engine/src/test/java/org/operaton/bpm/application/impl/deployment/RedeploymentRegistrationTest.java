@@ -94,7 +94,7 @@ public class RedeploymentRegistrationTest {
   }
 
   @BeforeEach
-  public void init() {
+  void init() {
     processApplication = new EmbeddedProcessApplication();
   }
 
@@ -458,7 +458,7 @@ public class RedeploymentRegistrationTest {
   // helper ///////////////////////////////////////////
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       deleteDeployment(deployment);
     }

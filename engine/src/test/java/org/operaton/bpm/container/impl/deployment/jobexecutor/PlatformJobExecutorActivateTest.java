@@ -40,13 +40,13 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguratio
  * @author Daniel Meyer
  *
  */
-public class PlatformJobExecutorActivateTest {
+class PlatformJobExecutorActivateTest {
 
   private static final String ENGINE_NAME = "PlatformJobExecutorActivateTest-engine";
   private static final String ACQUISITION_NAME = "PlatformJobExecutorActivateTest-acquisition";
 
   @Test
-  public void shouldAutoActivateIfNoPropertySet() {
+  void shouldAutoActivateIfNoPropertySet() {
 
     // given
     JobExecutorXmlImpl jobExecutorXml = defineJobExecutor();
@@ -70,7 +70,7 @@ public class PlatformJobExecutorActivateTest {
   }
 
   @Test
-  public void shouldNotAutoActivateIfConfigured() {
+  void shouldNotAutoActivateIfConfigured() {
 
     // given
     JobExecutorXmlImpl jobExecutorXml = defineJobExecutor();

@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class ProcessApplicationElResolverTest {
+class ProcessApplicationElResolverTest {
 
   RuntimeContainerDelegate runtimeContainerDelegate = null;
 
@@ -46,7 +46,7 @@ public class ProcessApplicationElResolverTest {
   CalledProcessApplication calledApp;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     runtimeContainerDelegate = RuntimeContainerDelegate.INSTANCE.get();
     runtimeContainerDelegate.registerProcessEngine(processEngine);
 
@@ -58,7 +58,7 @@ public class ProcessApplicationElResolverTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
 
     callingApp.undeploy();
     calledApp.undeploy();
@@ -73,7 +73,7 @@ public class ProcessApplicationElResolverTest {
    * in the context of the called process definition's application.
    */
   @Test
-  public void testCallActivityOutputExpression() {
+  void testCallActivityOutputExpression() {
     // given an instance of the calling process that calls the called process
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("callingProcess");
 
@@ -91,7 +91,7 @@ public class ProcessApplicationElResolverTest {
    * is resolved in the context of the calling process definition's application.
    */
   @Test
-  public void testCallActivityConditionalOutgoingFlow() {
+  void testCallActivityConditionalOutgoingFlow() {
     // given an instance of the calling process that calls the called process
     runtimeService.startProcessInstanceByKey("callingProcessConditionalFlow");
 

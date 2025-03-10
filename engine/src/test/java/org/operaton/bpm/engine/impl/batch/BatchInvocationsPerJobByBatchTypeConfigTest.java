@@ -48,12 +48,12 @@ public class BatchInvocationsPerJobByBatchTypeConfigTest {
   ProcessEngineConfigurationImpl engineConfiguration;
 
   @AfterEach
-  public void teardown() {
+  void teardown() {
     processEngine.close();
   }
 
   @Test
-  public void shouldSetInvocationsPerJobByBatchType() {
+  void shouldSetInvocationsPerJobByBatchType() {
     // when
     initEngine();
     Map<String, Integer> invocationsPerBatchJobByBatchType =
@@ -69,7 +69,7 @@ public class BatchInvocationsPerJobByBatchTypeConfigTest {
   }
 
   @Test
-  public void shouldWriteLogWhenBatchTypeIsUnknown() {
+  void shouldWriteLogWhenBatchTypeIsUnknown() {
     initEngine();
     // then
     assertThat(loggingRule.getFilteredLog("ENGINE-12014 The configuration property " +

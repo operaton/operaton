@@ -24,10 +24,10 @@ import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Test;
 
-public class ImmutablePairTest {
+class ImmutablePairTest {
 
   @Test
-  public void shouldReturnBasicValues() {
+  void shouldReturnBasicValues() {
     final ImmutablePair<Integer, String> pair = new ImmutablePair<>(0, "foo");
     assertThat(pair.getLeft().intValue()).isZero();
     assertThat(pair.getRight()).isEqualTo("foo");
@@ -37,7 +37,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldBeCompatibleToMapEntry() {
+  void shouldBeCompatibleToMapEntry() {
     final ImmutablePair<Integer, String> pair = new ImmutablePair<>(0, "foo");
     final HashMap<Integer, String> map = new HashMap<>();
     map.put(0, "foo");
@@ -46,7 +46,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldCompareWithLeftFirst() {
+  void shouldCompareWithLeftFirst() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "D");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("B", "C");
     assertThat(pair1)
@@ -58,7 +58,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldCompareWithRightSecond() {
+  void shouldCompareWithRightSecond() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "C");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("A", "D");
     assertThat(pair1)
@@ -70,7 +70,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldFailWithNonComparableTypes() {
+  void shouldFailWithNonComparableTypes() {
     final ImmutablePair<Object, Object> pair1 = new ImmutablePair<>(new Object(), new Object());
     final ImmutablePair<Object, Object> pair2 = new ImmutablePair<>(new Object(), new Object());
     try {
@@ -82,7 +82,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldFulfillEqualityRules() {
+  void shouldFulfillEqualityRules() {
     assertThat(new ImmutablePair<>(null, "foo")).isEqualTo(new ImmutablePair<>(null, "foo"));
     assertThat(new ImmutablePair<>("foo", null)).isNotEqualTo(new ImmutablePair<>("foo", 0));
     assertThat(new ImmutablePair<>("xyz", "bar")).isNotEqualTo(new ImmutablePair<>("foo", "bar"));
@@ -93,7 +93,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldHaveSameHashCodeAsEqualObject() {
+  void shouldHaveSameHashCodeAsEqualObject() {
     assertThat(new ImmutablePair<>(null, "foo")).hasSameHashCodeAs(new ImmutablePair<>(null, "foo"));
   }
 }

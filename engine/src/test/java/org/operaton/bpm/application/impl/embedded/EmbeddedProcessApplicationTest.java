@@ -66,19 +66,19 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     defaultEngineRegistered = false;
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (defaultEngineRegistered) {
       runtimeContainerDelegate.unregisterProcessEngine(processEngine);
     }
   }
 
   @Test
-  public void testDeployAppWithoutEngine() {
+  void testDeployAppWithoutEngine() {
     TestApplicationWithoutEngine processApplication = new TestApplicationWithoutEngine();
 
     assertThatCode(processApplication::deploy).doesNotThrowAnyException();
@@ -86,7 +86,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployAppWithoutProcesses() {
+  void testDeployAppWithoutProcesses() {
 
     registerProcessEngine();
 
@@ -102,7 +102,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployAppWithCustomEngine() {
+  void testDeployAppWithCustomEngine() {
 
     TestApplicationWithCustomEngine processApplication = new TestApplicationWithCustomEngine();
     processApplication.deploy();
@@ -124,7 +124,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployAppWithoutDmn() {
+  void testDeployAppWithoutDmn() {
     // given
     TestApplicationWithoutDmn processApplication = new TestApplicationWithoutDmn();
     processApplication.deploy();
@@ -153,7 +153,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployAppWithCustomDefaultEngine() {
+  void testDeployAppWithCustomDefaultEngine() {
 
     // Test if it's possible to set a custom default engine name.
     // This might happen when the "default" ProcessEngine is not available,
@@ -177,7 +177,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployAppReusingExistingEngine() {
+  void testDeployAppReusingExistingEngine() {
 
     registerProcessEngine();
 
@@ -193,7 +193,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployAppWithAdditionalResourceSuffixes() {
+  void testDeployAppWithAdditionalResourceSuffixes() {
     registerProcessEngine();
 
     TestApplicationWithAdditionalResourceSuffixes processApplication = new TestApplicationWithAdditionalResourceSuffixes();
@@ -212,7 +212,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployAppWithResources() {
+  void testDeployAppWithResources() {
     registerProcessEngine();
 
     TestApplicationWithResources processApplication = new TestApplicationWithResources();
@@ -230,7 +230,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeploymentSourceProperty() {
+  void testDeploymentSourceProperty() {
     registerProcessEngine();
 
     TestApplicationWithResources processApplication = new TestApplicationWithResources();
@@ -245,7 +245,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployProcessApplicationWithNameAttribute() {
+  void testDeployProcessApplicationWithNameAttribute() {
     TestApplicationWithCustomName pa = new TestApplicationWithCustomName();
 
     pa.deploy();
@@ -257,7 +257,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployWithTenantIds() {
+  void testDeployWithTenantIds() {
     registerProcessEngine();
 
     TestApplicationWithTenantId processApplication = new TestApplicationWithTenantId();
@@ -277,7 +277,7 @@ public class EmbeddedProcessApplicationTest {
   }
 
   @Test
-  public void testDeployWithoutTenantId() {
+  void testDeployWithoutTenantId() {
     registerProcessEngine();
 
     TestApplicationWithResources processApplication = new TestApplicationWithResources();

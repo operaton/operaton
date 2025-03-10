@@ -24,7 +24,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ClockUtilTest {
+class ClockUtilTest {
 
   private static final long ONE_SECOND = 1000L;
   private static final long TWO_SECONDS = 2000L;
@@ -32,27 +32,27 @@ public class ClockUtilTest {
   private static final long TWO_DAYS = 172800000L;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     ClockUtil.reset();
   }
 
   @AfterAll
-  public static void resetClock() {
+  static void resetClock() {
     ClockUtil.reset();
   }
 
   @Test
-  public void nowShouldReturnCurrentTime() {
+  void nowShouldReturnCurrentTime() {
     assertThat(ClockUtil.now()).isCloseTo(new Date(), ONE_SECOND);
   }
 
   @Test
-  public void getCurrentTimeShouldReturnSameValueAsNow() {
+  void getCurrentTimeShouldReturnSameValueAsNow() {
     assertThat(ClockUtil.getCurrentTime()).isCloseTo(ClockUtil.now(), ONE_SECOND);
   }
 
   @Test
-  public void offsetShouldTravelInTime() throws InterruptedException {
+  void offsetShouldTravelInTime() throws InterruptedException {
     long duration = TWO_DAYS;
     Date target = new Date(new Date().getTime() + duration);
 
@@ -64,7 +64,7 @@ public class ClockUtilTest {
   }
 
   @Test
-  public void setCurrentTimeShouldFreezeTime() throws InterruptedException {
+  void setCurrentTimeShouldFreezeTime() throws InterruptedException {
     long duration = TWO_DAYS;
     Date target = new Date(new Date().getTime() + duration);
 
@@ -76,7 +76,7 @@ public class ClockUtilTest {
   }
 
   @Test
-  public void resetClockShouldResetToCurrentTime() {
+  void resetClockShouldResetToCurrentTime() {
     long duration = TWO_DAYS;
     Date target = new Date(new Date().getTime() + duration);
 
@@ -89,7 +89,7 @@ public class ClockUtilTest {
   }
 
   @Test
-  public void resetShouldResetToCurrentTime() {
+  void resetShouldResetToCurrentTime() {
     long duration = TWO_DAYS;
     Date target = new Date(new Date().getTime() + duration);
 
@@ -103,7 +103,7 @@ public class ClockUtilTest {
   }
 
   @Test
-  public void timeShouldMoveOnAfterTravel() throws InterruptedException {
+  void timeShouldMoveOnAfterTravel() throws InterruptedException {
     Date now = new Date();
     long duration = TWO_DAYS;
     Date target = new Date(now.getTime() + duration);
@@ -118,7 +118,7 @@ public class ClockUtilTest {
   }
 
   @Test
-  public void timeShouldFreezeWithSetCurrentTime() throws InterruptedException {
+  void timeShouldFreezeWithSetCurrentTime() throws InterruptedException {
     Date now = new Date();
     long duration = TWO_DAYS;
     Date target = new Date(now.getTime() + duration);

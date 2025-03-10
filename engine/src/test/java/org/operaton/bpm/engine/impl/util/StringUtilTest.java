@@ -29,12 +29,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class StringUtilTest {
+class StringUtilTest {
 	
   ProcessEngine processEngine;
-  
+
   @Test
-  public void shouldAllowTrimToMaximumLength() {
+  void shouldAllowTrimToMaximumLength() {
     // given
     String fittingThreeByteMessage = repeatCharacter("\u9faf", StringUtil.DB_MAX_STRING_LENGTH);
     String exceedingMessage = repeatCharacter("a", StringUtil.DB_MAX_STRING_LENGTH * 2);
@@ -45,7 +45,7 @@ public class StringUtilTest {
   }
 
   @Test
-  public void shouldConvertByteArrayToString() {
+  void shouldConvertByteArrayToString() {
     // given
     String message = "This is a message string";
     byte[] bytes = message.getBytes();
@@ -58,7 +58,7 @@ public class StringUtilTest {
   }
 
   @Test
-  public void shouldConvertNullByteArrayToEmptyString() {
+  void shouldConvertNullByteArrayToEmptyString() {
     // given
     byte[] bytes = null;
 

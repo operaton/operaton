@@ -94,7 +94,7 @@ run_tests () {
 
   case "$DATABASE" in
     h2)
-      PROFILES+=(h2-in-memory)
+      PROFILES+=(h2)
       ;;
     postgresql)
       PROFILES+=(postgresql)

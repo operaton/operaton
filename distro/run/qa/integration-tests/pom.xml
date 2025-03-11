@@ -12,10 +12,6 @@
   <name>Operaton - Run - QA - Integration Tests</name>
   <packaging>jar</packaging>
 
-  <properties>
-    <install.skip>true</install.skip>
-  </properties>
-
   <dependencies>
 
     <dependency>
@@ -114,6 +110,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <!-- created jar is empty, but without the tests jar is also not created -->
+          <skipIfEmpty>false</skipIfEmpty>
+        </configuration>
         <executions>
           <execution>
             <id>create-test-jar</id>

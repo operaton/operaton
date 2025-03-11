@@ -38,15 +38,16 @@ on:
           - '["engine"]'
           - '["webapps"]'
           - '["engine", "webapps"]'
-      container:
+      distro:
         description: 'Integration Tests: Container to use'
         type: choice
         required: true
-        default: '["tomcat", "wildfly"]'
+        default: '["operaton", "tomcat", "wildfly"]'
         options:
+          - '["operaton"]'
           - '["tomcat"]'
           - '["wildfly"]'
-          - '["tomcat", "wildfly"]'
+          - '["operaton", "tomcat", "wildfly"]'
       database:
         description: 'Integration Tests: Database to use'
         type: choice
@@ -145,7 +146,7 @@ jobs:
       matrix:
         java: ${{ fromJson(github.event.inputs.java_version || '["17"]') }}
         testsuite: ${{ fromJson(github.event.inputs.testsuite || '["engine"]') }}
-        container: ${{ fromJson(github.event.inputs.container || '["tomcat", "wildfly"]') }}
+        distro: ${{ fromJson(github.event.inputs.distro || '["tomcat", "wildfly"]') }}
         database: ${{ fromJson(github.event.inputs.database || '["h2", "postgres"]') }}
     steps:
       - name: Checkout Code
@@ -167,12 +168,12 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --container=${{ matrix.container }} --db=${{ matrix.database }} --no-test
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
       - name: Execute Integration Tests
         id: maven-integration-tests
         shell: bash
         run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --container=${{ matrix.container }} --db=${{ matrix.database }} --no-build
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@v4
@@ -183,7 +184,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.container }}-${{ matrix.database }}
+          name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
           path: |
             ${{ github.workspace }}/**/target/surefire-reports/**
             ${{ github.workspace }}/qa/**/target/**/logs/**

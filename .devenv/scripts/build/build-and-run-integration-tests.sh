@@ -4,9 +4,9 @@ EXECUTE_BUILD=true
 EXECUTE_TEST=true
 TEST_SUITE="engine"
 DATABASE="h2"
-CONTAINER="tomcat"
+DISTRO="tomcat"
 VALID_TEST_SUITES=("engine" "webapps")
-VALID_CONTAINERS=("tomcat" "wildfly")
+VALID_DISTROS=("operaton" "tomcat" "wildfly")
 VALID_DATABASES=("h2" "postgresql")
 
 ##########################################################################
@@ -31,8 +31,8 @@ parse_args() {
       --testsuite=*)
         TEST_SUITE="${1#*=}"
         ;;
-      --container=*)
-        CONTAINER="${1#*=}"
+      --distro=*)
+        DISTRO="${1#*=}"
         ;;
       --db=*)
         DATABASE="${1#*=}"
@@ -48,21 +48,24 @@ parse_args() {
   done
 
   check_valid_values "testsuite" "$TEST_SUITE" "${VALID_TEST_SUITES[@]}"
-  check_valid_values "container" "$CONTAINER" "${VALID_CONTAINERS[@]}"
+  check_valid_values "distro" "$DISTRO" "${VALID_DISTROS[@]}"
   check_valid_values "db" "$DATABASE" "${VALID_DATABASES[@]}"
 }
 
 run_build () {
   PROFILES=(distro distro-webjar h2-in-memory)
 
-  if [[ "$CONTAINER" == "tomcat" ]]; then
+  if [[ "$DISTRO" == "operaton" ]]; then
+    PROFILES+=(distro-run integration-test-operaton-run)
+  fi
+  if [[ "$DISTRO" == "tomcat" ]]; then
     PROFILES+=(tomcat distro-tomcat)
   fi
-  if [[ "$CONTAINER" == "wildfly" ]]; then
+  if [[ "$DISTRO" == "wildfly" ]]; then
     PROFILES+=(wildfly distro-wildfly)
   fi
 
-  echo "ℹ️ Building $TEST_SUITE integration tests for container $CONTAINER with $DATABASE database using profiles: [${PROFILES[*]}]"
+  echo "ℹ️ Building $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
   ./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
@@ -83,12 +86,18 @@ run_tests () {
       ;;
   esac
 
-  case "$CONTAINER" in
+  case "$DISTRO" in
+    operaton)
+      PROFILES+=(integration-test-operaton-run)
+      QA_DIR=distro/run/qa
+      ;;
     tomcat)
       PROFILES+=(tomcat)
+      QA_DIR=qa
       ;;
     wildfly)
       PROFILES+=(wildfly)
+      QA_DIR=qa
       ;;
   esac
 
@@ -101,8 +110,8 @@ run_tests () {
       ;;
   esac
 
-  echo "ℹ️ Running $TEST_SUITE integration tests for container $CONTAINER with $DATABASE database using profiles: [${PROFILES[*]}]"
-  ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f qa
+  echo "ℹ️ Running $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
+  ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f $QA_DIR
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     exit 1

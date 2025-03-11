@@ -19,7 +19,6 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
 
@@ -55,12 +54,6 @@
     </dependency>
 
     <dependency>
-      <groupId>jakarta.platform</groupId>
-      <artifactId>jakarta.jakartaee-api</artifactId>
-      <version>${version.jakarta-ee-spec}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
       <version>3.4.1</version>
@@ -79,7 +72,6 @@
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
-      <version>3.0.2</version>
     </dependency>
 
     <!-- If using Java 8+, you might also need this -->
@@ -128,7 +120,6 @@
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
-      <version>6.0.0</version>
       <scope>provided</scope>
     </dependency>
 

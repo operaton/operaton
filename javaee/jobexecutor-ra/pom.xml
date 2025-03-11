@@ -33,7 +33,6 @@
     <dependency>
       <groupId>jakarta.resource</groupId>
       <artifactId>jakarta.resource-api</artifactId>
-      <version>2.1.0</version>
     </dependency>
 
     <dependency>

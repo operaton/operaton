@@ -29,13 +29,6 @@
         <scope>import</scope>
       </dependency>
 
-      <dependency>
-        <groupId>jakarta.platform</groupId>
-        <artifactId>jakarta.jakartaee-bom</artifactId>
-        <version>${version.jakarta-ee-spec}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -43,12 +36,6 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.platform</groupId>
-      <artifactId>jakarta.jakartaee-api</artifactId>
-      <version>${version.jakarta-ee-spec}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -69,7 +56,6 @@
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
-      <version>3.0.2</version>
     </dependency>
 
     <!-- If using Java 8+, you might also need this -->
@@ -116,7 +102,6 @@
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
-      <version>6.0.0</version>
       <scope>provided</scope>
     </dependency>
 
@@ -196,7 +181,6 @@
     <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
-      <version>3.1.0</version> <!-- Use latest stable version -->
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>

@@ -24,14 +24,6 @@
       <artifactId>jersey-client</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>jakarta.platform</groupId>
-      <artifactId>jakarta.jakartaee-web-api</artifactId>
-      <type>pom</type>
-      <scope>provided</scope>
-      <version>10.0.0</version>
-    </dependency>
-
   </dependencies>
   <description>${project.name}</description>
 </project>

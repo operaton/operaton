@@ -10,11 +10,22 @@
   <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
   <name>Operaton - Spin - DOM XML data format</name>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
-      <version>4.0.2</version>
     </dependency>
 
     <dependency>
@@ -92,12 +103,6 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-
-    <!--<dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-      <scope>provided</scope>
-    </dependency>-->
 
     <dependency>
       <groupId>com.sun.xml.bind</groupId>

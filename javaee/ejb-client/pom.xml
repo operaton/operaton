@@ -30,13 +30,11 @@
     <dependency>
       <groupId>jakarta.ejb</groupId>
       <artifactId>jakarta.ejb-api</artifactId>
-      <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
-      <version>6.1.0</version>
       <scope>provided</scope>
     </dependency>
 

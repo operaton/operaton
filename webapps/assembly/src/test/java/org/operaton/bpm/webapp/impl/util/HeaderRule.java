@@ -22,7 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
+import org.eclipse.jetty.util.resource.URLResourceFactory;
 import org.junit.rules.ExternalResource;
 
 /**
@@ -65,7 +66,7 @@ public class HeaderRule extends ExternalResource {
 
   protected void startServer(String webDescriptor, String scope, String contextPath, int startUpRetries) {
     webAppContext.setContextPath(contextPath);
-    webAppContext.setContextPath("/");
+    webAppContext.setBaseResource(new URLResourceFactory().newResource("/"));
     webAppContext.setDescriptor("src/test/resources/WEB-INF/" + scope + "/" + webDescriptor);
 
     server.setHandler(webAppContext);

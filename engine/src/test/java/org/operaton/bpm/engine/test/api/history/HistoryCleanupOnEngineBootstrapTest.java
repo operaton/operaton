@@ -40,6 +40,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.junit.Test;
+import org.springframework.beans.PropertyBatchUpdateException;
 
 /**
  * @author Nikola Koevski
@@ -179,6 +180,8 @@ public class HistoryCleanupOnEngineBootstrapTest {
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-batch-window-map-wrong-values.operaton.cfg.xml")
       .buildProcessEngine())
     .isInstanceOf(Exception.class)
+    .hasRootCauseInstanceOf(PropertyBatchUpdateException.class)
+    .rootCause()
     .hasMessageContaining("startTime");
   }
 

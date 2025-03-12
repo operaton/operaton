@@ -65,7 +65,7 @@ public class HeaderRule extends ExternalResource {
 
   protected void startServer(String webDescriptor, String scope, String contextPath, int startUpRetries) {
     webAppContext.setContextPath(contextPath);
-    webAppContext.setResourceBase("/");
+    webAppContext.setContextPath("/");
     webAppContext.setDescriptor("src/test/resources/WEB-INF/" + scope + "/" + webDescriptor);
 
     server.setHandler(webAppContext);

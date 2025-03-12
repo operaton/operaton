@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.webapp.plugin.resource;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.webapp.AppRuntimeDelegate;
@@ -42,29 +40,27 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.webapp.plugin.resource.AbstractAppPluginRootResource.MIME_TYPE_TEXT_CSS;
 import static org.operaton.bpm.webapp.plugin.resource.AbstractAppPluginRootResource.MIME_TYPE_TEXT_JAVASCRIPT;
 
-@RunWith(Parameterized.class)
 public class AbstractAppPluginRootResourceTest {
 
   public static final String PLUGIN_NAME = "test-plugin";
   public static final String ASSET_DIR = "plugin/asset-dir";
   public static final String ASSET_CONTENT = "content";
 
-  private final String assetName;
-  private final String assetMediaType;
-  private final boolean assetAllowed;
+  private String assetName;
+  private String assetMediaType;
+  private boolean assetAllowed;
 
   private AppRuntimeDelegate<AppPlugin> runtimeDelegate;
   private AppPluginRegistry<AppPlugin>  pluginRegistry;
   private AbstractAppPluginRootResource<AppPlugin> pluginRootResource;
   private ServletContext mockServletContext;
 
-  public AbstractAppPluginRootResourceTest(String assetName, String assetMediaType, boolean assetAllowed) {
+  public void initAbstractAppPluginRootResourceTest(String assetName, String assetMediaType, boolean assetAllowed) {
     this.assetName = assetName;
     this.assetMediaType = assetMediaType;
     this.assetAllowed = assetAllowed;
   }
 
-  @Parameters
   public static Collection<Object[]> getAssets() {
     return Arrays.asList(new Object[][]{
         {"app/plugin.js", MIME_TYPE_TEXT_JAVASCRIPT, true},
@@ -78,8 +74,8 @@ public class AbstractAppPluginRootResourceTest {
     });
   }
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     runtimeDelegate = Mockito.mock(AppRuntimeDelegate.class);
     pluginRegistry = Mockito.mock(AppPluginRegistry.class);
     AppPlugin plugin = Mockito.mock(AppPlugin.class);
@@ -95,8 +91,10 @@ public class AbstractAppPluginRootResourceTest {
     pluginRootResource.allowedAssets.add("app/asset.css");
   }
 
-  @Test
-  public void shouldGetAssetIfAllowed() throws IOException {
+  @MethodSource("getAssets")
+  @ParameterizedTest
+  void shouldGetAssetIfAllowed(String assetName, String assetMediaType, boolean assetAllowed) throws IOException {
+    initAbstractAppPluginRootResourceTest(assetName, assetMediaType, assetAllowed);
     // given
     String resourceName = "/" + ASSET_DIR + "/" + assetName;
     ByteArrayInputStream inputStream = new ByteArrayInputStream(ASSET_CONTENT.getBytes());

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyString;
@@ -54,13 +55,10 @@ import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 import org.operaton.bpm.engine.rest.spi.impl.MockedProcessEngineProvider;
 import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.MockedStatic;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
@@ -68,7 +66,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
 
-@RunWith(Parameterized.class)
 public class ContainerAuthenticationFilterTest {
 
   protected static final String SERVICE_PATH = "/operaton";
@@ -90,7 +87,7 @@ public class ContainerAuthenticationFilterTest {
   private MockedStatic<AuthenticationUtil> authenticationUtilMockedStatic;
   private MockedStatic<ProcessEngineUtil> processEngineUtilMockedStatic;
 
-  public ContainerAuthenticationFilterTest(String requestUrl, String engineName, boolean alreadyAuthenticated, boolean authenticationExpected) {
+  public void initContainerAuthenticationFilterTest(String requestUrl, String engineName, boolean alreadyAuthenticated, boolean authenticationExpected) {
     this.requestUrl = requestUrl;
     this.engineName = engineName;
     if (engineName == null) {
@@ -100,7 +97,6 @@ public class ContainerAuthenticationFilterTest {
     this.authenticationExpected = authenticationExpected;
   }
 
-  @Parameters
   public static Collection<Object[]> getRequestUrls() {
     return Arrays.asList(new Object[][]{
         {"/app/cockpit/default/", "default", false, true},
@@ -154,8 +150,8 @@ public class ContainerAuthenticationFilterTest {
     });
   }
 
-  @Before
-  public void setup() throws ServletException {
+  @BeforeEach
+  void setup() throws ServletException {
     setupProcessEngine();
     setupAuthentications();
     setupFilter();
@@ -220,19 +216,23 @@ public class ContainerAuthenticationFilterTest {
     authenticationFilter.doFilter(request, response, filterChain);
   }
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     authenticationUtilMockedStatic.close();
     processEngineUtilMockedStatic.close();
   }
 
-  @Test
-  public void shouldCheckCustomApplicationPath() throws IOException, ServletException {
+  @MethodSource("getRequestUrls")
+  @ParameterizedTest
+  void shouldCheckCustomApplicationPath(String requestUrl, String engineName, boolean alreadyAuthenticated, boolean authenticationExpected) throws IOException, ServletException {
+    initContainerAuthenticationFilterTest(requestUrl, engineName, alreadyAuthenticated, authenticationExpected);
     testContainerAuthenticationCheck("/my-custom/application/path");
   }
 
-  @Test
-  public void shouldCheckEmptyApplicationPath() throws IOException, ServletException {
+  @MethodSource("getRequestUrls")
+  @ParameterizedTest
+  void shouldCheckEmptyApplicationPath(String requestUrl, String engineName, boolean alreadyAuthenticated, boolean authenticationExpected) throws IOException, ServletException {
+    initContainerAuthenticationFilterTest(requestUrl, engineName, alreadyAuthenticated, authenticationExpected);
     testContainerAuthenticationCheck("");
   }
 
@@ -266,7 +266,7 @@ public class ContainerAuthenticationFilterTest {
     request.setContextPath(SERVICE_PATH);
     applyFilter(request, response, MockProvider.EXAMPLE_USER_ID);
 
-    Assert.assertEquals(Status.OK.getStatusCode(), response.getStatus());
+    assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
 
     if (authenticationExpected) {
       verify(authentications).addOrReplace(any(UserAuthentication.class));

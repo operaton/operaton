@@ -16,30 +16,30 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.authorization;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto;
+import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessDefinitionResource;
+import org.operaton.bpm.engine.test.Deployment;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto;
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto;
-import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessDefinitionResource;
-import org.operaton.bpm.engine.test.Deployment;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTest {
+class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTest {
 
   protected static final String USER_TASK_PROCESS_KEY = "userTaskProcess";
   protected static final String CALLING_USER_TASK_PROCESS_KEY = "CallingUserTaskProcess";
@@ -49,11 +49,9 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
   protected ProcessDefinitionResource resource;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     super.setUp();
-
-    runtimeService = processEngine.getRuntimeService();
 
     deploymentId = createDeployment(null, "processes/user-task-process.bpmn", "processes/calling-user-task-process.bpmn").getId();
 
@@ -61,14 +59,14 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     deleteDeployment(deploymentId);
     super.tearDown();
   }
 
   @Test
-  public void testCalledProcessDefinitionQueryWithoutAuthorization() {
+  void calledProcessDefinitionQueryWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
     resource = new ProcessDefinitionResource(engineName, processDefinitionId);
@@ -83,7 +81,7 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
   }
 
   @Test
-  public void testCalledProcessDefinitionQueryWithReadPermissionOnProcessInstance() {
+  void calledProcessDefinitionQueryWithReadPermissionOnProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
     resource = new ProcessDefinitionResource(engineName, processDefinitionId);
@@ -104,7 +102,7 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
   }
 
   @Test
-  public void testCalledProcessDefinitionQueryWithReadPermissionOnAnyProcessInstance() {
+  void calledProcessDefinitionQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
     resource = new ProcessDefinitionResource(engineName, processDefinitionId);
@@ -124,7 +122,7 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
   }
 
   @Test
-  public void testCalledProcessDefinitionQueryWithMultipleReadPermissions() {
+  void calledProcessDefinitionQueryWithMultipleReadPermissions() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
     resource = new ProcessDefinitionResource(engineName, processDefinitionId);
@@ -147,7 +145,7 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
   }
 
   @Test
-  public void testCalledProcessDefinitionQueryWithReadInstancePermissionOnProcessDefinition() {
+  void calledProcessDefinitionQueryWithReadInstancePermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
     resource = new ProcessDefinitionResource(engineName, processDefinitionId);
@@ -171,7 +169,7 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
     "processes/another-user-task-process.bpmn",
     "processes/dynamic-call-activity.bpmn"
   })
-  public void testCalledProcessDefinitionQueryDifferentCalledProcesses() {
+  void calledProcessDefinitionQueryDifferentCalledProcesses() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey("DynamicCallActivity").getId();
     resource = new ProcessDefinitionResource(engineName, processDefinitionId);

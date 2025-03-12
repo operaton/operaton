@@ -16,7 +16,14 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.tenantcheck;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
+import org.operaton.bpm.cockpit.impl.plugin.resources.IncidentRestService;
+import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
+import org.operaton.bpm.engine.authorization.Groups;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,30 +31,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
-import org.operaton.bpm.cockpit.impl.plugin.resources.IncidentRestService;
-import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.authorization.Groups;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTest {
+class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
   protected static final String ADMIN_GROUP = "adminGroup";
   protected static final String ADMIN_USER = "adminUser";
 
-  private ProcessEngine processEngine;
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
-  private RuntimeService runtimeService;
-  private IdentityService identityService;
 
   private IncidentRestService resource;
   private IncidentQueryDto queryParameter;
@@ -55,15 +47,8 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
   private String processInstanceTenantOne;
   private String processInstanceTenantTwo;
 
-  @Before
-  public void init() {
-
-    processEngine = getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-
-    runtimeService = processEngine.getRuntimeService();
-    identityService = processEngine.getIdentityService();
-
+  @BeforeEach
+  void init() {
     processEngineConfiguration.getAdminGroups().add(ADMIN_GROUP);
     processEngineConfiguration.getAdminUsers().add(ADMIN_USER);
 
@@ -84,14 +69,14 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
     queryParameter.setProcessInstanceIdIn(new String[]{processInstanceTenantOne, processInstanceTenantTwo});
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.getAdminGroups().remove(ADMIN_GROUP);
     processEngineConfiguration.getAdminUsers().remove(ADMIN_USER);
   }
 
   @Test
-  public void queryIncidentsByProcessInstanceIdsNoAuthenticatedTenants() {
+  void queryIncidentsByProcessInstanceIdsNoAuthenticatedTenants() {
 
     identityService.setAuthentication("user", null, null);
 
@@ -100,7 +85,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
   }
 
   @Test
-  public void queryIncidentsByProcessInstanceIdsWithAuthenticatedTenant() {
+  void queryIncidentsByProcessInstanceIdsWithAuthenticatedTenant() {
 
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -112,7 +97,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
   }
 
   @Test
-  public void queryIncidentsByProcessInstanceIdsDisabledTenantCheck() {
+  void queryIncidentsByProcessInstanceIdsDisabledTenantCheck() {
 
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
@@ -129,7 +114,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
   }
 
   @Test
-  public void queryIncidentsByProcessInstanceIdsWithOperatonAdmin() {
+  void queryIncidentsByProcessInstanceIdsWithOperatonAdmin() {
 
     identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
@@ -146,7 +131,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
   }
 
   @Test
-  public void queryIncidentsByProcessInstanceIdsWithAdminGroups() {
+  void queryIncidentsByProcessInstanceIdsWithAdminGroups() {
 
     identityService.setAuthentication("user", Collections.singletonList(ADMIN_GROUP), null);
 
@@ -163,7 +148,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
   }
 
   @Test
-  public void queryIncidentsByProcessInstanceIdsWithAdminUsers() {
+  void queryIncidentsByProcessInstanceIdsWithAdminUsers() {
 
     identityService.setAuthentication("adminUser", null, null);
 

@@ -16,61 +16,43 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
-import static junit.framework.TestCase.fail;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.IncidentRestService;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
 import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author roman.smirnov
  */
-public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
+class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
-  private ProcessEngine processEngine;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  private RepositoryService repositoryService;
-  private RuntimeService runtimeService;
   private IncidentRestService resource;
-  protected IdentityService identityService;
 
-  @Before
-  public void setUp() {
-    super.before();
-
-    processEngine = getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine
-      .getProcessEngineConfiguration();
-    repositoryService = processEngine.getRepositoryService();
-    runtimeService = processEngine.getRuntimeService();
-    identityService = processEngine.getIdentityService();
-
+  @BeforeEach
+  void setUp() {
     resource = new IncidentRestService(processEngine.getName());
   }
 
-  @After
-  public void clearAuthentication() {
+  @AfterEach
+  void clearAuthentication() {
     identityService.clearAuthentication();
   }
 
-  @After
-  public void resetQueryMaxResultsLimit() {
+  @AfterEach
+  void resetQueryMaxResultsLimit() {
     processEngineConfiguration.setQueryMaxResultsLimit(Integer.MAX_VALUE);
   }
 
@@ -78,7 +60,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/failing-process.bpmn"
   })
-  public void testQueryByProcessInstanceId() {
+  void queryByProcessInstanceId() {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("FailingProcess");
     runtimeService.startProcessInstanceByKey("FailingProcess");
 
@@ -129,7 +111,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/failing-process.bpmn"
   })
-  public void testQueryByProcessInstanceIds() {
+  void queryByProcessInstanceIds() {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("FailingProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("FailingProcess");
 
@@ -150,7 +132,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/process-with-two-parallel-failing-services.bpmn"
   })
-  public void testQueryByActivityId() {
+  void queryByActivityId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("processWithTwoParallelFailingServices");
 
     executeAvailableJobs();
@@ -195,7 +177,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/process-with-two-parallel-failing-services.bpmn"
   })
-  public void testQueryByActivityIds() {
+  void queryByActivityIds() {
     runtimeService.startProcessInstanceByKey("processWithTwoParallelFailingServices");
 
     executeAvailableJobs();
@@ -215,7 +197,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/failing-process.bpmn"
   })
-  public void testQueryByProcessInstanceIdAndActivityId() {
+  void queryByProcessInstanceIdAndActivityId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FailingProcess");
 
     executeAvailableJobs();
@@ -238,7 +220,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     "processes/failing-process.bpmn",
     "processes/process-with-two-parallel-failing-services.bpmn"
   })
-  public void testQueryByProcessInstanceIdAndActivityId_ShouldReturnEmptyList() {
+  void queryByProcessInstanceIdAndActivityIdShouldReturnEmptyList() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FailingProcess");
     runtimeService.startProcessInstanceByKey("processWithTwoParallelFailingServices");
 
@@ -262,7 +244,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     "processes/call-activity.bpmn",
     "processes/nested-call-activity.bpmn"
   })
-  public void testQueryWithNestedIncidents() {
+  void queryWithNestedIncidents() {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("NestedCallActivity");
 
     executeAvailableJobs();
@@ -312,7 +294,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
     "processes/process-with-two-parallel-failing-services.bpmn"
   })
-  public void testQueryPaginiation() {
+  void queryPaginiation() {
     runtimeService.startProcessInstanceByKey("processWithTwoParallelFailingServices");
 
     executeAvailableJobs();
@@ -341,11 +323,11 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/failing-process.bpmn",
-      "processes/call-activity.bpmn",
-      "processes/nested-call-activity.bpmn"
+    "processes/failing-process.bpmn",
+    "processes/call-activity.bpmn",
+    "processes/nested-call-activity.bpmn"
   })
-  public void testQueryByProcessDefinitionId() {
+  void queryByProcessDefinitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("NestedCallActivity");
 
     executeAvailableJobs();
@@ -376,11 +358,11 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/failing-process.bpmn",
-      "processes/call-activity.bpmn",
-      "processes/nested-call-activity.bpmn"
+    "processes/failing-process.bpmn",
+    "processes/call-activity.bpmn",
+    "processes/nested-call-activity.bpmn"
   })
-  public void testQueryByProcessDefinitionIds() {
+  void queryByProcessDefinitionIds() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("NestedCallActivity");
 
     executeAvailableJobs();
@@ -400,11 +382,11 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-      "processes/failing-process.bpmn",
-      "processes/call-activity.bpmn",
-      "processes/nested-call-activity.bpmn"
+    "processes/failing-process.bpmn",
+    "processes/call-activity.bpmn",
+    "processes/nested-call-activity.bpmn"
   })
-  public void testQuerySorting() {
+  void querySorting() {
     runtimeService.startProcessInstanceByKey("NestedCallActivity");
 
     executeAvailableJobs();
@@ -428,7 +410,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = "processes/simple-user-task-process.bpmn")
-  public void testQuerySortingByIncidentMessage()
+  void querySortingByIncidentMessage()
   {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("simpleUserTaskProcess");
@@ -446,54 +428,45 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  public void shouldReturnPaginatedResult() {
+  void shouldReturnPaginatedResult() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
     identityService.setAuthenticatedUserId("foo");
 
-    try {
+    Assertions.assertDoesNotThrow(() -> {
       // when
       resource.queryIncidents(new IncidentQueryDto(), 0, 10);
       // then: no exception expected
-    } catch (BadUserRequestException e) {
-      // then
-      fail("No exception expected");
-    }
+    }, "No exception expected");
   }
 
   @Test
-  public void shouldReturnUnboundedResult_NotAuthenticated() {
+  void shouldReturnUnboundedResult_NotAuthenticated() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    try {
+    Assertions.assertDoesNotThrow(() -> {
       // when
       resource.queryIncidents(new IncidentQueryDto(), null, null);
       // then: no exception expected
-    } catch (BadUserRequestException e) {
-      // then
-      fail("No exception expected");
-    }
+    }, "No exception expected");
   }
 
   @Test
-  public void shouldReturnUnboundedResult_NoLimitConfigured() {
+  void shouldReturnUnboundedResult_NoLimitConfigured() {
     // given
     identityService.setAuthenticatedUserId("foo");
 
-    try {
+    Assertions.assertDoesNotThrow(() -> {
       // when
       resource.queryIncidents(new IncidentQueryDto(), null, null);
       // then: no exception expected
-    } catch (BadUserRequestException e) {
-      // then
-      fail("No exception expected");
-    }
+    }, "No exception expected");
   }
 
   @Test
-  public void shouldThrowExceptionWhenMaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenMaxResultsLimitExceeded() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
@@ -510,7 +483,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenQueryUnbounded() {
+  void shouldThrowExceptionWhenQueryUnbounded() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 

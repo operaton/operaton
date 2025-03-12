@@ -17,16 +17,16 @@
 package org.operaton.bpm.admin.plugin.base;
 
 import org.apache.ibatis.logging.LogFactory;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.admin.Admin;
 import org.operaton.bpm.admin.impl.DefaultAdminRuntimeDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.util.LogUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 public abstract class AbstractAdminPluginTest {
 
@@ -37,32 +37,32 @@ public abstract class AbstractAdminPluginTest {
     LogFactory.useJdkLogging();
   }
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule(true);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().ensureCleanAfterTest(true).build();
 
-  @BeforeClass
+  @BeforeAll
   public static void beforeClass() {
     Admin.setAdminRuntimeDelegate(RUNTIME_DELEGATE);
   }
 
-  @AfterClass
+  @AfterAll
   public static void afterClass() {
     Admin.setAdminRuntimeDelegate(null);
   }
 
-  @Before
+  @BeforeEach
   public void before() {
     RUNTIME_DELEGATE.engine = getProcessEngine();
   }
 
-  @After
+  @AfterEach
   public void after() {
     RUNTIME_DELEGATE.engine = null;
     getProcessEngine().getIdentityService().clearAuthentication();
   }
 
   public ProcessEngine getProcessEngine() {
-    return processEngineRule.getProcessEngine();
+    return processEngineExtension.getProcessEngine();
   }
 
   private static class TestAdminRuntimeDelegate extends DefaultAdminRuntimeDelegate {

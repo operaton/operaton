@@ -19,6 +19,8 @@ package org.operaton.bpm.webapp.impl.engine;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.io.File;
+
+import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -26,7 +28,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-import org.junit.Test;
 
 public class WebappsDatabaseNamingConsistencyTest {
 
@@ -35,7 +36,7 @@ public class WebappsDatabaseNamingConsistencyTest {
       "org/operaton/bpm/admin/plugin/base/queries" };
 
   @Test
-  public void shouldNotFindLowercaseDbColumnNamesInMappings() {
+  void shouldNotFindLowercaseDbColumnNamesInMappings() {
     // given the rule that all DB column names are created in uppercase
 
     // when scanning all mapping files for lowercase column names

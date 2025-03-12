@@ -66,6 +66,7 @@ run_build () {
   fi
 
   echo "ℹ️ Building $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
+  echo "./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install"
   ./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
@@ -111,6 +112,7 @@ run_tests () {
   esac
 
   echo "ℹ️ Running $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
+  echo "./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f $QA_DIR"
   ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f $QA_DIR
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"

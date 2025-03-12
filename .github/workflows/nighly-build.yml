@@ -39,7 +39,7 @@ on:
           - '["webapps"]'
           - '["engine", "webapps"]'
       distro:
-        description: 'Integration Tests: Container to use'
+        description: 'Integration Tests: Distribution to use'
         type: choice
         required: true
         default: '["operaton", "tomcat", "wildfly"]'

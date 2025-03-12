@@ -242,7 +242,7 @@ public class ProcessEngineExtension implements TestWatcher,
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
     // we disable the authorization check when deploying before the test starts
-    boolean authorizationEnabled = processEngineConfiguration.isAuthorizationEnabled();
+    boolean oldValue = processEngineConfiguration.isAuthorizationEnabled();
     try {
       processEngineConfiguration.setAuthorizationEnabled(false);
       deploymentId = TestHelper.annotationDeploymentSetUp(processEngine, testClass, testMethod.getName(), null, testMethod.getParameterTypes());
@@ -252,7 +252,7 @@ public class ProcessEngineExtension implements TestWatcher,
       Assumptions.assumeTrue(hasRequiredDatabase, "ignored because the database doesn't match the required ones");
     } finally {
       // after the initialization we restore authorization to the state defined by the test
-      processEngineConfiguration.setAuthorizationEnabled(authorizationEnabled);
+      processEngineConfiguration.setAuthorizationEnabled(oldValue);
     }
     
   }
@@ -291,7 +291,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public void afterAll(ExtensionContext context) {
-    deleteHistoryCleanupJob();
+	  deleteHistoryCleanupJob();
   }
 
   private void deleteHistoryCleanupJob() {

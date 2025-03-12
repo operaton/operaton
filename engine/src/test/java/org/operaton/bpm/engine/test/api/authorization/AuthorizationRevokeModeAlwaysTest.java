@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
 
 public class AuthorizationRevokeModeAlwaysTest extends AuthorizationTest {
 

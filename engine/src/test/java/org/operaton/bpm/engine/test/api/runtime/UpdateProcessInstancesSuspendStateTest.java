@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 
+import java.util.Set;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -36,7 +37,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
-import com.google.common.collect.Sets;
 
 public class UpdateProcessInstancesSuspendStateTest {
 
@@ -206,7 +206,8 @@ public class UpdateProcessInstancesSuspendStateTest {
 
     // when the process instances are suspended
     runtimeService.updateProcessInstanceSuspensionState()
-      .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Sets.newHashSet(processInstance1.getId(), processInstance2.getId()))).suspend();
+      .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(
+              Set.of(processInstance1.getId(), processInstance2.getId()))).suspend();
 
     // Update the process instances and they are suspended
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
@@ -229,11 +230,11 @@ public class UpdateProcessInstancesSuspendStateTest {
 
     // when the process instances are suspended
     runtimeService.updateProcessInstanceSuspensionState()
-      .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Sets.newHashSet(processInstance1.getId(), processInstance2.getId()))).suspend();
+      .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Set.of(processInstance1.getId(), processInstance2.getId()))).suspend();
 
     // when they are activated again
     runtimeService.updateProcessInstanceSuspensionState()
-      .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Sets.newHashSet(processInstance1.getId(), processInstance2.getId()))).activate();
+      .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Set.of(processInstance1.getId(), processInstance2.getId()))).activate();
 
 
     // Update the process instances and they are active again

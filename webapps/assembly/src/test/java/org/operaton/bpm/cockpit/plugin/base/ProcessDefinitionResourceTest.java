@@ -16,73 +16,51 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
-import static junit.framework.TestCase.fail;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
-import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.*;
-
+import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessDefinitionResource;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
 import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
-public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-  private ProcessEngine processEngine;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  private RuntimeService runtimeService;
-  private RepositoryService repositoryService;
-  private ProcessDefinitionResource resource;
-  protected IdentityService identityService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
 
-  @Before
-  public void setUp() {
-    super.before();
+class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
+  ProcessDefinitionResource resource;
 
-    processEngine = getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine
-      .getProcessEngineConfiguration();
-
-    runtimeService = processEngine.getRuntimeService();
-    repositoryService = processEngine.getRepositoryService();
-    identityService = processEngine.getIdentityService();
-  }
-
-  @After
-  public void clearAuthentication() {
+  @AfterEach
+  void clearAuthentication() {
     identityService.clearAuthentication();
   }
 
-  @After
-  public void resetQueryMaxResultsLimit() {
+  @AfterEach
+  void resetQueryMaxResultsLimit() {
     processEngineConfiguration.setQueryMaxResultsLimit(Integer.MAX_VALUE);
   }
 
   @Test
   @Deployment(resources = {
-    "processes/user-task-process.bpmn",
-    "processes/calling-user-task-process.bpmn"
+      "processes/user-task-process.bpmn",
+      "processes/calling-user-task-process.bpmn"
   })
-  public void testCalledProcessDefinitionByParentProcessDefinitionId() {
+  void testCalledProcessDefinitionByParentProcessDefinitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("CallingUserTaskProcess");
 
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
@@ -115,9 +93,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
   @Test
   @Deployment(resources = {
       "processes/user-task-process.bpmn",
-    "processes/two-parallel-call-activities-calling-same-process.bpmn"
+      "processes/two-parallel-call-activities-calling-same-process.bpmn"
   })
-  public void testCalledProcessDefinitionByParentProcessDefinitionIdWithTwoActivityCallingSameProcess() {
+  void testCalledProcessDefinitionByParentProcessDefinitionIdWithTwoActivityCallingSameProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingSameProcess");
 
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
@@ -147,18 +125,18 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
       } else if (activityId.equals("secondCallActivity")) {
         assertThat(activityId).isEqualTo("secondCallActivity");
       } else {
-        Assert.fail("Unexpected activity id:" + activityId);
+        fail("Unexpected activity id:" + activityId);
       }
     }
   }
 
   @Test
   @Deployment(resources = {
-    "processes/user-task-process.bpmn",
-    "processes/two-parallel-call-activities-calling-same-process.bpmn",
-    "processes/calling-user-task-process.bpmn"
+      "processes/user-task-process.bpmn",
+      "processes/two-parallel-call-activities-calling-same-process.bpmn",
+      "processes/calling-user-task-process.bpmn"
   })
-  public void testCalledProcessDefinitionByCallingSameProcessFromDifferentProcessDefinitions() {
+  void testCalledProcessDefinitionByCallingSameProcessFromDifferentProcessDefinitions() {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingSameProcess");
     ProcessDefinitionResource resource1 = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance1.getProcessDefinitionId());
 
@@ -190,7 +168,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
       } else if (activityId.equals("secondCallActivity")) {
         assertThat(activityId).isEqualTo("secondCallActivity");
       } else {
-        Assert.fail("Unexpected activity id:" + activityId);
+        fail("Unexpected activity id:" + activityId);
       }
     }
 
@@ -216,11 +194,11 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-    "processes/user-task-process.bpmn",
-    "processes/another-user-task-process.bpmn",
-    "processes/two-parallel-call-activities-calling-different-process.bpmn"
+      "processes/user-task-process.bpmn",
+      "processes/another-user-task-process.bpmn",
+      "processes/two-parallel-call-activities-calling-different-process.bpmn"
   })
-  public void testCalledProcessDefinitionByCallingDifferentProcessFromSameProcessDefinitions() {
+  void testCalledProcessDefinitionByCallingDifferentProcessFromSameProcessDefinitions() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingDifferentProcess");
 
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
@@ -260,7 +238,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
         assertThat(calledFrom).isEqualTo("secondCallActivity");
 
       } else {
-        Assert.fail("Unexpected process definition: " + id);
+        fail("Unexpected process definition: " + id);
       }
 
       assertThat(dto.getId()).isEqualTo(compareWith.getId());
@@ -273,11 +251,11 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-    "processes/user-task-process.bpmn",
-    "processes/another-user-task-process.bpmn",
-    "processes/dynamic-call-activity.bpmn"
+      "processes/user-task-process.bpmn",
+      "processes/another-user-task-process.bpmn",
+      "processes/dynamic-call-activity.bpmn"
   })
-  public void testCalledProcessDefinitionByCallingDifferentProcessFromSameCallActivity() {
+  void testCalledProcessDefinitionByCallingDifferentProcessFromSameCallActivity() {
     Map<String, Object> vars1 = new HashMap<>();
     vars1.put("callProcess", "userTaskProcess");
     runtimeService.startProcessInstanceByKey("DynamicCallActivity", vars1);
@@ -315,7 +293,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
       } else if (id.equals(anotherUserTaskProcess.getId())) {
         compareWith = anotherUserTaskProcess;
       } else {
-        Assert.fail("Unexpected process definition: " + id);
+        fail("Unexpected process definition: " + id);
       }
 
       assertThat(dto.getId()).isEqualTo(compareWith.getId());
@@ -335,8 +313,8 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn",
       "processes/calling-user-task-process.bpmn",
       "processes/nested-calling-user-task-process.bpmn"
-    })
-  public void testCalledProcessDefinitionQueryBySuperProcessDefinitionId() {
+  })
+  void testCalledProcessDefinitionQueryBySuperProcessDefinitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("NestedCallingUserTaskProcess");
 
     ProcessDefinition callingUserTaskProcess = repositoryService
@@ -373,11 +351,11 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-    "processes/user-task-process.bpmn",
-    "processes/another-user-task-process.bpmn",
-    "processes/two-parallel-call-activities-calling-different-process.bpmn"
+      "processes/user-task-process.bpmn",
+      "processes/another-user-task-process.bpmn",
+      "processes/two-parallel-call-activities-calling-different-process.bpmn"
   })
-  public void testCalledProcessDefinitionQueryByActivityId() {
+  void testCalledProcessDefinitionQueryByActivityId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingDifferentProcess");
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
 
@@ -444,11 +422,11 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-    "processes/user-task-process.bpmn",
-    "processes/another-user-task-process.bpmn",
-    "processes/two-parallel-call-activities-calling-different-process.bpmn"
+      "processes/user-task-process.bpmn",
+      "processes/another-user-task-process.bpmn",
+      "processes/two-parallel-call-activities-calling-different-process.bpmn"
   })
-  public void testCalledProcessDefinitionQueryByBusinessKey() {
+  void testCalledProcessDefinitionQueryByBusinessKey() {
     runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingDifferentProcess", "aBusinessKey");
     runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingDifferentProcess", "anotherBusinessKey");
 
@@ -477,11 +455,11 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-    "processes/user-task-process.bpmn",
-    "processes/another-user-task-process.bpmn",
-    "processes/two-parallel-call-activities-calling-different-process.bpmn"
+      "processes/user-task-process.bpmn",
+      "processes/another-user-task-process.bpmn",
+      "processes/two-parallel-call-activities-calling-different-process.bpmn"
   })
-  public void testCalledProcessDefinitionQueryByInvalidBusinessKey() {
+  void testCalledProcessDefinitionQueryByInvalidBusinessKey() {
     runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingDifferentProcess", "aBusinessKey");
 
     ProcessDefinition parallelProcess = repositoryService.createProcessDefinitionQuery()
@@ -499,10 +477,10 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-    "processes/variables-process-with-call-activity.bpmn",
-    "processes/user-task-process.bpmn"
+      "processes/variables-process-with-call-activity.bpmn",
+      "processes/user-task-process.bpmn"
   })
-  public void testQueryWithBooleanVariable() {
+  void testQueryWithBooleanVariable() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("variableProcessWithCallActivity");
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
@@ -521,11 +499,11 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
   @Test
   @Deployment(resources = {
-    "processes/user-task-process.bpmn",
-    "processes/another-user-task-process.bpmn",
-    "processes/dynamic-call-activity.bpmn"
+      "processes/user-task-process.bpmn",
+      "processes/another-user-task-process.bpmn",
+      "processes/dynamic-call-activity.bpmn"
   })
-  public void testQueryWithVariable() {
+  void testQueryWithVariable() {
     // given
     Map<String, Object> vars1 = new HashMap<>();
     vars1.put("callProcess", "userTaskProcess");
@@ -567,8 +545,8 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
   @Deployment(resources = {
       "processes/variables-process-with-call-activity.bpmn",
       "processes/user-task-process.bpmn"
-    })
-  public void testQueryWithStringVariable() {
+  })
+  void testQueryWithStringVariable() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("variableProcessWithCallActivity");
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
@@ -590,7 +568,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
       "processes/variables-process-with-call-activity.bpmn",
       "processes/user-task-process.bpmn"
   })
-  public void testQueryWithFloatVariable() {
+  void testQueryWithFloatVariable() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("variableProcessWithCallActivity");
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
@@ -612,7 +590,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
       "processes/variables-process-with-call-activity.bpmn",
       "processes/user-task-process.bpmn"
   })
-  public void testQueryWithIntegerVariable() {
+  void testQueryWithIntegerVariable() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("variableProcessWithCallActivity");
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
@@ -635,7 +613,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
   })
   @RequiredDatabase(excludes = {DbSqlSessionFactory.MYSQL, DbSqlSessionFactory.MARIADB})
-  public void testQueryWithComplexVariableFilter() {
+  void testQueryWithComplexVariableFilter() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("variableProcessWithCallActivity");
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), processInstance.getProcessDefinitionId());
@@ -662,7 +640,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  public void shouldNotThrowExceptionWhenQueryUnbounded() {
+  void shouldNotThrowExceptionWhenQueryUnbounded() {
     // given
     resource = new ProcessDefinitionResource(getProcessEngine().getName(), "anId");
 
@@ -675,7 +653,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
       resource.queryCalledProcessDefinitions(new ProcessDefinitionQueryDto());
       // then: no exception thrown
     } catch (BadUserRequestException e) {
-      fail("No exception expected");
+      TestCase.fail("No exception expected");
     }
   }
 

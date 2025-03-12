@@ -16,32 +16,27 @@
  */
 package org.operaton.bpm.webapp.impl.db;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import java.util.Collections;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
-public class QuerySessionFactoryTest {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule("operaton-skip-check.cfg.xml");
+class QuerySessionFactoryTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().configurationResource("operaton-skip-check.cfg.xml").build();
 
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
-  public void setUp() throws Exception {
-    processEngineConfiguration = processEngineRule.getProcessEngineConfiguration();
-  }
-
   @Test
-  public void testQuerySessionFactoryInitializationFromEngineConfig() {
+  void querySessionFactoryInitializationFromEngineConfig() {
     // given
     QuerySessionFactory querySessionFactory = new QuerySessionFactory();
-    processEngineConfiguration = processEngineRule.getProcessEngineConfiguration();
+    processEngineConfiguration = processEngineExtension.getProcessEngineConfiguration();
 
     // when
     querySessionFactory.initFromProcessEngineConfiguration(processEngineConfiguration, Collections.emptyList());

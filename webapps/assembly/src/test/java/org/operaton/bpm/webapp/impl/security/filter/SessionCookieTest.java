@@ -16,111 +16,111 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.webapp.impl.util.HeaderExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.webapp.impl.util.HeaderRule;
-import org.junit.Rule;
-import org.junit.Test;
+class SessionCookieTest {
 
-public class SessionCookieTest {
-
-  @Rule
-  public HeaderRule headerRule = new HeaderRule();
+  @RegisterExtension
+  HeaderExtension headerExtension = new HeaderExtension();
 
   @Test
-  public void shouldConfigureDefault() {
+  void shouldConfigureDefault() {
     // given
-    headerRule.startServer("web.xml", "session");
+    headerExtension.startServer("web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "Lax", false));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex("operaton", "Lax", false));
   }
 
   @Test
-  public void shouldConfigureRootContextPath() {
+  void shouldConfigureRootContextPath() {
     // given
-    headerRule.startServer("web.xml", "session", "/");
+    headerExtension.startServer("web.xml", "session", "/");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex(null, "Lax", false));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex(null, "Lax", false));
   }
 
   @Test
-  public void shouldConfigureSecureEnabled() {
+  void shouldConfigureSecureEnabled() {
     // given
-    headerRule.startServer("secure_enabled_web.xml", "session");
+    headerExtension.startServer("secure_enabled_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "Lax", true));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex("operaton", "Lax", true));
   }
 
   @Test
-  public void shouldConfigureSameSiteDisabled() {
+  void shouldConfigureSameSiteDisabled() {
     // given
-    headerRule.startServer("same_site_disabled_web.xml", "session");
+    headerExtension.startServer("same_site_disabled_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", null, false));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex("operaton", null, false));
   }
 
   @Test
-  public void shouldConfigureSameSiteOptionStrict() {
+  void shouldConfigureSameSiteOptionStrict() {
     // given
-    headerRule.startServer("same_site_option_strict_web.xml", "session");
+    headerExtension.startServer("same_site_option_strict_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "Strict", false));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex("operaton", "Strict", false));
   }
 
   @Test
-  public void shouldConfigureSameSiteOptionLax() {
+  void shouldConfigureSameSiteOptionLax() {
     // given
-    headerRule.startServer("same_site_option_lax_web.xml", "session");
+    headerExtension.startServer("same_site_option_lax_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "Lax", false));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex("operaton", "Lax", false));
   }
 
   @Test
-  public void shouldConfigureSameSiteCustomValue() {
+  void shouldConfigureSameSiteCustomValue() {
     // given
-    headerRule.startServer("same_site_custom_value_web.xml", "session");
+    headerExtension.startServer("same_site_custom_value_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "aCustomValue", false));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex("operaton", "aCustomValue", false));
   }
 
   @Test
-  public void shouldThrowExceptionWhenConfiguringBothSameSiteOptionAndValue() {
+  void shouldThrowExceptionWhenConfiguringBothSameSiteOptionAndValue() {
     // given
-    headerRule.startServer("same_site_option_value_web.xml", "session");
+    headerExtension.startServer("same_site_option_value_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
-    Throwable expectedException = headerRule.getException();
+    Throwable expectedException = headerExtension.getException();
 
     // then
     assertThat(expectedException)
@@ -129,14 +129,14 @@ public class SessionCookieTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenConfiguringUnknownSameSiteOption() {
+  void shouldThrowExceptionWhenConfiguringUnknownSameSiteOption() {
     // given
-    headerRule.startServer("same_site_option_unknown_web.xml", "session");
+    headerExtension.startServer("same_site_option_unknown_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
-    Throwable expectedException = headerRule.getException();
+    Throwable expectedException = headerExtension.getException();
 
     // then
     assertThat(expectedException)
@@ -145,39 +145,40 @@ public class SessionCookieTest {
   }
 
   @Test
-  public void shouldIgnoreCaseOfParamValues() {
+  void shouldIgnoreCaseOfParamValues() {
     // given
-    headerRule.startServer("ignore_case_web.xml", "session");
+    headerExtension.startServer("ignore_case_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "Lax", true));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex("operaton", "Lax", true));
   }
 
   @Test
-  public void shouldConfigureCookieName() {
+  void shouldConfigureCookieName() {
     // given
-    headerRule.startServer("changed_cookie_name_web.xml", "session");
+    headerExtension.startServer("changed_cookie_name_web.xml", "session");
 
     // when
-    headerRule.performRequest();
+    headerExtension.performRequest();
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "MYCOOKIENAME", "Lax", false));
+    assertThat(headerExtension.getCookieHeader()).matches(
+            headerExtension.getSessionCookieRegex("operaton", "MYCOOKIENAME", "Lax", false));
   }
 
   @Test
-  public void shouldConfigureWhenCookieIsSent() {
+  void shouldConfigureWhenCookieIsSent() {
     // given
-    headerRule.startServer("web.xml", "session");
+    headerExtension.startServer("web.xml", "session");
 
     // when
-    headerRule.performRequestWithHeader("Cookie", "JSESSIONID=aToken");
+    headerExtension.performRequestWithHeader("Cookie", "JSESSIONID=aToken");
 
     // then
-    assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "Lax", false));
+    assertThat(headerExtension.getCookieHeader()).matches(headerExtension.getSessionCookieRegex("operaton", "Lax", false));
   }
 
 }

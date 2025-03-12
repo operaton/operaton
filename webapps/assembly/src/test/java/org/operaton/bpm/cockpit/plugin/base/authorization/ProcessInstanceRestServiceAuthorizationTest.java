@@ -24,19 +24,18 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessInstanceDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessInstanceQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessInstanceRestService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTest {
+class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTest {
 
   protected static final String USER_TASK_PROCESS_KEY = "userTaskProcess";
 
@@ -45,7 +44,7 @@ public class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTe
   protected ProcessInstanceRestService resource;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     super.setUp();
 
@@ -57,14 +56,14 @@ public class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTe
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     deleteDeployment(deploymentId);
     super.tearDown();
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void queryWithoutAuthorization() {
     // given
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
@@ -76,7 +75,7 @@ public class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryWithReadPermissionOnProcessInstance() {
+  void queryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = selectAnyProcessInstanceByKey(USER_TASK_PROCESS_KEY).getId();
 
@@ -93,7 +92,7 @@ public class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessInstance() {
+  void queryWithReadPermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
 
@@ -107,7 +106,7 @@ public class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryWithReadInstancePermissionOnProcessDefinition() {
+  void queryWithReadInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, USER_TASK_PROCESS_KEY, userId, READ_INSTANCE);
 
@@ -121,7 +120,7 @@ public class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryPaginationWithOverlappingPermissions() {
+  void queryPaginationWithOverlappingPermissions() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, USER_TASK_PROCESS_KEY, userId, READ_INSTANCE);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);

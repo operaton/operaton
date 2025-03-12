@@ -16,48 +16,38 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.tenantcheck;
 
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto;
-import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessDefinitionRestService;
-import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.authorization.Groups;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.rest.dto.CountResultDto;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto;
+import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessDefinitionRestService;
+import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
+import org.operaton.bpm.engine.authorization.Groups;
+import org.operaton.bpm.engine.rest.dto.CountResultDto;
+
 import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginTest {
+class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
   protected static final String ADMIN_GROUP = "adminGroup";
   protected static final String ADMIN_USER = "adminUser";
 
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
-  private IdentityService identityService;
   private ProcessDefinitionRestService resource;
   private UriInfo uriInfo;
   private final MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
 
-  @Before
-  public void init() {
-
-    ProcessEngine processEngine = getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-
-    identityService = processEngine.getIdentityService();
+  @BeforeEach
+  void init() {
 
     processEngineConfiguration.getAdminGroups().add(ADMIN_GROUP);
     processEngineConfiguration.getAdminUsers().add(ADMIN_USER);
@@ -74,15 +64,15 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
     queryParameters.add("sortOrder", "asc");
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.getAdminGroups().remove(ADMIN_GROUP);
     processEngineConfiguration.getAdminUsers().remove(ADMIN_USER);
     queryParameters.clear();
   }
 
   @Test
-  public void queryStatisticsNoAuthenticatedTenant() {
+  void queryStatisticsNoAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -96,7 +86,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void queryStatisticsWithAuthenticatedTenant() {
+  void queryStatisticsWithAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
 
@@ -111,7 +101,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void queryStatisticsWithDisabledTenantCheck() {
+  void queryStatisticsWithDisabledTenantCheck() {
     // given
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
@@ -128,7 +118,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void queryStatisticsWithOperatonAdmin() {
+  void queryStatisticsWithOperatonAdmin() {
     // given
     identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
@@ -144,7 +134,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void queryStatisticsWithAdminGroups() {
+  void queryStatisticsWithAdminGroups() {
     // given
     identityService.setAuthentication("user", Collections.singletonList(ADMIN_GROUP), null);
 
@@ -160,7 +150,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void queryStatisticsWithAdminUsers() {
+  void queryStatisticsWithAdminUsers() {
     // given
     identityService.setAuthentication("adminUser", null, null);
 
@@ -176,7 +166,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void getStatisticsCountNoAuthenticatedTenant() {
+  void getStatisticsCountNoAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -188,7 +178,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void getStatisticsCountWithAuthenticatedTenant() {
+  void getStatisticsCountWithAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
 
@@ -200,7 +190,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void getStatisticsCountWithDisabledTenantCheck() {
+  void getStatisticsCountWithDisabledTenantCheck() {
     // given
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
@@ -213,7 +203,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void getStatisticsCountWithOperatonAdmin() {
+  void getStatisticsCountWithOperatonAdmin() {
     // given
     identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
@@ -225,7 +215,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void getStatisticsCountWithAdminGroups() {
+  void getStatisticsCountWithAdminGroups() {
     // given
     identityService.setAuthentication("user", Collections.singletonList(ADMIN_GROUP), null);
 
@@ -237,7 +227,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   }
 
   @Test
-  public void getStatisticsCountWithAdminUsers() {
+  void getStatisticsCountWithAdminUsers() {
     // given
     identityService.setAuthentication("adminUser", null, null);
 

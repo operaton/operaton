@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import java.util.List;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -30,43 +31,38 @@ import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.springframework.mock.web.MockHttpServletRequest;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserAuthenticationResourceLoggingTest {
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule("operaton-test-engine.cfg.xml");
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch("org.operaton.bpm.webapp")
+  @RegisterExtension
+  static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().configurationResource("operaton-test-engine.cfg.xml").build();
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch("org.operaton.bpm.webapp")
       .level(Level.INFO);
 
-  protected ProcessEngine processEngine;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected IdentityService identityService;
-  protected AuthorizationService authorizationService;
+  ProcessEngine processEngine;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  IdentityService identityService;
+  AuthorizationService authorizationService;
 
   protected boolean authorizationEnabledInitialValue;
   protected boolean webappsAuthenticationLoggingEnabledInitialValue;
 
-  @Before
-  public void setUp() {
-    this.processEngine = processEngineRule.getProcessEngine();
-    this.processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-    this.identityService = processEngine.getIdentityService();
-    this.authorizationService = processEngine.getAuthorizationService();
-
+  @BeforeEach
+  void setUp() {
     authorizationEnabledInitialValue = processEngineConfiguration.isAuthorizationEnabled();
     webappsAuthenticationLoggingEnabledInitialValue = processEngineConfiguration.isWebappsAuthenticationLoggingEnabled();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
     processEngineConfiguration.setAuthorizationEnabled(authorizationEnabledInitialValue);
     processEngineConfiguration.setWebappsAuthenticationLoggingEnabled(webappsAuthenticationLoggingEnabledInitialValue);
@@ -82,7 +78,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldProduceLogStatementOnValidLogin() {
+  void shouldProduceLogStatementOnValidLogin() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");
@@ -103,7 +99,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldNotProduceLogStatementOnValidLoginWhenDisabled() {
+  void shouldNotProduceLogStatementOnValidLoginWhenDisabled() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");
@@ -123,7 +119,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldProduceLogStatementOnInvalidLogin() {
+  void shouldProduceLogStatementOnInvalidLogin() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");
@@ -144,7 +140,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldNotProduceLogStatementOnInvalidLoginWhenDisabled() {
+  void shouldNotProduceLogStatementOnInvalidLoginWhenDisabled() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");
@@ -164,7 +160,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldProduceLogStatementOnLogout() {
+  void shouldProduceLogStatementOnLogout() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");
@@ -186,7 +182,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldNotProduceLogStatementOnLogoutWhenDisabled() {
+  void shouldNotProduceLogStatementOnLogoutWhenDisabled() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");
@@ -207,7 +203,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldNotProduceLogStatementOnLogoutWhenNoAuthentication() {
+  void shouldNotProduceLogStatementOnLogoutWhenNoAuthentication() {
     // given
     UserAuthenticationResource authResource = new UserAuthenticationResource();
     authResource.request = new MockHttpServletRequest();
@@ -223,7 +219,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldProduceLogStatementOnLoginWhenAuthorized() {
+  void shouldProduceLogStatementOnLoginWhenAuthorized() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");
@@ -252,7 +248,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldProduceLogStatementOnLoginWhenNotAuthorized() {
+  void shouldProduceLogStatementOnLoginWhenNotAuthorized() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");
@@ -274,7 +270,7 @@ public class UserAuthenticationResourceLoggingTest {
   }
 
   @Test
-  public void shouldNotProduceLogStatementOnLoginWhenNotAuthorizedAndWebappsLoggingDisabled() {
+  void shouldNotProduceLogStatementOnLoginWhenNotAuthorizedAndWebappsLoggingDisabled() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");

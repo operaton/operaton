@@ -16,15 +16,18 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessDefinitionRestService;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
 import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
@@ -32,48 +35,28 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
 
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.UriInfo;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
-public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
-
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
-  private RepositoryService repositoryService;
-  private RuntimeService runtimeService;
+class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
   private ProcessDefinitionRestService resource;
-  private IdentityService identityService;
   private UriInfo uriInfo;
   private final MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
 
-  @Before
-  public void setUp() {
-    super.before();
-
-    ProcessEngine processEngine = getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-    repositoryService = processEngine.getRepositoryService();
-    runtimeService = processEngine.getRuntimeService();
-    identityService = processEngine.getIdentityService();
-
+  @BeforeEach
+  void setUp() {
     resource = new ProcessDefinitionRestService(processEngine.getName());
 
     uriInfo = Mockito.mock(UriInfo.class);
     Mockito.doReturn(queryParameters).when(uriInfo).getQueryParameters();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.clearAuthentication();
     processEngineConfiguration.setQueryMaxResultsLimit(Integer.MAX_VALUE);
     queryParameters.clear();
@@ -126,7 +109,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldThrowExceptionWhenMaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenMaxResultsLimitExceeded() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
     identityService.setAuthenticatedUserId("foo");
@@ -142,7 +125,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldThrowExceptionWhenQueryUnbounded() {
+  void shouldThrowExceptionWhenQueryUnbounded() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
     identityService.setAuthenticatedUserId("foo");
@@ -158,18 +141,15 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldReturnUnboundedResultWhenNotAuthenticated() {
+  void shouldReturnUnboundedResultWhenNotAuthenticated() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    try {
+    Assertions.assertDoesNotThrow(() -> {
       // when
       resource.queryStatistics(uriInfo, null, null);
       // then: no exception expected
-    } catch (BadUserRequestException e) {
-      // then
-      fail("No exception expected");
-    }
+    }, "No exception expected");
   }
 
   protected void assertProcessDefinitionStatisticsDto(ProcessDefinitionStatisticsDto actual,
@@ -188,7 +168,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldAggregateResultsByKeyAndTenantId() {
+  void shouldAggregateResultsByKeyAndTenantId() {
     // given
     deployProcesses(1, "A", "Process A", 1, 3, "default");
     repositoryService.suspendProcessDefinitionByKey("A");
@@ -210,7 +190,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldNotAggregateIfTenantIdIsDifferent() {
+  void shouldNotAggregateIfTenantIdIsDifferent() {
     // given
     deployProcesses(1, "A", "Process A", 1, 3, "tenant1");
     repositoryService.suspendProcessDefinitionByKey("A");
@@ -255,7 +235,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldReturnPaginatedResult() {
+  void shouldReturnPaginatedResult() {
     // given
     deployProcesses(10);
     queryParameters.add("sortBy", "key");
@@ -285,7 +265,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldFilterResultByKey() {
+  void shouldFilterResultByKey() {
     // given
     deployProcesses(2);
     deployProcesses(2, "Something", "Descriptive Name");
@@ -296,7 +276,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldFilterResultByName() {
+  void shouldFilterResultByName() {
     // given
     deployProcesses(2);
     deployProcesses(2, "Something", "Descriptive Name");
@@ -321,7 +301,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldFilterResultByLike() {
+  void shouldFilterResultByLike() {
     // given
     deployProcesses(2);
     deployProcesses(2, "AwesomeProcess", "Descriptive Process Name");
@@ -334,7 +314,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldFilterResultByNameLike() {
+  void shouldFilterResultByNameLike() {
     // given
     deployProcesses(2);
     deployProcesses(2, "AwesomeProcess", "Descriptive Process Name");
@@ -366,7 +346,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldSortResult() {
+  void shouldSortResult() {
     // given
     deployProcesses(1, "A", "Process A", 1, 3, "tenant2");
     deployProcesses(1, "B", "Process B", 3, 1, "tenant0");
@@ -395,7 +375,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   @Test
-  public void shouldReturnCorrectStatistics() {
+  void shouldReturnCorrectStatistics() {
     // given a process with two process instances
     deployProcesses(1, "A", "Process A", 2, 0, "tenant1");
 

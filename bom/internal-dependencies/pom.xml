@@ -273,6 +273,18 @@
         <version>${version.openjpa}</version>
       </dependency>
 
+      <!-- Jetty -->
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-server</artifactId>
+        <version>${version.jetty}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-webapp</artifactId>
+        <version>${version.jetty}</version>
+      </dependency>
+
       <!-- groovy script engine dependencies -->
       <dependency>
         <groupId>org.apache.groovy</groupId>

@@ -111,15 +111,13 @@ jobs:
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
           SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
-          echo "skip_tests=$SKIP_TESTS"
-          ./mvnw \
-            -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \
-            install \
-            versions:dependency-updates-aggregate-report \
-            versions:plugin-updates-aggregate-report \
-            -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \
-            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list \
-            -DskipTests=$SKIP_TESTS
+          
+          CMD=".devenv/scripts/build/build.sh --profile=max --reports"
+          if [ "$SKIP_TESTS" = "true" ]; then
+              CMD="$CMD --skip-tests"
+          fi
+          $CMD
+
           .github/scripts/prepare-reports.sh
           ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete

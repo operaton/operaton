@@ -70,6 +70,7 @@ run_build () {
   ./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
+    popd > /dev/null
     exit 1
   fi
 }
@@ -116,6 +117,7 @@ run_tests () {
   ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f $QA_DIR
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
+    popd > /dev/null
     exit 1
   fi
 }
@@ -138,6 +140,5 @@ if [[ "$EXECUTE_TEST" == true ]]; then
 else
   echo "ℹ️ Skipping tests"
 fi
-
 
 popd > /dev/null

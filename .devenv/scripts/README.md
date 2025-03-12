@@ -7,6 +7,36 @@ The scripts are intended to be run from the root of the repository.
 
 This directory contains scripts that are used to build the project.
 
+## `build.sh`
+
+Use this script to perform the build of the project.
+
+The script has the following options:
+
+- `--profile=<PROFILE>` - The build profile to use. Valid values: `fast`, `normal` (default), `max`. This will activate a different amount of Maven profiles.
+- `--reports` - Execute Reporting plugins to generate update reports, code statistics.
+- `--skip-tests` - Skip the test execution.
+
+Any further arguments will be passed to the Maven build. 
+
+### Examples
+
+To build the project with the `fast` profile and skip the tests, you can run:
+
+```bash
+build.sh --profile=fast --skip-tests
+```
+
+Build the project with the `normal` profile and generate reports:
+```bash
+build.sh --reports
+```
+
+Build the project with the `max` profile and execute just a specific test:
+```bash
+build.sh --profile=max -Dsurefire.includes="**/MyTest*"
+```
+
 ## `build-and-run-integration-tests.sh`
 
 Use this script to perform various integration tests. 

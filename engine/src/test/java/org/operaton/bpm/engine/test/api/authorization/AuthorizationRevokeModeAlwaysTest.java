@@ -25,12 +25,14 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class AuthorizationRevokeModeAlwaysTest extends AuthorizationTest {
 
@@ -38,16 +40,16 @@ public class AuthorizationRevokeModeAlwaysTest extends AuthorizationTest {
 
   protected String defaultRevokeMode;
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
       .watch(LOGGING_CONTEXT, Level.DEBUG);
 
-  @Before
+  @BeforeEach
   public void storeRevokeMode() {
     defaultRevokeMode = processEngineConfiguration.getAuthorizationCheckRevokes();
   }
 
-  @After
+  @AfterEach
   public void resetRevokeMode() {
     processEngineConfiguration.setAuthorizationCheckRevokes(defaultRevokeMode);
   }

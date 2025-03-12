@@ -24,6 +24,10 @@ import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
 import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
@@ -33,9 +37,6 @@ import org.operaton.bpm.engine.history.HistoricIdentityLinkLogQuery;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest {
@@ -44,7 +45,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   protected static final String CASE_KEY = "oneTaskCase";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy( "org/operaton/bpm/engine/test/api/authorization/oneTaskProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn");
@@ -52,7 +53,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     processEngineConfiguration.setEnableHistoricInstancePermissions(false);

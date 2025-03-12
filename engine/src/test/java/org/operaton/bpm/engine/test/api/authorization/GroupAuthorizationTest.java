@@ -29,8 +29,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -52,7 +53,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   public static final String TEST_USER_ID = "testUser";
   public static final List<String> TEST_GROUP_IDS = Arrays.asList("testGroup1", "testGroup2", "testGroup3");
 
-  @Before
+  @BeforeEach
   @Override
   public void setUp() {
     createUser(TEST_USER_ID);

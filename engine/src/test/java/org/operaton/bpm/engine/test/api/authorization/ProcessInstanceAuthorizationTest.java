@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
@@ -37,10 +40,6 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -60,7 +59,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   protected boolean ensureSpecificVariablePermission;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
@@ -76,7 +75,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     processEngineConfiguration.setEnforceSpecificVariablePermission(ensureSpecificVariablePermission);

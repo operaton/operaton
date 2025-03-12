@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Groups;
 
 import java.util.Collections;

@@ -25,12 +25,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.management.ActivityStatistics;
 import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
 import org.operaton.bpm.engine.management.IncidentStatistics;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -41,9 +42,9 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
   protected static final String ONE_INCIDENT_PROCESS_KEY = "process";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
-    testRule.deploy("org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml");
+	testRule.deploy("org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml");
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);

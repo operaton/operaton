@@ -23,12 +23,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  *
@@ -45,7 +45,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
 
   protected String defaultTaskPermissionValue;
 
-  @After
+  @AfterEach
   @Override
   public void tearDown() {
     // reset default permission

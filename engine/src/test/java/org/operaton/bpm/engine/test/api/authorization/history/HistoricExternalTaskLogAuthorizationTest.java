@@ -38,9 +38,9 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest {
@@ -51,7 +51,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   protected static final String ANOTHER_PROCESS_KEY = "AnotherProcess";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     BpmnModelInstance defaultModel = createDefaultExternalTaskModel().build();
     BpmnModelInstance modifiedModel = createDefaultExternalTaskModel().processKey(ANOTHER_PROCESS_KEY).build();
@@ -60,7 +60,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     processEngineConfiguration.setEnableHistoricInstancePermissions(false);

@@ -31,6 +31,9 @@ import static org.assertj.core.api.Assertions.*;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
@@ -44,8 +47,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -57,7 +58,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   protected static final String TWO_TASKS_PROCESS_KEY = "twoTasksProcess";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",

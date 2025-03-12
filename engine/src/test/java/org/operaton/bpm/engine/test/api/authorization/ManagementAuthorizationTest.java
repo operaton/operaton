@@ -23,8 +23,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.authorization.SystemPermissions;
@@ -49,7 +50,13 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   protected static final String DUMMY_METRIC = "dummyMetric";
 
   @Override
-  @After
+  @BeforeEach
+  public void setUp() {
+    super.setUp();
+  }
+  
+  @Override
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     managementService.deleteProperty(DUMMY_PROPERTY);

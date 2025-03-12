@@ -26,10 +26,12 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
@@ -44,7 +46,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   protected String instance2Id;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
@@ -53,6 +55,12 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
     instance1Id = startProcessInstanceByKey("oneExternalTaskProcess").getId();
     instance2Id = startProcessInstanceByKey("twoExternalTaskProcess").getId();
     super.setUp();
+  }
+  
+  @Override
+  @AfterEach
+  public void tearDown() {
+    super.tearDown();
   }
 
   @Test

@@ -25,16 +25,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
-import org.junit.Before;
-import org.junit.Test;
 
 public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
 
   protected String instance1Id;
   protected String instance2Id;
 
-  @Before
+  @BeforeEach
   @Override
   public void setUp() {
     testRule.deploy(

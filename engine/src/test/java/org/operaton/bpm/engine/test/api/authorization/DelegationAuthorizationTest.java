@@ -24,6 +24,10 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -45,8 +49,6 @@ import org.operaton.bpm.engine.test.api.authorization.service.MyFormFieldValidat
 import org.operaton.bpm.engine.test.api.authorization.service.MyServiceTaskActivityBehaviorExecuteCommand;
 import org.operaton.bpm.engine.test.api.authorization.service.MyServiceTaskActivityBehaviorExecuteQuery;
 import org.operaton.bpm.engine.test.api.authorization.service.MyTaskService;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -56,7 +58,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   public static final String DEFAULT_PROCESS_KEY = "process";
 
-  @Before
+  @BeforeEach
   @Override
   public void setUp() {
     MyDelegationService.clearProperties();

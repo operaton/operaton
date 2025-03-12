@@ -24,13 +24,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.io.InputStream;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinitionQuery;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Philipp Ossler
@@ -41,7 +42,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   protected static final String DECISION_DEFINITION_KEY = "sampleDecision";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/authorization/singleDecision.dmn11.xml",

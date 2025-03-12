@@ -25,12 +25,13 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.management.DeploymentStatistics;
 import org.operaton.bpm.engine.management.DeploymentStatisticsQuery;
 import org.operaton.bpm.engine.management.IncidentStatistics;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -47,7 +48,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   protected String thirdDeploymentId;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     firstDeploymentId = createDeployment("first", "org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml").getId();
     secondDeploymentId = createDeployment("second", "org/operaton/bpm/engine/test/api/authorization/timerStartEventProcess.bpmn20.xml").getId();
@@ -56,7 +57,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     deleteDeployment(firstDeploymentId);

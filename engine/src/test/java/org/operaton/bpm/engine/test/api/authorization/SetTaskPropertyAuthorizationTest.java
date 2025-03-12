@@ -17,10 +17,7 @@
 
 package org.operaton.bpm.engine.test.api.authorization;
 
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.TASK_ASSIGN;
@@ -33,24 +30,22 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.util.ClockTestUtil;
+import org.operaton.bpm.engine.test.util.ObjectProperty;
+import org.operaton.bpm.engine.test.util.TriConsumer;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@RunWith(Parameterized.class)
-@SuppressWarnings("java:S1117")
+@Parameterized
 public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
 
   protected static final String PROCESS_KEY = "oneTaskProcess";
-
-  @Rule
-  public EntityRemoveRule entityRemoveRule = EntityRemoveRule.of(testRule);
 
   @Parameter(0)
   public String operationName;
@@ -71,7 +66,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
    * setValue: The value to use to set property to
    * taskQueryBuilderMethodName: The corresponding taskQuery builder method name to use for assertion purposes
    */
-  @Parameters(name = "{0}")
+  @Parameters
   public static List<Object[]> data() {
     TriConsumer<TaskService, String, Object> setPriority = (taskService, taskId, value) -> taskService.setPriority(taskId, (int) value);
     TriConsumer<TaskService, String, Object> setName = (taskService, taskId, value) -> taskService.setName(taskId, (String) value);
@@ -89,14 +84,13 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml");
     super.setUp();
   }
 
-  @Test
-  @RemoveAfter
+  @TestTemplate
   public void shouldSetOperationStandaloneWithoutAuthorization() {
     // given
     createTask(taskId);
@@ -111,10 +105,10 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
           "The user with id '" + userId + "' does not have one of the following permissions: 'TASK_ASSIGN'",
           e.getMessage());
     }
+    deleteTask(taskId, true);
   }
 
-  @Test
-  @RemoveAfter
+  @TestTemplate
   public void shouldSetOperationStandalone() {
     // given
     createTask(taskId);
@@ -128,10 +122,11 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
 
     assertThat(task).isNotNull();
     assertHasPropertyValue(task, operationName, value);
+    
+    deleteTask(taskId, true);
   }
 
-  @Test
-  @RemoveAfter
+  @TestTemplate
   public void shouldSetOperationStandaloneWithTaskAssignPermission() {
     // given
     createTask(taskId);
@@ -145,9 +140,11 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
 
     assertThat(task).isNotNull();
     assertHasPropertyValue(task, operationName, value);
+    
+    deleteTask(taskId, true);
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationOnProcessWithTaskAssignPermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
@@ -165,7 +162,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     assertHasPropertyValue(task, operationName, value);
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationOnProcessWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
@@ -187,7 +184,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationOnProcessWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
@@ -205,7 +202,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     assertHasPropertyValue(task, operationName, value);
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationOnProcessWithTaskAssignPermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
@@ -223,7 +220,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     assertHasPropertyValue(task, operationName, value);
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationOnProcessWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
@@ -241,7 +238,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     assertHasPropertyValue(task, operationName, value);
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationOnProcessWithTaskAssignPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
@@ -259,7 +256,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     assertHasPropertyValue(task, operationName, value);
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationOnProcessTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
@@ -278,7 +275,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     assertHasPropertyValue(task, operationName, value);
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationOnProcessWithTaskAssignPermission() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);

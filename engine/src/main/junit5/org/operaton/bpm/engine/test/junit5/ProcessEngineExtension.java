@@ -168,7 +168,7 @@ import org.slf4j.Logger;
  * </p>
  */
 public class ProcessEngineExtension implements TestWatcher,
-    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, BeforeAllCallback,
+    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback,BeforeAllCallback,
     AfterAllCallback, ParameterResolver, ProcessEngineServices, ProcessEngineProvider {
 
   protected static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
@@ -304,11 +304,11 @@ public class ProcessEngineExtension implements TestWatcher,
       processEngine.getProcessEngineConfiguration().setTenantCheckEnabled(true);
     }
 
-   TestHelper.resetIdGenerator(processEngineConfiguration);
-   ClockUtil.reset();
-   PlatformDiagnosticsRegistry.clear();
+      TestHelper.resetIdGenerator(processEngineConfiguration);
+      ClockUtil.reset();
+      PlatformDiagnosticsRegistry.clear();
 
-   for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
+      for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
      historyService.deleteUserOperationLogEntry(logEntry.getId());
    }
 

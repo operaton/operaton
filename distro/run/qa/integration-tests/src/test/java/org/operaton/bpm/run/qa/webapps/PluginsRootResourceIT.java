@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import jakarta.ws.rs.core.Response;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 import org.junit.jupiter.api.AfterEach;

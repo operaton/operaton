@@ -27,7 +27,7 @@
   <properties>
     <operaton.artifact>org.operaton.bpm.engine.variable</operaton.artifact>
     <operaton.osgi.import.additional>
-      !javax.activation
+      !jakarta.activation
     </operaton.osgi.import.additional>
   </properties>
   <dependencies>
@@ -61,6 +61,12 @@
       <groupId>jakarta.activation</groupId>
       <artifactId>jakarta.activation-api</artifactId>
       <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.angus</groupId>
+      <artifactId>jakarta.mail</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

@@ -16,7 +16,32 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import org.operaton.bpm.engine.*;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
+import org.junit.jupiter.api.extension.TestInstancePostProcessor;
+import org.junit.jupiter.api.extension.TestWatcher;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.ProcessEngineServices;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -28,18 +53,21 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.slf4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.extension.*;
-import org.slf4j.Logger;
 
 /**
  * JUnit 5 Extension to create and inject a {@link ProcessEngine} into test classes.
@@ -214,7 +242,7 @@ public class ProcessEngineExtension implements TestWatcher,
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
     // we disable the authorization check when deploying before the test starts
-    boolean oldValue = processEngineConfiguration.isAuthorizationEnabled();
+    boolean authorizationEnabled = processEngineConfiguration.isAuthorizationEnabled();
     try {
       processEngineConfiguration.setAuthorizationEnabled(false);
       deploymentId = TestHelper.annotationDeploymentSetUp(processEngine, testClass, testMethod.getName(), null, testMethod.getParameterTypes());
@@ -224,7 +252,7 @@ public class ProcessEngineExtension implements TestWatcher,
       Assumptions.assumeTrue(hasRequiredDatabase, "ignored because the database doesn't match the required ones");
     } finally {
       // after the initialization we restore authorization to the state defined by the test
-      processEngineConfiguration.setAuthorizationEnabled(oldValue);
+      processEngineConfiguration.setAuthorizationEnabled(authorizationEnabled);
     }
     
   }
@@ -263,7 +291,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public void afterAll(ExtensionContext context) {
-	  deleteHistoryCleanupJob();
+    deleteHistoryCleanupJob();
   }
 
   private void deleteHistoryCleanupJob() {

@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  * @author Roman Smirnov
  *
  */
-public class ExecutionAuthorizationTest extends AuthorizationTest {
+class ExecutionAuthorizationTest extends AuthorizationTest {
 
   protected static final String ONE_TASK_PROCESS_KEY = "oneTaskProcess";
   protected static final String MESSAGE_BOUNDARY_PROCESS_KEY = "messageBoundaryProcess";
@@ -50,7 +50,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithoutAuthorization() {
+  void testSimpleQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -62,7 +62,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadPermissionOnProcessInstance() {
+  void testSimpleQueryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -79,7 +79,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadPermissionOnAnyProcessInstance() {
+  void testSimpleQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
@@ -96,7 +96,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithMultiple() {
+  void testSimpleQueryWithMultiple() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
@@ -110,7 +110,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindExecutionWithRevokedReadPermissionOnProcess() {
+  void shouldNotFindExecutionWithRevokedReadPermissionOnProcess() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, ANY, READ);
@@ -124,7 +124,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadInstancesPermissionOnOneTaskProcess() {
+  void testSimpleQueryWithReadInstancesPermissionOnOneTaskProcess() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ_INSTANCE);
@@ -141,7 +141,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
+  void testSimpleQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
@@ -158,7 +158,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
@@ -177,7 +177,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnProcessInstance() {
+  void testQueryWithReadPermissionOnProcessInstance() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
@@ -202,7 +202,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessInstance() {
+  void testQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
@@ -223,7 +223,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancesPermissionOnOneTaskProcess() {
+  void testQueryWithReadInstancesPermissionOnOneTaskProcess() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
@@ -244,7 +244,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
@@ -265,7 +265,7 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryShouldReturnAllExecutions() {
+  void testQueryShouldReturnAllExecutions() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(MESSAGE_BOUNDARY_PROCESS_KEY);
     createGrantAuthorization(PROCESS_INSTANCE, processInstance.getId(), userId, READ);

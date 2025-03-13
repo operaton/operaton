@@ -31,12 +31,12 @@ import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 
-public class TaskCommentAuthorizationTest extends AuthorizationTest {
+class TaskCommentAuthorizationTest extends AuthorizationTest {
 
   protected static final String PROCESS_KEY = "oneTaskProcess";
 
   @Test
-  public void testDeleteTaskCommentWithoutAuthorization() {
+  void testDeleteTaskCommentWithoutAuthorization() {
     // given
     createTask(TASK_ID);
     Comment createdComment = createComment(TASK_ID, null, "aComment");
@@ -58,7 +58,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteTaskComment() {
+  void testDeleteTaskComment() {
     // given
     createTask(TASK_ID);
     Comment createdComment = taskService.createComment(TASK_ID, null, "aComment");
@@ -76,7 +76,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteTaskCommentsWithoutAuthorization() {
+  void testDeleteTaskCommentsWithoutAuthorization() {
     // given
     createTask(TASK_ID);
     createComment(TASK_ID, null, "aComment");
@@ -97,7 +97,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteTaskComments() {
+  void testDeleteTaskComments() {
     // given
     createTask(TASK_ID);
     taskService.createComment(TASK_ID, null, "aCommentOne");
@@ -117,7 +117,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testUpdateTaskCommentWithoutAuthorization() {
+  void testUpdateTaskCommentWithoutAuthorization() {
     // given
     createTask(TASK_ID);
     Comment createdComment = createComment(TASK_ID, null, "originalComment");
@@ -139,7 +139,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testUpdateTaskComment() {
+  void testUpdateTaskComment() {
     // given
     createTask(TASK_ID);
     String commentMessage = "OriginalCommentMessage";
@@ -161,7 +161,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testDeleteProcessTaskCommentWithoutAuthorization() {
+  void testDeleteProcessTaskCommentWithoutAuthorization() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
     var taskId = selectSingleTask().getId();
@@ -181,7 +181,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testDeleteProcessTaskComment() {
+  void testDeleteProcessTaskComment() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();
@@ -199,7 +199,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testDeleteProcessTaskCommentsWithoutAuthorization() {
+  void testDeleteProcessTaskCommentsWithoutAuthorization() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();
@@ -220,7 +220,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testDeleteProcessTaskComments() {
+  void testDeleteProcessTaskComments() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();
@@ -239,7 +239,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testUpdateProcessTaskCommentWithoutAuthorization() {
+  void testUpdateProcessTaskCommentWithoutAuthorization() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
     var taskId = selectSingleTask().getId();
@@ -259,7 +259,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testUpdateProcessTaskComment() {
+  void testUpdateProcessTaskComment() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();

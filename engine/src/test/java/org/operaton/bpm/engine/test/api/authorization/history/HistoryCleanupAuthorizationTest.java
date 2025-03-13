@@ -52,7 +52,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
+class HistoryCleanupAuthorizationTest extends AuthorizationTest {
 
   @BeforeEach
   @Override
@@ -72,9 +72,9 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupWithAuthorization() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupWithAuthorization() {
     // given
     prepareInstances(5, 5, 5);
 
@@ -91,9 +91,9 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupWithoutAuthorization() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupWithoutAuthorization() {
     // given
     prepareInstances(5, 5, 5);
 

@@ -62,7 +62,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   // historic identity link query (standalone task) - Authorization
 
   @Test
-  public void testQueryForStandaloneTaskHistoricIdentityLinkWithoutAuthorization() {
+  void testQueryForStandaloneTaskHistoricIdentityLinkWithoutAuthorization() {
     // given
     disableAuthorization();
 
@@ -84,7 +84,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testQueryForTaskHistoricIdentityLinkWithoutUserPermission() {
+  void testQueryForTaskHistoricIdentityLinkWithoutUserPermission() {
     // given
     disableAuthorization();
     startProcessInstanceByKey(ONE_PROCESS_KEY);
@@ -104,7 +104,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testQueryForTaskHistoricIdentityLinkWithUserPermission() {
+  void testQueryForTaskHistoricIdentityLinkWithUserPermission() {
     // given
     disableAuthorization();
     startProcessInstanceByKey(ONE_PROCESS_KEY);
@@ -121,7 +121,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testQueryWithMultiple() {
+  void testQueryWithMultiple() {
     // given
     disableAuthorization();
     startProcessInstanceByKey(ONE_PROCESS_KEY);
@@ -139,7 +139,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void shouldNotFindLinkWithRevokedReadHistoryPermissionOnAnyProcessDefinition() {
+  void shouldNotFindLinkWithRevokedReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     disableAuthorization();
     startProcessInstanceByKey(ONE_PROCESS_KEY);
@@ -157,7 +157,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testQueryCaseTask() {
+  void testQueryCaseTask() {
     // given
     testRule.createCaseInstanceByKey(CASE_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -175,7 +175,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testMixedQuery() {
+  void testMixedQuery() {
 
     disableAuthorization();
     // given
@@ -224,7 +224,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricTask() {
+  void testCheckNonePermissionOnHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -242,7 +242,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricTask() {
+  void testCheckReadPermissionOnHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -260,7 +260,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadPermissionOnStandaloneHistoricTask() {
+  void testCheckReadPermissionOnStandaloneHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -285,7 +285,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckNonePermissionOnStandaloneHistoricTask() {
+  void testCheckNonePermissionOnStandaloneHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -309,7 +309,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadPermissionOnCompletedHistoricTask() {
+  void testCheckReadPermissionOnCompletedHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -330,7 +330,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricTaskAndReadHistoryPermissionOnProcessDefinition() {
+  void testCheckNonePermissionOnHistoricTaskAndReadHistoryPermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -352,7 +352,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricTaskAndNonePermissionOnProcessDefinition() {
+  void testCheckReadPermissionOnHistoricTaskAndNonePermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -375,7 +375,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testHistoricTaskPermissionsAuthorizationDisabled() {
+  void testHistoricTaskPermissionsAuthorizationDisabled() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -394,7 +394,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricProcessInstance() {
+  void testCheckNonePermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -411,7 +411,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricProcessInstance() {
+  void testCheckReadPermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -430,7 +430,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadPermissionOnCompletedHistoricProcessInstance() {
+  void testCheckReadPermissionOnCompletedHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -453,7 +453,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
+  void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -477,7 +477,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
+  void testCheckReadOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 

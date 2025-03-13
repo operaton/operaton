@@ -50,7 +50,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Philipp Ossler
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest {
+class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest {
 
   protected static final String PROCESS_KEY = "testProcess";
   protected static final String DECISION_DEFINITION_KEY = "testDecision";
@@ -84,7 +84,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     startProcessInstanceAndEvaluateDecision();
 
@@ -96,7 +96,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testQueryWithReadPermissionOnDecisionDefinition() {
+  void testQueryWithReadPermissionOnDecisionDefinition() {
     // given
     startProcessInstanceAndEvaluateDecision();
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, READ_HISTORY);
@@ -109,7 +109,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyDecisionDefinition() {
+  void testQueryWithReadPermissionOnAnyDecisionDefinition() {
     // given
     startProcessInstanceAndEvaluateDecision();
     createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ_HISTORY);
@@ -122,7 +122,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testQueryWithMultiple() {
+  void testQueryWithMultiple() {
     // given
     startProcessInstanceAndEvaluateDecision();
     createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ_HISTORY);
@@ -136,7 +136,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void shouldNotFindDecisionInstanceWithRevokedReadPermissionOnAnyDecisionDefinition() {
+  void shouldNotFindDecisionInstanceWithRevokedReadPermissionOnAnyDecisionDefinition() {
     // given
     startProcessInstanceAndEvaluateDecision();
     createGrantAuthorization(DECISION_DEFINITION, ANY, ANY, READ_HISTORY);
@@ -150,7 +150,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testDeleteHistoricDecisionInstanceWithoutAuthorization(){
+  void testDeleteHistoricDecisionInstanceWithoutAuthorization(){
     // given
     startProcessInstanceAndEvaluateDecision();
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
@@ -161,7 +161,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testDeleteHistoricDecisionInstanceWithDeleteHistoryPermissionOnDecisionDefinition() {
+  void testDeleteHistoricDecisionInstanceWithDeleteHistoryPermissionOnDecisionDefinition() {
     // given
     startProcessInstanceAndEvaluateDecision();
     createGrantAuthorization(DECISION_DEFINITION, ANY, userId, DELETE_HISTORY);
@@ -178,7 +178,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
 }
 
   @Test
-  public void testDeleteHistoricDecisionInstanceWithDeleteHistoryPermissionOnAnyDecisionDefinition() {
+  void testDeleteHistoricDecisionInstanceWithDeleteHistoryPermissionOnAnyDecisionDefinition() {
     // given
     startProcessInstanceAndEvaluateDecision();
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, DELETE_HISTORY);
@@ -194,7 +194,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testDeleteHistoricDecisionInstanceByInstanceIdWithoutAuthorization() {
+  void testDeleteHistoricDecisionInstanceByInstanceIdWithoutAuthorization() {
 
     // given
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, READ_HISTORY);
@@ -209,7 +209,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testDeleteHistoricDecisionInstanceByInstanceIdWithDeleteHistoryPermissionOnDecisionDefinition() {
+  void testDeleteHistoricDecisionInstanceByInstanceIdWithDeleteHistoryPermissionOnDecisionDefinition() {
 
     // given
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, DELETE_HISTORY, READ_HISTORY);
@@ -227,7 +227,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testHistoryCleanupReportWithoutAuthorization() {
+  void testHistoryCleanupReportWithoutAuthorization() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, 5, 10);
 
@@ -239,7 +239,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testHistoryCleanupReportWithAuthorization() {
+  void testHistoryCleanupReportWithAuthorization() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, 5, 10);
 
@@ -256,7 +256,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testHistoryCleanupReportWithReadPermissionOnly() {
+  void testHistoryCleanupReportWithReadPermissionOnly() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, 5, 10);
 
@@ -270,7 +270,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void testHistoryCleanupReportWithReadHistoryPermissionOnly() {
+  void testHistoryCleanupReportWithReadHistoryPermissionOnly() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, 5, 10);
 
@@ -284,7 +284,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   @Test
-  public void shouldNotFindCleanupReportWithRevokedReadHistoryPermissionOnDecisionDefinition() {
+  void shouldNotFindCleanupReportWithRevokedReadHistoryPermissionOnDecisionDefinition() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, 5, 10);
 

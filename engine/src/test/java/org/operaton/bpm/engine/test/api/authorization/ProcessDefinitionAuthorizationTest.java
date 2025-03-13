@@ -52,7 +52,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Roman Smirnov
  *
  */
-public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
+class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
   protected static final String ONE_TASK_PROCESS_KEY = "oneTaskProcess";
   protected static final String TWO_TASKS_PROCESS_KEY = "twoTasksProcess";
@@ -67,7 +67,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     // given user is not authorized to read any process definition
 
@@ -79,7 +79,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadPermissionOnAnyProcessDefinition() {
     // given
     // given user gets read permission on any process definition
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
@@ -92,7 +92,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithMultiple() {
+  void testQueryWithMultiple() {
     // given
     // given user gets read permission on any process definition
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
@@ -106,7 +106,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnOneTaskProcess() {
+  void testQueryWithReadPermissionOnOneTaskProcess() {
     // given
     // given user gets read permission on "oneTaskProcess" process definition
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
@@ -123,7 +123,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithRevokedReadPermission() {
+  void testQueryWithRevokedReadPermission() {
     // given
     // given user gets all permissions on any process definition
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, ALL);
@@ -145,7 +145,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithGroupAuthorizationRevokedReadPermission() {
+  void testQueryWithGroupAuthorizationRevokedReadPermission() {
     // given
     // given user gets all permissions on any process definition
     Authorization authorization = createGrantAuthorization(PROCESS_DEFINITION, ANY);
@@ -172,7 +172,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // get process definition /////////////////////////////////////////////////////
 
   @Test
-  public void testGetProcessDefinitionWithoutAuthorizations() {
+  void testGetProcessDefinitionWithoutAuthorizations() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
@@ -188,7 +188,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetProcessDefinition() {
+  void testGetProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
@@ -203,7 +203,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // get deployed process definition /////////////////////////////////////////////////////
 
   @Test
-  public void testGetDeployedProcessDefinitionWithoutAuthorizations() {
+  void testGetDeployedProcessDefinitionWithoutAuthorizations() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
@@ -222,7 +222,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDeployedProcessDefinition() {
+  void testGetDeployedProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
@@ -237,7 +237,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // get process diagram /////////////////////////////////////////////////////
 
   @Test
-  public void testGetProcessDiagramWithoutAuthorizations() {
+  void testGetProcessDiagramWithoutAuthorizations() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
@@ -256,7 +256,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetProcessDiagram() {
+  void testGetProcessDiagram() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
@@ -272,7 +272,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // get process model /////////////////////////////////////////////////////
 
   @Test
-  public void testGetProcessModelWithoutAuthorizations() {
+  void testGetProcessModelWithoutAuthorizations() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
@@ -291,7 +291,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetProcessModel() {
+  void testGetProcessModel() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
@@ -306,7 +306,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // get bpmn model instance /////////////////////////////////////////////////////
 
   @Test
-  public void testGetBpmnModelInstanceWithoutAuthorizations() {
+  void testGetBpmnModelInstanceWithoutAuthorizations() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
@@ -325,7 +325,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetBpmnModelInstance() {
+  void testGetBpmnModelInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
@@ -340,7 +340,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // get process diagram layout /////////////////////////////////////////////////
 
   @Test
-  public void testGetProcessDiagramLayoutWithoutAuthorization() {
+  void testGetProcessDiagramLayoutWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
@@ -359,7 +359,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetProcessDiagramLayout() {
+  void testGetProcessDiagramLayout() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
@@ -375,7 +375,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend process definition by id ///////////////////////////////////////////
 
   @Test
-  public void testSuspendProcessDefinitionByIdWithoutAuthorization() {
+  void testSuspendProcessDefinitionByIdWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
@@ -395,7 +395,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionById() {
+  void testSuspendProcessDefinitionById() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
@@ -409,7 +409,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByIdWithSuspendPermission() {
+  void testSuspendProcessDefinitionByIdWithSuspendPermission() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND);
@@ -425,7 +425,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // activate process definition by id ///////////////////////////////////////////
 
   @Test
-  public void testActivateProcessDefinitionByIdWithoutAuthorization() {
+  void testActivateProcessDefinitionByIdWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessDefinitionById(processDefinitionId);
@@ -446,7 +446,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionById() {
+  void testActivateProcessDefinitionById() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessDefinitionById(processDefinitionId);
@@ -462,7 +462,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testActivateProcessDefinitionByIdWithSuspendPermission() {
+  void testActivateProcessDefinitionByIdWithSuspendPermission() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessDefinitionById(processDefinitionId);
@@ -479,7 +479,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend process definition by id including instances ///////////////////////////////////////////
 
   @Test
-  public void testSuspendProcessDefinitionByIdIncludingInstancesWithoutAuthorization() {
+  void testSuspendProcessDefinitionByIdIncludingInstancesWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
@@ -503,7 +503,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByIdIncludingInstancesWithUpdatePermissionOnProcessInstance() {
+  void testSuspendProcessDefinitionByIdIncludingInstancesWithUpdatePermissionOnProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, ProcessDefinitionPermissions.SUSPEND);
@@ -530,7 +530,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByIdIncludingInstancesWithUpdatePermissionOnAnyProcessInstance() {
+  void testSuspendProcessDefinitionByIdIncludingInstancesWithUpdatePermissionOnAnyProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
@@ -550,7 +550,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByIdIncludingInstancesWithSuspendPermissionOnAnyProcessInstance() {
+  void testSuspendProcessDefinitionByIdIncludingInstancesWithSuspendPermissionOnAnyProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND);
@@ -566,7 +566,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByIdIncludingInstancesWithUpdateInstancePermissionOnProcessDefinition() {
+  void testSuspendProcessDefinitionByIdIncludingInstancesWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, UPDATE_INSTANCE);
@@ -585,7 +585,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByIdIncludingInstancesWithUpdateAndSuspendInstancePermissionOnProcessDefinition() {
+  void testSuspendProcessDefinitionByIdIncludingInstancesWithUpdateAndSuspendInstancePermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, SUSPEND_INSTANCE);
@@ -600,7 +600,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByIdIncludingInstancesWithSuspendAndSuspendInstancePermissionOnProcessDefinition() {
+  void testSuspendProcessDefinitionByIdIncludingInstancesWithSuspendAndSuspendInstancePermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND, SUSPEND_INSTANCE);
@@ -615,7 +615,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByIdIncludingInstancesWithSuspendAndUpdateInstancePermissionOnProcessDefinition() {
+  void testSuspendProcessDefinitionByIdIncludingInstancesWithSuspendAndUpdateInstancePermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND, UPDATE_INSTANCE);
@@ -632,7 +632,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // activate process definition by id including instances ///////////////////////////////////////////
 
   @Test
-  public void testActivateProcessDefinitionByIdIncludingInstancesWithoutAuthorization() {
+  void testActivateProcessDefinitionByIdIncludingInstancesWithoutAuthorization() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -659,7 +659,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByIdIncludingInstancesWithUpdatePermissionOnProcessInstance() {
+  void testActivateProcessDefinitionByIdIncludingInstancesWithUpdatePermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE);
@@ -687,7 +687,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByIdIncludingInstancesWithUpdatePermissionOnAnyProcessInstance() {
+  void testActivateProcessDefinitionByIdIncludingInstancesWithUpdatePermissionOnAnyProcessInstance() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, UPDATE);
@@ -708,7 +708,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByIdIncludingInstancesWithSuspendPermissionOnAnyProcessInstance() {
+  void testActivateProcessDefinitionByIdIncludingInstancesWithSuspendPermissionOnAnyProcessInstance() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, ProcessInstancePermissions.SUSPEND);
@@ -725,7 +725,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByIdIncludingInstancesWithUpdateInstancePermissionOnProcessDefinition() {
+  void testActivateProcessDefinitionByIdIncludingInstancesWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -745,7 +745,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByIdIncludingInstancesWithSuspendAndSuspendInstancePermissionOnProcessDefinition() {
+  void testActivateProcessDefinitionByIdIncludingInstancesWithSuspendAndSuspendInstancePermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -761,7 +761,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByIdIncludingInstancesWithSuspendAndUpdateInstancePermissionOnProcessDefinition() {
+  void testActivateProcessDefinitionByIdIncludingInstancesWithSuspendAndUpdateInstancePermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -777,7 +777,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByIdIncludingInstancesWithUpdateAndSuspendInstancePermissionOnProcessDefinition() {
+  void testActivateProcessDefinitionByIdIncludingInstancesWithUpdateAndSuspendInstancePermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -795,7 +795,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend process definition by key ///////////////////////////////////////////
 
   @Test
-  public void testSuspendProcessDefinitionByKeyWithoutAuthorization() {
+  void testSuspendProcessDefinitionByKeyWithoutAuthorization() {
     // given
 
     try {
@@ -814,7 +814,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByKey() {
+  void testSuspendProcessDefinitionByKey() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
 
@@ -827,7 +827,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByKeyWithSuspendPermission() {
+  void testSuspendProcessDefinitionByKeyWithSuspendPermission() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND);
 
@@ -842,7 +842,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // activate process definition by id ///////////////////////////////////////////
 
   @Test
-  public void testActivateProcessDefinitionByKeyWithoutAuthorization() {
+  void testActivateProcessDefinitionByKeyWithoutAuthorization() {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
 
@@ -862,7 +862,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByKey() {
+  void testActivateProcessDefinitionByKey() {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
@@ -876,7 +876,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByKeyWithSuspendPermission() {
+  void testActivateProcessDefinitionByKeyWithSuspendPermission() {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND);
@@ -892,7 +892,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend process definition by key including instances ///////////////////////////////////////////
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstancesWithoutAuthorization() {
+  void testSuspendProcessDefinitionByKeyIncludingInstancesWithoutAuthorization() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, ProcessDefinitionPermissions.SUSPEND);
 
@@ -915,7 +915,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstancesWithUpdatePermissionOnProcessInstance() {
+  void testSuspendProcessDefinitionByKeyIncludingInstancesWithUpdatePermissionOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, ProcessDefinitionPermissions.SUSPEND);
 
@@ -941,7 +941,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstancesWithUpdatePermissionOnAnyProcessInstance() {
+  void testSuspendProcessDefinitionByKeyIncludingInstancesWithUpdatePermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
 
@@ -960,7 +960,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstancesWithSuspendPermissionOnAnyProcessInstance() {
+  void testSuspendProcessDefinitionByKeyIncludingInstancesWithSuspendPermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND);
 
@@ -975,7 +975,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstancesWithUpdateInstancePermissionOnProcessDefinition() {
+  void testSuspendProcessDefinitionByKeyIncludingInstancesWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, UPDATE_INSTANCE);
 
@@ -993,7 +993,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstancesWithSuspendAndSuspendInstancePermissionOnProcessDefinition() {
+  void testSuspendProcessDefinitionByKeyIncludingInstancesWithSuspendAndSuspendInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND, SUSPEND_INSTANCE);
 
@@ -1008,7 +1008,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstancesWithSuspendAndUpdateInstancePermissionOnProcessDefinition() {
+  void testSuspendProcessDefinitionByKeyIncludingInstancesWithSuspendAndUpdateInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, ProcessDefinitionPermissions.SUSPEND, UPDATE_INSTANCE);
 
@@ -1023,7 +1023,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstancesWithUpdateAndSuspendInstancePermissionOnProcessDefinition() {
+  void testSuspendProcessDefinitionByKeyIncludingInstancesWithUpdateAndSuspendInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE, SUSPEND_INSTANCE);
 
@@ -1039,7 +1039,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // activate process definition by key including instances ///////////////////////////////////////////
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstancesWithoutAuthorization() {
+  void testActivateProcessDefinitionByKeyIncludingInstancesWithoutAuthorization() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1065,7 +1065,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstancesWithUpdatePermissionOnProcessInstance() {
+  void testActivateProcessDefinitionByKeyIncludingInstancesWithUpdatePermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE, ProcessInstancePermissions.SUSPEND);
@@ -1092,7 +1092,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstancesWithUpdatePermissionOnAnyProcessInstance() {
+  void testActivateProcessDefinitionByKeyIncludingInstancesWithUpdatePermissionOnAnyProcessInstance() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, UPDATE);
@@ -1112,7 +1112,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstancesWithSuspendPermissionOnAnyProcessInstance() {
+  void testActivateProcessDefinitionByKeyIncludingInstancesWithSuspendPermissionOnAnyProcessInstance() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, ProcessInstancePermissions.SUSPEND);
@@ -1128,7 +1128,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstancesWithUpdateInstancePermissionOnProcessDefinition() {
+  void testActivateProcessDefinitionByKeyIncludingInstancesWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1147,7 +1147,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstancesWithSuspendAndSuspendInstancePermissionOnProcessDefinition() {
+  void testActivateProcessDefinitionByKeyIncludingInstancesWithSuspendAndSuspendInstancePermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1163,7 +1163,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstancesWithSuspendAndUpdateInstancePermissionOnProcessDefinition() {
+  void testActivateProcessDefinitionByKeyIncludingInstancesWithSuspendAndUpdateInstancePermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1179,7 +1179,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstancesWithUpdateAndSuspendInstancePermissionOnProcessDefinition() {
+  void testActivateProcessDefinitionByKeyIncludingInstancesWithUpdateAndSuspendInstancePermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1197,7 +1197,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // update history time to live ///////////////////////////////////////////
 
   @Test
-  public void testProcessDefinitionUpdateTimeToLive() {
+  void testProcessDefinitionUpdateTimeToLive() {
 
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, UPDATE);
@@ -1213,7 +1213,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDecisionDefinitionUpdateTimeToLiveWithoutAuthorizations() {
+  void testDecisionDefinitionUpdateTimeToLiveWithoutAuthorizations() {
     //given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
@@ -1231,7 +1231,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   // startable in tasklist ///////////////////////////////////////////
 
   @Test
-  public void testStartableInTasklist() {
+  void testStartableInTasklist() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ, CREATE_INSTANCE);
     createGrantAuthorization(PROCESS_INSTANCE, "*", userId, CREATE);
@@ -1247,7 +1247,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartableInTasklistReadAllProcessDefinition() {
+  void testStartableInTasklistReadAllProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "*", userId, READ);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, CREATE_INSTANCE);
@@ -1264,7 +1264,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartableInTasklistWithoutCreateInstancePerm() {
+  void testStartableInTasklistWithoutCreateInstancePerm() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
     createGrantAuthorization(PROCESS_INSTANCE, "*", userId, CREATE);
@@ -1277,7 +1277,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartableInTasklistWithoutReadDefPerm() {
+  void testStartableInTasklistWithoutReadDefPerm() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, CREATE_INSTANCE);
     createGrantAuthorization(PROCESS_INSTANCE, "*", userId, CREATE);
@@ -1290,7 +1290,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartableInTasklistWithoutCreatePerm() {
+  void testStartableInTasklistWithoutCreatePerm() {
     // given
     selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1301,7 +1301,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotResolveUnauthorizedCalledProcessDefinitions() {
+  void shouldNotResolveUnauthorizedCalledProcessDefinitions() {
     Deployment deployment = createDeployment("test",
       "org/operaton/bpm/engine/test/api/repository/call-activities-with-references.bpmn",
       "org/operaton/bpm/engine/test/api/repository/first-process.bpmn20.xml");

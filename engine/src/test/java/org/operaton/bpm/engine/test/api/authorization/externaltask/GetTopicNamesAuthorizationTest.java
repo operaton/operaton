@@ -29,7 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 
-public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
+class GetTopicNamesAuthorizationTest extends AuthorizationTest {
 
   protected String instance1Id;
   protected String instance2Id;
@@ -47,7 +47,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetTopicNamesWithoutAuthorization() {
+  void testGetTopicNamesWithoutAuthorization() {
     // when
     List<String> result = externalTaskService.getTopicNames();
 
@@ -56,7 +56,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetTopicNamesWithReadOnProcessInstance() {
+  void testGetTopicNamesWithReadOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ);
 
@@ -69,7 +69,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetTopicNamesWithReadOnAnyProcessInstance() {
+  void testGetTopicNamesWithReadOnAnyProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
 
@@ -81,7 +81,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetTopicNamesWithReadInstanceOnAnyProcessDefinition() {
+  void testGetTopicNamesWithReadInstanceOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
 
@@ -93,7 +93,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetTopicNamesWithReadDefinitionWithMultiple() {
+  void testGetTopicNamesWithReadDefinitionWithMultiple() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, READ_INSTANCE);
 
@@ -106,7 +106,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetTopicNamesWithReadInstanceWithMultiple() {
+  void testGetTopicNamesWithReadInstanceWithMultiple() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, READ_INSTANCE);

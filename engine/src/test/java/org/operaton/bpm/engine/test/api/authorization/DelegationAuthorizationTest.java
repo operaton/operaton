@@ -68,7 +68,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testJavaDelegateExecutesQueryAfterUserCompletesTask() {
+  void testJavaDelegateExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     String taskId = selectAnyTask().getId();
@@ -86,7 +86,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testJavaDelegateExecutesCommandAfterUserCompletesTask() {
+  void testJavaDelegateExecutesCommandAfterUserCompletesTask() {
     // given
     startProcessInstanceByKey(DEFAULT_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -106,7 +106,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testJavaDelegateExecutesQueryAfterUserCompletesTaskAsDelegateExpression() {
+  void testJavaDelegateExecutesQueryAfterUserCompletesTaskAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myDelegate", new ExecuteQueryDelegate());
 
@@ -126,7 +126,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testJavaDelegateExecutesCommandAfterUserCompletesTaskAsDelegateExpression() {
+  void testJavaDelegateExecutesCommandAfterUserCompletesTaskAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myDelegate", new ExecuteCommandDelegate());
 
@@ -148,7 +148,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testJavaDelegateExecutesQueryAfterUserCompletesTaskAsExpression() {
+  void testJavaDelegateExecutesQueryAfterUserCompletesTaskAsExpression() {
     // given
     processEngineConfiguration.getBeans().put("myDelegate", new ExecuteQueryDelegate());
 
@@ -168,7 +168,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testJavaDelegateExecutesCommandAfterUserCompletesTaskAsExpression() {
+  void testJavaDelegateExecutesCommandAfterUserCompletesTaskAsExpression() {
     // given
     processEngineConfiguration.getBeans().put("myDelegate", new ExecuteCommandDelegate());
 
@@ -190,7 +190,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testCustomActivityBehaviorExecutesQueryAfterUserCompletesTask() {
+  void testCustomActivityBehaviorExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     String taskId = selectAnyTask().getId();
@@ -208,7 +208,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testCustomActivityBehaviorExecutesCommandAfterUserCompletesTask() {
+  void testCustomActivityBehaviorExecutesCommandAfterUserCompletesTask() {
     // given
     startProcessInstanceByKey(DEFAULT_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -228,7 +228,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testCustomActivityBehaviorExecutesQueryAfterUserCompletesTaskAsDelegateExpression() {
+  void testCustomActivityBehaviorExecutesQueryAfterUserCompletesTaskAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myBehavior", new MyServiceTaskActivityBehaviorExecuteQuery());
 
@@ -248,7 +248,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testCustomActivityBehaviorExecutesCommandAfterUserCompletesTaskAsDelegateExpression() {
+  void testCustomActivityBehaviorExecutesCommandAfterUserCompletesTaskAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myBehavior", new MyServiceTaskActivityBehaviorExecuteCommand());
 
@@ -270,7 +270,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testSignallableActivityBehaviorAsClass() {
+  void testSignallableActivityBehaviorAsClass() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 4);
     String processInstanceId = startProcessInstanceByKey(DEFAULT_PROCESS_KEY).getId();
@@ -288,7 +288,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testSignallableActivityBehaviorAsDelegateExpression() {
+  void testSignallableActivityBehaviorAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("activityBehavior", new MyServiceTaskActivityBehaviorExecuteQuery());
 
@@ -308,7 +308,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testExecutionListenerExecutesQueryAfterUserCompletesTask() {
+  void testExecutionListenerExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     String taskId = selectAnyTask().getId();
@@ -326,7 +326,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testExecutionListenerExecutesCommandAfterUserCompletesTask() {
+  void testExecutionListenerExecutesCommandAfterUserCompletesTask() {
     // given
     startProcessInstanceByKey(DEFAULT_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -346,7 +346,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testExecutionListenerExecutesQueryAfterUserCompletesTaskAsDelegateExpression() {
+  void testExecutionListenerExecutesQueryAfterUserCompletesTaskAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ExecuteQueryListener());
 
@@ -366,7 +366,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testExecutionListenerExecutesCommandAfterUserCompletesTaskAsDelegateExpression() {
+  void testExecutionListenerExecutesCommandAfterUserCompletesTaskAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ExecuteCommandListener());
 
@@ -388,7 +388,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testExecutionListenerExecutesQueryAfterUserCompletesTaskAsExpression() {
+  void testExecutionListenerExecutesQueryAfterUserCompletesTaskAsExpression() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ExecuteQueryListener());
 
@@ -408,7 +408,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testExecutionListenerExecutesCommandAfterUserCompletesTaskAsExpression() {
+  void testExecutionListenerExecutesCommandAfterUserCompletesTaskAsExpression() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ExecuteCommandListener());
 
@@ -430,7 +430,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testTaskListenerExecutesQueryAfterUserCompletesTask() {
+  void testTaskListenerExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     String taskId = selectAnyTask().getId();
@@ -448,7 +448,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testTaskListenerExecutesCommandAfterUserCompletesTask() {
+  void testTaskListenerExecutesCommandAfterUserCompletesTask() {
     // given
     startProcessInstanceByKey(DEFAULT_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -468,7 +468,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testTaskListenerExecutesQueryAfterUserCompletesTaskAsDelegateExpression() {
+  void testTaskListenerExecutesQueryAfterUserCompletesTaskAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ExecuteQueryTaskListener());
 
@@ -488,7 +488,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testTaskListenerExecutesCommandAfterUserCompletesTaskAsDelegateExpression() {
+  void testTaskListenerExecutesCommandAfterUserCompletesTaskAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ExecuteCommandTaskListener());
 
@@ -510,7 +510,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testTaskListenerExecutesQueryAfterUserCompletesTaskAsExpression() {
+  void testTaskListenerExecutesQueryAfterUserCompletesTaskAsExpression() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ExecuteQueryTaskListener());
 
@@ -530,7 +530,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testTaskListenerExecutesCommandAfterUserCompletesTaskAsExpression() {
+  void testTaskListenerExecutesCommandAfterUserCompletesTaskAsExpression() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ExecuteCommandTaskListener());
 
@@ -552,7 +552,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testTaskAssigneeExpression() {
+  void testTaskAssigneeExpression() {
     // given
     processEngineConfiguration.getBeans().put("myTaskService", new MyTaskService());
 
@@ -572,7 +572,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptTaskExecutesQueryAfterUserCompletesTask() {
+  void testScriptTaskExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     Task task = selectAnyTask();
@@ -609,7 +609,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptTaskExecutesCommandAfterUserCompletesTask() {
+  void testScriptTaskExecutesCommandAfterUserCompletesTask() {
     // given
     String processInstanceId = startProcessInstanceByKey(DEFAULT_PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -636,7 +636,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptExecutionListenerExecutesQueryAfterUserCompletesTask() {
+  void testScriptExecutionListenerExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     Task task = selectAnyTask();
@@ -673,7 +673,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptExecutionListenerExecutesCommandAfterUserCompletesTask() {
+  void testScriptExecutionListenerExecutesCommandAfterUserCompletesTask() {
     // given
     String processInstanceId = startProcessInstanceByKey(DEFAULT_PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -700,7 +700,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptTaskListenerExecutesQueryAfterUserCompletesTask() {
+  void testScriptTaskListenerExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     Task task = selectAnyTask();
@@ -737,7 +737,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptTaskListenerExecutesCommandAfterUserCompletesTask() {
+  void testScriptTaskListenerExecutesCommandAfterUserCompletesTask() {
     // given
     String processInstanceId = startProcessInstanceByKey(DEFAULT_PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -764,7 +764,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptConditionExecutesQueryAfterUserCompletesTask() {
+  void testScriptConditionExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     Task task = selectAnyTask();
@@ -801,7 +801,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptConditionExecutesCommandAfterUserCompletesTask() {
+  void testScriptConditionExecutesCommandAfterUserCompletesTask() {
     // given
     String processInstanceId = startProcessInstanceByKey(DEFAULT_PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -828,7 +828,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptIoMappingExecutesQueryAfterUserCompletesTask() {
+  void testScriptIoMappingExecutesQueryAfterUserCompletesTask() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
     Task task = selectAnyTask();
@@ -865,7 +865,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testScriptIoMappingExecutesCommandAfterUserCompletesTask() {
+  void testScriptIoMappingExecutesCommandAfterUserCompletesTask() {
     // given
     String processInstanceId = startProcessInstanceByKey(DEFAULT_PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -900,7 +900,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testCustomStartFormHandlerExecutesQuery() {
+  void testCustomStartFormHandlerExecutesQuery() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
 
@@ -921,7 +921,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testCustomTaskFormHandlerExecutesQuery() {
+  void testCustomTaskFormHandlerExecutesQuery() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
 
@@ -942,7 +942,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/authorization/DelegationAuthorizationTest.testCustomStartFormHandlerExecutesQuery.bpmn20.xml"})
   @Test
-  public void testSubmitCustomStartFormHandlerExecutesQuery() {
+  void testSubmitCustomStartFormHandlerExecutesQuery() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
 
@@ -962,7 +962,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/authorization/DelegationAuthorizationTest.testCustomTaskFormHandlerExecutesQuery.bpmn20.xml"})
   @Test
-  public void testSubmitCustomTaskFormHandlerExecutesQuery() {
+  void testSubmitCustomTaskFormHandlerExecutesQuery() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
 
@@ -981,7 +981,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testCustomFormFieldValidator() {
+  void testCustomFormFieldValidator() {
     // given
     startProcessInstancesByKey(DEFAULT_PROCESS_KEY, 5);
 
@@ -1000,7 +1000,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testCustomFormFieldValidatorAsDelegateExpression() {
+  void testCustomFormFieldValidatorAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myValidator", new MyFormFieldValidator());
 
@@ -1021,7 +1021,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/authorization/DelegationAuthorizationTest.testJavaDelegateExecutesQueryAfterUserCompletesTask.bpmn20.xml"})
   @Test
-  public void testPerformAuthorizationCheckByExecutingQuery() {
+  void testPerformAuthorizationCheckByExecutingQuery() {
     // given
     processEngineConfiguration.setAuthorizationEnabledForCustomCode(true);
 
@@ -1041,7 +1041,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/authorization/DelegationAuthorizationTest.testJavaDelegateExecutesCommandAfterUserCompletesTask.bpmn20.xml"})
   @Test
-  public void testPerformAuthorizationCheckByExecutingCommand() {
+  void testPerformAuthorizationCheckByExecutingCommand() {
     // given
     processEngineConfiguration.setAuthorizationEnabledForCustomCode(true);
 
@@ -1067,7 +1067,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
   @Deployment
   @Test
-  public void testTaskListenerOnCreateAssignsTask() {
+  void testTaskListenerOnCreateAssignsTask() {
     // given
     String processInstanceId = startProcessInstanceByKey(DEFAULT_PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();

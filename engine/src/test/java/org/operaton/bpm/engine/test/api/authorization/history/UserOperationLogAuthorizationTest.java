@@ -94,7 +94,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // standalone task ///////////////////////////////
 
   @Test
-  public void testQueryCreateStandaloneTaskUserOperationLogWithoutAuthorization() {
+  void testQueryCreateStandaloneTaskUserOperationLogWithoutAuthorization() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -109,7 +109,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryCreateStandaloneTaskUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryCreateStandaloneTaskUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -143,7 +143,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryCreateStandaloneTaskUserOperationLogWithReadPermissionOnCategory() {
+  void testQueryCreateStandaloneTaskUserOperationLogWithReadPermissionOnCategory() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -160,7 +160,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryCreateStandaloneTaskUserOperationLogWithReadPermissionOnAnyCategory() {
+  void testQueryCreateStandaloneTaskUserOperationLogWithReadPermissionOnAnyCategory() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -177,7 +177,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryCreateStandaloneTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeReadHistoryOnProcessDefinition() {
+  void testQueryCreateStandaloneTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeReadHistoryOnProcessDefinition() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -214,7 +214,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeStandaloneTaskUserOperationLogWithoutAuthorization() {
+  void testQuerySetAssigneeStandaloneTaskUserOperationLogWithoutAuthorization() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -230,7 +230,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeStandaloneTaskUserOperationLogWithReadPermissionOnProcessDefinition() {
+  void testQuerySetAssigneeStandaloneTaskUserOperationLogWithReadPermissionOnProcessDefinition() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -266,7 +266,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeStandaloneTaskUserOperationLogWithReadPermissionOnCategory() {
+  void testQuerySetAssigneeStandaloneTaskUserOperationLogWithReadPermissionOnCategory() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -284,7 +284,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeStandaloneTaskUserOperationLogWithReadPermissionOnAnyCategory() {
+  void testQuerySetAssigneeStandaloneTaskUserOperationLogWithReadPermissionOnAnyCategory() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -304,7 +304,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // (process) user task /////////////////////////////
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithoutAuthorization() {
+  void testQuerySetAssigneeTaskUserOperationLogWithoutAuthorization() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -318,7 +318,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
+  void testQuerySetAssigneeTaskUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -334,7 +334,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQuerySetAssigneeTaskUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -350,7 +350,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithMultiple() {
+  void testQuerySetAssigneeTaskUserOperationLogWithMultiple() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -367,7 +367,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricProcessInstance() {
+  void testCheckNonePermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -388,7 +388,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricProcessInstance() {
+  void testCheckReadPermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -411,7 +411,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
+  void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -436,7 +436,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
+  void testCheckReadOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -461,7 +461,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNoneOnHistoricProcessInstanceAndTaskWorkerCategory() {
+  void testCheckNoneOnHistoricProcessInstanceAndTaskWorkerCategory() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -486,7 +486,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadOnHistoricProcessInstanceAndAdminCategory() {
+  void testCheckReadOnHistoricProcessInstanceAndAdminCategory() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -510,7 +510,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricProcessInstancePermissionsAuthorizationDisabled() {
+  void testHistoricProcessInstancePermissionsAuthorizationDisabled() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -533,7 +533,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricTask() {
+  void testCheckNonePermissionOnHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -553,7 +553,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricTask() {
+  void testCheckReadPermissionOnHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -574,7 +574,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnStandaloneHistoricTask() {
+  void testCheckReadPermissionOnStandaloneHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -598,7 +598,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOnStandaloneHistoricTask() {
+  void testCheckNonePermissionOnStandaloneHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -619,7 +619,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnCompletedHistoricTask() {
+  void testCheckReadPermissionOnCompletedHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -643,7 +643,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricTaskAndReadHistoryPermissionOnProcessDefinition() {
+  void testCheckNonePermissionOnHistoricTaskAndReadHistoryPermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -668,7 +668,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricTaskAndNonePermissionOnProcessDefinition() {
+  void testCheckReadPermissionOnHistoricTaskAndNonePermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -693,7 +693,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNoneOnHistoricTaskAndTaskWorkerCategory() {
+  void testCheckNoneOnHistoricTaskAndTaskWorkerCategory() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -717,7 +717,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadOnHistoricTaskAndAdminCategory() {
+  void testCheckReadOnHistoricTaskAndAdminCategory() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -741,7 +741,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskPermissionsAuthorizationDisabled() {
+  void testHistoricTaskPermissionsAuthorizationDisabled() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -761,7 +761,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnCategory() {
+  void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnCategory() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -777,7 +777,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnAnyCategory() {
+  void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnAnyCategory() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -793,7 +793,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeOnProcessDefinition() {
+  void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -810,7 +810,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeOnUnrelatedProcessDefinition() {
+  void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeOnUnrelatedProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -827,7 +827,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeOnAnyProcessDefinition() {
+  void testQuerySetAssigneeTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -846,7 +846,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // (case) human task /////////////////////////////
 
   @Test
-  public void testQuerySetAssigneeHumanTaskUserOperationLogWithoutAuthorization() {
+  void testQuerySetAssigneeHumanTaskUserOperationLogWithoutAuthorization() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -860,7 +860,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeHumanTaskUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
+  void testQuerySetAssigneeHumanTaskUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -892,7 +892,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeHumanTaskUserOperationLogWithReadPermissionOnCategory() {
+  void testQuerySetAssigneeHumanTaskUserOperationLogWithReadPermissionOnCategory() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -908,7 +908,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetAssigneeHumanTaskUserOperationLogWithReadPermissionOnAnyCategory() {
+  void testQuerySetAssigneeHumanTaskUserOperationLogWithReadPermissionOnAnyCategory() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -926,7 +926,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // standalone job ///////////////////////////////
 
   @Test
-  public void testQuerySetStandaloneJobRetriesUserOperationLogWithoutAuthorization() {
+  void testQuerySetStandaloneJobRetriesUserOperationLogWithoutAuthorization() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, new Date());
@@ -951,7 +951,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetStandaloneJobRetriesUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
+  void testQuerySetStandaloneJobRetriesUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, new Date());
@@ -980,7 +980,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetStandaloneJobRetriesUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQuerySetStandaloneJobRetriesUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     disableAuthorization();
     identityService.clearAuthentication();
@@ -1009,7 +1009,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetStandaloneJobRetriesUserOperationLogWithReadPermissionOnCategory() {
+  void testQuerySetStandaloneJobRetriesUserOperationLogWithReadPermissionOnCategory() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, new Date());
@@ -1037,7 +1037,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetStandaloneJobRetriesUserOperationLogWithReadPermissionOnAnyCategory() {
+  void testQuerySetStandaloneJobRetriesUserOperationLogWithReadPermissionOnAnyCategory() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, new Date());
@@ -1064,7 +1064,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetStandaloneJobRetriesUserOperationLogWithReadPermissionOnWrongCategory() {
+  void testQuerySetStandaloneJobRetriesUserOperationLogWithReadPermissionOnWrongCategory() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY, true, new Date());
@@ -1093,7 +1093,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // job ///////////////////////////////
 
   @Test
-  public void testQuerySetJobRetriesUserOperationLogWithoutAuthorization() {
+  void testQuerySetJobRetriesUserOperationLogWithoutAuthorization() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     String jobId = selectSingleJob().getId();
@@ -1110,7 +1110,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetJobRetriesUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
+  void testQuerySetJobRetriesUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     String jobId = selectSingleJob().getId();
@@ -1129,7 +1129,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetJobRetriesUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQuerySetJobRetriesUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     String jobId = selectSingleJob().getId();
@@ -1148,7 +1148,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetJobRetriesUserOperationLogWithReadPermissionOnCategory() {
+  void testQuerySetJobRetriesUserOperationLogWithReadPermissionOnCategory() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     String jobId = selectSingleJob().getId();
@@ -1167,7 +1167,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySetJobRetriesUserOperationLogWithReadPermissionOnAnyCategory() {
+  void testQuerySetJobRetriesUserOperationLogWithReadPermissionOnAnyCategory() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     String jobId = selectSingleJob().getId();
@@ -1188,7 +1188,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // process definition ////////////////////////////////////////////
 
   @Test
-  public void testQuerySuspendProcessDefinitionUserOperationLogWithoutAuthorization() {
+  void testQuerySuspendProcessDefinitionUserOperationLogWithoutAuthorization() {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1202,7 +1202,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySuspendProcessDefinitionUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
+  void testQuerySuspendProcessDefinitionUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorizationWithoutAuthentication(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ_HISTORY);
@@ -1217,7 +1217,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySuspendProcessDefinitionUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQuerySuspendProcessDefinitionUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorizationWithoutAuthentication(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -1232,7 +1232,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySuspendProcessDefinitionUserOperationLogWithReadHPermissionOnCategory() {
+  void testQuerySuspendProcessDefinitionUserOperationLogWithReadHPermissionOnCategory() {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_OPERATOR, userId, READ);
@@ -1247,7 +1247,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySuspendProcessDefinitionUserOperationLogWithReadHPermissionOnAnyCategory() {
+  void testQuerySuspendProcessDefinitionUserOperationLogWithReadHPermissionOnAnyCategory() {
     // given
     suspendProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, ANY, userId, READ);
@@ -1264,7 +1264,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // process instance //////////////////////////////////////////////
 
   @Test
-  public void testQuerySuspendProcessInstanceUserOperationLogWithoutAuthorization() {
+  void testQuerySuspendProcessInstanceUserOperationLogWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessInstanceById(processInstanceId);
@@ -1279,7 +1279,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySuspendProcessInstanceUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
+  void testQuerySuspendProcessInstanceUserOperationLogWithReadHistoryPermissionOnProcessDefinition() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessInstanceById(processInstanceId);
@@ -1296,7 +1296,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySuspendProcessInstanceUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQuerySuspendProcessInstanceUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessInstanceById(processInstanceId);
@@ -1313,7 +1313,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySuspendProcessInstanceUserOperationLogWithReadPermissionOnCategory() {
+  void testQuerySuspendProcessInstanceUserOperationLogWithReadPermissionOnCategory() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessInstanceById(processInstanceId);
@@ -1330,7 +1330,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQuerySuspendProcessInstanceUserOperationLogWithReadPermissionOnAnyCategory() {
+  void testQuerySuspendProcessInstanceUserOperationLogWithReadPermissionOnAnyCategory() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     suspendProcessInstanceById(processInstanceId);
@@ -1349,7 +1349,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // delete deployment (cascade = false)
 
   @Test
-  public void testQueryAfterDeletingDeploymentWithoutAuthorization() {
+  void testQueryAfterDeletingDeploymentWithoutAuthorization() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1376,7 +1376,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryAfterDeletingDeploymentWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryAfterDeletingDeploymentWithReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1404,7 +1404,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryAfterDeletingDeploymentWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQueryAfterDeletingDeploymentWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1432,7 +1432,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryAfterDeletingDeploymentWithReadPermissionOnCategory() {
+  void testQueryAfterDeletingDeploymentWithReadPermissionOnCategory() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1466,7 +1466,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryAfterDeletingDeploymentWithReadPermissionOnAnyCategory() {
+  void testQueryAfterDeletingDeploymentWithReadPermissionOnAnyCategory() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1496,7 +1496,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // delete user operation log (standalone) ////////////////////////
 
   @Test
-  public void testDeleteStandaloneEntryWithoutAuthorization() {
+  void testDeleteStandaloneEntryWithoutAuthorization() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -1522,7 +1522,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteStandaloneEntryWithDeleteHistoryPermissionOnProcessDefinition() {
+  void testDeleteStandaloneEntryWithDeleteHistoryPermissionOnProcessDefinition() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -1550,7 +1550,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteStandaloneEntryWithDeleteHistoryPermissionOnAnyProcessDefinition() {
+  void testDeleteStandaloneEntryWithDeleteHistoryPermissionOnAnyProcessDefinition() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -1578,7 +1578,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteStandaloneEntryWithDeletePermissionOnCategory() {
+  void testDeleteStandaloneEntryWithDeletePermissionOnCategory() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -1599,7 +1599,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteStandaloneEntryWithDeletePermissionOnAnyCategory() {
+  void testDeleteStandaloneEntryWithDeletePermissionOnAnyCategory() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -1622,7 +1622,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // delete user operation log /////////////////////////////////////
 
   @Test
-  public void testDeleteEntryWithoutAuthorization() {
+  void testDeleteEntryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1650,7 +1650,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteEntryWithDeleteHistoryPermissionOnProcessDefinition() {
+  void testDeleteEntryWithDeleteHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1671,7 +1671,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteEntryWithDeleteHistoryPermissionOnAnyProcessDefinition() {
+  void testDeleteEntryWithDeleteHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1692,7 +1692,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteEntryWithDeletePermissionOnCategory() {
+  void testDeleteEntryWithDeletePermissionOnCategory() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1713,7 +1713,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteEntryWithDeletePermissionOnAnyCategory() {
+  void testDeleteEntryWithDeletePermissionOnAnyCategory() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1734,7 +1734,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteEntryAfterDeletingDeployment() {
+  void testDeleteEntryAfterDeletingDeployment() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -1764,7 +1764,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // delete user operation log (case) //////////////////////////////
 
   @Test
-  public void testCaseDeleteEntryWithoutAuthorization() {
+  void testCaseDeleteEntryWithoutAuthorization() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -1789,7 +1789,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCaseDeleteEntryWithDeleteHistoryPermissionOnProcessDefinition() {
+  void testCaseDeleteEntryWithDeleteHistoryPermissionOnProcessDefinition() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -1816,7 +1816,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCaseDeleteEntryWithDeleteHistoryPermissionOnAnyProcessDefinition() {
+  void testCaseDeleteEntryWithDeleteHistoryPermissionOnAnyProcessDefinition() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -1843,7 +1843,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCaseDeleteEntryWithDeletePermissionOnCategory() {
+  void testCaseDeleteEntryWithDeletePermissionOnCategory() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -1863,7 +1863,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCaseDeleteEntryWithDeletePermissionOnAnyCategory() {
+  void testCaseDeleteEntryWithDeletePermissionOnAnyCategory() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -1885,7 +1885,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   // update user operation log //////////////////////////////
 
   @Test
-  public void testUpdateEntryWithUpdateHistoryPermissionOnProcessDefinition() {
+  void testUpdateEntryWithUpdateHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1919,7 +1919,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testUpdateEntryWithUpdateHistoryPermissionOnAnyProcessDefinition() {
+  void testUpdateEntryWithUpdateHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -1954,7 +1954,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testUpdateEntryWithUpdateHistoryPermissionOnAnyProcessDefinition_Standalone() {
+  void testUpdateEntryWithUpdateHistoryPermissionOnAnyProcessDefinition_Standalone() {
     // given
     createTask("aTaskId");
 
@@ -1988,7 +1988,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testUpdateEntryRelatedToProcessDefinitionWithUpdatePermissionOnCategory() {
+  void testUpdateEntryRelatedToProcessDefinitionWithUpdatePermissionOnCategory() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -2022,7 +2022,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testUpdateEntryRelatedToProcessDefinitionWithUpdatePermissionOnAnyCategory() {
+  void testUpdateEntryRelatedToProcessDefinitionWithUpdatePermissionOnAnyCategory() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
 
@@ -2056,7 +2056,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testUpdateEntryWithoutAuthorization() {
+  void testUpdateEntryWithoutAuthorization() {
     // given
     createTask("aTaskId");
 
@@ -2088,7 +2088,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testUpdateEntryWithUpdatePermissionOnCategory() {
+  void testUpdateEntryWithUpdatePermissionOnCategory() {
     // given
     createTask("aTaskId");
 
@@ -2122,7 +2122,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testUpdateEntryWithUpdatePermissionOnAnyCategory() {
+  void testUpdateEntryWithUpdatePermissionOnAnyCategory() {
     // given
     createTask("aTaskId");
 

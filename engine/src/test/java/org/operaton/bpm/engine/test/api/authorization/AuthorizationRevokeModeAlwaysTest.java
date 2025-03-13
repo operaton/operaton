@@ -45,17 +45,17 @@ public class AuthorizationRevokeModeAlwaysTest extends AuthorizationTest {
       .watch(LOGGING_CONTEXT, Level.DEBUG);
 
   @BeforeEach
-  public void storeRevokeMode() {
+  void storeRevokeMode() {
     defaultRevokeMode = processEngineConfiguration.getAuthorizationCheckRevokes();
   }
 
   @AfterEach
-  public void resetRevokeMode() {
+  void resetRevokeMode() {
     processEngineConfiguration.setAuthorizationCheckRevokes(defaultRevokeMode);
   }
 
   @Test
-  public void shouldCreateEqualQueriesForModesAlwaysAndAutoWhenRevokeExists() {
+  void shouldCreateEqualQueriesForModesAlwaysAndAutoWhenRevokeExists() {
     // given
     disableAuthorization();
     testRule.deploy("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml");
@@ -83,7 +83,7 @@ public class AuthorizationRevokeModeAlwaysTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldCreateUnequalQueriesForModesAlwaysAndAutoWhenNoRevokeExists() {
+  void shouldCreateUnequalQueriesForModesAlwaysAndAutoWhenNoRevokeExists() {
     // given
     disableAuthorization();
     testRule.deploy("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml");

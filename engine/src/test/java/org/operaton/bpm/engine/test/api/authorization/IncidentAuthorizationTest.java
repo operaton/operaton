@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Roman Smirnov
  *
  */
-public class IncidentAuthorizationTest extends AuthorizationTest {
+class IncidentAuthorizationTest extends AuthorizationTest {
 
   protected static final String TIMER_START_PROCESS_KEY = "timerStartProcess";
   protected static final String ONE_INCIDENT_PROCESS_KEY = "process";
@@ -63,7 +63,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryForStandaloneIncidents() {
+  void testQueryForStandaloneIncidents() {
     // given
     String jobId = createStandaloneIncident();
 
@@ -78,7 +78,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithoutAuthorization() {
+  void testStartTimerJobIncidentQueryWithoutAuthorization() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -93,7 +93,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadPermissionOnAnyProcessInstance() {
+  void testStartTimerJobIncidentQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -110,7 +110,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadInstancePermissionOnProcessDefinition() {
+  void testStartTimerJobIncidentQueryWithReadInstancePermissionOnProcessDefinition() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -127,7 +127,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testStartTimerJobIncidentQueryWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -144,7 +144,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithoutAuthorization() {
+  void testSimpleQueryWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
 
@@ -156,7 +156,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadPermissionOnProcessInstance() {
+  void testSimpleQueryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -173,7 +173,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadPermissionOnAnyProcessInstance() {
+  void testSimpleQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
@@ -190,7 +190,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithMultiple() {
+  void testSimpleQueryWithMultiple() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -208,7 +208,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadInstancesPermissionOnOneTaskProcess() {
+  void testSimpleQueryWithReadInstancesPermissionOnOneTaskProcess() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, READ_INSTANCE);
@@ -225,7 +225,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
+  void testSimpleQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
@@ -242,7 +242,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindIncidentWithRevokedReadPermissionOnProcessInstance() {
+  void shouldNotFindIncidentWithRevokedReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
@@ -256,7 +256,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -275,7 +275,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnProcessInstance() {
+  void testQueryWithReadPermissionOnProcessInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -300,7 +300,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessInstance() {
+  void testQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -321,7 +321,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancesPermissionOnOneTaskProcess() {
+  void testQueryWithReadInstancesPermissionOnOneTaskProcess() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -342,7 +342,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -364,7 +364,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void shouldDenySetAnnotationWithoutAuthorization() {
+  void shouldDenySetAnnotationWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -380,7 +380,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowSetAnnotationWithUpdatePermissionOnAnyInstance() {
+  void shouldAllowSetAnnotationWithUpdatePermissionOnAnyInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -395,7 +395,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowSetAnnotationWithUpdatePermissionOnInstance() {
+  void shouldAllowSetAnnotationWithUpdatePermissionOnInstance() {
     // given
     ProcessInstance instance = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -410,7 +410,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowSetAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
+  void shouldAllowSetAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -425,7 +425,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowSetAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
+  void shouldAllowSetAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -440,7 +440,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldDenyClearAnnotationWithoutAuthorization() {
+  void shouldDenyClearAnnotationWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -456,7 +456,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowClearAnnotationWithUpdatePermissionOnAnyInstance() {
+  void shouldAllowClearAnnotationWithUpdatePermissionOnAnyInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -471,7 +471,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowClearAnnotationWithUpdatePermissionOnInstance() {
+  void shouldAllowClearAnnotationWithUpdatePermissionOnInstance() {
     // given
     ProcessInstance instance = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -486,7 +486,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowClearAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
+  void shouldAllowClearAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -501,7 +501,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowClearAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
+  void shouldAllowClearAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -516,7 +516,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowSetAnnotationOnStandaloneIncidentWithoutAuthorization() {
+  void shouldAllowSetAnnotationOnStandaloneIncidentWithoutAuthorization() {
     // given
     String jobId = createStandaloneIncident();
     disableAuthorization();
@@ -531,7 +531,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldAllowClearAnnotationOnStandaloneIncidentWithoutAuthorization() {
+  void shouldAllowClearAnnotationOnStandaloneIncidentWithoutAuthorization() {
     // given
     String jobId = createStandaloneIncident();
     disableAuthorization();

@@ -35,16 +35,16 @@ import org.operaton.bpm.engine.test.Deployment;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
+class ConditionStartEventAuthorizationTest extends AuthorizationTest {
 
   private static final String SINGLE_CONDITIONAL_XML = "org/operaton/bpm/engine/test/bpmn/event/conditional/ConditionalStartEventTest.testSingleConditionalStartEvent1.bpmn20.xml";
   private static final String TRUE_CONDITIONAL_XML = "org/operaton/bpm/engine/test/bpmn/event/conditional/ConditionalStartEventTest.testStartInstanceWithTrueConditionalStartEvent.bpmn20.xml";
   protected static final String PROCESS_KEY = "conditionalEventProcess";
   protected static final String PROCESS_KEY_TWO = "trueConditionProcess";
 
-  @Deployment(resources = { SINGLE_CONDITIONAL_XML, TRUE_CONDITIONAL_XML })
+  @Deployment(resources = {SINGLE_CONDITIONAL_XML, TRUE_CONDITIONAL_XML})
   @Test
-  public void testWithAllPermissions() {
+  void testWithAllPermissions() {
     // given two deployed processes with conditional start event
 
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY_TWO, userId, CREATE_INSTANCE);
@@ -61,9 +61,9 @@ public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
     assertThat(instances).hasSize(1);
   }
 
-  @Deployment(resources = { SINGLE_CONDITIONAL_XML })
+  @Deployment(resources = {SINGLE_CONDITIONAL_XML})
   @Test
-  public void testWithoutProcessDefinitionPermissions() {
+  void testWithoutProcessDefinitionPermissions() {
     // given deployed process with conditional start event
 
     // user does not have process definition permissions
@@ -78,9 +78,9 @@ public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
         .hasMessageContaining("No subscriptions were found during evaluation of the conditional start events.");
   }
 
-  @Deployment(resources = { SINGLE_CONDITIONAL_XML })
+  @Deployment(resources = {SINGLE_CONDITIONAL_XML})
   @Test
-  public void testWithoutCreateInstancePermissions() {
+  void testWithoutCreateInstancePermissions() {
     // given deployed process with conditional start event
 
     // user does not have process definition CREATE_INSTANCE permissions
@@ -97,9 +97,9 @@ public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
   }
 
   @SuppressWarnings("GrazieInspection")
-  @Deployment(resources = { SINGLE_CONDITIONAL_XML })
+  @Deployment(resources = {SINGLE_CONDITIONAL_XML})
   @Test
-  public void testWithoutProcessInstancePermission() {
+  void testWithoutProcessInstancePermission() {
     // given deployed process with conditional start event
 
     // the user doesn't have CREATE permission for process instances
@@ -114,9 +114,9 @@ public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
         .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'.");
   }
 
-  @Deployment(resources = { SINGLE_CONDITIONAL_XML })
+  @Deployment(resources = {SINGLE_CONDITIONAL_XML})
   @Test
-  public void testWithRevokeAuthorizations() {
+  void testWithRevokeAuthorizations() {
     // given deployed process with conditional start event
 
     createRevokeAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, READ);

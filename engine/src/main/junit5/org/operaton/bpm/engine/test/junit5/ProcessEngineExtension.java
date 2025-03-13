@@ -16,7 +16,32 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import org.operaton.bpm.engine.*;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
+import org.junit.jupiter.api.extension.TestInstancePostProcessor;
+import org.junit.jupiter.api.extension.TestWatcher;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.ProcessEngineServices;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -28,18 +53,21 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.slf4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.extension.*;
-import org.slf4j.Logger;
 
 /**
  * JUnit 5 Extension to create and inject a {@link ProcessEngine} into test classes.
@@ -213,25 +241,43 @@ public class ProcessEngineExtension implements TestWatcher,
     final Method testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set"));
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
-    deploymentId = TestHelper.annotationDeploymentSetUp(processEngine, testClass, testMethod.getName(), null, testMethod.getParameterTypes());
-    boolean hasRequiredHistoryLevel = TestHelper.annotationRequiredHistoryLevelCheck(processEngine, testClass, testMethod.getName(), testMethod.getParameterTypes());
-    boolean hasRequiredDatabase = TestHelper.annotationRequiredDatabaseCheck(processEngine, testClass, testMethod.getName(), testMethod.getParameterTypes());
-
-    Assumptions.assumeTrue(hasRequiredHistoryLevel, "ignored because the current history level is too low");
-    Assumptions.assumeTrue(hasRequiredDatabase, "ignored because the database doesn't match the required ones");
+    // we disable the authorization check when deploying before the test starts
+    boolean authorizationEnabled = processEngineConfiguration.isAuthorizationEnabled();
+    try {
+      processEngineConfiguration.setAuthorizationEnabled(false);
+      deploymentId = TestHelper.annotationDeploymentSetUp(processEngine, testClass, testMethod.getName(), null, testMethod.getParameterTypes());
+      boolean hasRequiredHistoryLevel = TestHelper.annotationRequiredHistoryLevelCheck(processEngine, testClass, testMethod.getName(), testMethod.getParameterTypes());
+      boolean hasRequiredDatabase = TestHelper.annotationRequiredDatabaseCheck(processEngine, testClass, testMethod.getName(), testMethod.getParameterTypes());
+      Assumptions.assumeTrue(hasRequiredHistoryLevel, "ignored because the current history level is too low");
+      Assumptions.assumeTrue(hasRequiredDatabase, "ignored because the database doesn't match the required ones");
+    } finally {
+      // after the initialization we restore authorization to the state defined by the test
+      processEngineConfiguration.setAuthorizationEnabled(authorizationEnabled);
+    }
+    
   }
 
   @Override
   public void afterTestExecution(ExtensionContext context) {
+    identityService.clearAuthentication();
+
     final String testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set")).getName();
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
-   TestHelper.annotationDeploymentTearDown(processEngine, deploymentId, testClass, testMethod);
-   deploymentId = null;
-   for (String additionalDeployment : additionalDeployments) {
-     TestHelper.deleteDeployment(processEngine, additionalDeployment);
-   }
-   additionalDeployments.clear();
+    // we disable the tenant check when undeploying after the test ends
+    boolean tenantCheckEnabled = processEngineConfiguration.isTenantCheckEnabled();
+    try {
+      processEngineConfiguration.setTenantCheckEnabled(false);
+      TestHelper.annotationDeploymentTearDown(processEngine, deploymentId, testClass, testMethod);
+      deploymentId = null;
+      for (String additionalDeployment : additionalDeployments) {
+        TestHelper.deleteDeployment(processEngine, additionalDeployment);
+      }
+      additionalDeployments.clear();
+    } finally {
+      // restore tenant check to the state defined by the test
+      processEngineConfiguration.setTenantCheckEnabled(tenantCheckEnabled);
+    }
 
    TestHelper.resetIdGenerator(processEngineConfiguration);
    ClockUtil.reset();
@@ -273,6 +319,7 @@ public class ProcessEngineExtension implements TestWatcher,
       // allow other extensions to access the engine instance created by this extension
       context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     }
+    initializeServices();
     getAllFields(testInstance.getClass())
             .filter(field -> field.getType() == ProcessEngine.class)
             .forEach(field -> inject(testInstance, field, processEngine));

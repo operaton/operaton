@@ -28,11 +28,12 @@ import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABL
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -47,7 +48,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   protected boolean ensureSpecificVariablePermission;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     deploymentId = testRule.deploy(
         "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
@@ -57,7 +58,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     deleteDeployment(deploymentId);
@@ -65,7 +66,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessVariableQueryWithoutAuthorization() {
+  void testProcessVariableQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY, getVariables());
 
@@ -77,7 +78,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCaseVariableQueryWithoutAuthorization () {
+  void testCaseVariableQueryWithoutAuthorization() {
     // given
     createCaseInstanceByKey(CASE_KEY, getVariables());
 
@@ -89,7 +90,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessLocalTaskVariableQueryWithoutAuthorization () {
+  void testProcessLocalTaskVariableQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -103,7 +104,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCaseLocalTaskVariableQueryWithoutAuthorization () {
+  void testCaseLocalTaskVariableQueryWithoutAuthorization() {
     // given
     testRule.createCaseInstanceByKey(CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -117,7 +118,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskVariableQueryWithoutAuthorization() {
+  void testStandaloneTaskVariableQueryWithoutAuthorization() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -133,7 +134,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessVariableQueryWithReadPermissionOnProcessInstance() {
+  void testProcessVariableQueryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -150,7 +151,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessVariableQueryWithReadInstancesPermissionOnOneTaskProcess() {
+  void testProcessVariableQueryWithReadInstancesPermissionOnOneTaskProcess() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_INSTANCE);
@@ -167,7 +168,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessVariableQueryWithReadInstanceVariablePermission() {
+  void testProcessVariableQueryWithReadInstanceVariablePermission() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
@@ -199,7 +200,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessVariableQueryWithReadProcessInstanceWhenReadVariableIsEnabled() {
+  void testProcessVariableQueryWithReadProcessInstanceWhenReadVariableIsEnabled() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
@@ -213,7 +214,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessVariableQueryWithReadTaskWhenReadVariableIsEnabled() {
+  void testProcessVariableQueryWithReadTaskWhenReadVariableIsEnabled() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
@@ -227,7 +228,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessLocalTaskVariableQueryWithReadPermissionOnTask() {
+  void testProcessLocalTaskVariableQueryWithReadPermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -242,9 +243,8 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
 
-
   @Test
-  public void testProcessLocalTaskVariableQueryWithMultiple() {
+  void testProcessLocalTaskVariableQueryWithMultiple() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -260,7 +260,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessLocalTaskVariableQueryWithReadPermissionOnProcessInstance() {
+  void testProcessLocalTaskVariableQueryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -279,7 +279,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessLocalTaskVariableQueryWithReadPermissionOnOneProcessTask() {
+  void testProcessLocalTaskVariableQueryWithReadPermissionOnOneProcessTask() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -298,7 +298,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessLocalTaskVariableQueryWithReadInstanceVariablePermission() {
+  void testProcessLocalTaskVariableQueryWithReadInstanceVariablePermission() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -318,7 +318,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessLocalTaskVariableQueryWithReadVariablePermission() {
+  void testProcessLocalTaskVariableQueryWithReadVariablePermission() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -338,7 +338,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessLocalTaskVariableQueryWithReadProcessInstanceWhenReadVariableIsEnabled() {
+  void testProcessLocalTaskVariableQueryWithReadProcessInstanceWhenReadVariableIsEnabled() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -354,7 +354,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessLocalTaskVariableQueryWithReadTaskWhenReadVariableIsEnabled() {
+  void testProcessLocalTaskVariableQueryWithReadTaskWhenReadVariableIsEnabled() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     startProcessInstanceByKey(PROCESS_KEY);
@@ -370,7 +370,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskVariableQueryWithReadPermissionOnTask() {
+  void testStandaloneTaskVariableQueryWithReadPermissionOnTask() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -387,7 +387,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskVariableQueryWithReadVariablePermissionOnTask() {
+  void testStandaloneTaskVariableQueryWithReadVariablePermissionOnTask() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String taskId = "myTask";
@@ -405,7 +405,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testMixedVariables() {
+  void testMixedVariables() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -437,7 +437,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testMixedVariablesWhenReadVariableIsEnabled() {
+  void testMixedVariablesWhenReadVariableIsEnabled() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String taskId = "myTask";
@@ -473,7 +473,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
    * CAM-10864: Tests that the query itself works if authorization is used and a value matcher
    */
   @Test
-  public void testQueryWithVariableValueFilter() {
+  void testQueryWithVariableValueFilter() {
     // given
     startProcessInstanceByKey(PROCESS_KEY, getVariables());
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_INSTANCE);
@@ -491,7 +491,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindProcessVariableWithRevokedReadPermissionOnProcessInstance() {
+  void shouldNotFindProcessVariableWithRevokedReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, ANY, ALL);

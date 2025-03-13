@@ -16,6 +16,16 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
@@ -23,15 +33,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-
-import java.util.List;
-import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
@@ -45,11 +46,11 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   protected String instance1Id;
   protected String instance2Id;
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     deploymentId = testRule.deploy(
         "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
@@ -61,7 +62,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // when
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
 
@@ -70,7 +71,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadOnProcessInstance() {
+  void testQueryWithReadOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ);
 
@@ -83,7 +84,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadOnAnyProcessInstance() {
+  void testQueryWithReadOnAnyProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
 
@@ -95,7 +96,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstanceOnProcessDefinition() {
+  void testQueryWithReadInstanceOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, READ_INSTANCE);
 
@@ -108,7 +109,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstanceOnAnyProcessDefinition() {
+  void testQueryWithReadInstanceOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
 
@@ -120,7 +121,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstanceWithMultiple() {
+  void testQueryWithReadInstanceWithMultiple() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, READ_INSTANCE);
@@ -134,7 +135,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindTaskWithRevokedReadOnProcessInstance() {
+  void shouldNotFindTaskWithRevokedReadOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
     createRevokeAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ);
@@ -147,7 +148,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldFetchAndLockWhenUserAuthorized() {
+  void shouldFetchAndLockWhenUserAuthorized() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, ALL);
 
@@ -163,7 +164,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldFetchAndLockWhenGroupAuthorized() {
+  void shouldFetchAndLockWhenGroupAuthorized() {
     // given
     createGrantAuthorizationGroup(PROCESS_DEFINITION, ANY, groupId, ALL);
 
@@ -179,7 +180,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFetchAndLockWhenUnauthorized() {
+  void shouldNotFetchAndLockWhenUnauthorized() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
     createGrantAuthorizationGroup(PROCESS_DEFINITION, ANY, groupId, READ_INSTANCE);

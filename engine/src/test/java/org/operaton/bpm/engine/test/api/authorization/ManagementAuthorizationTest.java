@@ -16,15 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.authorization.SystemPermissions;
@@ -36,12 +29,19 @@ import org.operaton.bpm.engine.management.TableMetaData;
 import org.operaton.bpm.engine.management.TablePage;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ManagementAuthorizationTest extends AuthorizationTest {
+class ManagementAuthorizationTest extends AuthorizationTest {
 
   protected static final String REQUIRED_ADMIN_AUTH_EXCEPTION = "ENGINE-03029 Required admin authenticated group or user.";
   protected static final String DUMMY_PROPERTY = "dummy-property";
@@ -49,7 +49,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   protected static final String DUMMY_METRIC = "dummyMetric";
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     managementService.deleteProperty(DUMMY_PROPERTY);
@@ -58,7 +58,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // get table count //////////////////////////////////////////////
 
   @Test
-  public void shouldGetTableCountAsOperatonAdmin() {
+  void shouldGetTableCountAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -70,7 +70,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetTableCountWithPermission() {
+  void shouldGetTableCountWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -82,7 +82,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetTableCountWithAdminAndPermission() {
+  void shouldGetTableCountWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -95,7 +95,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotGetTableCountWithoutAuthorization() {
+  void shouldNotGetTableCountWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -109,7 +109,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // get table name //////////////////////////////////////////////
 
   @Test
-  public void shouldGetTableNameAsOperatonAdmin() {
+  void shouldGetTableNameAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
@@ -122,7 +122,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetTableNameWithPermission() {
+  void shouldGetTableNameWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
@@ -135,7 +135,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetTableNameAdminAndWithPermission() {
+  void shouldGetTableNameAdminAndWithPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -149,7 +149,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotGetTableNameWithoutAuthorization() {
+  void shouldNotGetTableNameWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -163,7 +163,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // get table meta data //////////////////////////////////////////////
 
   @Test
-  public void shouldGetTableMetaDataAsOperatonAdmin() {
+  void shouldGetTableMetaDataAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -175,7 +175,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetTableMetaDataWithPermission() {
+  void shouldGetTableMetaDataWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -187,7 +187,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetTableMetaDataWithAdminAndPermission() {
+  void shouldGetTableMetaDataWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -201,7 +201,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void shouldNotGetTableMetaDataWithoutAuthorization() {
+  void shouldNotGetTableMetaDataWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -215,7 +215,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // table page query //////////////////////////////////
 
   @Test
-  public void shouldNotPerformTablePageQueryWithoutAuthorization() {
+  void shouldNotPerformTablePageQueryWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -227,7 +227,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldPerformTablePageQueryAsOperatonAdmin() {
+  void shouldPerformTablePageQueryAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
@@ -242,7 +242,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // get history level /////////////////////////////////
 
   @Test
-  public void shouldGetHistoryLevelAsOperatonAdmin() {
+  void shouldGetHistoryLevelAsOperatonAdmin() {
     //given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -254,7 +254,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetHistoryLevelWithPermission() {
+  void shouldGetHistoryLevelWithPermission() {
     //given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -266,7 +266,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetHistoryLevelAdminAndWithPermission() {
+  void shouldGetHistoryLevelAdminAndWithPermission() {
     //given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -279,7 +279,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotGetHistoryLevelWithoutAuthorization() {
+  void shouldNotGetHistoryLevelWithoutAuthorization() {
     // given
     assertThatThrownBy(() -> {
       // when
@@ -292,7 +292,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // database schema upgrade ///////////////////////////
 
   @Test
-  public void shouldNotPerformDataSchemaUpgradeWithoutAuthorization() {
+  void shouldNotPerformDataSchemaUpgradeWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -307,7 +307,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void shouldGetPropertiesAsOperatonAdmin() {
+  void shouldGetPropertiesAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -319,7 +319,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetPropertiesWithPermission() {
+  void shouldGetPropertiesWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -331,7 +331,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetPropertiesWithAdminAndPermission() {
+  void shouldGetPropertiesWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -344,7 +344,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotGetPropertiesWithWrongPermission() {
+  void shouldNotGetPropertiesWithWrongPermission() {
     // given
     createGrantAuthorization(Resources.TASK, "*", userId, TaskPermissions.DELETE);
 
@@ -357,7 +357,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotGetPropertiesWithoutAuthorization() {
+  void shouldNotGetPropertiesWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -371,7 +371,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // set properties ///////////////////////////
 
   @Test
-  public void shouldSetPropertyAsOperatonAdmin() {
+  void shouldSetPropertyAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -384,7 +384,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldSetPropertyWithPermission() {
+  void shouldSetPropertyWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
@@ -397,7 +397,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldSetPropertyWithAdminAndPermission() {
+  void shouldSetPropertyWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
@@ -411,7 +411,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotSetPropertyWithoutAuthorization() {
+  void shouldNotSetPropertyWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -425,7 +425,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // delete properties ///////////////////////////
 
   @Test
-  public void shouldDeletePropertyAsOperatonAdmin() {
+  void shouldDeletePropertyAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     managementService.setProperty(DUMMY_VALUE, DUMMY_PROPERTY);
@@ -439,7 +439,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldDeletePropertyWithPermission() {
+  void shouldDeletePropertyWithPermission() {
     // given
     disableAuthorization();
     managementService.setProperty(DUMMY_VALUE, DUMMY_PROPERTY);
@@ -456,7 +456,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldDeletePropertyWithAdminAndPermission() {
+  void shouldDeletePropertyWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
@@ -470,7 +470,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotDeletePropertyWithoutAuthorization() {
+  void shouldNotDeletePropertyWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -484,7 +484,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // configure telemetry /////////////////////////////////////
 
   @Test
-  public void shouldNotThrowExceptionWhenToggleTelemetry() {
+  void shouldNotThrowExceptionWhenToggleTelemetry() {
     // given
 
     // when
@@ -497,7 +497,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // get telemetry data /////////////////////////////////////
 
   @Test
-  public void shouldGetTelemetryDataAsOperatonAdmin() {
+  void shouldGetTelemetryDataAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -509,7 +509,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetTelemetryDataWithPermission() {
+  void shouldGetTelemetryDataWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -521,7 +521,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetTelemetryDataWithAdminAndPermission() {
+  void shouldGetTelemetryDataWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -535,7 +535,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void shouldNotGetTelemetryDataWithoutAdminAndPermission() {
+  void shouldNotGetTelemetryDataWithoutAdminAndPermission() {
     // given
 
     assertThatThrownBy(() -> {
@@ -549,7 +549,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // delete metrics //////////////////////////////////////
 
   @Test
-  public void shouldDeleteMetricsAsOperatonAdmin() {
+  void shouldDeleteMetricsAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -563,7 +563,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldDeleteMetricsWithPermission() {
+  void shouldDeleteMetricsWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
 
@@ -577,7 +577,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldDeleteMetricsWithAdminAndPermission() {
+  void shouldDeleteMetricsWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
@@ -592,7 +592,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotDeleteMetricsWithoutAuthorization() {
+  void shouldNotDeleteMetricsWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -606,7 +606,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // delete task metrics /////////////////////////////////
 
   @Test
-  public void shouldDeleteTaskMetricsAsOperatonAdmin() {
+  void shouldDeleteTaskMetricsAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -619,7 +619,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldDeleteTaskMetricsWithPermission() {
+  void shouldDeleteTaskMetricsWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
 
@@ -632,7 +632,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldDeleteTaskMetricsWithAdminAndPermission() {
+  void shouldDeleteTaskMetricsWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
@@ -646,7 +646,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotDeleteTaskMetricsWithoutAuthorization() {
+  void shouldNotDeleteTaskMetricsWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -660,7 +660,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // query schema log list //////////////////////////////////////////
 
   @Test
-  public void shouldExecuteSchemaLogListAsOperatonAdmin() {
+  void shouldExecuteSchemaLogListAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -672,7 +672,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldExecuteSchemaLogListWithPermission() {
+  void shouldExecuteSchemaLogListWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -684,7 +684,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldExecuteSchemaLogListWithAdminAndPermission() {
+  void shouldExecuteSchemaLogListWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -697,7 +697,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotExecuteSchemaLogListWithoutAuthorization() {
+  void shouldNotExecuteSchemaLogListWithoutAuthorization() {
     // given
 
     // when
@@ -710,7 +710,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   // query schema log count //////////////////////////////////////////
 
   @Test
-  public void shouldExecuteSchemaLogCountAsOperatonAdmin() {
+  void shouldExecuteSchemaLogCountAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -722,7 +722,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldExecuteSchemaLogCountWithPermission() {
+  void shouldExecuteSchemaLogCountWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -734,7 +734,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldExecuteSchemaLogCountWithAdminAndPermission() {
+  void shouldExecuteSchemaLogCountWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -747,7 +747,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotExecuteSchemaLogCountWithoutAuthorization() {
+  void shouldNotExecuteSchemaLogCountWithoutAuthorization() {
     // given
 
     // when

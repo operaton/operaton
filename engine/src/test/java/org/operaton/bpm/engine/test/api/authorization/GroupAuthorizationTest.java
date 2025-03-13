@@ -29,8 +29,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -52,7 +53,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   public static final String TEST_USER_ID = "testUser";
   public static final List<String> TEST_GROUP_IDS = Arrays.asList("testGroup1", "testGroup2", "testGroup3");
 
-  @Before
+  @BeforeEach
   @Override
   public void setUp() {
     createUser(TEST_USER_ID);
@@ -66,7 +67,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testTaskQueryWithoutGroupAuthorizations() {
+  void testTaskQueryWithoutGroupAuthorizations() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
       AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
@@ -84,7 +85,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testTaskQueryWithOneGroupAuthorization() {
+  void testTaskQueryWithOneGroupAuthorization() {
     createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, TEST_GROUP_IDS.get(0));
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
@@ -104,7 +105,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testTaskQueryWithGroupAuthorization() {
+  void testTaskQueryWithGroupAuthorization() {
     for (String testGroupId : TEST_GROUP_IDS) {
       createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, testGroupId);
     }
@@ -125,7 +126,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testTaskQueryWithUserWithoutGroups() {
+  void testTaskQueryWithUserWithoutGroups() {
     identityService.setAuthentication(TEST_USER_ID, null);
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
@@ -145,7 +146,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckAuthorizationWithoutGroupAuthorizations() {
+  void testCheckAuthorizationWithoutGroupAuthorizations() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
       AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
       DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
@@ -165,7 +166,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckAuthorizationWithOneGroupAuthorizations() {
+  void testCheckAuthorizationWithOneGroupAuthorizations() {
     createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, TEST_GROUP_IDS.get(0));
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
@@ -187,7 +188,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckAuthorizationWithGroupAuthorizations() {
+  void testCheckAuthorizationWithGroupAuthorizations() {
     for (String testGroupId : TEST_GROUP_IDS) {
       createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, testGroupId);
     }
@@ -211,7 +212,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckAuthorizationWithUserWithoutGroups() {
+  void testCheckAuthorizationWithUserWithoutGroups() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
       AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
       DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
@@ -231,7 +232,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckAuthorizationForNullHostileListOfGroups() {
+  void testCheckAuthorizationForNullHostileListOfGroups() {
     // given
     identityService.clearAuthentication();
 

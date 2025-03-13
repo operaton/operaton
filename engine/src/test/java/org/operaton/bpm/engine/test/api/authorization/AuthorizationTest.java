@@ -16,11 +16,27 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resource;
+import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -35,9 +51,18 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
@@ -47,21 +72,15 @@ import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
-
-import org.junit.After;
-import org.junit.Before;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author Roman Smirnov
  */
-public abstract class AuthorizationTest extends PluggableProcessEngineTest {
+public abstract class AuthorizationTest {
+
+  @RegisterExtension
+  protected static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineExtension);
 
   protected String userId = "test";
   protected String groupId = "accounting";
@@ -71,35 +90,53 @@ public abstract class AuthorizationTest extends PluggableProcessEngineTest {
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
   protected static final String TASK_ID = "myTask";
+  
+  protected ProcessEngine processEngine;
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected IdentityService identityService;
+  protected AuthorizationService authorizationService;
+  protected RuntimeService runtimeService;
+  protected TaskService taskService;
+  protected ManagementService managementService;
+  protected RepositoryService repositoryService;
+  protected CaseService caseService;
+  protected FormService formService;
+  protected ExternalTaskService externalTaskService;
+  protected HistoryService historyService;
+  protected DecisionService decisionService;
 
   protected List<String> deploymentIds = new ArrayList<>();
 
-  @Before
+  @BeforeEach
   public void setUp() {
+    processEngineConfiguration.setAuthorizationEnabled(false);
     testUser = createUser(userId);
     testGroup = createGroup(groupId);
-
     identityService.createMembership(userId, groupId);
-
     identityService.setAuthentication(userId, Arrays.asList(groupId));
     processEngineConfiguration.setAuthorizationEnabled(true);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
-    processEngineConfiguration.setAuthorizationEnabled(false);
-    for (User user : identityService.createUserQuery().list()) {
-      identityService.deleteUser(user.getId());
-    }
-    for (Group group : identityService.createGroupQuery().list()) {
-      identityService.deleteGroup(group.getId());
-    }
-    for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
-      authorizationService.deleteAuthorization(authorization.getId());
-    }
-    for (String deploymentId : deploymentIds) {
-      deleteDeployment(deploymentId);
-    }
+    runWithoutAuthorization((Callable<Void>) () -> {
+      for (User user : identityService.createUserQuery().list()) {
+        identityService.deleteUser(user.getId());
+      }
+      for (Group group : identityService.createGroupQuery().list()) {
+        identityService.deleteGroup(group.getId());
+      }
+      for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
+        authorizationService.deleteAuthorization(authorization.getId());
+      }
+      for (String deploymentId : deploymentIds) {
+        deleteDeployment(deploymentId);
+      }
+      for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
+        historyService.deleteUserOperationLogEntry(logEntry.getId());
+      }
+      return null;
+    });
   }
 
   protected <T> T runWithoutAuthorization(Callable<T> runnable) {

@@ -22,6 +22,10 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -29,20 +33,18 @@ import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.management.JobDefinitionQuery;
 import org.operaton.bpm.engine.runtime.Job;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class JobDefinitionAuthorizationTest extends AuthorizationTest {
+class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
   protected static final String TIMER_START_PROCESS_KEY = "timerStartProcess";
   protected static final String TIMER_BOUNDARY_PROCESS_KEY = "timerBoundaryProcess";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/authorization/timerStartEventProcess.bpmn20.xml",
@@ -53,7 +55,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // job definition query ///////////////////////////////////////
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
 
     // when
@@ -64,7 +66,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnProcessDefinition() {
+  void testQueryWithReadPermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, READ);
 
@@ -76,7 +78,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadPermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
 
@@ -88,7 +90,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithMultiple() {
+  void testQueryWithMultiple() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, READ);
@@ -101,7 +103,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindJobDefinitionWithRevokedReadPermissionOnProcessDefinition() {
+  void shouldNotFindJobDefinitionWithRevokedReadPermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, ANY, READ);
     createRevokeAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, READ);
@@ -116,7 +118,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend job definition by id ///////////////////////////////
 
   @Test
-  public void testSuspendByIdWithoutAuthorization() {
+  void testSuspendByIdWithoutAuthorization() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
 
@@ -135,7 +137,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendByIdWithUpdatePermissionOnProcessDefinition() {
+  void testSuspendByIdWithUpdatePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -150,7 +152,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendByIdWithUpdatePermissionOnAnyProcessDefinition() {
+  void testSuspendByIdWithUpdatePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE);
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -167,7 +169,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // activate job definition by id ///////////////////////////////
 
   @Test
-  public void testActivateByIdWithoutAuthorization() {
+  void testActivateByIdWithoutAuthorization() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     suspendJobDefinitionById(jobDefinitionId);
@@ -187,7 +189,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateByIdWithUpdatePermissionOnProcessDefinition() {
+  void testActivateByIdWithUpdatePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -203,7 +205,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateByIdWithUpdatePermissionOnAnyProcessDefinition() {
+  void testActivateByIdWithUpdatePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE);
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -221,7 +223,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend job definition by id (including jobs) ///////////////////////////////
 
   @Test
-  public void testSuspendIncludingJobsByIdWithoutAuthorization() {
+  void testSuspendIncludingJobsByIdWithoutAuthorization() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -244,7 +246,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByIdWithUpdatePermissionOnProcessInstance() {
+  void testSuspendIncludingJobsByIdWithUpdatePermissionOnProcessInstance() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -269,7 +271,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByIdWithUpdatePermissionOnAnyProcessInstance() {
+  void testSuspendIncludingJobsByIdWithUpdatePermissionOnAnyProcessInstance() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -291,7 +293,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByIdWithUpdateInstancePermissionOnProcessDefinition() {
+  void testSuspendIncludingJobsByIdWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -312,7 +314,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByIdWithUpdateInstancePermissionOnAnyProcessDefinition() {
+  void testSuspendIncludingJobsByIdWithUpdateInstancePermissionOnAnyProcessDefinition() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -336,7 +338,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // activate job definition by id (including jobs) ///////////////////////////////
 
   @Test
-  public void testActivateIncludingJobsByIdWithoutAuthorization() {
+  void testActivateIncludingJobsByIdWithoutAuthorization() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -361,7 +363,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByIdWithUpdatePermissionOnProcessInstance() {
+  void testActivateIncludingJobsByIdWithUpdatePermissionOnProcessInstance() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -387,7 +389,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByIdWithUpdatePermissionOnAnyProcessInstance() {
+  void testActivateIncludingJobsByIdWithUpdatePermissionOnAnyProcessInstance() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -410,7 +412,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByIdWithUpdateInstancePermissionOnProcessDefinition() {
+  void testActivateIncludingJobsByIdWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -432,7 +434,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByIdWithUpdateInstancePermissionOnAnyProcessDefinition() {
+  void testActivateIncludingJobsByIdWithUpdateInstancePermissionOnAnyProcessDefinition() {
     // given
     String jobDefinitionId = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -457,7 +459,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend job definition by process definition id ///////////////////////////////
 
   @Test
-  public void testSuspendByProcessDefinitionIdWithoutAuthorization() {
+  void testSuspendByProcessDefinitionIdWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
 
@@ -476,7 +478,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendByProcessDefinitionIdWithUpdatePermissionOnProcessDefinition() {
+  void testSuspendByProcessDefinitionIdWithUpdatePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -491,7 +493,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendByProcessDefinitionIdWithUpdatePermissionOnAnyProcessDefinition() {
+  void testSuspendByProcessDefinitionIdWithUpdatePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE);
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -508,7 +510,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // activate job definition by process definition id ///////////////////////////////
 
   @Test
-  public void testActivateByProcessDefinitionIdWithoutAuthorization() {
+  void testActivateByProcessDefinitionIdWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     suspendJobDefinitionByProcessDefinitionId(processDefinitionId);
@@ -528,7 +530,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateByProcessDefinitionIdWithUpdatePermissionOnProcessDefinition() {
+  void testActivateByProcessDefinitionIdWithUpdatePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -544,7 +546,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateByProcessDefinitionIdWithUpdatePermissionOnAnyProcessDefinition() {
+  void testActivateByProcessDefinitionIdWithUpdatePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE);
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -562,7 +564,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend job definition by process definition id (including jobs) ///////////////////////////////
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionIdWithoutAuthorization() {
+  void testSuspendIncludingJobsByProcessDefinitionIdWithoutAuthorization() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -586,7 +588,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionIdWithUpdatePermissionOnProcessInstance() {
+  void testSuspendIncludingJobsByProcessDefinitionIdWithUpdatePermissionOnProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -611,7 +613,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionIdWithUpdatePermissionOnAnyProcessInstance() {
+  void testSuspendIncludingJobsByProcessDefinitionIdWithUpdatePermissionOnAnyProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -633,7 +635,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionIdWithUpdateInstancePermissionOnProcessDefinition() {
+  void testSuspendIncludingJobsByProcessDefinitionIdWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -654,7 +656,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionIdWithUpdateInstancePermissionOnAnyProcessDefinition() {
+  void testSuspendIncludingJobsByProcessDefinitionIdWithUpdateInstancePermissionOnAnyProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -678,7 +680,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // activate job definition by id (including jobs) ///////////////////////////////
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionIdWithoutAuthorization() {
+  void testActivateIncludingJobsByProcessDefinitionIdWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -703,7 +705,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionIdWithUpdatePermissionOnProcessInstance() {
+  void testActivateIncludingJobsByProcessDefinitionIdWithUpdatePermissionOnProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -729,7 +731,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionIdWithUpdatePermissionOnAnyProcessInstance() {
+  void testActivateIncludingJobsByProcessDefinitionIdWithUpdatePermissionOnAnyProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -752,7 +754,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionIdWithUpdateInstancePermissionOnProcessDefinition() {
+  void testActivateIncludingJobsByProcessDefinitionIdWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -774,7 +776,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionIdWithUpdateInstancePermissionOnAnyProcessDefinition() {
+  void testActivateIncludingJobsByProcessDefinitionIdWithUpdateInstancePermissionOnAnyProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
@@ -799,7 +801,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend job definition by process definition key ///////////////////////////////
 
   @Test
-  public void testSuspendByProcessDefinitionKeyWithoutAuthorization() {
+  void testSuspendByProcessDefinitionKeyWithoutAuthorization() {
     // given
 
     try {
@@ -817,7 +819,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendByProcessDefinitionKeyWithUpdatePermissionOnProcessDefinition() {
+  void testSuspendByProcessDefinitionKeyWithUpdatePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
 
@@ -831,7 +833,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendByProcessDefinitionKeyWithUpdatePermissionOnAnyProcessDefinition() {
+  void testSuspendByProcessDefinitionKeyWithUpdatePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE);
 
@@ -847,7 +849,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // activate job definition by process definition key ///////////////////////////////
 
   @Test
-  public void testActivateByProcessDefinitionKeyWithoutAuthorization() {
+  void testActivateByProcessDefinitionKeyWithoutAuthorization() {
     // given
     suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
 
@@ -866,7 +868,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateByProcessDefinitionKeyWithUpdatePermissionOnProcessDefinition() {
+  void testActivateByProcessDefinitionKeyWithUpdatePermissionOnProcessDefinition() {
     // given
     suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, UPDATE);
@@ -881,7 +883,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateByProcessDefinitionKeyWithUpdatePermissionOnAnyProcessDefinition() {
+  void testActivateByProcessDefinitionKeyWithUpdatePermissionOnAnyProcessDefinition() {
     // given
     suspendJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE);
@@ -898,7 +900,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // suspend job definition by process definition key (including jobs) ///////////////////////////////
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionKeyWithoutAuthorization() {
+  void testSuspendIncludingJobsByProcessDefinitionKeyWithoutAuthorization() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
 
@@ -921,7 +923,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionKeyWithUpdatePermissionOnProcessInstance() {
+  void testSuspendIncludingJobsByProcessDefinitionKeyWithUpdatePermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
 
@@ -945,7 +947,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionKeyWithUpdatePermissionOnAnyProcessInstance() {
+  void testSuspendIncludingJobsByProcessDefinitionKeyWithUpdatePermissionOnAnyProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
 
@@ -966,7 +968,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionKeyWithUpdateInstancePermissionOnProcessDefinition() {
+  void testSuspendIncludingJobsByProcessDefinitionKeyWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
 
@@ -986,7 +988,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSuspendIncludingJobsByProcessDefinitionKeyWithUpdateInstancePermissionOnAnyProcessDefinition() {
+  void testSuspendIncludingJobsByProcessDefinitionKeyWithUpdateInstancePermissionOnAnyProcessDefinition() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
 
@@ -1009,7 +1011,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   // activate job definition by id (including jobs) ///////////////////////////////
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionKeyWithoutAuthorization() {
+  void testActivateIncludingJobsByProcessDefinitionKeyWithoutAuthorization() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     suspendJobDefinitionIncludingJobsByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -1033,7 +1035,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionKeyWithUpdatePermissionOnProcessInstance() {
+  void testActivateIncludingJobsByProcessDefinitionKeyWithUpdatePermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     suspendJobDefinitionIncludingJobsByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -1058,7 +1060,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionKeyWithUpdatePermissionOnAnyProcessInstance() {
+  void testActivateIncludingJobsByProcessDefinitionKeyWithUpdatePermissionOnAnyProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     suspendJobDefinitionIncludingJobsByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -1080,7 +1082,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionKeyWithUpdateInstancePermissionOnProcessDefinition() {
+  void testActivateIncludingJobsByProcessDefinitionKeyWithUpdateInstancePermissionOnProcessDefinition() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     suspendJobDefinitionIncludingJobsByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -1101,7 +1103,7 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testActivateIncludingJobsByProcessDefinitionKeyWithUpdateInstancePermissionOnAnyProcessDefinition() {
+  void testActivateIncludingJobsByProcessDefinitionKeyWithUpdateInstancePermissionOnAnyProcessDefinition() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     suspendJobDefinitionIncludingJobsByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);

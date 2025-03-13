@@ -43,17 +43,17 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 
 import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class SingleProcessInstanceModificationAsyncAuthorizationTest extends AuthorizationTest {
+class SingleProcessInstanceModificationAsyncAuthorizationTest extends AuthorizationTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
 
-  @After
+  @AfterEach
   @Override
   public void tearDown() {
     disableAuthorization();
@@ -72,7 +72,7 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testModificationWithAllPermissions() {
+  void testModificationWithAllPermissions() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "parallelGateway", userId, CREATE_INSTANCE, READ_INSTANCE, UPDATE_INSTANCE);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
@@ -121,7 +121,7 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testModificationWithoutBatchPermissions() {
+  void testModificationWithoutBatchPermissions() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "parallelGateway", userId, CREATE_INSTANCE, READ_INSTANCE, UPDATE_INSTANCE);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
@@ -144,7 +144,7 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testModificationRevoke() {
+  void testModificationRevoke() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "parallelGateway", userId, CREATE_INSTANCE, READ_INSTANCE, UPDATE_INSTANCE);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);

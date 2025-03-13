@@ -27,6 +27,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Date;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendJobDefinitionHandler;
@@ -34,22 +38,19 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class JobAuthorizationTest extends AuthorizationTest {
+class JobAuthorizationTest extends AuthorizationTest {
 
   protected static final String TIMER_START_PROCESS_KEY = "timerStartProcess";
   protected static final String TIMER_BOUNDARY_PROCESS_KEY = "timerBoundaryProcess";
   protected static final String ONE_INCIDENT_PROCESS_KEY = "process";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/authorization/timerStartEventProcess.bpmn20.xml",
@@ -59,7 +60,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -72,7 +73,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // job query (jobs associated to a process) //////////////////////////////////////////////////
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
 
@@ -84,7 +85,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnProcessInstance() {
+  void testQueryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -97,7 +98,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessInstance() {
+  void testQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
@@ -110,7 +111,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithMultiple() {
+  void testQueryWithMultiple() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
@@ -124,7 +125,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindJobWithRevokedReadPermissionOnProcessInstance() {
+  void shouldNotFindJobWithRevokedReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, ANY, ALL);
@@ -138,7 +139,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancePermissionOnTimerStartProcessDefinition() {
+  void testQueryWithReadInstancePermissionOnTimerStartProcessDefinition() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
 
@@ -156,7 +157,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancePermissionOnTimerBoundaryProcessDefinition() {
+  void testQueryWithReadInstancePermissionOnTimerBoundaryProcessDefinition() {
     // given
     String processInstanceId = startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_BOUNDARY_PROCESS_KEY, userId, READ_INSTANCE);
@@ -173,7 +174,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testQueryWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
 
@@ -189,7 +190,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // job query (standalone job) /////////////////////////////////
 
   @Test
-  public void testStandaloneJobQueryWithoutAuthorization() {
+  void testStandaloneJobQueryWithoutAuthorization() {
     // given
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
@@ -217,7 +218,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // execute job (standalone job) ////////////////////////////////
 
   @Test
-  public void testExecuteStandaloneJob() {
+  void testExecuteStandaloneJob() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, UPDATE);
 
@@ -243,7 +244,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // delete standalone job ////////////////////////////////
 
   @Test
-  public void testDeleteStandaloneJob() {
+  void testDeleteStandaloneJob() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, UPDATE);
 
@@ -269,7 +270,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // set job retries (standalone) ////////////////////////////////
 
   @Test
-  public void testSetStandaloneJobRetries() {
+  void testSetStandaloneJobRetries() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, UPDATE);
 
@@ -297,7 +298,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // set job retries (standalone) ////////////////////////////////
 
   @Test
-  public void testSetStandaloneJobDueDate() {
+  void testSetStandaloneJobDueDate() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, UPDATE);
 
@@ -325,7 +326,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // get exception stacktrace ///////////////////////////////////////////
 
   @Test
-  public void testGetExceptionStacktraceWithoutAuthorization() {
+  void testGetExceptionStacktraceWithoutAuthorization() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     disableAuthorization();
@@ -345,7 +346,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetExceptionStacktraceWithReadPermissionOnProcessInstance() {
+  void testGetExceptionStacktraceWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     String jobId = selectJobByProcessInstanceId(processInstanceId).getId();
@@ -359,7 +360,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetExceptionStacktraceReadPermissionOnAnyProcessInstance() {
+  void testGetExceptionStacktraceReadPermissionOnAnyProcessInstance() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     String jobId = selectJobByProcessInstanceId(processInstanceId).getId();
@@ -374,7 +375,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetExceptionStacktraceWithReadInstancePermissionOnTimerBoundaryProcessDefinition() {
+  void testGetExceptionStacktraceWithReadInstancePermissionOnTimerBoundaryProcessDefinition() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     String jobId = selectJobByProcessInstanceId(processInstanceId).getId();
@@ -389,7 +390,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetExceptionStacktraceWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testGetExceptionStacktraceWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     String jobId = selectJobByProcessInstanceId(processInstanceId).getId();
@@ -406,7 +407,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // get exception stacktrace (standalone) ////////////////////////////////
 
   @Test
-  public void testStandaloneJobGetExceptionStacktrace() {
+  void testStandaloneJobGetExceptionStacktrace() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, UPDATE);
 
@@ -434,7 +435,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void testSuspendStandaloneJobById() {
+  void testSuspendStandaloneJobById() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, UPDATE);
 
@@ -463,7 +464,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
   // activate job by id //////////////////////////////////////////
 
   @Test
-  public void testActivateStandaloneJobById() {
+  void testActivateStandaloneJobById() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, TIMER_START_PROCESS_KEY, userId, UPDATE);
 

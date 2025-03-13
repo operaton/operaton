@@ -34,6 +34,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 
 import java.io.InputStream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.form.StartFormData;
@@ -41,15 +44,12 @@ import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.VariableMap;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class FormAuthorizationTest extends AuthorizationTest {
+class FormAuthorizationTest extends AuthorizationTest {
 
   protected static final String FORM_PROCESS_KEY = "FormsProcess";
   protected static final String RENDERED_FORM_PROCESS_KEY = "renderedFormProcess";
@@ -58,7 +58,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   protected String deploymentId;
   protected boolean ensureSpecificVariablePermission;
 
-  @Before
+  @BeforeEach
   @Override
   public void setUp() {
     deploymentId = testRule.deploy(
@@ -71,7 +71,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     super.setUp();
   }
 
-  @After
+  @AfterEach
   @Override
   public void tearDown() {
     super.tearDown();
@@ -81,7 +81,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get start form data ///////////////////////////////////////////
 
   @Test
-  public void testGetStartFormDataWithoutAuthorizations() {
+  void testGetStartFormDataWithoutAuthorizations() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
@@ -100,7 +100,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetStartFormData() {
+  void testGetStartFormData() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, READ);
@@ -116,7 +116,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get rendered start form /////////////////////////////////////
 
   @Test
-  public void testGetRenderedStartFormWithoutAuthorization() {
+  void testGetRenderedStartFormWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(RENDERED_FORM_PROCESS_KEY).getId();
 
@@ -135,7 +135,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetRenderedStartForm() {
+  void testGetRenderedStartForm() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(RENDERED_FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, RENDERED_FORM_PROCESS_KEY, userId, READ);
@@ -150,7 +150,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get start form variables //////////////////////////////////
 
   @Test
-  public void testGetStartFormVariablesWithoutAuthorization() {
+  void testGetStartFormVariablesWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(RENDERED_FORM_PROCESS_KEY).getId();
 
@@ -169,7 +169,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetStartFormVariables() {
+  void testGetStartFormVariables() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(RENDERED_FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, RENDERED_FORM_PROCESS_KEY, userId, READ);
@@ -186,7 +186,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // submit start form /////////////////////////////////////////
 
   @Test
-  public void testSubmitStartFormWithoutAuthorization() {
+  void testSubmitStartFormWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
@@ -204,7 +204,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSubmitStartFormWithCreatePermissionOnProcessInstance() {
+  void testSubmitStartFormWithCreatePermissionOnProcessInstance() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
@@ -224,7 +224,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSubmitStartFormWithCreateInstancePermissionOnProcessDefinition() {
+  void testSubmitStartFormWithCreateInstancePermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, CREATE_INSTANCE);
@@ -243,7 +243,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSubmitStartForm() {
+  void testSubmitStartForm() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, CREATE_INSTANCE);
@@ -259,7 +259,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get task form data (standalone task) /////////////////////////////////
 
   @Test
-  public void testStandaloneTaskGetTaskFormDataWithoutAuthorization() {
+  void testStandaloneTaskGetTaskFormDataWithoutAuthorization() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -297,7 +297,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskGetTaskFormData() {
+  void testStandaloneTaskGetTaskFormData() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -314,7 +314,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskGetTaskFormDataWithReadVariablePermission() {
+  void testStandaloneTaskGetTaskFormDataWithReadVariablePermission() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String taskId = "myTask";
@@ -334,7 +334,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get task form data (process task) /////////////////////////////////
 
   @Test
-  public void testProcessTaskGetTaskFormDataWithoutAuthorization() {
+  void testProcessTaskGetTaskFormDataWithoutAuthorization() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -376,7 +376,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormDataWithReadPermissionOnTask() {
+  void testProcessTaskGetTaskFormDataWithReadPermissionOnTask() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -390,7 +390,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormDataWithReadTaskPermissionOnProcessDefinition() {
+  void testProcessTaskGetTaskFormDataWithReadTaskPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -404,7 +404,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormDataWithReadVariablePermissionOnTask() {
+  void testProcessTaskGetTaskFormDataWithReadVariablePermissionOnTask() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     startProcessInstanceByKey(FORM_PROCESS_KEY);
@@ -419,7 +419,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormDataWithReadTaskVariablePermissionOnProcessDefinition() {
+  void testProcessTaskGetTaskFormDataWithReadTaskVariablePermissionOnProcessDefinition() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     startProcessInstanceByKey(FORM_PROCESS_KEY);
@@ -434,7 +434,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormData() {
+  void testProcessTaskGetTaskFormData() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -451,7 +451,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get task form data (case task) /////////////////////////////////
 
   @Test
-  public void testCaseTaskGetTaskFormData() {
+  void testCaseTaskGetTaskFormData() {
     // given
     testRule.createCaseInstanceByKey(CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -466,7 +466,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get rendered task form (standalone task) //////////////////
 
   @Test
-  public void testStandaloneTaskGetTaskRenderedFormWithoutAuthorization() {
+  void testStandaloneTaskGetTaskRenderedFormWithoutAuthorization() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -505,7 +505,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskGetTaskRenderedForm() {
+  void testStandaloneTaskGetTaskRenderedForm() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -519,7 +519,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskGetTaskRenderedFormWithReadVariablePermission() {
+  void testStandaloneTaskGetTaskRenderedFormWithReadVariablePermission() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String taskId = "myTask";
@@ -536,7 +536,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get rendered task form (process task) /////////////////////////////////
 
   @Test
-  public void testProcessTaskGetRenderedTaskFormWithoutAuthorization() {
+  void testProcessTaskGetRenderedTaskFormWithoutAuthorization() {
     // given
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -578,7 +578,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetRenderedTaskFormWithReadPermissionOnTask() {
+  void testProcessTaskGetRenderedTaskFormWithReadPermissionOnTask() {
     // given
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -592,7 +592,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetRenderedTaskFormWithReadTaskPermissionOnProcessDefinition() {
+  void testProcessTaskGetRenderedTaskFormWithReadTaskPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -606,7 +606,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetRenderedTaskFormWithReadTaskVariablesPermissionOnProcessDefinition() {
+  void testProcessTaskGetRenderedTaskFormWithReadTaskVariablesPermissionOnProcessDefinition() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
@@ -621,7 +621,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetRenderedTaskFormWithReadVariablePermissionOnTask() {
+  void testProcessTaskGetRenderedTaskFormWithReadVariablePermissionOnTask() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
@@ -636,7 +636,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetRenderedTaskForm() {
+  void testProcessTaskGetRenderedTaskForm() {
     // given
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -653,7 +653,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get rendered task form (case task) /////////////////////////////////
 
   @Test
-  public void testCaseTaskGetRenderedTaskForm() {
+  void testCaseTaskGetRenderedTaskForm() {
     // given
     testRule.createCaseInstanceByKey(CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -668,7 +668,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get task form variables (standalone task) ////////////////////////
 
   @Test
-  public void testStandaloneTaskGetTaskFormVariablesWithoutAuthorization() {
+  void testStandaloneTaskGetTaskFormVariablesWithoutAuthorization() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -706,7 +706,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskGetTaskFormVariables() {
+  void testStandaloneTaskGetTaskFormVariables() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -722,7 +722,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskGetTaskFormVariablesWithReadVariablePermission() {
+  void testStandaloneTaskGetTaskFormVariablesWithReadVariablePermission() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     String taskId = "myTask";
@@ -741,7 +741,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get task form variables (process task) /////////////////////////////////
 
   @Test
-  public void testProcessTaskGetTaskFormVariablesWithoutAuthorization() {
+  void testProcessTaskGetTaskFormVariablesWithoutAuthorization() {
     // given
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -783,7 +783,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormVariablesWithReadPermissionOnTask() {
+  void testProcessTaskGetTaskFormVariablesWithReadPermissionOnTask() {
     // given
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -799,7 +799,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormVariablesWithReadTaskPermissionOnProcessDefinition() {
+  void testProcessTaskGetTaskFormVariablesWithReadTaskPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -815,7 +815,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormVariables() {
+  void testProcessTaskGetTaskFormVariables() {
     // given
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -832,7 +832,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormVariablesWithReadVariablePermissionOnTask() {
+  void testProcessTaskGetTaskFormVariablesWithReadVariablePermissionOnTask() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
@@ -849,7 +849,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetTaskFormVariablesWithReadTaskVariablePermissionOnProcessDefinition() {
+  void testProcessTaskGetTaskFormVariablesWithReadTaskVariablePermissionOnProcessDefinition() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
     startProcessInstanceByKey(RENDERED_FORM_PROCESS_KEY);
@@ -868,7 +868,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get task form variables (case task) /////////////////////////////////
 
   @Test
-  public void testCaseTaskGetTaskFormVariables() {
+  void testCaseTaskGetTaskFormVariables() {
     // given
     testRule.createCaseInstanceByKey(CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -883,7 +883,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // submit task form (standalone task) ////////////////////////////////
 
   @Test
-  public void testStandaloneTaskSubmitTaskFormWithoutAuthorization() {
+  void testStandaloneTaskSubmitTaskFormWithoutAuthorization() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -905,7 +905,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskSubmitTaskForm() {
+  void testStandaloneTaskSubmitTaskForm() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -924,7 +924,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // submit task form (process task) ////////////////////////////////
 
   @Test
-  public void testProcessTaskSubmitTaskFormWithoutAuthorization() {
+  void testProcessTaskSubmitTaskFormWithoutAuthorization() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -947,7 +947,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSubmitTaskFormWithUpdatePermissionOnTask() {
+  void testProcessTaskSubmitTaskFormWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -963,7 +963,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSubmitTaskFormWithUpdateTaskPermissionOnProcessDefinition() {
+  void testProcessTaskSubmitTaskFormWithUpdateTaskPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -979,7 +979,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSubmitTaskForm() {
+  void testProcessTaskSubmitTaskForm() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -997,7 +997,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // submit task form (case task) ////////////////////////////////
 
   @Test
-  public void testCaseTaskSubmitTaskForm() {
+  void testCaseTaskSubmitTaskForm() {
     // given
     testRule.createCaseInstanceByKey(CASE_KEY);
     String taskId = selectSingleTask().getId();
@@ -1013,7 +1013,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get start form key ////////////////////////////////////////
 
   @Test
-  public void testGetStartFormKeyWithoutAuthorizations() {
+  void testGetStartFormKeyWithoutAuthorizations() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
@@ -1032,7 +1032,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetStartFormKey() {
+  void testGetStartFormKey() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, READ);
@@ -1047,7 +1047,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get task form key ////////////////////////////////////////
 
   @Test
-  public void testGetTaskFormKeyWithoutAuthorizations() {
+  void testGetTaskFormKeyWithoutAuthorizations() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
@@ -1066,7 +1066,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetTaskFormKey() {
+  void testGetTaskFormKey() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, READ);
@@ -1081,7 +1081,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get deployed start form////////////////////////////////////////
 
   @Test
-  public void testGetDeployedStartForm() {
+  void testGetDeployedStartForm() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, FORM_PROCESS_KEY, userId, READ);
@@ -1092,7 +1092,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDeployedStartFormWithoutAuthorization() {
+  void testGetDeployedStartFormWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(FORM_PROCESS_KEY).getId();
 
@@ -1113,7 +1113,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   // get deployed task form////////////////////////////////////////
 
   @Test
-  public void testGetDeployedTaskForm() {
+  void testGetDeployedTaskForm() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1125,7 +1125,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDeployedTaskFormWithoutAuthorization() {
+  void testGetDeployedTaskFormWithoutAuthorization() {
     // given
     startProcessInstanceByKey(FORM_PROCESS_KEY);
     String taskId = selectSingleTask().getId();

@@ -23,19 +23,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  *
  * @author Deivarayan Azhagappan
  *
  */
-public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
+class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
 
   protected String userId2 = "demo";
   protected User user2;
@@ -45,7 +45,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
 
   protected String defaultTaskPermissionValue;
 
-  @After
+  @AfterEach
   @Override
   public void tearDown() {
     // reset default permission
@@ -54,7 +54,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
   }
 
   @Test
-  public void testShouldGrantTaskWorkOnAssign() {
+  void testShouldGrantTaskWorkOnAssign() {
 
     // given
     processEngineConfiguration.setDefaultUserPermissionForTask(TASK_WORK);
@@ -75,7 +75,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
   }
 
   @Test
-  public void testShouldGrantUpdateOnAssign() {
+  void testShouldGrantUpdateOnAssign() {
 
     // given
     processEngineConfiguration.setDefaultUserPermissionForTask(UPDATE);
@@ -95,7 +95,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
   }
 
   @Test
-  public void testShouldGrantTaskWorkOnSetCandidateUser() {
+  void testShouldGrantTaskWorkOnSetCandidateUser() {
 
     // given
     processEngineConfiguration.setDefaultUserPermissionForTask(TASK_WORK);
@@ -116,7 +116,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
   }
 
   @Test
-  public void testShouldGrantUpdateOnSetCandidateUser() {
+  void testShouldGrantUpdateOnSetCandidateUser() {
 
     // given
     processEngineConfiguration.setDefaultUserPermissionForTask(UPDATE);
@@ -136,7 +136,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
   }
 
   @Test
-  public void testShouldGrantTaskWorkOnSetOwner() {
+  void testShouldGrantTaskWorkOnSetOwner() {
 
     // given
     processEngineConfiguration.setDefaultUserPermissionForTask(TASK_WORK);
@@ -157,7 +157,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
   }
 
   @Test
-  public void testShouldGrantUpdateOnSetOwner() {
+  void testShouldGrantUpdateOnSetOwner() {
 
     // given
     processEngineConfiguration.setDefaultUserPermissionForTask(UPDATE);
@@ -178,7 +178,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
 
 
   @Test
-  public void testShouldGrantTaskWorkOnSetCandidateGroup() {
+  void testShouldGrantTaskWorkOnSetCandidateGroup() {
 
     // given
     processEngineConfiguration.setDefaultUserPermissionForTask(TASK_WORK);
@@ -199,7 +199,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
   }
 
   @Test
-  public void testShouldGrantUpdateOnSetCandidateGroup() {
+  void testShouldGrantUpdateOnSetCandidateGroup() {
 
     // given
     processEngineConfiguration.setDefaultUserPermissionForTask(UPDATE);

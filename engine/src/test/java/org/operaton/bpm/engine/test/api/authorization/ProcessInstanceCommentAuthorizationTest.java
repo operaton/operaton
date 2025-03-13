@@ -21,20 +21,21 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
+class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
   protected static final String ONE_TASK_PROCESS_KEY = "oneTaskProcess";
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstanceTaskCommentWithoutAuthorization() {
+  void testDeleteProcessInstanceTaskCommentWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createTask(TASK_ID);
@@ -54,7 +55,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstanceTaskComment() {
+  void testDeleteProcessInstanceTaskComment() {
     // given
     createTask(TASK_ID);
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
@@ -74,7 +75,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstanceTaskCommentsWithoutAuthorization() {
+  void testDeleteProcessInstanceTaskCommentsWithoutAuthorization() {
     // given
     createTask(TASK_ID);
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
@@ -96,7 +97,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstanceTaskComments() {
+  void testDeleteProcessInstanceTaskComments() {
     // given
     createTask(TASK_ID);
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
@@ -118,7 +119,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateProcessInstanceTaskCommentWithoutAuthorization() {
+  void testUpdateProcessInstanceTaskCommentWithoutAuthorization() {
     // given
     createTask(TASK_ID);
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
@@ -136,7 +137,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateProcessInstanceTaskComment() {
+  void testUpdateProcessInstanceTaskComment() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -161,7 +162,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstanceCommentWithoutAuthorization() {
+  void testDeleteProcessInstanceCommentWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     String createdCommentId = createComment(null, processInstanceId, "aComment").getId();
@@ -176,7 +177,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstanceComment() {
+  void testDeleteProcessInstanceComment() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     Comment createdComment = taskService.createComment(null, processInstanceId, "aComment");
@@ -192,7 +193,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstanceCommentsWithoutAuthorization() {
+  void testDeleteProcessInstanceCommentsWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createComment(null, processInstanceId, "aComment");
@@ -210,7 +211,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstanceComments() {
+  void testDeleteProcessInstanceComments() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     taskService.createComment(null, processInstanceId, "aCommentOne");
@@ -228,7 +229,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateProcessInstanceCommentWithoutAuthorization() {
+  void testUpdateProcessInstanceCommentWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     String createdCommentId = createComment(null, processInstanceId, "originalComment").getId();
@@ -243,7 +244,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateProcessInstanceComment() {
+  void testUpdateProcessInstanceComment() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
 

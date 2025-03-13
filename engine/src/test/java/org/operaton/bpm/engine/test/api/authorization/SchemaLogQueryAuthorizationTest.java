@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Groups;
 
 import java.util.Collections;
@@ -27,10 +27,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Miklas Boskamp
  *
  */
-public class SchemaLogQueryAuthorizationTest extends AuthorizationTest {
+class SchemaLogQueryAuthorizationTest extends AuthorizationTest {
 
   @Test
-  public void testSimpleQueryWithoutAuthorization() {
+  void testSimpleQueryWithoutAuthorization() {
     // given
 
     // then
@@ -38,7 +38,7 @@ public class SchemaLogQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCountQueryWithAuthorization() {
+  void testCountQueryWithAuthorization() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -47,7 +47,7 @@ public class SchemaLogQueryAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithAuthorization() {
+  void testQueryWithAuthorization() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 

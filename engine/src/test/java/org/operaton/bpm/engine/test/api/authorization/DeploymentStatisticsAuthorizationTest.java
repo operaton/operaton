@@ -25,18 +25,19 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.management.DeploymentStatistics;
 import org.operaton.bpm.engine.management.DeploymentStatisticsQuery;
 import org.operaton.bpm.engine.management.IncidentStatistics;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
+class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
 
   protected static final String ONE_INCIDENT_PROCESS_KEY = "process";
   protected static final String TIMER_START_PROCESS_KEY = "timerStartProcess";
@@ -47,7 +48,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   protected String thirdDeploymentId;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     firstDeploymentId = createDeployment("first", "org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml").getId();
     secondDeploymentId = createDeployment("second", "org/operaton/bpm/engine/test/api/authorization/timerStartEventProcess.bpmn20.xml").getId();
@@ -56,7 +57,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     deleteDeployment(firstDeploymentId);
@@ -67,7 +68,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   // deployment statistics query without process instance authorizations /////////////////////////////////////////////
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
 
     // when
@@ -78,7 +79,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnDeployment() {
+  void testQueryWithReadPermissionOnDeployment() {
     // given
     createGrantAuthorization(DEPLOYMENT, firstDeploymentId, userId, READ);
 
@@ -93,7 +94,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithMultiple() {
+  void testQueryWithMultiple() {
     // given
     createGrantAuthorization(DEPLOYMENT, firstDeploymentId, userId, READ);
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
@@ -106,7 +107,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyDeployment() {
+  void testQueryWithReadPermissionOnAnyDeployment() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -123,7 +124,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindStatisticsWithRevokedReadPermissionOnAnyDeployment() {
+  void shouldNotFindStatisticsWithRevokedReadPermissionOnAnyDeployment() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, ANY, READ);
     createRevokeAuthorization(DEPLOYMENT, ANY, userId, READ);
@@ -138,7 +139,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   // deployment statistics query (including process instances) /////////////////////////////////////////////
 
   @Test
-  public void testQueryWithReadPermissionOnProcessInstance() {
+  void testQueryWithReadPermissionOnProcessInstance() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -176,7 +177,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessInstance() {
+  void testQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -215,7 +216,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancePermissionOnProcessDefinition() {
+  void testQueryWithReadInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -254,7 +255,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testQueryWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -295,7 +296,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   // deployment statistics query (including failed jobs) /////////////////////////////////////////////
 
   @Test
-  public void testQueryIncludingFailedJobsWithReadPermissionOnProcessInstance() {
+  void testQueryIncludingFailedJobsWithReadPermissionOnProcessInstance() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -335,7 +336,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingFailedJobsWithReadPermissionOnAnyProcessInstance() {
+  void testQueryIncludingFailedJobsWithReadPermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -376,7 +377,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingFailedJobsWithReadInstancePermissionOnProcessDefinition() {
+  void testQueryIncludingFailedJobsWithReadInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -417,7 +418,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingFailedJobsWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testQueryIncludingFailedJobsWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -460,7 +461,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   // deployment statistics query (including incidents) /////////////////////////////////////////////
 
   @Test
-  public void testQueryIncludingIncidentsWithReadPermissionOnProcessInstance() {
+  void testQueryIncludingIncidentsWithReadPermissionOnProcessInstance() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -500,7 +501,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingIncidentsWithReadPermissionOnAnyProcessInstance() {
+  void testQueryIncludingIncidentsWithReadPermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -541,7 +542,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingIncidentsWithReadInstancePermissionOnProcessDefinition() {
+  void testQueryIncludingIncidentsWithReadInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -582,7 +583,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingIncidentsWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testQueryIncludingIncidentsWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -625,7 +626,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   // deployment statistics query (including failed jobs and incidents) /////////////////////////////////////////////
 
   @Test
-  public void testQueryIncludingFailedJobsAndIncidentsWithReadPermissionOnProcessInstance() {
+  void testQueryIncludingFailedJobsAndIncidentsWithReadPermissionOnProcessInstance() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -666,7 +667,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingFailedJobsAndIncidentsWithReadPermissionOnAnyProcessInstance() {
+  void testQueryIncludingFailedJobsAndIncidentsWithReadPermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -708,7 +709,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingFailedJobsAndIncidentsWithReadInstancePermissionOnProcessDefinition() {
+  void testQueryIncludingFailedJobsAndIncidentsWithReadInstancePermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 
@@ -750,7 +751,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryIncludingFailedJobsAndIncidentsWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testQueryIncludingFailedJobsAndIncidentsWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
 

@@ -24,24 +24,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.io.InputStream;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinitionQuery;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Philipp Ossler
  */
-public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
+class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
   protected static final String PROCESS_KEY = "testProcess";
   protected static final String DECISION_DEFINITION_KEY = "sampleDecision";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/authorization/singleDecision.dmn11.xml",
@@ -50,7 +51,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given user is not authorized to read any decision definition
 
     // when
@@ -61,7 +62,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyDecisionDefinition() {
+  void testQueryWithReadPermissionOnAnyDecisionDefinition() {
     // given user gets read permission on any decision definition
     createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ);
 
@@ -73,7 +74,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnOneDecisionDefinition() {
+  void testQueryWithReadPermissionOnOneDecisionDefinition() {
     // given user gets read permission on the decision definition
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, READ);
 
@@ -89,7 +90,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithMultiple() {
+  void testQueryWithMultiple() {
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, READ);
     createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ);
 
@@ -101,7 +102,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindDefinitionWithRevokedReadPermissionOnDefinition() {
+  void shouldNotFindDefinitionWithRevokedReadPermissionOnDefinition() {
     createGrantAuthorization(DECISION_DEFINITION, ANY, ANY, READ);
     createRevokeAuthorization(DECISION_DEFINITION, ANY, userId, READ);
 
@@ -113,7 +114,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDecisionDefinitionWithoutAuthorizations() {
+  void testGetDecisionDefinitionWithoutAuthorizations() {
     // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
@@ -133,7 +134,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDecisionDefinition() {
+  void testGetDecisionDefinition() {
     // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, READ);
@@ -146,7 +147,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDecisionDiagramWithoutAuthorizations() {
+  void testGetDecisionDiagramWithoutAuthorizations() {
     // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
@@ -166,7 +167,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDecisionDiagram() {
+  void testGetDecisionDiagram() {
     // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, READ);
@@ -180,7 +181,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDecisionModelWithoutAuthorizations() {
+  void testGetDecisionModelWithoutAuthorizations() {
     // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
@@ -200,7 +201,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDecisionModel() {
+  void testGetDecisionModel() {
     // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, READ);
@@ -213,7 +214,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDmnModelInstanceWithoutAuthorizations() {
+  void testGetDmnModelInstanceWithoutAuthorizations() {
     // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
@@ -233,7 +234,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDmnModelInstance() {
+  void testGetDmnModelInstance() {
     // given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, READ);
@@ -246,7 +247,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDecisionDefinitionUpdateTimeToLive() {
+  void testDecisionDefinitionUpdateTimeToLive() {
     //given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
     createGrantAuthorization(DECISION_DEFINITION, DECISION_DEFINITION_KEY, userId, UPDATE);
@@ -260,7 +261,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDecisionDefinitionUpdateTimeToLiveWithoutAuthorizations() {
+  void testDecisionDefinitionUpdateTimeToLiveWithoutAuthorizations() {
     //given
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
     try {

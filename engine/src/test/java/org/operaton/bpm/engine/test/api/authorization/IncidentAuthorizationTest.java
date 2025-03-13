@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -27,34 +29,34 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.IncidentQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.*;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Test.None;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class IncidentAuthorizationTest extends AuthorizationTest {
+class IncidentAuthorizationTest extends AuthorizationTest {
 
   protected static final String TIMER_START_PROCESS_KEY = "timerStartProcess";
   protected static final String ONE_INCIDENT_PROCESS_KEY = "process";
   protected static final String ANOTHER_ONE_INCIDENT_PROCESS_KEY = "anotherOneIncidentProcess";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/authorization/timerStartEventProcess.bpmn20.xml",
@@ -64,7 +66,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryForStandaloneIncidents() {
+  void testQueryForStandaloneIncidents() {
     // given
     String jobId = createStandaloneIncident();
 
@@ -79,7 +81,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithoutAuthorization() {
+  void testStartTimerJobIncidentQueryWithoutAuthorization() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -94,7 +96,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadPermissionOnAnyProcessInstance() {
+  void testStartTimerJobIncidentQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -111,7 +113,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadInstancePermissionOnProcessDefinition() {
+  void testStartTimerJobIncidentQueryWithReadInstancePermissionOnProcessDefinition() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -128,7 +130,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testStartTimerJobIncidentQueryWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -145,7 +147,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithoutAuthorization() {
+  void testSimpleQueryWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
 
@@ -157,7 +159,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadPermissionOnProcessInstance() {
+  void testSimpleQueryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -174,7 +176,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadPermissionOnAnyProcessInstance() {
+  void testSimpleQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
@@ -191,7 +193,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithMultiple() {
+  void testSimpleQueryWithMultiple() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -209,7 +211,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadInstancesPermissionOnOneTaskProcess() {
+  void testSimpleQueryWithReadInstancesPermissionOnOneTaskProcess() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, READ_INSTANCE);
@@ -226,7 +228,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
+  void testSimpleQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
@@ -243,7 +245,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindIncidentWithRevokedReadPermissionOnProcessInstance() {
+  void shouldNotFindIncidentWithRevokedReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE);
@@ -257,7 +259,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -276,7 +278,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnProcessInstance() {
+  void testQueryWithReadPermissionOnProcessInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -301,7 +303,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessInstance() {
+  void testQueryWithReadPermissionOnAnyProcessInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -322,7 +324,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancesPermissionOnOneTaskProcess() {
+  void testQueryWithReadInstancesPermissionOnOneTaskProcess() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -343,7 +345,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadInstancesPermissionOnAnyProcessDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -365,7 +367,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
 
 
   @Test
-  public void shouldDenySetAnnotationWithoutAuthorization() {
+  void shouldDenySetAnnotationWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -380,8 +382,8 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
       .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE_INSTANCE, PROCESS_DEFINITION));
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowSetAnnotationWithUpdatePermissionOnAnyInstance() {
+  @Test
+  void shouldAllowSetAnnotationWithUpdatePermissionOnAnyInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -391,13 +393,12 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, UPDATE);
 
     // when
-    runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation");
-
+    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
     // then no error is thrown
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowSetAnnotationWithUpdatePermissionOnInstance() {
+  @Test
+  void shouldAllowSetAnnotationWithUpdatePermissionOnInstance() {
     // given
     ProcessInstance instance = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -407,13 +408,12 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_INSTANCE, instance.getId(), userId, UPDATE);
 
     // when
-    runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation");
-
+    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
     // then no error is thrown
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowSetAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
+  @Test
+  void shouldAllowSetAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -423,13 +423,12 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE_INSTANCE);
 
     // when
-    runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation");
-
+    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
     // then no error is thrown
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowSetAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
+  @Test
+  void shouldAllowSetAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -439,13 +438,12 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, UPDATE_INSTANCE);
 
     // when
-    runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation");
-
+    assertAll(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
     // then no error is thrown
   }
 
   @Test
-  public void shouldDenyClearAnnotationWithoutAuthorization() {
+  void shouldDenyClearAnnotationWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -460,8 +458,8 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
       .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE_INSTANCE, PROCESS_DEFINITION));
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowClearAnnotationWithUpdatePermissionOnAnyInstance() {
+  @Test
+  void shouldAllowClearAnnotationWithUpdatePermissionOnAnyInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -471,13 +469,12 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, UPDATE);
 
     // when
-    runtimeService.clearAnnotationForIncidentById(incident.getId());
-
+    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
     // then no error is thrown
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowClearAnnotationWithUpdatePermissionOnInstance() {
+  @Test
+  void shouldAllowClearAnnotationWithUpdatePermissionOnInstance() {
     // given
     ProcessInstance instance = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -487,13 +484,12 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_INSTANCE, instance.getId(), userId, UPDATE);
 
     // when
-    runtimeService.clearAnnotationForIncidentById(incident.getId());
-
+    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
     // then no error is thrown
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowClearAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
+  @Test
+  void shouldAllowClearAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -503,13 +499,12 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE_INSTANCE);
 
     // when
-    runtimeService.clearAnnotationForIncidentById(incident.getId());
-
+    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
     // then no error is thrown
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowClearAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
+  @Test
+  void shouldAllowClearAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     disableAuthorization();
@@ -519,13 +514,12 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, UPDATE_INSTANCE);
 
     // when
-    runtimeService.clearAnnotationForIncidentById(incident.getId());
-
+    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
     // then no error is thrown
   }
 
   @Test
-  public void shouldAllowSetAnnotationOnStandaloneIncidentWithoutAuthorization() {
+  void shouldAllowSetAnnotationOnStandaloneIncidentWithoutAuthorization() {
     // given
     String jobId = createStandaloneIncident();
     disableAuthorization();
@@ -539,8 +533,8 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     cleanupStandalonIncident(jobId);
   }
 
-  @Test(expected = None.class)
-  public void shouldAllowClearAnnotationOnStandaloneIncidentWithoutAuthorization() {
+  @Test
+  void shouldAllowClearAnnotationOnStandaloneIncidentWithoutAuthorization() {
     // given
     String jobId = createStandaloneIncident();
     disableAuthorization();
@@ -548,9 +542,8 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // when
-    runtimeService.clearAnnotationForIncidentById(incident.getId());
-
     // then no error is thrown
+    assertAll(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
 
     // cleanup
     cleanupStandalonIncident(jobId);

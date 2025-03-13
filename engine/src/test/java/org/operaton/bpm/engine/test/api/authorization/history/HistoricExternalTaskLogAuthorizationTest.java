@@ -38,12 +38,12 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest {
+class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final long LOCK_DURATION = 5 * 60L * 1000L;
@@ -51,7 +51,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   protected static final String ANOTHER_PROCESS_KEY = "AnotherProcess";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     BpmnModelInstance defaultModel = createDefaultExternalTaskModel().build();
     BpmnModelInstance modifiedModel = createDefaultExternalTaskModel().processKey(ANOTHER_PROCESS_KEY).build();
@@ -60,14 +60,14 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     processEngineConfiguration.setEnableHistoricInstancePermissions(false);
   }
 
   @Test
-  public void testSimpleQueryWithoutAuthorization() {
+  void testSimpleQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(DEFAULT_PROCESS_KEY);
 
@@ -79,7 +79,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testSimpleQueryWithHistoryReadPermissionOnProcessDefinition() {
+  void testSimpleQueryWithHistoryReadPermissionOnProcessDefinition() {
 
     // given
     startProcessInstanceByKey(DEFAULT_PROCESS_KEY);
@@ -93,7 +93,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testSimpleQueryWithHistoryReadPermissionOnAnyProcessDefinition() {
+  void testSimpleQueryWithHistoryReadPermissionOnAnyProcessDefinition() {
 
     // given
     startProcessInstanceByKey(DEFAULT_PROCESS_KEY);
@@ -107,7 +107,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testSimpleQueryWithMultipleAuthorizations() {
+  void testSimpleQueryWithMultipleAuthorizations() {
     // given
     startProcessInstanceByKey(DEFAULT_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -121,7 +121,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     startThreeProcessInstancesDeleteOneAndCompleteTwoWithFailure();
 
@@ -133,7 +133,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testQueryWithHistoryReadPermissionOnOneProcessDefinition() {
+  void testQueryWithHistoryReadPermissionOnOneProcessDefinition() {
     // given
     startThreeProcessInstancesDeleteOneAndCompleteTwoWithFailure();
     createGrantAuthorization(PROCESS_DEFINITION, DEFAULT_PROCESS_KEY, userId, READ_HISTORY);
@@ -146,7 +146,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testQueryWithHistoryReadPermissionOnAnyProcessDefinition() {
+  void testQueryWithHistoryReadPermissionOnAnyProcessDefinition() {
     // given
     startThreeProcessInstancesDeleteOneAndCompleteTwoWithFailure();
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -159,7 +159,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void shouldNotFindLogsWithRevokedHistoryReadPermissionOnAnyProcessDefinition() {
+  void shouldNotFindLogsWithRevokedHistoryReadPermissionOnAnyProcessDefinition() {
     // given
     startThreeProcessInstancesDeleteOneAndCompleteTwoWithFailure();
     createGrantAuthorization(PROCESS_DEFINITION, ANY, ANY, READ_HISTORY);
@@ -173,7 +173,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testGetErrorDetailsWithoutAuthorization() {
+  void testGetErrorDetailsWithoutAuthorization() {
     // given
     startThreeProcessInstancesDeleteOneAndCompleteTwoWithFailure();
 
@@ -201,7 +201,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testGetErrorDetailsWithHistoryReadPermissionOnProcessDefinition() {
+  void testGetErrorDetailsWithHistoryReadPermissionOnProcessDefinition() {
 
     // given
     startThreeProcessInstancesDeleteOneAndCompleteTwoWithFailure();
@@ -222,7 +222,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testGetErrorDetailsWithHistoryReadPermissionOnProcessAnyDefinition() {
+  void testGetErrorDetailsWithHistoryReadPermissionOnProcessAnyDefinition() {
 
     // given
     startThreeProcessInstancesDeleteOneAndCompleteTwoWithFailure();
@@ -243,7 +243,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricProcessInstance() {
+  void testCheckNonePermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -261,7 +261,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricProcessInstance() {
+  void testCheckReadPermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -281,7 +281,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
+  void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -303,7 +303,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testCheckReadOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
+  void testCheckReadOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -325,7 +325,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
   }
 
   @Test
-  public void testHistoricProcessInstancePermissionsAuthorizationDisabled() {
+  void testHistoricProcessInstancePermissionsAuthorizationDisabled() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 

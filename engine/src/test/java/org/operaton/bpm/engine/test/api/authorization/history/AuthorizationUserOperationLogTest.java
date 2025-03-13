@@ -16,13 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions.READ;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_ADMIN;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -40,17 +34,23 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 import org.operaton.bpm.engine.test.api.identity.TestPermissions;
 import org.operaton.bpm.engine.test.api.identity.TestResource;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions.READ;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_ADMIN;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 
 /**
  * @author Tobias Metzke
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class AuthorizationUserOperationLogTest extends AuthorizationTest {
+class AuthorizationUserOperationLogTest extends AuthorizationTest {
 
   @Test
-  public void testLogCreatedOnAuthorizationCreation() {
+  void testLogCreatedOnAuthorizationCreation() {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
@@ -100,7 +100,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   }
 
   @Test
-  public void testLogCreatedOnAuthorizationUpdate() {
+  void testLogCreatedOnAuthorizationUpdate() {
     // given
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
     Authorization authorization = createGrantAuthorizationWithoutAuthentication(Resources.PROCESS_DEFINITION, Authorization.ANY, "testUserId",
@@ -170,7 +170,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   }
 
   @Test
-  public void testLogCreatedOnAuthorizationDeletion() {
+  void testLogCreatedOnAuthorizationDeletion() {
     // given
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
     Authorization authorization = createGrantAuthorizationWithoutAuthentication(Resources.PROCESS_DEFINITION, Authorization.ANY, "testUserId",
@@ -222,7 +222,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   }
 
   @Test
-  public void testLogCreatedOnAuthorizationCreationWithExceedingPermissionStringList() {
+  void testLogCreatedOnAuthorizationCreationWithExceedingPermissionStringList() {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
@@ -245,7 +245,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   }
 
   @Test
-  public void testLogCreatedOnAuthorizationCreationWithAllPermission() {
+  void testLogCreatedOnAuthorizationCreationWithAllPermission() {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
@@ -268,7 +268,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   }
 
   @Test
-  public void testLogCreatedOnAuthorizationCreationWithNonePermission() {
+  void testLogCreatedOnAuthorizationCreationWithNonePermission() {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
@@ -291,7 +291,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   }
 
   @Test
-  public void testLogCreatedOnAuthorizationCreationWithoutAuthorization() {
+  void testLogCreatedOnAuthorizationCreationWithoutAuthorization() {
     // given
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
     assertThat(query.count()).isZero();
@@ -304,7 +304,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   }
 
   @Test
-  public void testLogCreatedOnAuthorizationCreationWithReadPermissionOnAnyCategoryPermission() {
+  void testLogCreatedOnAuthorizationCreationWithReadPermissionOnAnyCategoryPermission() {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, Authorization.ANY, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
@@ -318,7 +318,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   }
 
   @Test
-  public void testLogCreatedOnAuthorizationCreationWithReadPermissionOnWrongCategory() {
+  void testLogCreatedOnAuthorizationCreationWithReadPermissionOnWrongCategory() {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_OPERATOR, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();

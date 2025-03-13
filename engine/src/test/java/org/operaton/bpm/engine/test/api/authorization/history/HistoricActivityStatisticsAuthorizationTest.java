@@ -22,26 +22,27 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricActivityStatistics;
 import org.operaton.bpm.engine.history.HistoricActivityStatisticsQuery;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTest {
+class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTest {
 
   protected static final String PROCESS_KEY = "oneTaskProcess";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml");
@@ -51,7 +52,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   // historic activity statistics query //////////////////////////////////
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -67,7 +68,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryWithReadHistoryPermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -86,7 +87,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -105,7 +106,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryMultiple() {
+  void testQueryMultiple() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -125,7 +126,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void shouldNotFindStatisticsWithRevokedReadHistoryPermissionOnAnyProcessDefinition() {
+  void shouldNotFindStatisticsWithRevokedReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -146,7 +147,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   // historic activity statistics query (including finished) //////////////////////////////////
 
   @Test
-  public void testQueryIncludingFinishedWithoutAuthorization() {
+  void testQueryIncludingFinishedWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -169,7 +170,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryIncludingFinishedWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryIncludingFinishedWithReadHistoryPermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -204,7 +205,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryIncludingFinishedWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQueryIncludingFinishedWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -241,7 +242,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   // historic activity statistics query (including canceled) //////////////////////////////////
 
   @Test
-  public void testQueryIncludingCanceledWithoutAuthorization() {
+  void testQueryIncludingCanceledWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -263,7 +264,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryIncludingCanceledWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryIncludingCanceledWithReadHistoryPermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -291,7 +292,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryIncludingCanceledWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQueryIncludingCanceledWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -321,7 +322,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   // historic activity statistics query (including complete scope) //////////////////////////////////
 
   @Test
-  public void testQueryIncludingCompleteScopeWithoutAuthorization() {
+  void testQueryIncludingCompleteScopeWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -344,7 +345,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryIncludingCompleteScopeWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryIncludingCompleteScopeWithReadHistoryPermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -376,7 +377,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryIncludingCompleteScopeWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQueryIncludingCompleteScopeWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -410,7 +411,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   // historic activity statistics query (including all) //////////////////////////////////
 
   @Test
-  public void testQueryIncludingAllWithoutAuthorization() {
+  void testQueryIncludingAllWithoutAuthorization() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -439,7 +440,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryIncludingAllWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryIncludingAllWithReadHistoryPermissionOnProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
@@ -480,7 +481,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   }
 
   @Test
-  public void testQueryIncludingAllWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQueryIncludingAllWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 

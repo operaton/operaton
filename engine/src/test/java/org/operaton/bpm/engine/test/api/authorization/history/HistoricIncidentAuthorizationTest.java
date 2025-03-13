@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
@@ -36,10 +39,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import java.util.Date;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -47,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
+class HistoricIncidentAuthorizationTest extends AuthorizationTest {
 
   protected static final String TIMER_START_PROCESS_KEY = "timerStartProcess";
   protected static final String ONE_INCIDENT_PROCESS_KEY = "process";
@@ -56,7 +55,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   protected String deploymentId;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     deploymentId = testRule.deploy(
         "org/operaton/bpm/engine/test/api/authorization/timerStartEventProcess.bpmn20.xml",
@@ -66,7 +65,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     processEngineConfiguration.setEnableHistoricInstancePermissions(false);
@@ -75,7 +74,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   // historic incident query (standalone) //////////////////////////////
 
   @Test
-  public void testQueryForStandaloneHistoricIncidents() {
+  void testQueryForStandaloneHistoricIncidents() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_INCIDENT_PROCESS_KEY, true, new Date());
@@ -106,7 +105,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   // historic incident query (start timer job incident) //////////////////////////////
 
   @Test
-  public void testStartTimerJobIncidentQueryWithoutAuthorization() {
+  void testStartTimerJobIncidentQueryWithoutAuthorization() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -121,7 +120,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadHistoryPermissionOnProcessDefinition() {
+  void testStartTimerJobIncidentQueryWithReadHistoryPermissionOnProcessDefinition() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -138,7 +137,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testStartTimerJobIncidentQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -155,7 +154,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStartTimerJobIncidentQueryWithReadInstancePermissionOnAnyProcessDefinition() {
+  void testStartTimerJobIncidentQueryWithReadInstancePermissionOnAnyProcessDefinition() {
     // given
     disableAuthorization();
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -174,7 +173,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   // historic incident query ///////////////////////////////////////////
 
   @Test
-  public void testSimpleQueryWithoutAuthorization() {
+  void testSimpleQueryWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
 
@@ -186,7 +185,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadHistoryPermissionOnProcessDefinition() {
+  void testSimpleQueryWithReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, READ_HISTORY);
@@ -199,7 +198,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testSimpleQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -212,7 +211,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithMultiple() {
+  void testSimpleQueryWithMultiple() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ONE_INCIDENT_PROCESS_KEY, userId, READ_HISTORY);
@@ -226,7 +225,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricProcessInstance() {
+  void testCheckNonePermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -244,7 +243,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricProcessInstance() {
+  void testCheckReadPermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -264,7 +263,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
+  void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -286,7 +285,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
+  void testCheckReadOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -308,7 +307,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricProcessInstancePermissionsAuthorizationDisabled() {
+  void testHistoricProcessInstancePermissionsAuthorizationDisabled() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -328,7 +327,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindIncidentWithRevokedReadHistoryPermissionOnAnyProcessDefinition() {
+  void shouldNotFindIncidentWithRevokedReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, ANY, READ_HISTORY);
@@ -344,7 +343,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   // historic incident query (multiple incidents ) ///////////////////////////////////////////
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -361,7 +360,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryWithReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -380,7 +379,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -401,7 +400,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   // historic job log (mixed) //////////////////////////////////////////
 
   @Test
-  public void testMixedQueryWithoutAuthorization() {
+  void testMixedQueryWithoutAuthorization() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_INCIDENT_PROCESS_KEY, true, new Date());
@@ -449,7 +448,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testMixedQueryWithReadHistoryPermissionOnProcessDefinition() {
+  void testMixedQueryWithReadHistoryPermissionOnProcessDefinition() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_INCIDENT_PROCESS_KEY, true, new Date());
@@ -499,7 +498,7 @@ public class HistoricIncidentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testMixedQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testMixedQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     disableAuthorization();
     repositoryService.suspendProcessDefinitionByKey(ONE_INCIDENT_PROCESS_KEY, true, new Date());

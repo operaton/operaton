@@ -29,6 +29,8 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
@@ -41,13 +43,12 @@ import org.operaton.bpm.engine.authorization.SystemPermissions;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.Resource;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class DeploymentAuthorizationTest extends AuthorizationTest {
+class DeploymentAuthorizationTest extends AuthorizationTest {
 
   protected static final String FIRST_RESOURCE = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
   protected static final String SECOND_RESOURCE = "org/operaton/bpm/engine/test/api/authorization/messageBoundaryEventProcess.bpmn20.xml";
@@ -55,7 +56,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // query ////////////////////////////////////////////////////////////
 
   @Test
-  public void testSimpleDeploymentQueryWithoutAuthorization() {
+  void testSimpleDeploymentQueryWithoutAuthorization() {
     // given
     createDeployment(null);
 
@@ -67,7 +68,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleDeploymentQueryWithReadPermissionOnDeployment() {
+  void testSimpleDeploymentQueryWithReadPermissionOnDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
@@ -80,7 +81,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleDeploymentQueryWithReadPermissionOnAnyDeployment() {
+  void testSimpleDeploymentQueryWithReadPermissionOnAnyDeployment() {
     // given
     createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
@@ -93,7 +94,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleDeploymentQueryWithMultiple() {
+  void testSimpleDeploymentQueryWithMultiple() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
@@ -107,7 +108,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeploymentQueryWithoutAuthorization() {
+  void testDeploymentQueryWithoutAuthorization() {
     // given
     createDeployment("first");
     createDeployment("second");
@@ -120,7 +121,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeploymentQueryWithReadPermissionOnDeployment() {
+  void testDeploymentQueryWithReadPermissionOnDeployment() {
     // given
     String deploymentId1 = createDeployment("first");
     createDeployment("second");
@@ -134,7 +135,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeploymentQueryWithReadPermissionOnAnyDeployment() {
+  void testDeploymentQueryWithReadPermissionOnAnyDeployment() {
     // given
     createDeployment("first");
     createDeployment("second");
@@ -148,7 +149,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindDeploymentWithRevokedReadPermissionOnAnyDeployment() {
+  void shouldNotFindDeploymentWithRevokedReadPermissionOnAnyDeployment() {
     // given
     createDeployment("first");
     createDeployment("second");
@@ -165,7 +166,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // create deployment ///////////////////////////////////////////////
 
   @Test
-  public void testCreateDeploymentWithoutAuthoriatzion() {
+  void testCreateDeploymentWithoutAuthoriatzion() {
     // given
     var deploymentBuilder = repositoryService
         .createDeployment()
@@ -181,7 +182,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCreateDeployment() {
+  void testCreateDeployment() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, CREATE);
 
@@ -204,7 +205,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // delete deployment //////////////////////////////////////////////
 
   @Test
-  public void testDeleteDeploymentWithoutAuthorization() {
+  void testDeleteDeploymentWithoutAuthorization() {
     // given
     String deploymentId = createDeployment(null);
 
@@ -218,7 +219,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteDeploymentWithDeletePermissionOnDeployment() {
+  void testDeleteDeploymentWithDeletePermissionOnDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, DELETE);
@@ -234,7 +235,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteDeploymentWithDeletePermissionOnAnyDeployment() {
+  void testDeleteDeploymentWithDeletePermissionOnAnyDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, ANY, userId, DELETE);
@@ -252,7 +253,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // get deployment resource names //////////////////////////////////
 
   @Test
-  public void testGetDeploymentResourceNamesWithoutAuthorization() {
+  void testGetDeploymentResourceNamesWithoutAuthorization() {
     // given
     String deploymentId = createDeployment(null);
 
@@ -266,7 +267,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDeploymentResourceNamesWithReadPermissionOnDeployment() {
+  void testGetDeploymentResourceNamesWithReadPermissionOnDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
@@ -283,7 +284,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDeploymentResourceNamesWithReadPermissionOnAnyDeployment() {
+  void testGetDeploymentResourceNamesWithReadPermissionOnAnyDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
@@ -302,7 +303,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // get deployment resources //////////////////////////////////
 
   @Test
-  public void testGetDeploymentResourcesWithoutAuthorization() {
+  void testGetDeploymentResourcesWithoutAuthorization() {
     // given
     String deploymentId = createDeployment(null);
 
@@ -315,7 +316,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDeploymentResourcesWithReadPermissionOnDeployment() {
+  void testGetDeploymentResourcesWithReadPermissionOnDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
@@ -330,7 +331,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetDeploymentResourcesWithReadPermissionOnAnyDeployment() {
+  void testGetDeploymentResourcesWithReadPermissionOnAnyDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
@@ -347,7 +348,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // get resource as stream //////////////////////////////////
 
   @Test
-  public void testGetResourceAsStreamWithoutAuthorization() {
+  void testGetResourceAsStreamWithoutAuthorization() {
     // given
     String deploymentId = createDeployment(null);
 
@@ -359,7 +360,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetResourceAsStreamWithReadPermissionOnDeployment() {
+  void testGetResourceAsStreamWithReadPermissionOnDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
@@ -372,7 +373,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetResourceAsStreamWithReadPermissionOnAnyDeployment() {
+  void testGetResourceAsStreamWithReadPermissionOnAnyDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
@@ -387,7 +388,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // get resource as stream by id//////////////////////////////////
 
   @Test
-  public void testGetResourceAsStreamByIdWithoutAuthorization() {
+  void testGetResourceAsStreamByIdWithoutAuthorization() {
     // given
     String deploymentId = createDeployment(null);
 
@@ -404,7 +405,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetResourceAsStreamByIdWithReadPermissionOnDeployment() {
+  void testGetResourceAsStreamByIdWithReadPermissionOnDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, deploymentId, userId, READ);
@@ -422,7 +423,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testGetResourceAsStreamByIdWithReadPermissionOnAnyDeployment() {
+  void testGetResourceAsStreamByIdWithReadPermissionOnAnyDeployment() {
     // given
     String deploymentId = createDeployment(null);
     createGrantAuthorization(DEPLOYMENT, ANY, userId, READ);
@@ -442,7 +443,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // should create authorization /////////////////////////////////////
 
   @Test
-  public void testCreateAuthorizationOnDeploy() {
+  void testCreateAuthorizationOnDeploy() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, CREATE);
     Deployment deployment = repositoryService
@@ -470,7 +471,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // clear authorization /////////////////////////////////////
 
   @Test
-  public void testClearAuthorizationOnDeleteDeployment() {
+  void testClearAuthorizationOnDeleteDeployment() {
     // given
     createGrantAuthorization(DEPLOYMENT, ANY, userId, CREATE);
     Deployment deployment = repositoryService
@@ -498,7 +499,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // register process application ///////////////////////////////////
 
   @Test
-  public void shouldRegisterProcessApplicationAsOperatonAdmin() {
+  void shouldRegisterProcessApplicationAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -515,7 +516,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldRegisterProcessApplicationWithPermission() {
+  void shouldRegisterProcessApplicationWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
@@ -531,7 +532,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldRegisterProcessApplicationWithAdminAndPermission() {
+  void shouldRegisterProcessApplicationWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
@@ -548,7 +549,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotRegisterProcessApplicationWithoutAuthorization() {
+  void shouldNotRegisterProcessApplicationWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -561,7 +562,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
   // unregister process application ///////////////////////////////////
   @Test
-  public void shouldUnregisterProcessApplicationAsOperatonAdmin() {
+  void shouldUnregisterProcessApplicationAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -578,7 +579,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldUnregisterProcessApplicationWithPermission() {
+  void shouldUnregisterProcessApplicationWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
@@ -595,7 +596,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldUnregisterProcessApplicationWithAdminAndPermission() {
+  void shouldUnregisterProcessApplicationWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
@@ -613,7 +614,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotUnregisterProcessApplicationWithoutAuthorization() {
+  void shouldNotUnregisterProcessApplicationWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -627,7 +628,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // get process application for deployment ///////////////////////////////////
 
   @Test
-  public void shouldGetProcessApplicationForDeploymentAsOperatonAdmin() {
+  void shouldGetProcessApplicationForDeploymentAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -644,7 +645,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetProcessApplicationForDeploymentWithPermission() {
+  void shouldGetProcessApplicationForDeploymentWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -661,7 +662,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetProcessApplicationForDeploymentWithAdminAndPermission() {
+  void shouldGetProcessApplicationForDeploymentWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -679,7 +680,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotGetProcessApplicationForDeploymentWithoutAuthorization() {
+  void shouldNotGetProcessApplicationForDeploymentWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -693,7 +694,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // get registered deployments ///////////////////////////////////
 
   @Test
-  public void shouldGetRegisteredDeploymentsAsOperatonAdmin() {
+  void shouldGetRegisteredDeploymentsAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -707,7 +708,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetRegisteredDeploymentsWithPermission() {
+  void shouldGetRegisteredDeploymentsWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
@@ -721,7 +722,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldGetRegisteredDeploymentsWithAdminAndPermission() {
+  void shouldGetRegisteredDeploymentsWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
@@ -736,7 +737,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotGetRegisteredDeploymentsWithoutAuthorization() {
+  void shouldNotGetRegisteredDeploymentsWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {
@@ -750,7 +751,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // register deployment for job executor ///////////////////////////////////
 
   @Test
-  public void shouldRegisterDeploymentAsOperatonAdmin() {
+  void shouldRegisterDeploymentAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -764,7 +765,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldRegisterDeploymentWithPermission() {
+  void shouldRegisterDeploymentWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
@@ -778,7 +779,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldRegisterDeploymentWithAdminAndPermission() {
+  void shouldRegisterDeploymentWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
@@ -793,7 +794,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotRegisterDeploymentWithoutAuthorization() {
+  void shouldNotRegisterDeploymentWithoutAuthorization() {
     // given
     disableAuthorization();
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
@@ -810,7 +811,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   // unregister deployment for job executor ///////////////////////////////////
 
   @Test
-  public void shouldUnregisterDeploymentAsOperatonAdmin() {
+  void shouldUnregisterDeploymentAsOperatonAdmin() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
@@ -824,7 +825,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldUnregisterDeploymentWithPermission() {
+  void shouldUnregisterDeploymentWithPermission() {
     // given
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
@@ -838,7 +839,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldUnregisterDeploymentWithAdminAndPermission() {
+  void shouldUnregisterDeploymentWithAdminAndPermission() {
     // given
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
@@ -853,7 +854,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotUnregisterDeploymentWithoutAuthorization() {
+  void shouldNotUnregisterDeploymentWithoutAuthorization() {
     // given
 
     assertThatThrownBy(() -> {

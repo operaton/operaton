@@ -23,23 +23,24 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.management.IncidentStatistics;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatistics;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatisticsQuery;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationTest {
+class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationTest {
 
   protected static final String ONE_TASK_PROCESS_KEY = "oneTaskProcess";
   protected static final String ONE_INCIDENT_PROCESS_KEY = "process";
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
@@ -50,7 +51,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   // without running instances //////////////////////////////////////////////////////////
 
   @Test
-  public void testQueryWithoutAuthorizations() {
+  void testQueryWithoutAuthorizations() {
     // given
 
     // when
@@ -61,7 +62,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   }
 
   @Test
-  public void testQueryWithReadPermissionOnOneTaskProcess() {
+  void testQueryWithReadPermissionOnOneTaskProcess() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
 
@@ -79,7 +80,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   }
 
   @Test
-  public void testQueryWithMultiple() {
+  void testQueryWithMultiple() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ONE_TASK_PROCESS_KEY, userId, READ);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
@@ -92,7 +93,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadPermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
 
@@ -109,7 +110,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   }
 
   @Test
-  public void shouldNotFindStatisticsWithRevokedReadPermissionOnAnyProcessDefinition() {
+  void shouldNotFindStatisticsWithRevokedReadPermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, "*", ALL);
     createRevokeAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
@@ -124,7 +125,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   // including instances //////////////////////////////////////////////////////////////
 
   @Test
-  public void testQueryIncludingInstancesWithoutProcessInstanceAuthorizations() {
+  void testQueryIncludingInstancesWithoutProcessInstanceAuthorizations() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
@@ -151,7 +152,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   // including failed jobs ////////////////////////////////////////////////////////////
 
   @Test
-  public void testQueryIncludingFailedJobsWithoutProcessInstanceAuthorizations() {
+  void testQueryIncludingFailedJobsWithoutProcessInstanceAuthorizations() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
@@ -181,7 +182,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   // including incidents //////////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testQueryIncludingIncidentsWithoutProcessInstanceAuthorizations() {
+  void testQueryIncludingIncidentsWithoutProcessInstanceAuthorizations() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
@@ -211,7 +212,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   // including incidents and failed jobs ///////////////////////////////////////////////////////////////
 
   @Test
-  public void testQueryIncludingIncidentsAndFailedJobsWithoutProcessInstanceAuthorizations() {
+  void testQueryIncludingIncidentsAndFailedJobsWithoutProcessInstanceAuthorizations() {
     // given
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);
     startProcessInstanceByKey(ONE_TASK_PROCESS_KEY);

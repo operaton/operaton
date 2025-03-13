@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
@@ -23,13 +31,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
@@ -44,7 +45,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   protected String instance2Id;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
@@ -56,7 +57,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithoutAuthorization() {
+  void testFetchWithoutAuthorization() {
     // when
     List<LockedExternalTask> tasks = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic("externalTaskTopic", LOCK_TIME)
@@ -67,7 +68,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithReadOnProcessInstance() {
+  void testFetchWithReadOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ);
 
@@ -81,7 +82,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithUpdateOnProcessInstance() {
+  void testFetchWithUpdateOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ);
 
@@ -95,7 +96,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithReadAndUpdateOnProcessInstance() {
+  void testFetchWithReadAndUpdateOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ, UPDATE);
 
@@ -110,7 +111,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithReadInstanceOnProcessDefinition() {
+  void testFetchWithReadInstanceOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, READ_INSTANCE);
 
@@ -124,7 +125,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithUpdateInstanceOnProcessDefinition() {
+  void testFetchWithUpdateInstanceOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, UPDATE_INSTANCE);
 
@@ -138,7 +139,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithReadAndUpdateInstanceOnProcessDefinition() {
+  void testFetchWithReadAndUpdateInstanceOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, READ_INSTANCE, UPDATE_INSTANCE);
 
@@ -153,7 +154,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithReadOnProcessInstanceAndUpdateInstanceOnProcessDefinition() {
+  void testFetchWithReadOnProcessInstanceAndUpdateInstanceOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ);
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, UPDATE_INSTANCE);
@@ -169,7 +170,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithUpdateOnProcessInstanceAndReadInstanceOnProcessDefinition() {
+  void testFetchWithUpdateOnProcessInstanceAndReadInstanceOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, UPDATE);
     createGrantAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, READ_INSTANCE);
@@ -185,7 +186,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithReadAndUpdateOnAnyProcessInstance() {
+  void testFetchWithReadAndUpdateOnAnyProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ, UPDATE);
 
@@ -199,7 +200,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testFetchWithMultipleMatchingAuthorizations() {
+  void testFetchWithMultipleMatchingAuthorizations() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ, UPDATE);
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ, UPDATE);
@@ -214,7 +215,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadAndUpdateInstanceOnAnyProcessDefinition() {
+  void testQueryWithReadAndUpdateInstanceOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE, UPDATE_INSTANCE);
 
@@ -228,7 +229,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadProcessInstanceAndUpdateInstanceOnAnyProcessDefinition() {
+  void testQueryWithReadProcessInstanceAndUpdateInstanceOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, UPDATE_INSTANCE);
     createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ);
@@ -244,7 +245,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldLockNoTaskForProcessDefinitionWithRevokedUpdateInstancePermission() {
+  void shouldLockNoTaskForProcessDefinitionWithRevokedUpdateInstancePermission() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_INSTANCE, UPDATE_INSTANCE);
     createRevokeAuthorization(PROCESS_DEFINITION, "oneExternalTaskProcess", userId, UPDATE_INSTANCE);

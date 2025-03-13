@@ -29,6 +29,10 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.list;
 
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -42,16 +46,13 @@ import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
+class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
 
   protected static final String PROCESS_KEY = "oneTaskProcess";
   protected static final String MESSAGE_START_PROCESS_KEY = "messageStartProcess";
@@ -60,7 +61,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   protected String deploymentId;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     deploymentId = testRule.deploy(
         "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
@@ -71,7 +72,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     super.tearDown();
     processEngineConfiguration.setEnableHistoricInstancePermissions(false);
@@ -80,7 +81,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   // historic task instance query (standalone task) ///////////////////////////////////////
 
   @Test
-  public void testQueryAfterStandaloneTask() {
+  void testQueryAfterStandaloneTask() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -97,7 +98,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   // historic task instance query (process task) //////////////////////////////////////////
 
   @Test
-  public void testSimpleQueryWithoutAuthorization() {
+  void testSimpleQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
 
@@ -109,7 +110,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadHistoryPermissionOnProcessDefinition() {
+  void testSimpleQueryWithReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_HISTORY);
@@ -122,7 +123,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testSimpleQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -135,7 +136,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testSimpleQueryWithMultiple() {
+  void testSimpleQueryWithMultiple() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -149,7 +150,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindTaskWithRevokedReadHistoryPermissionOnProcessDefinition() {
+  void shouldNotFindTaskWithRevokedReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, ANY, READ_HISTORY);
@@ -165,7 +166,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   // historic task instance query (multiple process instances) ////////////////////////
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void testQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     startProcessInstanceByKey(PROCESS_KEY);
@@ -184,7 +185,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadHistoryPermissionOnProcessDefinition() {
+  void testQueryWithReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     startProcessInstanceByKey(PROCESS_KEY);
@@ -205,7 +206,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     startProcessInstanceByKey(PROCESS_KEY);
@@ -228,7 +229,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   // historic task instance query (case task) ///////////////////////////////////////
 
   @Test
-  public void testQueryAfterCaseTask() {
+  void testQueryAfterCaseTask() {
     // given
     testRule.createCaseInstanceByKey(CASE_KEY);
 
@@ -242,7 +243,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   // historic task instance query (mixed tasks) ////////////////////////////////////
 
   @Test
-  public void testMixedQueryWithoutAuthorization() {
+  void testMixedQueryWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     startProcessInstanceByKey(PROCESS_KEY);
@@ -276,7 +277,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testMixedQueryWithReadHistoryPermissionOnProcessDefinition() {
+  void testMixedQueryWithReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     startProcessInstanceByKey(PROCESS_KEY);
@@ -312,7 +313,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testMixedQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
+  void testMixedQueryWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     startProcessInstanceByKey(PROCESS_KEY);
@@ -350,7 +351,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   // delete deployment (cascade = false)
 
   @Test
-  public void testQueryAfterDeletingDeployment() {
+  void testQueryAfterDeletingDeployment() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     startProcessInstanceByKey(PROCESS_KEY);
@@ -385,7 +386,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   // delete historic task (standalone task) ///////////////////////
 
   @Test
-  public void testDeleteStandaloneTask() {
+  void testDeleteStandaloneTask() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -407,7 +408,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   // delete historic task (process task) ///////////////////////
 
   @Test
-  public void testDeleteProcessTaskWithoutAuthorization() {
+  void testDeleteProcessTaskWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -424,7 +425,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteProcessTaskWithDeleteHistoryPermissionOnProcessDefinition() {
+  void testDeleteProcessTaskWithDeleteHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -444,7 +445,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteProcessTaskWithDeleteHistoryPermissionOnAnyProcessDefinition() {
+  void testDeleteProcessTaskWithDeleteHistoryPermissionOnAnyProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -464,7 +465,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testDeleteHistoricTaskInstanceAfterDeletingDeployment() {
+  void testDeleteHistoricTaskInstanceAfterDeletingDeployment() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
     String taskId = selectSingleTask().getId();
@@ -495,7 +496,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceDurationReportWithoutAuthorization() {
+  void testHistoricTaskInstanceDurationReportWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -519,7 +520,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceReportWithHistoryReadPermissionOnAny() {
+  void testHistoricTaskInstanceReportWithHistoryReadPermissionOnAny() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -539,7 +540,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceCountByProcessDefinitionReportWithoutAuthorization() {
+  void testHistoricTaskInstanceCountByProcessDefinitionReportWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -563,7 +564,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceReportGroupedByProcessDefinitionKeyWithHistoryReadPermissionOnAny() {
+  void testHistoricTaskInstanceReportGroupedByProcessDefinitionKeyWithHistoryReadPermissionOnAny() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -583,7 +584,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceGroupedByTaskNameReportWithoutAuthorization() {
+  void testHistoricTaskInstanceGroupedByTaskNameReportWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -607,7 +608,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceGroupedByTaskNameReportWithHistoryReadPermissionOnAny() {
+  void testHistoricTaskInstanceGroupedByTaskNameReportWithHistoryReadPermissionOnAny() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -627,7 +628,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckAllHistoricTaskPermissions() {
+  void testCheckAllHistoricTaskPermissions() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -649,7 +650,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadHistoricTaskPermissions() {
+  void testCheckReadHistoricTaskPermissions() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -665,7 +666,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNoneHistoricTaskPermission() {
+  void testCheckNoneHistoricTaskPermission() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -678,7 +679,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricTask() {
+  void testCheckNonePermissionOnHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -695,7 +696,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricTask() {
+  void testCheckReadPermissionOnHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -712,7 +713,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnStandaloneHistoricTask() {
+  void testCheckReadPermissionOnStandaloneHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -732,7 +733,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOnStandaloneHistoricTask() {
+  void testCheckNonePermissionOnStandaloneHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -752,7 +753,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnCompletedHistoricTask() {
+  void testCheckReadPermissionOnCompletedHistoricTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -772,7 +773,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOndHistoricTaskAndReadHistoryPermissionOnProcessDefinition() {
+  void testCheckNonePermissionOndHistoricTaskAndReadHistoryPermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -793,7 +794,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOndHistoricTaskAndNonePermissionOnProcessDefinition() {
+  void testCheckReadPermissionOndHistoricTaskAndNonePermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -815,7 +816,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskPermissionsAuthorizationDisabled() {
+  void testHistoricTaskPermissionsAuthorizationDisabled() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -831,7 +832,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskReadPermissionGrantedWhenAssign() {
+  void testHistoricTaskReadPermissionGrantedWhenAssign() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -852,7 +853,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskReadPermissionGrantedWhenAddingIdentityLinkOnStandaloneTask() {
+  void testHistoricTaskReadPermissionGrantedWhenAddingIdentityLinkOnStandaloneTask() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -876,7 +877,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskReadPermissionGrantedWhenSettingOwner() {
+  void testHistoricTaskReadPermissionGrantedWhenSettingOwner() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -897,7 +898,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskReadPermissionGrantedWhenSettingCandidateUser() {
+  void testHistoricTaskReadPermissionGrantedWhenSettingCandidateUser() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -918,7 +919,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testHistoricTaskReadPermissionGrantedWhenSettingCandidateGroup() {
+  void testHistoricTaskReadPermissionGrantedWhenSettingCandidateGroup() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -939,7 +940,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testStandaloneTaskClearHistoricAuthorization() {
+  void testStandaloneTaskClearHistoricAuthorization() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -974,7 +975,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskClearHistoricAuthorization() {
+  void testProcessTaskClearHistoricAuthorization() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -1011,7 +1012,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNonePermissionOnHistoricProcessInstance() {
+  void testCheckNonePermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -1028,7 +1029,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricProcessInstance() {
+  void testCheckReadPermissionOnHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -1047,7 +1048,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnCompletedHHistoricProcessInstance() {
+  void testCheckReadPermissionOnCompletedHHistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -1070,7 +1071,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
+  void testCheckNoneOnHistoricProcessInstanceAndReadHistoryPermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -1094,7 +1095,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testCheckReadPermissionOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
+  void testCheckReadPermissionOnHistoricProcessInstanceAndNonePermissionOnProcessDefinition() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 

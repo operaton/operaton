@@ -94,129 +94,137 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
  */
 public class ParameterizedTestExtension implements TestTemplateInvocationContextProvider {
 
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target(ElementType.FIELD)
-	public @interface Parameter {
-		int value();
-	}
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.FIELD)
+  public @interface Parameter {
+    int value() default 0;
+  }
 
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target(ElementType.METHOD)
-	public @interface Parameters {
-	}
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.METHOD)
+  public @interface Parameters {
+  }
 
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target(ElementType.TYPE)
-	@ExtendWith(ParameterizedTestExtension.class)
-	public @interface Parameterized {
-	}
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.TYPE)
+  @ExtendWith(ParameterizedTestExtension.class)
+  public @interface Parameterized {
+  }
 
-	@Override
-	public boolean supportsTestTemplate(ExtensionContext context) {
-		// This extension “activates” if the test class is annotated with our marker
-		return context.getTestClass().map(cls -> cls.isAnnotationPresent(Parameterized.class)).orElse(false);
-	}
+  @Override
+  public boolean supportsTestTemplate(ExtensionContext context) {
+    // This extension “activates” if the test class is annotated with our marker
+    return context.getTestClass().map(cls -> cls.isAnnotationPresent(Parameterized.class)).orElse(false);
+  }
 
-	@Override
-	public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext context) {
-		Class<?> testClass = context.getRequiredTestClass();
-		// Look for a static method annotated with @Parameters
-		Method parametersMethod = Arrays.stream(testClass.getDeclaredMethods())
-				.filter(m -> m.isAnnotationPresent(Parameters.class) && Modifier.isStatic(m.getModifiers())).findFirst()
-				.orElseThrow(() -> new ExtensionConfigurationException(
-						"No static @Parameters method found in " + testClass.getName()));
+  @Override
+  public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext context) {
+    Class<?> testClass = context.getRequiredTestClass();
+    // Look for a static method annotated with @Parameters
+    Method parametersMethod = Arrays.stream(testClass.getDeclaredMethods())
+        .filter(m -> m.isAnnotationPresent(Parameters.class) && Modifier.isStatic(m.getModifiers())).findFirst()
+        .orElseThrow(
+            () -> new ExtensionConfigurationException("No static @Parameters method found in " + testClass.getName()));
 
-		Object parametersResult;
-		try {
-			parametersMethod.setAccessible(true);
-			parametersResult = parametersMethod.invoke(null);
-		} catch (Exception e) {
-			throw new ExtensionConfigurationException("Failed to invoke @Parameters method", e);
-		}
+    Object parametersResult;
+    try {
+      parametersMethod.setAccessible(true);
+      parametersResult = parametersMethod.invoke(null);
+    } catch (Exception e) {
+      throw new ExtensionConfigurationException("Failed to invoke @Parameters method", e);
+    }
 
-		if (!(parametersResult instanceof Collection)) {
-			throw new ExtensionConfigurationException("@Parameters method must return a Collection<Object[]>");
-		}
+    if (!(parametersResult instanceof Collection)) {
+      throw new ExtensionConfigurationException("@Parameters method must return a Collection<Object[]>");
+    }
 
-		@SuppressWarnings("unchecked")
-		Collection<Object[]> parameterSets = (Collection<Object[]>) parametersResult;
-		return parameterSets.stream().map(params -> new ParameterizedTestInvocationContext(params));
-	}
+    @SuppressWarnings("unchecked")
+    Collection<Object[]> parameterSets = (Collection<Object[]>) parametersResult;
+    return parameterSets.stream().map(params -> new ParameterizedTestInvocationContext(params));
+  }
 
-	private static class ParameterizedTestInvocationContext implements TestTemplateInvocationContext {
+  private static class ParameterizedTestInvocationContext implements TestTemplateInvocationContext {
 
-		private final Object[] parameters;
+    private final Object[] parameters;
 
-		ParameterizedTestInvocationContext(Object[] parameters) {
-			this.parameters = parameters;
-		}
+    ParameterizedTestInvocationContext(Object[] parameters) {
+      this.parameters = parameters;
+    }
 
-		@Override
-		public String getDisplayName(int invocationIndex) {
-			return "Parameters: " + Arrays.toString(parameters);
-		}
+    @Override
+    public String getDisplayName(int invocationIndex) {
+      return "Parameters: " + Arrays.toString(parameters);
+    }
 
-		@Override
-		public List<Extension> getAdditionalExtensions() {
-			return asList(
-					// ParameterResolver for method/constructor parameters
-					new ParameterResolver() {
-						@Override
-						public boolean supportsParameter(ParameterContext parameterContext,
-								ExtensionContext extensionContext) throws ParameterResolutionException {
-							// we assume the number of parameters from the static method exactly match the
-							// number needed.
-							return true;
-						}
+    @Override
+    public List<Extension> getAdditionalExtensions() {
+      return asList(
+          // ParameterResolver for method/constructor parameters
+          new ParameterResolver() {
+            @Override
+            public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
+                throws ParameterResolutionException {
+              // we assume the number of parameters from the static method exactly match the
+              // number needed.
+              return true;
+            }
 
-						@Override
-						public Object resolveParameter(ParameterContext parameterContext,
-								ExtensionContext extensionContext) throws ParameterResolutionException {
-							int index = parameterContext.getIndex();
-							if (index >= parameters.length) {
-								throw new ParameterResolutionException("Not enough parameters provided; index " + index
-										+ " out of " + parameters.length);
-							}
-							return parameters[index];
-						}
-					},
-					// TestInstanceFactory to create a new test instance using the parameters
-					new TestInstanceFactory() {
-						@Override
-						public Object createTestInstance(TestInstanceFactoryContext factoryContext,
-								ExtensionContext extensionContext) throws TestInstantiationException {
-							try {
-								Class<?> testClass = extensionContext.getRequiredTestClass();
-								// assume the test class has a single constructor.
-								Constructor<?> constructor = testClass.getDeclaredConstructors()[0];
-								constructor.setAccessible(true);
-								return constructor.newInstance(parameters);
-							} catch (Exception e) {
-								throw new TestInstantiationException("Could not create test instance", e);
-							}
-						}
-					},
-					// TestInstancePostProcessor for field injection using @Parameter(X)
-					new TestInstancePostProcessor() {
-						@Override
-						public void postProcessTestInstance(Object testInstance, ExtensionContext context)
-								throws Exception {
-							// Iterate over declared fields and inject values for those annotated with
-							// @Parameter
-							for (Field field : testInstance.getClass().getDeclaredFields()) {
-								Parameter parameterAnnotation = field.getAnnotation(Parameter.class);
-								if (parameterAnnotation != null) {
-									int index = parameterAnnotation.value();
-									if (index < 0 || index >= parameters.length) {
-										throw new ExtensionConfigurationException("Index " + index
-												+ " is out of bounds for the provided parameters array.");
-									}
-									field.setAccessible(true);
-									field.set(testInstance, parameters[index]);
-								}
-							}
-						}
-					});
-		}
-	}
+            @Override
+            public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
+                throws ParameterResolutionException {
+              int index = parameterContext.getIndex();
+              if (index >= parameters.length) {
+                throw new ParameterResolutionException(
+                    "Not enough parameters provided; index " + index + " out of " + parameters.length);
+              }
+              return parameters[index];
+            }
+          },
+          // TestInstanceFactory to create a new test instance using the parameters
+          new TestInstanceFactory() {
+            @Override
+            public Object createTestInstance(TestInstanceFactoryContext factoryContext,
+                ExtensionContext extensionContext) throws TestInstantiationException {
+              try {
+                Class<?> testClass = extensionContext.getRequiredTestClass();
+                // assume the test class has a single constructor.
+                Constructor<?> constructor = testClass.getDeclaredConstructors()[0];
+                constructor.setAccessible(true);
+                return constructor.newInstance(parameters);
+              } catch (Exception e) {
+                throw new TestInstantiationException("Could not create test instance", e);
+              }
+            }
+          },
+          // TestInstancePostProcessor for field injection using @Parameter(X)
+          new TestInstancePostProcessor() {
+            @Override
+            public void postProcessTestInstance(Object testInstance, ExtensionContext context) throws Exception {
+              // Iterate over declared fields and inject values for those annotated with
+              // @Parameter
+              Class<?> c = testInstance.getClass();
+              do {
+                addFields(testInstance, c);
+                c = c.getSuperclass();
+              } while(c != null);
+            }
+
+            private void addFields(Object testInstance, Class<?> c)
+                throws IllegalArgumentException, IllegalAccessException {
+              for (Field field : c.getDeclaredFields()) {
+                Parameter parameterAnnotation = field.getAnnotation(Parameter.class);
+                if (parameterAnnotation != null) {
+                  int index = parameterAnnotation.value();
+                  if (index < 0 || index >= parameters.length) {
+                    throw new ExtensionConfigurationException(
+                        "Index " + index + " is out of bounds for the provided parameters array.");
+                  }
+                  field.setAccessible(true);
+                  field.set(testInstance, parameters[index]);
+                }
+              }
+            }
+          });
+    }
+  }
 }

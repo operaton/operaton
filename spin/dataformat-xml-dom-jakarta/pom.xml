@@ -14,6 +14,16 @@
     <jaxb-runtime.version>4.0.1</jaxb-runtime.version>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.operaton.spin</groupId>
@@ -33,7 +43,6 @@
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
-      <version>${version.jakarta.xml.bind-api}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -67,13 +76,13 @@
       <artifactId>jruby-complete</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>

@@ -19,9 +19,9 @@ package org.operaton.bpm.engine.test.bpmn.mail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import javax.activation.DataHandler;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.activation.DataHandler;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -186,7 +186,7 @@ public class EmailSendTaskTest extends EmailTestCase {
         }
       }
 
-    } catch (MessagingException | IOException e) {
+    } catch (jakarta.mail.MessagingException | IOException e) {
       fail(e.getMessage());
     }
 

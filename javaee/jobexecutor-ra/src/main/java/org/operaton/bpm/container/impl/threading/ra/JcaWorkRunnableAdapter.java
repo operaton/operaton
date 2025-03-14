@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.container.impl.threading.ra;
 
-import javax.resource.spi.work.Work;
+import jakarta.resource.spi.work.Work;
 
 /**
  * An adapter for wrapping a Runnable as a JCA {@link Work} instance.
- * 
+ *
  * @author Daniel Meyer
- * 
+ *
  */
 public class JcaWorkRunnableAdapter implements Work {
 

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import com.google.common.collect.ImmutableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -60,7 +59,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
 
   private static final TypedValue STRING_VARIABLE_DEFAULT_VALUE = Variables.stringValue("aString");
   private static final ObjectValueBuilder OBJECT_VARIABLE_DEFAULT_VALUE = Variables
-    .objectValue(ImmutableList.of("one", "two", "three"));
+    .objectValue(List.of("one", "two", "three"));
   private static final TypedValue BYTE_VARIABLE_DEFAULT_VALUE = Variables
     .byteArrayValue(new byte[]{8, 6, 3, 4, 2, 6, 7, 8});
   private static final FileValue FILE_VARIABLE_DEFAULT_VALUE = Variables.fileValue("test.txt")

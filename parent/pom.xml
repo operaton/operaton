@@ -26,14 +26,15 @@
     <version.ejb>3.1</version.ejb>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
-    <version.groovy>4.0.22</version.groovy>
+    <version.groovy>4.0.24</version.groovy>
     <version.graal.js>21.3.12</version.graal.js>
     <version.nashorn>15.4</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
     <version.json-path>2.9.0</version.json-path>
-    <version.json-smart>2.5.0</version.json-smart>
-    <version.accessors-smart>2.5.0</version.accessors-smart>
+    <version.json-smart>2.5.1</version.json-smart>
+    <version.commons-codec>1.17.1</version.commons-codec>
+    <version.accessors-smart>2.5.1</version.accessors-smart>
     <version.gson>2.8.9</version.gson>
     <version.openjpa>2.4.3</version.openjpa>
     <version.hibernate>5.6.5.Final</version.hibernate>

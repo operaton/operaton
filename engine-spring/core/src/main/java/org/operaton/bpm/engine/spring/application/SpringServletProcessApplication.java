@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.application;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInfo;

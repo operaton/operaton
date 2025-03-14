@@ -21,10 +21,10 @@ import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
-import com.sun.jersey.api.client.ClientResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -89,7 +89,7 @@ class PluginsRootResourceIT extends AbstractWebIT {
     startContainer();
     initPluginsRootResourceIT(assetName, assetAllowed);
     // when
-    ClientResponse response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
+    Response response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
 
     // then
     assertResponse(assetName, response);
@@ -98,17 +98,17 @@ class PluginsRootResourceIT extends AbstractWebIT {
     response.close();
   }
 
-  protected ClientResponse getAsset(String path) {
-    return client.resource(APP_BASE_PATH + path).get(ClientResponse.class);
+  protected Response getAsset(String path) {
+    return client.resource(APP_BASE_PATH + path).get(Response.class);
   }
 
-  protected void assertResponse(String asset, ClientResponse response) {
+  protected void assertResponse(String asset, Response response) {
     if (assetAllowed) {
       assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
     } else {
       assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
-      assertThat(response.getType().toString()).startsWith(MediaType.APPLICATION_JSON);
-      String responseEntity = response.getEntity(String.class);
+      assertThat(response.getMediaType().toString()).startsWith(MediaType.APPLICATION_JSON);
+      String responseEntity = (String)response.getEntity();
       assertThat(responseEntity).contains("\"type\":\"RestException\"");
       assertThat(responseEntity).contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
     }

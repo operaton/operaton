@@ -25,7 +25,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;

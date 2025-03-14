@@ -16,7 +16,7 @@
     Assembles the Operaton and makes it ready for qa.
     The assembly is installed to maven later in the reactor, if the integration tests pass successfully
   </description>
-  
+
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
@@ -36,7 +36,7 @@
       <groupId>org.operaton.bpm.javaee</groupId>
       <artifactId>operaton-ejb-client-jakarta</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
@@ -51,12 +51,18 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-cdi-jakarta</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-spring-6</artifactId>
     </dependency>
-    
+
+    <dependency>
+      <groupId>net.minidev</groupId>
+      <artifactId>json-smart</artifactId>
+      <version>2.5.0</version>
+    </dependency>
+
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest-jakarta</artifactId>
@@ -115,7 +121,7 @@
     </dependency>
 
     <dependency>
-      <!-- this dependency is to make sure that we are executed after operaton-modules 
+      <!-- this dependency is to make sure that we are executed after operaton-modules
         in the reactor -->
       <groupId>org.operaton.bpm.wildfly</groupId>
       <artifactId>operaton-wildfly-modules</artifactId>

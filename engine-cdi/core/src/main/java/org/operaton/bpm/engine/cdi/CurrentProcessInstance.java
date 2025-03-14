@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.cdi;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.Typed;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Typed;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.cdi.annotation.ExecutionId;
 import org.operaton.bpm.engine.cdi.annotation.ProcessInstanceId;
@@ -32,10 +32,10 @@ import org.operaton.bpm.engine.task.Task;
  * Allows to access executions and tasks of a managed process instance via
  * dependency injection. A process instance can be managed, using the
  * {@link BusinessProcess}-bean.
- * 
+ *
  * The producer methods provided by this class have been extracted from the
  * {@link BusinessProcess}-bean in order to allow for specializing it.
- * 
+ *
  * @author Falko Menge
  */
 public class CurrentProcessInstance {
@@ -45,7 +45,7 @@ public class CurrentProcessInstance {
 
   /**
    * Returns the {@link ProcessInstance} currently associated or 'null'
-   * 
+   *
    * @throws ProcessEngineCdiException
    *           if no {@link Execution} is associated. Use
    *           {@link BusinessProcess#isAssociated()} to check whether an
@@ -93,7 +93,7 @@ public class CurrentProcessInstance {
 
   /**
    * Returns the currently associated {@link Task} or 'null'
-   * 
+   *
    * @throws ProcessEngineCdiException
    *           if no {@link Task} is associated. Use
    *           {@link BusinessProcess#isTaskAssociated()} to check whether an

@@ -20,12 +20,12 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.inject.Instance;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.enterprise.context.Conversation;
+import jakarta.enterprise.context.ConversationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;

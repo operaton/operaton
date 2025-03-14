@@ -32,7 +32,7 @@
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
-        <version>${weld.version}</version>
+        <version>6.0.1.Final</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -51,20 +51,36 @@
         </exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
-      <groupId>org.jboss.spec</groupId>
-      <artifactId>${javaee.spec}</artifactId>
-      <version>${javaee.spec.version}</version>
-      <type>pom</type>
+      <groupId>jakarta.inject</groupId>
+      <artifactId>jakarta.inject-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.enterprise</groupId>
+      <artifactId>jakarta.enterprise.cdi-api</artifactId>
       <scope>provided</scope>
     </dependency>
-
+    <dependency>
+      <groupId>jakarta.interceptor</groupId>
+      <artifactId>jakarta.interceptor-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.enterprise.concurrent</groupId>
+      <artifactId>jakarta.enterprise.concurrent-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.faces</groupId>
+      <artifactId>jakarta.faces-api</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.jboss.arquillian.container</groupId>
       <artifactId>arquillian-weld-embedded</artifactId>
       <version>${arquillian.container.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- Test dependencies -->
     <dependency>
       <groupId>org.jboss.weld</groupId>
       <artifactId>weld-core-impl</artifactId>

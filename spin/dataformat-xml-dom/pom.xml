@@ -10,7 +10,29 @@
   <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
   <name>Operaton - Spin - DOM XML data format</name>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
@@ -55,7 +77,7 @@
       <artifactId>js</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
@@ -79,12 +101,6 @@
       <artifactId>operaton-spin-core</artifactId>
       <type>test-jar</type>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>

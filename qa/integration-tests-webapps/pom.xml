@@ -57,18 +57,18 @@
         <artifactId>httpclient</artifactId>
         <version>4.5.13</version>
       </dependency>
-    
+
       <dependency>
         <groupId>com.sun.jersey.contribs</groupId>
         <artifactId>jersey-apache-client4</artifactId>
-        <version>1.15</version>
+        <version>1.19.4</version>
       </dependency>
 	  <dependency>
 	    <groupId>com.sun.jersey</groupId>
 	    <artifactId>jersey-json</artifactId>
 	    <version>1.15</version>
 	  </dependency>
-	  
+
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
@@ -122,7 +122,7 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>

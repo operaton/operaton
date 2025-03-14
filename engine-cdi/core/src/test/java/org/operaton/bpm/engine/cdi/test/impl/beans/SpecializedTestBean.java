@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.beans;
 
-import javax.enterprise.inject.Specializes;
+import jakarta.enterprise.inject.Specializes;
 
 import org.operaton.bpm.engine.cdi.test.impl.util.ProgrammaticBeanLookupTest.TestBean;
 

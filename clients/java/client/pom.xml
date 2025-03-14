@@ -164,6 +164,10 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -266,6 +270,13 @@
             <home>${tomcat.runtime}</home>
             <timeout>${cargo.timeout}</timeout>
             <log>${tomcat.runtime}/logs/catalina.out</log>
+            <dependencies>
+              <dependency>
+                <group-id>jakarta.xml.bind</group-id>
+                <artifact-id>jakarta.xml.bind-api</artifact-id>
+                <type>jar</type>
+              </dependency>
+            </dependencies>
           </container>
           <configuration>
             <type>standalone</type>

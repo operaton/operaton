@@ -31,6 +31,11 @@
   <dependencies>
 
     <dependency>
+      <groupId>jakarta.resource</groupId>
+      <artifactId>jakarta.resource-api</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>

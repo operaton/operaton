@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.cdi.impl.annotation;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Named;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.cdi.annotation.BusinessKey;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 /**
  * Producer for the current business key.
- * 
+ *
  * @author Daniel Meyer
  */
 public class BusinessKeyProducer {

@@ -49,8 +49,7 @@
     </dependency>
     <dependency>
       <groupId>org.wiremock</groupId>
-      <artifactId>wiremock</artifactId>
-      <version>${version.wiremock}</version>
+      <artifactId>wiremock-standalone</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -58,7 +57,6 @@
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
 
     <!-- dependencies required by the openapi client -->
     <!-- update them during openapi-generator-maven-plugin version update  -->
@@ -111,9 +109,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>javax.annotation</groupId>
-      <artifactId>jsr250-api</artifactId>
-      <version>${javax-annotation-version}</version>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
       <scope>test</scope>
     </dependency>
     <!-- test dependencies -->
@@ -219,6 +216,7 @@
               <generatorName>java</generatorName>
               <configOptions>
                 <dateLibrary>legacy</dateLibrary>
+                <useJakartaEe>true</useJakartaEe>
               </configOptions>
             </configuration>
           </execution>

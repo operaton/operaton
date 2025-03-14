@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.GRAAL_JS_SCRIPT_ENGINE_NAME;
+import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.JYTHON_SCRIPT_ENGINE_NAME;
 
 /**
  * Custom Script Engine Manager that can execute custom logic:
@@ -35,7 +36,8 @@ import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.GRA
 public class OperatonScriptEngineManager extends ScriptEngineManager {
 
   protected final Map<String, Runnable> engineNameToInitLogicMappings = Map.of(
-      GRAAL_JS_SCRIPT_ENGINE_NAME, this::disableGraalVMInterpreterOnlyModeWarnings
+    GRAAL_JS_SCRIPT_ENGINE_NAME, this::disableGraalVMInterpreterOnlyModeWarnings,
+    JYTHON_SCRIPT_ENGINE_NAME, this::disablePythonImportSiteWarnings
   );
 
   public OperatonScriptEngineManager() {
@@ -76,4 +78,7 @@ public class OperatonScriptEngineManager extends ScriptEngineManager {
     System.setProperty("polyglot.engine.WarnInterpreterOnly", "false");
   }
 
+  protected void disablePythonImportSiteWarnings() {
+    System.setProperty("python.import.site", "false");
+  }
 }

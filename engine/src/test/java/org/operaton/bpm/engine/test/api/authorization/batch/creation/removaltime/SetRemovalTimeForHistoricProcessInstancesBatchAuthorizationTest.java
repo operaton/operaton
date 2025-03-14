@@ -22,6 +22,7 @@ import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationS
 import java.util.Collection;
 import java.util.Date;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -31,18 +32,19 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.batch.creation.BatchCreationAuthorizationTest;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
 /**
  * @author Tassilo Weidner
  */
+@Parameterized
 public class SetRemovalTimeForHistoricProcessInstancesBatchAuthorizationTest extends BatchCreationAuthorizationTest {
 
-  @Parameterized.Parameters(name = "Scenario {index}")
+  @Parameters
   public static Collection<AuthorizationScenario[]> scenarios() {
-    return AuthorizationTestRule.asParameters(
+    return AuthorizationTestExtension.asParameters(
         scenario()
             .withAuthorizations(
               grant(Resources.PROCESS_DEFINITION, "Process", "userId", Permissions.READ_HISTORY)
@@ -64,7 +66,7 @@ public class SetRemovalTimeForHistoricProcessInstancesBatchAuthorizationTest ext
     );
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })

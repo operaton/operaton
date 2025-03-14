@@ -23,18 +23,21 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
+@Parameterized
 public class CreateDeleteProcessInstancesBatchAuthorizationTest extends BatchCreationAuthorizationTest {
-  @Parameterized.Parameters(name = "Scenario {index}")
+
+  @Parameters
   public static Collection<AuthorizationScenario[]> scenarios() {
-    return AuthorizationTestRule.asParameters(
+    return AuthorizationTestExtension.asParameters(
         scenario()
             .withoutAuthorizations()
             .failsDueToRequired(
@@ -52,7 +55,7 @@ public class CreateDeleteProcessInstancesBatchAuthorizationTest extends BatchCre
     );
   }
 
-  @Test
+  @TestTemplate
   public void testBatchProcessInstanceDeletion() {
     //given
     authRule

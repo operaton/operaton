@@ -27,7 +27,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
@@ -57,12 +56,6 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
     super.setUp();
   }
   
-  @Override
-  @AfterEach
-  public void tearDown() {
-    super.tearDown();
-  }
-
   @Test
   void testFetchWithoutAuthorization() {
     // when

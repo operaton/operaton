@@ -308,9 +308,6 @@ class AuthorizationUserOperationLogTest extends AuthorizationTest {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, Authorization.ANY, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    for (UserOperationLogEntry logEntry : query.list()) {
-		System.out.println(logEntry);
-	}
     assertThat(query.count()).isZero();
 
     // when

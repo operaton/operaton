@@ -24,6 +24,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -36,36 +39,32 @@ import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenarioWithCount;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
 /**
  * @author Askar Akhmerov
  */
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends AbstractBatchAuthorizationTest {
 
   protected static final long BATCH_OPERATIONS = 3;
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
 
-  @Parameterized.Parameter
+  @Parameter
   public AuthorizationScenarioWithCount scenario;
 
   protected HistoryService historyService;
 
-  @Before
+  @BeforeEach
   public void setupHistoricService() {
     historyService = engineRule.getHistoryService();
   }
 
   @Override
+  @AfterEach
   public void cleanBatch() {
     super.cleanBatch();
     List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery().list();
@@ -79,9 +78,9 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
     }
   }
 
-  @Parameterized.Parameters(name = "Scenario {index}")
+  @Parameters
   public static Collection<AuthorizationScenario[]> scenarios() {
-    return AuthorizationTestRule.asParameters(
+    return AuthorizationTestExtension.asParameters(
         AuthorizationScenarioWithCount.scenario()
             .withCount(1L)
             .withAuthorizations(
@@ -109,7 +108,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
     );
   }
 
-  @Test
+  @TestTemplate
   public void testWithTwoInvocationsProcessInstancesList() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
     setupAndExecuteHistoricProcessInstancesListTest();
@@ -120,7 +119,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(getScenario().getCount());
   }
 
-  @Test
+  @TestTemplate
   public void testProcessInstancesList() {
     setupAndExecuteHistoricProcessInstancesListTest();
     // then

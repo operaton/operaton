@@ -19,16 +19,16 @@ package org.operaton.bpm.engine.test.api.authorization.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resource;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 /**
  * @author Filip Hrisafov
@@ -80,9 +80,9 @@ public class MissingAuthorizationMatcher extends TypeSafeDiagnosingMatcher<Missi
 
   @Override
   protected boolean matchesSafely(MissingAuthorization item, Description mismatchDescription) {
-    if (StringUtils.equals(missing.getResourceId(), item.getResourceId())
-        && StringUtils.equals(missing.getResourceType(), item.getResourceType())
-        && StringUtils.equals(missing.getViolatedPermissionName(), item.getViolatedPermissionName())) {
+    if (Objects.equals(missing.getResourceId(), item.getResourceId())
+        && Objects.equals(missing.getResourceType(), item.getResourceType())
+        && Objects.equals(missing.getViolatedPermissionName(), item.getViolatedPermissionName())) {
       return true;
     }
     mismatchDescription.appendText("expected missing authorization: ").appendValue(missing).appendValue(" received: ").appendValue(item);

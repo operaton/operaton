@@ -52,7 +52,6 @@ import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resource;
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -131,9 +130,6 @@ public abstract class AuthorizationTest {
       }
       for (String deploymentId : deploymentIds) {
         deleteDeployment(deploymentId);
-      }
-      for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
-        historyService.deleteUserOperationLogEntry(logEntry.getId());
       }
       return null;
     });
@@ -299,7 +295,7 @@ public abstract class AuthorizationTest {
 
   public void executeAvailableJobs() {
     runWithoutAuthorization((Callable<Void>) () -> {
-    	testRule.executeAvailableJobs();
+      testRule.executeAvailableJobs();
       return null;
     });
   }

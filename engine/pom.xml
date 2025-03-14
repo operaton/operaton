@@ -435,6 +435,7 @@
             </goals>
             <configuration>
               <sources>
+                <source>src/main/junit-shared</source>
                 <source>src/main/junit4</source>
                 <source>src/main/junit5</source>
               </sources>
@@ -537,6 +538,38 @@
             <goals>
               <goal>testCompile</goal>
             </goals>
+          </execution>
+          <!-- Additional execution to compile code needed for JUnit4 (classes also used by JUnit5) -->
+          <execution>
+            <id>junit4-shared-Compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <!-- Specify the extra test source folder -->
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
+              </compileSourceRoots>
+              <!-- Set its own output directory -->
+              <outputDirectory>${project.build.directory}/classes-junit4</outputDirectory>
+            </configuration>
+          </execution>
+           <!-- Additional execution to compile code needed for JUnit5 (classes also used by JUnit4) -->
+          <execution>
+            <id>junit5-shared-Compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <!-- Specify the extra test source folder -->
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
+              </compileSourceRoots>
+              <!-- Set its own output directory -->
+              <outputDirectory>${project.build.directory}/classes-junit5</outputDirectory>
+            </configuration>
           </execution>
           <!-- Additional execution to compile code needed for JUnit4 test only -->
           <execution>

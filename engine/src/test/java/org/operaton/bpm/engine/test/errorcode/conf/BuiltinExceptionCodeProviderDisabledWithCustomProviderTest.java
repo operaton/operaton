@@ -43,7 +43,7 @@ import static org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 
 public class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
 
-  protected static int PROVIDED_CUSTOM_CODE = 888_888;
+  protected static final int PROVIDED_CUSTOM_CODE = 888_888;
 
   @ClassRule
   public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(c -> {

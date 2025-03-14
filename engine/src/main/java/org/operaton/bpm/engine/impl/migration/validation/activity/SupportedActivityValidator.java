@@ -31,9 +31,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class SupportedActivityValidator implements MigrationActivityValidator {
 
-  public static SupportedActivityValidator INSTANCE = new SupportedActivityValidator();
+  public static final SupportedActivityValidator INSTANCE = new SupportedActivityValidator();
 
-  public static List<Class<? extends ActivityBehavior>> SUPPORTED_ACTIVITY_BEHAVIORS = new ArrayList<>();
+  public static final List<Class<? extends ActivityBehavior>> SUPPORTED_ACTIVITY_BEHAVIORS = new ArrayList<>();
 
   static {
     SUPPORTED_ACTIVITY_BEHAVIORS.add(SubProcessActivityBehavior.class);

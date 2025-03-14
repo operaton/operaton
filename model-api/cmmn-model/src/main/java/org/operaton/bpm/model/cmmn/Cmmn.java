@@ -135,7 +135,7 @@ public class Cmmn {
 
   /** the singleton instance of {@link Cmmn}. If you want to customize the behavior of Cmmn,
    * replace this instance with an instance of a custom subclass of {@link Cmmn}. */
-  public static Cmmn INSTANCE = new Cmmn();
+  public static final Cmmn INSTANCE = new Cmmn();
 
   /** the parser used by the Cmmn implementation. */
   private final CmmnParser cmmnParser = new CmmnParser();

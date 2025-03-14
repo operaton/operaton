@@ -29,7 +29,7 @@ public class Tasklist {
    * initialized by bootstrapping operaton admin with an specific
    * instance
    */
-  protected static TasklistRuntimeDelegate TASKLIST_RUNTIME_DELEGATE;
+  protected static TasklistRuntimeDelegate tasklistRuntimeDelegate;
 
   private Tasklist() {
   }
@@ -40,7 +40,7 @@ public class Tasklist {
    * @return
    */
   public static TasklistRuntimeDelegate getRuntimeDelegate() {
-    return TASKLIST_RUNTIME_DELEGATE;
+    return tasklistRuntimeDelegate;
   }
 
   /**
@@ -48,6 +48,6 @@ public class Tasklist {
    * @param tasklistRuntimeDelegate
    */
   public static void setTasklistRuntimeDelegate(TasklistRuntimeDelegate tasklistRuntimeDelegate) {
-    TASKLIST_RUNTIME_DELEGATE = tasklistRuntimeDelegate;
+    Tasklist.tasklistRuntimeDelegate = tasklistRuntimeDelegate;
   }
 }

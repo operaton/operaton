@@ -30,10 +30,10 @@ import org.operaton.bpm.engine.query.QueryProperty;
  */
 public class JsonQueryFilteringPropertyConverter extends JsonObjectConverter<QueryEntityRelationCondition> {
 
-  protected static JsonQueryFilteringPropertyConverter INSTANCE =
+  protected static final JsonQueryFilteringPropertyConverter INSTANCE =
       new JsonQueryFilteringPropertyConverter();
 
-  protected static JsonArrayConverter<List<QueryEntityRelationCondition>> ARRAY_CONVERTER =
+  protected static final JsonArrayConverter<List<QueryEntityRelationCondition>> ARRAY_CONVERTER =
     new JsonArrayOfObjectsConverter<>(INSTANCE);
 
   public static final String BASE_PROPERTY = "baseField";

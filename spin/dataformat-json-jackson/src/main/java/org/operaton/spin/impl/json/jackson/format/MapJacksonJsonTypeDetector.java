@@ -32,7 +32,7 @@ public class MapJacksonJsonTypeDetector extends AbstractJacksonJsonTypeDetector 
     /**
      * Object instance to use.
      */
-    public static MapJacksonJsonTypeDetector INSTANCE = new MapJacksonJsonTypeDetector();
+    public static final MapJacksonJsonTypeDetector INSTANCE = new MapJacksonJsonTypeDetector();
 
     @Override
     public boolean canHandle(Object value) {

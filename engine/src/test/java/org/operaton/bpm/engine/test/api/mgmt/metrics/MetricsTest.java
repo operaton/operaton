@@ -50,7 +50,7 @@ public class MetricsTest {
   protected static final ProcessEngineTestRule TEST_RULE = new ProcessEngineTestRule(ENGINE_RULE);
 
   @ClassRule
-  public static RuleChain RULE_CHAIN = RuleChain.outerRule(ENGINE_RULE).around(TEST_RULE);
+  public static final RuleChain RULE_CHAIN = RuleChain.outerRule(ENGINE_RULE).around(TEST_RULE);
 
   protected static RuntimeService runtimeService;
   protected static ProcessEngineConfigurationImpl processEngineConfiguration;

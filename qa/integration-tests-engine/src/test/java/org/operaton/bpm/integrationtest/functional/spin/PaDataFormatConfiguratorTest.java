@@ -84,7 +84,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
     JsonSerializable jsonSerializable = new JsonSerializable(date);
 
     try {
-      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.INSTANCE);
+      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.instance);
       runtimeService.setVariable(pi.getId(),
         "jsonSerializable",
         Variables.objectValue(jsonSerializable).serializationDataFormat(SerializationDataFormats.JSON).create());
@@ -151,7 +151,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
     JsonSerializable jsonSerializable = new JsonSerializable(date);
     try {
 
-      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.INSTANCE);
+      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.instance);
       runtimeService.setVariable(pi.getId(),
         ImplicitObjectValueUpdateHandler.VARIABLE_NAME,
         Variables.objectValue(jsonSerializable).serializationDataFormat(SerializationDataFormats.JSON).create());
@@ -202,7 +202,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
     Date date = new Date(JsonSerializable.ONE_DAY_IN_MILLIS * 10); // 10th of January 1970
     JsonSerializable jsonSerializable = new JsonSerializable(date);
     try {
-      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.INSTANCE);
+      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.instance);
       taskService.setVariableLocal(task.getId(),
         ImplicitObjectValueUpdateHandler.VARIABLE_NAME,
         Variables.objectValue(jsonSerializable).serializationDataFormat(SerializationDataFormats.JSON).create());

@@ -30,7 +30,7 @@ public class DurationBusinessCalendar implements BusinessCalendar {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  public static String NAME = "duration";
+  public static final String NAME = "duration";
 
 
   @Override

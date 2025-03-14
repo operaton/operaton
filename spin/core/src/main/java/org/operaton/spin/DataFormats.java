@@ -42,12 +42,12 @@ public class DataFormats {
 
   private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
 
-  public static String JSON_DATAFORMAT_NAME = "application/json";
+  public static final String JSON_DATAFORMAT_NAME = "application/json";
 
-  public static String XML_DATAFORMAT_NAME = "application/xml";
+  public static final String XML_DATAFORMAT_NAME = "application/xml";
 
   /** The global instance of the manager */
-  static DataFormats INSTANCE = new DataFormats();
+  static final DataFormats INSTANCE = new DataFormats();
 
   /**
    * Provides the global instance of the DataFormats manager.
@@ -151,9 +151,9 @@ public class DataFormats {
   protected void registerCustomDataFormats(Map<String, DataFormat<?>> dataFormats, ClassLoader classloader) {
     registerCustomDataFormats(dataFormats, classloader, Collections.emptyMap());
   }
-  
-  protected void registerCustomDataFormats(Map<String, DataFormat<?>> dataFormats, 
-                                           ClassLoader classloader, 
+
+  protected void registerCustomDataFormats(Map<String, DataFormat<?>> dataFormats,
+                                           ClassLoader classloader,
                                            Map<String, Object> configurationProperties) {
     // use java.util.ServiceLoader to load custom DataFormatProvider instances on the classpath
     ServiceLoader<DataFormatProvider> providerLoader = ServiceLoader.load(DataFormatProvider.class, classloader);

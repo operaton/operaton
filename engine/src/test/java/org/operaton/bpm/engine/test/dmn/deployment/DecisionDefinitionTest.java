@@ -58,7 +58,7 @@ import org.junit.rules.RuleChain;
 public class DecisionDefinitionTest {
 
   @ClassRule
-  public static ProcessEngineBootstrapRule BOOTSTRAP_RULE = new ProcessEngineBootstrapRule(configuration -> {
+  public static final ProcessEngineBootstrapRule BOOTSTRAP_RULE = new ProcessEngineBootstrapRule(configuration -> {
     configuration.setHistoryTimeToLive("P30D");
   });
 

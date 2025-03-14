@@ -48,11 +48,11 @@ import org.junit.rules.RuleChain;
 */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class MultiTenancyHistoricIdentityLinkLogQueryTest {
-  
+
   private static final String GROUP_1 = "Group1";
   private static final String USER_1 = "User1";
-  
-  private static String PROCESS_DEFINITION_KEY = "oneTaskProcess";
+
+  private static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
@@ -104,7 +104,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
     // when
     HistoricIdentityLinkLog historicIdentityLink = query.singleResult();
     taskService.deleteCandidateUser(historicIdentityLink.getTaskId(), A_USER_ID);
-    
+
     // then
     assertThat(query.tenantIdIn(TENANT_1).count()).isEqualTo(2L);
   }

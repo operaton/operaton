@@ -31,14 +31,14 @@ import org.operaton.bpm.engine.management.Metrics;
  */
 public class MetricsBpmnParseListener extends AbstractBpmnParseListener {
 
-  public static MetricsExecutionListener ROOT_PROCESS_INSTANCE_START_COUNTER =
+  public static final MetricsExecutionListener ROOT_PROCESS_INSTANCE_START_COUNTER =
       new MetricsExecutionListener(Metrics.ROOT_PROCESS_INSTANCE_START,
                                    delegateExecution -> (delegateExecution.getId().equals(
                                            ((ExecutionEntity) delegateExecution)
                                                .getRootProcessInstanceId())));
-  public static MetricsExecutionListener ACTIVITY_INSTANCE_START_COUNTER =
+  public static final MetricsExecutionListener ACTIVITY_INSTANCE_START_COUNTER =
       new MetricsExecutionListener(Metrics.ACTIVTY_INSTANCE_START);
-  public static MetricsExecutionListener ACTIVITY_INSTANCE_END_COUNTER =
+  public static final MetricsExecutionListener ACTIVITY_INSTANCE_END_COUNTER =
       new MetricsExecutionListener(Metrics.ACTIVTY_INSTANCE_END);
 
   protected void addListeners(ActivityImpl activity) {

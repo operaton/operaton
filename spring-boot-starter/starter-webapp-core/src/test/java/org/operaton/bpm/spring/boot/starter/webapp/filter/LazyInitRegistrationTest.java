@@ -50,7 +50,7 @@ class LazyInitRegistrationTest {
 
   @BeforeEach
   void init() {
-    LazyInitRegistration.APPLICATION_CONTEXT = null;
+    LazyInitRegistration.applicationContext = null;
     LazyInitRegistration.REGISTRATION.clear();
   }
 
@@ -67,14 +67,14 @@ class LazyInitRegistrationTest {
 
   @Test
   void getInitHookWithoutResourceLoaderDependingInitHook() {
-    LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
+    LazyInitRegistration.applicationContext = applicationContextMock;
     when(applicationContextMock.containsBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK)).thenReturn(false);
     assertThat(LazyInitRegistration.getInitHook()).isNull();
   }
 
   @Test
   void getInitHookWithResourceLoaderDependingInitHook() {
-    LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
+    LazyInitRegistration.applicationContext = applicationContextMock;
     when(applicationContextMock.containsBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK)).thenReturn(true);
     when(applicationContextMock.getBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK, InitHook.class)).thenReturn(initHookMock);
 
@@ -99,7 +99,7 @@ class LazyInitRegistrationTest {
   @SuppressWarnings("unchecked")
   @Test
   void lazyInitWithoutRegistration() {
-    LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
+    LazyInitRegistration.applicationContext = applicationContextMock;
     assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isFalse();
     verify(lazyDelegateFilterMock, times(0)).setInitHook(Mockito.any(InitHook.class));
     verify(lazyDelegateFilterMock, times(0)).lazyInit();
@@ -107,7 +107,7 @@ class LazyInitRegistrationTest {
 
   @Test
   void lazyInitWithRegistration() {
-    LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
+    LazyInitRegistration.applicationContext = applicationContextMock;
     LazyInitRegistration.register(lazyDelegateFilterMock);
     when(applicationContextMock.containsBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK)).thenReturn(true);
     when(applicationContextMock.getBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK, InitHook.class)).thenReturn(initHookMock);
@@ -120,7 +120,7 @@ class LazyInitRegistrationTest {
 
   @Test
   void lazyInitWithoutInitHook() {
-    LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
+    LazyInitRegistration.applicationContext = applicationContextMock;
     LazyInitRegistration.register(lazyDelegateFilterMock);
     when(applicationContextMock.containsBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK)).thenReturn(false);
 
@@ -145,10 +145,10 @@ class LazyInitRegistrationTest {
       Set<LazyDelegateFilter<? extends Filter>> registrations = new HashSet<>();
       registrations.add(lazyDelegateFilterMock);
       theMock.when(LazyInitRegistration::getRegistrations).thenReturn(registrations);
-  
+
       new LazyInitRegistration().setApplicationContext(applicationContextMock);
 
-      assertThat(applicationContextMock).isEqualTo(LazyInitRegistration.APPLICATION_CONTEXT);
+      assertThat(applicationContextMock).isEqualTo(LazyInitRegistration.applicationContext);
       theMock.verify(() -> LazyInitRegistration.lazyInit(lazyDelegateFilterMock));
     }
   }

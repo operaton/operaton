@@ -72,7 +72,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
     fullMessage = (fullMessageBytes != null ? StringUtil.fromBytes(fullMessageBytes) : null );
   }
 
-  public static String MESSAGE_PARTS_MARKER = "_|_";
+  public static final String MESSAGE_PARTS_MARKER = "_|_";
 
   public void setMessage(String[] messageParts) {
     StringBuilder stringBuilder = new StringBuilder();

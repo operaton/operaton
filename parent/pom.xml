@@ -31,10 +31,9 @@
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
     <version.json-path>2.9.0</version.json-path>
-    <version.json-smart>2.5.1</version.json-smart>
-    <version.commons-codec>1.17.1</version.commons-codec>
-    <version.commons-codec>1.17.1</version.commons-codec>
-    <version.accessors-smart>2.5.1</version.accessors-smart>
+    <version.json-smart>2.5.2</version.json-smart>
+    <version.commons-codec>1.17.2</version.commons-codec>
+    <version.accessors-smart>2.5.2</version.accessors-smart>
     <version.gson>2.8.9</version.gson>
     <version.openjpa>2.4.3</version.openjpa>
     <version.hibernate>6.6.10.Final</version.hibernate>

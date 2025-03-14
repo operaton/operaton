@@ -83,13 +83,13 @@ public class BPMNParseListenerTest {
 
   @After
   public void tearDown() {
-    DelegatingBpmnParseListener.DELEGATE = null;
+    DelegatingBpmnParseListener.delegate = null;
   }
 
   @Test
   public void testAlterProcessDefinitionKeyWhenDeploying() {
     // given
-    DelegatingBpmnParseListener.DELEGATE = new TestBPMNParseListener();
+    DelegatingBpmnParseListener.delegate = new TestBPMNParseListener();
 
     // when
     engineTestRule.deploy("org/operaton/bpm/engine/test/standalone/deploy/"
@@ -105,7 +105,7 @@ public class BPMNParseListenerTest {
   public void testAlterActivityBehaviors() {
 
     // given
-    DelegatingBpmnParseListener.DELEGATE = new TestBPMNParseListener();
+    DelegatingBpmnParseListener.delegate = new TestBPMNParseListener();
 
     // when
     engineTestRule.deploy("org/operaton/bpm/engine/test/standalone/deploy/"
@@ -137,7 +137,7 @@ public class BPMNParseListenerTest {
       .endEvent()
       .done();
 
-    DelegatingBpmnParseListener.DELEGATE = new AbstractBpmnParseListener() {
+    DelegatingBpmnParseListener.delegate = new AbstractBpmnParseListener() {
       @Override
       public void parseUserTask(Element userTaskElement, ScopeImpl scope, ActivityImpl activity) {
         UserTaskActivityBehavior activityBehavior = (UserTaskActivityBehavior) activity.getActivityBehavior();
@@ -184,7 +184,7 @@ public class BPMNParseListenerTest {
           .endEvent()
         .done();
 
-    DelegatingBpmnParseListener.DELEGATE = new AbstractBpmnParseListener() {
+    DelegatingBpmnParseListener.delegate = new AbstractBpmnParseListener() {
       @Override
       public void parseUserTask(Element userTaskElement, ScopeImpl scope, ActivityImpl activity) {
         UserTaskActivityBehavior activityBehavior = (UserTaskActivityBehavior) activity.getActivityBehavior();
@@ -231,7 +231,7 @@ public class BPMNParseListenerTest {
         .endEvent()
         .done();
 
-    DelegatingBpmnParseListener.DELEGATE = createBpmnParseListenerAndAssertTenantId(null);
+    DelegatingBpmnParseListener.delegate = createBpmnParseListenerAndAssertTenantId(null);
 
     // when
     engineTestRule.deploy(model);
@@ -250,7 +250,7 @@ public class BPMNParseListenerTest {
         .endEvent()
         .done();
 
-    DelegatingBpmnParseListener.DELEGATE = createBpmnParseListenerAndAssertTenantId("parseListenerTenantId");
+    DelegatingBpmnParseListener.delegate = createBpmnParseListenerAndAssertTenantId("parseListenerTenantId");
 
     // when
     engineTestRule.deployForTenant("parseListenerTenantId", model);
@@ -260,7 +260,7 @@ public class BPMNParseListenerTest {
   public void shouldInvokeParseIoMapping() {
     // given
     AtomicInteger invokeTimes = new AtomicInteger();
-    DelegatingBpmnParseListener.DELEGATE = new AbstractBpmnParseListener() {
+    DelegatingBpmnParseListener.delegate = new AbstractBpmnParseListener() {
       @Override
       public void parseIoMapping(Element extensionElements, ActivityImpl activity, IoMapping inputOutput) {
         invokeTimes.incrementAndGet();

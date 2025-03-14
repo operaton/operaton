@@ -48,7 +48,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class CustomErrorCodeProviderTest {
 
-  protected static int PROVIDED_CUSTOM_CODE = 33_333;
+  protected static final int PROVIDED_CUSTOM_CODE = 33_333;
 
   @ClassRule
   public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(c -> {

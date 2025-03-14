@@ -36,11 +36,11 @@ public class Connectors {
 
   protected static final ConnectCoreLogger LOG = ConnectLogger.CORE_LOGGER;
 
-  public static String HTTP_CONNECTOR_ID = "http-connector";
-  public static String SOAP_HTTP_CONNECTOR_ID = "soap-http-connector";
+  public static final String HTTP_CONNECTOR_ID = "http-connector";
+  public static final String SOAP_HTTP_CONNECTOR_ID = "soap-http-connector";
 
   /** The global instance of the manager */
-  static Connectors INSTANCE = new Connectors();
+  static final Connectors INSTANCE = new Connectors();
 
   /**
    * Provides the global instance of the Connectors manager.

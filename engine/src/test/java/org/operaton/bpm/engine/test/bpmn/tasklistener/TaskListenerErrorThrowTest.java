@@ -254,7 +254,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
     } catch (Exception e) {
       // then
       assertThat(e.getMessage()).contains("business error");
-      assertThat(ThrowBPMNErrorListener.INVOCATIONS).isEqualTo(1);
+      assertThat(ThrowBPMNErrorListener.invocations).isEqualTo(1);
       assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isZero();
     }
 
@@ -294,7 +294,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
     Task resultTask = taskService.createTaskQuery().singleResult();
     assertThat(resultTask).isNotNull();
     assertThat(resultTask.getName()).isEqualTo("mainTask");
-    assertThat(ThrowBPMNErrorListener.INVOCATIONS).isEqualTo(1);
+    assertThat(ThrowBPMNErrorListener.invocations).isEqualTo(1);
     assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isZero();
 
     // cleanup
@@ -307,7 +307,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
     Task resultTask = taskService.createTaskQuery().singleResult();
     assertThat(resultTask).isNotNull();
     assertThat(resultTask.getName()).isEqualTo("afterCatch");
-    assertThat(ThrowBPMNErrorListener.INVOCATIONS).isEqualTo(1);
+    assertThat(ThrowBPMNErrorListener.invocations).isEqualTo(1);
     assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isEqualTo(1);
   }
 
@@ -363,16 +363,16 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   public static class ThrowBPMNErrorListener implements TaskListener {
-    public static int INVOCATIONS = 0;
+    public static int invocations = 0;
 
     @Override
     public void notify(DelegateTask delegateTask) {
-      INVOCATIONS++;
+      invocations++;
       throw new BpmnError(ERROR_CODE, "business error 208");
     }
 
     public static void reset() {
-      INVOCATIONS = 0;
+      invocations = 0;
     }
   }
 }

@@ -77,7 +77,7 @@ public class PaDataFormatProviderTest extends AbstractFoxPlatformIntegrationTest
 
     ObjectValue objectValue;
     try {
-      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.INSTANCE);
+      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.instance);
       objectValue = runtimeService.getVariableTyped(pi.getId(), "serializedObject", true);
     } finally {
       ProcessApplicationContext.clear();

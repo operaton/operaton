@@ -33,8 +33,8 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles(profiles = { "test-auth-disabled" })
 public abstract class AbstractRestTest {
 
-  public static String CONTEXT_PATH = "/engine-rest";
-  
+  public static final String CONTEXT_PATH = "/engine-rest";
+
   @Autowired
   protected TestRestTemplate testRestTemplate;
 

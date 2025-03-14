@@ -34,8 +34,8 @@ import org.junit.Test;
 
 public class DatabaseNamingConsistencyTest {
 
-  public static String COLUMN_NAME_REGEX = "([a-zA-Z_]*(?=[a-z]+)[a-zA-Z_]+_)[,\\s]";
-  public static String[] SCANNED_FOLDERS = {
+  public static final String COLUMN_NAME_REGEX = "([a-zA-Z_]*(?=[a-z]+)[a-zA-Z_]+_)[,\\s]";
+  public static final String[] SCANNED_FOLDERS = {
       "org/operaton/bpm/engine/impl/mapping/entity/",
       "org/operaton/bpm/engine/db/create", "org/operaton/bpm/engine/db/drop",
       "org/operaton/bpm/engine/db/liquibase/baseline" };

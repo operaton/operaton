@@ -67,8 +67,8 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
   }
 
   protected static JavaArchive[] getWeld(String engineCdiArtifactName) {
-    if (CACHED_WELD_ASSETS != null) {
-      return CACHED_WELD_ASSETS;
+    if (cachedWeldAssets != null) {
+      return cachedWeldAssets;
     } else {
 
       JavaArchive[] archives = resolveDependenciesFromPomXml(engineCdiArtifactName,
@@ -78,8 +78,8 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
       if(archives.length == 0) {
         throw new RuntimeException("Could not resolve the Weld implementation and JakartaEE API dependencies");
       } else {
-        CACHED_WELD_ASSETS = archives;
-        return CACHED_WELD_ASSETS;
+        cachedWeldAssets = archives;
+        return cachedWeldAssets;
       }
     }
   }

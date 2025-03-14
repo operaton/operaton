@@ -29,21 +29,21 @@ public class CloseCaseExecutionListener implements CaseExecutionListener, Serial
 
   private static final long serialVersionUID = 1L;
 
-  protected static String EVENT;
-  protected static int COUNTER = 0;
-  protected static String ON_CASE_EXECUTION_ID;
+  protected static String event;
+  protected static int counter = 0;
+  protected static String onCaseExecutionId;
 
   @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {
-    EVENT = caseExecution.getEventName();
-    COUNTER = COUNTER + 1;
-    ON_CASE_EXECUTION_ID = caseExecution.getId();
+    event = caseExecution.getEventName();
+    counter = counter + 1;
+    onCaseExecutionId = caseExecution.getId();
   }
 
   public static void clear() {
-    EVENT = null;
-    COUNTER = 0;
-    ON_CASE_EXECUTION_ID = null;
+    event = null;
+    counter = 0;
+    onCaseExecutionId = null;
   }
 
 }

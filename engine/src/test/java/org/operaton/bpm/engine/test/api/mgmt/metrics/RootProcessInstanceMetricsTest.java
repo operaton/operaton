@@ -34,7 +34,7 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
 
   public static final String DMN_FILE
       = "org/operaton/bpm/engine/test/api/mgmt/metrics/ExecutedDecisionElementsTest.dmn11.xml";
-  public static VariableMap VARIABLES = Variables.createVariables()
+  public static final VariableMap VARIABLES = Variables.createVariables()
       .putValue("status", "")
       .putValue("sum", 100);
 

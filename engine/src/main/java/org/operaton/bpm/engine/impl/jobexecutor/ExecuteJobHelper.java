@@ -29,7 +29,7 @@ public class ExecuteJobHelper {
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   // Default behavior, just log exception
-  public static ExceptionLoggingHandler LOGGING_HANDLER = LOG::exceptionWhileExecutingJob;
+  public static ExceptionLoggingHandler loggingHandler = LOG::exceptionWhileExecutingJob;
 
   private ExecuteJobHelper() {
   }

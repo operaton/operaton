@@ -581,9 +581,9 @@ public class CaseInstanceListenerTest extends CmmnTest {
   public void testCloseListenerByClass() {
     CloseCaseExecutionListener.clear();
 
-    assertThat(CloseCaseExecutionListener.EVENT).isNull();
-    assertThat(CloseCaseExecutionListener.COUNTER).isZero();
-    assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isNull();
+    assertThat(CloseCaseExecutionListener.event).isNull();
+    assertThat(CloseCaseExecutionListener.counter).isZero();
+    assertThat(CloseCaseExecutionListener.onCaseExecutionId).isNull();
 
     // given
     String caseInstanceId = caseService
@@ -601,9 +601,9 @@ public class CaseInstanceListenerTest extends CmmnTest {
       .close();
 
     // then
-    assertThat(CloseCaseExecutionListener.EVENT).isEqualTo("close");
-    assertThat(CloseCaseExecutionListener.COUNTER).isEqualTo(1);
-    assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isEqualTo(caseInstanceId);
+    assertThat(CloseCaseExecutionListener.event).isEqualTo("close");
+    assertThat(CloseCaseExecutionListener.counter).isEqualTo(1);
+    assertThat(CloseCaseExecutionListener.onCaseExecutionId).isEqualTo(caseInstanceId);
 
   }
 
@@ -612,9 +612,9 @@ public class CaseInstanceListenerTest extends CmmnTest {
   public void testCloseListenerByDelegateExpression() {
     CloseCaseExecutionListener.clear();
 
-    assertThat(CloseCaseExecutionListener.EVENT).isNull();
-    assertThat(CloseCaseExecutionListener.COUNTER).isZero();
-    assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isNull();
+    assertThat(CloseCaseExecutionListener.event).isNull();
+    assertThat(CloseCaseExecutionListener.counter).isZero();
+    assertThat(CloseCaseExecutionListener.onCaseExecutionId).isNull();
 
     // given
     String caseInstanceId = caseService
@@ -631,9 +631,9 @@ public class CaseInstanceListenerTest extends CmmnTest {
       .close();
 
     // then
-    assertThat(CloseCaseExecutionListener.EVENT).isEqualTo("close");
-    assertThat(CloseCaseExecutionListener.COUNTER).isEqualTo(1);
-    assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isEqualTo(caseInstanceId);
+    assertThat(CloseCaseExecutionListener.event).isEqualTo("close");
+    assertThat(CloseCaseExecutionListener.counter).isEqualTo(1);
+    assertThat(CloseCaseExecutionListener.onCaseExecutionId).isEqualTo(caseInstanceId);
 
   }
 
@@ -642,9 +642,9 @@ public class CaseInstanceListenerTest extends CmmnTest {
   public void testCloseListenerByExpression() {
     CloseCaseExecutionListener.clear();
 
-    assertThat(CloseCaseExecutionListener.EVENT).isNull();
-    assertThat(CloseCaseExecutionListener.COUNTER).isZero();
-    assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isNull();
+    assertThat(CloseCaseExecutionListener.event).isNull();
+    assertThat(CloseCaseExecutionListener.counter).isZero();
+    assertThat(CloseCaseExecutionListener.onCaseExecutionId).isNull();
 
     // given
     String caseInstanceId = caseService
@@ -661,9 +661,9 @@ public class CaseInstanceListenerTest extends CmmnTest {
       .close();
 
     // then
-    assertThat(CloseCaseExecutionListener.EVENT).isEqualTo("close");
-    assertThat(CloseCaseExecutionListener.COUNTER).isEqualTo(1);
-    assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isEqualTo(caseInstanceId);
+    assertThat(CloseCaseExecutionListener.event).isEqualTo("close");
+    assertThat(CloseCaseExecutionListener.counter).isEqualTo(1);
+    assertThat(CloseCaseExecutionListener.onCaseExecutionId).isEqualTo(caseInstanceId);
 
   }
 

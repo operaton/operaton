@@ -25,13 +25,13 @@ package org.operaton.bpm.admin;
 public class Admin {
   private Admin() {
   }
-  
+
   /**
    * The {@link AdminRuntimeDelegate} is an delegate that will be
    * initialized by bootstrapping operaton admin with an specific
    * instance
    */
-  protected static AdminRuntimeDelegate ADMIN_RUNTIME_DELEGATE;
+  protected static AdminRuntimeDelegate adminRuntimeDelegate;
 
   /**
    * Returns an instance of {@link AdminRuntimeDelegate}
@@ -39,7 +39,7 @@ public class Admin {
    * @return
    */
   public static AdminRuntimeDelegate getRuntimeDelegate() {
-    return ADMIN_RUNTIME_DELEGATE;
+    return adminRuntimeDelegate;
   }
 
   /**
@@ -47,7 +47,7 @@ public class Admin {
    * @param adminRuntimeDelegate
    */
   public static void setAdminRuntimeDelegate(AdminRuntimeDelegate adminRuntimeDelegate) {
-    ADMIN_RUNTIME_DELEGATE = adminRuntimeDelegate;
+    Admin.adminRuntimeDelegate = adminRuntimeDelegate;
   }
 
 }

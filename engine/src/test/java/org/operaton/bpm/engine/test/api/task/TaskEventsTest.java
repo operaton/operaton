@@ -45,12 +45,12 @@ import org.junit.Test;
 @SuppressWarnings("deprecation")
 public class TaskEventsTest extends AbstractUserOperationLogTest {
 
-  static String JONNY = "jonny";
-  static String ACCOUNTING = "accounting";
-  static String IMAGE_PNG = "application/png";
-  static String IMAGE_NAME = "my-image.png";
-  static String IMAGE_DESC = "a super duper image";
-  static String IMAGE_URL = "file://some/location/my-image.png";
+  static final String JONNY = "jonny";
+  static final String ACCOUNTING = "accounting";
+  static final String IMAGE_PNG = "application/png";
+  static final String IMAGE_NAME = "my-image.png";
+  static final String IMAGE_DESC = "a super duper image";
+  static final String IMAGE_URL = "file://some/location/my-image.png";
 
   private Task task;
 

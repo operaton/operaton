@@ -80,7 +80,7 @@ public class EventBasedGatewayInputOutputTest extends PluggableProcessEngineTest
     assertThat(vars).hasSize(1);
     assertThat(vars.get(0).getValue()).isEqualTo("foo");
 
-    assertThat(VariableLogDelegate.LOCAL_VARIABLES).hasSize(1);
+    assertThat(VariableLogDelegate.localVariables).hasSize(1);
     vars = historyService.createHistoricVariableInstanceQuery()
         .variableName("variable1")
         .list();
@@ -98,7 +98,7 @@ public class EventBasedGatewayInputOutputTest extends PluggableProcessEngineTest
     runtimeService.deleteProcessInstance(instanceId, "manual cancelation");
 
     // then
-    assertThat(VariableLogDelegate.LOCAL_VARIABLES).isEmpty();
+    assertThat(VariableLogDelegate.localVariables).isEmpty();
     assertThat(historyService.createHistoricVariableInstanceQuery()
         .variableName("eventOutput")
         .count()).isZero();

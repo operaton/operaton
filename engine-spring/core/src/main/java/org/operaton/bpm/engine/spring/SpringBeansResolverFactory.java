@@ -32,7 +32,7 @@ import org.springframework.context.ApplicationContext;
  * {@link ResolverFactory} and {@link Resolver} classes to make the beans
  * managed by the Spring container available in scripting
  * </p>
- * 
+ *
  * <p>
  * {@see org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration#initScripting()}
  * <p>
@@ -42,7 +42,7 @@ public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
 
   protected static final Logger LOG = Logger.getLogger(SpringBeansResolverFactory.class.getName());
 
-  protected static String SCOPE_NOT_ACTIVE_EXCEPTION = "org.springframework.beans.factory.support.ScopeNotActiveException";
+  protected static final String SCOPE_NOT_ACTIVE_EXCEPTION = "org.springframework.beans.factory.support.ScopeNotActiveException";
 
   private final ApplicationContext applicationContext;
   private final Set<String> keySet;

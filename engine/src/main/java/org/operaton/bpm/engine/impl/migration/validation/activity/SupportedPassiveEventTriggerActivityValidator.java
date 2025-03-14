@@ -33,9 +33,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class SupportedPassiveEventTriggerActivityValidator implements MigrationActivityValidator {
 
-  public static SupportedPassiveEventTriggerActivityValidator INSTANCE = new SupportedPassiveEventTriggerActivityValidator();
+  public static final SupportedPassiveEventTriggerActivityValidator INSTANCE = new SupportedPassiveEventTriggerActivityValidator();
 
-  public static final List<String> supportedTypes = Arrays.asList(
+  public static final List<String> SUPPORTED_TYPES = Arrays.asList(
     ActivityTypes.BOUNDARY_MESSAGE,
     ActivityTypes.BOUNDARY_SIGNAL,
     ActivityTypes.BOUNDARY_TIMER,
@@ -59,7 +59,7 @@ public class SupportedPassiveEventTriggerActivityValidator implements MigrationA
   }
 
   public boolean isSupportedEventType(ActivityImpl activity) {
-    return supportedTypes.contains(activity.getProperties().get(BpmnProperties.TYPE));
+    return SUPPORTED_TYPES.contains(activity.getProperties().get(BpmnProperties.TYPE));
   }
 
 }

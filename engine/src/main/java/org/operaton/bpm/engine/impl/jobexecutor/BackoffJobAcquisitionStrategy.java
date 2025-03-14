@@ -48,7 +48,7 @@ import java.util.Map;
  */
 public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
 
-  public static long DEFAULT_EXECUTION_SATURATION_WAIT_TIME = 100;
+  public static final long DEFAULT_EXECUTION_SATURATION_WAIT_TIME = 100;
 
   /*
    * all wait times are in milliseconds

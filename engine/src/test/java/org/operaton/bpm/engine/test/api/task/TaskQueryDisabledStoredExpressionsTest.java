@@ -49,7 +49,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
   public static final String STATE_MANIPULATING_EXPRESSION =
       "${''.getClass().forName('" + TaskQueryDisabledStoredExpressionsTest.class.getName() + "').getField('MUTABLE_FIELD').setLong(null, 42)}";
 
-  public static long MUTABLE_FIELD = 0;
+  public static long mutableField = 0;
 
   @ClassRule
   public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
@@ -69,7 +69,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     taskService = engineRule.getTaskService();
     filterService = engineRule.getFilterService();
-    MUTABLE_FIELD = 0;
+    mutableField = 0;
   }
 
   @Test
@@ -144,7 +144,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
   }
 
   protected boolean fieldIsUnchanged() {
-    return MUTABLE_FIELD == 0;
+    return mutableField == 0;
   }
 
   protected void extendFilterAndValidateFailingQuery(String filterId, TaskQuery query) {

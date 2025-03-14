@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class NoCompensationHandlerActivityValidator implements MigrationActivityValidator {
 
-  public static NoCompensationHandlerActivityValidator INSTANCE = new NoCompensationHandlerActivityValidator();
+  public static final NoCompensationHandlerActivityValidator INSTANCE = new NoCompensationHandlerActivityValidator();
 
   @Override
   public boolean valid(ActivityImpl activity) {

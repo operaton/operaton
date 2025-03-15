@@ -20,7 +20,7 @@
   </description>
 
   <properties>
-    <version.junit5>5.11.3</version.junit5>
+    <version.junit5>5.12.0</version.junit5>
     <version.slf4j>2.0.16</version.slf4j>
   </properties>
 

@@ -75,11 +75,6 @@
 
     <!-- Test dependencies -->
     <dependency>
-      <groupId>org.jboss.weld</groupId>
-      <artifactId>weld-core-impl</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.jboss.weld.module</groupId>
       <artifactId>weld-web</artifactId>
       <scope>test</scope>

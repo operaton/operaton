@@ -588,7 +588,6 @@
               <exclude>org.operaton.commons:*</exclude>
               <exclude>org.operaton.connect:*</exclude>
               <exclude>org.camunda.feel:*</exclude>
-              <exclude>jakarta*:*</exclude>
 
               <exclude>org.springframework:*</exclude>
               <exclude>org.slf4j:*</exclude>

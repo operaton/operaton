@@ -15,7 +15,6 @@
   <properties>
     <arquillian.container.version>4.0.0.Final</arquillian.container.version>
     <arquillian.junit.version>1.9.3.Final</arquillian.junit.version>
-    <weld.version>6.0.1.Final</weld.version>
   </properties>
 
   <dependencyManagement>
@@ -34,27 +33,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>jakarta.platform</groupId>
-        <artifactId>jakarta.jakartaee-bom</artifactId>
-        <version>${version.jakarta-ee-spec}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.arquillian.jakarta</groupId>
-        <artifactId>arquillian-jakarta-bom</artifactId>
-        <version>10.0.0.Final</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.arquillian</groupId>
-        <artifactId>arquillian-bom</artifactId>
-        <version>1.9.3.Final</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -62,12 +40,6 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <exclusions>
-        <exclusion>
-          <artifactId>livetribe-jsr223</artifactId>
-          <groupId>org.livetribe</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -108,11 +80,6 @@
     </dependency>
 
     <!-- Test dependencies -->
-    <dependency>
-      <groupId>org.jboss.weld</groupId>
-      <artifactId>weld-core-impl</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.jboss.weld.module</groupId>
       <artifactId>weld-web</artifactId>

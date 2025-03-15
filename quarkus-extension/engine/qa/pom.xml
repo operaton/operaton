@@ -11,7 +11,6 @@
   <name>Operaton - Quarkus Extension - Engine - CDI QA</name>
 
   <properties>
-    <arquillian.version>1.7.0.Final</arquillian.version>
     <deploy.skip>true</deploy.skip>
     <install.skip>true</install.skip>
   </properties>
@@ -32,13 +31,6 @@
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.arquillian</groupId>
-        <artifactId>arquillian-bom</artifactId>
-        <version>${arquillian.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -26,6 +26,7 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- BOMs -->
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-framework-bom</artifactId>
@@ -47,6 +48,21 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>${version.arquillian}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.jakarta</groupId>
+        <artifactId>arquillian-jakarta-bom</artifactId>
+        <version>${version.arquillian-jakarta}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <!-- Other dependencies -->
       <dependency>
         <groupId>org.camunda.feel</groupId>
         <artifactId>feel-engine</artifactId>
@@ -130,7 +146,7 @@
         <version>1.0.1.Final</version>
       </dependency>
       <dependency>
-        <groupId>org.hibernate</groupId>
+        <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-core</artifactId>
         <version>${version.hibernate}</version>
       </dependency>
@@ -264,16 +280,6 @@
         <artifactId>jakarta.mail</artifactId>
         <version>2.0.3</version>
       </dependency>
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-email2-jakarta</artifactId>
-        <version>2.0.0-M1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.angus</groupId>
-        <artifactId>jakarta.mail</artifactId>
-        <version>2.0.3</version>
-      </dependency>
         <!-- Web service -->
       <dependency>
         <groupId>org.apache.geronimo.specs</groupId>
@@ -284,24 +290,6 @@
         <groupId>org.apache.openjpa</groupId>
         <artifactId>openjpa</artifactId>
         <version>${version.openjpa}</version>
-      </dependency>
-
-      <!-- Jetty -->
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-bom</artifactId>
-        <version>${version.jetty}</version>
-        <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-webapp</artifactId>
-        <version>${version.jetty}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty.ee10</groupId>
-        <artifactId>jetty-ee10-webapp</artifactId>
-        <version>${version.jetty}</version>
       </dependency>
 
       <!-- Jetty -->

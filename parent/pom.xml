@@ -58,18 +58,24 @@
     <version.bouncycastle>1.47</version.bouncycastle>
 
     <!-- application servers -->
+    <version.jakarta-ee-spec>10.0.0</version.jakarta-ee-spec>
     <version.wildfly>35.0.1.Final</version.wildfly>
     <version.wildfly.core>27.0.1.Final</version.wildfly.core>
 
     <version.tomcat>10.1.30</version.tomcat>
 
     <version.arquillian>1.1.10.Final</version.arquillian>
+    <version.arquillian-jakarta>10.0.0.Final</version.arquillian-jakarta>
+    <version.arquillian.container>4.0.0.Final</version.arquillian.container>
+    <!-- version 6 depends on jakarta.enterprise.cdi.api version 4.1.0, which is newer than 4.0.1 defined by
+    JakartaEE 10.0.0 BOM -->
+    <weld.version>5.1.5.Final</weld.version>
+
     <version.shrinkwrap.resolvers>3.3.3</version.shrinkwrap.resolvers>
     <version.selenium>4.10.0</version.selenium>
     <version.freemarker>2.3.31</version.freemarker>
 
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
-    <version.jakarta-ee-spec>10.0.0</version.jakarta-ee-spec>
 
     <version.nodejs>22.13.0</version.nodejs>
     <version.npm>11.0.0</version.npm>

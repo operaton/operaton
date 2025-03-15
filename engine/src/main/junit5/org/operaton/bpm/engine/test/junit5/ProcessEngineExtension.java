@@ -16,6 +16,20 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
@@ -42,6 +56,7 @@ import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -54,20 +69,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.slf4j.Logger;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 /**
  * JUnit 5 Extension to create and inject a {@link ProcessEngine} into test classes.
@@ -242,7 +243,7 @@ public class ProcessEngineExtension implements TestWatcher,
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
     // we disable the authorization check when deploying before the test starts
-    boolean authorizationEnabled = processEngineConfiguration.isAuthorizationEnabled();
+    boolean oldValue = processEngineConfiguration.isAuthorizationEnabled();
     try {
       processEngineConfiguration.setAuthorizationEnabled(false);
       deploymentId = TestHelper.annotationDeploymentSetUp(processEngine, testClass, testMethod.getName(), null, testMethod.getParameterTypes());
@@ -252,7 +253,7 @@ public class ProcessEngineExtension implements TestWatcher,
       Assumptions.assumeTrue(hasRequiredDatabase, "ignored because the database doesn't match the required ones");
     } finally {
       // after the initialization we restore authorization to the state defined by the test
-      processEngineConfiguration.setAuthorizationEnabled(authorizationEnabled);
+      processEngineConfiguration.setAuthorizationEnabled(oldValue);
     }
     
   }
@@ -283,6 +284,10 @@ public class ProcessEngineExtension implements TestWatcher,
    ClockUtil.reset();
    PlatformDiagnosticsRegistry.clear();
 
+   for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
+     historyService.deleteUserOperationLogEntry(logEntry.getId());
+   }
+
    // finally clear database and fail test if database is dirty
    if (ensureCleanAfterTest) {
      TestHelper.assertAndEnsureCleanDbAndCache(processEngine);
@@ -291,7 +296,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public void afterAll(ExtensionContext context) {
-    deleteHistoryCleanupJob();
+	  deleteHistoryCleanupJob();
   }
 
   private void deleteHistoryCleanupJob() {

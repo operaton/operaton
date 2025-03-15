@@ -17,14 +17,15 @@
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
+import static org.operaton.bpm.engine.test.junit5.authorization.AuthorizationScenario.scenario;
+import static org.operaton.bpm.engine.test.junit5.authorization.AuthorizationSpec.grant;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -32,31 +33,26 @@ import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationScenario;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
 /**
  * @author Askar Akhmerov
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchAuthorizationTest {
 
   protected static final long BATCH_OPERATIONS = 3L;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
-
-  @Parameterized.Parameter
+  @Parameter
   public AuthorizationScenario scenario;
 
-  @Parameterized.Parameters(name = "Scenario {index}")
+  @Parameters
   public static Collection<AuthorizationScenario[]> scenarios() {
-    return AuthorizationTestRule.asParameters(
+    return AuthorizationTestExtension.asParameters(
         scenario()
             .withAuthorizations(
                 grant(Resources.BATCH, "*", "userId", Permissions.CREATE),
@@ -88,7 +84,7 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
     );
   }
 
-  @Test
+  @TestTemplate
   public void testWithTwoInvocationsProcessInstancesList() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
     setupAndExecuteProcessInstancesListTest();
@@ -97,14 +93,14 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
     assertScenario();
   }
 
-  @Test
+  @TestTemplate
   public void testProcessInstancesList() {
     setupAndExecuteProcessInstancesListTest();
     // then
     assertScenario();
   }
 
-  @Test
+  @TestTemplate
   public void testWithQuery() {
     //given
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery()

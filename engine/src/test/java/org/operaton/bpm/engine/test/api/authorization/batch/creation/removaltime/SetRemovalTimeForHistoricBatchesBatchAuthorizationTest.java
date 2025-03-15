@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.batch.creation.removaltime;
 
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
+import static org.operaton.bpm.engine.test.junit5.authorization.AuthorizationScenario.scenario;
+import static org.operaton.bpm.engine.test.junit5.authorization.AuthorizationSpec.grant;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -30,19 +31,20 @@ import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.batch.creation.BatchCreationAuthorizationTest;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationScenario;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
 /**
  * @author Tassilo Weidner
  */
+@Parameterized
 public class SetRemovalTimeForHistoricBatchesBatchAuthorizationTest extends BatchCreationAuthorizationTest {
 
-  @Parameterized.Parameters(name = "Scenario {index}")
+  @Parameters
   public static Collection<AuthorizationScenario[]> scenarios() {
-    return AuthorizationTestRule.asParameters(
+    return AuthorizationTestExtension.asParameters(
         scenario()
             .withAuthorizations(
               grant(Resources.BATCH, "batchId", "userId", Permissions.READ_HISTORY)
@@ -62,7 +64,7 @@ public class SetRemovalTimeForHistoricBatchesBatchAuthorizationTest extends Batc
     );
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void shouldAuthorizeSetRemovalTimeForHistoricBatchesBatch() {
     // given

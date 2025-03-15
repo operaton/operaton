@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.impl.event;
 
-import java.lang.annotation.Annotation;
 import jakarta.enterprise.inject.spi.BeanManager;
+import java.lang.annotation.Annotation;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  * Generic {@link ExecutionListener} publishing events using the CDI event
  * infrastructure.
  *
- * @author Daniel Meyer
  */
 public class CdiEventListener extends AbstractCdiEventListener {
 
@@ -35,7 +34,7 @@ public class CdiEventListener extends AbstractCdiEventListener {
 
   @Override
   protected void fireEvent(BusinessProcessEvent event, Annotation[] qualifiers) {
-    getBeanManager().getEvent().select(qualifiers).fire(event);
+    getBeanManager().getEvent().select(BusinessProcessEvent.class, qualifiers).fire(event);
   }
 
   protected BeanManager getBeanManager() {
@@ -45,5 +44,4 @@ public class CdiEventListener extends AbstractCdiEventListener {
     }
     return bm;
   }
-
 }

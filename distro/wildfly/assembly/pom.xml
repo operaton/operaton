@@ -49,7 +49,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-cdi-jakarta</artifactId>
+      <artifactId>operaton-engine-cdi</artifactId>
     </dependency>
 
     <dependency>

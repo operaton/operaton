@@ -168,7 +168,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-cdi-jakarta</artifactId>
+      <artifactId>operaton-engine-cdi</artifactId>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -487,11 +487,6 @@
           <groupId>org.jboss.arquillian.junit</groupId>
           <artifactId>arquillian-junit-container</artifactId>
           <scope>test</scope>
-        </dependency>
-
-        <dependency>
-          <groupId>jakarta.xml.bind</groupId>
-          <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
 
         <dependency>

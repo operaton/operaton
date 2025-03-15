@@ -50,7 +50,7 @@
 
     <version.junit>5.11.3</version.junit>
     <version.junit>4.13.1</version.junit>
-    <version.assertj>3.26.3</version.assertj>
+    <version.assertj>3.27.3</version.assertj>
     <version.mockito>5.10.0</version.mockito>
     <version.wiremock>3.10.0</version.wiremock>
     <version.testcontainers>1.20.5</version.testcontainers>

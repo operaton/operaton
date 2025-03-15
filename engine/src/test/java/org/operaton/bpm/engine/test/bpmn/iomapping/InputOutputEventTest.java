@@ -59,7 +59,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     // input mapping
-    Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
+    Map<String, Object> mappedVariables = VariableLogDelegate.localVariables;
     assertThat(mappedVariables)
             .hasSize(1)
             .containsEntry("mappedVariable", "mappedValue");
@@ -113,7 +113,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
   public void testNoneThrowEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
-    Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
+    Map<String, Object> mappedVariables = VariableLogDelegate.localVariables;
     assertThat(mappedVariables)
             .hasSize(1)
             .containsEntry("mappedVariable", "mappedValue");
@@ -160,7 +160,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // input mapping
-    Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
+    Map<String, Object> mappedVariables = VariableLogDelegate.localVariables;
     assertThat(mappedVariables)
             .hasSize(1)
             .containsEntry("mappedVariable", "mappedValue");

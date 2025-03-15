@@ -33,13 +33,13 @@ import org.operaton.bpm.engine.repository.OperatonFormDefinition;
  */
 public abstract class AbstractGetDeployedFormCmd implements Command<InputStream> {
 
-  protected static String EMBEDDED_KEY = "embedded:";
-  protected static String CAMUNDA_FORMS_KEY = "operaton-forms:";
-  protected static int EMBEDDED_KEY_LENGTH = EMBEDDED_KEY.length();
-  protected static int CAMUNDA_FORMS_KEY_LENGTH = CAMUNDA_FORMS_KEY.length();
+  protected static final String EMBEDDED_KEY = "embedded:";
+  protected static final String CAMUNDA_FORMS_KEY = "operaton-forms:";
+  protected static final int EMBEDDED_KEY_LENGTH = EMBEDDED_KEY.length();
+  protected static final int CAMUNDA_FORMS_KEY_LENGTH = CAMUNDA_FORMS_KEY.length();
 
-  protected static String DEPLOYMENT_KEY = "deployment:";
-  protected static int DEPLOYMENT_KEY_LENGTH = DEPLOYMENT_KEY.length();
+  protected static final String DEPLOYMENT_KEY = "deployment:";
+  protected static final int DEPLOYMENT_KEY_LENGTH = DEPLOYMENT_KEY.length();
 
   protected CommandContext commandContext;
 

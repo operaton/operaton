@@ -39,7 +39,7 @@ public abstract class Parser {
   protected static final String EXTERNAL_PARAMETER_ENTITIES = "http://xml.org/sax/features/external-parameter-entities";
   protected static final String NAMESPACE_PREFIXES = "http://xml.org/sax/features/namespace-prefixes";
 
-  protected static ThreadLocal<SAXParserFactory> SAX_PARSER_FACTORY_INSTANCE = ThreadLocal.withInitial(SAXParserFactory::newInstance);
+  protected static final ThreadLocal<SAXParserFactory> SAX_PARSER_FACTORY_INSTANCE = ThreadLocal.withInitial(SAXParserFactory::newInstance);
 
   public abstract Parse createParse();
 

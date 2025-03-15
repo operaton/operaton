@@ -48,13 +48,13 @@ import static org.assertj.core.api.Assertions.fail;
  */
 public class AsyncTaskTest extends PluggableProcessEngineTest {
 
-  public static boolean INVOCATION;
-  public static int NUM_INVOCATIONS = 0;
+  public static boolean invocation;
+  public static int numInvocations = 0;
 
   @Deployment
   @Test
   public void testAsyncServiceNoListeners() {
-    INVOCATION = false;
+    invocation = false;
     // start process
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncService");
 
@@ -68,12 +68,12 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there should be one job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the service was not invoked:
-    assertThat(INVOCATION).isFalse();
+    assertThat(invocation).isFalse();
 
     testRule.executeAvailableJobs();
 
     // the service was invoked
-    assertThat(INVOCATION).isTrue();
+    assertThat(invocation).isTrue();
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isZero();
   }
@@ -94,18 +94,18 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncServiceConcurrent() {
-    INVOCATION = false;
+    invocation = false;
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
     // now there should be one job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the service was not invoked:
-    assertThat(INVOCATION).isFalse();
+    assertThat(invocation).isFalse();
 
     testRule.executeAvailableJobs();
 
     // the service was invoked
-    assertThat(INVOCATION).isTrue();
+    assertThat(invocation).isTrue();
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isZero();
   }
@@ -113,18 +113,18 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncSequentialMultiInstanceWithServiceTask() {
-    NUM_INVOCATIONS = 0;
+    numInvocations = 0;
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isZero();
+    assertThat(numInvocations).isZero();
 
     // now there should be one job for the multi-instance body to execute:
     testRule.executeAvailableJobs(1);
 
     // the service was invoked
-    assertThat(NUM_INVOCATIONS).isEqualTo(5);
+    assertThat(numInvocations).isEqualTo(5);
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isZero();
   }
@@ -133,18 +133,18 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncParallelMultiInstanceWithServiceTask() {
-    NUM_INVOCATIONS = 0;
+    numInvocations = 0;
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isZero();
+    assertThat(numInvocations).isZero();
 
     // now there should be one job for the multi-instance body to execute:
     testRule.executeAvailableJobs(1);
 
     // the service was invoked
-    assertThat(NUM_INVOCATIONS).isEqualTo(5);
+    assertThat(numInvocations).isEqualTo(5);
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isZero();
   }
@@ -152,12 +152,12 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncServiceWrappedInSequentialMultiInstance() {
-    NUM_INVOCATIONS = 0;
+    numInvocations = 0;
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isZero();
+    assertThat(numInvocations).isZero();
 
     // now there should be one job for the first service task wrapped in the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
@@ -165,7 +165,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(5);
 
     // the service was invoked
-    assertThat(NUM_INVOCATIONS).isEqualTo(5);
+    assertThat(numInvocations).isEqualTo(5);
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isZero();
   }
@@ -173,12 +173,12 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncServiceWrappedInParallelMultiInstance() {
-    NUM_INVOCATIONS = 0;
+    numInvocations = 0;
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isZero();
+    assertThat(numInvocations).isZero();
 
     // now there should be one job for each service task wrapped in the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(5);
@@ -186,7 +186,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(5);
 
     // the service was invoked
-    assertThat(NUM_INVOCATIONS).isEqualTo(5);
+    assertThat(numInvocations).isEqualTo(5);
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isZero();
   }
@@ -194,12 +194,12 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncBeforeAndAfterOfServiceWrappedInParallelMultiInstance() {
-    NUM_INVOCATIONS = 0;
+    numInvocations = 0;
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isZero();
+    assertThat(numInvocations).isZero();
 
     // now there should be one job for each service task wrapped in the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(5);
@@ -207,7 +207,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(5+5);
 
     // the service was invoked
-    assertThat(NUM_INVOCATIONS).isEqualTo(5);
+    assertThat(numInvocations).isEqualTo(5);
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isZero();
   }
@@ -215,12 +215,12 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncBeforeSequentialMultiInstanceWithAsyncAfterServiceWrappedInMultiInstance() {
-    NUM_INVOCATIONS = 0;
+    numInvocations = 0;
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isZero();
+    assertThat(numInvocations).isZero();
 
     // now there should be one job for the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
@@ -228,7 +228,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(1+5);
 
     // the service was invoked
-    assertThat(NUM_INVOCATIONS).isEqualTo(5);
+    assertThat(numInvocations).isEqualTo(5);
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isZero();
   }
@@ -242,12 +242,12 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncBeforeAndAfterParallelMultiInstanceWithAsyncBeforeAndAfterServiceWrappedInMultiInstance() {
-    NUM_INVOCATIONS = 0;
+    numInvocations = 0;
     // start process
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isZero();
+    assertThat(numInvocations).isZero();
 
     // now there should be one job for the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
@@ -261,13 +261,13 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     List<Job> innerBeforeJobs = managementService.createJobQuery().list();
     assertThat(innerBeforeJobs).hasSize(5);
     assertTransitionInstances(processInstance.getId(), "service", 5);
-    assertThat(NUM_INVOCATIONS).isZero();
+    assertThat(numInvocations).isZero();
 
     // when executing all inner jobs
     for (Job innerBeforeJob : innerBeforeJobs) {
       managementService.executeJob(innerBeforeJob.getId());
     }
-    assertThat(NUM_INVOCATIONS).isEqualTo(5);
+    assertThat(numInvocations).isEqualTo(5);
 
     // then there are five async after jobs
     List<Job> innerAfterJobs = managementService.createJobQuery().list();
@@ -373,19 +373,19 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testAsyncServiceSubProcessTimer() {
-    INVOCATION = false;
+    invocation = false;
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
     // now there should be two jobs in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(2);
     // the service was not invoked:
-    assertThat(INVOCATION).isFalse();
+    assertThat(invocation).isFalse();
 
     Job job = managementService.createJobQuery().messages().singleResult();
     managementService.executeJob(job.getId());
 
     // the service was invoked
-    assertThat(INVOCATION).isTrue();
+    assertThat(invocation).isTrue();
     // both the timer and the message are cancelled
     assertThat(managementService.createJobQuery().count()).isZero();
 

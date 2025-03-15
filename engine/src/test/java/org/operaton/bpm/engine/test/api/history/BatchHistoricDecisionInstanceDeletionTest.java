@@ -60,7 +60,7 @@ import org.junit.runners.Parameterized;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class BatchHistoricDecisionInstanceDeletionTest {
 
-  protected static String DECISION = "decision";
+  protected static final String DECISION = "decision";
   protected static final Date TEST_DATE = new Date(1457326800000L);
 
   protected ProcessEngineRule rule = new ProvidedProcessEngineRule();

@@ -48,20 +48,20 @@ public class JobExecutorExceptionLoggingHandlerTest {
   @Before
   public void init() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    originalHandler = ExecuteJobHelper.LOGGING_HANDLER;
+    originalHandler = ExecuteJobHelper.loggingHandler;
   }
 
   @After
   public void tearDown() {
     // cleanup
-    ExecuteJobHelper.LOGGING_HANDLER = originalHandler;
+    ExecuteJobHelper.loggingHandler = originalHandler;
   }
 
   @Test
   public void shouldBeAbleToReplaceLoggingHandler() {
  // given
     CollectingHandler collectingHandler = new CollectingHandler();
-    ExecuteJobHelper.LOGGING_HANDLER = collectingHandler;
+    ExecuteJobHelper.loggingHandler = collectingHandler;
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("failingDelegate")
         .startEvent()
         .serviceTask()

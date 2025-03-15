@@ -31,7 +31,7 @@ public class DelegateBean implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  protected static List<DelegateEvent> RECORDED_EVENTS = new ArrayList<>();
+  protected static final List<DelegateEvent> RECORDED_EVENTS = new ArrayList<>();
 
   public List<String> resolveCollection(DelegateExecution delegateExecution) {
 

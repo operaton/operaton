@@ -29,10 +29,10 @@ import org.operaton.bpm.application.ProcessApplication;
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
 public class ReferenceStoringProcessApplication extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
-  public static ReferenceStoringProcessApplication INSTANCE = null;
+  public static ReferenceStoringProcessApplication instance = null;
 
   @PostDeploy
   public void postDeploy() {
-    INSTANCE = this;
+    instance = this;
   }
 }

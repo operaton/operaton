@@ -29,221 +29,221 @@ import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 
 public class DelegatingBpmnParseListener implements BpmnParseListener {
 
-  public static BpmnParseListener DELEGATE;
+  public static BpmnParseListener delegate;
 
   @Override
   public void parseProcess(Element processElement, ProcessDefinitionEntity processDefinition) {
-    DELEGATE.parseProcess(processElement, processDefinition);
+    delegate.parseProcess(processElement, processDefinition);
   }
 
   @Override
   public void parseStartEvent(Element startEventElement, ScopeImpl scope,
       ActivityImpl startEventActivity) {
-    DELEGATE.parseStartEvent(startEventElement, scope, startEventActivity);
+    delegate.parseStartEvent(startEventElement, scope, startEventActivity);
   }
 
   @Override
   public void parseExclusiveGateway(Element exclusiveGwElement, ScopeImpl scope,
       ActivityImpl activity) {
-    DELEGATE.parseExclusiveGateway(exclusiveGwElement, scope, activity);
+    delegate.parseExclusiveGateway(exclusiveGwElement, scope, activity);
   }
 
   @Override
   public void parseInclusiveGateway(Element inclusiveGwElement, ScopeImpl scope,
       ActivityImpl activity) {
-    DELEGATE.parseInclusiveGateway(inclusiveGwElement, scope, activity);
+    delegate.parseInclusiveGateway(inclusiveGwElement, scope, activity);
   }
 
   @Override
   public void parseParallelGateway(Element parallelGwElement, ScopeImpl scope,
       ActivityImpl activity) {
-    DELEGATE.parseParallelGateway(parallelGwElement, scope, activity);
+    delegate.parseParallelGateway(parallelGwElement, scope, activity);
   }
 
   @Override
   public void parseScriptTask(Element scriptTaskElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseScriptTask(scriptTaskElement, scope, activity);
+    delegate.parseScriptTask(scriptTaskElement, scope, activity);
   }
 
   @Override
   public void parseServiceTask(Element serviceTaskElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseServiceTask(serviceTaskElement, scope, activity);
+    delegate.parseServiceTask(serviceTaskElement, scope, activity);
   }
 
   @Override
   public void parseBusinessRuleTask(Element businessRuleTaskElement, ScopeImpl scope,
       ActivityImpl activity) {
-    DELEGATE.parseBusinessRuleTask(businessRuleTaskElement, scope, activity);
+    delegate.parseBusinessRuleTask(businessRuleTaskElement, scope, activity);
   }
 
   @Override
   public void parseTask(Element taskElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseTask(taskElement, scope, activity);
+    delegate.parseTask(taskElement, scope, activity);
   }
 
   @Override
   public void parseManualTask(Element manualTaskElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseManualTask(manualTaskElement, scope, activity);
+    delegate.parseManualTask(manualTaskElement, scope, activity);
   }
 
   @Override
   public void parseUserTask(Element userTaskElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseUserTask(userTaskElement, scope, activity);
+    delegate.parseUserTask(userTaskElement, scope, activity);
   }
 
   @Override
   public void parseEndEvent(Element endEventElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseEndEvent(endEventElement, scope, activity);
+    delegate.parseEndEvent(endEventElement, scope, activity);
   }
 
   @Override
   public void parseBoundaryTimerEventDefinition(Element timerEventDefinition, boolean interrupting,
       ActivityImpl timerActivity) {
-    DELEGATE.parseBoundaryTimerEventDefinition(timerEventDefinition, interrupting, timerActivity);
+    delegate.parseBoundaryTimerEventDefinition(timerEventDefinition, interrupting, timerActivity);
   }
 
   @Override
   public void parseBoundaryErrorEventDefinition(Element errorEventDefinition, boolean interrupting,
       ActivityImpl activity, ActivityImpl nestedErrorEventActivity) {
-    DELEGATE.parseBoundaryErrorEventDefinition(errorEventDefinition, interrupting, activity, nestedErrorEventActivity);
+    delegate.parseBoundaryErrorEventDefinition(errorEventDefinition, interrupting, activity, nestedErrorEventActivity);
   }
 
   @Override
   public void parseSubProcess(Element subProcessElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseSubProcess(subProcessElement, scope, activity);
+    delegate.parseSubProcess(subProcessElement, scope, activity);
   }
 
   @Override
   public void parseCallActivity(Element callActivityElement, ScopeImpl scope,
       ActivityImpl activity) {
-    DELEGATE.parseCallActivity(callActivityElement, scope, activity);
+    delegate.parseCallActivity(callActivityElement, scope, activity);
   }
 
   @Override
   public void parseProperty(Element propertyElement, VariableDeclaration variableDeclaration,
       ActivityImpl activity) {
-    DELEGATE.parseProperty(propertyElement, variableDeclaration, activity);
+    delegate.parseProperty(propertyElement, variableDeclaration, activity);
   }
 
   @Override
   public void parseSequenceFlow(Element sequenceFlowElement, ScopeImpl scopeElement,
       TransitionImpl transition) {
-    DELEGATE.parseSequenceFlow(sequenceFlowElement, scopeElement, transition);
+    delegate.parseSequenceFlow(sequenceFlowElement, scopeElement, transition);
   }
 
   @Override
   public void parseSendTask(Element sendTaskElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseSendTask(sendTaskElement, scope, activity);
+    delegate.parseSendTask(sendTaskElement, scope, activity);
   }
 
   @Override
   public void parseMultiInstanceLoopCharacteristics(Element activityElement,
       Element multiInstanceLoopCharacteristicsElement, ActivityImpl activity) {
-    DELEGATE.parseMultiInstanceLoopCharacteristics(activityElement, multiInstanceLoopCharacteristicsElement, activity);
+    delegate.parseMultiInstanceLoopCharacteristics(activityElement, multiInstanceLoopCharacteristicsElement, activity);
   }
 
   @Override
   public void parseIntermediateTimerEventDefinition(Element timerEventDefinition,
       ActivityImpl timerActivity) {
-    DELEGATE.parseIntermediateTimerEventDefinition(timerEventDefinition, timerActivity);
+    delegate.parseIntermediateTimerEventDefinition(timerEventDefinition, timerActivity);
   }
 
   @Override
   public void parseRootElement(Element rootElement,
       List<ProcessDefinitionEntity> processDefinitions) {
-    DELEGATE.parseRootElement(rootElement, processDefinitions);
+    delegate.parseRootElement(rootElement, processDefinitions);
   }
 
   @Override
   public void parseReceiveTask(Element receiveTaskElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseReceiveTask(receiveTaskElement, scope, activity);
+    delegate.parseReceiveTask(receiveTaskElement, scope, activity);
   }
 
   @Override
   public void parseIntermediateSignalCatchEventDefinition(Element signalEventDefinition,
       ActivityImpl signalActivity) {
-    DELEGATE.parseIntermediateSignalCatchEventDefinition(signalEventDefinition, signalActivity);
+    delegate.parseIntermediateSignalCatchEventDefinition(signalEventDefinition, signalActivity);
   }
 
   @Override
   public void parseIntermediateMessageCatchEventDefinition(Element messageEventDefinition,
       ActivityImpl nestedActivity) {
-    DELEGATE.parseIntermediateMessageCatchEventDefinition(messageEventDefinition, nestedActivity);
+    delegate.parseIntermediateMessageCatchEventDefinition(messageEventDefinition, nestedActivity);
   }
 
   @Override
   public void parseBoundarySignalEventDefinition(Element signalEventDefinition,
       boolean interrupting, ActivityImpl signalActivity) {
-    DELEGATE.parseBoundarySignalEventDefinition(signalEventDefinition, interrupting, signalActivity);
+    delegate.parseBoundarySignalEventDefinition(signalEventDefinition, interrupting, signalActivity);
   }
 
   @Override
   public void parseEventBasedGateway(Element eventBasedGwElement, ScopeImpl scope,
       ActivityImpl activity) {
-    DELEGATE.parseEventBasedGateway(eventBasedGwElement, scope, activity);
+    delegate.parseEventBasedGateway(eventBasedGwElement, scope, activity);
   }
 
   @Override
   public void parseTransaction(Element transactionElement, ScopeImpl scope, ActivityImpl activity) {
-    DELEGATE.parseTransaction(transactionElement, scope, activity);
+    delegate.parseTransaction(transactionElement, scope, activity);
   }
 
   @Override
   public void parseCompensateEventDefinition(Element compensateEventDefinition,
       ActivityImpl compensationActivity) {
-    DELEGATE.parseCompensateEventDefinition(compensateEventDefinition, compensationActivity);
+    delegate.parseCompensateEventDefinition(compensateEventDefinition, compensationActivity);
   }
 
   @Override
   public void parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scope,
       ActivityImpl activity) {
-    DELEGATE.parseIntermediateThrowEvent(intermediateEventElement, scope, activity);
+    delegate.parseIntermediateThrowEvent(intermediateEventElement, scope, activity);
   }
 
   @Override
   public void parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scope,
       ActivityImpl activity) {
-    DELEGATE.parseIntermediateCatchEvent(intermediateEventElement, scope, activity);
+    delegate.parseIntermediateCatchEvent(intermediateEventElement, scope, activity);
   }
 
   @Override
   public void parseBoundaryEvent(Element boundaryEventElement, ScopeImpl scopeElement,
       ActivityImpl nestedActivity) {
-    DELEGATE.parseBoundaryEvent(boundaryEventElement, scopeElement, nestedActivity);
+    delegate.parseBoundaryEvent(boundaryEventElement, scopeElement, nestedActivity);
   }
 
   @Override
   public void parseBoundaryMessageEventDefinition(Element element, boolean interrupting,
       ActivityImpl messageActivity) {
-    DELEGATE.parseBoundaryMessageEventDefinition(element, interrupting, messageActivity);
+    delegate.parseBoundaryMessageEventDefinition(element, interrupting, messageActivity);
   }
 
   @Override
   public void parseBoundaryEscalationEventDefinition(Element escalationEventDefinition,
       boolean interrupting, ActivityImpl boundaryEventActivity) {
-    DELEGATE.parseBoundaryEscalationEventDefinition(escalationEventDefinition, interrupting, boundaryEventActivity);
+    delegate.parseBoundaryEscalationEventDefinition(escalationEventDefinition, interrupting, boundaryEventActivity);
   }
 
   @Override
   public void parseBoundaryConditionalEventDefinition(Element element, boolean interrupting,
       ActivityImpl conditionalActivity) {
-    DELEGATE.parseBoundaryConditionalEventDefinition(element, interrupting, conditionalActivity);
+    delegate.parseBoundaryConditionalEventDefinition(element, interrupting, conditionalActivity);
   }
 
   @Override
   public void parseIntermediateConditionalEventDefinition(Element conditionalEventDefinition,
       ActivityImpl conditionalActivity) {
-    DELEGATE.parseIntermediateConditionalEventDefinition(conditionalEventDefinition, conditionalActivity);
+    delegate.parseIntermediateConditionalEventDefinition(conditionalEventDefinition, conditionalActivity);
   }
 
   @Override
   public void parseConditionalStartEventForEventSubprocess(Element element,
       ActivityImpl conditionalActivity, boolean interrupting) {
-    DELEGATE.parseConditionalStartEventForEventSubprocess(element, conditionalActivity, interrupting);
+    delegate.parseConditionalStartEventForEventSubprocess(element, conditionalActivity, interrupting);
   }
 
   @Override
   public void parseIoMapping(Element extensionElements, ActivityImpl activity, IoMapping inputOutput) {
-    DELEGATE.parseIoMapping(extensionElements, activity, inputOutput);
+    delegate.parseIoMapping(extensionElements, activity, inputOutput);
   }
 }

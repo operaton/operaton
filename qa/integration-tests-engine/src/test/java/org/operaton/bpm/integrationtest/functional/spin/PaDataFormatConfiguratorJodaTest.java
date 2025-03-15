@@ -75,7 +75,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
     JodaJsonSerializable jsonSerializable = new JodaJsonSerializable(new DateTime(date.getTime()));
 
     try {
-      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.INSTANCE);
+      ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.instance);
       runtimeService.setVariable(pi.getId(),
         "jsonSerializable",
         Variables.objectValue(jsonSerializable).serializationDataFormat(SerializationDataFormats.JSON).create());

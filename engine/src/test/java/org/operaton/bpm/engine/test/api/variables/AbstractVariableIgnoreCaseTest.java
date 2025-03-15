@@ -41,7 +41,7 @@ public abstract class AbstractVariableIgnoreCaseTest<T extends AbstractVariableQ
   protected static final String VARIABLE_VALUE_LC = VARIABLE_VALUE.toLowerCase();
   protected static final String VARIABLE_VALUE_LC_LIKE = "%" + VARIABLE_VALUE_LC.substring(2, 10) + "%";
   protected static final String VARIABLE_VALUE_NE = "nonExistent";
-  protected static Map<String, Object> VARIABLES = new HashMap<>();
+  protected static final Map<String, Object> VARIABLES = new HashMap<>();
   static {
     VARIABLES.put(VARIABLE_NAME, VARIABLE_VALUE);
   }

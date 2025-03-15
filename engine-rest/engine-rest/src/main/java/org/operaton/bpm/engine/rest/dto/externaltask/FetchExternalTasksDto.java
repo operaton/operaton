@@ -297,11 +297,11 @@ public class FetchExternalTasksDto {
    */
   static class SortMapper {
 
-    protected static Map<String, Consumer<FetchAndLockBuilder>> FIELD_MAPPINGS = Map.of(
+    protected static final Map<String, Consumer<FetchAndLockBuilder>> FIELD_MAPPINGS = Map.of(
         "createTime", FetchAndLockBuilder::orderByCreateTime
     );
 
-    protected static Map<String, Consumer<FetchAndLockBuilder>> ORDER_MAPPINGS = Map.of(
+    protected static final Map<String, Consumer<FetchAndLockBuilder>> ORDER_MAPPINGS = Map.of(
         "asc", FetchAndLockBuilder::asc,
         "desc", FetchAndLockBuilder::desc
     );

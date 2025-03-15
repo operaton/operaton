@@ -26,10 +26,10 @@ import java.util.List;
  */
 public class TaskReportResultToCsvConverter {
 
-  protected static String DELIMITER = ",";
-  protected static String NEW_LINE_SEPARATOR = "\n";
+  protected static final String DELIMITER = ",";
+  protected static final String NEW_LINE_SEPARATOR = "\n";
 
-  public static String CANDIDATE_GROUP_HEADER = "CANDIDATE_GROUP_NAME"
+  public static final String CANDIDATE_GROUP_HEADER = "CANDIDATE_GROUP_NAME"
                                                 + DELIMITER
                                                 + "TASK_COUNT";
 

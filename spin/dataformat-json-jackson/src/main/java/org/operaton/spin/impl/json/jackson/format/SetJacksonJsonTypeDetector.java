@@ -32,7 +32,7 @@ public class SetJacksonJsonTypeDetector extends AbstractJacksonJsonTypeDetector 
     /**
      * Object instance to use.
      */
-    public static SetJacksonJsonTypeDetector INSTANCE = new SetJacksonJsonTypeDetector();
+    public static final SetJacksonJsonTypeDetector INSTANCE = new SetJacksonJsonTypeDetector();
 
     @Override
     public boolean canHandle(Object value) {

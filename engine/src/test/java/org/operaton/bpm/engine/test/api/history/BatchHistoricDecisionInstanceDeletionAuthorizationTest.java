@@ -57,7 +57,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
 
-  protected static String DECISION = "decision";
+  protected static final String DECISION = "decision";
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);

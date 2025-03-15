@@ -30,8 +30,8 @@ import javax.naming.directory.SearchControls;
  */
 public class LdapConfiguration {
 
-  public static String LDAP_QUERY_WILDCARD = "*";
-  public static String DB_QUERY_WILDCARD = "%";
+  public static final String LDAP_QUERY_WILDCARD = "*";
+  public static final String DB_QUERY_WILDCARD = "%";
 
   protected String initialContextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
   protected String securityAuthentication = "simple";

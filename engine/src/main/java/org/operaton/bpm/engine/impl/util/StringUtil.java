@@ -47,7 +47,7 @@ public final class StringUtil {
    * characters twice, so for a String consisting only of those,
    * the limit is effectively MAX_LONG_STRING_LENGTH / 2
    */
-  public static int DB_MAX_STRING_LENGTH = 666;
+  public static final int DB_MAX_STRING_LENGTH = 666;
 
   /**
    * Checks whether a {@link String} seams to be an expression or not

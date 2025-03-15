@@ -34,6 +34,8 @@ import org.openapitools.client.api.ProcessInstanceApi;
 import org.openapitools.client.model.ProcessInstanceDto;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+
 
 public class BasicAuthenticationTest {
 
@@ -44,8 +46,8 @@ public class BasicAuthenticationTest {
 
   ProcessInstanceApi api;
 
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(8080);
+ @Rule
+public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
 
   @Before
   public void clientWithValidCredentials() {

@@ -37,6 +37,7 @@ import org.openapitools.client.model.ProcessInstanceQueryDto;
 import org.openapitools.client.model.SuspensionStateDto;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
 public class ProcessInstanceTest {
 
@@ -44,8 +45,8 @@ public class ProcessInstanceTest {
 
   final ProcessInstanceApi api = new ProcessInstanceApi();
 
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(8080);
+ @Rule
+public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
 
   @Test
   public void shouldQueryProcessInstancesCount() throws ApiException {

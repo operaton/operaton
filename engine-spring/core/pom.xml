@@ -19,7 +19,6 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
 
@@ -46,12 +45,6 @@
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse</groupId>
-      <artifactId>yasson</artifactId>
-      <version>3.0.3</version>
     </dependency>
 
     <dependency>
@@ -82,7 +75,6 @@
       <!--  do not expose -->
       <scope>provided</scope>
     </dependency>
-
     <!-- servlet API -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
@@ -141,7 +133,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.hibernate</groupId>
+      <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
       <scope>test</scope>
       <exclusions>

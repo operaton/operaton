@@ -15,7 +15,6 @@
 
   <modules>
     <module>core</module>
-    <module>core-6</module>
   </modules>
 
   <description>${project.name}</description>

@@ -16,9 +16,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-beans</artifactId>
-        <version>${version.spring.framework6}</version>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
@@ -108,28 +110,6 @@
                   </includes>
                 </resource>
               </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-            <configuration>
-              <forceCreation>true</forceCreation>
-              <!-- exclude otherwise there would be duplicates in -sources.jar -->
-              <excludes>
-                <exclude>deployments/**/*</exclude>
-                <exclude>configuration/**/*</exclude>
-                <exclude>**/configuration/**/*</exclude>
-              </excludes>
             </configuration>
           </execution>
         </executions>

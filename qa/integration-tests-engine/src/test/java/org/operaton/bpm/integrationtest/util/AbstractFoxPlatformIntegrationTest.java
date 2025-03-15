@@ -50,7 +50,6 @@ public abstract class AbstractFoxPlatformIntegrationTest {
   protected Logger logger = Logger.getLogger(AbstractFoxPlatformIntegrationTest.class.getName());
 
   protected ProcessEngineService processEngineService;
-//  protected ProcessArchiveService processArchiveService;
   protected ProcessEngine processEngine;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected FormService formService;
@@ -67,6 +66,7 @@ public abstract class AbstractFoxPlatformIntegrationTest {
     WebArchive archive = ShrinkWrap.create(WebArchive.class, name)
               .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
               .addAsLibraries(DeploymentHelper.getEngineCdi())
+              .addAsLibraries(DeploymentHelper.getAssertJ())
               .addAsResource(processesXmlPath, "META-INF/processes.xml")
               .addClass(AbstractFoxPlatformIntegrationTest.class)
               .addClass(TestConstants.class);

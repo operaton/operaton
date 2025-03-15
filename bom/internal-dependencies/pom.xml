@@ -132,11 +132,6 @@
         <version>${version.hibernate}</version>
       </dependency>
       <dependency>
-        <groupId>org.hibernate.validator</groupId>
-        <artifactId>hibernate-validator</artifactId>
-        <version>8.0.0.Final</version>
-      </dependency>
-      <dependency>
         <groupId>io.github.frshdn</groupId>
         <artifactId>subethasmtp-java17</artifactId>
         <version>3.1.7</version>
@@ -533,6 +528,12 @@
         <groupId>org.skyscreamer</groupId>
         <artifactId>jsonassert</artifactId>
         <version>1.5.3</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.awaitility</groupId>
+        <artifactId>awaitility</artifactId>
+        <version>4.3.0</version>
       </dependency>
 
     </dependencies>

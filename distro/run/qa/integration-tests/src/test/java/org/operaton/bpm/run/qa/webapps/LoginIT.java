@@ -29,6 +29,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
@@ -48,6 +49,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
  * and <code>@Parameters</code> for different setups, might be removed with
  * <a href="https://jira.camunda.com/browse/CAM-11379">CAM-11379</a>
  */
+@Disabled("Fix Chrome driver download: Chrome driver is outdated and must be downloaded in the version installed on the local machine")
 class LoginIT extends AbstractWebappUiIT {
   String[] commands;
 

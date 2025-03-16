@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  * Generic {@link ExecutionListener} publishing events using the CDI event
  * infrastructure.
  *
+ * @author Daniel Meyer
  */
 public class CdiEventListener extends AbstractCdiEventListener {
 

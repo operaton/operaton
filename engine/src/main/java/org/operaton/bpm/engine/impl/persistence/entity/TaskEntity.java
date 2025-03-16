@@ -160,7 +160,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected String eventName;
   protected boolean isFormKeyInitialized = false;
   protected String formKey;
-  protected OperatonFormRef operatonFormRef;
+  protected transient OperatonFormRef operatonFormRef;
   protected boolean attachmentExists;
   protected boolean commentExists;
 
@@ -178,33 +178,33 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   protected transient List<PropertyChange> identityLinkChanges = new ArrayList<>();
 
-  protected List<VariableInstanceLifecycleListener<VariableInstanceEntity>> customLifecycleListeners;
+  protected transient List<VariableInstanceLifecycleListener<VariableInstanceEntity>> customLifecycleListeners;
 
   // name references of tracked properties
-  public static final String ASSIGNEE = "assignee";
-  public static final String DELEGATION = "delegation";
-  public static final String DELETE = "delete";
-  public static final String DESCRIPTION = "description";
-  public static final String DUE_DATE = "dueDate";
-  public static final String FOLLOW_UP_DATE = "followUpDate";
-  public static final String NAME = "name";
-  public static final String OWNER = "owner";
-  public static final String PARENT_TASK = "parentTask";
-  public static final String PRIORITY = "priority";
-  public static final String CASE_INSTANCE_ID = "caseInstanceId";
+  public static final String PROPERTY_ASSIGNEE = "assignee";
+  public static final String PROPERTY_DELEGATION = "delegation";
+  public static final String PROPERTY_DELETE = "delete";
+  public static final String PROPERTY_DESCRIPTION = "description";
+  public static final String PROPERTY_DUE_DATE = "dueDate";
+  public static final String PROPERTY_FOLLOW_UP_DATE = "followUpDate";
+  public static final String PROPERTY_NAME = "name";
+  public static final String PROPERTY_OWNER = "owner";
+  public static final String PROPERTY_PARENT_TASK = "parentTask";
+  public static final String PROPERTY_PRIORITY = "priority";
+  public static final String PROPERTY_CASE_INSTANCE_ID = "caseInstanceId";
 
   // name references of the rest of properties
-  private static final String EXECUTION_ID = "executionId";
-  private static final String PROCESS_DEFINITION_ID = "processDefinitionId";
-  private static final String CASE_EXECUTION_ID = "caseExecutionId";
-  private static final String CASE_DEFINITION_ID = "caseDefinitionId";
-  private static final String CREATE_TIME = "createTime";
-  private static final String LAST_UPDATED = "lastUpdated";
-  private static final String PARENT_TASK_ID = "parentTaskId";
-  private static final String DELEGATION_STATE = "delegationState";
-  private static final String TENANT_ID = "tenantId";
-  private static final String TASK_STATE = "taskState";
-  private static final String SUSPENSION_STATE = "suspensionState";
+  private static final String PROPERTY_EXECUTION_ID = "executionId";
+  private static final String PROPERTY_PROCESS_DEFINITION_ID = "processDefinitionId";
+  private static final String PROPERTY_CASE_EXECUTION_ID = "caseExecutionId";
+  private static final String PROPERTY_CASE_DEFINITION_ID = "caseDefinitionId";
+  private static final String PROPERTY_CREATE_TIME = "createTime";
+  private static final String PROPERTY_LAST_UPDATED = "lastUpdated";
+  private static final String PROPERTY_PARENT_TASK_ID = "parentTaskId";
+  private static final String PROPERTY_DELEGATION_STATE = "delegationState";
+  private static final String PROPERTY_TENANT_ID = "tenantId";
+  private static final String PROPERTY_TASK_STATE = "taskState";
+  private static final String PROPERTY_SUSPENSION_STATE = "suspensionState";
 
   /**
    * Mybatis constructor
@@ -417,54 +417,54 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @Override
   public Object getPersistentState() {
     Map<String, Object> persistentState = new  HashMap<>();
-    persistentState.put(ASSIGNEE, this.assignee);
-    persistentState.put(OWNER, this.owner);
-    persistentState.put(NAME, this.name);
-    persistentState.put(PRIORITY, this.priority);
+    persistentState.put(PROPERTY_ASSIGNEE, this.assignee);
+    persistentState.put(PROPERTY_OWNER, this.owner);
+    persistentState.put(PROPERTY_NAME, this.name);
+    persistentState.put(PROPERTY_PRIORITY, this.priority);
     if (executionId != null) {
-      persistentState.put(EXECUTION_ID, this.executionId);
+      persistentState.put(PROPERTY_EXECUTION_ID, this.executionId);
     }
     if (processDefinitionId != null) {
-      persistentState.put(PROCESS_DEFINITION_ID, this.processDefinitionId);
+      persistentState.put(PROPERTY_PROCESS_DEFINITION_ID, this.processDefinitionId);
     }
     if (caseExecutionId != null) {
-      persistentState.put(CASE_EXECUTION_ID, this.caseExecutionId);
+      persistentState.put(PROPERTY_CASE_EXECUTION_ID, this.caseExecutionId);
     }
     if (caseInstanceId != null) {
-      persistentState.put(CASE_INSTANCE_ID, this.caseInstanceId);
+      persistentState.put(PROPERTY_CASE_INSTANCE_ID, this.caseInstanceId);
     }
     if (caseDefinitionId != null) {
-      persistentState.put(CASE_DEFINITION_ID, this.caseDefinitionId);
+      persistentState.put(PROPERTY_CASE_DEFINITION_ID, this.caseDefinitionId);
     }
     if (createTime != null) {
-      persistentState.put(CREATE_TIME, this.createTime);
+      persistentState.put(PROPERTY_CREATE_TIME, this.createTime);
     }
     if (lastUpdated != null) {
-      persistentState.put(LAST_UPDATED, this.lastUpdated);
+      persistentState.put(PROPERTY_LAST_UPDATED, this.lastUpdated);
     }
     if(description != null) {
-      persistentState.put(DESCRIPTION, this.description);
+      persistentState.put(PROPERTY_DESCRIPTION, this.description);
     }
     if(dueDate != null) {
-      persistentState.put(DUE_DATE, this.dueDate);
+      persistentState.put(PROPERTY_DUE_DATE, this.dueDate);
     }
     if(followUpDate != null) {
-      persistentState.put(FOLLOW_UP_DATE, this.followUpDate);
+      persistentState.put(PROPERTY_FOLLOW_UP_DATE, this.followUpDate);
     }
     if (parentTaskId != null) {
-      persistentState.put(PARENT_TASK_ID, this.parentTaskId);
+      persistentState.put(PROPERTY_PARENT_TASK_ID, this.parentTaskId);
     }
     if (delegationState != null) {
-      persistentState.put(DELEGATION_STATE, this.delegationState);
+      persistentState.put(PROPERTY_DELEGATION_STATE, this.delegationState);
     }
     if (tenantId != null) {
-      persistentState.put(TENANT_ID, this.tenantId);
+      persistentState.put(PROPERTY_TENANT_ID, this.tenantId);
     }
     if (taskState != null) {
-      persistentState.put(TASK_STATE, this.taskState);
+      persistentState.put(PROPERTY_TASK_STATE, this.taskState);
     }
 
-    persistentState.put(SUSPENSION_STATE, this.suspensionState);
+    persistentState.put(PROPERTY_SUSPENSION_STATE, this.suspensionState);
 
     return persistentState;
   }
@@ -481,7 +481,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
           .getTaskManager()
           .findTaskById(parentTaskId);
 
-      ensureNotNull(NullValueException.class, "Parent task with id '"+parentTaskId+"' does not exist", PARENT_TASK, parentTaskEntity);
+      ensureNotNull(NullValueException.class, "Parent task with id '"+parentTaskId+"' does not exist",
+          PROPERTY_PARENT_TASK, parentTaskEntity);
 
       if (parentTaskEntity.suspensionState == SuspensionState.SUSPENDED.getStateCode()) {
         throw LOG.suspendedEntityException("parent task", id);
@@ -713,7 +714,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @Override
   public void setCaseInstanceId(String caseInstanceId) {
     registerCommandContextCloseListener();
-    propertyChanged(CASE_INSTANCE_ID, this.caseInstanceId, caseInstanceId);
+    propertyChanged(PROPERTY_CASE_INSTANCE_ID, this.caseInstanceId, caseInstanceId);
     this.caseInstanceId = caseInstanceId;
   }
 
@@ -894,14 +895,14 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @Override
   public void setName(String taskName) {
     registerCommandContextCloseListener();
-    propertyChanged(NAME, this.name, taskName);
+    propertyChanged(PROPERTY_NAME, this.name, taskName);
     this.name = taskName;
   }
 
   @Override
   public void setDescription(String description) {
     registerCommandContextCloseListener();
-    propertyChanged(DESCRIPTION, this.description, description);
+    propertyChanged(PROPERTY_DESCRIPTION, this.description, description);
     this.description = description;
   }
 
@@ -917,7 +918,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
 
     addIdentityLinkChanges(IdentityLinkType.ASSIGNEE, oldAssignee, assignee);
-    propertyChanged(ASSIGNEE, oldAssignee, assignee);
+    propertyChanged(PROPERTY_ASSIGNEE, oldAssignee, assignee);
     this.assignee = assignee;
 
     CommandContext commandContext = Context.getCommandContext();
@@ -946,7 +947,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
 
     addIdentityLinkChanges(IdentityLinkType.OWNER, oldOwner, owner);
-    propertyChanged(OWNER, oldOwner, owner);
+    propertyChanged(PROPERTY_OWNER, oldOwner, owner);
     this.owner = owner;
 
     CommandContext commandContext = Context.getCommandContext();
@@ -962,21 +963,21 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @Override
   public void setDueDate(Date dueDate) {
     registerCommandContextCloseListener();
-    propertyChanged(DUE_DATE, this.dueDate, dueDate);
+    propertyChanged(PROPERTY_DUE_DATE, this.dueDate, dueDate);
     this.dueDate = dueDate;
   }
 
   @Override
   public void setPriority(int priority) {
     registerCommandContextCloseListener();
-    propertyChanged(PRIORITY, this.priority, priority);
+    propertyChanged(PROPERTY_PRIORITY, this.priority, priority);
     this.priority = priority;
   }
 
   @Override
   public void setParentTaskId(String parentTaskId) {
     registerCommandContextCloseListener();
-    propertyChanged(PARENT_TASK, this.parentTaskId, parentTaskId);
+    propertyChanged(PROPERTY_PARENT_TASK, this.parentTaskId, parentTaskId);
     this.parentTaskId = parentTaskId;
   }
 
@@ -1173,14 +1174,14 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   // authorizations ///////////////////////////////////////////////////////////
 
   public void fireAuthorizationProvider() {
-    PropertyChange assigneePropertyChange = propertyChanges.get(ASSIGNEE);
+    PropertyChange assigneePropertyChange = propertyChanges.get(PROPERTY_ASSIGNEE);
     if (assigneePropertyChange != null) {
       String oldAssignee = assigneePropertyChange.getOrgValueString();
       String newAssignee = assigneePropertyChange.getNewValueString();
       fireAssigneeAuthorizationProvider(oldAssignee, newAssignee);
     }
 
-    PropertyChange ownerPropertyChange = propertyChanges.get(OWNER);
+    PropertyChange ownerPropertyChange = propertyChanges.get(PROPERTY_OWNER);
     if (ownerPropertyChange != null) {
       String oldOwner = ownerPropertyChange.getOrgValueString();
       String newOwner = ownerPropertyChange.getNewValueString();
@@ -1240,7 +1241,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   protected boolean fireAssignmentEvent() {
-    PropertyChange assigneePropertyChange = propertyChanges.get(ASSIGNEE);
+    PropertyChange assigneePropertyChange = propertyChanges.get(PROPERTY_ASSIGNEE);
     if (assigneePropertyChange != null) {
       return fireEvent(TaskListener.EVENTNAME_ASSIGNMENT);
     }
@@ -1249,11 +1250,11 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   protected void fireAssigneeAuthorizationProvider(String oldAssignee, String newAssignee) {
-    fireAuthorizationProvider(ASSIGNEE, oldAssignee, newAssignee);
+    fireAuthorizationProvider(PROPERTY_ASSIGNEE, oldAssignee, newAssignee);
   }
 
   protected void fireOwnerAuthorizationProvider(String oldOwner, String newOwner) {
-    fireAuthorizationProvider(OWNER, oldOwner, newOwner);
+    fireAuthorizationProvider(PROPERTY_OWNER, oldOwner, newOwner);
   }
 
   protected void fireAuthorizationProvider(String property, String oldValue, String newValue) {
@@ -1261,10 +1262,10 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       ResourceAuthorizationProvider provider = getResourceAuthorizationProvider();
 
       AuthorizationEntity[] authorizations = null;
-      if (ASSIGNEE.equals(property)) {
+      if (PROPERTY_ASSIGNEE.equals(property)) {
         authorizations = provider.newTaskAssignee(this, oldValue, newValue);
       }
-      else if (OWNER.equals(property)) {
+      else if (PROPERTY_OWNER.equals(property)) {
         authorizations = provider.newTaskOwner(this, oldValue, newValue);
       }
 
@@ -1449,33 +1450,40 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   public void initializeFormKey() {
     isFormKeyInitialized = true;
-    if(taskDefinitionKey != null) {
+    if (taskDefinitionKey != null) {
       TaskDefinition taskDef = getTaskDefinition();
-      if(taskDef != null) {
-        // initialize formKey
-        Expression taskDefFormKey = taskDef.getFormKey();
-        if(taskDefFormKey != null) {
-          this.formKey = (String) taskDefFormKey.getValue(this);
-        } else {
-          // initialize form reference
-          Expression formRef = taskDef.getOperatonFormDefinitionKey();
-          String formRefBinding = taskDef.getOperatonFormDefinitionBinding();
-          Expression formRefVersion = taskDef.getOperatonFormDefinitionVersion();
-          if (formRef != null && formRefBinding != null) {
-            String formRefValue = (String) formRef.getValue(this);
-            if (formRefValue != null) {
-              OperatonFormRefImpl camFormRef = new OperatonFormRefImpl(formRefValue, formRefBinding);
-              if (formRefBinding.equals(FORM_REF_BINDING_VERSION) && formRefVersion != null) {
-                String formRefVersionValue = (String) formRefVersion.getValue(this);
-                camFormRef.setVersion(Integer.parseInt(formRefVersionValue));
-              }
-              this.operatonFormRef = camFormRef;
-            }
-          }
-        }
+      if (taskDef != null) {
+        initializeFormKeyFromTaskDefinition(taskDef);
       }
     }
   }
+
+  private void initializeFormKeyFromTaskDefinition(TaskDefinition taskDef) {
+    Expression taskDefFormKey = taskDef.getFormKey();
+    if (taskDefFormKey != null) {
+      this.formKey = (String) taskDefFormKey.getValue(this);
+    } else {
+      initializeFormRefFromTaskDefinition(taskDef);
+    }
+  }
+
+  private void initializeFormRefFromTaskDefinition(TaskDefinition taskDef) {
+    Expression formRef = taskDef.getOperatonFormDefinitionKey();
+    String formRefBinding = taskDef.getOperatonFormDefinitionBinding();
+    Expression formRefVersion = taskDef.getOperatonFormDefinitionVersion();
+    if (formRef != null && formRefBinding != null) {
+      String formRefValue = (String) formRef.getValue(this);
+      if (formRefValue != null) {
+        OperatonFormRefImpl camFormRef = new OperatonFormRefImpl(formRefValue, formRefBinding);
+        if (formRefBinding.equals(FORM_REF_BINDING_VERSION) && formRefVersion != null) {
+          String formRefVersionValue = (String) formRefVersion.getValue(this);
+          camFormRef.setVersion(Integer.parseInt(formRefVersionValue));
+        }
+        this.operatonFormRef = camFormRef;
+      }
+    }
+  }
+
   public void initializeAttachmentAndComments(){
     this.attachmentExists = !Context.getCommandContext().getAttachmentManager().findAttachmentsByTaskId(id).isEmpty();
     this.commentExists = !Context.getCommandContext().getCommentManager().findCommentsByTaskId(id).isEmpty();
@@ -1562,7 +1570,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   @Override
   public void setDelegationState(DelegationState delegationState) {
-    propertyChanged(DELEGATION, this.delegationState, delegationState);
+    propertyChanged(PROPERTY_DELEGATION, this.delegationState, delegationState);
     this.delegationState = delegationState;
   }
 
@@ -1627,7 +1635,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @Override
   public void setFollowUpDate(Date followUpDate) {
     registerCommandContextCloseListener();
-    propertyChanged(FOLLOW_UP_DATE, this.followUpDate, followUpDate);
+    propertyChanged(PROPERTY_FOLLOW_UP_DATE, this.followUpDate, followUpDate);
     this.followUpDate = followUpDate;
   }
 
@@ -1661,7 +1669,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public void logUserOperation(String operation) {
     if (UserOperationLogEntry.OPERATION_TYPE_COMPLETE.equals(operation) ||
         UserOperationLogEntry.OPERATION_TYPE_DELETE.equals(operation)) {
-      propertyChanged(DELETE, false, true);
+      propertyChanged(PROPERTY_DELETE, false, true);
     }
 
     final CommandContext commandContext = Context.getCommandContext();
@@ -1735,7 +1743,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       processEngineConfiguration.getMetricsRegistry().markOccurrence(Metrics.ACTIVTY_INSTANCE_START);
     }
     if (Metrics.UNIQUE_TASK_WORKERS.equals(metricsName) && processEngineConfiguration.isTaskMetricsEnabled() &&
-        assignee != null && propertyChanges.containsKey(ASSIGNEE)) {
+        assignee != null && propertyChanges.containsKey(PROPERTY_ASSIGNEE)) {
       // assignee has changed and is not null, so mark a new task worker
       commandContext.getMeterLogManager().insert(new TaskMeterLogEntity(assignee, ClockUtil.getCurrentTime()));
     }

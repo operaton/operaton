@@ -19,17 +19,17 @@ package org.operaton.bpm.engine.test.history.useroperationlog;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_UPDATE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.CASE_INSTANCE_ID;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELEGATION;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELETE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DESCRIPTION;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DUE_DATE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.FOLLOW_UP_DATE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.NAME;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PARENT_TASK;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PRIORITY;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_ASSIGNEE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_CASE_INSTANCE_ID;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_DELEGATION;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_DELETE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_DESCRIPTION;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_DUE_DATE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_FOLLOW_UP_DATE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_NAME;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_OWNER;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_PARENT_TASK;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_PRIORITY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
@@ -71,8 +71,8 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
     entity.setAssignee("icke");
     Map<String, PropertyChange> changes = entity.getPropertyChanges();
     assertThat(changes).hasSize(1);
-    assertThat(changes.get(ASSIGNEE).getOrgValue()).isNull();
-    assertThat(changes.get(ASSIGNEE).getNewValue()).isEqualTo("icke");
+    assertThat(changes.get(PROPERTY_ASSIGNEE).getOrgValue()).isNull();
+    assertThat(changes.get(PROPERTY_ASSIGNEE).getNewValue()).isEqualTo("icke");
 
     // assign it again
     entity.setAssignee("er");
@@ -80,8 +80,8 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
     assertThat(changes).hasSize(1);
 
     // original value is still null because the task was not saved
-    assertThat(changes.get(ASSIGNEE).getOrgValue()).isNull();
-    assertThat(changes.get(ASSIGNEE).getNewValue()).isEqualTo("er");
+    assertThat(changes.get(PROPERTY_ASSIGNEE).getOrgValue()).isNull();
+    assertThat(changes.get(PROPERTY_ASSIGNEE).getNewValue()).isEqualTo("er");
 
     // set a due date
     entity.setDueDate(new Date());
@@ -140,15 +140,15 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
 
     // and validate the change list
     Map<String, PropertyChange> changes = entity.getPropertyChanges();
-    assertThat(changes.get(ASSIGNEE).getNewValue()).isEqualTo("er");
-    assertThat(changes.get(DELEGATION).getNewValue()).isSameAs(DelegationState.PENDING);
-    assertThat(changes.get(DESCRIPTION).getNewValue()).isEqualTo("a description");
-    assertThat(changes.get(DUE_DATE).getNewValue()).isEqualTo(tomorrow);
-    assertThat(changes.get(FOLLOW_UP_DATE).getNewValue()).isEqualTo(yesterday);
-    assertThat(changes.get(NAME).getNewValue()).isEqualTo("to do");
-    assertThat(changes.get(OWNER).getNewValue()).isEqualTo("icke");
-    assertThat(changes.get(PARENT_TASK).getNewValue()).isEqualTo("parent");
-    assertThat(changes.get(PRIORITY).getNewValue()).isEqualTo(73);
+    assertThat(changes.get(PROPERTY_ASSIGNEE).getNewValue()).isEqualTo("er");
+    assertThat(changes.get(PROPERTY_DELEGATION).getNewValue()).isSameAs(DelegationState.PENDING);
+    assertThat(changes.get(PROPERTY_DESCRIPTION).getNewValue()).isEqualTo("a description");
+    assertThat(changes.get(PROPERTY_DUE_DATE).getNewValue()).isEqualTo(tomorrow);
+    assertThat(changes.get(PROPERTY_FOLLOW_UP_DATE).getNewValue()).isEqualTo(yesterday);
+    assertThat(changes.get(PROPERTY_NAME).getNewValue()).isEqualTo("to do");
+    assertThat(changes.get(PROPERTY_OWNER).getNewValue()).isEqualTo("icke");
+    assertThat(changes.get(PROPERTY_PARENT_TASK).getNewValue()).isEqualTo("parent");
+    assertThat(changes.get(PROPERTY_PRIORITY).getNewValue()).isEqualTo(73);
 
     // DELETE property is not validated here; it is set directly on task deletion
   }
@@ -168,7 +168,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
 
     // assert: details
     UserOperationLogEntry delete = query.singleResult();
-    assertThat(delete.getProperty()).isEqualTo(DELETE);
+    assertThat(delete.getProperty()).isEqualTo(PROPERTY_DELETE);
     assertThat(Boolean.parseBoolean(delete.getOrgValue())).isFalse();
     assertThat(Boolean.parseBoolean(delete.getNewValue())).isTrue();
     assertThat(delete.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
@@ -299,7 +299,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
 
     assertThat(entry.getOrgValue()).isNull();
     assertThat(entry.getNewValue()).isEqualTo("aCaseInstanceId");
-    assertThat(entry.getProperty()).isEqualTo(CASE_INSTANCE_ID);
+    assertThat(entry.getProperty()).isEqualTo(PROPERTY_CASE_INSTANCE_ID);
 
     // change case instance id and save task
     task.setCaseInstanceId("anotherCaseInstanceId");
@@ -314,7 +314,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
       if (!currentEntry.getId().equals(entry.getId())) {
         assertThat(currentEntry.getOrgValue()).isEqualTo("aCaseInstanceId");
         assertThat(currentEntry.getNewValue()).isEqualTo("anotherCaseInstanceId");
-        assertThat(currentEntry.getProperty()).isEqualTo(CASE_INSTANCE_ID);
+        assertThat(currentEntry.getProperty()).isEqualTo(PROPERTY_CASE_INSTANCE_ID);
       }
     }
   }

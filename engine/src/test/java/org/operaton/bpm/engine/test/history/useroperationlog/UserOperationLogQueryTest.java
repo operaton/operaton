@@ -37,8 +37,8 @@ import static org.operaton.bpm.engine.EntityTypes.*;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
 import static org.operaton.bpm.engine.impl.cmd.AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY;
 import static org.operaton.bpm.engine.impl.cmd.AbstractSetProcessDefinitionStateCmd.INCLUDE_PROCESS_INSTANCES_PROPERTY;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_ASSIGNEE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PROPERTY_OWNER;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -124,8 +124,8 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(query().operationId(updateOperationId).count()).isEqualTo(updates.count());
 
     // changed properties
-    assertThat(query().property(ASSIGNEE).count()).isEqualTo(3);
-    assertThat(query().property(OWNER).count()).isEqualTo(2);
+    assertThat(query().property(PROPERTY_ASSIGNEE).count()).isEqualTo(3);
+    assertThat(query().property(PROPERTY_OWNER).count()).isEqualTo(2);
 
     // ascending order results by time
     List<UserOperationLogEntry> ascLog = query().orderByTimestamp().asc().list();

@@ -43,6 +43,7 @@ public class TestProcessEnginesXmlInProcessApplication extends AbstractFoxPlatfo
             
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("singleEngine.xml", "META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class);

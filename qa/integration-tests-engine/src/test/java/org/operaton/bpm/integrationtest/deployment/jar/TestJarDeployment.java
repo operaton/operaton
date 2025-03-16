@@ -49,7 +49,8 @@ public class TestJarDeployment extends AbstractFoxPlatformIntegrationTest {
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addClass(DefaultEjbProcessApplication.class)
       .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
-      .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml");
+      .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml")
+      .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml");
   }
   
   @Test
@@ -59,8 +60,8 @@ public class TestJarDeployment extends AbstractFoxPlatformIntegrationTest {
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("testDeployProcessArchive")
       .count();
-    
-    Assert.assertEquals(1, count);
+
+    assertThat(count).isEqualTo(1);
   }
 
 }

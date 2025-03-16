@@ -82,7 +82,8 @@ public class TestFoxPlatformClientAsEjbModule_onePaAsLib extends AbstractFoxPlat
       .addAsLibrary(processArchiveJar)
       .addAsModule(foxPlatformClientJar)
       .addAsModule(testJar)
-      .addAsLibrary(DeploymentHelper.getEngineCdi());
+      .addAsLibrary(DeploymentHelper.getEngineCdi())
+      .addAsLibraries(DeploymentHelper.getAssertJ());
   }
 
   @Test
@@ -94,7 +95,7 @@ public class TestFoxPlatformClientAsEjbModule_onePaAsLib extends AbstractFoxPlat
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    Assert.assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
   }
 
 }

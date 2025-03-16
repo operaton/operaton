@@ -138,6 +138,7 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
         .addAsLibraries(pa4)
 
 
+        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsResource(processAssets[4], "alternateDirectory/process4.bpmn")
         .addAsResource(processAssets[5], "alternateDirectory/subDirectory/process5.bpmn")
 

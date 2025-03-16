@@ -72,7 +72,8 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
 
     return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
-      .addAsLibrary(DeploymentHelper.getEngineCdi());
+      .addAsLibrary(DeploymentHelper.getEngineCdi())
+      .addAsLibraries(DeploymentHelper.getAssertJ());
   }
 
   @Test
@@ -81,10 +82,10 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
     assertThat(processEngine).isNotNull();
 
     runtimeService.startProcessInstanceByKey("paAsEjbJar-process");
-    Assert.assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
 }

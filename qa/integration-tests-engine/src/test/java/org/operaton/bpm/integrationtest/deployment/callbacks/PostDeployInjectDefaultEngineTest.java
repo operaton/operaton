@@ -16,20 +16,17 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
-
-import org.junit.Assert;
-
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployInjectApp;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployInjectApp;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -40,10 +37,9 @@ public class PostDeployInjectDefaultEngineTest {
   
   @Deployment
   public static WebArchive createDeployment() {
-    
     return ShrinkWrap.create(WebArchive.class, "test.war")
+        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addClass(PostDeployInjectApp.class);
-    
   }
   
   @Test
@@ -52,11 +48,11 @@ public class PostDeployInjectDefaultEngineTest {
     assertThat(PostDeployInjectApp.processApplicationInfo).as("processApplicationInfo must be injected").isNotNull();
     
     List<ProcessEngine> processEngines = PostDeployInjectApp.processEngines;
-    assertThat(processEngines).as("processEngines must be injected").isNotNull();
-    
-    // the app did not do a deployment so no engines are in the list
-    Assert.assertEquals(0, processEngines.size());
-    
+    assertThat(processEngines)
+            .as("processEngines must be injected")
+            .isNotNull()
+            // the app did not do a deployment so no engines are in the list
+            .isEmpty();
   }
   
 }

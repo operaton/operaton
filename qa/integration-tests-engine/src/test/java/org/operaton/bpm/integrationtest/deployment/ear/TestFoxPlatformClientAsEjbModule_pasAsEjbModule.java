@@ -77,7 +77,8 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
     WebArchive testJar = ShrinkWrap.create(WebArchive.class, "paAsEjbModule-test.war")
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
-      .addClass(TestFoxPlatformClientAsEjbModule_pasAsEjbModule.class);
+      .addClass(TestFoxPlatformClientAsEjbModule_pasAsEjbModule.class)
+      .addAsLibraries(DeploymentHelper.getAssertJ());
 
     return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
@@ -94,7 +95,7 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("paAsEjbModule-process")
       .count();
-    Assert.assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
   }
 
 }

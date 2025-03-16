@@ -88,12 +88,10 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
-
         .addAsLibraries(pa0)
-
+        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsResource(paProcessesXml, "META-INF/processes.xml")
         .addAsResource(processAssets[1], "directory/processes/process.bpmn")
-
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(TestResourceName.class);
 
@@ -112,7 +110,7 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     long count = query.count();
-    Assert.assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
   }
 
 }

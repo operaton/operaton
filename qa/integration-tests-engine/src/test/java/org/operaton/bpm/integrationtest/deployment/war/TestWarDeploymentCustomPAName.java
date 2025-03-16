@@ -44,6 +44,7 @@ public class TestWarDeploymentCustomPAName extends AbstractFoxPlatformIntegratio
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CustomNameServletPA.class)
+        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml");
   }
 

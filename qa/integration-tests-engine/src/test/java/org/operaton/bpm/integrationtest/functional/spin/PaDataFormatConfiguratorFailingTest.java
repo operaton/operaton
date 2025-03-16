@@ -51,6 +51,7 @@ public class PaDataFormatConfiguratorFailingTest {
   public static WebArchive createDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "PaDataFormatConfiguratorFailingTest.war")
         .addAsResource("META-INF/processes.xml")
+        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ReferenceStoringProcessApplication.class)
         .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")

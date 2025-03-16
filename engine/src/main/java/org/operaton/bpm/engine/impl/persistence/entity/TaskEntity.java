@@ -160,7 +160,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected String eventName;
   protected boolean isFormKeyInitialized = false;
   protected String formKey;
-  protected OperatonFormRef operatonFormRef;
+  protected transient OperatonFormRef operatonFormRef;
   protected boolean attachmentExists;
   protected boolean commentExists;
 
@@ -178,7 +178,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   protected transient List<PropertyChange> identityLinkChanges = new ArrayList<>();
 
-  protected List<VariableInstanceLifecycleListener<VariableInstanceEntity>> customLifecycleListeners;
+  protected transient List<VariableInstanceLifecycleListener<VariableInstanceEntity>> customLifecycleListeners;
 
   // name references of tracked properties
   public static final String ASSIGNEE = "assignee";
@@ -1449,33 +1449,40 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   public void initializeFormKey() {
     isFormKeyInitialized = true;
-    if(taskDefinitionKey != null) {
+    if (taskDefinitionKey != null) {
       TaskDefinition taskDef = getTaskDefinition();
-      if(taskDef != null) {
-        // initialize formKey
-        Expression taskDefFormKey = taskDef.getFormKey();
-        if(taskDefFormKey != null) {
-          this.formKey = (String) taskDefFormKey.getValue(this);
-        } else {
-          // initialize form reference
-          Expression formRef = taskDef.getOperatonFormDefinitionKey();
-          String formRefBinding = taskDef.getOperatonFormDefinitionBinding();
-          Expression formRefVersion = taskDef.getOperatonFormDefinitionVersion();
-          if (formRef != null && formRefBinding != null) {
-            String formRefValue = (String) formRef.getValue(this);
-            if (formRefValue != null) {
-              OperatonFormRefImpl camFormRef = new OperatonFormRefImpl(formRefValue, formRefBinding);
-              if (formRefBinding.equals(FORM_REF_BINDING_VERSION) && formRefVersion != null) {
-                String formRefVersionValue = (String) formRefVersion.getValue(this);
-                camFormRef.setVersion(Integer.parseInt(formRefVersionValue));
-              }
-              this.operatonFormRef = camFormRef;
-            }
-          }
-        }
+      if (taskDef != null) {
+        initializeFormKeyFromTaskDefinition(taskDef);
       }
     }
   }
+
+  private void initializeFormKeyFromTaskDefinition(TaskDefinition taskDef) {
+    Expression taskDefFormKey = taskDef.getFormKey();
+    if (taskDefFormKey != null) {
+      this.formKey = (String) taskDefFormKey.getValue(this);
+    } else {
+      initializeFormRefFromTaskDefinition(taskDef);
+    }
+  }
+
+  private void initializeFormRefFromTaskDefinition(TaskDefinition taskDef) {
+    Expression formRef = taskDef.getOperatonFormDefinitionKey();
+    String formRefBinding = taskDef.getOperatonFormDefinitionBinding();
+    Expression formRefVersion = taskDef.getOperatonFormDefinitionVersion();
+    if (formRef != null && formRefBinding != null) {
+      String formRefValue = (String) formRef.getValue(this);
+      if (formRefValue != null) {
+        OperatonFormRefImpl camFormRef = new OperatonFormRefImpl(formRefValue, formRefBinding);
+        if (formRefBinding.equals(FORM_REF_BINDING_VERSION) && formRefVersion != null) {
+          String formRefVersionValue = (String) formRefVersion.getValue(this);
+          camFormRef.setVersion(Integer.parseInt(formRefVersionValue));
+        }
+        this.operatonFormRef = camFormRef;
+      }
+    }
+  }
+
   public void initializeAttachmentAndComments(){
     this.attachmentExists = !Context.getCommandContext().getAttachmentManager().findAttachmentsByTaskId(id).isEmpty();
     this.commentExists = !Context.getCommandContext().getCommentManager().findCommentsByTaskId(id).isEmpty();

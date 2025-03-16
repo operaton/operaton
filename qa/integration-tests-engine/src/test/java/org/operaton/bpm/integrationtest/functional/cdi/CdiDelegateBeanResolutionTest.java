@@ -62,7 +62,8 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
             .addClass(ProgrammaticBeanLookup.class)
             .addClass(BeanManagerLookup.class)
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+            .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getAssertJ());
 
      TestContainer.addContainerSpecificResourcesEmbedCdiLib(webArchive);
 

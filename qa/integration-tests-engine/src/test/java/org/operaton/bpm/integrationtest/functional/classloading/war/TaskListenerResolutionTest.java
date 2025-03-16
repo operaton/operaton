@@ -21,6 +21,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleTaskListener;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -48,7 +49,8 @@ public class TaskListenerResolutionTest extends AbstractFoxPlatformIntegrationTe
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-            .addClass(AbstractFoxPlatformIntegrationTest.class);
+            .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addAsLibraries(DeploymentHelper.getAssertJ());
 
     TestContainer.addContainerSpecificResources(webArchive);
 

@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.integrationtest.functional.context.classes.MyPojo;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
@@ -73,7 +74,8 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-        .addClass(AbstractFoxPlatformIntegrationTest.class);
+        .addClass(AbstractFoxPlatformIntegrationTest.class)
+        .addAsLibraries(DeploymentHelper.getAssertJ());
 
     TestContainer.addContainerSpecificResources(webArchive);
 

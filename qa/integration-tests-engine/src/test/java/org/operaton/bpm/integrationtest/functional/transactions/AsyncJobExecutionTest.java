@@ -17,7 +17,7 @@
 package org.operaton.bpm.integrationtest.functional.transactions;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.HashMap;
 
@@ -36,7 +36,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
 @RunWith(Arquillian.class)
 public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
@@ -44,6 +44,7 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
   @Deployment
   public static WebArchive processArchive() {
     return initWebArchiveDeployment()
+            .addAsLibraries(DeploymentHelper.getAssertJ())
             .addClass(GetVersionInfoDelegate.class)
             .addClass(UpdateRouterConfiguration.class)
             .addClass(FailingTransactionListenerDelegate.class)
@@ -72,7 +73,7 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
 
     // when
     // all jobs are executed
-    assertDoesNotThrow(() -> waitForJobExecutorToProcessAllJobs());
+    assertThatCode(() -> waitForJobExecutorToProcessAllJobs()).doesNotThrowAnyException();
 
     // then
     // there are no failures
@@ -91,7 +92,7 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
     Job job = managementService.createJobQuery().processDefinitionKey("failingTransactionListener").singleResult();
 
     assertThat(job).isNotNull();
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isNotNull();
     assertThat(managementService.getJobExceptionStacktrace(job.getId())).isNotNull();
   }

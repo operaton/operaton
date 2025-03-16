@@ -44,6 +44,7 @@ public class ProcessApplicationExecutionListenerTest extends AbstractFoxPlatform
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addAsLibraries(DeploymentHelper.getEngineCdi())
+      .addAsLibraries(DeploymentHelper.getAssertJ())
       .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
       .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)

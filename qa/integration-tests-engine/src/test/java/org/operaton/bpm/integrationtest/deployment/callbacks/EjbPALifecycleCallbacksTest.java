@@ -36,6 +36,7 @@ public class EjbPALifecycleCallbacksTest extends AbstractFoxPlatformIntegrationT
   public static WebArchive createDeployment() {
 
     return ShrinkWrap.create(WebArchive.class, "test.war")
+        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addClass(CustomEjbProcessApplication.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class);
 

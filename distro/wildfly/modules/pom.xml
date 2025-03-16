@@ -270,18 +270,6 @@
                   <include name="**/module.xml" />
                 </replace>
 
-                <replace dir="target/modules" token="@project.version@" value="${project.version}">
-                  <include name="**/module.xml" />
-                </replace>
-
-                <replace dir="target/modules" token="@project.version@" value="${project.version}">
-                  <include name="**/module.xml" />
-                </replace>
-
-                <replace dir="target/modules" token="@project.version@" value="${project.version}">
-                  <include name="**/module.xml" />
-                </replace>
-
                 <replace dir="target/modules" token="@version.freemarker@" value="${version.freemarker}">
                   <include name="**/module.xml" />
                 </replace>
@@ -331,6 +319,10 @@
                 </replace>
 
                 <replace dir="target/modules" token="@version.icu.icu4j@" value="${version.icu.icu4j}">
+                  <include name="**/module.xml" />
+                </replace>
+
+                <replace dir="target/modules" token="@version.assertj@" value="${version.assertj}">
                   <include name="**/module.xml" />
                 </replace>
 

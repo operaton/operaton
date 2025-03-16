@@ -20,6 +20,7 @@ import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FailingJsonDataFormatConfigurator;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.JsonSerializable;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 import org.jboss.arquillian.container.test.api.Deployer;
@@ -67,7 +68,8 @@ public class PaDataFormatConfiguratorFailingTest {
 
   @Deployment(name = "checkDeployment")
   public static WebArchive createCheckDeployment() {
-    WebArchive webArchive = ShrinkWrap.create(WebArchive.class);
+    WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
+        .addAsLibraries(DeploymentHelper.getAssertJ());
     TestContainer.addContainerSpecificResourcesForNonPa(webArchive);
     return webArchive;
   }
@@ -76,11 +78,11 @@ public class PaDataFormatConfiguratorFailingTest {
   public void setUp() {
     try {
       deployer.deploy("deployment");
+    } catch (Exception e) {
       // The failing configurator provokes a RuntimeException in a servlet context listener.
       // Apparently such an exception needs not cancel the deployment of a Java EE application.
       // That means deployment fails for some servers and for others not.
       // => we don't care if there is an exception here or not
-    }catch (Exception e) {
     }
   }
 

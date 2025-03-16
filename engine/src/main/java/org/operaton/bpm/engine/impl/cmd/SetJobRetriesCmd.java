@@ -41,12 +41,12 @@ public class SetJobRetriesCmd implements Command<Void>, Serializable {
   protected static final long serialVersionUID = 1L;
   protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  protected static final String RETRIES = "retries";
-  protected static final String DUE_DATE = "dueDate";
+  protected static final String PROPERTY_RETRIES = "retries";
+  protected static final String PROPERTY_DUE_DATE = "dueDate";
 
   protected final String jobId;
   protected final String jobDefinitionId;
-  protected final List<String> jobIds;
+  protected final transient List<String> jobIds;
   protected final int retries;
   protected Date dueDate;
   protected final boolean isDueDateSet;
@@ -104,12 +104,12 @@ public class SetJobRetriesCmd implements Command<Void>, Serializable {
 
       int oldRetries = job.getRetries();
       job.setRetries(retries);
-      propertyChanges.add(new PropertyChange(RETRIES, oldRetries, job.getRetries()));
+      propertyChanges.add(new PropertyChange(PROPERTY_RETRIES, oldRetries, job.getRetries()));
 
       if (isDueDateSet) {
         Date oldDueDate = job.getDuedate();
         job.setDuedate(dueDate);
-        propertyChanges.add(new PropertyChange(DUE_DATE, oldDueDate, job.getDuedate()));
+        propertyChanges.add(new PropertyChange(PROPERTY_DUE_DATE, oldDueDate, job.getDuedate()));
       }
 
       commandContext.getOperationLogManager().logJobOperation(getLogEntryOperation(), job.getId(),
@@ -136,10 +136,10 @@ public class SetJobRetriesCmd implements Command<Void>, Serializable {
         .updateFailedJobRetriesByJobDefinitionId(jobDefinitionId, retries, dueDate, isDueDateSet);
 
     List<PropertyChange> propertyChanges = new ArrayList<>();
-    propertyChanges.add(new PropertyChange(RETRIES, null, retries));
+    propertyChanges.add(new PropertyChange(PROPERTY_RETRIES, null, retries));
 
     if (isDueDateSet) {
-      propertyChanges.add(new PropertyChange(DUE_DATE, null, dueDate));
+      propertyChanges.add(new PropertyChange(PROPERTY_DUE_DATE, null, dueDate));
     }
 
     commandContext.getOperationLogManager().logJobOperation(getLogEntryOperation(), null, jobDefinitionId, null,

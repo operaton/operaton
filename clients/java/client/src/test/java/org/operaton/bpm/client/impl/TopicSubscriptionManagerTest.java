@@ -15,6 +15,8 @@
  */
 package org.operaton.bpm.client.impl;
 
+import static org.awaitility.Awaitility.await;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,10 +25,10 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,7 +63,7 @@ class TopicSubscriptionManagerTest {
 	void setUp() {
 		typedValues = new TypedValues(new DefaultValueMappers<PrimitiveValue<String>>(""));
 		engineClient = mock(EngineClient.class);
-		topicSubscriptionManager = new TopicSubscriptionManagerForTesting(engineClient, typedValues, 0l);
+		topicSubscriptionManager = new TopicSubscriptionManagerForTesting(engineClient, typedValues, 0L);
 		topicSubscriptionManager.setBackoffStrategy(new OneSecondBackOffStrategy());
 		t0Handler = new RecordingExternalTaskHandler();
 		taskList = new ArrayList<ExternalTask>();
@@ -84,8 +86,10 @@ class TopicSubscriptionManagerTest {
 
 	@Test
 	void startStopFinishes() {
-		topicSubscriptionManager.start();
-		topicSubscriptionManager.stop();
+		assertDoesNotThrow(() -> {
+			topicSubscriptionManager.start();
+			topicSubscriptionManager.stop();
+		});
 	}
 
 	@Test
@@ -214,11 +218,7 @@ class TopicSubscriptionManagerTest {
 	}
 
 	private void waitMillies(int millies) {
-		try {
-			Thread.sleep(millies);
-		} catch (InterruptedException e) {
-			fail(e);
-		}
+		await().pollDelay(Duration.ofMillis(millies)).until(() -> true);
 	}
 
 	private void waitForTopicSubscriptionManagerToFinish() {
@@ -277,6 +277,7 @@ class RecordingExternalTaskHandler implements ExternalTaskHandler {
 class OneSecondBackOffStrategy implements BackoffStrategy {
 	@Override
 	public void reconfigure(List<ExternalTask> externalTasks) {
+		// unused
 	}
 
 	@Override

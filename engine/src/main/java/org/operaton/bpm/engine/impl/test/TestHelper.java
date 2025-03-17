@@ -55,6 +55,13 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.function.Consumer;
+
 import org.slf4j.Logger;
 
 
@@ -353,6 +360,8 @@ public abstract class TestHelper {
     // executed with an authenticated user
     clearUserOperationLog(processEngineConfiguration);
 
+    clearMetrics(processEngineConfiguration);
+
     LOG.debug("verifying that db is clean after test");
     PurgeReport purgeReport = ((ManagementServiceImpl) processEngine.getManagementService()).purge();
 
@@ -532,6 +541,12 @@ public abstract class TestHelper {
         historyService.deleteUserOperationLogEntry(log.getId());
       }
     }
+  }
+
+  public static void clearMetrics(ProcessEngineConfigurationImpl processEngineConfiguration) {
+    var managementService = processEngineConfiguration.getManagementService();
+    managementService.deleteMetrics(null);
+    managementService.deleteTaskMetrics(null);
   }
 
   public static void deleteInstallationId(ProcessEngineConfigurationImpl processEngineConfiguration) {

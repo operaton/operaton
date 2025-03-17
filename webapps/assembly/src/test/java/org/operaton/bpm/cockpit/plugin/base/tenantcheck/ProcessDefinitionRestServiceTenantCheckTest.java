@@ -48,7 +48,6 @@ class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginT
 
   @BeforeEach
   void init() {
-
     processEngineConfiguration.getAdminGroups().add(ADMIN_GROUP);
     processEngineConfiguration.getAdminUsers().add(ADMIN_USER);
 
@@ -77,7 +76,7 @@ class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginT
     identityService.setAuthentication("user", null, null);
 
     // when
-    List<ProcessDefinitionStatisticsDto> actual = resource.queryStatistics(uriInfo, null, null);
+    var actual = resource.queryStatistics(uriInfo, null, null);
 
     // then
     assertThat(actual).hasSize(1);
@@ -184,6 +183,7 @@ class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginT
 
     // when
     CountResultDto actual = resource.getStatisticsCount(uriInfo);
+    List<ProcessDefinitionStatisticsDto> actualDtos = resource.queryStatistics(uriInfo, null, null);
 
     // then
     assertThat(actual.getCount()).isEqualTo(2);

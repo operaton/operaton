@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.operaton.bpm.admin.impl.plugin.resources.MetricsRestService;
 import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskMeterLogEntity;
@@ -56,8 +55,6 @@ class MetricsRestServiceTest extends AbstractAdminPluginTest {
   void setUp() {
     super.before();
 
-    var processEngine = getProcessEngine();
-    var processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
     dbMetricsReporter = processEngineConfiguration.getDbMetricsReporter();
     metricsRegistry = processEngineConfiguration.getMetricsRegistry();
     managementService = processEngine.getManagementService();
@@ -71,8 +68,7 @@ class MetricsRestServiceTest extends AbstractAdminPluginTest {
   @AfterEach
   void tearDown() {
     queryParameters.clear();
-    managementService.deleteMetrics(null);
-    managementService.deleteTaskMetrics(null);
+
     ClockUtil.reset();
   }
 
@@ -344,9 +340,11 @@ class MetricsRestServiceTest extends AbstractAdminPluginTest {
     queryParameters.add("metrics", Metrics.TASK_USERS);
 
     // generate TU metric - counts _unique_ task workers (unique ASSIGNEE_HASH_)
-    processEngineExtension.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
-      commandContext.getMeterLogManager().insert(new TaskMeterLogEntity("assignee", ClockUtil.getCurrentTime()));
-      commandContext.getMeterLogManager().insert(new TaskMeterLogEntity("assignee", ClockUtil.getCurrentTime()));
+    TaskMeterLogEntity assignee1 = new TaskMeterLogEntity("assignee", ClockUtil.getCurrentTime());
+    TaskMeterLogEntity assignee2 = new TaskMeterLogEntity("assignee", ClockUtil.getCurrentTime());
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getMeterLogManager().insert(assignee1);
+      commandContext.getMeterLogManager().insert(assignee2);
       ClockUtil.reset();
       return null;
     });

@@ -16,27 +16,14 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.ws.rs.core.Response.Status;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.mockito.MockedStatic;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -53,20 +40,35 @@ import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFil
 import org.operaton.bpm.engine.rest.security.auth.impl.ContainerBasedAuthenticationProvider;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 import org.operaton.bpm.engine.rest.spi.impl.MockedProcessEngineProvider;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.MockedStatic;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
 
-public class ContainerAuthenticationFilterTest {
+import java.io.IOException;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@Parameterized
+class ContainerAuthenticationFilterTest {
 
   protected static final String SERVICE_PATH = "/operaton";
 
@@ -77,27 +79,24 @@ public class ContainerAuthenticationFilterTest {
 
   protected Filter authenticationFilter;
 
-  protected String requestUrl;
-  protected String engineName;
-  protected boolean alreadyAuthenticated;
-  protected boolean authenticationExpected;
+  @Parameter(0)
+  String requestUrl;
+  @Parameter(1)
+  String engineName;
+  @Parameter(2)
+  boolean alreadyAuthenticated;
+  @Parameter(3)
+  boolean authenticationExpected;
 
   protected ProcessEngine currentEngine;
 
   private MockedStatic<AuthenticationUtil> authenticationUtilMockedStatic;
   private MockedStatic<ProcessEngineUtil> processEngineUtilMockedStatic;
 
-  public void initContainerAuthenticationFilterTest(String requestUrl, String engineName, boolean alreadyAuthenticated, boolean authenticationExpected) {
-    this.requestUrl = requestUrl;
-    this.engineName = engineName;
-    if (engineName == null) {
-      this.engineName = "default";
-    }
-    this.alreadyAuthenticated = alreadyAuthenticated;
-    this.authenticationExpected = authenticationExpected;
-  }
 
-  public static Collection<Object[]> getRequestUrls() {
+
+  @Parameters
+  static Collection<Object[]> getRequestUrls() {
     return Arrays.asList(new Object[][]{
         {"/app/cockpit/default/", "default", false, true},
         {"/app/cockpit/engine2/", "engine2", false, true},
@@ -157,8 +156,17 @@ public class ContainerAuthenticationFilterTest {
     setupFilter();
   }
 
+  @AfterEach
+  void teardown() {
+    authenticationUtilMockedStatic.close();
+    processEngineUtilMockedStatic.close();
+  }
+
   protected void setupProcessEngine() {
     final ProcessEngineProvider provider = new MockedProcessEngineProvider();
+    if (engineName == null) {
+      engineName = "default";
+    }
     currentEngine = provider.getProcessEngine(engineName);
 
     authorizationService = mock(AuthorizationServiceImpl.class);
@@ -216,27 +224,17 @@ public class ContainerAuthenticationFilterTest {
     authenticationFilter.doFilter(request, response, filterChain);
   }
 
-  @AfterEach
-  void teardown() {
-    authenticationUtilMockedStatic.close();
-    processEngineUtilMockedStatic.close();
-  }
-
-  @MethodSource("getRequestUrls")
-  @ParameterizedTest
-  void shouldCheckCustomApplicationPath(String requestUrl, String engineName, boolean alreadyAuthenticated, boolean authenticationExpected) throws IOException, ServletException {
-    initContainerAuthenticationFilterTest(requestUrl, engineName, alreadyAuthenticated, authenticationExpected);
+  @TestTemplate
+  void shouldCheckCustomApplicationPath() throws IOException, ServletException {
     testContainerAuthenticationCheck("/my-custom/application/path");
   }
 
-  @MethodSource("getRequestUrls")
-  @ParameterizedTest
-  void shouldCheckEmptyApplicationPath(String requestUrl, String engineName, boolean alreadyAuthenticated, boolean authenticationExpected) throws IOException, ServletException {
-    initContainerAuthenticationFilterTest(requestUrl, engineName, alreadyAuthenticated, authenticationExpected);
+  @TestTemplate
+  void shouldCheckEmptyApplicationPath() throws IOException, ServletException {
     testContainerAuthenticationCheck("");
   }
 
-  public void testContainerAuthenticationCheck(String applicationPath) throws IOException, ServletException {
+  private void testContainerAuthenticationCheck(String applicationPath) throws IOException, ServletException {
     if (alreadyAuthenticated) {
       Authentication authentication = mock(Authentication.class);
       when(authentication.getProcessEngineName()).thenReturn(engineName);

@@ -93,7 +93,7 @@ public abstract class AbstractCockpitPluginTest {
   }
 
   public ProcessEngine getProcessEngine() {
-    return processEngineExtension.getProcessEngine();
+    return processEngine;
   }
 
   protected CommandExecutor getCommandExecutor() {

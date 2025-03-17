@@ -24,7 +24,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.admin.Admin;
 import org.operaton.bpm.admin.impl.DefaultAdminRuntimeDelegate;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.LogUtil;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
@@ -40,6 +42,10 @@ public abstract class AbstractAdminPluginTest {
   @RegisterExtension
   static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().ensureCleanAfterTest(true).build();
 
+  protected ProcessEngine processEngine;
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected IdentityService identityService;
+
   @BeforeAll
   public static void beforeClass() {
     Admin.setAdminRuntimeDelegate(RUNTIME_DELEGATE);
@@ -52,17 +58,13 @@ public abstract class AbstractAdminPluginTest {
 
   @BeforeEach
   public void before() {
-    RUNTIME_DELEGATE.engine = getProcessEngine();
+    RUNTIME_DELEGATE.engine = processEngine;
   }
 
   @AfterEach
   public void after() {
     RUNTIME_DELEGATE.engine = null;
-    getProcessEngine().getIdentityService().clearAuthentication();
-  }
-
-  public ProcessEngine getProcessEngine() {
-    return processEngineExtension.getProcessEngine();
+    identityService.clearAuthentication();
   }
 
   private static class TestAdminRuntimeDelegate extends DefaultAdminRuntimeDelegate {

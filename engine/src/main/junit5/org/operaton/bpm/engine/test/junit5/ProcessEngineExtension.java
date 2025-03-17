@@ -304,11 +304,11 @@ public class ProcessEngineExtension implements TestWatcher,
       processEngine.getProcessEngineConfiguration().setTenantCheckEnabled(true);
     }
 
-      TestHelper.resetIdGenerator(processEngineConfiguration);
-      ClockUtil.reset();
-      PlatformDiagnosticsRegistry.clear();
+   TestHelper.resetIdGenerator(processEngineConfiguration);
+   ClockUtil.reset();
+   PlatformDiagnosticsRegistry.clear();
 
-      for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
+   for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
      historyService.deleteUserOperationLogEntry(logEntry.getId());
    }
 

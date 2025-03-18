@@ -1,4 +1,4 @@
-name: Nightly Build
+name: Integration Build
 
 on:
   schedule:

@@ -70,8 +70,8 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>runtime</module>
         <module>example-plugin</module>
+        <module>runtime</module>
         <module>integration-tests</module>
       </modules>
     </profile>

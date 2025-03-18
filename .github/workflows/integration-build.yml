@@ -1,8 +1,8 @@
-name: Nightly Build
+name: Integration Build
 
 on:
   schedule:
-    - cron: "0 3 * * *"     # Runs at 3:00 AM UTC daily
+    - cron: "0 2 * * *"     # Runs at 2:00 AM UTC daily
   workflow_dispatch:        # Allows manual trigger
     inputs:
       java_version:
@@ -14,16 +14,54 @@ on:
           - '["17"]'
           - '["21"]'
           - '["17", "21"]'
-      dry_run:
-        description: 'Dry-Run: Skips remote operations when true'
-        type: boolean
-        required: true
-        default: false
-      skip_tests:
-        description: 'Skip test execution for faster build'
+      skip_build:
+        description: 'Build: Set to false to skip the normal build, e.g. when running integration tests only'
         type: boolean
         required: true
         default: true
+      skip_tests:
+        description: 'Build: Skip test execution for faster build'
+        type: boolean
+        required: true
+        default: true
+      integration_tests:
+        description: 'Integration Tests: Enable/Disable'
+        type: boolean
+        required: true
+        default: true
+      testsuite:
+        description: 'Integration Tests: Test suite to run'
+        type: choice
+        required: true
+        default: '["engine"]'
+        options:
+          - '["engine"]'
+          - '["webapps"]'
+          - '["engine", "webapps"]'
+      distro:
+        description: 'Integration Tests: Distribution to use'
+        type: choice
+        required: true
+        default: '["operaton", "tomcat", "wildfly"]'
+        options:
+          - '["operaton"]'
+          - '["tomcat"]'
+          - '["wildfly"]'
+          - '["operaton", "tomcat", "wildfly"]'
+      database:
+        description: 'Integration Tests: Database to use'
+        type: choice
+        required: true
+        default: '["h2"]'
+        options:
+          - '["h2"]'
+          - '["postgresql"]'
+          - '["h2", "postgresql"]'
+      dry_run:
+        description: 'Release: Skips remote operations when true'
+        type: boolean
+        required: true
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -37,6 +75,7 @@ jobs:
       matrix:
         java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
     runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_build == 'false' }}
     outputs:
       version: ${{steps.maven-build.outputs.version}}
       project_version: ${{steps.maven-build.outputs.project_version}}
@@ -72,15 +111,13 @@ jobs:
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
           SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
-          echo "skip_tests=$SKIP_TESTS"
-          ./mvnw \
-            -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \
-            install \
-            versions:dependency-updates-aggregate-report \
-            versions:plugin-updates-aggregate-report \
-            -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \
-            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list \
-            -DskipTests=$SKIP_TESTS
+          
+          CMD=".devenv/scripts/build/build.sh --profile=max --reports"
+          if [ "$SKIP_TESTS" = "true" ]; then
+              CMD="$CMD --skip-tests"
+          fi
+          $CMD
+
           .github/scripts/prepare-reports.sh
           ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
@@ -98,11 +135,67 @@ jobs:
             target/project-reports.zip
           key: ${{ github.run_id }}-build-artifacts
 
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.integration_tests == 'true' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        java: ${{ fromJson(github.event.inputs.java_version || '["17"]') }}
+        testsuite: ${{ fromJson(github.event.inputs.testsuite || '["engine"]') }}
+        distro: ${{ fromJson(github.event.inputs.distro || '["tomcat", "wildfly"]') }}
+        database: ${{ fromJson(github.event.inputs.database || '["h2", "postgres"]') }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+      - name: Maven Build
+        id: maven-build
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
+      - name: Execute Integration Tests
+        id: maven-integration-tests
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml
+          require_passed_tests: true
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
+          path: |
+            ${{ github.workspace }}/**/target/surefire-reports/**
+            ${{ github.workspace }}/**/target/failsafe-reports/**
+            ${{ github.workspace }}/qa/**/target/**/logs/**
+            ${{ github.workspace }}/**/target/cargo.log
+          retention-days: 30
+
   release:
     name: Release
     needs:
       - build
     runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_build == 'false' }}
     steps:
       - name: Check out the code
         uses: actions/checkout@v4

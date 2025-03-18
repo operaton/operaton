@@ -34,12 +34,12 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
-  protected boolean writeUserOperationLog;
+  protected boolean shouldWriteUserOperationLog;
 
   public ProcessInstanceModificationCmd(ModificationBuilderImpl builder,
-                                        boolean writeUserOperationLog) {
+                                        boolean shouldWriteUserOperationLog) {
     super(builder);
-    this.writeUserOperationLog = writeUserOperationLog;
+    this.shouldWriteUserOperationLog = shouldWriteUserOperationLog;
    }
 
   @Override
@@ -60,7 +60,7 @@ public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void
 
     ensureNotNull(BadUserRequestException.class, "Process definition id cannot be null", processDefinition);
 
-    if (writeUserOperationLog) {
+    if (shouldWriteUserOperationLog) {
       String annotation = builder.getAnnotation();
       writeUserOperationLog(commandContext, processDefinition,
           processInstanceIds.size(), false, annotation);
@@ -123,10 +123,8 @@ public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void
           activityInstanceTree = commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId));
         }
 
-        ActivityCancellationCmd cancellationInstruction = (ActivityCancellationCmd) instruction;
-        List<AbstractInstanceCancellationCmd> cmds =
-            cancellationInstruction.createActivityInstanceCancellations(activityInstanceTree,
-                commandContext);
+        List<AbstractInstanceCancellationCmd> cmds = cmd.createActivityInstanceCancellations(activityInstanceTree,
+            commandContext);
 
         operations.addAll(cmds);
       }

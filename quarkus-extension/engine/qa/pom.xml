@@ -11,7 +11,6 @@
   <name>Operaton - Quarkus Extension - Engine - CDI QA</name>
 
   <properties>
-    <arquillian.version>1.7.0.Final</arquillian.version>
     <deploy.skip>true</deploy.skip>
     <install.skip>true</install.skip>
   </properties>
@@ -33,13 +32,6 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-      <dependency>
-        <groupId>org.jboss.arquillian</groupId>
-        <artifactId>arquillian-bom</artifactId>
-        <version>${arquillian.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -54,7 +46,7 @@
           </systemPropertyVariables>
 
           <dependenciesToScan>
-            <dependency>org.operaton.bpm:operaton-engine-cdi-jakarta</dependency>
+            <dependency>org.operaton.bpm:operaton-engine-cdi</dependency>
           </dependenciesToScan>
 
           <excludes>
@@ -82,7 +74,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-cdi-jakarta</artifactId>
+      <artifactId>operaton-engine-cdi</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <classifier>tests-quarkus</classifier>

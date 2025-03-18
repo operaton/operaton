@@ -182,6 +182,12 @@
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
                     <artifactItem>
+                      <groupId>io.smallrye</groupId>
+                      <artifactId>jandex</artifactId>
+                      <version>3.2.2</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
                       <groupId>jakarta.xml.bind</groupId>
                       <artifactId>jakarta.xml.bind-api</artifactId>
                       <version>4.0.2</version>

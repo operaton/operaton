@@ -18,27 +18,52 @@ package org.operaton.bpm.integrationtest.util;
 
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
+import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
 
 public class DeploymentHelper extends AbstractDeploymentHelper {
 
-  protected static final String CAMUNDA_EJB_CLIENT = "org.operaton.bpm.javaee:operaton-ejb-client-jakarta";
-  protected static final String CAMUNDA_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi-jakarta";
-  protected static final String CAMUNDA_ENGINE_SPRING = "org.operaton.bpm:operaton-engine-spring-6";
+  protected static final String OPERATON_EJB_CLIENT = "org.operaton.bpm.javaee:operaton-ejb-client-jakarta";
+  protected static final String OPERATON_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi";
+  protected static final String OPERATON_ENGINE_SPRING = "org.operaton.bpm:operaton-engine-spring";
+  protected static final String OPERATON_ENGINE = "org.operaton.bpm:operaton-engine";
+  protected static JavaArchive cachedAssertJ;
 
   public static JavaArchive getEjbClient() {
-    return getEjbClient(CAMUNDA_EJB_CLIENT);
+    return getEjbClient(OPERATON_EJB_CLIENT);
   }
 
   public static JavaArchive getEngineCdi() {
-    return getEngineCdi(CAMUNDA_ENGINE_CDI);
+    return getEngineCdi(OPERATON_ENGINE_CDI);
   }
 
   public static JavaArchive[] getWeld() {
-    return getWeld(CAMUNDA_ENGINE_CDI);
+    return getWeld(OPERATON_ENGINE_CDI);
   }
 
   public static JavaArchive[] getEngineSpring() {
-    return getEngineSpring(CAMUNDA_ENGINE_SPRING);
+    return getEngineSpring(OPERATON_ENGINE_SPRING);
+  }
+
+  public static JavaArchive getAssertJ() {
+    if (cachedAssertJ != null) {
+      return cachedAssertJ;
+    } else {
+      JavaArchive[] archives = Maven.configureResolver()
+        .workOffline()
+        .loadPomFromFile("pom.xml")
+        .addDependencies(MavenDependencies.createDependency("org.assertj:assertj-core", ScopeType.COMPILE, false))
+        .resolve()
+        .withTransitivity()
+        .as(JavaArchive.class);
+
+      if(archives.length == 0) {
+        throw new RuntimeException("Could not resolve AssertJ");
+      } else {
+        cachedAssertJ = archives[0];
+        return cachedAssertJ;
+      }
+    }
   }
 
   protected static JavaArchive[] getWeld(String engineCdiArtifactName) {
@@ -51,7 +76,7 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
       );
 
       if(archives.length == 0) {
-        throw new RuntimeException("could not resolve the weld implementation and jakarta API dependencies");
+        throw new RuntimeException("Could not resolve the Weld implementation and JakartaEE API dependencies");
       } else {
         CACHED_WELD_ASSETS = archives;
         return CACHED_WELD_ASSETS;

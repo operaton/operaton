@@ -14,7 +14,6 @@
   <properties>
     <rest.http.port>38081</rest.http.port>
     <version.resteasy>6.2.3.Final</version.resteasy>
-    <version.spring.framework>${version.spring.framework6}</version.spring.framework>
     <skipTests>true</skipTests>
   </properties>
 
@@ -205,7 +204,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>${version.spring.framework}</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>

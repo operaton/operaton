@@ -177,12 +177,6 @@
                   <excludes>configuration/default.yml,configuration/production.yml</excludes>
                 </configuration>
               </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
               <execution>
                 <id>copy-plugin</id>
                 <goals>

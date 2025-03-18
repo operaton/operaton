@@ -15,6 +15,14 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.functional.cdi.beans.ExampleDelegateBean;
@@ -22,17 +30,8 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * <p>Deploys two different applications, a process archive and a client application.</p>
@@ -62,7 +61,8 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
             .addClass(ProgrammaticBeanLookup.class)
             .addClass(BeanManagerLookup.class)
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+            .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getAssertJ());
 
      TestContainer.addContainerSpecificResourcesEmbedCdiLib(webArchive);
 
@@ -76,25 +76,30 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
       .as("Expected to lookup bean")
       .doesNotThrowAnyException();
 
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
+    var processInstanceQuery = runtimeService
+            .createProcessInstanceQuery()
+            .processDefinitionKey("testResolveBean");
+    assertThat(processInstanceQuery.count()).isZero();
     // but the process engine can:
     runtimeService.startProcessInstanceByKey("testResolveBean");
 
-    Assert.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
+    assertThat(processInstanceQuery.count()).isZero();
   }
 
   @Test
   @OperateOnDeployment("clientDeployment")
   public void testResolveBeanFromJobExecutor() {
+    var processInstanceQuery = runtimeService
+            .createProcessInstanceQuery()
+            .processDefinitionKey("testResolveBeanFromJobExecutor");
 
-    Assert.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
+    assertThat(processInstanceQuery.count()).isZero();
     runtimeService.startProcessInstanceByKey("testResolveBeanFromJobExecutor");
-    Assert.assertEquals(1,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
+    assertThat(processInstanceQuery.count()).isOne();
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count());
-
+    assertThat(processInstanceQuery.count()).isZero();
   }
 
 }

@@ -19,6 +19,7 @@ package org.operaton.bpm.integrationtest.functional.classloading.war;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleCaseExecutionListener;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -51,7 +52,8 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-            .addClass(AbstractFoxPlatformIntegrationTest.class);
+            .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addAsLibraries(DeploymentHelper.getAssertJ());
 
     TestContainer.addContainerSpecificResources(webArchive);
 

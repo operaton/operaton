@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.integrationtest.deployment.ear;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.operaton.bpm.application.impl.ejb.DefaultEjbProcessApplication;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
@@ -23,16 +30,7 @@ import org.operaton.bpm.integrationtest.deployment.ear.beans.NamedCdiBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Roman Smirnov
@@ -72,7 +70,8 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
 
     return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
-      .addAsLibrary(DeploymentHelper.getEngineCdi());
+      .addAsLibrary(DeploymentHelper.getEngineCdi())
+      .addAsLibraries(DeploymentHelper.getAssertJ());
   }
 
   @Test
@@ -81,10 +80,10 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
     assertThat(processEngine).isNotNull();
 
     runtimeService.startProcessInstanceByKey("paAsEjbJar-process");
-    Assert.assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
 }

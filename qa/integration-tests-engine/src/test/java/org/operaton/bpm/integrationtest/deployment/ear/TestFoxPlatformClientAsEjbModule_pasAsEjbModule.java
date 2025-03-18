@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.deployment.ear;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
@@ -23,17 +31,7 @@ import org.operaton.bpm.integrationtest.deployment.ear.beans.EeComponent;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 /**
@@ -77,7 +75,8 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
     WebArchive testJar = ShrinkWrap.create(WebArchive.class, "paAsEjbModule-test.war")
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
-      .addClass(TestFoxPlatformClientAsEjbModule_pasAsEjbModule.class);
+      .addClass(TestFoxPlatformClientAsEjbModule_pasAsEjbModule.class)
+      .addAsLibraries(DeploymentHelper.getAssertJ());
 
     return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
@@ -94,7 +93,7 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("paAsEjbModule-process")
       .count();
-    Assert.assertEquals(1, count);
+    assertThat(count).isOne();
   }
 
 }

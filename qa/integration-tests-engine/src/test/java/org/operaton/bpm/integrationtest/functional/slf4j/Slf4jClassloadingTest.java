@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.integrationtest.functional.slf4j;
 
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.NOPLoggerFactory;
@@ -38,9 +37,7 @@ public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
   public static WebArchive createDeployment() {
-    WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
-        .addAsResource("META-INF/processes.xml")
-        .addClass(AbstractFoxPlatformIntegrationTest.class)
+    WebArchive webArchive = initWebArchiveDeployment("test.war")
         .addClass(TestLogger.class);
 
     TestContainer.addContainerSpecificResourcesWithoutWeld(webArchive);

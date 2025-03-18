@@ -24,6 +24,9 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+
+import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;
 
 /**
  * @author Daniel Meyer
@@ -34,14 +37,17 @@ public class EjbPALifecycleCallbacksTest extends AbstractFoxPlatformIntegrationT
 
   @Deployment
   public static WebArchive createDeployment() {
-
-    return ShrinkWrap.create(WebArchive.class, "test.war")
+    var webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
+        .addAsLibraries(DeploymentHelper.getAssertJ())
         .addClass(CustomEjbProcessApplication.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class);
 
+    addContainerSpecificResourcesForNonPa(webArchive);
+    return webArchive;
   }
 
   @Test
+  @SuppressWarnings("java:S2699")
   public void testPaLifecycleCallbacks() {
     // if we get here, everything is all right :)
   }

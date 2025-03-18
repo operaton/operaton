@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.Variables;
@@ -25,17 +33,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Thorben Lindhauer
@@ -65,7 +63,8 @@ public class CdiBeanCallActivityResolutionTest extends AbstractFoxPlatformIntegr
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+            .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getAssertJ());
 
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
 
@@ -94,7 +93,6 @@ public class CdiBeanCallActivityResolutionTest extends AbstractFoxPlatformIntegr
     Task afterCallActivityTask = taskService.createTaskQuery().singleResult();
     assertThat(afterCallActivityTask).isNotNull();
     assertThat(afterCallActivityTask.getTaskDefinitionKey()).isEqualTo("afterCallActivity");
-    Assert.assertEquals("afterCallActivity", afterCallActivityTask.getTaskDefinitionKey());
 
     String variable = (String) runtimeService.getVariable(processInstance.getId(), "var");
     assertThat(variable).isEqualTo("valuevalue");
@@ -115,7 +113,7 @@ public class CdiBeanCallActivityResolutionTest extends AbstractFoxPlatformIntegr
     // then
     Task afterCallActivityTask = taskService.createTaskQuery().singleResult();
     assertThat(afterCallActivityTask).isNotNull();
-    Assert.assertEquals("afterCallActivityTask", afterCallActivityTask.getTaskDefinitionKey());
+    assertThat(afterCallActivityTask.getTaskDefinitionKey()).isEqualTo("afterCallActivityTask");
   }
 
 }

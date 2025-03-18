@@ -15,9 +15,6 @@
   <properties>
     <arquillian.container.version>4.0.0.Final</arquillian.container.version>
     <arquillian.junit.version>1.9.3.Final</arquillian.junit.version>
-    <weld.version>3.1.9.Final</weld.version>
-    <javaee.spec>jboss-javaee-8.0</javaee.spec>
-    <javaee.spec.version>1.0.4.Final</javaee.spec.version>
   </properties>
 
   <dependencyManagement>
@@ -32,7 +29,7 @@
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
-        <version>6.0.1.Final</version>
+        <version>${weld.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -43,18 +40,12 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>livetribe-jsr223</artifactId>
-          <groupId>org.livetribe</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
       <groupId>jakarta.inject</groupId>
       <artifactId>jakarta.inject-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>jakarta.enterprise</groupId>
@@ -64,14 +55,27 @@
     <dependency>
       <groupId>jakarta.interceptor</groupId>
       <artifactId>jakarta.interceptor-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>jakarta.enterprise.concurrent</groupId>
       <artifactId>jakarta.enterprise.concurrent-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.el</groupId>
+      <artifactId>jakarta.el-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.transaction</groupId>
+      <artifactId>jakarta.transaction-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>jakarta.faces</groupId>
       <artifactId>jakarta.faces-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.arquillian.container</groupId>
@@ -81,11 +85,6 @@
     </dependency>
 
     <!-- Test dependencies -->
-    <dependency>
-      <groupId>org.jboss.weld</groupId>
-      <artifactId>weld-core-impl</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.jboss.weld.module</groupId>
       <artifactId>weld-web</artifactId>
@@ -97,9 +96,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.jboss.arquillian.core</groupId>
+      <artifactId>arquillian-core-spi</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
-      <version>${arquillian.junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -157,6 +159,37 @@
             <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create-test-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <forceCreation>true</forceCreation>
+            </configuration>
+          </execution>
+          <!-- create test jar that is consumed by the quarkus qa -->
+          <execution>
+            <id>create-test-jar-quarkus</id>
+            <phase>package</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <classifier>tests-quarkus</classifier>
+              <forceCreation>true</forceCreation>
+              <excludes>
+                <exclude>org/operaton/bpm/engine/cdi/test/CdiProcessEngineTestCase.class</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

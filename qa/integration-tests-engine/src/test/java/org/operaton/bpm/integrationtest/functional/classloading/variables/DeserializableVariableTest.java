@@ -23,6 +23,7 @@ import org.operaton.bpm.integrationtest.functional.classloading.variables.beans.
 import org.operaton.bpm.integrationtest.functional.classloading.variables.beans.SerializableVariable;
 import org.operaton.bpm.integrationtest.functional.classloading.variables.beans.SetVariableDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
@@ -57,7 +58,8 @@ public class DeserializableVariableTest extends AbstractFoxPlatformIntegrationTe
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-      .addClass(AbstractFoxPlatformIntegrationTest.class);
+      .addClass(AbstractFoxPlatformIntegrationTest.class)
+      .addAsLibraries(DeploymentHelper.getAssertJ());
 
     TestContainer.addContainerSpecificResources(webArchive);
 

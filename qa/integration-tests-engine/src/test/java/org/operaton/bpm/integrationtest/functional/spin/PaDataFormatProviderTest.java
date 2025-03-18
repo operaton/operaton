@@ -25,6 +25,7 @@ import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooDataFormat
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooDataFormatProvider;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooSpin;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.spin.spi.DataFormatProvider;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -48,6 +49,7 @@ public class PaDataFormatProviderTest extends AbstractFoxPlatformIntegrationTest
     return ShrinkWrap.create(WebArchive.class, "PaDataFormatTest.war")
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
+        .addAsLibraries(DeploymentHelper.getAssertJ())
         .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")
         .addClass(Foo.class)
         .addClass(FooDataFormat.class)

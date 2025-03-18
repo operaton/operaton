@@ -47,7 +47,8 @@ public class CdiCallActivityVersionTagTest extends AbstractFoxPlatformIntegratio
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+            .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getAssertJ());
 
     TestContainer.addContainerSpecificResourcesForNonPaEmbedCdiLib(deployment);
 
@@ -62,6 +63,5 @@ public class CdiCallActivityVersionTagTest extends AbstractFoxPlatformIntegratio
     // then
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").superProcessInstanceId(processInstance.getId()).singleResult();
     assertThat(subInstance).isNotNull();
-
   }
 }

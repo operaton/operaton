@@ -20,6 +20,7 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AbstractScriptEngineFactory;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AlwaysTrueScriptEngineFactory;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -30,7 +31,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -59,6 +59,7 @@ public class PaLocalScriptEngineCallActivityConditionTest extends AbstractFoxPla
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
+            .addAsLibraries(DeploymentHelper.getAssertJ())
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class);
 
@@ -81,7 +82,7 @@ public class PaLocalScriptEngineCallActivityConditionTest extends AbstractFoxPla
     // then the conditional flow leaving the call activity has been taken
     Task afterCallActivityTask = taskService.createTaskQuery().singleResult();
     assertThat(afterCallActivityTask).isNotNull();
-    Assert.assertEquals("afterCallActivityTask", afterCallActivityTask.getTaskDefinitionKey());
+    assertThat(afterCallActivityTask.getTaskDefinitionKey()).isEqualTo("afterCallActivityTask");
   }
 
 }

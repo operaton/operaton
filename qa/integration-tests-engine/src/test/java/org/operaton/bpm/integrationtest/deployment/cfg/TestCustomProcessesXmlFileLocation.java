@@ -16,19 +16,17 @@
  */
 package org.operaton.bpm.integrationtest.deployment.cfg;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * <p>This test ensures that we can use a custom location for the <em>processes.xml</em> file.</p>
@@ -45,6 +43,7 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
     return ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addAsLibraries(DeploymentHelper.getAssertJ())
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes.xml", "my/alternate/location/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CustomProcessApplication.class)
@@ -59,8 +58,8 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("invoice-it")
       .count();
-    
-    Assert.assertEquals(1, count);
+
+    assertThat(count).isOne();
   }
   
   

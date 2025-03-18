@@ -56,7 +56,8 @@ public class CatchErrorFromProcessApplicationTest extends AbstractFoxPlatformInt
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
-      .addAsLibraries(DeploymentHelper.getEngineCdi());
+      .addAsLibraries(DeploymentHelper.getEngineCdi())
+      .addAsLibraries(DeploymentHelper.getAssertJ());
 
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
 

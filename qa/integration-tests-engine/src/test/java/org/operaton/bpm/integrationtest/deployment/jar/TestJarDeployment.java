@@ -16,20 +16,18 @@
  */
 package org.operaton.bpm.integrationtest.deployment.jar;
 
-import org.operaton.bpm.application.impl.ejb.DefaultEjbProcessApplication;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-
 import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.application.impl.ejb.DefaultEjbProcessApplication;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test only runs on WildFly, as for all other servers, Arquillian wraps the jar in a war file
@@ -49,7 +47,8 @@ public class TestJarDeployment extends AbstractFoxPlatformIntegrationTest {
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addClass(DefaultEjbProcessApplication.class)
       .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
-      .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml");
+      .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml")
+      .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml");
   }
   
   @Test
@@ -59,8 +58,8 @@ public class TestJarDeployment extends AbstractFoxPlatformIntegrationTest {
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("testDeployProcessArchive")
       .count();
-    
-    Assert.assertEquals(1, count);
+
+    assertThat(count).isEqualTo(1);
   }
 
 }

@@ -17,12 +17,9 @@
 package org.operaton.bpm.dmn.engine.impl.el;
 
 import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import jakarta.el.ELResolver;
-
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
 
 /**
  * @author Daniel Meyer
@@ -65,11 +62,6 @@ public class VariableContextElResolver extends ELResolver {
   @Override
   public Class<?> getCommonPropertyType(ELContext arg0, Object arg1) {
     return Object.class;
-  }
-
-  @Override
-  public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext arg0, Object arg1) {
-    return null;
   }
 
   @Override

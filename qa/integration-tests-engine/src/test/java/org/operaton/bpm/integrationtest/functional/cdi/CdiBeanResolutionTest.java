@@ -61,7 +61,8 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+            .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getAssertJ());
 
     TestContainer.addContainerSpecificResourcesForNonPaEmbedCdiLib(deployment);
 
@@ -78,7 +79,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
     // but the process engine can:
     runtimeService.startProcessInstanceByKey("testResolveBean");
 
-    Assert.assertEquals(0,runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count()).isZero();
   }
 
   @Test

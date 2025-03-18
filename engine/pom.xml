@@ -103,22 +103,22 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.vintage</groupId>
@@ -229,6 +229,7 @@
     <dependency>
       <groupId>io.github.frshdn</groupId>
       <artifactId>subethasmtp-java17</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -241,7 +242,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>5.3.39</version>
       <scope>test</scope>
     </dependency>
 
@@ -588,11 +588,10 @@
               <exclude>org.operaton.commons:*</exclude>
               <exclude>org.operaton.connect:*</exclude>
               <exclude>org.camunda.feel:*</exclude>
+              <exclude>jakarta.*:*</exclude>
 
               <exclude>org.springframework:*</exclude>
               <exclude>org.slf4j:*</exclude>
-              <exclude>com.sun.mail:*</exclude>
-              <exclude>javax.activation:*</exclude>
               <exclude>org.mybatis:mybatis:*</exclude>
               <exclude>joda-time:*</exclude>
             </excludes>

@@ -17,7 +17,7 @@
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
 
     <!-- Needs to be adjusted with every WildFly update -->
-    <cargo.wildfly.container.id>wildfly29x</cargo.wildfly.container.id>
+    <cargo.wildfly.container.id>wildfly35x</cargo.wildfly.container.id>
 
     <redirect.test.output>true</redirect.test.output>
 
@@ -63,12 +63,11 @@
         <artifactId>jersey-apache-client4</artifactId>
         <version>1.19.4</version>
       </dependency>
-	  <dependency>
-	    <groupId>com.sun.jersey</groupId>
-	    <artifactId>jersey-json</artifactId>
-	    <version>1.15</version>
-	  </dependency>
-
+      <dependency>
+        <groupId>com.sun.jersey</groupId>
+        <artifactId>jersey-json</artifactId>
+        <version>1.15</version>
+      </dependency>
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>

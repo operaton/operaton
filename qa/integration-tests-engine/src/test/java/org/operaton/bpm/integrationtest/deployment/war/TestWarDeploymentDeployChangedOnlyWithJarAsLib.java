@@ -31,7 +31,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -97,6 +96,7 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "pa2.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addAsLibraries(DeploymentHelper.getAssertJ())
 
         .addAsLibraries(processArchiveJar)
 
@@ -120,7 +120,7 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
       .processDefinitionKey("testDeployProcessArchiveUnchanged")
       .count();
 
-    Assert.assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
   }
 
 }

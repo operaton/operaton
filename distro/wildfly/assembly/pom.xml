@@ -49,12 +49,12 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-cdi-jakarta</artifactId>
+      <artifactId>operaton-engine-cdi</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-spring-6</artifactId>
+      <artifactId>operaton-engine-spring</artifactId>
     </dependency>
 
     <dependency>

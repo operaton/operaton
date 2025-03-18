@@ -47,6 +47,7 @@ public class TestContainer {
 
   public static void addContainerSpecificResourcesForNonPaWithoutWeld(WebArchive webArchive) {
     webArchive.addAsManifestResource("jboss-deployment-structure.xml");
+    webArchive.addAsLibraries(DeploymentHelper.getAssertJ());
   }
 
   public static void addContainerSpecificProcessEngineConfigurationClass(WebArchive deployment) {

@@ -16,31 +16,27 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_FILE;
-import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_LOCATION;
-import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_SYSTEM_PROPERTY;
-import static org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep.CATALINA_HOME;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Hashtable;
-
 import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-//import org.junit.Rule;
-//import org.junit.Test;
 import org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep;
-import org.springframework.mock.jndi.SimpleNamingContext;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_FILE;
+import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_LOCATION;
+import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_SYSTEM_PROPERTY;
+import static org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep.CATALINA_HOME;
 
 /**
  * Checks the correct retrieval of bpm-platform.xml file through JNDI,
@@ -65,11 +61,13 @@ class BpmPlatformXmlLocationTest {
 
   private static final String BPM_PLATFORM_XML_LOCATION_URL_HTTP_PROTOCOL = "http://localhost:8080/operaton/" + BPM_PLATFORM_XML_FILE;
   private static final String BPM_PLATFORM_XML_LOCATION_URL_HTTPS_PROTOCOL = "https://localhost:8080/operaton/" + BPM_PLATFORM_XML_FILE;
+  private Context context;
 
   @BeforeEach
   void setUp() {
     System.setProperty(Context.INITIAL_CONTEXT_FACTORY, MockContextFactory.class.getName());
-    MockContextFactory.setCurrentContext(new SimpleNamingContext());
+    context = mock(Context.class);
+    MockContextFactory.setCurrentContext(context);
   }
 
   @AfterEach
@@ -133,11 +131,13 @@ class BpmPlatformXmlLocationTest {
 
   @Test
   void getBpmPlatformXmlLocationFromJndi() throws NamingException, MalformedURLException {
-    Context context = new InitialContext();
-    context.bind("java:comp/env/" + BPM_PLATFORM_XML_LOCATION, BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION);
+    // given
+    when(context.lookup("java:comp/env/" + BPM_PLATFORM_XML_LOCATION)).thenReturn(BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION);
 
+    // when
     URL url = new TomcatParseBpmPlatformXmlStep().lookupBpmPlatformXmlLocationFromJndi();
 
+    // then
     assertThat(url).isEqualTo(new File(BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION).toURI().toURL());
   }
 
@@ -196,14 +196,16 @@ class BpmPlatformXmlLocationTest {
 
   @Test
   void lookupBpmPlatformXml() throws NamingException, MalformedURLException {
-    Context context = new InitialContext();
-    context.bind("java:comp/env/" + BPM_PLATFORM_XML_LOCATION, BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION);
+    // given
+    when(context.lookup("java:comp/env/" + BPM_PLATFORM_XML_LOCATION)).thenReturn(BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION);
 
+    // when
     URL url = new TomcatParseBpmPlatformXmlStep().lookupBpmPlatformXml();
 
+    // then
     assertThat(url).isEqualTo(new File(BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION).toURI().toURL());
   }
-  
+
   private static String getBpmPlatformXmlLocationParentDir() {
     String baseDir = BpmPlatformXmlLocationTest.class.getProtectionDomain().getCodeSource().getLocation().getFile();
     try {

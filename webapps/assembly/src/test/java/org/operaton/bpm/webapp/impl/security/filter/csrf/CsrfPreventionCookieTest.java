@@ -17,13 +17,10 @@
 package org.operaton.bpm.webapp.impl.security.filter.csrf;
 
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.util.HeaderExtension;
-
-import javax.servlet.http.HttpServletResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

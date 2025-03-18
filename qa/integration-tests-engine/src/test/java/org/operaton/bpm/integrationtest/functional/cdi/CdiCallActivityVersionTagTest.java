@@ -63,6 +63,5 @@ public class CdiCallActivityVersionTagTest extends AbstractFoxPlatformIntegratio
     // then
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").superProcessInstanceId(processInstance.getId()).singleResult();
     assertThat(subInstance).isNotNull();
-
   }
 }

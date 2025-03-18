@@ -94,9 +94,9 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
       .addAsResource("META-INF/processes.xml");
 
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "pa2.war")
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addAsLibraries(DeploymentHelper.getAssertJ())
 
         .addAsLibraries(processArchiveJar)
 

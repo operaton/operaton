@@ -48,7 +48,6 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
             .addClass(GetVersionInfoDelegate.class)
             .addClass(UpdateRouterConfiguration.class)
             .addClass(FailingTransactionListenerDelegate.class)
-            .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
             .addAsResource("org/operaton/bpm/integrationtest/functional/transactions/AsyncJobExecutionTest.testAsyncServiceTasks.bpmn20.xml")
             .addAsResource("org/operaton/bpm/integrationtest/functional/transactions/AsyncJobExecutionTest.failingTransactionListener.bpmn20.xml")
             .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml");

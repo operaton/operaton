@@ -72,7 +72,5 @@ public class CdiBeanSignallableActivityBehaviorResolutionTest extends AbstractFo
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveBean");
 
     runtimeService.signal(processInstance.getId());
-
   }
-
 }

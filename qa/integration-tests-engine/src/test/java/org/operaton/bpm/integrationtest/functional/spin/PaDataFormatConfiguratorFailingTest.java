@@ -51,8 +51,8 @@ public class PaDataFormatConfiguratorFailingTest {
   @Deployment(managed = false, name = "deployment")
   public static WebArchive createDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "PaDataFormatConfiguratorFailingTest.war")
+        .addAsLibraries(DeploymentHelper.getAssertJ())
         .addAsResource("META-INF/processes.xml")
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ReferenceStoringProcessApplication.class)
         .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")

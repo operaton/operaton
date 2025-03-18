@@ -93,7 +93,7 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("paAsEjbModule-process")
       .count();
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

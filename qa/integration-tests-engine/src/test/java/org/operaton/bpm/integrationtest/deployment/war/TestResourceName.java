@@ -131,14 +131,12 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
-
+        .addAsLibraries(DeploymentHelper.getAssertJ())
         .addAsLibraries(pa1)
         .addAsLibraries(pa2)
         .addAsLibraries(pa3)
         .addAsLibraries(pa4)
 
-
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsResource(processAssets[4], "alternateDirectory/process4.bpmn")
         .addAsResource(processAssets[5], "alternateDirectory/subDirectory/process5.bpmn")
 

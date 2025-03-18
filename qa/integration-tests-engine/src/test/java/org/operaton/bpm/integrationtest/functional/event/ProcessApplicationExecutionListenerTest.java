@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,7 +45,6 @@ public class ProcessApplicationExecutionListenerTest extends AbstractFoxPlatform
       .addAsLibraries(DeploymentHelper.getEngineCdi())
       .addAsLibraries(DeploymentHelper.getAssertJ())
       .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
-      .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addClass(ExecutionListenerProcessApplication.class)
       .addAsResource("org/operaton/bpm/integrationtest/functional/event/ProcessApplicationEventSupportTest.testExecutionListener.bpmn20.xml");
@@ -63,7 +61,7 @@ public class ProcessApplicationExecutionListenerTest extends AbstractFoxPlatform
 
     Integer listenerInvocationCount = (Integer) runtimeService.getVariable(processInstance.getId(), ExecutionListenerProcessApplication.LISTENER_INVOCATION_COUNT);
     assertThat(listenerInvocationCount).isNotNull();
-    Assert.assertEquals(5, listenerInvocationCount.intValue());
+    assertThat(listenerInvocationCount.intValue()).isEqualTo(5);
   }
 
 }

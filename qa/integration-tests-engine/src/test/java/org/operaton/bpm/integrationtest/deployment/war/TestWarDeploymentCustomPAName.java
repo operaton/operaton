@@ -16,18 +16,17 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
-import org.operaton.bpm.BpmPlatform;
-import org.operaton.bpm.integrationtest.deployment.war.apps.CustomNameServletPA;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import java.util.Set;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Set;
+import org.operaton.bpm.BpmPlatform;
+import org.operaton.bpm.integrationtest.deployment.war.apps.CustomNameServletPA;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,10 +40,10 @@ public class TestWarDeploymentCustomPAName extends AbstractFoxPlatformIntegratio
   @Deployment
   public static WebArchive processArchive() {
     return ShrinkWrap.create(WebArchive.class, "pa1.war")
+        .addAsLibraries(DeploymentHelper.getAssertJ())
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CustomNameServletPA.class)
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml");
   }
 
@@ -52,8 +51,6 @@ public class TestWarDeploymentCustomPAName extends AbstractFoxPlatformIntegratio
   public void testProcessApplicationName() {
     Set<String> paNames = BpmPlatform.getProcessApplicationService().getProcessApplicationNames();
 
-    Assert.assertEquals(1, paNames.size());
-    assertThat(paNames).contains(CustomNameServletPA.NAME);
-
+    assertThat(paNames).hasSize(1).contains(CustomNameServletPA.NAME);
   }
 }

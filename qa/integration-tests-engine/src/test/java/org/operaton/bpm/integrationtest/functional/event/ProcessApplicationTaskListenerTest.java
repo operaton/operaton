@@ -49,7 +49,6 @@ public class ProcessApplicationTaskListenerTest extends AbstractFoxPlatformInteg
         .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getAssertJ())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(TaskListenerProcessApplication.class)
         .addAsResource("org/operaton/bpm/integrationtest/functional/event/ProcessApplicationEventSupportTest.testTaskListener.bpmn20.xml");

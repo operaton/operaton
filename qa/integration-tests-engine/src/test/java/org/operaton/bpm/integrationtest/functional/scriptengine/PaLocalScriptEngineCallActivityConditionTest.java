@@ -61,7 +61,6 @@ public class PaLocalScriptEngineCallActivityConditionTest extends AbstractFoxPla
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsLibraries(DeploymentHelper.getAssertJ())
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-            .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class);
 
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);

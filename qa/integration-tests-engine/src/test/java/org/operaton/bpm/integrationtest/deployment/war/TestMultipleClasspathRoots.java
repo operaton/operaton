@@ -29,8 +29,6 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.DeploymentHelper;
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -83,19 +81,10 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
     JavaArchive pa0 = ShrinkWrap.create(JavaArchive.class, "pa0.jar")
         .addAsResource(processAssets[0], "directory/processes/process.bpmn");
 
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
-        .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-        .addAsLibraries(DeploymentHelper.getEngineCdi())
+    return initWebArchiveDeployment()
         .addAsLibraries(pa0)
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
-        .addAsResource(paProcessesXml, "META-INF/processes.xml")
         .addAsResource(processAssets[1], "directory/processes/process.bpmn")
-        .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(TestResourceName.class);
-
-    TestContainer.addContainerSpecificResources(archive);
-
-    return archive;
   }
 
   @Test

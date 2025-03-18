@@ -39,12 +39,11 @@ import org.junit.runner.RunWith;
 public class TestProcessEnginesXmlInProcessApplication extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive processArchive() {    
-            
+  public static WebArchive processArchive() {
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addAsLibraries(DeploymentHelper.getAssertJ())
         .addAsResource("singleEngine.xml", "META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class);
 

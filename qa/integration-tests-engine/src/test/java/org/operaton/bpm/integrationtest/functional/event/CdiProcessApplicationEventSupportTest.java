@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.integrationtest.functional.event;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.event.beans.CdiEventSupportProcessApplication;
@@ -25,15 +31,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Meyer
@@ -47,9 +45,7 @@ public class CdiProcessApplicationEventSupportTest extends AbstractFoxPlatformIn
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsLibraries(DeploymentHelper.getAssertJ())
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CdiEventSupportProcessApplication.class)
@@ -59,7 +55,6 @@ public class CdiProcessApplicationEventSupportTest extends AbstractFoxPlatformIn
     TestContainer.addContainerSpecificResourcesForNonPa(archive);
 
     return archive;
-
   }
 
   @Test
@@ -68,14 +63,13 @@ public class CdiProcessApplicationEventSupportTest extends AbstractFoxPlatformIn
 
     Integer listenerInvocationCount = (Integer) runtimeService.getVariable(processInstance.getId(), ExecutionListenerProcessApplication.LISTENER_INVOCATION_COUNT);
     assertThat(listenerInvocationCount).isNotNull();
-    Assert.assertEquals(6, listenerInvocationCount.intValue());
+    assertThat(listenerInvocationCount.intValue()).isEqualTo(6);
 
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     taskService.setAssignee(task.getId(), "demo");
     listenerInvocationCount = (Integer) runtimeService.getVariable(processInstance.getId(), ExecutionListenerProcessApplication.LISTENER_INVOCATION_COUNT);
 
     // assignment & update events fired
-    Assert.assertEquals(8, listenerInvocationCount.intValue());
+    assertThat(listenerInvocationCount.intValue()).isEqualTo(8);
   }
-
 }

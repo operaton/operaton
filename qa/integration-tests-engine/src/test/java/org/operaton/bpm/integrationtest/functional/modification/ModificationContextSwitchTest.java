@@ -19,6 +19,7 @@ package org.operaton.bpm.integrationtest.functional.modification;
 import org.operaton.bpm.engine.runtime.ProcessInstanceModificationInstantiationBuilder;
 import org.operaton.bpm.integrationtest.functional.modification.beans.ExampleDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -48,7 +49,7 @@ public class ModificationContextSwitchTest extends AbstractFoxPlatformIntegratio
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-            .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
+            .addAsLibraries(DeploymentHelper.getAssertJ())
             .addClass(AbstractFoxPlatformIntegrationTest.class);
 
     TestContainer.addContainerSpecificResources(webArchive);

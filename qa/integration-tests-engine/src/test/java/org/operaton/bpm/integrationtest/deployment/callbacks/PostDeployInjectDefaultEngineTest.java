@@ -25,8 +25,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployInjectApp;
+import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;
 
 /**
  * @author Daniel Meyer
@@ -37,9 +39,11 @@ public class PostDeployInjectDefaultEngineTest {
   
   @Deployment
   public static WebArchive createDeployment() {
-    return ShrinkWrap.create(WebArchive.class, "test.war")
-        .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
+    var webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addClass(PostDeployInjectApp.class);
+
+    addContainerSpecificResourcesForNonPa(webArchive);
+    return webArchive;
   }
   
   @Test

@@ -22,6 +22,8 @@ import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooDataFormat
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooDataFormatProvider;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooSpin;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+import org.operaton.bpm.integrationtest.util.TestConstants;
 import org.operaton.spin.spi.DataFormatProvider;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -42,16 +44,20 @@ public class PaDataFormatAndPostDeployTest extends AbstractFoxPlatformIntegratio
 
   @Deployment
   public static WebArchive createDeployment() {
-
-    return initWebArchiveDeployment("test.war")
-        .addClass(PaDataformatAndPostDeployApp.class)
-        .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")
-        .addClass(Foo.class)
-        .addClass(FooDataFormat.class)
-        .addClass(FooDataFormatProvider.class)
-        .addClass(FooSpin.class)
-        .addAsServiceProvider(DataFormatProvider.class, FooDataFormatProvider.class);
-
+    return ShrinkWrap.create(WebArchive.class, "test.war")
+            .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+            .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getAssertJ())
+            .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
+            .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addClass(TestConstants.class)
+            .addClass(PaDataformatAndPostDeployApp.class)
+            .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")
+            .addClass(Foo.class)
+            .addClass(FooDataFormat.class)
+            .addClass(FooDataFormatProvider.class)
+            .addClass(FooSpin.class)
+            .addAsServiceProvider(DataFormatProvider.class, FooDataFormatProvider.class);
   }
 
   @Test

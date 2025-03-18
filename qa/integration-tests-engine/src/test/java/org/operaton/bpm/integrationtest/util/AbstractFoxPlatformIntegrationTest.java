@@ -67,7 +67,6 @@ public abstract class AbstractFoxPlatformIntegrationTest {
               .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
               .addAsLibraries(DeploymentHelper.getEngineCdi())
               .addAsLibraries(DeploymentHelper.getAssertJ())
-              .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
               .addAsResource(processesXmlPath, "META-INF/processes.xml")
               .addClass(AbstractFoxPlatformIntegrationTest.class)
               .addClass(TestConstants.class);

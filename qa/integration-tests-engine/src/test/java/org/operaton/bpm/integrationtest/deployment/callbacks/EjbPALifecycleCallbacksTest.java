@@ -25,6 +25,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;
+
 /**
  * @author Daniel Meyer
  *
@@ -34,12 +36,13 @@ public class EjbPALifecycleCallbacksTest extends AbstractFoxPlatformIntegrationT
 
   @Deployment
   public static WebArchive createDeployment() {
-
-    return ShrinkWrap.create(WebArchive.class, "test.war")
+    var webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
         .addClass(CustomEjbProcessApplication.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class);
 
+    addContainerSpecificResourcesForNonPa(webArchive);
+    return webArchive;
   }
 
   @Test

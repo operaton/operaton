@@ -18,6 +18,8 @@ package org.operaton.bpm.integrationtest.util;
 
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
+import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
 
 public class DeploymentHelper extends AbstractDeploymentHelper {
 
@@ -25,6 +27,7 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
   protected static final String OPERATON_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi";
   protected static final String OPERATON_ENGINE_SPRING = "org.operaton.bpm:operaton-engine-spring";
   protected static final String OPERATON_ENGINE = "org.operaton.bpm:operaton-engine";
+  protected static JavaArchive cachedAssertJ;
 
   public static JavaArchive getEjbClient() {
     return getEjbClient(OPERATON_EJB_CLIENT);
@@ -42,8 +45,25 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
     return getEngineSpring(OPERATON_ENGINE_SPRING);
   }
 
-  public static JavaArchive[] getAssertJ() {
-    return resolveDependenciesFromPomXml(OPERATON_ENGINE_CDI, "org.assertj:assertj-core");
+  public static JavaArchive getAssertJ() {
+    if (cachedAssertJ != null) {
+      return cachedAssertJ;
+    } else {
+      JavaArchive[] archives = Maven.configureResolver()
+        .workOffline()
+        .loadPomFromFile("pom.xml")
+        .addDependencies(MavenDependencies.createDependency("org.assertj:assertj-core", ScopeType.COMPILE, false))
+        .resolve()
+        .withTransitivity()
+        .as(JavaArchive.class);
+
+      if(archives.length == 0) {
+        throw new RuntimeException("Could not resolve AssertJ");
+      } else {
+        cachedAssertJ = archives[0];
+        return cachedAssertJ;
+      }
+    }
   }
 
   protected static JavaArchive[] getWeld(String engineCdiArtifactName) {

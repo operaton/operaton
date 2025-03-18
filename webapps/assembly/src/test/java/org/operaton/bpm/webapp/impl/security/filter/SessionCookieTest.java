@@ -163,9 +163,10 @@ class SessionCookieTest {
 
     // when
     headerExtension.performRequest();
+    String cookieHeader = headerExtension.getCookieHeader();
 
     // then
-    assertThat(headerExtension.getCookieHeader()).matches(
+    assertThat(cookieHeader).matches(
             headerExtension.getSessionCookieRegex("operaton", "MYCOOKIENAME", "Lax", false));
   }
 

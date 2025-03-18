@@ -126,7 +126,7 @@ public class Dmn {
 
   /** the singleton instance of {@link Dmn}. If you want to customize the behavior of Dmn,
    * replace this instance with an instance of a custom subclass of {@link Dmn}. */
-  public static final Dmn INSTANCE = new Dmn();
+  public static Dmn INSTANCE = new Dmn();
 
   /** the parser used by the Dmn implementation. */
   private final DmnParser dmnParser = new DmnParser();

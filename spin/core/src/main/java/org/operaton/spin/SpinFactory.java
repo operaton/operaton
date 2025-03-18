@@ -29,7 +29,7 @@ public abstract class SpinFactory {
   /**
    * The singleton instance of the SpinFactory.
    */
-  public static final SpinFactory INSTANCE = new SpinFactoryImpl();
+  public static SpinFactory INSTANCE = new SpinFactoryImpl();
 
   public abstract <T extends Spin<?>> T createSpin(Object parameter);
 

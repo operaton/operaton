@@ -176,7 +176,7 @@ jobs:
         if: always()
         uses: mikepenz/action-junit-report@v4
         with:
-          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml,${{ github.workspace }}/**/target/failsafe-reports/*.xml
+          report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()

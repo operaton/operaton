@@ -25,7 +25,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployInjectApp;
-import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.integrationtest.util.TestContainer.addContainerSpecificResourcesForNonPa;

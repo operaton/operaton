@@ -178,8 +178,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   public void testBatchWindowXmlConfigParsingException() {
     // when/then
     assertThatThrownBy(() -> ProcessEngineConfiguration
-      .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-batch-window-map-wrong-values.operaton.cfg.xml")
-      .buildProcessEngine())
+      .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-batch-window-map-wrong-values.operaton.cfg.xml"))
       .isInstanceOf(BeanCreationException.class)
       .hasRootCauseInstanceOf(PropertyBatchUpdateException.class)
       .rootCause().hasMessageContaining("startTime");

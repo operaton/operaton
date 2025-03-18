@@ -16,20 +16,18 @@
  */
 package org.operaton.bpm.integrationtest.deployment.jar;
 
-import org.operaton.bpm.application.impl.ejb.DefaultEjbProcessApplication;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-
 import org.jboss.arquillian.container.test.api.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.application.impl.ejb.DefaultEjbProcessApplication;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test only runs on WildFly, as for all other servers, Arquillian wraps the jar in a war file

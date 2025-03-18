@@ -5,8 +5,8 @@ operaton-spin
   <a href="https://operaton.com/">Home</a> |
   <a href="https://docs.operaton.org/manual/reference/spin/">Documentation</a> |
   <a href="https://forum.operaton.org/">Forum</a> |
-  <a href="../LICENSE">License</a> |
-  <a href="../CONTRIBUTING.md">Contribute</a>
+  <a href="../../LICENSE">License</a> |
+  <a href="../../CONTRIBUTING.md">Contribute</a>
 </p>
 
 Library for simple XML and JSON processing on the JVM (Java Virtual Machine), targeting Java and
@@ -76,4 +76,4 @@ Have a look at our [contribution guide](https://github.com/operaton/operaton/blo
 
 # License:
 
-The source files in this repository are made available under the [Apache License Version 2.0](../LICENSE).
+The source files in this repository are made available under the [Apache License Version 2.0](../../LICENSE).

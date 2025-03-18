@@ -51,6 +51,9 @@ parse_args "$@"
 
 pushd $(pwd) > /dev/null
 cd $(git rev-parse --show-toplevel) || exit 1
+PROJECT_ROOT=$(pwd)
+
+MVN_ARGS+=(clean install)
 
 if [ "$REPORT_PLUGINS" = "true" ]; then
   MVN_ARGS+=(versions:dependency-updates-aggregate-report)

@@ -185,6 +185,7 @@ jobs:
           name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
           path: |
             ${{ github.workspace }}/**/target/surefire-reports/**
+            ${{ github.workspace }}/**/target/failsafe-reports/**
             ${{ github.workspace }}/qa/**/target/**/logs/**
             ${{ github.workspace }}/**/target/cargo.log
           retention-days: 30

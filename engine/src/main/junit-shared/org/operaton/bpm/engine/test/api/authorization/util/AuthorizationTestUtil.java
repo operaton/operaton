@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.util;
 
-import static junit.framework.TestCase.assertEquals;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -56,9 +56,9 @@ public class AuthorizationTestUtil {
    */
   public static void assertExceptionInfo(String expectedPermissionName, String expectedResourceName, String expectedResourceId,
       MissingAuthorization info) {
-    assertEquals(expectedPermissionName, info.getViolatedPermissionName());
-    assertEquals(expectedResourceName, info.getResourceType());
-    assertEquals(expectedResourceId, info.getResourceId());
+    assertThat(info.getViolatedPermissionName()).isEqualTo(expectedPermissionName);
+    assertThat(info.getResourceType()).isEqualTo(expectedResourceName);
+    assertThat(info.getResourceId()).isEqualTo(expectedResourceId);
   }
 
   /**

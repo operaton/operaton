@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions.READ;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_ADMIN;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
+
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -34,13 +41,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 import org.operaton.bpm.engine.test.api.identity.TestPermissions;
 import org.operaton.bpm.engine.test.api.identity.TestResource;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions.READ;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_ADMIN;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 
 /**
  * @author Tobias Metzke

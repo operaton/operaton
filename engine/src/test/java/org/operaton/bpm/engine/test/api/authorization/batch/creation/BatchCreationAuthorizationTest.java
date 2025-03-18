@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.test.api.authorization.batch.creation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -27,44 +30,39 @@ import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
 /**
  * @author Askar Akhmerov
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public abstract class BatchCreationAuthorizationTest {
 
   protected static final String TEST_REASON = "test reason";
   protected static final String JOB_EXCEPTION_DEFINITION_XML = "org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessInstance processInstance;
   protected RuntimeService runtimeService;
   protected ManagementService managementService;
   protected HistoryService historyService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
-
-  @Parameterized.Parameter
+  @Parameter
   public AuthorizationScenario scenario;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
     runtimeService = engineRule.getRuntimeService();
@@ -72,18 +70,18 @@ public abstract class BatchCreationAuthorizationTest {
     historyService = engineRule.getHistoryService();
   }
 
-  @Before
+  @BeforeEach
   public void deployProcesses() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 
-  @After
+  @AfterEach
   public void cleanBatch() {
     Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
     if (batch != null) {

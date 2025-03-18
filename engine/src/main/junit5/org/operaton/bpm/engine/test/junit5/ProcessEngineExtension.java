@@ -42,6 +42,7 @@ import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -282,6 +283,10 @@ public class ProcessEngineExtension implements TestWatcher,
    TestHelper.resetIdGenerator(processEngineConfiguration);
    ClockUtil.reset();
    PlatformDiagnosticsRegistry.clear();
+
+   for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
+     historyService.deleteUserOperationLogEntry(logEntry.getId());
+   }
 
    // finally clear database and fail test if database is dirty
    if (ensureCleanAfterTest) {

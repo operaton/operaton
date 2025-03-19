@@ -36,10 +36,10 @@ import org.operaton.bpm.engine.query.QueryProperty;
 public class JsonQueryOrderingPropertyConverter extends JsonObjectConverter<QueryOrderingProperty> {
 
 
-  protected static JsonQueryOrderingPropertyConverter INSTANCE =
+  protected static final JsonQueryOrderingPropertyConverter INSTANCE =
       new JsonQueryOrderingPropertyConverter();
 
-  protected static JsonArrayConverter<List<QueryOrderingProperty>> ARRAY_CONVERTER =
+  protected static final JsonArrayConverter<List<QueryOrderingProperty>> ARRAY_CONVERTER =
       new JsonArrayOfObjectsConverter<>(INSTANCE);
 
   public static final String RELATION = "relation";

@@ -24,7 +24,7 @@ import java.util.StringJoiner;
  * Aggregated information on deployment ids and the number of related resources
  */
 public class DeploymentMapping {
-  protected static String NULL_ID = "$NULL";
+  protected static final String NULL_ID = "$NULL";
 
   protected String deploymentId;
   protected int count;

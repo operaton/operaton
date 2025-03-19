@@ -97,8 +97,8 @@ public class CustomHistoryLevelIncidentTest {
 
   DeploymentWithDefinitions deployment;
 
-  public static String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
-  public static BpmnModelInstance FAILING_SERVICE_TASK_MODEL  = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
+  public static final String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
+  public static final BpmnModelInstance FAILING_SERVICE_TASK_MODEL  = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
     .startEvent("start")
     .serviceTask("task")
       .operatonAsyncBefore()

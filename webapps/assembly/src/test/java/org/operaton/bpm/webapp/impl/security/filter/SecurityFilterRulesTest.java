@@ -30,7 +30,6 @@ import java.util.List;
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.webapp.impl.security.auth.Authentication;
 import org.operaton.bpm.webapp.impl.security.auth.Authentications;
 import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;
@@ -54,12 +53,9 @@ public class SecurityFilterRulesTest {
   protected static final String EMPTY_PATH = "";
   protected static final String CUSTOM_APP_PATH = "/my-custom/application/path";
 
-  public static List<SecurityFilterRule> FILTER_RULES;
+  public static List<SecurityFilterRule> filterRules;
 
-  public static Authentication NO_AUTHENTICATION = null;
-  public static Authentication LOGGED_IN_USER = new Authentication("user", "default");
-
-  public static final String TESTUSER_ID = "testuser";
+  public static final Authentication LOGGED_IN_USER = new Authentication("user", "default");
 
   protected String applicationPath;
 
@@ -70,7 +66,7 @@ public class SecurityFilterRulesTest {
 
   public SecurityFilterRulesTest(String applicationPath) throws IOException {
     this.applicationPath = applicationPath;
-    FILTER_RULES = loadFilterRules(applicationPath);
+    filterRules = loadFilterRules(applicationPath);
   }
 
   @Before
@@ -100,7 +96,7 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldHaveRulesLoaded() {
-    assertThat(FILTER_RULES).hasSize(1);
+    assertThat(filterRules).hasSize(1);
   }
 
 
@@ -481,7 +477,7 @@ public class SecurityFilterRulesTest {
   }
 
   protected Authorization getAuthorization(String method, String uri) {
-    return FilterRules.authorize(method, uri, FILTER_RULES);
+    return FilterRules.authorize(method, uri, filterRules);
   }
 
   protected boolean isAuthorized(String method, String uri) {

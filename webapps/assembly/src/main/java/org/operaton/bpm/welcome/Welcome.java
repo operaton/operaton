@@ -32,7 +32,7 @@ public class Welcome {
    * initialized by bootstrapping operaton welcome with an specific
    * instance
    */
-  protected static WelcomeRuntimeDelegate WELCOME_RUNTIME_DELEGATE;
+  protected static WelcomeRuntimeDelegate welcomeRuntimeDelegate;
 
   /**
    * Returns an instance of {@link WelcomeRuntimeDelegate}
@@ -40,7 +40,7 @@ public class Welcome {
    * @return
    */
   public static WelcomeRuntimeDelegate getRuntimeDelegate() {
-    return WELCOME_RUNTIME_DELEGATE;
+    return welcomeRuntimeDelegate;
   }
 
   /**
@@ -48,6 +48,6 @@ public class Welcome {
    * @param cockpitRuntimeDelegate
    */
   public static void setRuntimeDelegate(WelcomeRuntimeDelegate welcomeRuntimeDelegate) {
-    WELCOME_RUNTIME_DELEGATE = welcomeRuntimeDelegate;
+    Welcome.welcomeRuntimeDelegate = welcomeRuntimeDelegate;
   }
 }

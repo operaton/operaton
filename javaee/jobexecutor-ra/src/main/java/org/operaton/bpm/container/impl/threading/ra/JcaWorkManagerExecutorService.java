@@ -40,9 +40,9 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
  */
 public class JcaWorkManagerExecutorService implements Referenceable, ExecutorService {
 
-  public static int START_WORK_TIMEOUT = 1500;
+  public static final int START_WORK_TIMEOUT = 1500;
 
-  private static final Logger logger = Logger.getLogger(JcaWorkManagerExecutorService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(JcaWorkManagerExecutorService.class.getName());
 
   protected final JcaExecutorServiceConnector ra;
   protected WorkManager workManager;
@@ -68,7 +68,7 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
       return true;
 
     } catch (WorkException e) {
-      logger.log(Level.WARNING, "Could not schedule : "+e.getMessage(), e);
+      LOGGER.log(Level.WARNING, "Could not schedule : "+e.getMessage(), e);
       return false;
 
     }
@@ -81,10 +81,10 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
       return true;
 
     } catch (WorkRejectedException e) {
-      logger.log(Level.FINE, "WorkRejectedException while scheduling jobs for execution", e);
+      LOGGER.log(Level.FINE, "WorkRejectedException while scheduling jobs for execution", e);
 
     } catch (WorkException e) {
-      logger.log(Level.WARNING, "WorkException while scheduling jobs for execution", e);
+      LOGGER.log(Level.WARNING, "WorkException while scheduling jobs for execution", e);
     }
 
     return false;

@@ -38,7 +38,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
   public static final String STATE_MANIPULATING_EXPRESSION =
       "${''.getClass().forName('" + TaskQueryDisabledAdhocExpressionsTest.class.getName() + "').getField('MUTABLE_FIELD').setLong(null, 42)}";
 
-  public static long MUTABLE_FIELD = 0;
+  public static long mutableField = 0;
 
   @Test
   public void testDefaultSetting() {
@@ -48,7 +48,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
 
   @Before
   public void setUp() {
-    MUTABLE_FIELD = 0;
+    mutableField = 0;
   }
 
   @Test
@@ -111,7 +111,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
   }
 
   protected boolean fieldIsUnchanged() {
-    return MUTABLE_FIELD == 0;
+    return mutableField == 0;
   }
 
   protected void executeAndValidateFailingQuery(TaskQuery query) {

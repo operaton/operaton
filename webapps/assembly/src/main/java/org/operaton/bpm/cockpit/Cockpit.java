@@ -36,7 +36,7 @@ public class Cockpit {
    * initialized by bootstrapping operaton cockpit with an specific
    * instance
    */
-  protected static CockpitRuntimeDelegate COCKPIT_RUNTIME_DELEGATE;
+  protected static CockpitRuntimeDelegate cockpitRuntimeDelegate;
 
   /**
    * Returns a configured {@link QueryService} to execute custom
@@ -72,7 +72,7 @@ public class Cockpit {
    * @return
    */
   public static CockpitRuntimeDelegate getRuntimeDelegate() {
-    return COCKPIT_RUNTIME_DELEGATE;
+    return cockpitRuntimeDelegate;
   }
 
   /**
@@ -80,6 +80,6 @@ public class Cockpit {
    * @param cockpitRuntimeDelegate
    */
   public static void setCockpitRuntimeDelegate(CockpitRuntimeDelegate cockpitRuntimeDelegate) {
-    COCKPIT_RUNTIME_DELEGATE = cockpitRuntimeDelegate;
+    Cockpit.cockpitRuntimeDelegate = cockpitRuntimeDelegate;
   }
 }

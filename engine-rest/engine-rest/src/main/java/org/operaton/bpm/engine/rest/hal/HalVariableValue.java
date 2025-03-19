@@ -31,7 +31,7 @@ import java.util.Map;
 public class HalVariableValue extends HalResource<HalVariableValue> {
 
   // add leading / by hand because otherwise it will be encoded as %2F (see CAM-3091)
-  public static HalRelation REL_SELF = HalRelation.build("self", VariableResource.class, UriBuilder.fromPath("/{scopeResourcePath}").path("{scopeId}").path("{variablesName}").path("{variableName}"));
+  public static final HalRelation REL_SELF = HalRelation.build("self", VariableResource.class, UriBuilder.fromPath("/{scopeResourcePath}").path("{scopeId}").path("{variablesName}").path("{variableName}"));
 
   protected String name;
   protected Object value;

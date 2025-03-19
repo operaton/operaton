@@ -41,17 +41,17 @@ public class DateTimeUtil {
 
   private static final DateTimeZone JVM_DEFAULT_DATE_TIME_ZONE = DateTimeZone.forTimeZone(TimeZone.getDefault());
 
-  private static DateTimeFormatter DATE_TIME_FORMATER;
+  private static DateTimeFormatter dateTimeFormatter;
 
   private DateTimeUtil() {
   }
 
   private static DateTimeFormatter getDataTimeFormater() {
-    if (DATE_TIME_FORMATER == null) {
-      DATE_TIME_FORMATER = ISODateTimeFormat.dateTimeParser().withZone(JVM_DEFAULT_DATE_TIME_ZONE);
+    if (dateTimeFormatter == null) {
+      dateTimeFormatter = ISODateTimeFormat.dateTimeParser().withZone(JVM_DEFAULT_DATE_TIME_ZONE);
     }
 
-    return DATE_TIME_FORMATER;
+    return dateTimeFormatter;
   }
 
   public static DateTime now() {

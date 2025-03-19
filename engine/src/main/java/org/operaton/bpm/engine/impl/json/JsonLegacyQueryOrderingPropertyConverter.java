@@ -44,7 +44,7 @@ public class JsonLegacyQueryOrderingPropertyConverter {
 
   public static final String ORDER_BY_DELIMITER = ",";
 
-  public static JsonLegacyQueryOrderingPropertyConverter INSTANCE =
+  public static final JsonLegacyQueryOrderingPropertyConverter INSTANCE =
       new JsonLegacyQueryOrderingPropertyConverter();
 
   public List<QueryOrderingProperty> fromOrderByString(String orderByString) {

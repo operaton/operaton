@@ -36,28 +36,28 @@ import org.operaton.bpm.engine.task.Task;
 public class MyResourceAuthorizationProvider implements ResourceAuthorizationProvider {
 
   // assignee
-  public static String OLD_ASSIGNEE;
-  public static String NEW_ASSIGNEE;
+  public static String oldAssignee;
+  public static String newAssignee;
 
   // owner
-  public static String OLD_OWNER;
-  public static String NEW_OWNER;
+  public static String oldOwner;
+  public static String newOwner;
 
   // add user identity link
-  public static String ADD_USER_IDENTITY_LINK_TYPE;
-  public static String ADD_USER_IDENTITY_LINK_USER;
+  public static String addUserIdentityLinkType;
+  public static String addUserIdentityLinkUser;
 
   // delete user identity link
-  public static String DELETE_USER_IDENTITY_LINK_TYPE = null;
-  public static String DELETE_USER_IDENTITY_LINK_USER = null;
+  public static String deleteUserIdentityLinkType = null;
+  public static String deleteUserIdentityLinkUser = null;
 
   // add group identity link
-  public static String ADD_GROUP_IDENTITY_LINK_TYPE;
-  public static String ADD_GROUP_IDENTITY_LINK_GROUP;
+  public static String addGroupIdentityLinkType;
+  public static String addGroupIdentityLinkGroup;
 
   // delete group identity link
-  public static String DELETE_GROUP_IDENTITY_LINK_TYPE = null;
-  public static String DELETE_GROUP_IDENTITY_LINK_GROUP = null;
+  public static String deleteGroupIdentityLinkType = null;
+  public static String deleteGroupIdentityLinkGroup = null;
 
   @Override
   public AuthorizationEntity[] newUser(User user) {
@@ -116,59 +116,59 @@ public class MyResourceAuthorizationProvider implements ResourceAuthorizationPro
 
   @Override
   public AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
-    OLD_ASSIGNEE = oldAssignee;
-    NEW_ASSIGNEE = newAssignee;
+    MyResourceAuthorizationProvider.oldAssignee = oldAssignee;
+    MyResourceAuthorizationProvider.newAssignee = newAssignee;
     return null;
   }
 
   @Override
   public AuthorizationEntity[] newTaskOwner(Task task, String oldOwner, String newOwner) {
-    OLD_OWNER = oldOwner;
-    NEW_OWNER = newOwner;
+    MyResourceAuthorizationProvider.oldOwner = oldOwner;
+    MyResourceAuthorizationProvider.newOwner = newOwner;
     return null;
   }
 
   @Override
   public AuthorizationEntity[] newTaskUserIdentityLink(Task task, String userId, String type) {
-    ADD_USER_IDENTITY_LINK_TYPE = type;
-    ADD_USER_IDENTITY_LINK_USER = userId;
+    addUserIdentityLinkType = type;
+    addUserIdentityLinkUser = userId;
     return null;
   }
 
   @Override
   public AuthorizationEntity[] newTaskGroupIdentityLink(Task task, String groupId, String type) {
-    ADD_GROUP_IDENTITY_LINK_TYPE = type;
-    ADD_GROUP_IDENTITY_LINK_GROUP = groupId;
+    addGroupIdentityLinkType = type;
+    addGroupIdentityLinkGroup = groupId;
     return null;
   }
 
   @Override
   public AuthorizationEntity[] deleteTaskUserIdentityLink(Task task, String userId, String type) {
-    DELETE_USER_IDENTITY_LINK_TYPE = type;
-    DELETE_USER_IDENTITY_LINK_USER = userId;
+    deleteUserIdentityLinkType = type;
+    deleteUserIdentityLinkUser = userId;
     return null;
   }
 
   @Override
   public AuthorizationEntity[] deleteTaskGroupIdentityLink(Task task, String groupId, String type) {
-    DELETE_GROUP_IDENTITY_LINK_TYPE = type;
-    DELETE_GROUP_IDENTITY_LINK_GROUP = groupId;
+    deleteGroupIdentityLinkType = type;
+    deleteGroupIdentityLinkGroup = groupId;
     return null;
   }
 
   public static void clearProperties() {
-    OLD_ASSIGNEE = null;
-    NEW_ASSIGNEE = null;
-    OLD_OWNER = null;
-    NEW_OWNER = null;
-    ADD_USER_IDENTITY_LINK_TYPE = null;
-    ADD_USER_IDENTITY_LINK_USER = null;
-    ADD_GROUP_IDENTITY_LINK_TYPE = null;
-    ADD_GROUP_IDENTITY_LINK_GROUP = null;
-    DELETE_USER_IDENTITY_LINK_TYPE = null;
-    DELETE_USER_IDENTITY_LINK_USER = null;
-    DELETE_GROUP_IDENTITY_LINK_TYPE = null;
-    DELETE_GROUP_IDENTITY_LINK_GROUP = null;
+    oldAssignee = null;
+    newAssignee = null;
+    oldOwner = null;
+    newOwner = null;
+    addUserIdentityLinkType = null;
+    addUserIdentityLinkUser = null;
+    addGroupIdentityLinkType = null;
+    addGroupIdentityLinkGroup = null;
+    deleteUserIdentityLinkType = null;
+    deleteUserIdentityLinkUser = null;
+    deleteGroupIdentityLinkType = null;
+    deleteGroupIdentityLinkGroup = null;
   }
 
   @Override

@@ -112,8 +112,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.setAssignee(taskId, "demo");
 
     // then (1)
-    assertThat(MyResourceAuthorizationProvider.OLD_ASSIGNEE).isNull();
-    assertThat(MyResourceAuthorizationProvider.NEW_ASSIGNEE).isEqualTo("demo");
+    assertThat(MyResourceAuthorizationProvider.oldAssignee).isNull();
+    assertThat(MyResourceAuthorizationProvider.newAssignee).isEqualTo("demo");
 
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -121,8 +121,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.setAssignee(taskId, userId);
 
     // then (2)
-    assertThat(MyResourceAuthorizationProvider.OLD_ASSIGNEE).isEqualTo("demo");
-    assertThat(MyResourceAuthorizationProvider.NEW_ASSIGNEE).isEqualTo(userId);
+    assertThat(MyResourceAuthorizationProvider.oldAssignee).isEqualTo("demo");
+    assertThat(MyResourceAuthorizationProvider.newAssignee).isEqualTo(userId);
 
     taskService.deleteTask(taskId, true);
   }
@@ -142,8 +142,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.setOwner(taskId, "demo");
 
     // then (1)
-    assertThat(MyResourceAuthorizationProvider.OLD_OWNER).isNull();
-    assertThat(MyResourceAuthorizationProvider.NEW_OWNER).isEqualTo("demo");
+    assertThat(MyResourceAuthorizationProvider.oldOwner).isNull();
+    assertThat(MyResourceAuthorizationProvider.newOwner).isEqualTo("demo");
 
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -151,8 +151,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.setOwner(taskId, userId);
 
     // then (2)
-    assertThat(MyResourceAuthorizationProvider.OLD_OWNER).isEqualTo("demo");
-    assertThat(MyResourceAuthorizationProvider.NEW_OWNER).isEqualTo(userId);
+    assertThat(MyResourceAuthorizationProvider.oldOwner).isEqualTo("demo");
+    assertThat(MyResourceAuthorizationProvider.newOwner).isEqualTo(userId);
 
     taskService.deleteTask(taskId, true);
   }
@@ -172,8 +172,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.addCandidateUser(taskId, "demo");
 
     // then
-    assertThat(MyResourceAuthorizationProvider.ADD_USER_IDENTITY_LINK_TYPE).isEqualTo(IdentityLinkType.CANDIDATE);
-    assertThat(MyResourceAuthorizationProvider.ADD_USER_IDENTITY_LINK_USER).isEqualTo("demo");
+    assertThat(MyResourceAuthorizationProvider.addUserIdentityLinkType).isEqualTo(IdentityLinkType.CANDIDATE);
+    assertThat(MyResourceAuthorizationProvider.addUserIdentityLinkUser).isEqualTo("demo");
 
     taskService.deleteTask(taskId, true);
   }
@@ -193,8 +193,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.addUserIdentityLink(taskId, "demo", "myIdentityLink");
 
     // then
-    assertThat(MyResourceAuthorizationProvider.ADD_USER_IDENTITY_LINK_TYPE).isEqualTo("myIdentityLink");
-    assertThat(MyResourceAuthorizationProvider.ADD_USER_IDENTITY_LINK_USER).isEqualTo("demo");
+    assertThat(MyResourceAuthorizationProvider.addUserIdentityLinkType).isEqualTo("myIdentityLink");
+    assertThat(MyResourceAuthorizationProvider.addUserIdentityLinkUser).isEqualTo("demo");
 
     taskService.deleteTask(taskId, true);
   }
@@ -214,8 +214,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.addCandidateGroup(taskId, "management");
 
     // then
-    assertThat(MyResourceAuthorizationProvider.ADD_GROUP_IDENTITY_LINK_TYPE).isEqualTo(IdentityLinkType.CANDIDATE);
-    assertThat(MyResourceAuthorizationProvider.ADD_GROUP_IDENTITY_LINK_GROUP).isEqualTo("management");
+    assertThat(MyResourceAuthorizationProvider.addGroupIdentityLinkType).isEqualTo(IdentityLinkType.CANDIDATE);
+    assertThat(MyResourceAuthorizationProvider.addGroupIdentityLinkGroup).isEqualTo("management");
 
     taskService.deleteTask(taskId, true);
   }
@@ -235,8 +235,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.addGroupIdentityLink(taskId, "management", "myIdentityLink");
 
     // then
-    assertThat(MyResourceAuthorizationProvider.ADD_GROUP_IDENTITY_LINK_TYPE).isEqualTo("myIdentityLink");
-    assertThat(MyResourceAuthorizationProvider.ADD_GROUP_IDENTITY_LINK_GROUP).isEqualTo("management");
+    assertThat(MyResourceAuthorizationProvider.addGroupIdentityLinkType).isEqualTo("myIdentityLink");
+    assertThat(MyResourceAuthorizationProvider.addGroupIdentityLinkGroup).isEqualTo("management");
 
     taskService.deleteTask(taskId, true);
   }
@@ -257,8 +257,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.deleteCandidateUser(taskId, "demo");
 
     // then
-    assertThat(MyResourceAuthorizationProvider.DELETE_USER_IDENTITY_LINK_TYPE).isEqualTo(IdentityLinkType.CANDIDATE);
-    assertThat(MyResourceAuthorizationProvider.DELETE_USER_IDENTITY_LINK_USER).isEqualTo("demo");
+    assertThat(MyResourceAuthorizationProvider.deleteUserIdentityLinkType).isEqualTo(IdentityLinkType.CANDIDATE);
+    assertThat(MyResourceAuthorizationProvider.deleteUserIdentityLinkUser).isEqualTo("demo");
 
     taskService.deleteTask(taskId, true);
   }
@@ -279,8 +279,8 @@ public class ResourceAuthorizationProviderTest {
     taskService.deleteCandidateGroup(taskId, "management");
 
     // then
-    assertThat(MyResourceAuthorizationProvider.DELETE_GROUP_IDENTITY_LINK_TYPE).isEqualTo(IdentityLinkType.CANDIDATE);
-    assertThat(MyResourceAuthorizationProvider.DELETE_GROUP_IDENTITY_LINK_GROUP).isEqualTo("management");
+    assertThat(MyResourceAuthorizationProvider.deleteGroupIdentityLinkType).isEqualTo(IdentityLinkType.CANDIDATE);
+    assertThat(MyResourceAuthorizationProvider.deleteGroupIdentityLinkGroup).isEqualTo("management");
 
     taskService.deleteTask(taskId, true);
   }

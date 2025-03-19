@@ -51,7 +51,7 @@ import org.junit.rules.RuleChain;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
 
-  protected static String DECISION = "decision";
+  protected static final String DECISION = "decision";
 
   public static final String USER_ID = "userId";
 

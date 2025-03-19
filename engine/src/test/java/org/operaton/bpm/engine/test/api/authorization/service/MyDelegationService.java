@@ -29,8 +29,8 @@ import org.operaton.bpm.engine.impl.identity.Authentication;
  */
 public abstract class MyDelegationService {
 
-  public static Authentication CURRENT_AUTHENTICATION;
-  public static Long INSTANCES_COUNT;
+  public static Authentication currentAuthentication;
+  public static Long instancesCount;
 
   // fetch current authentication //////////////////////////////////////////
 
@@ -48,7 +48,7 @@ public abstract class MyDelegationService {
   }
 
   protected void logAuthentication(IdentityService identityService) {
-    CURRENT_AUTHENTICATION = identityService.getCurrentAuthentication();
+    currentAuthentication = identityService.getCurrentAuthentication();
   }
 
   // execute a query /////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ public abstract class MyDelegationService {
   }
 
   protected void logInstancesCount(RuntimeService runtimeService) {
-    INSTANCES_COUNT = runtimeService.createProcessInstanceQuery().count();
+    instancesCount = runtimeService.createProcessInstanceQuery().count();
   }
 
   // execute a command ///////////////////////////////////////////////////////
@@ -92,8 +92,8 @@ public abstract class MyDelegationService {
   // helper /////////////////////////////////////////////////////////////////
 
   public static void clearProperties() {
-    CURRENT_AUTHENTICATION = null;
-    INSTANCES_COUNT = null;
+    currentAuthentication = null;
+    instancesCount = null;
   }
 
 }

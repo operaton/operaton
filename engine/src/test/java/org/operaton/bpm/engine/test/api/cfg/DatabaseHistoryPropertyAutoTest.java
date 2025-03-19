@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -27,9 +29,6 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.junit.After;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -91,7 +90,7 @@ public class DatabaseHistoryPropertyAutoTest {
     assertThat(processEngine.getProcessEngineConfiguration().getHistoryLevel()).isEqualTo(HistoryLevel.HISTORY_LEVEL_AUDIT);
   }
 
-  @After
+  @AfterEach
   public void after() {
     for (ProcessEngineImpl engine : processEngines) {
       // no need to drop schema when testing with h2

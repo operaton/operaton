@@ -20,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
@@ -30,8 +32,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
@@ -42,7 +42,7 @@ public class FallbackSerializerFactoryTest {
   protected ProcessEngine processEngine;
   protected String deployment;
 
-  @After
+  @AfterEach
   public void tearDown() {
 
     if (processEngine != null) {

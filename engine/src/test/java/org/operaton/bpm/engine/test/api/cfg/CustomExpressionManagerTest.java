@@ -21,13 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.el.CommandContextFunctions;
 import org.operaton.bpm.engine.impl.el.DateTimeFunctions;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
@@ -62,7 +62,7 @@ public class CustomExpressionManagerTest {
             .containsKey(DateTimeFunctions.DATE_TIME);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     if (engine != null) {
       engine.close();

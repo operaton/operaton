@@ -20,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -28,8 +30,6 @@ import org.operaton.bpm.engine.impl.SchemaOperationsProcessEngineBuild;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Christian Lipphardt
@@ -40,7 +40,7 @@ public class DatabaseHistoryPropertyTest {
   private static ProcessEngineImpl processEngineImpl;
 
   // make sure schema is dropped
-  @After
+  @AfterEach
   public void cleanup() {
     processEngineImpl.close();
     processEngineImpl = null;

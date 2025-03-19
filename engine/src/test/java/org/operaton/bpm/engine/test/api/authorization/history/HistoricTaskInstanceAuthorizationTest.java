@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
+import static org.assertj.core.api.Assertions.as;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.list;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
@@ -24,9 +28,6 @@ import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_I
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.InstanceOfAssertFactories.list;
 
 import java.util.List;
 
@@ -41,7 +42,12 @@ import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.TaskPermissions;
-import org.operaton.bpm.engine.history.*;
+import org.operaton.bpm.engine.history.DurationReportResult;
+import org.operaton.bpm.engine.history.HistoricProcessInstance;
+import org.operaton.bpm.engine.history.HistoricTaskInstance;
+import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
+import org.operaton.bpm.engine.history.HistoricTaskInstanceReport;
+import org.operaton.bpm.engine.history.HistoricTaskInstanceReportResult;
 import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;

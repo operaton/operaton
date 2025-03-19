@@ -16,23 +16,22 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class SetExternalTaskRetriesAuthorizationTest extends HandleExternalTaskAuthorizationTest {
 
-  @Test
+  @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   public void testSetRetries() {
 

@@ -18,10 +18,10 @@ package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
 import java.util.List;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Test;
 
 /**
  * Represents a base class for authorization test cases to handle
@@ -31,7 +31,7 @@ import org.junit.Test;
  */
 public abstract class HandleLockedExternalTaskAuthorizationTest extends HandleExternalTaskAuthorizationTest {
 
-  @Test
+  @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   public void testCompleteExternalTask() {
 

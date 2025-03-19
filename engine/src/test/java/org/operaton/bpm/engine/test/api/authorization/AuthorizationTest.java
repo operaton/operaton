@@ -118,21 +118,19 @@ public abstract class AuthorizationTest {
 
   @AfterEach
   public void tearDown() {
-    runWithoutAuthorization((Callable<Void>) () -> {
-      for (User user : identityService.createUserQuery().list()) {
-        identityService.deleteUser(user.getId());
-      }
-      for (Group group : identityService.createGroupQuery().list()) {
-        identityService.deleteGroup(group.getId());
-      }
-      for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
-        authorizationService.deleteAuthorization(authorization.getId());
-      }
-      for (String deploymentId : deploymentIds) {
-        deleteDeployment(deploymentId);
-      }
-      return null;
-    });
+    processEngineConfiguration.setAuthorizationEnabled(false);
+    for (User user : identityService.createUserQuery().list()) {
+      identityService.deleteUser(user.getId());
+    }
+    for (Group group : identityService.createGroupQuery().list()) {
+      identityService.deleteGroup(group.getId());
+    }
+    for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
+      authorizationService.deleteAuthorization(authorization.getId());
+    }
+    for (String deploymentId : deploymentIds) {
+      deleteDeployment(deploymentId);
+    }
   }
 
   protected <T> T runWithoutAuthorization(Callable<T> runnable) {

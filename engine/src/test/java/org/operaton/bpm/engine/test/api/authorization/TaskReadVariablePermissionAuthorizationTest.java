@@ -16,15 +16,19 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -41,18 +45,12 @@ import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class TaskReadVariablePermissionAuthorizationTest {
 
   protected static final String AUTHORIZATION_TYP_HISTORIC = "historicAuthorization";
@@ -63,11 +61,10 @@ public class TaskReadVariablePermissionAuthorizationTest {
   private static final String ACCOUNTING_GROUP = "accounting";
   protected static String userId = "test";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   private ProcessEngineConfigurationImpl processEngineConfiguration;
   private IdentityService identityService;
@@ -80,7 +77,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   protected String authorizationType;
 
-  @Parameterized.Parameters(name = "{0}")
+  @Parameters
   public static Collection<String> scenarios() {
     return Arrays.asList(AUTHORIZATION_TYP_HISTORIC, AUTHORIZATION_TYP_RUNTIME);
   }
@@ -89,7 +86,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     this.authorizationType = authorizationType;
   }
 
-  @Before
+  @BeforeEach
   public void init() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     identityService = engineRule.getIdentityService();
@@ -107,7 +104,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.createGrantAuthorization(Resources.AUTHORIZATION, "*", userId, Permissions.CREATE);
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     authRule.disableAuthorization();
     for (User user : identityService.createUserQuery().list()) {
@@ -125,7 +122,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   // TaskService#saveTask() ///////////////////////////////////
 
-  @Test
+  @TestTemplate
   public void testSaveStandaloneTaskAndCheckAssigneePermissions() {
     // given
     String taskId = "myTask";
@@ -147,7 +144,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   public void testSaveProcessTaskAndCheckAssigneePermissions() {
     // given
@@ -169,7 +166,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   // TaskService#setOwner() ///////////////////////////////////
 
-  @Test
+  @TestTemplate
   public void testStandaloneTaskSetOwnerAndCheckOwnerPermissions() {
     // given
     String taskId = "myTask";
@@ -189,7 +186,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   public void testProcessTaskSetOwnerAndCheckOwnerPermissions() {
     // given
@@ -210,7 +207,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   // TaskService#addUserIdentityLink() ///////////////////////////////////
 
-  @Test
+  @TestTemplate
   public void testStandaloneTaskAddUserIdentityLinkAndUserOwnerPermissions() {
     // given
     String taskId = "myTask";
@@ -240,7 +237,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   public void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnTask() {
     // given
@@ -271,7 +268,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   // TaskService#addGroupIdentityLink() ///////////////////////////////////
 
-  @Test
+  @TestTemplate
   public void testStandaloneTaskAddGroupIdentityLink() {
     // given
     String taskId = "myTask";
@@ -302,7 +299,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   public void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnTask() {
     // given

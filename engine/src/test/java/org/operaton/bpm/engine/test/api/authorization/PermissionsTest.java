@@ -23,12 +23,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
-import org.junit.Test;
 
 public class PermissionsTest {
 

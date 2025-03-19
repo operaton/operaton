@@ -16,16 +16,21 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.task.updatevariable;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIABLE;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.revoke;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -34,36 +39,28 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Yana.Vasileva
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class StandaloneTaskAuthorizationTest {
 
-
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(authRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;
@@ -79,7 +76,7 @@ public class StandaloneTaskAuthorizationTest {
   protected static final String VARIABLE_VALUE = "aVariableValue";
   protected static final String PROCESS_KEY = "oneTaskProcess";
 
-  @Parameters(name = "Scenario {index}")
+  @Parameters
   public static Collection<AuthorizationScenario[]> scenarios() {
     return AuthorizationTestRule.asParameters(
       scenario()
@@ -110,7 +107,7 @@ public class StandaloneTaskAuthorizationTest {
       );
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     taskService = engineRule.getTaskService();
@@ -120,7 +117,7 @@ public class StandaloneTaskAuthorizationTest {
     authRule.createUserAndGroup("userId", "groupId");
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.deleteUsersAndGroups();
     taskService.deleteTask(taskId, true);
@@ -129,7 +126,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testSetVariable() {
     // given
     createTask(taskId);
@@ -149,7 +146,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testSetVariableLocal() {
     // given
     createTask(taskId);
@@ -169,7 +166,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testSetVariables() {
     // given
     createTask(taskId);
@@ -189,7 +186,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testSetVariablesLocal() {
     // given
     createTask(taskId);
@@ -209,7 +206,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testRemoveVariable() {
     // given
@@ -232,7 +229,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testRemoveVariableLocal() {
     // given
@@ -255,7 +252,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testRemoveVariables() {
     // given
@@ -278,7 +275,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testRemoveVariablesLocal() {
     // given
@@ -301,7 +298,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testUpdateVariablesAdd() {
     // given
@@ -322,7 +319,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testUpdateVariablesRemove() {
     // given
@@ -344,7 +341,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testUpdateVariablesAddRemove() {
     // given
@@ -365,7 +362,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testUpdateVariablesLocalAdd() {
     // given
@@ -386,7 +383,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testUpdateVariablesLocalRemove() {
     // given
@@ -408,7 +405,7 @@ public class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testUpdateVariablesLocalAddRemove() {
     // given

@@ -21,23 +21,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runners.Parameterized.Parameter;
 
 /**
  * @author Yana.Vasileva
@@ -52,11 +50,10 @@ public abstract class ProcessTaskAuthorizationTest {
   public static final String VARIABLE_VALUE = "aVariableValue";
   protected static final String PROCESS_KEY = "oneTaskProcess";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(authRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;
@@ -69,7 +66,7 @@ public abstract class ProcessTaskAuthorizationTest {
   protected String deploymentId;
 
 
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     taskService = engineRule.getTaskService();
@@ -79,13 +76,13 @@ public abstract class ProcessTaskAuthorizationTest {
     deploymentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.deleteUsersAndGroups();
     engineRule.getRepositoryService().deleteDeployment(deploymentId, true);
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariable() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
@@ -106,7 +103,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariableLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -129,7 +126,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariableTyped() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
@@ -151,7 +148,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariableLocalTyped() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -175,7 +172,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariables() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
@@ -196,7 +193,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -219,7 +216,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesTyped() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
@@ -240,7 +237,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesLocalTyped() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -263,7 +260,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesByName() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
@@ -284,7 +281,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesLocalByName() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -307,7 +304,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesTypedByName() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
@@ -328,7 +325,7 @@ public abstract class ProcessTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesLocalTypedByName() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);

@@ -19,16 +19,16 @@ package org.operaton.bpm.engine.test.api.authorization.externaltask;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
+import org.junit.jupiter.api.TestTemplate;
+
+@Parameterized
 public class LockExternalTaskAuthorizationTest extends HandleExternalTaskAuthorizationTest {
 
-  @Test
+  @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   public void shouldLockExternalTaskWithAuthorizations() {
 

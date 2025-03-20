@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -41,14 +40,14 @@ public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
 
     businessProcess.startProcessByKey("testResolution").getId();
 
-    assertNotNull(getBeanInstance(CreditCard.class));    
+    assertThat(getBeanInstance(CreditCard.class)).isNotNull();
   }
 
   @Test
   // no @Deployment for this test
   public void testResolutionBeforeProcessStart() {
     // assert that @BusinessProcessScoped beans can be resolved in the absence of an underlying process instance:
-    assertNotNull(getBeanInstance(CreditCard.class));
+    assertThat(getBeanInstance(CreditCard.class)).isNotNull();
   }
 
   @Test
@@ -62,7 +61,7 @@ public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
     getBeanInstance(BusinessProcess.class).startTask(taskService.createTaskQuery().singleResult().getId());
         
     // assert that the value of creditCardNumber is '123'
-    assertEquals("123", getBeanInstance(CreditCard.class).getCreditcardNumber());
+    assertThat(getBeanInstance(CreditCard.class).getCreditcardNumber()).isEqualTo("123");
     // set a different value:
     getBeanInstance(CreditCard.class).setCreditcardNumber("321");
     // complete the task
@@ -71,7 +70,7 @@ public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
     getBeanInstance(BusinessProcess.class).associateExecutionById(pid);
 
     // now assert that the value of creditcard is "321":
-    assertEquals("321", getBeanInstance(CreditCard.class).getCreditcardNumber());
+    assertThat(getBeanInstance(CreditCard.class).getCreditcardNumber()).isEqualTo("321");
     
     // complete the task to allow the process instance to terminate
     taskService.complete(taskService.createTaskQuery().singleResult().getId());

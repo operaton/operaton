@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.annotation.CompleteTaskInterceptor;
@@ -53,7 +53,7 @@ public class CompleteTaskTest extends CdiProcessEngineTestCase {
     getBeanInstance(DeclarativeProcessController.class).completeTask();
 
     // assert that now the task is completed
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
 
   

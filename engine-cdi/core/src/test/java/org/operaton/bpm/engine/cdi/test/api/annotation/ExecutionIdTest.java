@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
 
@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.cdi.annotation.ExecutionIdLiteral;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,11 +43,11 @@ public class ExecutionIdTest extends CdiProcessEngineTestCase {
   public void testExecutionIdInjectableByName() {
     getBeanInstance(BusinessProcess.class).startProcessByKey("keyOfTheProcess");
     String processInstanceId = (String) getBeanInstance("processInstanceId");
-    Assert.assertNotNull(processInstanceId);
+    assertThat(processInstanceId).isNotNull();
     String executionId = (String) getBeanInstance("executionId");
-    Assert.assertNotNull(executionId);
+    assertThat(executionId).isNotNull();
 
-    assertEquals(processInstanceId, executionId);
+    assertThat(executionId).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -61,12 +60,12 @@ public class ExecutionIdTest extends CdiProcessEngineTestCase {
 
     CreationalContext<String> ctx = beanManager.createCreationalContext(bean);
     String executionId = (String) beanManager.getReference(bean, String.class, ctx);
-    Assert.assertNotNull(executionId);
+    assertThat(executionId).isNotNull();
 
     String processInstanceId = (String) getBeanInstance("processInstanceId");
-    Assert.assertNotNull(processInstanceId);
+    assertThat(processInstanceId).isNotNull();
 
-    assertEquals(processInstanceId, executionId);
+    assertThat(executionId).isEqualTo(processInstanceId);
   }
 
 }

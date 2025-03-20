@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -41,7 +41,7 @@ public class TaskIdTest extends CdiProcessEngineTestCase {
     businessProcess.startTask(taskService.createTaskQuery().singleResult().getId());   
     
     // assert that now the 'taskId'-bean can be looked up
-    assertNotNull(getBeanInstance("taskId"));
+    assertThat(getBeanInstance("taskId")).isNotNull();
     
     businessProcess.completeTask();
   }

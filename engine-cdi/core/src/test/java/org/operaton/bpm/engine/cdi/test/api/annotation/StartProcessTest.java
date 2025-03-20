@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.annotation.StartProcessInterceptor;
@@ -46,37 +43,38 @@ public class StartProcessTest extends CdiProcessEngineTestCase {
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/annotation/StartProcessTest.bpmn20.xml")
   public void testStartProcessByKey() {
 
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
 
     getBeanInstance(DeclarativeProcessController.class).startProcessByKey();
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
-    assertNotNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNotNull();
 
-    assertEquals("operaton", businessProcess.getVariable("name"));
+    String variable = businessProcess.getVariable("name");
+    assertThat(variable).isEqualTo("operaton");
 
     TypedValue nameTypedValue = businessProcess.getVariableTyped("name");
-    assertNotNull(nameTypedValue);
-    assertTrue(nameTypedValue instanceof StringValue);
-    assertEquals(ValueType.STRING, nameTypedValue.getType());
-    assertEquals("operaton", nameTypedValue.getValue());
+    assertThat(nameTypedValue).isNotNull();
+    assertThat(nameTypedValue instanceof StringValue).isTrue();
+    assertThat(nameTypedValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(nameTypedValue.getValue()).isEqualTo("operaton");
 
-    assertEquals("untypedName", businessProcess.getVariable("untypedName"));
+    assertThat((String)businessProcess.getVariable("untypedName")).isEqualTo("untypedName");
 
     TypedValue untypedNameTypedValue = businessProcess.getVariableTyped("untypedName");
-    assertNotNull(untypedNameTypedValue);
-    assertTrue(untypedNameTypedValue instanceof StringValue);
-    assertEquals(ValueType.STRING, untypedNameTypedValue.getType());
-    assertEquals("untypedName", untypedNameTypedValue.getValue());
+    assertThat(untypedNameTypedValue).isNotNull();
+    assertThat(untypedNameTypedValue instanceof StringValue).isTrue();
+    assertThat(untypedNameTypedValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(untypedNameTypedValue.getValue()).isEqualTo("untypedName");
 
 
-    assertEquals("typedName", businessProcess.getVariable("typedName"));
+    assertThat((String)businessProcess.getVariable("typedName")).isEqualTo("typedName");
 
     TypedValue typedNameTypedValue = businessProcess.getVariableTyped("typedName");
-    assertNotNull(typedNameTypedValue);
-    assertTrue(typedNameTypedValue instanceof StringValue);
-    assertEquals(ValueType.STRING, typedNameTypedValue.getType());
-    assertEquals("typedName", typedNameTypedValue.getValue());
+    assertThat(typedNameTypedValue).isNotNull();
+    assertThat(typedNameTypedValue instanceof StringValue).isTrue();
+    assertThat(typedNameTypedValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(typedNameTypedValue.getValue()).isEqualTo("typedName");
 
     businessProcess.startTask(taskService.createTaskQuery().singleResult().getId());
     businessProcess.completeTask();

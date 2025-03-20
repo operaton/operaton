@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,7 +41,7 @@ public class BusinessKeyTest extends CdiProcessEngineTestCase {
     getBeanInstance(BusinessProcess.class).associateExecutionById(pid);
     
     // assert that now the businessKey-Bean can be looked up:
-    Assert.assertEquals(businessKey, ProgrammaticBeanLookup.lookup("businessKey"));
+    assertThat(ProgrammaticBeanLookup.lookup("businessKey")).isEqualTo(businessKey);
     
   } 
 }

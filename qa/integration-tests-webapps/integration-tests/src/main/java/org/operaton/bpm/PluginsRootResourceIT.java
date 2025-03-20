@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm;
 
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,7 +72,10 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   }
 
   protected Response getAsset(String path) {
-    return client.resource(appBasePath + path).get(Response.class);
+    WebTarget target = client.target(appBasePath + path);
+
+    // Send GET request and return the Response
+    return target.request().get(Response.class);
   }
 
   protected void assertResponse(String asset, Response response) {

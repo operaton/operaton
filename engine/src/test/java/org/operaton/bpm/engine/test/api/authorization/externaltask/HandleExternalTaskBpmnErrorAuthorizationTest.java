@@ -16,18 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+
+import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 
 /**
  * Tests the authorization of the bpmn error handling of an external task.
  * 
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class HandleExternalTaskBpmnErrorAuthorizationTest extends HandleLockedExternalTaskAuthorizationTest {
 
   @Override

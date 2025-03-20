@@ -21,23 +21,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runners.Parameterized.Parameter;
 
 /**
  * @author Yana.Vasileva
@@ -45,11 +43,10 @@ import org.junit.runners.Parameterized.Parameter;
  */
 public abstract class StandaloneTaskAuthorizationTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(authRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;
@@ -65,7 +62,7 @@ public abstract class StandaloneTaskAuthorizationTest {
   public static final String PROCESS_KEY = "oneTaskProcess";
   protected boolean ensureSpecificVariablePermission;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     taskService = engineRule.getTaskService();
@@ -74,13 +71,13 @@ public abstract class StandaloneTaskAuthorizationTest {
     authRule.createUserAndGroup("userId", "groupId");
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.deleteUsersAndGroups();
     taskService.deleteTask(taskId, true);
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariable() {
     // given
     createTask(taskId);
@@ -102,7 +99,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariableLocal() {
     // given
     createTask(taskId);
@@ -124,7 +121,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariableTyped() {
     // given
     createTask(taskId);
@@ -147,7 +144,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariableLocalTyped() {
     // given
     createTask(taskId);
@@ -170,7 +167,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariables() {
     // given
     createTask(taskId);
@@ -192,7 +189,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesLocal() {
     // given
     createTask(taskId);
@@ -214,7 +211,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesTyped() {
     createTask(taskId);
 
@@ -235,7 +232,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesLocalTyped() {
     createTask(taskId);
 
@@ -256,7 +253,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesByName() {
     // given
     createTask(taskId);
@@ -278,7 +275,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesLocalByName() {
     // given
     createTask(taskId);
@@ -300,7 +297,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesTypedByName() {
     createTask(taskId);
 
@@ -321,7 +318,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetVariablesLocalTypedByName() {
     createTask(taskId);
 

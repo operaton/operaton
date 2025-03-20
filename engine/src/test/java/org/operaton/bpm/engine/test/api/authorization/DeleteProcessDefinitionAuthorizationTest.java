@@ -16,14 +16,18 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -32,45 +36,41 @@ import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class DeleteProcessDefinitionAuthorizationTest {
 
   public static final String PROCESS_DEFINITION_KEY = "one";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  @RegisterExtension
+  public ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
   protected RepositoryService repositoryService;
   protected RuntimeService runtimeService;
   protected HistoryService historyService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
-
-  @Parameterized.Parameter
+  @Parameter
   public AuthorizationScenario scenario;
 
-  @Parameterized.Parameters(name = "Scenario {index}")
+  @Parameters
   public static Collection<AuthorizationScenario[]> scenarios() {
     return AuthorizationTestRule.asParameters(
       scenario()
@@ -88,7 +88,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
       );
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
     repositoryService = engineRule.getRepositoryService();
@@ -97,7 +97,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.deleteUsersAndGroups();
     repositoryService = null;
@@ -105,7 +105,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
     processEngineConfiguration = null;
   }
 
-  @Test
+  @TestTemplate
   public void testDeleteProcessDefinition() {
     testHelper.deploy("org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml");
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
@@ -124,7 +124,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   }
 
 
-  @Test
+  @TestTemplate
   public void testDeleteProcessDefinitionCascade() {
     // given process definition and a process instance
     BpmnModelInstance bpmnModel = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().userTask().endEvent().done();
@@ -150,7 +150,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testDeleteProcessDefinitionsByKey() {
     // given
     for (int i = 0; i < 3; i++) {
@@ -173,7 +173,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testDeleteProcessDefinitionsByKeyCascade() {
     // given
     for (int i = 0; i < 3; i++) {
@@ -204,7 +204,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testDeleteProcessDefinitionsByIds() {
     // given
     for (int i = 0; i < 3; i++) {
@@ -228,7 +228,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testDeleteProcessDefinitionsByIdsCascade() {
     // given
     for (int i = 0; i < 3; i++) {

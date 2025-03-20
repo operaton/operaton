@@ -21,50 +21,51 @@ import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationS
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * @author Askar Akhmerov
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class HistoricDecisionInstanceStatisticsAuthorizationTest {
 
   protected static final String DISH_DRG_DMN = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  @RegisterExtension
+  public ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+
   protected DecisionService decisionService;
   protected HistoryService historyService;
   protected RepositoryService repositoryService;
 
   protected DecisionRequirementsDefinition decisionRequirementsDefinition;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
-
-  @Parameterized.Parameter
+  @Parameter
   public AuthorizationScenario scenario;
 
-  @Parameterized.Parameters(name = "Scenario {index}")
+  @Parameters
   public static Collection<AuthorizationScenario[]> scenarios() {
     return AuthorizationTestRule.asParameters(
         scenario()
@@ -79,7 +80,7 @@ public class HistoricDecisionInstanceStatisticsAuthorizationTest {
     );
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
     testHelper.deploy(DISH_DRG_DMN);
     decisionService = engineRule.getDecisionService();
@@ -95,12 +96,12 @@ public class HistoricDecisionInstanceStatisticsAuthorizationTest {
     decisionRequirementsDefinition = repositoryService.createDecisionRequirementsDefinitionQuery().singleResult();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 
-  @Test
+  @TestTemplate
   public void testCreateStatistics() {
     //given
     authRule

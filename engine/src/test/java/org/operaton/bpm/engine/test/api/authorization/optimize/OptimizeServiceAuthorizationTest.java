@@ -16,16 +16,38 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.optimize;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
+import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
+import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.TENANT;
+import static org.operaton.bpm.engine.authorization.Resources.USER;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.OptimizeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -33,26 +55,20 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestBaseRule;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.*;
-import static org.operaton.bpm.engine.authorization.Resources.*;
-
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class OptimizeServiceAuthorizationTest {
 
@@ -69,14 +85,14 @@ public class OptimizeServiceAuthorizationTest {
   public static final String DECISION_INPUT_EQUALS_OUTPUT =
     "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.decisionSingleOutput.dmn11.xml";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected AuthorizationTestBaseRule authRule = new AuthorizationTestBaseRule(engineRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  @RegisterExtension
+  public ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule).around(authRule);
-
-  @Parameterized.Parameters
+  @Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][]{
       {(Function<OptimizeService, List<?>>) optimizeService ->
@@ -113,7 +129,7 @@ public class OptimizeServiceAuthorizationTest {
     });
   }
 
-  @Parameterized.Parameter
+  @Parameter
   public Function<OptimizeService, List<?>> methodToTest;
 
   protected IdentityService identityService;
@@ -124,7 +140,7 @@ public class OptimizeServiceAuthorizationTest {
   protected TaskService taskService;
   protected ManagementService managementService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
 
     identityService = engineRule.getIdentityService();
@@ -151,7 +167,7 @@ public class OptimizeServiceAuthorizationTest {
     authRule.enableAuthorization(userId);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
       engineRule.getProcessEngineConfiguration().getDmnEngineConfiguration();
@@ -165,7 +181,7 @@ public class OptimizeServiceAuthorizationTest {
     identityService.clearAuthentication();
   }
 
-  @Test
+  @TestTemplate
   public void cantGetDataWithoutTenantAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
@@ -185,7 +201,7 @@ public class OptimizeServiceAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void cantGetDataWithoutProcessDefinitionAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
@@ -205,7 +221,7 @@ public class OptimizeServiceAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void authorizationOnSingleProcessResourceNotEnough() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
@@ -226,7 +242,7 @@ public class OptimizeServiceAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void cantGetDataWithoutDecisionDefinitionAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
@@ -246,7 +262,7 @@ public class OptimizeServiceAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void authorizationOnSingleDecisionResourceNotEnough() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
@@ -267,7 +283,7 @@ public class OptimizeServiceAuthorizationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void canGetDataWithAllAuthorizations() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));

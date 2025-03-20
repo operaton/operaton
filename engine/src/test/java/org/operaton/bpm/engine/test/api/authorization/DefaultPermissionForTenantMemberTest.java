@@ -20,6 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -27,14 +31,8 @@ import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 public class DefaultPermissionForTenantMemberTest {
 
@@ -43,17 +41,16 @@ public class DefaultPermissionForTenantMemberTest {
   protected static final String USER_ID = "user";
   protected static final String GROUP_ID = "group";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected AuthorizationService authorizationService;
   protected IdentityService identityService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
-  @Before
+  @BeforeEach
   public void init() {
     identityService = engineRule.getIdentityService();
     authorizationService = engineRule.getAuthorizationService();
@@ -69,7 +66,7 @@ public class DefaultPermissionForTenantMemberTest {
     engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     identityService.clearAuthentication();
 

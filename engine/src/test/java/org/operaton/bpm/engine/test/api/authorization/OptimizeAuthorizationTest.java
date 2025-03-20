@@ -16,36 +16,33 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.OptimizePermissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestBaseRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
 public class OptimizeAuthorizationTest {
 
   protected static final String USER_ID = "user";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public AuthorizationTestBaseRule authRule = new AuthorizationTestBaseRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   ProcessEngineConfigurationImpl processEngineConfiguration;
   AuthorizationService authorizationService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     authorizationService = engineRule.getAuthorizationService();
@@ -64,7 +61,7 @@ public class OptimizeAuthorizationTest {
     assertThat(authorizationService.isUserAuthorized(USER_ID, null, OptimizePermissions.SHARE, Resources.OPTIMIZE)).isTrue();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.disableAuthorization();
     authRule.deleteUsersAndGroups();

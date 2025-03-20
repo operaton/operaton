@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.deployment.cfg;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
@@ -45,15 +43,15 @@ public class TestDeploymentTenantId extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   public void testDeployProcessArchiveWithTenantId() {
-    assertThat(processEngine, is(notNullValue()));
+    assertThat(processEngine).isNotNull();
 
     org.operaton.bpm.engine.repository.Deployment deployment = processEngine
         .getRepositoryService()
         .createDeploymentQuery()
         .singleResult();
 
-    assertThat(deployment, is(notNullValue()));
-    assertThat(deployment.getTenantId(), is("tenant1"));
+    assertThat(deployment).isNotNull();
+    assertThat(deployment.getTenantId()).isEqualTo("tenant1");
   }
 
 }

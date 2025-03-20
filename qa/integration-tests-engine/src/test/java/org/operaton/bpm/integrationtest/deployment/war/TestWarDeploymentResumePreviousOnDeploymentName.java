@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
 import java.util.Set;
@@ -58,16 +56,16 @@ public class TestWarDeploymentResumePreviousOnDeploymentName extends AbstractFox
   @Test
   @OperateOnDeployment(value = PA2)
   public void testDeployProcessArchive() {
-    assertThat(processEngine, is(notNullValue()));
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     //since we have two processes deployed for PA2 we got to check that both are present
     long count = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testDeployProcessArchive").count();
 
-    assertThat(count, is(1L));
+    assertThat(count).isEqualTo(1L);
 
     count = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testProcess").count();
     
-    assertThat(count, is(1L));
+    assertThat(count).isEqualTo(1L);
     
     // validate registrations:
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();
@@ -85,6 +83,6 @@ public class TestWarDeploymentResumePreviousOnDeploymentName extends AbstractFox
         resumedRegistrationFound = true;
       }
     }
-    assertThat("Previous version of the deployment was not resumed", resumedRegistrationFound, is(true));
+    assertThat(resumedRegistrationFound).as("Previous version of the deployment was not resumed").isTrue();
   }
 }

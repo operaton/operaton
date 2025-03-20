@@ -85,8 +85,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * @author Frederik Heremans
@@ -271,7 +271,8 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("ioMappingProcess");
 
     // Try to delete the deployment
-    assertDoesNotThrow(() -> repositoryService.deleteDeployment(deploymentId, true, false, true));
+    assertThatCode(() -> repositoryService.deleteDeployment(deploymentId, true, false, true))
+        .doesNotThrowAnyException();
   }
 
   @Test
@@ -1457,7 +1458,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @Test
   public void testGetStaticCallActivityMappingShouldThrowIfProcessDoesNotExist(){
     //given //when //then
-    assertThrows(NotFoundException.class, () -> repositoryService.getStaticCalledProcessDefinitions("notExistingId"));
+    assertThatExceptionOfType(NotFoundException.class).isThrownBy(() -> repositoryService.getStaticCalledProcessDefinitions("notExistingId"));
   }
 
   @Test

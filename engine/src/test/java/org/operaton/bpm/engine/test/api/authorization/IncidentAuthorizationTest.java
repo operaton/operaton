@@ -34,9 +34,9 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
@@ -527,7 +527,8 @@ class IncidentAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // when
-    assertDoesNotThrow(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
+    assertThatCode(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
+        .doesNotThrowAnyException();
 
     // cleanup
     cleanupStandalonIncident(jobId);

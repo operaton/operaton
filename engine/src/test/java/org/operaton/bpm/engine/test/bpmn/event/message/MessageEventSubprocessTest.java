@@ -21,9 +21,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
 
@@ -935,11 +932,11 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
   public void testNonInterruptingWithTerminatingEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName(), is("Inner User Task"));
+    assertThat(task.getName()).isEqualTo("Inner User Task");
     runtimeService.correlateMessage("message");
 
     Task eventSubprocessTask = taskService.createTaskQuery().taskName("Event User Task").singleResult();
-    assertThat(eventSubprocessTask, is(notNullValue()));
+    assertThat(eventSubprocessTask).isNotNull();
     taskService.complete(eventSubprocessTask.getId());
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());

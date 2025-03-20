@@ -45,7 +45,7 @@ The script will build the project and run the integration tests.
 The script has the following options:
 
 - `--testsuite=<TESTSUITE>` - The test suite to run. Valid values: `engine` (default), `webapps`.
-- `--container=<TESTSUITE>` - The application container to perform the test on. Valid values: `tomcat` (default), `wildfly`.
+- `--distro=<TESTSUITE>` - The application distribution to perform the test on. Valid values: `tomcat` (default), `wildfly`.
 - `--db=<DATABASE>` - The database to use. Valid values: `h2` (default), `postgres`.
 - `--no-build` - Skip the build step.
 - `--no-test` - Skip the test step.
@@ -53,5 +53,5 @@ The script has the following options:
 Example:
 
 ```bash
-./build/build-and-run-integration-tests.sh --testsuite=engine --container=wildfly --db=h2
+./build/build-and-run-integration-tests.sh --testsuite=engine --distro=wildfly --db=h2
 ```

@@ -81,7 +81,11 @@ public class AuthorizationScenarioInstance {
       String assertionFailureMessage = describeScenarioFailure("Expected an authorization exception but the message was wrong: " + e.getMessage());
 
       List<MissingAuthorization> actualMissingAuthorizations = getActualMissingAuthorizations(e);
-      List<MissingAuthorization> expectedMissingAuthorizations = MissingAuthorizationMatcher.asMissingAuthorizations(missingAuthorizations);
+      List<MissingAuthorization> missingAuthorizations1 = new ArrayList<>();
+      for (Authorization authorization : missingAuthorizations) {
+        missingAuthorizations1.add(asMissingAuthorization(authorization));
+      }
+      List<MissingAuthorization> expectedMissingAuthorizations = missingAuthorizations1;
 
       assertThat(actualMissingAuthorizations).containsExactlyInAnyOrderElementsOf(expectedMissingAuthorizations);
 
@@ -117,6 +121,26 @@ public class AuthorizationScenarioInstance {
         fail(describeScenarioFailure("Expected failure due to missing authorizations but code under test was successful"));
       }
     }
+  }
+
+  protected static MissingAuthorization asMissingAuthorization(Authorization authorization) {
+    String permissionName = null;
+    String resourceId = null;
+    String resourceName = null;
+
+    Permission[] permissions = AuthorizationTestUtil.getPermissions(authorization);
+    for (Permission permission : permissions) {
+      if (permission.getValue() != Permissions.NONE.getValue()) {
+        permissionName = permission.getName();
+        break;
+      }
+    }
+
+    resourceId = authorization.getResourceId();
+
+    Resource resource = AuthorizationTestUtil.getResourceByType(authorization.getResourceType());
+    resourceName = resource.resourceName();
+    return new MissingAuthorization(permissionName, resourceName, resourceId);
   }
 
   protected String describeScenarioFailure(String message) {

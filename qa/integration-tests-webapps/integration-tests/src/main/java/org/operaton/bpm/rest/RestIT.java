@@ -16,15 +16,18 @@
  */
 package org.operaton.bpm.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.sun.jersey.api.client.WebResource;
 
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import org.operaton.bpm.AbstractWebIntegrationTest;
 import org.operaton.bpm.engine.rest.hal.Hal;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -67,33 +70,43 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testScenario() throws JSONException {
+  public void testScenario() throws JsonProcessingException {
     // get process definitions for default engine
     log.info("Checking " + appBasePath + PROCESS_DEFINITION_PATH);
-    WebResource resource = client.resource(appBasePath + PROCESS_DEFINITION_PATH);
-    Response response = resource.accept(MediaType.APPLICATION_JSON).get(Response.class);
+    WebTarget target = client.target(appBasePath + PROCESS_DEFINITION_PATH);
+
+    // Send GET request with the desired Accept header
+    Response response = target.request(MediaType.APPLICATION_JSON)
+            .get(Response.class);
 
     assertEquals(200, response.getStatus());
 
-    JSONArray definitionsJson = (JSONArray) response.getEntity();
+    ObjectMapper objectMapper = new ObjectMapper();
+    ArrayNode definitionsJson = (ArrayNode) objectMapper.readTree(response.getEntity().toString());
     response.close();
 
     // invoice example
-    assertEquals(3, definitionsJson.length());
+    assertEquals(3, definitionsJson.size());
 
     // order of results is not consistent between database types
-    for (int i = 0; i < definitionsJson.length(); i++) {
-      JSONObject definitionJson = definitionsJson.getJSONObject(i);
-      assertTrue(definitionJson.isNull("description"));
-      assertFalse(definitionJson.getBoolean("suspended"));
-      if (definitionJson.getString("key").equals("ReviewInvoice")) {
-        assertEquals("http://bpmn.io/schema/bpmn", definitionJson.getString("category"));
-        assertEquals("Review Invoice", definitionJson.getString("name"));
-        assertEquals("reviewInvoice.bpmn", definitionJson.getString("resource"));
-      } else if (definitionJson.getString("key").equals("invoice")) {
-        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", definitionJson.getString("category"));
-        assertEquals("Invoice Receipt", definitionJson.getString("name"));
-        assertTrue(definitionJson.getString("resource").matches("invoice\\.v[1,2]\\.bpmn"));
+    for (int i = 0; i < definitionsJson.size(); i++) {
+      JsonNode definitionJson = definitionsJson.get(i);
+
+      // Check if 'description' is null
+      assertTrue(definitionJson.get("description") == null);
+
+      // Check if 'suspended' is false
+      assertFalse(definitionJson.get("suspended").asBoolean());
+
+      // Check conditions based on 'key'
+      if ("ReviewInvoice".equals(definitionJson.get("key").asText())) {
+        assertEquals("http://bpmn.io/schema/bpmn", definitionJson.get("category").asText());
+        assertEquals("Review Invoice", definitionJson.get("name").asText());
+        assertEquals("reviewInvoice.bpmn", definitionJson.get("resource").asText());
+      } else if ("invoice".equals(definitionJson.get("key").asText())) {
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", definitionJson.get("category").asText());
+        assertEquals("Invoice Receipt", definitionJson.get("name").asText());
+        assertTrue(definitionJson.get("resource").asText().matches("invoice\\.v[1,2]\\.bpmn"));
       } else {
         fail("Unexpected definition key in response JSON.");
       }
@@ -101,17 +114,21 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void assertJodaTimePresent() {
+  public void assertJodaTimePresent() throws JsonProcessingException {
     log.info("Checking " + appBasePath + TASK_PATH);
 
-    WebResource resource = client.resource(appBasePath + TASK_PATH);
-    resource.queryParam("dueAfter", "2000-01-01T00-00-00");
-    Response response = resource.accept(MediaType.APPLICATION_JSON).get(Response.class);
+    WebTarget target = client.target(appBasePath + TASK_PATH)
+            .queryParam("dueAfter", "2000-01-01T00-00-00");
+
+    // Send GET request with the desired Accept header
+    Response response = target.request(MediaType.APPLICATION_JSON)
+            .get(Response.class);
 
     assertEquals(200, response.getStatus());
 
-    JSONArray definitionsJson = (JSONArray) response.getEntity();
-    assertEquals(6, definitionsJson.length());
+    ObjectMapper objectMapper = new ObjectMapper();
+    ArrayNode definitionsJson = (ArrayNode) objectMapper.readTree(response.getEntity().toString());
+    assertEquals(6, definitionsJson.size());
 
     response.close();
   }
@@ -120,16 +137,19 @@ public class RestIT extends AbstractWebIntegrationTest {
   public void testDelayedJobDefinitionSuspension() {
     log.info("Checking " + appBasePath + JOB_DEFINITION_PATH + "/suspended");
 
-    WebResource resource = client.resource(appBasePath + JOB_DEFINITION_PATH + "/suspended");
+    WebTarget target = client.target(appBasePath + JOB_DEFINITION_PATH + "/suspended");
 
+    // Create request body as a Map (or you can use a custom DTO if required)
     Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("processDefinitionKey", "jobExampleProcess");
     requestBody.put("suspended", true);
     requestBody.put("includeJobs", true);
     requestBody.put("executionDate", "2014-08-25T13:55:45");
 
-    Response response = resource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).put(Response.class, requestBody);
-
+    // Send PUT request with entity and headers
+    Response response = target.request(MediaType.APPLICATION_JSON)
+            .header("Content-Type", MediaType.APPLICATION_JSON)
+            .put(Entity.entity(requestBody, MediaType.APPLICATION_JSON));
     assertEquals(204, response.getStatus());
   }
 
@@ -141,9 +161,9 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testSingleTaskContentType() throws JSONException {
+  public void testSingleTaskContentType() throws JsonProcessingException {
     // get id of first task
-    String taskId = getFirstTask().getString("id");
+    String taskId = getFirstTask().get("id").asText();
 
     String resourcePath = appBasePath + TASK_PATH + "/" + taskId;
     log.info("Checking " + resourcePath);
@@ -151,47 +171,76 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testTaskFilterResultContentType() throws JSONException {
+  public void testTaskFilterResultContentType() throws JsonProcessingException {
     // create filter for first task, so single result will not throw an exception
-    JSONObject firstTask = getFirstTask();
+    JsonNode firstTask = getFirstTask();
     Map<String, Object> query = new HashMap<>();
-    query.put("taskDefinitionKey", firstTask.getString("taskDefinitionKey"));
-    query.put("processInstanceId", firstTask.getString("processInstanceId"));
+    query.put("taskDefinitionKey", firstTask.get("taskDefinitionKey").asText());
+    query.put("processInstanceId", firstTask.get("processInstanceId").asText());
+
     Map<String, Object> filter = new HashMap<>();
     filter.put("resourceType", "Task");
     filter.put("name", "IT Test Filter");
     filter.put("query", query);
 
-    Response response = client.resource(appBasePath + FILTER_PATH + "/create").accept(MediaType.APPLICATION_JSON)
-      .entity(filter, String.valueOf(MediaType.APPLICATION_JSON_TYPE))
-      .post(Response.class);
+    // Create the filter using Jackson
+    WebTarget target = client.target(appBasePath + FILTER_PATH + "/create");
+
+    // Send POST request with entity and accept header
+    Response response = target.request()
+            .accept(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(filter, MediaType.APPLICATION_JSON));
+
     assertEquals(200, response.getStatus());
-    String filterId = ((JSONObject) response.getEntity()).getString("id");
+
+    // Get the 'id' from the response
+    String responseBody = response.readEntity(String.class);
+    JsonNode responseJson = new ObjectMapper().readTree(responseBody);
+    String filterId = responseJson.get("id").asText();
     response.close();
 
+    // Check the filter resource (list)
     String resourcePath = appBasePath + FILTER_PATH + "/" + filterId + "/list";
     log.info("Checking " + resourcePath);
     assertMediaTypesOfResource(resourcePath, true);
 
+    // Check the filter resource (singleResult)
     resourcePath = appBasePath + FILTER_PATH + "/" + filterId + "/singleResult";
     log.info("Checking " + resourcePath);
     assertMediaTypesOfResource(resourcePath, true);
 
     // delete test filter
-    response = client.resource(appBasePath + FILTER_PATH + "/" + filterId ).delete(Response.class);
+    target = client.target(appBasePath + FILTER_PATH + "/" + filterId);
+    response = target.request().delete(Response.class);
     assertEquals(204, response.getStatus());
     response.close();
   }
 
   @Test
-  public void shouldSerializeDateWithDefinedFormat() throws JSONException {
-    // when
-    Response response = client.resource(appBasePath + SCHEMA_LOG_PATH).accept(MediaType.APPLICATION_JSON).get(Response.class);
-    // then
+  public void shouldSerializeDateWithDefinedFormat() throws Exception {
+    // When
+    WebTarget target = client.target(appBasePath + SCHEMA_LOG_PATH);
+    Response response = target.request()
+            .accept(MediaType.APPLICATION_JSON)
+            .get(Response.class);
+
+    // Then
     assertEquals(200, response.getStatus());
-    JSONObject logElement = ((JSONArray) response.getEntity()).getJSONObject(0);
+
+    // Parse the response body to a JsonNode (assuming it's an array)
+    String responseBody = response.readEntity(String.class);
     response.close();
-    String timestamp = logElement.getString("timestamp");
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode logArray = objectMapper.readTree(responseBody);
+
+    // Get the first element in the array (assuming the response is an array)
+    JsonNode logElement = logArray.get(0);
+
+    // Extract the 'timestamp' field
+    String timestamp = logElement.get("timestamp").asText();
+
+    // Try to parse the timestamp using the defined date format
     try {
       new SimpleDateFormat(JacksonConfigurator.DEFAULT_DATE_FORMAT).parse(timestamp);
     } catch (ParseException pex) {
@@ -204,124 +253,197 @@ public class RestIT extends AbstractWebIntegrationTest {
    * polymorphic serialization of historic details
    */
   @Test
-  public void testPolymorphicSerialization() throws JSONException {
-    JSONObject historicVariableUpdate = getFirstHistoricVariableUpdates();
+  public void testPolymorphicSerialization() throws Exception {
+    // Get the first historic variable update
+    JsonNode historicVariableUpdate = getFirstHistoricVariableUpdates();
 
-    // variable update specific property
+    // Assert that the 'variableName' field is present
     assertTrue(historicVariableUpdate.has("variableName"));
-
   }
 
   /**
    * Uses Jackson's object mapper directly
    */
   @Test
-  public void testProcessInstanceQuery() {
-    WebResource resource = client.resource(appBasePath + PROCESS_INSTANCE_PATH);
-    Response response = resource.queryParam("variables", "invoiceNumber_eq_GPFE-23232323").accept(MediaType.APPLICATION_JSON).get(Response.class);
+  public void testProcessInstanceQuery() throws Exception {
+    // Make the GET request with the query parameter 'variables'
+    WebTarget target = client.target(appBasePath + PROCESS_INSTANCE_PATH);
 
-    JSONArray instancesJson = (JSONArray) response.getEntity();
+    // Send GET request with query parameter and accept header
+    Response response = target.queryParam("variables", "invoiceNumber_eq_GPFE-23232323")
+            .request(MediaType.APPLICATION_JSON)
+            .get();
+
+    // Read the response body as a String
+    String responseBody = response.readEntity(String.class);
     response.close();
 
-    assertEquals(200, response.getStatus());
-    // invoice example instance
-    assertEquals(2, instancesJson.length());
+    // Use ObjectMapper to parse the response body into a JsonNode
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode instancesJson = objectMapper.readTree(responseBody);
 
+    // Assert the response status is 200
+    assertEquals(200, response.getStatus());
+
+    // Assert the number of instances in the response
+    // The response is expected to be a JSON array, so use instancesJson.size() to get the length
+    assertEquals(2, instancesJson.size());
   }
 
   @Test
-  public void testComplexObjectJacksonSerialization() throws JSONException {
-    WebResource resource = client.resource(appBasePath + PROCESS_DEFINITION_PATH + "/statistics");
-    Response response = resource.queryParam("incidents", "true").accept(MediaType.APPLICATION_JSON).get(Response.class);
+  public void testComplexObjectJacksonSerialization() throws Exception {
+    // Make the GET request to retrieve process definition statistics
+    WebTarget target = client.target(appBasePath + PROCESS_DEFINITION_PATH + "/statistics");
 
-    JSONArray definitionStatistics = (JSONArray) response.getEntity();
+    // Send GET request with query parameter and accept header
+    Response response = target.queryParam("incidents", "true")
+            .request(MediaType.APPLICATION_JSON)
+            .get();
+
+    // Read the response body as a String
+    String responseBody = response.readEntity(String.class);
     response.close();
 
-    assertEquals(200, response.getStatus());
-    // invoice example instance
-    assertEquals(3, definitionStatistics.length());
+    // Use ObjectMapper to parse the response body into a JsonNode (Array)
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode definitionStatistics = objectMapper.readTree(responseBody);
 
-    // check that definition is also serialized
-    for (int i = 0; i < definitionStatistics.length(); i++) {
-      JSONObject definitionStatistic = definitionStatistics.getJSONObject(i);
-      assertEquals("org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto", definitionStatistic.getString("@class"));
-      assertEquals(0, definitionStatistic.getJSONArray("incidents").length());
-      JSONObject definition = definitionStatistic.getJSONObject("definition");
-      assertTrue(definition.getString("name").toLowerCase().contains("invoice"));
-      assertFalse(definition.getBoolean("suspended"));
+    // Assert the response status is 200 (We already know the response is 200 since we are manually reading the response body)
+    assertEquals(200, response.getStatus());
+
+    // Assert the length of the definition statistics array
+    assertEquals(3, definitionStatistics.size());
+
+    // Check that the definition is also serialized correctly
+    for (int i = 0; i < definitionStatistics.size(); i++) {
+      JsonNode definitionStatistic = definitionStatistics.get(i);
+
+      // Assert the class type
+      assertEquals("org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto", definitionStatistic.get("@class").asText());
+
+      // Assert the incidents length
+      assertEquals(0, definitionStatistic.get("incidents").size());
+
+      // Get the definition object
+      JsonNode definition = definitionStatistic.get("definition");
+
+      // Check the name contains "invoice" (case-insensitive)
+      assertTrue(definition.get("name").asText().toLowerCase().contains("invoice"));
+
+      // Check if the definition is not suspended
+      assertFalse(definition.get("suspended").asBoolean());
     }
   }
 
   @Test
-  public void testOptionsRequest() {
-    //since WAS 9 contains patched cxf, which does not support OPTIONS request, we have to test this
+  public void testOptionsRequest() throws Exception {
+    // Given
     String resourcePath = appBasePath + FILTER_PATH;
     log.info("Send OPTIONS request to " + resourcePath);
 
-    // given
-    WebResource resource = client.resource(resourcePath);
+    WebTarget target = client.target(resourcePath);
 
-    // when
-    Response response = resource.options(Response.class);
+    // Send OPTIONS request
+    Response response = target.request().options(Response.class);
 
-    // then
+    // Then
     assertNotNull(response);
     assertEquals(200, response.getStatus());
-    JSONObject entity = (JSONObject) response.getEntity();
-    assertNotNull(entity.has("links"));
+
+    // Parse the response entity using Jackson (convert response entity to a JsonNode)
+    String responseBody = response.readEntity(String.class);
+    response.close();
+
+    // Use ObjectMapper to convert response body to JsonNode
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode entity = objectMapper.readTree(responseBody);
+
+    // Assert that the "links" field is present in the response entity
+    assertNotNull(entity.get("links"));
   }
 
   @Test
   public void testEmptyBodyFilterIsActive() {
-    Response response = client.resource(appBasePath + FILTER_PATH + "/create").accept(MediaType.APPLICATION_JSON)
-      .entity(null, String.valueOf(MediaType.APPLICATION_JSON_TYPE))
-      .post(Response.class);
+    WebTarget target = client.target(appBasePath + FILTER_PATH + "/create");
+
+    // Send POST request with null entity and JSON media type
+    Response response = target.request()
+            .accept(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(null, MediaType.APPLICATION_JSON));
 
     assertEquals(400, response.getStatus());
     response.close();
   }
 
-  protected JSONObject getFirstTask() throws JSONException {
-    Response response = client.resource(appBasePath + TASK_PATH).accept(MediaType.APPLICATION_JSON).get(Response.class);
-    JSONArray tasks = (JSONArray) response.getEntity();
-    JSONObject firstTask = tasks.getJSONObject(0);
+  protected JsonNode getFirstTask() throws JsonProcessingException {
+    // Make the GET request to retrieve the tasks
+    WebTarget target = client.target(appBasePath + TASK_PATH);
+
+    // Send the GET request and accept JSON response
+    Response response = target.request()
+            .accept(MediaType.APPLICATION_JSON)
+            .get();
+
+    // Read the response body as a string
+    String responseBody = response.readEntity(String.class);
     response.close();
+
+    // Use Jackson ObjectMapper to parse the response JSON into a JsonNode
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode tasks = objectMapper.readTree(responseBody);
+
+    // Get the first task from the array (assuming it's an array)
+    JsonNode firstTask = tasks.get(0);  // Get the first element in the array (JsonNode)
+
     return firstTask;
   }
 
-  protected JSONObject getFirstHistoricVariableUpdates() throws JSONException {
-    Response response = client.resource(appBasePath + HISTORIC_DETAIL_PATH)
-        .queryParam("variableUpdates", "true")
-        .accept(MediaType.APPLICATION_JSON).get(Response.class);
+  protected JsonNode getFirstHistoricVariableUpdates() throws JsonProcessingException {
+    // Make the GET request with the query parameter 'variableUpdates=true'
+    WebTarget target = client.target(appBasePath + HISTORIC_DETAIL_PATH)
+            .queryParam("variableUpdates", "true");
 
-    JSONArray updates = (JSONArray) response.getEntity();
-    JSONObject firstUpdate = updates.getJSONObject(0);
+    // Send the GET request and accept JSON response
+    Response response = target.request()
+            .accept(MediaType.APPLICATION_JSON)
+            .get();
+
+    // Read the response body as a String
+    String responseBody = response.readEntity(String.class);
     response.close();
-    return firstUpdate;
+
+    // Parse the response body as a JsonNode (Array)
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode updates = objectMapper.readTree(responseBody);
+
+    // Return the first item in the array (assuming the response is an array)
+    return updates.get(0); // returns the first element of the array
   }
 
   protected void assertMediaTypesOfResource(String resourcePath, boolean postSupported) {
-    WebResource resource = client.resource(resourcePath);
-    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON_TYPE.getType());
-    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON_TYPE.getType(), MediaType.WILDCARD);
-    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON_TYPE.getType(), MediaType.APPLICATION_JSON);
+    WebTarget resource = client.target(resourcePath);
+    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON);
+    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON, MediaType.WILDCARD);
+    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
     assertMediaTypes(resource, postSupported, Hal.APPLICATION_HAL_JSON, Hal.APPLICATION_HAL_JSON);
     assertMediaTypes(resource, postSupported, Hal.APPLICATION_HAL_JSON, Hal.APPLICATION_HAL_JSON, MediaType.APPLICATION_JSON + "; q=0.5");
-    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON_TYPE.getType(), Hal.APPLICATION_HAL_JSON + "; q=0.5", MediaType.APPLICATION_JSON);
-    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON_TYPE.getType(), Hal.APPLICATION_HAL_JSON + "; q=0.5 ", MediaType.APPLICATION_JSON + "; q=0.6");
+    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON, Hal.APPLICATION_HAL_JSON + "; q=0.5", MediaType.APPLICATION_JSON);
+    assertMediaTypes(resource, postSupported, MediaType.APPLICATION_JSON, Hal.APPLICATION_HAL_JSON + "; q=0.5 ", MediaType.APPLICATION_JSON + "; q=0.6");
     assertMediaTypes(resource, postSupported, Hal.APPLICATION_HAL_JSON, Hal.APPLICATION_HAL_JSON + "; q=0.6", MediaType.APPLICATION_JSON + "; q=0.5");
   }
 
-  protected void assertMediaTypes(WebResource resource, boolean postSupported, String expectedMediaType, String... acceptMediaTypes) {
-    // test GET request
-    Response response = resource.accept(acceptMediaTypes).get(Response.class);
+  // Method to check media types for GET and POST requests
+  protected void assertMediaTypes(WebTarget resource, boolean postSupported, String expectedMediaType, String... acceptMediaTypes) {
+    // Test GET request
+    Response response = resource.request().accept(acceptMediaTypes).get();
     assertMediaType(response, expectedMediaType);
     response.close();
 
     if (postSupported) {
-      // test POST request
-      response =
-        resource.accept(acceptMediaTypes).entity(Collections.emptyMap(), String.valueOf(MediaType.APPLICATION_JSON_TYPE)).post(Response.class);
+      // Test POST request
+      response = resource.request()
+              .accept(acceptMediaTypes)
+              .post(Entity.entity(Collections.emptyMap(), MediaType.APPLICATION_JSON));
       assertMediaType(response, expectedMediaType);
       response.close();
     }

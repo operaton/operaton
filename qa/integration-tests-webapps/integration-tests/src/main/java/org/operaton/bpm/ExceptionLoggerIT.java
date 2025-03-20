@@ -18,6 +18,7 @@ package org.operaton.bpm;
 
 import static org.junit.Assert.assertEquals;
 
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 
 import org.junit.Before;
@@ -33,8 +34,8 @@ public class ExceptionLoggerIT extends AbstractWebIntegrationTest {
   @Test
   public void shouldNotFailForUndefinedUser() {
     // when
-    Response response = client.resource(appBasePath + "app/admin/default/#/users/undefined?tab=profile")
-                                    .get(Response.class);
+    WebTarget target = client.target(appBasePath + "app/admin/default/#/users/undefined?tab=profile");
+    Response response = target.request().get();
 
     // then
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());

@@ -16,10 +16,17 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
+//import org.glassfish.jersey.client.Client;
+import com.sun.jersey.api.client.Client;
+//import jakarta.ws.rs.client.ClientBuilder;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.glassfish.jersey.client.JerseyClient;
+import org.glassfish.jersey.client.JerseyClientBuilder;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import com.sun.jersey.client.apache4.ApacheHttpClient4;
-import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -50,7 +57,7 @@ public abstract class AbstractWebIT {
 
   protected static ChromeDriverService service;
 
-  public ApacheHttpClient4 client;
+  public JerseyClient client;
   public DefaultHttpClient defaultHttpClient;
   public String httpPort;
 
@@ -62,23 +69,37 @@ public abstract class AbstractWebIT {
 
   @AfterEach
   public void destroyClient() {
-    client.destroy();
+    client.close();
   }
 
   public void createClient(String ctxPath) throws Exception {
+    // Initialize test properties
     testProperties = new TestProperties();
 
+    // Get the application base path
     APP_BASE_PATH = testProperties.getApplicationPath("/" + ctxPath);
-    LOGGER.info("Connecting to application "+APP_BASE_PATH);
+    LOGGER.info("Connecting to application " + APP_BASE_PATH);
 
-    ClientConfig clientConfig = new DefaultApacheHttpClient4Config();
-    clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-    client = ApacheHttpClient4.create(clientConfig);
+    // Create ClientConfig and register JacksonFeature for POJO mapping
+    ClientConfig clientConfig = new ClientConfig();
+    clientConfig.register(JacksonFeature.class);
 
-    defaultHttpClient = (DefaultHttpClient) client.getClientHandler().getHttpClient();
-    HttpParams params = defaultHttpClient.getParams();
-    HttpConnectionParams.setConnectionTimeout(params, 3 * 60 * 1000);
-    HttpConnectionParams.setSoTimeout(params, 10 * 60 * 1000);
+    // Create the underlying HttpClient (e.g., Apache HttpClient)
+    /*HttpClient apacheHttpClient = HttpClients.custom()
+            .setConnectionManager(new PoolingHttpClientConnectionManager())  // Optional: configure connection manager
+            .build();*/
+
+    // Use JerseyClientBuilder to create the client and configure it with HttpClient
+    client = (JerseyClient) JerseyClientBuilder.newBuilder()
+            .withConfig(clientConfig)
+            .build();
+
+
+
+    // Set connection timeout and socket timeout
+    // These can be set directly in the HttpClient or via properties in JerseyClient
+    client.property("jersey.config.client.connectTimeout", 3 * 60 * 1000);  // 3 minutes
+    client.property("jersey.config.client.readTimeout", 10 * 60 * 1000);
   }
 
   public void preventRaceConditions() throws InterruptedException {

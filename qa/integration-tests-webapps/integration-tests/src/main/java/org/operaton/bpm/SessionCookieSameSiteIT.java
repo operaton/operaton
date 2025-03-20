@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm;
 
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,8 +41,10 @@ public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    Response response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(Response.class);
+    WebTarget target = client.target(appBasePath + TASKLIST_PATH);
+
+    // Send GET request and return the Response
+    Response response = target.request().get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());

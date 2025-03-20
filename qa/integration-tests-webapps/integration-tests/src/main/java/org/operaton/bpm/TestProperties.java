@@ -19,6 +19,7 @@ package org.operaton.bpm;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.stream.Stream;
 
 /**
  * @author drobisch
@@ -26,6 +27,9 @@ import java.util.Properties;
 public class TestProperties {
 
   public static final String TESTCONFIG_PROPERTIES_FILE = "/testconfig.properties";
+  public static final String HTTP_PORT = "http.port";
+  public static final String HTTP_CTX_PATH_WEBAPP = "http.ctx-path.webapp";
+  public static final String HTTP_CTX_PATH_REST = "http.ctx-path.rest";
 
   private final Properties properties;
   private final int defaultPort;
@@ -82,6 +86,11 @@ public class TestProperties {
         // nop
       }
     }
+    Stream.of(HTTP_PORT, HTTP_CTX_PATH_WEBAPP, HTTP_CTX_PATH_REST).forEach(prop -> {
+      if (System.getProperty(prop) != null) {
+        properties.setProperty(prop, System.getProperty(prop));
+      }
+    });
 
     return properties;
   }

@@ -38,8 +38,8 @@ class SqlAvailabilityIT {
     assertThat(createDir).isNotNull();
     assertThat(dropDir).isNotNull();
     assertThat(upgradeDir).isNotNull();
-    assertThat(createDir.toFile()).isNotEmptyDirectory();
-    assertThat(dropDir.toFile()).isNotEmptyDirectory();
-    assertThat(upgradeDir.toFile()).isNotEmptyDirectory();
+    assertThat(createDir).isNotEmptyDirectory();
+    assertThat(dropDir).isNotEmptyDirectory();
+    assertThat(upgradeDir).isNotEmptyDirectory();
   }
 }

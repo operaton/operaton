@@ -78,14 +78,12 @@ public class AuthorizationScenarioInstance {
   public void assertAuthorizationException(AuthorizationException e) {
     if (!missingAuthorizations.isEmpty() && e != null) {
       String message = e.getMessage();
-      String assertionFailureMessage = describeScenarioFailure("Expected an authorization exception but the message was wrong: " + e.getMessage());
 
       List<MissingAuthorization> actualMissingAuthorizations = getActualMissingAuthorizations(e);
-      List<MissingAuthorization> missingAuthorizations1 = new ArrayList<>();
+      List<MissingAuthorization> expectedMissingAuthorizations = new ArrayList<>();
       for (Authorization authorization : missingAuthorizations) {
-        missingAuthorizations1.add(asMissingAuthorization(authorization));
+        expectedMissingAuthorizations.add(asMissingAuthorization(authorization));
       }
-      List<MissingAuthorization> expectedMissingAuthorizations = missingAuthorizations1;
 
       assertThat(actualMissingAuthorizations).containsExactlyInAnyOrderElementsOf(expectedMissingAuthorizations);
 

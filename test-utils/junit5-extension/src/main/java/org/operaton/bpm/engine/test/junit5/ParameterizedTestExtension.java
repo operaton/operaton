@@ -28,6 +28,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -120,11 +121,23 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
   @Override
   public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext context) {
     Class<?> testClass = context.getRequiredTestClass();
-    // Look for a static method annotated with @Parameters
-    Method parametersMethod = Arrays.stream(testClass.getDeclaredMethods())
-        .filter(m -> m.isAnnotationPresent(Parameters.class) && Modifier.isStatic(m.getModifiers())).findFirst()
-        .orElseThrow(
-            () -> new ExtensionConfigurationException("No static @Parameters method found in " + testClass.getName()));
+    // Look for a static method annotated with @Parameters in the class and it's superclasses
+    
+    Class<?> c = testClass;
+    Method parametersMethod = null;
+    do {
+      Optional<Method> first = Arrays.stream(c.getDeclaredMethods())
+        .filter(m -> m.isAnnotationPresent(Parameters.class) && Modifier.isStatic(m.getModifiers()))
+        .findFirst();
+      if (first.isPresent()) {
+        parametersMethod = first.get();
+        break;
+      }
+      c = c.getSuperclass();
+    } while(c != null);
+    if (parametersMethod == null) {
+      throw new ExtensionConfigurationException("No static @Parameters method found in " + testClass.getName());
+    }
 
     Object parametersResult;
     try {
@@ -135,11 +148,11 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
     }
 
     if (!(parametersResult instanceof Collection)) {
-      throw new ExtensionConfigurationException("@Parameters method must return a Collection<Object[]>");
+      throw new ExtensionConfigurationException("@Parameters method must return a Collection<Object>");
     }
 
     @SuppressWarnings("unchecked")
-    Collection<Object[]> parameterSets = (Collection<Object[]>) parametersResult;
+    Collection<Object> parameterSets = (Collection<Object>) parametersResult;
     return parameterSets.stream().map(params -> new ParameterizedTestInvocationContext(params));
   }
 
@@ -147,8 +160,12 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
 
     private final Object[] parameters;
 
-    ParameterizedTestInvocationContext(Object[] parameters) {
-      this.parameters = parameters;
+    ParameterizedTestInvocationContext(Object parameters) {
+      if (parameters instanceof Object[]) {
+        this.parameters = (Object[]) parameters;
+      } else {
+        this.parameters = new Object[] { parameters };
+      }
     }
 
     @Override

@@ -30,6 +30,11 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ManagementService;
@@ -53,31 +58,24 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestBaseRule;
 import org.operaton.bpm.engine.test.api.identity.TestPermissions;
 import org.operaton.bpm.engine.test.api.identity.TestResource;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 public class DisabledPermissionsAuthorizationTest {
 
   protected static final String USER_ID = "user";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public AuthorizationTestBaseRule authRule = new AuthorizationTestBaseRule(engineRule);
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  @RegisterExtension
+  public ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   ProcessEngineConfigurationImpl processEngineConfiguration;
   RepositoryService repositoryService;
@@ -86,7 +84,7 @@ public class DisabledPermissionsAuthorizationTest {
   ManagementService managementService;
   TaskService taskService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     authRule.createUserAndGroup(USER_ID, "group");
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
@@ -97,7 +95,7 @@ public class DisabledPermissionsAuthorizationTest {
     taskService = engineRule.getTaskService();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.disableAuthorization();
     authRule.deleteUsersAndGroups();
@@ -287,7 +285,7 @@ public class DisabledPermissionsAuthorizationTest {
   }
 
   @Test
-  @Ignore("CAM-9888")
+  @Disabled("CAM-9888")
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   public void testFetchAndLockIgnoreRead() {
     // given

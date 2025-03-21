@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.pa.service;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Daniel Meyer

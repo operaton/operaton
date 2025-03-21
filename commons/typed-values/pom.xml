@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -21,6 +22,13 @@
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-bom</artifactId>
+        <version>${version.jakarta-ee-spec}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -51,6 +59,12 @@
       <groupId>jakarta.activation</groupId>
       <artifactId>jakarta.activation-api</artifactId>
       <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.angus</groupId>
+      <artifactId>jakarta.mail</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -128,19 +142,10 @@
             </goals>
             <configuration>
               <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
-              <artifactSet>
-                <includes>
-                  <include>com.sun.activation:javax.activation</include>
-                </includes>
-              </artifactSet>
               <relocations>
                 <relocation>
-                  <pattern>com.sun.activation</pattern>
-                  <shadedPattern>operatonjar.com.sun.activation</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>javax.activation</pattern>
-                  <shadedPattern>operatonjar.javax.activation</shadedPattern>
+                  <pattern>jakarta.activation</pattern>
+                  <shadedPattern>operatonjar.jakarta.activation</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>

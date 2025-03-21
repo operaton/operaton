@@ -84,7 +84,11 @@ public class CdiResolver extends ELResolver {
 
   @Override
   public Object invoke(ELContext context, Object base, Object method, java.lang.Class< ? >[] paramTypes, Object[] params) {
-    return getWrappedResolver().invoke(context, base, method, paramTypes, params);
+    return getWrappedResolver().invoke(wrapContext(context), base, method, paramTypes, params);
+  }
+
+  protected ELContext wrapContext(ELContext context) {
+    return new ElContextDelegate(context, getWrappedResolver());
   }
 
 }

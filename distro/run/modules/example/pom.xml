@@ -28,7 +28,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm.example</groupId>
-      <artifactId>operaton-example-invoice-jakarta</artifactId>
+      <artifactId>operaton-example-invoice</artifactId>
       <version>${project.version}</version>
       <classifier>classes</classifier>
       <scope>provided</scope>
@@ -52,7 +52,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>org.operaton.bpm.example</groupId>
-                  <artifactId>operaton-example-invoice-jakarta</artifactId>
+                  <artifactId>operaton-example-invoice</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>

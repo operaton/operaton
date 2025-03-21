@@ -51,6 +51,13 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+      <dependency>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-bom</artifactId>
+        <version>${version.jakarta-ee-spec}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -75,6 +82,12 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -136,7 +149,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-jakarta</artifactId>
+      <artifactId>operaton-engine-rest</artifactId>
       <scope>test</scope>
       <type>war</type>
       <classifier>tomcat</classifier>
@@ -149,13 +162,6 @@
       <scope>test</scope>
       <type>war</type>
       <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <version>${version.xml.jaxb-impl4}</version>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -304,7 +310,7 @@
           <deployables>
             <deployable>
               <groupId>org.operaton.bpm</groupId>
-              <artifactId>operaton-engine-rest-jakarta</artifactId>
+              <artifactId>operaton-engine-rest</artifactId>
               <type>war</type>
               <classifier>tomcat</classifier>
               <pingURL>

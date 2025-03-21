@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.functional.context.beans.NoOpJavaDelegate;
 import org.operaton.bpm.integrationtest.functional.context.beans.SignalableTask;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -47,6 +48,7 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
   public static WebArchive createDeployment() {
     return ShrinkWrap.create(WebArchive.class, "app.war")
         .addAsResource("META-INF/processes.xml")
+        .addAsLibraries(DeploymentHelper.getAssertJ())
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ProcessApplicationWithInvocationContext.class)
         .addClass(NoOpJavaDelegate.class)

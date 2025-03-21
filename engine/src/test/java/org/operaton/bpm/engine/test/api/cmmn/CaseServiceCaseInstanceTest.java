@@ -16,26 +16,44 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.CaseExecution;
+import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
+import org.operaton.bpm.engine.runtime.CaseInstance;
+import org.operaton.bpm.engine.runtime.CaseInstanceBuilder;
+import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+@ExtendWith(ProcessEngineTestExtension.class)
+public class CaseServiceCaseInstanceTest {
+
+  protected RepositoryService repositoryService;
+  protected RuntimeService runtimeService;
+  protected CaseService caseService;
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test

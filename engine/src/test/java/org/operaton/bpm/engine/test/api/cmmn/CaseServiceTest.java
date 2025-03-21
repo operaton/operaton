@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.variable.Variables.booleanValue;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.integerValue;
 import static org.operaton.bpm.engine.variable.Variables.stringValue;
-import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,27 +30,43 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.repository.CaseDefinition;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.CaseExecution;
+import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
+import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
+import org.operaton.bpm.engine.runtime.CaseInstance;
+import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
+import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseServiceTest extends PluggableProcessEngineTest {
+public class CaseServiceTest {
 
+  @RegisterExtension
+  protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineExtension);
+  
+  protected CaseService caseService;
+  protected RepositoryService repositoryService;
+  protected RuntimeService runtimeService;
+  
   @Test
   public void testCreateCaseInstanceQuery() {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();

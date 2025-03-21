@@ -16,27 +16,35 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseServiceMilestoneTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+@ExtendWith(ProcessEngineTestExtension.class)
+public class CaseServiceMilestoneTest {
 
   protected final String DEFINITION_KEY = "oneMilestoneCase";
   protected final String MILESTONE_KEY = "PI_Milestone_1";
+
+  protected TaskService taskService;
+  protected CaseService caseService;
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
   @Test

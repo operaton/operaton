@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguratio
 
 import org.apache.ibatis.datasource.pooled.PoolState;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -22,6 +22,8 @@ import static org.mockito.Mockito.mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionTableEvaluationListener;
@@ -33,8 +35,6 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.dmn.el.ProcessEngineJuelElProvider;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Philipp Ossler
@@ -45,7 +45,7 @@ public class DmnEngineConfigurationTest {
 
   protected ProcessEngine engine;
 
-  @After
+  @AfterEach
   public void tearDown() {
     if (engine != null) {
       engine.close();

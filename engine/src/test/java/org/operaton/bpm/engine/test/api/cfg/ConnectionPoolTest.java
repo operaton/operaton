@@ -22,10 +22,10 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.session.Configuration;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.junit.Test;
 
 
 /**

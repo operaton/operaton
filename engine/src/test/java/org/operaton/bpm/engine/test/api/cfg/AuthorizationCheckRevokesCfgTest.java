@@ -17,8 +17,8 @@
 package org.operaton.bpm.engine.test.api.cfg;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
@@ -31,6 +31,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
@@ -41,9 +44,6 @@ import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
@@ -59,7 +59,7 @@ public class AuthorizationCheckRevokesCfgTest {
   AuthorizationManager authorizationManager;
   DbEntityManager mockedEntityManager;
 
-  @Before
+  @BeforeEach
   public void setup() {
 
     mockedCmdContext = mock(CommandContext.class);
@@ -78,7 +78,7 @@ public class AuthorizationCheckRevokesCfgTest {
     Context.setProcessEngineConfiguration(mockedConfiguration);
   }
 
-  @After
+  @AfterEach
   public void cleanup() {
     Context.removeCommandContext();
     Context.removeProcessEngineConfiguration();

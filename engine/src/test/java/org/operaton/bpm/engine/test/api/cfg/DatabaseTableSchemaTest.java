@@ -30,13 +30,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Test.None;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * @author Ronny Bräunlich
@@ -48,13 +48,13 @@ public class DatabaseTableSchemaTest {
 
   private PooledDataSource pooledDataSource;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     pooledDataSource = new PooledDataSource(ReflectUtil.getClassLoader(), "org.h2.Driver",
         "jdbc:h2:mem:DatabaseTableSchemaTest;DB_CLOSE_DELAY=1000", "sa", "");
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws SQLException {
 
     Connection connection = pooledDataSource.getConnection();
@@ -62,10 +62,10 @@ public class DatabaseTableSchemaTest {
     connection.close();
   }
 
-  @Test(expected=None.class)
+  @Test
   public void testPerformDatabaseSchemaOperationCreateTwice() throws Exception {
 
-    Connection connection = pooledDataSource.getConnection();
+    final Connection connection = pooledDataSource.getConnection();
     connection.createStatement().execute("drop schema if exists " + SCHEMA_NAME + " cascade");
     connection.createStatement().execute("create schema " + SCHEMA_NAME);
     connection.close();
@@ -79,16 +79,18 @@ public class DatabaseTableSchemaTest {
     ProcessEngine engine1 = config1.buildProcessEngine();
 
     // create the tables for the first time
-    connection = pooledDataSource.getConnection();
-    connection.createStatement().execute("set schema " + SCHEMA_NAME);
-    engine1.getManagementService().databaseSchemaUpgrade(connection, "", SCHEMA_NAME);
-    connection.close();
+    final Connection connection2 = pooledDataSource.getConnection();
+    connection2.createStatement().execute("set schema " + SCHEMA_NAME);
+    engine1.getManagementService().databaseSchemaUpgrade(connection2, "", SCHEMA_NAME);
+    connection2.close();
     // create the tables for the second time; here we shouldn't crash since the
     // session should tell us that the tables are already present and
     // databaseSchemaUpdate is set to noop
-    connection = pooledDataSource.getConnection();
-    connection.createStatement().execute("set schema " + SCHEMA_NAME);
-    engine1.getManagementService().databaseSchemaUpgrade(connection, "", SCHEMA_NAME);
+    final Connection connection3 = pooledDataSource.getConnection();
+    assertAll(() -> {
+      connection3.createStatement().execute("set schema " + SCHEMA_NAME);
+      engine1.getManagementService().databaseSchemaUpgrade(connection3, "", SCHEMA_NAME);
+    });
     engine1.close();
   }
 

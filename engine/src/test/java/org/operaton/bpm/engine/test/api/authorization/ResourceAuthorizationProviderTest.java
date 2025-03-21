@@ -16,6 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
+import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import static org.operaton.bpm.engine.authorization.Resources.USER;
+
+import java.util.Collections;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.TaskService;
@@ -28,20 +42,7 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.Resources.USER;
-
-import java.util.Collections;
-
-import org.junit.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Roman Smirnov
@@ -49,11 +50,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class ResourceAuthorizationProviderTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/api/authorization/resource.authorization.provider.operaton.cfg.xml");
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .configurationResource("org/operaton/bpm/engine/test/api/authorization/resource.authorization.provider.operaton.cfg.xml").build();
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;
@@ -65,7 +64,7 @@ public class ResourceAuthorizationProviderTest {
   protected User testUser;
   protected Group testGroup;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setResourceAuthorizationProvider(new MyResourceAuthorizationProvider());
@@ -83,7 +82,7 @@ public class ResourceAuthorizationProviderTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     for (User user : identityService.createUserQuery().list()) {

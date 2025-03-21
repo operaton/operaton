@@ -23,10 +23,11 @@ import org.operaton.bpm.engine.impl.SchemaOperationsProcessEngineBuild;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.junit.After;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
@@ -37,7 +38,7 @@ public class DmnDisabledTest {
   protected static ProcessEngineImpl processEngineImpl;
 
   // make sure schema is dropped
-  @After
+  @AfterEach
   public void cleanup() {
     TestHelper.dropSchema(processEngineImpl.getProcessEngineConfiguration());
     processEngineImpl.close();

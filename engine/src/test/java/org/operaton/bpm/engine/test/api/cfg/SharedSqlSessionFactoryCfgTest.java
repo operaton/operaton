@@ -24,11 +24,11 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
@@ -36,8 +36,8 @@ import org.junit.Test;
  */
 public class SharedSqlSessionFactoryCfgTest {
 
-  @Before
-  @After
+  @BeforeEach
+  @AfterEach
   public void cleanCachedSessionFactory() {
     ProcessEngineConfigurationImpl.cachedSqlSessionFactory = null;
   }

@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -28,10 +29,9 @@ import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.BatchHelper;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.junit.After;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Askar Akhmerov
@@ -52,7 +52,7 @@ public abstract class AbstractAsyncOperationsTest {
   protected int defaultBatchJobsPerSeed;
   protected int defaultInvocationsPerBatchJob;
 
-  protected void initDefaults(ProcessEngineRule engineRule) {
+  protected void initDefaults(ProcessEngineExtension engineRule) {
     runtimeService = engineRule.getRuntimeService();
     managementService = engineRule.getManagementService();
     historyService = engineRule.getHistoryService();
@@ -64,7 +64,7 @@ public abstract class AbstractAsyncOperationsTest {
     defaultInvocationsPerBatchJob = engineConfiguration.getInvocationsPerBatchJob();
   }
 
-  @After
+  @AfterEach
   public void cleanUpBatches() {
     managementService.createBatchQuery().list().forEach(b -> managementService.deleteBatch(b.getId(), true));
 
@@ -137,7 +137,7 @@ public abstract class AbstractAsyncOperationsTest {
     return ids;
   }
 
-  protected void assertHistoricTaskDeletionPresent(List<String> processIds, String deleteReason, ProcessEngineTestRule testRule) {
+  protected void assertHistoricTaskDeletionPresent(List<String> processIds, String deleteReason, ProcessEngineTestExtension testRule) {
     if (!testRule.isHistoryLevelNone()) {
 
       for (String processId : processIds) {
@@ -151,7 +151,7 @@ public abstract class AbstractAsyncOperationsTest {
     }
   }
 
-  protected void assertHistoricBatchExists(ProcessEngineTestRule testRule) {
+  protected void assertHistoricBatchExists(ProcessEngineTestExtension testRule) {
     if (testRule.isHistoryLevelFull()) {
       assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1L);
     }

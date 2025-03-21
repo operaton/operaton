@@ -20,30 +20,34 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.util.SingleConsumerCondition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 /**
  * Tests the signalling of external task conditions
  */
+@ExtendWith(ProcessEngineExtension.class)
 public class ExternalTaskConditionsTest {
-
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
 
   @Mock
   public SingleConsumerCondition condition;
+  
+  protected RepositoryService repositoryService;
+  protected RuntimeService runtimeService;
+  protected ExternalTaskService externalTaskService;
 
   private String deploymentId;
 
@@ -53,27 +57,27 @@ public class ExternalTaskConditionsTest {
         .operatonExternalTask("theTopic")
     .done();
 
-  @Before
+  @BeforeEach
   public void setUp() {
 
     MockitoAnnotations.openMocks(this);
 
     ProcessEngineImpl.EXT_TASK_CONDITIONS.addConsumer(condition);
 
-    deploymentId = rule.getRepositoryService()
+    deploymentId = repositoryService
         .createDeployment()
         .addModelInstance("process.bpmn", testProcess)
         .deploy()
         .getId();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
 
     ProcessEngineImpl.EXT_TASK_CONDITIONS.removeConsumer(condition);
 
     if (deploymentId != null) {
-      rule.getRepositoryService().deleteDeployment(deploymentId, true);
+      repositoryService.deleteDeployment(deploymentId, true);
     }
   }
 
@@ -81,7 +85,7 @@ public class ExternalTaskConditionsTest {
   public void shouldSignalConditionOnTaskCreate() {
 
     // when
-    rule.getRuntimeService()
+    runtimeService
       .startProcessInstanceByKey("theProcess");
 
     // then
@@ -92,9 +96,9 @@ public class ExternalTaskConditionsTest {
   public void shouldSignalConditionOnTaskCreateMultipleTimes() {
 
     // when
-    rule.getRuntimeService()
+    runtimeService
       .startProcessInstanceByKey("theProcess");
-    rule.getRuntimeService()
+    runtimeService
       .startProcessInstanceByKey("theProcess");
 
     // then
@@ -106,18 +110,18 @@ public class ExternalTaskConditionsTest {
 
     // given
 
-    rule.getRuntimeService()
+    runtimeService
       .startProcessInstanceByKey("theProcess");
 
     reset(condition); // clear signal for create
 
-    LockedExternalTask lockedTask = rule.getExternalTaskService().fetchAndLock(1, "theWorker")
+    LockedExternalTask lockedTask = externalTaskService.fetchAndLock(1, "theWorker")
       .topic("theTopic", 10000)
       .execute()
       .get(0);
 
     // when
-    rule.getExternalTaskService().unlock(lockedTask.getId());
+    externalTaskService.unlock(lockedTask.getId());
 
     // then
     verify(condition, times(1)).signal();

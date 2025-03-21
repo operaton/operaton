@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -40,21 +40,19 @@ import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.AbstractAsyncOperationsTest;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
   protected static final int RETRIES = 5;
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   private static final String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
   private static final String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";
@@ -63,7 +61,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
   protected List<String> processInstanceIds;
 
-  @Before
+  @BeforeEach
   public void setup() {
     initDefaults(engineRule);
     externalTaskService = engineRule.getExternalTaskService();
@@ -88,7 +86,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
     processInstanceIds.add(runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY_2).getId());
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processInstanceIds = null;
   }

@@ -18,6 +18,7 @@ package org.operaton.bpm.util;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.JerseyClientBuilder;
@@ -44,16 +45,14 @@ public class TestUtil {
     ClientConfig clientConfig = new ClientConfig();
     clientConfig.register(JacksonJaxbJsonProvider.class);  // Register Jackson for POJO mapping
 
-    client = JerseyClientBuilder.newClient(clientConfig);
+    client = ClientBuilder.newClient(clientConfig);
   }
 
   public void destroy() {
-    client.close();  // Close the client (client.destroy() is deprecated)
+    client.close();
   }
 
   public void createInitialUser(String id, String password, String firstName, String lastName) {
-
-    // Create the user DTO and set credentials and profile
     UserDto user = new UserDto();
     UserCredentialsDto credentials = new UserCredentialsDto();
     credentials.setPassword(password);
@@ -85,10 +84,10 @@ public class TestUtil {
 
   public void deleteUser(String id) {
     // Delete the user
-    WebTarget webTarget = client.target(testProperties.getApplicationPath("/engine-rest/user/admin"));
+    var webTarget = client.target(testProperties.getApplicationPath("/engine-rest/user/admin"));
 
     // Send DELETE request
-    Response response = webTarget
+    var response = webTarget
             .request(MediaType.APPLICATION_JSON)
             .delete();
 

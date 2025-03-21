@@ -16,22 +16,20 @@
  */
 package org.operaton.bpm;
 
-import java.util.List;
-import java.util.logging.Logger;
-
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
-
 import jakarta.ws.rs.core.Response;
+import java.util.List;
+import java.util.logging.Logger;
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.JerseyClient;
-import org.glassfish.jersey.client.JerseyClientBuilder;
-import org.operaton.bpm.util.TestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.operaton.bpm.util.TestUtil;
 
 /**
  *
@@ -60,11 +58,16 @@ public abstract class AbstractWebIntegrationTest {
 
   protected static ChromeDriverService service;
 
-  protected JerseyClient client;
+  protected Client client;
   protected String httpPort;
 
   protected String csrfToken;
   protected String sessionId;
+
+  // current target under test
+  protected WebTarget target;
+  // current response under test
+  protected Response response;
 
   @Before
   public void before() throws Exception {
@@ -75,6 +78,9 @@ public abstract class AbstractWebIntegrationTest {
   @After
   public void destroyClient() {
     client.close();
+    if (response != null) {
+      response.close();
+    }
   }
 
   public void createClient(String ctxPath) throws Exception {
@@ -83,15 +89,15 @@ public abstract class AbstractWebIntegrationTest {
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);
     LOGGER.info("Connecting to application " + appBasePath);
 
-    org.glassfish.jersey.client.ClientConfig clientConfig = new ClientConfig();
+    var clientConfig = new ClientConfig();
     clientConfig.register(JacksonJaxbJsonProvider.class);  // Register Jackson for POJO mapping
 
-    client = (JerseyClient) JerseyClientBuilder.newClient(clientConfig);
+    client = ClientBuilder.newClient(clientConfig);
   }
 
   protected void getTokens() {
     // First request, first set of cookies
-    WebTarget target = client.target(appBasePath + "/tasklist"); // replace TASKLIST_PATH
+    target = client.target(appBasePath + "/tasklist"); // replace TASKLIST_PATH
     Response clientResponse = target.request().get();
     List<Object> cookieValues = getCookieHeaders(clientResponse);
     clientResponse.close();

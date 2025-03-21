@@ -45,11 +45,11 @@ public class DateSerializationIT extends AbstractWebIntegrationTest {
 
   @Test
   public void shouldSerializeDateWithDefinedFormat() throws Exception {
-    // when
-    WebTarget target = client.target(appBasePath + SCHEMA_LOG_PATH);
+    // given
+    target = client.target(appBasePath + SCHEMA_LOG_PATH);
 
-    // Send GET request with headers and return the response
-    Response response = target.request()
+    // when
+    response = target.request()
             .accept(MediaType.APPLICATION_JSON)
             .header("X-XSRF-TOKEN", csrfToken)  // Replace with your actual CSRF token header name
             .header("Cookie", createCookieHeader())  // Replace with actual cookie header method
@@ -60,9 +60,7 @@ public class DateSerializationIT extends AbstractWebIntegrationTest {
 
     // Read the response body and parse it into JsonNode
     String responseBody = response.readEntity(String.class);
-    response.close();
 
-    // Use ObjectMapper to convert the response body to JsonNode
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode logElement = objectMapper.readTree(responseBody).get(0); // Get the first element in the array
 

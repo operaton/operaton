@@ -49,8 +49,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
+import static org.assertj.core.api.Assumptions.assumeThat;
 
 /**
  *
@@ -1249,7 +1248,7 @@ public class BpmnParseTest {
   @Test
   public void testFeatureSecureProcessingRejectsDefinitionDueToAttributeLimit() {
     // IBM JDKs do not check on attribute number limits, skip the test there
-    Assume.assumeThat(System.getProperty("java.vm.vendor"), not(containsString("IBM")));
+    assumeThat(System.getProperty("java.vm.vendor")).doesNotContain("IBM");
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionFSP");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {

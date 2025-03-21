@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.dmn;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -54,12 +52,12 @@ public class DmnHistoryTest extends AbstractFoxPlatformIntegrationTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
     HistoricDecisionInstance historicDecisionInstance = historyService.createHistoricDecisionInstanceQuery().includeInputs().includeOutputs().singleResult();
-    assertThat(historicDecisionInstance, is(notNullValue()));
-    assertThat(historicDecisionInstance.getDecisionDefinitionKey(), is("decision"));
-    assertThat(historicDecisionInstance.getDecisionDefinitionName(), is("Check Order"));
+    assertThat(historicDecisionInstance).isNotNull();
+    assertThat(historicDecisionInstance.getDecisionDefinitionKey()).isEqualTo("decision");
+    assertThat(historicDecisionInstance.getDecisionDefinitionName()).isEqualTo("Check Order");
 
-    assertThat(historicDecisionInstance.getInputs().size(), is(2));
-    assertThat(historicDecisionInstance.getOutputs().size(), is(2));
+    assertThat(historicDecisionInstance.getInputs().size()).isEqualTo(2);
+    assertThat(historicDecisionInstance.getOutputs().size()).isEqualTo(2);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
     taskService.complete(task.getId());

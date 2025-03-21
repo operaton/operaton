@@ -26,8 +26,8 @@ import org.junit.runner.RunWith;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.cdi.test.impl.el.beans.CdiTaskListenerBean.*;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Sebastian Menski
@@ -46,6 +46,6 @@ public class TaskListenerInvocationTest extends CdiProcessEngineTestCase {
     Task task = taskService.createTaskQuery().singleResult();
     taskService.setAssignee(task.getId(), "demo");
 
-    assertEquals(UPDATED_VALUE, taskService.getVariable(task.getId(), VARIABLE_NAME));
+    assertThat(taskService.getVariable(task.getId(), VARIABLE_NAME)).isEqualTo(UPDATED_VALUE);
   }
 }

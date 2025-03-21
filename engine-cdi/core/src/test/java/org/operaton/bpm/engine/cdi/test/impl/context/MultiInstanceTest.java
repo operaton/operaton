@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
@@ -45,11 +43,11 @@ public class MultiInstanceTest extends CdiProcessEngineTestCase {
     businessProcess.setVariable("list", Arrays.asList("1","2"));
     var process = (ProcessInstanceWithVariablesImpl) businessProcess.startProcessByKey("miParallelScriptTask");
     
-    assertFalse(process.isEnded());
-    assertFalse(process.isSuspended());
-    assertTrue(process.getExecutionEntity().isActive());
-    assertEquals(Arrays.asList("1","2"), process.getVariables().get("list"));
-    assertEquals("waitState", process.getExecutionEntity().getCurrentActivityId());
+    assertThat(process.isEnded()).isFalse();
+    assertThat(process.isSuspended()).isFalse();
+    assertThat(process.getExecutionEntity().isActive()).isTrue();
+    assertThat(process.getVariables().get("list")).isEqualTo(Arrays.asList("1", "2"));
+    assertThat(process.getExecutionEntity().getCurrentActivityId()).isEqualTo("waitState");
 
   }
 

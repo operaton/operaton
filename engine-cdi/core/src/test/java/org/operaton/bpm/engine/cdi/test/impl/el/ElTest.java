@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
@@ -39,7 +39,7 @@ public class ElTest extends CdiProcessEngineTestCase {
   public void testSetBeanProperty() {
     MessageBean messageBean = getBeanInstance(MessageBean.class);
     runtimeService.startProcessInstanceByKey("setBeanProperty");
-    assertEquals("Greetings from Berlin", messageBean.getMessage());
+    assertThat(messageBean.getMessage()).isEqualTo("Greetings from Berlin");
   }
 
   @Test
@@ -52,7 +52,7 @@ public class ElTest extends CdiProcessEngineTestCase {
 
     // make sure the complete bean lifecycle (including invocation of @PreDestroy) was executed.
     // This ensures that the @Dependent scoped bean was properly destroyed.
-    assertEquals(Arrays.asList("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"), DependentScopedBean.lifecycle);
+    assertThat(DependentScopedBean.lifecycle).isEqualTo(Arrays.asList("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"));
   }
 
 }

@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.ProcessScopedMessageBean;
@@ -40,10 +39,10 @@ public class ThreadContextAssociationTest extends CdiProcessEngineTestCase {
         
     waitForJobExecutorToProcessAllJobs(5000l, 25l);
         
-    assertNull(managementService.createJobQuery().singleResult());
+    assertThat(managementService.createJobQuery().singleResult()).isNull();
     
     ProcessScopedMessageBean messageBean = (ProcessScopedMessageBean) runtimeService.getVariable(pid, "processScopedMessageBean");
-    assertEquals("Greetings from Berlin", messageBean.getMessage());
+    assertThat(messageBean.getMessage()).isEqualTo("Greetings from Berlin");
     
     runtimeService.signal(pid);
     

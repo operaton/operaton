@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.test.jsf;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.Set;
 
 import jakarta.enterprise.inject.AmbiguousResolutionException;
@@ -26,7 +29,6 @@ import org.operaton.bpm.engine.cdi.compat.FoxTaskForm;
 import org.operaton.bpm.engine.cdi.jsf.TaskForm;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,25 +44,25 @@ public class TaskFormTest extends CdiProcessEngineTestCase {
     Set<Bean<?>> taskForm = beanManager.getBeans(TaskForm.class);
     try {
       Bean<? extends Object> bean = beanManager.resolve(taskForm);
-      Assert.assertNotNull(bean);
+      assertThat(bean).isNotNull();
     }catch(AmbiguousResolutionException e) {
-      Assert.fail("Injection of TaskForm is ambiguous.");
+      fail("Injection of TaskForm is ambiguous.");
     }
 
     Set<Bean<?>> foxTaskForm = beanManager.getBeans(FoxTaskForm.class);
     try {
       Bean<? extends Object> bean = beanManager.resolve(foxTaskForm);
-      Assert.assertNotNull(bean);
+      assertThat(bean).isNotNull();
     }catch(AmbiguousResolutionException e) {
-      Assert.fail("Injection of FoxTaskForm is ambiguous.");
+      fail("Injection of FoxTaskForm is ambiguous.");
     }
 
     Set<Bean<?>> operatonTaskForm = beanManager.getBeans(OperatonTaskForm.class);
     try {
       Bean<? extends Object> bean = beanManager.resolve(operatonTaskForm);
-      Assert.assertNotNull(bean);
+      assertThat(bean).isNotNull();
     }catch(AmbiguousResolutionException e) {
-      Assert.fail("Injection of OperatonTaskForm is ambiguous.");
+      fail("Injection of OperatonTaskForm is ambiguous.");
     }
 
   }

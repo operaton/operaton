@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -49,10 +47,10 @@ public class ProcessVariableTypedTest extends CdiProcessEngineTestCase {
     businessProcess.startProcessByKey("keyOfTheProcess", variables);
 
     TypedValue value = getBeanInstance(DeclarativeProcessController.class).getInjectedValue();
-    assertNotNull(value);
-    assertTrue(value instanceof StringValue);
-    assertEquals(ValueType.STRING, value.getType());
-    assertEquals("operaton", value.getValue());
+    assertThat(value).isNotNull();
+    assertThat(value instanceof StringValue).isTrue();
+    assertThat(value.getType()).isEqualTo(ValueType.STRING);
+    assertThat(value.getValue()).isEqualTo("operaton");
   }
 
 }

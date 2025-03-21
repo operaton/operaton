@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
@@ -56,7 +55,7 @@ public class SLSBExceptionInDelegateTest extends AbstractFoxPlatformIntegrationT
       waitForJobExecutorToProcessAllJobs();
       
       Incident incident = runtimeService.createIncidentQuery().activityId("servicetask1").singleResult();
-      assertThat(incident.getIncidentMessage(), is("error"));
+      assertThat(incident.getIncidentMessage()).isEqualTo("error");
   }
 
 }

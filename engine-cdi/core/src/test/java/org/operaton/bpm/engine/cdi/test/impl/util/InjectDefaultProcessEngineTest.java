@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -25,7 +27,6 @@ import org.operaton.bpm.engine.cdi.test.impl.beans.InjectedProcessEngineBean;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,11 +68,11 @@ public class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
 
     //when TestClass is created
     InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
-    Assert.assertNotNull(testClass);
+    assertThat(testClass).isNotNull();
 
     //then default engine is injected
-    Assert.assertEquals("default", testClass.processEngine.getName());
-    Assert.assertTrue(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()
-        .contains("default-process-engine"));
+    assertThat(testClass.processEngine.getName()).isEqualTo("default");
+    assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()
+        .contains("default-process-engine")).isTrue();
   }
 }

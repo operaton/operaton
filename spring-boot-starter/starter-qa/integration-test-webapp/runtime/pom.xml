@@ -13,7 +13,6 @@
   <name>Operaton - Spring Boot Starter - QA - Webapps Runtime</name>
 
   <properties>
-    <version.jersey-json>1.15</version.jersey-json>
     <version.h2>1.4.199</version.h2>
     <version.jaxb-api>2.3.1</version.jaxb-api>
     <version.jersey-apache-client>1.15</version.jersey-apache-client>

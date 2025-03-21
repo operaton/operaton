@@ -36,9 +36,11 @@ public class ErrorPageIT extends AbstractWebIntegrationTest {
 
   @Test
   public void shouldCheckNonFoundResponse() {
+    // given
+    target = client.target(appBasePath + "nonexisting");
+
     // when
-    WebTarget target = client.target(appBasePath + "nonexisting");
-    Response response = target.request().get();
+    response = target.request().get();
 
     // then
     assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
@@ -46,9 +48,6 @@ public class ErrorPageIT extends AbstractWebIntegrationTest {
     String responseEntity = response.getEntity().toString();
     assertTrue(responseEntity.contains("Operaton"));
     assertTrue(responseEntity.contains("Not Found"));
-
-    // cleanup
-    response.close();
   }
 
 }

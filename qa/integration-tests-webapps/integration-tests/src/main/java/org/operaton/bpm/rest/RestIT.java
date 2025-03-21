@@ -73,17 +73,16 @@ public class RestIT extends AbstractWebIntegrationTest {
   public void testScenario() throws JsonProcessingException {
     // get process definitions for default engine
     log.info("Checking " + appBasePath + PROCESS_DEFINITION_PATH);
-    WebTarget target = client.target(appBasePath + PROCESS_DEFINITION_PATH);
+    target = client.target(appBasePath + PROCESS_DEFINITION_PATH);
 
     // Send GET request with the desired Accept header
-    Response response = target.request(MediaType.APPLICATION_JSON)
+    response = target.request(MediaType.APPLICATION_JSON)
             .get(Response.class);
 
     assertEquals(200, response.getStatus());
 
     ObjectMapper objectMapper = new ObjectMapper();
     ArrayNode definitionsJson = (ArrayNode) objectMapper.readTree(response.getEntity().toString());
-    response.close();
 
     // invoice example
     assertEquals(3, definitionsJson.size());
@@ -117,11 +116,11 @@ public class RestIT extends AbstractWebIntegrationTest {
   public void assertJodaTimePresent() throws JsonProcessingException {
     log.info("Checking " + appBasePath + TASK_PATH);
 
-    WebTarget target = client.target(appBasePath + TASK_PATH)
+    target = client.target(appBasePath + TASK_PATH)
             .queryParam("dueAfter", "2000-01-01T00-00-00");
 
     // Send GET request with the desired Accept header
-    Response response = target.request(MediaType.APPLICATION_JSON)
+    response = target.request(MediaType.APPLICATION_JSON)
             .get(Response.class);
 
     assertEquals(200, response.getStatus());
@@ -129,15 +128,13 @@ public class RestIT extends AbstractWebIntegrationTest {
     ObjectMapper objectMapper = new ObjectMapper();
     ArrayNode definitionsJson = (ArrayNode) objectMapper.readTree(response.getEntity().toString());
     assertEquals(6, definitionsJson.size());
-
-    response.close();
   }
 
   @Test
   public void testDelayedJobDefinitionSuspension() {
     log.info("Checking " + appBasePath + JOB_DEFINITION_PATH + "/suspended");
 
-    WebTarget target = client.target(appBasePath + JOB_DEFINITION_PATH + "/suspended");
+    target = client.target(appBasePath + JOB_DEFINITION_PATH + "/suspended");
 
     // Create request body as a Map (or you can use a custom DTO if required)
     Map<String, Object> requestBody = new HashMap<>();
@@ -147,7 +144,7 @@ public class RestIT extends AbstractWebIntegrationTest {
     requestBody.put("executionDate", "2014-08-25T13:55:45");
 
     // Send PUT request with entity and headers
-    Response response = target.request(MediaType.APPLICATION_JSON)
+    response = target.request(MediaType.APPLICATION_JSON)
             .header("Content-Type", MediaType.APPLICATION_JSON)
             .put(Entity.entity(requestBody, MediaType.APPLICATION_JSON));
     assertEquals(204, response.getStatus());
@@ -184,10 +181,10 @@ public class RestIT extends AbstractWebIntegrationTest {
     filter.put("query", query);
 
     // Create the filter using Jackson
-    WebTarget target = client.target(appBasePath + FILTER_PATH + "/create");
+    target = client.target(appBasePath + FILTER_PATH + "/create");
 
     // Send POST request with entity and accept header
-    Response response = target.request()
+    response = target.request()
             .accept(MediaType.APPLICATION_JSON)
             .post(Entity.entity(filter, MediaType.APPLICATION_JSON));
 
@@ -197,7 +194,6 @@ public class RestIT extends AbstractWebIntegrationTest {
     String responseBody = response.readEntity(String.class);
     JsonNode responseJson = new ObjectMapper().readTree(responseBody);
     String filterId = responseJson.get("id").asText();
-    response.close();
 
     // Check the filter resource (list)
     String resourcePath = appBasePath + FILTER_PATH + "/" + filterId + "/list";
@@ -213,14 +209,13 @@ public class RestIT extends AbstractWebIntegrationTest {
     target = client.target(appBasePath + FILTER_PATH + "/" + filterId);
     response = target.request().delete(Response.class);
     assertEquals(204, response.getStatus());
-    response.close();
   }
 
   @Test
   public void shouldSerializeDateWithDefinedFormat() throws Exception {
-    // When
-    WebTarget target = client.target(appBasePath + SCHEMA_LOG_PATH);
-    Response response = target.request()
+    // when
+    target = client.target(appBasePath + SCHEMA_LOG_PATH);
+    response = target.request()
             .accept(MediaType.APPLICATION_JSON)
             .get(Response.class);
 
@@ -229,7 +224,6 @@ public class RestIT extends AbstractWebIntegrationTest {
 
     // Parse the response body to a JsonNode (assuming it's an array)
     String responseBody = response.readEntity(String.class);
-    response.close();
 
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode logArray = objectMapper.readTree(responseBody);
@@ -267,10 +261,10 @@ public class RestIT extends AbstractWebIntegrationTest {
   @Test
   public void testProcessInstanceQuery() throws Exception {
     // Make the GET request with the query parameter 'variables'
-    WebTarget target = client.target(appBasePath + PROCESS_INSTANCE_PATH);
+    target = client.target(appBasePath + PROCESS_INSTANCE_PATH);
 
     // Send GET request with query parameter and accept header
-    Response response = target.queryParam("variables", "invoiceNumber_eq_GPFE-23232323")
+    response = target.queryParam("variables", "invoiceNumber_eq_GPFE-23232323")
             .request(MediaType.APPLICATION_JSON)
             .get();
 
@@ -293,16 +287,15 @@ public class RestIT extends AbstractWebIntegrationTest {
   @Test
   public void testComplexObjectJacksonSerialization() throws Exception {
     // Make the GET request to retrieve process definition statistics
-    WebTarget target = client.target(appBasePath + PROCESS_DEFINITION_PATH + "/statistics");
+    target = client.target(appBasePath + PROCESS_DEFINITION_PATH + "/statistics");
 
     // Send GET request with query parameter and accept header
-    Response response = target.queryParam("incidents", "true")
+    response = target.queryParam("incidents", "true")
             .request(MediaType.APPLICATION_JSON)
             .get();
 
     // Read the response body as a String
     String responseBody = response.readEntity(String.class);
-    response.close();
 
     // Use ObjectMapper to parse the response body into a JsonNode (Array)
     ObjectMapper objectMapper = new ObjectMapper();
@@ -341,10 +334,10 @@ public class RestIT extends AbstractWebIntegrationTest {
     String resourcePath = appBasePath + FILTER_PATH;
     log.info("Send OPTIONS request to " + resourcePath);
 
-    WebTarget target = client.target(resourcePath);
+    target = client.target(resourcePath);
 
     // Send OPTIONS request
-    Response response = target.request().options(Response.class);
+    response = target.request().options(Response.class);
 
     // Then
     assertNotNull(response);
@@ -352,7 +345,6 @@ public class RestIT extends AbstractWebIntegrationTest {
 
     // Parse the response entity using Jackson (convert response entity to a JsonNode)
     String responseBody = response.readEntity(String.class);
-    response.close();
 
     // Use ObjectMapper to convert response body to JsonNode
     ObjectMapper objectMapper = new ObjectMapper();
@@ -364,10 +356,10 @@ public class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   public void testEmptyBodyFilterIsActive() {
-    WebTarget target = client.target(appBasePath + FILTER_PATH + "/create");
+    target = client.target(appBasePath + FILTER_PATH + "/create");
 
     // Send POST request with null entity and JSON media type
-    Response response = target.request()
+    response = target.request()
             .accept(MediaType.APPLICATION_JSON)
             .post(Entity.entity(null, MediaType.APPLICATION_JSON));
 
@@ -377,16 +369,15 @@ public class RestIT extends AbstractWebIntegrationTest {
 
   protected JsonNode getFirstTask() throws JsonProcessingException {
     // Make the GET request to retrieve the tasks
-    WebTarget target = client.target(appBasePath + TASK_PATH);
+    target = client.target(appBasePath + TASK_PATH);
 
     // Send the GET request and accept JSON response
-    Response response = target.request()
+    response = target.request()
             .accept(MediaType.APPLICATION_JSON)
             .get();
 
     // Read the response body as a string
     String responseBody = response.readEntity(String.class);
-    response.close();
 
     // Use Jackson ObjectMapper to parse the response JSON into a JsonNode
     ObjectMapper objectMapper = new ObjectMapper();
@@ -400,17 +391,16 @@ public class RestIT extends AbstractWebIntegrationTest {
 
   protected JsonNode getFirstHistoricVariableUpdates() throws JsonProcessingException {
     // Make the GET request with the query parameter 'variableUpdates=true'
-    WebTarget target = client.target(appBasePath + HISTORIC_DETAIL_PATH)
+    target = client.target(appBasePath + HISTORIC_DETAIL_PATH)
             .queryParam("variableUpdates", "true");
 
     // Send the GET request and accept JSON response
-    Response response = target.request()
+    response = target.request()
             .accept(MediaType.APPLICATION_JSON)
             .get();
 
     // Read the response body as a String
     String responseBody = response.readEntity(String.class);
-    response.close();
 
     // Parse the response body as a JsonNode (Array)
     ObjectMapper objectMapper = new ObjectMapper();
@@ -435,7 +425,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   // Method to check media types for GET and POST requests
   protected void assertMediaTypes(WebTarget resource, boolean postSupported, String expectedMediaType, String... acceptMediaTypes) {
     // Test GET request
-    Response response = resource.request().accept(acceptMediaTypes).get();
+    response = resource.request().accept(acceptMediaTypes).get();
     assertMediaType(response, expectedMediaType);
     response.close();
 

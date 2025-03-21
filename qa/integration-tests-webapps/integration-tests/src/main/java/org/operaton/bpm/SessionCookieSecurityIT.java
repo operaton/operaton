@@ -42,18 +42,15 @@ public class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    WebTarget target = client.target(appBasePath + TASKLIST_PATH);
+    target = client.target(appBasePath + TASKLIST_PATH);
 
     // Send GET request and return the Response
-    Response response = target.request().get(Response.class);
+    response = target.request().get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());
     assertTrue(isCookieHeaderValuePresent("HttpOnly", response));
     assertFalse(isCookieHeaderValuePresent("Secure", response));
-
-    // cleanup
-    response.close();
   }
 
   protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, Response response) {

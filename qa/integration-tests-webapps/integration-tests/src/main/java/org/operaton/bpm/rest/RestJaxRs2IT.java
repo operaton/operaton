@@ -70,10 +70,10 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
 
-    WebTarget target = client.target(appBasePath + FETCH_AND_LOCK_PATH);
+    target = client.target(appBasePath + FETCH_AND_LOCK_PATH);
 
     // Make POST request with the payload
-    Response response = target.request()
+    response = target.request()
             .accept(MediaType.APPLICATION_JSON)
             .post(Entity.entity(payload, MediaType.APPLICATION_JSON));
 
@@ -101,7 +101,7 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
         StringEntity stringEntity = new StringEntity("{ \"workerId\": \"aWorkerId\", \"asyncResponseTimeout\": 1000 }");
         request.setEntity(stringEntity);
 
-        CloseableHttpResponse response = httpClient.execute(request, HttpClientContext.create());
+        var response = httpClient.execute(request, HttpClientContext.create());
         String responseBody = null;
         try {
           HttpEntity entity = response.getEntity();

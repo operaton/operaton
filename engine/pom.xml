@@ -147,23 +147,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.spec</groupId>
-      <artifactId>jboss-javaee-web-6.0</artifactId>
-      <type>pom</type>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.spec.javax.xml.bind</groupId>
-          <artifactId>jboss-jaxb-api_2.2_spec</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.jboss.spec.javax.servlet.jsp</groupId>
-          <artifactId>jboss-jsp-api_2.2_spec</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
       <groupId>jakarta.transaction</groupId>
       <artifactId>jakarta.transaction-api</artifactId>
       <scope>provided</scope>
@@ -244,6 +227,13 @@
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.h-thurow</groupId>
+      <artifactId>simple-jndi</artifactId>
+      <version>0.24.0</version>
+    </dependency>
+
 
     <dependency>
       <groupId>org.apache.commons</groupId>

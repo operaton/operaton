@@ -21,26 +21,24 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.concurrent.Callable;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.context.ProcessEngineContext;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 public class ProcessEngineContextTest {
 
-  protected final ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected final ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected static final String SIMPLE_PROCESS_KEY = "simple_process";
   protected static final BpmnModelInstance SIMPLE_PROCESS = Bpmn.createExecutableProcess(SIMPLE_PROCESS_KEY)
@@ -50,7 +48,7 @@ public class ProcessEngineContextTest {
       .endEvent()
       .done();
 
-  @Before
+  @BeforeEach
   public void setUp() {
     testHelper.deploy(SIMPLE_PROCESS);
     engineRule.getRuntimeService().startProcessInstanceByKey(SIMPLE_PROCESS_KEY);

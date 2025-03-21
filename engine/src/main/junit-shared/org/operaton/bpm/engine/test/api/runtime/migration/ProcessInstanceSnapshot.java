@@ -222,7 +222,7 @@ public class ProcessInstanceSnapshot {
     }
   }
 
-  protected List<JobDefinition> getJobDefinitionsForActivityIdAndType(String activityId, String jobHandlerType) {
+  public List<JobDefinition> getJobDefinitionsForActivityIdAndType(String activityId, String jobHandlerType) {
     List<JobDefinition> collectedDefinitions = new ArrayList<>();
     for (JobDefinition jobDefinition : getJobDefinitions()) {
       if (activityId.equals(jobDefinition.getActivityId()) && jobHandlerType.equals(jobDefinition.getJobType())) {

@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 
 import java.util.Collections;
 import java.util.Date;
@@ -142,7 +141,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
   }
 
   public ExecutionAssert assertExecutionTreeAfterMigration() {
-    return assertThat(snapshotAfterMigration.getExecutionTree());
+    return ExecutionAssert.assertThat(snapshotAfterMigration.getExecutionTree());
   }
 
   public ActivityInstanceAssertThatClause assertActivityTreeAfterMigration() {

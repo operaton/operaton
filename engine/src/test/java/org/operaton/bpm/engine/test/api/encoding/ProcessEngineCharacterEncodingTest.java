@@ -24,25 +24,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-@RunWith(Parameterized.class)
+@Parameterized
+@ExtendWith(ProcessEngineExtension.class)
 public class ProcessEngineCharacterEncodingTest {
-
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected TaskService taskService;
@@ -52,15 +50,15 @@ public class ProcessEngineCharacterEncodingTest {
   @Parameter(0)
   public Charset charset;
 
-  @Parameters(name = "{index} - {0}")
-  public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
-      { StandardCharsets.UTF_8 },
-      { StandardCharsets.UTF_16 }
-    });
+  @Parameters
+  public static Collection<Object> scenarios() {
+    return Arrays.asList(
+      StandardCharsets.UTF_8,
+      StandardCharsets.UTF_16
+    );
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setDefaultCharset(defaultCharset);
     for (Task task : tasks) {
@@ -68,10 +66,8 @@ public class ProcessEngineCharacterEncodingTest {
     }
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    taskService = processEngineConfiguration.getTaskService();
     defaultCharset = processEngineConfiguration.getDefaultCharset();
     processEngineConfiguration.setDefaultCharset(charset);
   }
@@ -93,7 +89,7 @@ public class ProcessEngineCharacterEncodingTest {
     return taskService.createComment(taskId, null, message);
   }
 
-  @Test
+  @TestTemplate
   public void shouldPreserveArabicTaskCommentMessageWithCharset() {
     // given
     String message = "این نمونه است";
@@ -107,7 +103,7 @@ public class ProcessEngineCharacterEncodingTest {
     assertThat(taskComments.get(0).getFullMessage()).isEqualTo(message);
   }
 
-  @Test
+  @TestTemplate
   public void shouldPreserveLatinTaskCommentMessageWithCharset() {
     // given
     String message = "This is an example";
@@ -121,7 +117,7 @@ public class ProcessEngineCharacterEncodingTest {
     assertThat(taskComments.get(0).getFullMessage()).isEqualTo(message);
   }
 
-  @Test
+  @TestTemplate
   public void shouldPreserveArabicTaskUpdateCommentMessageWithCharset() {
     // given
     String taskId = newTask().getId();
@@ -138,7 +134,7 @@ public class ProcessEngineCharacterEncodingTest {
     assertThat(updatedComment.getFullMessage()).isEqualTo(updatedMessage);
   }
 
-  @Test
+  @TestTemplate
   public void shouldPreserveLatinTaskUpdateCommentMessageWithCharset() {
     // given
     String taskId = newTask().getId();

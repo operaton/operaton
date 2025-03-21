@@ -251,6 +251,9 @@ public class ProcessEngineExtension implements TestWatcher,
       boolean hasRequiredDatabase = TestHelper.annotationRequiredDatabaseCheck(processEngine, testClass, testMethod.getName(), testMethod.getParameterTypes());
       Assumptions.assumeTrue(hasRequiredHistoryLevel, "ignored because the current history level is too low");
       Assumptions.assumeTrue(hasRequiredDatabase, "ignored because the database doesn't match the required ones");
+      for (UserOperationLogEntry logEntry : historyService.createUserOperationLogQuery().list()) {
+        historyService.deleteUserOperationLogEntry(logEntry.getId());
+      }
     } finally {
       // after the initialization we restore authorization to the state defined by the test
       processEngineConfiguration.setAuthorizationEnabled(authorizationEnabled);

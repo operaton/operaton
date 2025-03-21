@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.delegate;
 
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.operaton.bpm.model.bpmn.Bpmn;
-
-import org.junit.After;
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.model.bpmn.Bpmn;
 
 /**
  * Tests for the execution hierarchy methods exposed in delegate execution
@@ -30,9 +32,16 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
+public class DelegateExecutionHierarchyTest {
 
-  @After
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  
+  @AfterEach
   public void tearDown() {
     AssertingJavaDelegate.clear();
 

@@ -161,8 +161,8 @@
     <!-- CDI engine & Client -->
 
     <dependency>
-      <groupId>org.operaton.bpm.javaee</groupId>
-      <artifactId>operaton-ejb-client-jakarta</artifactId>
+      <groupId>org.operaton.bpm.jakartaee</groupId>
+      <artifactId>operaton-ejb-client</artifactId>
       <scope>provided</scope>
     </dependency>
 

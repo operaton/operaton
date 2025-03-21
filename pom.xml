@@ -340,11 +340,10 @@
         <module>spring-boot-starter</module>
         <module>quarkus-extension</module>
         <module>qa</module>
-        <module>javaee/ejb-service</module>
-        <module>javaee/ejb-client</module>
-        <module>javaee/ejb-client-jakarta</module>
-        <module>javaee/jobexecutor-ra</module>
-        <module>javaee/jobexecutor-rar</module>
+        <module>jakarta-ee/ejb-service</module>
+        <module>jakarta-ee/ejb-client</module>
+        <module>jakarta-ee/jobexecutor-ra</module>
+        <module>jakarta-ee/jobexecutor-rar</module>
         <module>model-api</module>
         <module>engine-dmn</module>
         <module>connect</module>
@@ -415,8 +414,7 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <modules>
-        <module>javaee/ejb-client</module>
-        <module>javaee/ejb-client-jakarta</module>
+        <module>jakarta-ee/ejb-client</module>
         <module>distro/license-book</module>
         <module>distro/wildfly</module>
       </modules>
@@ -495,8 +493,7 @@
         <module>spin</module>
         <module>commons</module>
         <module>freemarker-template-engine</module>
-        <module>javaee/ejb-client</module>
-        <module>javaee/ejb-client-jakarta</module>
+        <module>jakarta-ee/ejb-client</module>
         <module>webapps</module>
         <module>engine-plugins</module>
         <module>distro/webjar</module>

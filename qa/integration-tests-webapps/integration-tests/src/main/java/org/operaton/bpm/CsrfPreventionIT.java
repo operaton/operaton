@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 
 import jakarta.ws.rs.core.Response;
@@ -37,10 +38,10 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
   @Test(timeout=10000)
   public void shouldCheckPresenceOfCsrfPreventionCookie() {
     // given
+    target = client.target(appBasePath + TASKLIST_PATH);
 
     // when
-    Response response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(Response.class);
+    response = target.request().get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());
@@ -59,11 +60,12 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     // given
     String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
+    target = client.target(baseUrl + modifyingRequestPath);
 
     // when
-    Response response = client.resource(baseUrl + modifyingRequestPath)
-        .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-        .post(Response.class);
+    response = target.request()
+            .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
+            .post(null, Response.class);
 
     // then
     assertEquals(403, response.getStatus());

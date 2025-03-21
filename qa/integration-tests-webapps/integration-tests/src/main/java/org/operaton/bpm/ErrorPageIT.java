@@ -19,6 +19,7 @@ package org.operaton.bpm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -35,9 +36,11 @@ public class ErrorPageIT extends AbstractWebIntegrationTest {
 
   @Test
   public void shouldCheckNonFoundResponse() {
+    // given
+    target = client.target(appBasePath + "nonexisting");
+
     // when
-    Response response = client.resource(appBasePath + "nonexisting")
-        .get(Response.class);
+    response = target.request().get();
 
     // then
     assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
@@ -45,9 +48,6 @@ public class ErrorPageIT extends AbstractWebIntegrationTest {
     String responseEntity = response.getEntity().toString();
     assertTrue(responseEntity.contains("Operaton"));
     assertTrue(responseEntity.contains("Not Found"));
-
-    // cleanup
-    response.close();
   }
 
 }

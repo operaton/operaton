@@ -34,24 +34,12 @@
       </dependency>
 
       <dependency>
-        <groupId>com.sun.jersey.contribs</groupId>
-        <artifactId>jersey-apache-client4</artifactId>
-        <version>${version.jersey-apache-client}</version>
-      </dependency>
-
-      <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
         <version>4.10.0</version>
       </dependency>
 
-      <dependency>
-        <groupId>com.sun.jersey</groupId>
-        <artifactId>jersey-json</artifactId>
-        <version>${version.jersey-json}</version>
-      </dependency>
-
-      <!-- using 4.13 in order to have @BeforeParam/@AfterParam for parameterized 
+      <!-- using 4.13 in order to have @BeforeParam/@AfterParam for parameterized
         tests to correctly start and tear down the Spring Boot container before each 
         parameter run -->
       <dependency>

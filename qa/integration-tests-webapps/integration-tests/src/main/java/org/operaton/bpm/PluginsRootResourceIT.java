@@ -16,29 +16,23 @@
  */
 package org.operaton.bpm;
 
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
-
-import java.util.Arrays;
-import java.util.Collection;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-@Ignore("""
-  Fails with com.sun.jersey.api.client.ClientHandlerException: A message body reader for Java class jakarta.ws.rs.core.Response, and Java type class jakarta.ws.rs.core.Response, and MIME media type text/javascript was not found
-  Revisit after upgrading to a newer version of Jersey
-  """)
 public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
 
   @Parameter(0)
@@ -66,17 +60,17 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   @Test
   public void shouldGetAssetIfAllowed() {
     // when
-    Response response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
+    response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
 
     // then
     assertResponse(assetName, response);
-
-    // cleanup
-    response.close();
   }
 
   protected Response getAsset(String path) {
-    return client.resource(appBasePath + path).get(Response.class);
+    target = client.target(appBasePath + path);
+
+    // Send GET request and return the Response
+    return target.request().get(Response.class);
   }
 
   protected void assertResponse(String asset, Response response) {

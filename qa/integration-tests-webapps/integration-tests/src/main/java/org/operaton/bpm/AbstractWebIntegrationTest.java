@@ -16,21 +16,20 @@
  */
 package org.operaton.bpm;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.logging.Logger;
-
-import jakarta.ws.rs.core.MediaType;
-
-import jakarta.ws.rs.core.Response;
-import org.operaton.bpm.util.TestUtil;
+import org.glassfish.jersey.client.ClientConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriverService;
-
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.client.apache4.ApacheHttpClient4;
-import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
+import org.operaton.bpm.util.TestUtil;
 
 /**
  *
@@ -59,11 +58,16 @@ public abstract class AbstractWebIntegrationTest {
 
   protected static ChromeDriverService service;
 
-  protected ApacheHttpClient4 client;
+  protected Client client;
   protected String httpPort;
 
   protected String csrfToken;
   protected String sessionId;
+
+  // current target under test
+  protected WebTarget target;
+  // current response under test
+  protected Response response;
 
   @Before
   public void before() throws Exception {
@@ -73,7 +77,10 @@ public abstract class AbstractWebIntegrationTest {
 
   @After
   public void destroyClient() {
-    client.destroy();
+    client.close();
+    if (response != null) {
+      response.close();
+    }
   }
 
   public void createClient(String ctxPath) throws Exception {
@@ -82,37 +89,42 @@ public abstract class AbstractWebIntegrationTest {
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);
     LOGGER.info("Connecting to application " + appBasePath);
 
-    ClientConfig clientConfig = new DefaultApacheHttpClient4Config();
-    clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-    client = ApacheHttpClient4.create(clientConfig);
+    var clientConfig = new ClientConfig();
+    clientConfig.register(JacksonJaxbJsonProvider.class);  // Register Jackson for POJO mapping
+
+    client = ClientBuilder.newClient(clientConfig);
   }
 
   protected void getTokens() {
-    // first request, first set of cookies
-    Response clientResponse = client.resource(appBasePath + TASKLIST_PATH).get(Response.class);
+    // First request, first set of cookies
+    target = client.target(appBasePath + "/tasklist"); // replace TASKLIST_PATH
+    Response clientResponse = target.request().get();
     List<Object> cookieValues = getCookieHeaders(clientResponse);
     clientResponse.close();
 
     String startCsrfCookie = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
     String startSessionCookie = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
 
-    // login with user, update session cookie
-    clientResponse = client.resource(appBasePath + "api/admin/auth/user/default/login/cockpit")
-        .entity("username=demo&password=demo", String.valueOf(MediaType.APPLICATION_FORM_URLENCODED_TYPE))
-        .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, startSessionCookie))
-        .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
-        .accept(MediaType.APPLICATION_JSON)
-        .post(Response.class);
+    // Login with user, update session cookie
+    target = client.target(appBasePath + "api/admin/auth/user/default/login/cockpit");
+    clientResponse = target
+            .request()
+            .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, startSessionCookie))
+            .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
+            .accept(MediaType.APPLICATION_JSON)
+            .post(Entity.entity("username=demo&password=demo", MediaType.APPLICATION_FORM_URLENCODED));
+
     cookieValues = clientResponse.getHeaders().get("Set-Cookie");
     clientResponse.close();
 
     sessionId = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
 
-    // update CSRF cookie
-    clientResponse = client.resource(appBasePath + "api/engine/engine")
-        .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, sessionId))
-        .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
-        .get(Response.class);
+    // Update CSRF cookie
+    clientResponse = client.target(appBasePath + "api/engine/engine")
+            .request()
+            .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, sessionId))
+            .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
+            .get();
 
     cookieValues = getCookieHeaders(clientResponse);
     clientResponse.close();

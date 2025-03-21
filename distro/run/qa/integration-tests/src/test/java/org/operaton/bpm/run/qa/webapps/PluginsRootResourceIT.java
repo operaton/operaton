@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
+import org.glassfish.jersey.client.JerseyClient;
+import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import java.util.Arrays;
@@ -99,7 +101,18 @@ class PluginsRootResourceIT extends AbstractWebIT {
   }
 
   protected Response getAsset(String path) {
-    return client.resource(APP_BASE_PATH + path).get(Response.class);
+    // Ensure the client is properly initialized
+    JerseyClient client = (JerseyClient) JerseyClientBuilder.newClient();
+
+    // Build the target URI using the base path and path parameter
+    String fullPath = APP_BASE_PATH + path;
+
+    // Perform the GET request to fetch the asset
+    Response response = client.target(fullPath)  // Use target() to define the endpoint
+            .request()  // Prepare to send the request
+            .get();  // Execute the GET request
+
+    return response;
   }
 
   protected void assertResponse(String asset, Response response) {
@@ -108,7 +121,7 @@ class PluginsRootResourceIT extends AbstractWebIT {
     } else {
       assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
       assertThat(response.getMediaType().toString()).startsWith(MediaType.APPLICATION_JSON);
-      String responseEntity = (String)response.getEntity();
+      String responseEntity = response.readEntity(String.class);
       assertThat(responseEntity).contains("\"type\":\"RestException\"");
       assertThat(responseEntity).contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
     }

@@ -51,15 +51,6 @@
         <version>${version.jersey-json}</version>
       </dependency>
 
-      <!-- using 4.13 in order to have @BeforeParam/@AfterParam for parameterized 
-        tests to correctly start and tear down the Spring Boot container before each 
-        parameter run -->
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>${version.junit}</version>
-      </dependency>
-
     </dependencies>
   </dependencyManagement>
 

@@ -33,14 +33,13 @@ public class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
   @Test
   public void shouldNotFailForUndefinedUser() {
+    // given
+    target = client.target(appBasePath + "app/admin/default/#/users/undefined?tab=profile");
+
     // when
-    WebTarget target = client.target(appBasePath + "app/admin/default/#/users/undefined?tab=profile");
-    Response response = target.request().get();
+    response = target.request().get();
 
     // then
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-    // cleanup
-    response.close();
   }
 }

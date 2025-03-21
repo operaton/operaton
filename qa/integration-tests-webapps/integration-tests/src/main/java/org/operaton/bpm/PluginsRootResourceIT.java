@@ -17,19 +17,17 @@
 package org.operaton.bpm;
 
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -62,17 +60,14 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   @Test
   public void shouldGetAssetIfAllowed() {
     // when
-    Response response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
+    response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
 
     // then
     assertResponse(assetName, response);
-
-    // cleanup
-    response.close();
   }
 
   protected Response getAsset(String path) {
-    WebTarget target = client.target(appBasePath + path);
+    target = client.target(appBasePath + path);
 
     // Send GET request and return the Response
     return target.request().get(Response.class);

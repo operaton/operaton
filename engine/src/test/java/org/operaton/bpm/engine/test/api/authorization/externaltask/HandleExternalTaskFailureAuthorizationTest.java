@@ -16,18 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 
 /**
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class HandleExternalTaskFailureAuthorizationTest extends HandleLockedExternalTaskAuthorizationTest {
 
   @Override

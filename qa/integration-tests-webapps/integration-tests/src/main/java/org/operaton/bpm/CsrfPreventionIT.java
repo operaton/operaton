@@ -38,10 +38,10 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
   @Test(timeout=10000)
   public void shouldCheckPresenceOfCsrfPreventionCookie() {
     // given
+    target = client.target(appBasePath + TASKLIST_PATH);
 
     // when
-    WebTarget target = client.target(appBasePath + TASKLIST_PATH);
-    Response response = target.request().get(Response.class);
+    response = target.request().get(Response.class);
 
     // then
     assertEquals(200, response.getStatus());
@@ -60,12 +60,10 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     // given
     String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
+    target = client.target(baseUrl + modifyingRequestPath);
 
     // when
-    WebTarget target = client.target(baseUrl + modifyingRequestPath);
-
-    // Send POST request with Content-Type header
-    Response response = target.request()
+    response = target.request()
             .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
             .post(null, Response.class);
 

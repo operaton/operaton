@@ -27,26 +27,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class DecisionRequirementsDefinitionQueryAuthorizationTest {
 
   protected static final String DMN_FILE = "org/operaton/bpm/engine/test/dmn/deployment/drdScore.dmn11.xml";
@@ -55,13 +53,12 @@ public class DecisionRequirementsDefinitionQueryAuthorizationTest {
   protected static final String DEFINITION_KEY = "score";
   protected static final String ANOTHER_DEFINITION_KEY = "dish";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
+  @RegisterExtension
+  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   protected RepositoryService repositoryService;
-
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(authRule);
 
   @Parameter(0)
   public AuthorizationScenario scenario;
@@ -69,7 +66,7 @@ public class DecisionRequirementsDefinitionQueryAuthorizationTest {
   @Parameter(1)
   public String[] expectedDefinitionKeys;
 
-  @Parameters(name = "scenario {index}")
+  @Parameters
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { scenario()
@@ -96,18 +93,18 @@ public class DecisionRequirementsDefinitionQueryAuthorizationTest {
     });
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
     repositoryService = engineRule.getRepositoryService();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = { DMN_FILE, ANOTHER_DMN })
   public void queryDecisionRequirementsDefinitions() {
 

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
 
+import org.junit.Ignore;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -38,6 +39,7 @@ import org.junit.runner.RunWith;
  *
  */
 @RunWith(Arquillian.class)
+@Ignore("https://github.com/operaton/operaton/issues/616")
 public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name="pa1")

@@ -144,8 +144,8 @@ jobs:
       matrix:
         java: ${{ fromJson(github.event.inputs.java_version || '["17"]') }}
         testsuite: ${{ fromJson(github.event.inputs.testsuite || '["engine"]') }}
-        distro: ${{ fromJson(github.event.inputs.distro || '["tomcat", "wildfly"]') }}
-        database: ${{ fromJson(github.event.inputs.database || '["h2", "postgres"]') }}
+        distro: ${{ fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]') }}
+        database: ${{ fromJson(github.event.inputs.database || '["h2", "postgresql"]') }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4

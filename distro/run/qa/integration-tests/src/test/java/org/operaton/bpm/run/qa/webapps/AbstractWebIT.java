@@ -16,27 +16,18 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-//import org.glassfish.jersey.client.Client;
-import com.sun.jersey.api.client.Client;
-//import jakarta.ws.rs.client.ClientBuilder;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.glassfish.jersey.client.JerseyClient;
-import org.glassfish.jersey.client.JerseyClientBuilder;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.jackson.JacksonFeature;
-import com.sun.jersey.client.apache4.ApacheHttpClient4;
+import java.util.logging.Logger;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.JerseyClient;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.AfterEach;
-import org.operaton.bpm.TestProperties;
-import org.operaton.bpm.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
-
-import java.util.logging.Logger;
+import org.operaton.bpm.TestProperties;
+import org.operaton.bpm.util.TestUtil;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 
 /**
  * NOTE: copied from
@@ -47,8 +38,8 @@ public abstract class AbstractWebIT {
 
   private static final Logger LOGGER = Logger.getLogger(AbstractWebIT.class.getName());
 
-  protected String TASKLIST_PATH = "app/tasklist/default/";
-  public static final String HOST_NAME = "localhost";
+  protected static final String TASKLIST_PATH = "app/tasklist/default/";
+  protected static final String HOST_NAME = "localhost";
   public String APP_BASE_PATH;
 
   protected String appUrl;
@@ -57,7 +48,7 @@ public abstract class AbstractWebIT {
 
   protected static ChromeDriverService service;
 
-  public JerseyClient client;
+  public Client client;
   public DefaultHttpClient defaultHttpClient;
   public String httpPort;
 
@@ -84,17 +75,10 @@ public abstract class AbstractWebIT {
     ClientConfig clientConfig = new ClientConfig();
     clientConfig.register(JacksonFeature.class);
 
-    // Create the underlying HttpClient (e.g., Apache HttpClient)
-    /*HttpClient apacheHttpClient = HttpClients.custom()
-            .setConnectionManager(new PoolingHttpClientConnectionManager())  // Optional: configure connection manager
-            .build();*/
-
     // Use JerseyClientBuilder to create the client and configure it with HttpClient
-    client = (JerseyClient) JerseyClientBuilder.newBuilder()
+    client =  ClientBuilder.newBuilder()
             .withConfig(clientConfig)
             .build();
-
-
 
     // Set connection timeout and socket timeout
     // These can be set directly in the HttpClient or via properties in JerseyClient

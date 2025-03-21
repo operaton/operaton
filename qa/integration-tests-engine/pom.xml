@@ -188,6 +188,10 @@
           <artifactId>spring-beans</artifactId>
           <groupId>org.springframework</groupId>
         </exclusion>
+        <exclusion>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -207,6 +211,10 @@
         <exclusion>
           <groupId>de.odysseus.juel</groupId>
           <artifactId>juel-impl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -457,7 +465,15 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
+            <dependencies>
+              <dependency>
+                <groupId>org.apache.maven.surefire</groupId>
+                <artifactId>surefire-junit47</artifactId>
+                <version>3.5.2</version>
+              </dependency>
+            </dependencies>
             <configuration>
+              <failIfNoTests>true</failIfNoTests>
               <excludes>
                 <!-- no EE stuff on tomcat :) -->
                 <exclude>**/ear/**</exclude>

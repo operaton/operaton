@@ -15,6 +15,14 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -48,14 +56,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * JUnit 5 Extension for managing a ProcessEngine during tests.
  * <p>
@@ -77,6 +77,9 @@ public class ProcessEngineTestExtension
   private ProcessEngineExtension processEngineRule;
   private ProcessEngine processEngine;
 
+  public ProcessEngineTestExtension() {
+  }
+  
   public ProcessEngineTestExtension(ProcessEngineExtension processEngineExtension) {
     this.processEngineRule = processEngineExtension;
   }
@@ -91,7 +94,10 @@ public class ProcessEngineTestExtension
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
-    this.processEngine = processEngineRule.getProcessEngine();
+    if (processEngineRule != null)
+      this.processEngine = processEngineRule.getProcessEngine();
+    else
+      this.processEngine = (ProcessEngine) context.getStore(ExtensionContext.Namespace.create("Operaton")).get(ProcessEngine.class);
   }
 
   @Override

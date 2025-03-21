@@ -15,29 +15,45 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.cmmn;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NotAllowedException;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.CaseExecution;
+import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
+import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
+import org.operaton.bpm.engine.runtime.CaseInstance;
+import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+@ExtendWith(ProcessEngineTestExtension.class)
+public class CaseServiceHumanTaskTest {
+
+  protected RepositoryService repositoryService;
+  protected TaskService taskService;
+  protected RuntimeService runtimeService;
+  protected CaseService caseService;
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test

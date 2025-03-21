@@ -140,7 +140,7 @@
            <additionalDependency>
              <groupId>junit</groupId>
              <artifactId>junit</artifactId>
-             <version>${version.junit}</version>
+             <version>4.13.1</version>
            </additionalDependency>
           </additionalDependencies>
         </configuration>

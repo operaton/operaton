@@ -32,14 +32,14 @@
 
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp-tomcat-jakarta</artifactId>
+      <artifactId>operaton-webapp-tomcat</artifactId>
       <version>${project.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-jakarta</artifactId>
+      <artifactId>operaton-engine-rest</artifactId>
       <version>${project.version}</version>
       <classifier>tomcat</classifier>
       <type>war</type>
@@ -47,7 +47,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm.example</groupId>
-      <artifactId>operaton-example-invoice-jakarta</artifactId>
+      <artifactId>operaton-example-invoice</artifactId>
       <version>${project.version}</version>
       <type>war</type>
     </dependency>

@@ -48,6 +48,14 @@
         <scope>import</scope>
       </dependency>
       <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-bom</artifactId>
+        <version>6.2.3.Final</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Test Framework BOMs -->
+      <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
         <version>5.11.4</version>

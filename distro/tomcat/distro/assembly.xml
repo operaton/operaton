@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assembly xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xmlns="urn:maven:assembly:1.1.2">
+<assembly
+        xmlns="urn:maven:assembly:1.1.2">
 
   <id>distro</id>
 
@@ -34,7 +34,7 @@
 
     <dependencySet>
         <includes>
-            <include>org.operaton.bpm:operaton-engine-rest-jakarta:war:*</include>
+            <include>org.operaton.bpm:operaton-engine-rest:war:*</include>
         </includes>
         <outputDirectory>server/apache-tomcat-${version.tomcat}/webapps/engine-rest</outputDirectory>
         <unpack>true</unpack>
@@ -42,7 +42,7 @@
 
     <dependencySet>
         <includes>
-            <include>org.operaton.bpm.webapp:operaton-webapp-tomcat-jakarta:war:*</include>
+            <include>org.operaton.bpm.webapp:operaton-webapp-tomcat:war:*</include>
         </includes>
         <outputDirectory>server/apache-tomcat-${version.tomcat}/webapps/operaton</outputDirectory>
         <unpack>true</unpack>
@@ -50,7 +50,7 @@
 
     <dependencySet>
         <includes>
-            <include>org.operaton.bpm.example:operaton-example-invoice-jakarta:war:*</include>
+            <include>org.operaton.bpm.example:operaton-example-invoice:war:*</include>
         </includes>
         <outputDirectory>server/apache-tomcat-${version.tomcat}/webapps/operaton-invoice</outputDirectory>
         <unpack>true</unpack>

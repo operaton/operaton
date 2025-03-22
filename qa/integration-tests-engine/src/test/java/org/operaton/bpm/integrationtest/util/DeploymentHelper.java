@@ -23,7 +23,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
 
 public class DeploymentHelper extends AbstractDeploymentHelper {
 
-  protected static final String OPERATON_EJB_CLIENT = "org.operaton.bpm.javaee:operaton-ejb-client-jakarta";
+  protected static final String OPERATON_EJB_CLIENT = "org.operaton.bpm.jakartaee:operaton-ejb-client";
   protected static final String OPERATON_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi";
   protected static final String OPERATON_ENGINE_SPRING = "org.operaton.bpm:operaton-engine-spring";
   protected static final String OPERATON_ENGINE = "org.operaton.bpm:operaton-engine";

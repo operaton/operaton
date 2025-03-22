@@ -36,7 +36,7 @@
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp-jakarta</artifactId>
+      <artifactId>operaton-webapp-webjar</artifactId>
       <version>${project.parent.version}</version>
       <type>jar</type>
       <classifier>classes</classifier>
@@ -59,7 +59,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>org.operaton.bpm.webapp</groupId>
-                  <artifactId>operaton-webapp-jakarta</artifactId>
+                  <artifactId>operaton-webapp</artifactId>
                   <version>${project.parent.version}</version>
                   <type>war</type>
                   <overWrite>true</overWrite>

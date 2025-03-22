@@ -22,7 +22,7 @@
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp-jakarta</artifactId>
+      <artifactId>operaton-webapp</artifactId>
       <version>${project.version}</version>
       <type>war</type>
       <scope>runtime</scope>

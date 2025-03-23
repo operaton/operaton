@@ -27,7 +27,7 @@ import java.util.Iterator;
 
 
 /**
- * Resolver wrapping an instance of javax.el.ELResolver obtained from the
+ * Resolver wrapping an instance of jakarta.el.ELResolver obtained from the
  * {@link BeanManager}. Allows the process engine to resolve Cdi-Beans.
  *
  * @author Daniel Meyer

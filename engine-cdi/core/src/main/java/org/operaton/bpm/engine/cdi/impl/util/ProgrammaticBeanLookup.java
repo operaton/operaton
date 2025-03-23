@@ -74,7 +74,7 @@ public class ProgrammaticBeanLookup {
 
   /**
    * @return a ContextualInstance of the given type
-   * @throws javax.enterprise.inject.AmbiguousResolutionException if the given type is satisfied by more than one Bean
+   * @throws jakarta.enterprise.inject.AmbiguousResolutionException if the given type is satisfied by more than one Bean
    * @see #lookup(Class, boolean)
    */
   public static <T> T lookup(Class<T> clazz) {
@@ -85,7 +85,7 @@ public class ProgrammaticBeanLookup {
    * @param optional if <code>false</code> then the bean must exist.
    * @return a ContextualInstance of the given type if optional is <code>false</code>. If optional is <code>true</code> null might be returned if no bean got found.
    * @throws IllegalStateException if there is no bean of the given class, but only if optional is <code>false</code>
-   * @throws javax.enterprise.inject.AmbiguousResolutionException if the given type is satisfied by more than one Bean
+   * @throws jakarta.enterprise.inject.AmbiguousResolutionException if the given type is satisfied by more than one Bean
    * @see #lookup(Class, boolean)
    */
   public static <T> T lookup(Class<T> clazz, boolean optional) {

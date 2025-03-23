@@ -63,11 +63,6 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-engine-rest-core-jakarta</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.operaton.bpm.identity</groupId>
         <artifactId>operaton-identity-ldap</artifactId>
         <version>${project.version}</version>

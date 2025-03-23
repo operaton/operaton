@@ -16,7 +16,7 @@
       <unpack>true</unpack>
       <scope>provided</scope>
       <includes>
-        <include>org.operaton.bpm:operaton-engine-rest-core-jakarta:jar:sources:*</include>
+        <include>org.operaton.bpm:operaton-engine-rest-core:jar:sources:*</include>
       </includes>
     </dependencySet>
   </dependencySets>

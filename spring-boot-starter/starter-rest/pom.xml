@@ -21,7 +21,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
+      <artifactId>operaton-engine-rest-core</artifactId>
       <version>${project.version}</version>
     </dependency>
 

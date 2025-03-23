@@ -46,14 +46,14 @@
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
+      <artifactId>operaton-engine-rest-core</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <!-- dependencies only used for assemblies should be scope provided -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
+      <artifactId>operaton-engine-rest-core</artifactId>
       <version>${project.version}</version>
       <classifier>sources</classifier>
       <scope>provided</scope>
@@ -61,7 +61,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
+      <artifactId>operaton-engine-rest-core</artifactId>
       <version>${project.version}</version>
       <classifier>tests</classifier>
       <scope>provided</scope>

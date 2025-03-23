@@ -24,11 +24,11 @@
       <useTransitiveFiltering>true</useTransitiveFiltering>
       <scope>provided</scope>
       <includes>
-        <include>org.operaton.bpm:operaton-engine-rest-core-jakarta:jar</include>
+        <include>org.operaton.bpm:operaton-engine-rest-core:jar</include>
       </includes>
       <excludes>
-        <exclude>org.operaton.bpm:operaton-engine-rest-core-jakarta:jar:tests</exclude>
-        <exclude>org.operaton.bpm:operaton-engine-rest-core-jakarta:jar:sources</exclude>
+        <exclude>org.operaton.bpm:operaton-engine-rest-core:jar:tests</exclude>
+        <exclude>org.operaton.bpm:operaton-engine-rest-core:jar:sources</exclude>
       </excludes>
     </dependencySet>
 

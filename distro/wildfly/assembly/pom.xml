@@ -65,7 +65,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-jakarta</artifactId>
+      <artifactId>operaton-engine-rest</artifactId>
       <classifier>classes</classifier>
       <version>${project.version}</version>
     </dependency>

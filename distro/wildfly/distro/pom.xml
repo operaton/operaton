@@ -54,7 +54,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm.example</groupId>
-      <artifactId>operaton-example-invoice-jakarta</artifactId>
+      <artifactId>operaton-example-invoice</artifactId>
       <version>${project.version}</version>
       <type>war</type>
     </dependency>

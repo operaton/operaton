@@ -7,9 +7,7 @@ Clean, package and install it via [Maven](https://maven.apache.org/).
 
 The structure is as follows:
 
-* `assembly` - Java sources and tests for the Operaton web application based on `javax` namespace.
-* `assembly-jakarta` - Java sources and tests for the Operaton web application based on `jakarta` namespace.
-  * This module is created from the `assembly` module via code transformation.
+* `assembly` - Java sources and tests for the Operaton web application.
 * `frontend` - HTML, CSS and Javascript sources as well as Plugins and tests for the Operaton webapplications Cockpit, Tasklist and Admin.
 
 ## FRONTEND
@@ -76,21 +74,12 @@ To start the server in development mode, call
 ```sh
 cd operaton/webapps/assembly
 mvn jetty:run -Pdevelop
+npm run start
 ```
 
 The webapps are then available pointing a browser at [http://localhost:8080](http://localhost:8080). To login as an admin user, use `jonny1` as username and password.
 
 You can now start developing using the `npm run start` command in the frontend directory.
-
-##### Jakarta Webapps
-
-In order to run the Jakarta Webapps start Jetty the same way from the `assembly-jakarta` folder
-
-```sh
-cd operaton/webapps/assembly
-mvn jetty:run -Pdevelop
-npm run start
-```
 
 ## Browsers support
 

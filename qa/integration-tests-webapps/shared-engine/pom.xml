@@ -158,7 +158,7 @@
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm.webapp</groupId>
-          <artifactId>operaton-webapp-tomcat-jakarta</artifactId>
+          <artifactId>operaton-webapp-tomcat</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
@@ -234,7 +234,7 @@
                 </deployable>
                 <deployable>
                   <groupId>org.operaton.bpm.webapp</groupId>
-                  <artifactId>operaton-webapp-tomcat-jakarta</artifactId>
+                  <artifactId>operaton-webapp-tomcat</artifactId>
                   <type>war</type>
                   <pingURL>http://localhost:${tomcat.connector.http.port}/operaton</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>

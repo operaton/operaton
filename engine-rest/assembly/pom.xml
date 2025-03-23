@@ -89,7 +89,7 @@
               </descriptors>
               <finalName>operaton-engine-rest-${project.version}</finalName>
               <attach>true</attach>
-              <classifier>wildfly</classifier>
+<!--              <classifier>wildfly</classifier>-->
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
             </configuration>
@@ -107,7 +107,7 @@
               </descriptors>
               <finalName>operaton-engine-rest-${project.version}</finalName>
               <attach>true</attach>
-              <classifier>tomcat</classifier>
+<!--              <classifier>tomcat</classifier>-->
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
             </configuration>
@@ -125,7 +125,7 @@
               </descriptors>
               <finalName>operaton-engine-rest-${project.version}</finalName>
               <attach>true</attach>
-              <classifier>was</classifier>
+<!--              <classifier>was</classifier>-->
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
             </configuration>
@@ -143,7 +143,7 @@
               </descriptors>
               <finalName>operaton-engine-rest-${project.version}</finalName>
               <attach>true</attach>
-              <classifier>wls</classifier>
+<!--              <classifier>wls</classifier>-->
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
             </configuration>

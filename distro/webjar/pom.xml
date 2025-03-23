@@ -36,7 +36,7 @@
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp-webjar</artifactId>
+      <artifactId>operaton-webapp</artifactId>
       <version>${project.parent.version}</version>
       <type>jar</type>
       <classifier>classes</classifier>

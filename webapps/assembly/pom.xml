@@ -89,12 +89,12 @@
     <!-- rest api -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
+      <artifactId>operaton-engine-rest-core</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
+      <artifactId>operaton-engine-rest-core</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
       <classifier>tests</classifier>

@@ -55,7 +55,7 @@
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm.example</groupId>
-          <artifactId>operaton-example-invoice-jakarta</artifactId>
+          <artifactId>operaton-example-invoice</artifactId>
           <version>${project.version}</version>
           <scope>test</scope>
           <type>war</type>
@@ -105,7 +105,7 @@
               <deployables>
                 <deployable>
                   <groupId>org.operaton.bpm.example</groupId>
-                  <artifactId>operaton-example-invoice-jakarta</artifactId>
+                  <artifactId>operaton-example-invoice</artifactId>
                   <type>war</type>
                   <pingURL>http://localhost:${jboss.http.port}/engine-rest/engine/default/user/demo/profile</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
@@ -173,7 +173,7 @@
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm.example</groupId>
-          <artifactId>operaton-example-invoice-jakarta</artifactId>
+          <artifactId>operaton-example-invoice</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
@@ -244,7 +244,7 @@
                 </deployable>
                 <deployable>
                   <groupId>org.operaton.bpm.example</groupId>
-                  <artifactId>operaton-example-invoice-jakarta</artifactId>
+                  <artifactId>operaton-example-invoice</artifactId>
                   <type>war</type>
                   <properties>
                     <context>invoice</context>

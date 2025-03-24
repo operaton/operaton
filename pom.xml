@@ -20,7 +20,6 @@
     <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
     <version.mybatis>3.5.15</version.mybatis>
     <version.joda-time>2.12.5</version.joda-time>
-    <version.jetty>12.0.16</version.jetty>
     <version.uuid-generator>4.3.0</version.uuid-generator>
     <version.feel-scala>1.18.1</version.feel-scala>
     <version.quarkus>3.15.0</version.quarkus>

@@ -14,23 +14,10 @@
 
   <dependencyManagement>
     <dependencies>
-      <!-- spring-framework-bom as first element in the list
-           ensures to be chosen over spring-boot-dependencies
-           to load spring-beans with Spring 5.
-           Can be removed if operaton-engine supports Spring 6 -->
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-      <!-- spring-boot-dependencies as second element in the list
-           ensures to be chosen over internal-dependencies for assertj -->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${version.spring-boot}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>

@@ -296,11 +296,6 @@
           <artifactId>logback-classic</artifactId>
         </dependency>
         <dependency>
-          <groupId>com.sun.xml.bind</groupId>
-          <artifactId>jaxb-impl</artifactId>
-          <version>${version.xml.jaxb-impl}</version>
-        </dependency>
-        <dependency>
           <groupId>org.graalvm.js</groupId>
           <artifactId>js</artifactId>
         </dependency>

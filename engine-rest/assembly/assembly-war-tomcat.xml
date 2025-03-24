@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assembly xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<assembly
           xmlns="urn:maven:assembly:1.1.2">
 
   <id>tomcat</id>
@@ -12,7 +12,7 @@
 
   <dependencySets>
 
-    <!-- Copy the engine-rest-core-jakarta along with its transitive dependencies (compile)  -->
+    <!-- Copy the engine-rest-core along with its transitive dependencies (compile)  -->
     <dependencySet>
       <outputDirectory>WEB-INF/lib</outputDirectory>
       <useTransitiveDependencies>true</useTransitiveDependencies>

@@ -43,23 +43,25 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Jakarta API -->
+
     <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-jaxrs</artifactId>
-      <version>${version.resteasy}</version>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-servlet</artifactId>
-      <version>${version.jersey3}</version>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
+
+    <!-- Resteasy -->
+
     <dependency>
-      <groupId>org.glassfish.jersey.inject</groupId>
-      <artifactId>jersey-hk2</artifactId>
-      <version>${version.jersey3}</version>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-core</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -89,7 +91,7 @@
               </descriptors>
               <finalName>operaton-engine-rest-${project.version}</finalName>
               <attach>true</attach>
-<!--              <classifier>wildfly</classifier>-->
+              <classifier>wildfly</classifier>
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
             </configuration>
@@ -107,43 +109,7 @@
               </descriptors>
               <finalName>operaton-engine-rest-${project.version}</finalName>
               <attach>true</attach>
-<!--              <classifier>tomcat</classifier>-->
-              <outputDirectory>target/</outputDirectory>
-              <workDirectory>target/assembly/work</workDirectory>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>was</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptors>
-                <descriptor>assembly-war-was.xml</descriptor>
-              </descriptors>
-              <finalName>operaton-engine-rest-${project.version}</finalName>
-              <attach>true</attach>
-<!--              <classifier>was</classifier>-->
-              <outputDirectory>target/</outputDirectory>
-              <workDirectory>target/assembly/work</workDirectory>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>wls</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptors>
-                <descriptor>assembly-war-wls.xml</descriptor>
-              </descriptors>
-              <finalName>operaton-engine-rest-${project.version}</finalName>
-              <attach>true</attach>
-<!--              <classifier>wls</classifier>-->
+              <classifier>tomcat</classifier>
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
             </configuration>

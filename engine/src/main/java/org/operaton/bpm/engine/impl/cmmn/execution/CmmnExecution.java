@@ -49,8 +49,6 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.util.*;
 
-import org.apache.bcel.generic.LRETURN;
-
 /**
  * @author Roman Smirnov
  *

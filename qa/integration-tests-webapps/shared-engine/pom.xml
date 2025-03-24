@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm</groupId>
-          <artifactId>operaton-engine-rest-jakarta</artifactId>
+          <artifactId>operaton-engine-rest</artifactId>
           <version>${project.version}</version>
           <classifier>wildfly</classifier>
           <scope>test</scope>
@@ -55,7 +55,7 @@
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm.example</groupId>
-          <artifactId>operaton-example-invoice-jakarta</artifactId>
+          <artifactId>operaton-example-invoice</artifactId>
           <version>${project.version}</version>
           <scope>test</scope>
           <type>war</type>
@@ -105,14 +105,14 @@
               <deployables>
                 <deployable>
                   <groupId>org.operaton.bpm.example</groupId>
-                  <artifactId>operaton-example-invoice-jakarta</artifactId>
+                  <artifactId>operaton-example-invoice</artifactId>
                   <type>war</type>
                   <pingURL>http://localhost:${jboss.http.port}/engine-rest/engine/default/user/demo/profile</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                 </deployable>
                 <deployable>
                   <groupId>org.operaton.bpm</groupId>
-                  <artifactId>operaton-engine-rest-jakarta</artifactId>
+                  <artifactId>operaton-engine-rest</artifactId>
                   <classifier>wildfly</classifier>
                   <type>war</type>
                   <pingURL>http://localhost:${jboss.http.port}/engine-rest/engine/default/process-definition</pingURL>
@@ -165,7 +165,7 @@
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm</groupId>
-          <artifactId>operaton-engine-rest-jakarta</artifactId>
+          <artifactId>operaton-engine-rest</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
@@ -173,7 +173,7 @@
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm.example</groupId>
-          <artifactId>operaton-example-invoice-jakarta</artifactId>
+          <artifactId>operaton-example-invoice</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
@@ -223,7 +223,7 @@
               <deployables>
                 <deployable>
                   <groupId>org.operaton.bpm</groupId>
-                  <artifactId>operaton-engine-rest-jakarta</artifactId>
+                  <artifactId>operaton-engine-rest</artifactId>
                   <type>war</type>
                   <classifier>tomcat</classifier>
                   <pingURL>http://localhost:${tomcat.connector.http.port}/engine-rest/engine/default/process-definition</pingURL>
@@ -244,7 +244,7 @@
                 </deployable>
                 <deployable>
                   <groupId>org.operaton.bpm.example</groupId>
-                  <artifactId>operaton-example-invoice-jakarta</artifactId>
+                  <artifactId>operaton-example-invoice</artifactId>
                   <type>war</type>
                   <properties>
                     <context>invoice</context>

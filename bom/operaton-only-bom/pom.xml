@@ -114,12 +114,6 @@
         <classifier>classes</classifier>
       </dependency>
       <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-engine-rest-jakarta</artifactId>
-        <version>${project.version}</version>
-        <classifier>classes</classifier>
-      </dependency>
-      <dependency>
         <groupId>org.operaton.bpm.webapp</groupId>
         <artifactId>operaton-webapp-webjar</artifactId>
         <version>${project.version}</version>

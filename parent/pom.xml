@@ -315,7 +315,6 @@
             <rules>
               <jakartaDefaults>true</jakartaDefaults>
               <renames>
-                <rename>jar:file:${org.operaton.bpm:operaton-engine:jar}!/META-INF/jakarta-renames.properties</rename>
                 <rename>jar:file:${org.operaton.bpm:operaton-engine:jar}!/META-INF/operaton-renames.properties</rename>
               </renames>
             </rules>

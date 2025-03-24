@@ -417,8 +417,8 @@
 
       <dependency>
         <groupId>org.apache.tomcat</groupId>
-        <artifactId>catalina</artifactId>
-        <version>6.0.53</version>
+        <artifactId>tomcat-catalina</artifactId>
+        <version>11.0.5</version>
       </dependency>
 
       <dependency>

@@ -51,7 +51,7 @@
 
     <dependencySet>
         <includes>
-          <include>org.operaton.bpm.example:operaton-example-invoice-jakarta:war:*</include>
+          <include>org.operaton.bpm.example:operaton-example-invoice:war:*</include>
         </includes>
         <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments</outputDirectory>
     </dependencySet>

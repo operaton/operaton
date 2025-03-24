@@ -24,6 +24,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
       <!-- explicitly declare groovy dependencies, so it prevents our groovy version
             from overriding the groovy version from rest-assured -->
       <dependency>
@@ -39,11 +46,6 @@
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb-impl</artifactId>
-        <version>${version.xml.jaxb-impl}</version>
       </dependency>
       <dependency>
         <groupId>io.rest-assured</groupId>

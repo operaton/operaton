@@ -54,6 +54,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <artifactId>jersey-apache-client4</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
     </dependency>

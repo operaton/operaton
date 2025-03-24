@@ -32,17 +32,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <!-- add dependency so this is run after the war was build -->
-  <dependencies>
-    <dependency>
-      <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp</artifactId>
-      <version>${project.parent.version}</version>
-      <type>jar</type>
-      <classifier>classes</classifier>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
       <!-- first fetch and unpack the war -->

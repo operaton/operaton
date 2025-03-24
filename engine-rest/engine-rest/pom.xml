@@ -348,97 +348,80 @@
 
     <profile>
       <id>resteasy</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
       <properties>
-        <version.netty>4.1.42.Final</version.netty>
+        <version.netty>4.1.89.Final</version.netty>
+        <version.undertow>2.3.0.Final</version.undertow>
       </properties>
+
       <dependencies>
         <dependency>
-          <groupId>org.jboss.spec.javax.ws.rs</groupId>
-          <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-          <scope>provided</scope>
+          <groupId>io.undertow</groupId>
+          <artifactId>undertow-servlet</artifactId>
+          <version>${version.undertow}</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-jaxrs</artifactId>
-          <version>${version.resteasy}</version>
+          <artifactId>resteasy-core</artifactId>
           <scope>test</scope>
-          <exclusions>
-            <exclusion>
-              <artifactId>httpclient</artifactId>
-              <groupId>org.apache.httpcomponents</groupId>
-            </exclusion>
-          </exclusions>
         </dependency>
-
+        <dependency>
+          <groupId>org.jboss.resteasy</groupId>
+          <artifactId>resteasy-undertow</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.resteasy</groupId>
+          <artifactId>resteasy-netty4</artifactId>
+          <scope>test</scope>
+        </dependency>
         <dependency>
           <groupId>io.netty</groupId>
           <artifactId>netty-all</artifactId>
           <version>${version.netty}</version>
           <scope>test</scope>
         </dependency>
-
-        <dependency>
-          <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-netty4</artifactId>
-          <version>${version.resteasy}</version>
-          <scope>test</scope>
-        </dependency>
       </dependencies>
+
       <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
+              <skipTests>${skipTests}</skipTests>
             </configuration>
-            <executions>
-              <execution>
-                <id>encoding-test</id>
-                <phase>test</phase>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <configuration>
-                  <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
-                  <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
-                  <includes>
-                    <include>**/ProcessDefinitionRestServiceInteractionTest.java</include>
-                    <include>**/TaskRestServiceInteractionTest.java</include>
-                  </includes>
-                </configuration>
-              </execution>
-            </executions>
           </plugin>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>add-test-source</id>
+                <id>add-jakarta-resteasy-test-source</id>
                 <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
                 </goals>
                 <configuration>
                   <sources>
-                    <source>src/test/java-resteasy</source>
+                    <source>${basedir}/src/test/java-resteasy</source>
+                    <source>${project.build.directory}/generated-test-sources/jakarta-resteasy</source>
                   </sources>
                 </configuration>
               </execution>
               <execution>
-                <id>add-test-resource</id>
+                <id>add-jakarta-resteasy-test-resource</id>
                 <phase>generate-test-resources</phase>
                 <goals>
                   <goal>add-test-resource</goal>
                 </goals>
                 <configuration>
                   <resources>
-                    <resource>
-                      <directory>
-                        src/test/resources-resteasy
-                      </directory>
-                    </resource>
+                    <resource><directory>${project.build.directory}/generated-test-resources/jakarta-resteasy</directory></resource>
                   </resources>
                 </configuration>
               </execution>
@@ -447,7 +430,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>jersey3</id>
       <activation>

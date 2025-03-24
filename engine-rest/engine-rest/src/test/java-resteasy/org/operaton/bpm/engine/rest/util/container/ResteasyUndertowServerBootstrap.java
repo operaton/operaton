@@ -16,38 +16,51 @@
  */
 package org.operaton.bpm.engine.rest.util.container;
 
+import io.undertow.servlet.api.DeploymentInfo;
+import java.net.BindException;
 import java.util.Properties;
-import jakarta.ws.rs.core.Application;
-import org.jboss.resteasy.plugins.server.netty.NettyJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 
-public class ResteasyServerBootstrap extends EmbeddedServerBootstrap {
+public class ResteasyUndertowServerBootstrap extends AbstractServerBootstrap {
 
-  protected NettyJaxrsServer server;
+  protected UndertowJaxrsServer server;
+  protected DeploymentInfo deploymentInfo;
 
-  public ResteasyServerBootstrap(Application application) {
-    super(application);
+  public ResteasyUndertowServerBootstrap(DeploymentInfo deploymentInfo) {
+    this.deploymentInfo = deploymentInfo;
+    setupServer();
   }
 
   @Override
   public void stop() {
-    server.stop();
+    this.server.stop();
   }
 
   @Override
-  protected void startServerInternal() {
-    server.start();
+  protected void startServer(int startUpRetries) {
+    try {
+      this.server.start();
+    } catch (Exception e) {
+      if ((e instanceof BindException || e.getCause() instanceof BindException) && startUpRetries > 0) {
+        stop();
+        try {
+          Thread.sleep(1500L);
+        } catch (Exception ex) {
+        }
+        setupServer();
+        startServer(--startUpRetries);
+      } else {
+        throw new ServerBootstrapException(e);
+      }
+    }
   }
 
-  @Override
-  protected void setupServer(Application application) {
+  protected void setupServer() {
     Properties serverProperties = readProperties();
     int port = Integer.parseInt(serverProperties.getProperty(PORT_PROPERTY));
 
-    server = new NettyJaxrsServer();
-    server.setRootResourcePath(ROOT_RESOURCE_PATH);
-    server.setPort(port);
-
-    server.getDeployment().setApplication(application);
+    this.server = new UndertowJaxrsServer();
+    this.server.setPort(port);
+    this.server.deploy(this.deploymentInfo);
   }
-
 }

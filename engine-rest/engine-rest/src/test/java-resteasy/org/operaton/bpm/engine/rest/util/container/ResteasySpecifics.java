@@ -16,18 +16,23 @@
  */
 package org.operaton.bpm.engine.rest.util.container;
 
+import io.undertow.servlet.Servlets;
+import io.undertow.servlet.api.DeploymentInfo;
+import jakarta.servlet.DispatcherType;
+import jakarta.ws.rs.core.Application;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.ws.rs.core.Application;
-
 import org.operaton.bpm.engine.rest.CustomJacksonDateFormatTest;
 import org.operaton.bpm.engine.rest.ExceptionHandlerTest;
 import org.operaton.bpm.engine.rest.application.TestCustomResourceApplication;
+import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
 import org.operaton.bpm.engine.rest.standalone.NoServletAuthenticationFilterTest;
 import org.operaton.bpm.engine.rest.standalone.NoServletEmptyBodyFilterTest;
 import org.operaton.bpm.engine.rest.standalone.ServletAuthenticationFilterTest;
 import org.operaton.bpm.engine.rest.standalone.ServletEmptyBodyFilterTest;
+import org.jboss.resteasy.plugins.server.servlet.FilterDispatcher;
+import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap;
 import org.junit.rules.ExternalResource;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TemporaryFolder;
@@ -35,25 +40,91 @@ import org.junit.rules.TestRule;
 
 /**
  * @author Thorben Lindhauer
- *
  */
 public class ResteasySpecifics implements ContainerSpecifics {
 
-  protected static final TestRuleFactory DEFAULT_RULE_FACTORY =
-      new EmbeddedServerRuleFactory(new JaxrsApplication());
+  protected static final TestRuleFactory DEFAULT_RULE_FACTORY = new EmbeddedServerRuleFactory(new JaxrsApplication());
 
-  protected static final Map<Class<?>, TestRuleFactory> TEST_RULE_FACTORIES =
-      new HashMap<Class<?>, TestRuleFactory>();
+  protected static final Map<Class<?>, TestRuleFactory> TEST_RULE_FACTORIES = new HashMap<>();
 
   static {
-    TEST_RULE_FACTORIES.put(ExceptionHandlerTest.class, new EmbeddedServerRuleFactory(new TestCustomResourceApplication()));
-    TEST_RULE_FACTORIES.put(ServletAuthenticationFilterTest.class, new ServletContainerRuleFactory("auth-filter-servlet-web.xml"));
-    TEST_RULE_FACTORIES.put(NoServletAuthenticationFilterTest.class, new ServletContainerRuleFactory("auth-filter-no-servlet-web.xml"));
-    TEST_RULE_FACTORIES.put(ServletEmptyBodyFilterTest.class, new ServletContainerRuleFactory("empty-body-filter-servlet-web.xml"));
-    TEST_RULE_FACTORIES.put(NoServletEmptyBodyFilterTest.class, new ServletContainerRuleFactory("empty-body-filter-no-servlet-web.xml"));
-    TEST_RULE_FACTORIES.put(CustomJacksonDateFormatTest.class, new ServletContainerRuleFactory("custom-date-format-web.xml"));
+    TEST_RULE_FACTORIES.put(ExceptionHandlerTest.class,
+        new EmbeddedServerRuleFactory(new TestCustomResourceApplication()));
+
+    TEST_RULE_FACTORIES.put(ServletAuthenticationFilterTest.class, new UndertowServletContainerRuleFactory(
+        Servlets.deployment()
+            .setDeploymentName("rest-test.war")
+            .setContextPath("/rest-test/rest")
+            .setClassLoader(ResteasyUndertowServerBootstrap.class.getClassLoader())
+            .addListener(Servlets.listener(ResteasyBootstrap.class))
+            .addFilter(Servlets.filter("operaton-auth", ProcessEngineAuthenticationFilter.class)
+                .addInitParam("authentication-provider",
+                    "org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider"))
+            .addFilterUrlMapping("operaton-auth", "/*", DispatcherType.REQUEST)
+            .addServlet(Servlets.servlet("operaton-app", HttpServletDispatcher.class)
+                .addMapping("/*")
+                .addInitParam("jakarta.ws.rs.Application",
+                    "org.operaton.bpm.engine.rest.util.container.JaxrsApplication"))));
+
+    TEST_RULE_FACTORIES.put(NoServletAuthenticationFilterTest.class, new UndertowServletContainerRuleFactory(
+        Servlets.deployment()
+            .setDeploymentName("rest-test.war")
+            .setContextPath("/rest-test/rest")
+            .setClassLoader(ResteasyUndertowServerBootstrap.class.getClassLoader())
+            .addListener(Servlets.listener(ResteasyBootstrap.class))
+            .addFilter(Servlets.filter("operaton-auth", ProcessEngineAuthenticationFilter.class)
+                .addInitParam("authentication-provider",
+                    "org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider")
+                .addInitParam("rest-url-pattern-prefix", ""))
+            .addFilterUrlMapping("operaton-auth", "/*", DispatcherType.REQUEST)
+            .addFilter(Servlets.filter("Resteasy", FilterDispatcher.class)
+                .addInitParam("jakarta.ws.rs.Application",
+                    "org.operaton.bpm.engine.rest.util.container.JaxrsApplication"))
+            .addFilterUrlMapping("Resteasy", "/*", DispatcherType.REQUEST)));
+
+    TEST_RULE_FACTORIES.put(ServletEmptyBodyFilterTest.class, new UndertowServletContainerRuleFactory(
+        Servlets.deployment()
+            .setDeploymentName("rest-test.war")
+            .setContextPath("/rest-test/rest")
+            .setClassLoader(ResteasyUndertowServerBootstrap.class.getClassLoader())
+            .addListener(Servlets.listener(ResteasyBootstrap.class))
+            .addFilter(Servlets.filter("EmptyBodyFilter", org.operaton.bpm.engine.rest.filter.EmptyBodyFilter.class)
+                .addInitParam("rest-url-pattern-prefix", ""))
+            .addFilterUrlMapping("EmptyBodyFilter", "/*", DispatcherType.REQUEST)
+            .addServlet(Servlets.servlet("operaton-app", HttpServletDispatcher.class)
+                .addMapping("/*")
+                .addInitParam("jakarta.ws.rs.Application",
+                    "org.operaton.bpm.engine.rest.util.container.JaxrsApplication"))));
+
+    TEST_RULE_FACTORIES.put(NoServletEmptyBodyFilterTest.class, new UndertowServletContainerRuleFactory(
+        Servlets.deployment()
+            .setDeploymentName("rest-test.war")
+            .setContextPath("/rest-test/rest")
+            .setClassLoader(ResteasyUndertowServerBootstrap.class.getClassLoader())
+            .addListener(Servlets.listener(ResteasyBootstrap.class))
+            .addFilter(Servlets.filter("EmptyBodyFilter", org.operaton.bpm.engine.rest.filter.EmptyBodyFilter.class)
+                .addInitParam("rest-url-pattern-prefix", ""))
+            .addFilterUrlMapping("EmptyBodyFilter", "/*", DispatcherType.REQUEST)
+            .addFilter(Servlets.filter("Resteasy", FilterDispatcher.class)
+                .addInitParam("jakarta.ws.rs.Application",
+                    "org.operaton.bpm.engine.rest.util.container.JaxrsApplication"))
+            .addFilterUrlMapping("Resteasy", "/*", DispatcherType.REQUEST)));
+
+    TEST_RULE_FACTORIES.put(CustomJacksonDateFormatTest.class, new UndertowServletContainerRuleFactory(
+        Servlets.deployment()
+            .setDeploymentName("rest-test.war")
+            .setContextPath("/rest-test")
+            .setClassLoader(ResteasyUndertowServerBootstrap.class.getClassLoader())
+            .addListener(Servlets.listener(ResteasyBootstrap.class))
+            .addListener(Servlets.listener(org.operaton.bpm.engine.rest.CustomJacksonDateFormatListener.class))
+            .addInitParameter("org.operaton.bpm.engine.rest.jackson.dateFormat", "yyyy-MM-dd'T'HH:mm:ss")
+            .addFilter(Servlets.filter("Resteasy", FilterDispatcher.class)
+                .addInitParam("jakarta.ws.rs.Application",
+                    "org.operaton.bpm.engine.rest.util.container.JaxrsApplication"))
+            .addFilterUrlMapping("Resteasy", "/*", DispatcherType.REQUEST)));
   }
 
+  @Override
   public TestRule getTestRule(Class<?> testClass) {
     TestRuleFactory ruleFactory = DEFAULT_RULE_FACTORY;
 
@@ -72,15 +143,18 @@ public class ResteasySpecifics implements ContainerSpecifics {
       this.jaxRsApplication = jaxRsApplication;
     }
 
+    @Override
     public TestRule createTestRule() {
       return new ExternalResource() {
 
         ResteasyServerBootstrap bootstrap = new ResteasyServerBootstrap(jaxRsApplication);
 
+        @Override
         protected void before() {
           bootstrap.start();
         }
 
+        @Override
         protected void after() {
           bootstrap.stop();
         }
@@ -88,35 +162,34 @@ public class ResteasySpecifics implements ContainerSpecifics {
     }
   }
 
-  public static class ServletContainerRuleFactory implements TestRuleFactory {
+  public static class UndertowServletContainerRuleFactory implements TestRuleFactory {
 
-    protected String webXmlResource;
+    protected DeploymentInfo deploymentInfo;
 
-    public ServletContainerRuleFactory(String webXmlResource) {
-      this.webXmlResource = webXmlResource;
+    public UndertowServletContainerRuleFactory(DeploymentInfo deploymentInfo) {
+      this.deploymentInfo = deploymentInfo;
     }
 
+    @Override
     public TestRule createTestRule() {
       final TemporaryFolder tempFolder = new TemporaryFolder();
 
-      return RuleChain
-        .outerRule(tempFolder)
-        .around(new ExternalResource() {
+      return RuleChain.outerRule(tempFolder).around(new ExternalResource() {
 
-          ResteasyTomcatServerBootstrap bootstrap = new ResteasyTomcatServerBootstrap(webXmlResource);
+        final AbstractServerBootstrap bootstrap = new ResteasyUndertowServerBootstrap(deploymentInfo);
 
-          protected void before() {
-            bootstrap.setWorkingDir(tempFolder.getRoot().getAbsolutePath());
-            bootstrap.start();
-          }
+        @Override
+        protected void before() {
+          bootstrap.start();
+        }
 
-          protected void after() {
-            bootstrap.stop();
-          }
-        });
+        @Override
+        protected void after() {
+          bootstrap.stop();
+        }
+      });
     }
 
   }
-
 
 }

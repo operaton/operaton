@@ -48,14 +48,6 @@
       </dependency>
 
       <dependency>
-        <groupId>com.fasterxml.jackson</groupId>
-        <artifactId>jackson-bom</artifactId>
-        <version>${version.jackson}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-
-      <dependency>
         <groupId>org.apache.groovy</groupId>
         <artifactId>groovy-jsr223</artifactId>
         <version>${version.groovy}</version>
@@ -86,15 +78,8 @@
       </dependency>
 
       <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb-impl</artifactId>
-        <version>${version.xml.jaxb-impl}</version>
-      </dependency>
-
-      <dependency>
         <groupId>com.jayway.jsonpath</groupId>
         <artifactId>json-path</artifactId>
-        <version>${version.json-path}</version>
       </dependency>
 
     </dependencies>

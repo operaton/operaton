@@ -16,7 +16,6 @@
     <!-- default os -->
     <os.type>linux64</os.type>
 
-    <version.jersey-json>1.15</version.jersey-json>
     <version.jersey-apache-client>1.15</version.jersey-apache-client>
     <version.httpcomponents>4.5.10</version.httpcomponents>
     <version.chromedriver>112.0.5615.49</version.chromedriver>
@@ -26,26 +25,15 @@
     <dependencies>
 
       <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpcomponents-client</artifactId>
-        <version>${version.httpcomponents}</version>
-        <type>pom</type>
-        <scope>import</scope>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
         <version>4.10.0</version>
-      </dependency>
-
-      <!-- using 4.13 in order to have @BeforeParam/@AfterParam for parameterized
-        tests to correctly start and tear down the Spring Boot container before each 
-        parameter run -->
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>${version.junit}</version>
       </dependency>
 
     </dependencies>

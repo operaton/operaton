@@ -14,7 +14,6 @@
     <!-- pin tomcat version for engine-rest -->
     <version.tomcat>10.1.35</version.tomcat>
     <rest.http.port>38080</rest.http.port>
-    <javax.activation.version>1.1.1</javax.activation.version>
     <surefire.memArgs>-Xmx2g</surefire.memArgs>
   </properties>
 
@@ -86,19 +85,6 @@
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-logging</artifactId>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>javax.activation</groupId>
-      <artifactId>activation</artifactId>
-      <version>${javax.activation.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <dependency>

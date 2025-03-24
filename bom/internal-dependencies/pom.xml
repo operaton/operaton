@@ -21,6 +21,8 @@
 
   <properties>
     <version.slf4j>2.0.16</version.slf4j>
+    <version.bouncycastle>1.47</version.bouncycastle>
+    <version.jetty>12.0.16</version.jetty>
   </properties>
 
   <dependencyManagement>
@@ -36,7 +38,7 @@
       <dependency>
         <groupId>jakarta.platform</groupId>
         <artifactId>jakarta.jakartaee-bom</artifactId>
-        <version>${version.jakarta-ee-spec}</version>
+        <version>10.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -79,14 +81,30 @@
       <dependency>
         <groupId>org.jboss.arquillian.jakarta</groupId>
         <artifactId>arquillian-jakarta-bom</artifactId>
-        <version>${version.arquillian-jakarta}</version>
+        <version>10.0.0.Final</version>
         <scope>import</scope>
         <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.shrinkwrap.resolver</groupId>
+        <artifactId>shrinkwrap-resolver-bom</artifactId>
+        <version>3.3.3</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
         <version>2.18.3</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-bom</artifactId>
+        <version>5.16.1</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
       <!-- Other dependencies -->
       <dependency>
@@ -142,14 +160,14 @@
         <version>1.5</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.httpcomponents.client5</groupId>
-        <artifactId>httpclient5</artifactId>
-        <version>${version.httpclient5}</version>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.14</version>
       </dependency>
       <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb-xjc</artifactId>
-        <version>2.3.6</version>
+        <groupId>org.apache.httpcomponents.client5</groupId>
+        <artifactId>httpclient5</artifactId>
+        <version>5.4.1</version>
       </dependency>
       <dependency>
         <groupId>org.glassfish.jaxb</groupId>
@@ -231,12 +249,25 @@
         <scope>provided</scope>
       </dependency>
 
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.2</version>
-      <scope>test</scope>
-    </dependency>
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.2</version>
+      </dependency>
+
+      <!-- JNA needed for Managed Container -->
+      <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna</artifactId>
+        <version>5.16.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna-platform</artifactId>
+        <version>5.16.0</version>
+        <scope>test</scope>
+      </dependency>
 
       <!-- EMAIL -->
       <dependency>
@@ -256,11 +287,6 @@
       </dependency>
         <!-- Web service -->
       <dependency>
-        <groupId>org.apache.geronimo.specs</groupId>
-        <artifactId>geronimo-jta_1.1_spec</artifactId>
-        <version>1.1.1</version>
-      </dependency>
-      <dependency>
         <groupId>org.apache.openjpa</groupId>
         <artifactId>openjpa</artifactId>
         <version>${version.openjpa}</version>
@@ -272,11 +298,6 @@
         <artifactId>jetty-bom</artifactId>
         <version>${version.jetty}</version>
         <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>${version.jetty}</version>
       </dependency>
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
@@ -323,18 +344,6 @@
         <groupId>org.mule.tests</groupId>
         <artifactId>mule-tests-functional</artifactId>
         <version>${mule.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>${version.mockito}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-junit-jupiter</artifactId>
-        <version>${version.mockito}</version>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.osgi</groupId>
@@ -498,7 +507,7 @@
       <dependency>
         <groupId>org.wiremock</groupId>
         <artifactId>wiremock</artifactId>
-        <version>${version.wiremock}</version>
+        <version>3.10.0</version>
         <scope>test</scope>
       </dependency>
 
@@ -506,7 +515,7 @@
         <groupId>org.wiremock</groupId>
         <artifactId>wiremock-standalone</artifactId>
         <scope>test</scope>
-        <version>${version.wiremock}</version>
+        <version>3.10.0</version>
       </dependency>
 
       <dependency>
@@ -535,6 +544,7 @@
         <version>1.1.0</version>
         <scope>provided</scope>
       </dependency>
+
 
     </dependencies>
   </dependencyManagement>

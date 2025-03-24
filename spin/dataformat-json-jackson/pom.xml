@@ -10,6 +10,16 @@
   <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
   <name>Operaton - Spin - Jackson JSON data format</name>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.operaton.spin</groupId>
@@ -39,6 +49,7 @@
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
       <artifactId>json-path</artifactId>
+      <version>2.9.0</version>
       <exclusions>
         <exclusion>
           <artifactId>asm</artifactId>

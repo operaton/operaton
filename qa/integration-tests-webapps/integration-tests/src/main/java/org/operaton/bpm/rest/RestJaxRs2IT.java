@@ -31,6 +31,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 
@@ -44,9 +49,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
-import org.codehaus.jettison.json.JSONObject;
 import org.operaton.bpm.AbstractWebIntegrationTest;
-import org.codehaus.jettison.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,17 +65,22 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
   }
 
   @Test(timeout=10000)
-  public void shouldUseJaxRs2Artifact() throws JSONException {
+  public void shouldUseJaxRs2Artifact() throws JsonProcessingException {
     Map<String, Object> payload = new HashMap<>();
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
 
-    Response response = client.resource(appBasePath + FETCH_AND_LOCK_PATH).accept(MediaType.APPLICATION_JSON)
-      .entity(payload, String.valueOf(MediaType.APPLICATION_JSON_TYPE))
-      .post(Response.class);
+    target = client.target(appBasePath + FETCH_AND_LOCK_PATH);
+
+    // Make POST request with the payload
+    response = target.request()
+            .accept(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(payload, MediaType.APPLICATION_JSON));
 
     assertEquals(400, response.getStatus());
-    String responseMessage = ((JSONObject) response.getEntity()).get("message").toString();
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode responseJson = objectMapper.readTree(response.getEntity().toString());
+    String responseMessage = responseJson.get("message").asText();
     assertTrue(responseMessage.equals("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds"));
     response.close();
   }
@@ -93,7 +101,7 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
         StringEntity stringEntity = new StringEntity("{ \"workerId\": \"aWorkerId\", \"asyncResponseTimeout\": 1000 }");
         request.setEntity(stringEntity);
 
-        CloseableHttpResponse response = httpClient.execute(request, HttpClientContext.create());
+        var response = httpClient.execute(request, HttpClientContext.create());
         String responseBody = null;
         try {
           HttpEntity entity = response.getEntity();

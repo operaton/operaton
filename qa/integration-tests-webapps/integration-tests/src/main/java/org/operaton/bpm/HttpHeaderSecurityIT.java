@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm;
 
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,67 +41,55 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
   @Test(timeout=10000)
   public void shouldCheckPresenceOfXssProtectionHeader() {
     // given
+    target = client.target(appBasePath + TASKLIST_PATH);
 
     // when
-    Response response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(Response.class);
+    response = target.request().get();
 
     // then
     assertEquals(200, response.getStatus());
     assertHeaderPresent("X-XSS-Protection", "1; mode=block", response);
-
-    // cleanup
-    response.close();
   }
 
   @Test(timeout=10000)
   public void shouldCheckPresenceOfContentSecurityPolicyHeader() {
     // given
+    target = client.target(appBasePath + TASKLIST_PATH);
 
     // when
-    Response response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(Response.class);
+    response = target.request().get();
 
     // then
     assertEquals(200, response.getStatus());
     assertHeaderPresent("Content-Security-Policy", CSP_VALUE, response);
-
-    // cleanup
-    response.close();
   }
 
   @Test(timeout=10000)
   public void shouldCheckPresenceOfContentTypeOptions() {
     // given
+    target = client.target(appBasePath + TASKLIST_PATH);
 
     // when
-    Response response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(Response.class);
+    response = target.request().get();
 
     // then
     assertEquals(200, response.getStatus());
     assertHeaderPresent("X-Content-Type-Options", "nosniff", response);
-
-    // cleanup
-    response.close();
   }
 
   @Test(timeout=10000)
   public void shouldCheckAbsenceOfHsts() {
     // given
+    target = client.target(appBasePath + TASKLIST_PATH);
 
     // when
-    Response response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(Response.class);
+    response = target.request().get();
 
     // then
     assertEquals(200, response.getStatus());
     MultivaluedMap<String, Object> headers = response.getHeaders();
     List<Object> values = headers.get("Strict-Transport-Security");
     assertNull(values);
-
-    // cleanup
-    response.close();
   }
 
   protected void assertHeaderPresent(String expectedName, String expectedValue, Response response) {

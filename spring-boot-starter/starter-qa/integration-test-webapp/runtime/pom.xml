@@ -13,7 +13,6 @@
   <name>Operaton - Spring Boot Starter - QA - Webapps Runtime</name>
 
   <properties>
-    <version.jersey-json>1.15</version.jersey-json>
     <version.h2>1.4.199</version.h2>
     <version.jaxb-api>2.3.1</version.jaxb-api>
     <version.jersey-apache-client>1.15</version.jersey-apache-client>
@@ -91,12 +90,6 @@
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-java</artifactId>
           <version>${version.selenium}</version>
-        </dependency>
-
-        <dependency>
-          <groupId>com.sun.jersey</groupId>
-          <artifactId>jersey-json</artifactId>
-          <version>${version.jersey-json}</version>
         </dependency>
 
         <dependency>

@@ -26,7 +26,6 @@ import java.util.TimerTask;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.opentest4j.AssertionFailedError;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.HistoryService;
@@ -70,7 +69,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * </p>
  */
 public class ProcessEngineTestExtension
-		implements BeforeEachCallback, AfterEachCallback, TestInstancePostProcessor {
+		implements BeforeEachCallback, AfterEachCallback {
 
   public static final String DEFAULT_BPMN_RESOURCE_NAME = "process.bpmn20.xml";
 
@@ -86,10 +85,6 @@ public class ProcessEngineTestExtension
 
   public ProcessEngine getProcessEngine() {
     return processEngineRule.getProcessEngine();
-  }
-
-  @Override
-  public void postProcessTestInstance(Object testInstance, ExtensionContext context) throws Exception {
   }
 
   @Override

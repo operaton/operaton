@@ -37,6 +37,30 @@ The following Maven coordinate needs to be added to the projects `pom.xml`:
 </dependency>
 ```
 
+## Testing
+
+### Run a single test
+
+```bash
+./mvnw verify -f clients/java/client -Dfailsafe.includes="**/PaSerializationIT.java"
+```
+
+### Server Logs
+
+The Tomcat instance logs can be found at 
+`clients/java/client/target/operaton-tomcat/server/apache-tomcat-10.1.30/logs/catalina.out`
+
+### Remote Debugging
+
+To enable remote debugging of server instance started by cargo, activate the `debug-cargo` profile:
+
+```bash
+./mvnw verify -f clients/java/client -Dfailsafe.includes="**/PaSerializationIT.java" -Pdebug-cargo
+```
+
+Then connect to the remote debugger on port `5055`. For IntelliJ IDEA, you can run the following configuration:
+`.devenv/ide/idea/run/external-task-client_cargo-remote-debug.run.xml`
+
 ## Contributing
 
 Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md) for how to contribute to this repository.

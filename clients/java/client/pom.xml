@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-  <name>Operaton - Java External Task Client - Client</name>
 
   <artifactId>operaton-external-task-client</artifactId>
+  <name>Operaton - Java External Task Client - Client</name>
+  <description>${project.name}</description>
 
   <packaging>jar</packaging>
 
@@ -26,6 +26,7 @@
 
     <cargo.timeout>240000</cargo.timeout>
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
+    <cargo.start.jvmargs></cargo.start.jvmargs>
   </properties>
 
   <dependencyManagement>
@@ -152,13 +153,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <version>${version.xml.jaxb-impl4}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
@@ -167,7 +161,31 @@
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
+      <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>jakarta.activation</groupId>
+      <artifactId>jakarta.activation-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- dependency of org.glassfish.jaxb:jaxb-core -->
+    <dependency>
+      <groupId>com.sun.istack</groupId>
+      <artifactId>istack-commons-runtime</artifactId>
+      <version>4.1.2</version>
+      <scope>provided</scope>
+    </dependency>
+
 
     <dependency>
       <groupId>org.awaitility</groupId>
@@ -282,6 +300,27 @@
                 <artifact-id>jakarta.xml.bind-api</artifact-id>
                 <type>jar</type>
               </dependency>
+              <!-- required by PaSerializationIT -->
+              <dependency>
+                <groupId>jakarta.activation</groupId>
+                <artifactId>jakarta.activation-api</artifactId>
+                <type>jar</type>
+              </dependency>
+              <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-core</artifactId>
+                <type>jar</type>
+              </dependency>
+              <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <type>jar</type>
+              </dependency>
+              <dependency>
+                <groupId>com.sun.istack</groupId>
+                <artifactId>istack-commons-runtime</artifactId>
+                <type>jar</type>
+              </dependency>
             </dependencies>
           </container>
           <configuration>
@@ -291,6 +330,7 @@
               <cargo.servlet.port>${tomcat.connector.http.port}</cargo.servlet.port>
               <cargo.tomcat.ajp.port>${tomcat.connector.ajp.port}</cargo.tomcat.ajp.port>
               <cargo.start.jvmargs>-Djava.security.egd=file:/dev/./urandom</cargo.start.jvmargs>
+              <cargo.start.jvmargs>${cargo.start.jvmargs}</cargo.start.jvmargs>
             </properties>
             <files>
               <copy>
@@ -321,7 +361,6 @@
               <type>war</type>
             </deployable>
           </deployables>
-          <wait>false</wait>
         </configuration>
       </plugin>
 
@@ -338,5 +377,18 @@
 
   </build>
 
-  <description>${project.name}</description>
+  <profiles>
+    <profile>
+      <id>debug-cargo</id>
+      <properties>
+        <cargo.start.jvmargs>-Xdebug
+          -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5055
+          -Xnoagent
+          -Djava.compiler=NONE
+          -Djava.awt.headless=true
+        </cargo.start.jvmargs>
+      </properties>
+    </profile>
+  </profiles>
+
 </project>

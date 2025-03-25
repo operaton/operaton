@@ -244,6 +244,13 @@ jobs:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
 
+      - name: Archive Wildfly
+        uses: actions/upload-artifact@v4
+        with:
+          name: wildfly
+          path: |
+            **/wildfly-35.0.1.Final/**
+
       - name: Archive Reports
         uses: actions/upload-artifact@v4
         with:

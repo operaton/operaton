@@ -43,7 +43,10 @@ public class ScriptEngineRule implements BeforeAllCallback, TestInstancePostProc
   private ScriptEngine scriptEngine;
 
   @Override
-  public void beforeAll(ExtensionContext context) throws Exception {
+  public void beforeAll(ExtensionContext context) {
+    System.setProperty("polyglot.engine.WarnInterpreterOnly", "false");
+    System.setProperty("python.import.site", "false");
+
     scriptEngine = createScriptEngine(context);
     if (scriptEngine != null) {
       LOG.scriptEngineFoundForLanguage(scriptEngine.getFactory().getLanguageName());

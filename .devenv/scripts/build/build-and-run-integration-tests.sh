@@ -109,6 +109,7 @@ run_tests () {
       ;;
     postgresql)
       PROFILES+=(postgresql)
+      PROFILES+=(postgresql-xa)
       ;;
   esac
 

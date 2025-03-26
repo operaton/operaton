@@ -394,38 +394,6 @@
         <version>2.0.0</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.jboss.spec</groupId>
-        <artifactId>jboss-javaee-6.0</artifactId>
-        <version>${version.jboss-javaee-spec}</version>
-        <type>pom</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.jboss.spec</groupId>
-        <artifactId>jboss-javaee-web-6.0</artifactId>
-        <version>${version.jboss-javaee-spec}</version>
-        <type>pom</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.jboss.spec.javax.servlet</groupId>
-        <artifactId>jboss-servlet-api_3.0_spec</artifactId>
-        <version>1.0.2.Final</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.jboss.spec.javax.ws.rs</groupId>
-        <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
-        <version>1.0.1.Final</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.jboss.spec.javax.ws.rs</groupId>
-        <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-        <version>${version.jaxrs.api}</version>
-      </dependency>
-
       <!-- Wildfly -->
       <!-- version 6 depends on jakarta.enterprise.cdi.api version 4.1.0, which is newer than 4.0.1 defined by
       JakartaEE 10.0.0 BOM -->

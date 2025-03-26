@@ -56,6 +56,13 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey</groupId>
+        <artifactId>jersey-bom</artifactId>
+        <version>3.1.10</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- Test Framework BOMs -->
       <dependency>
         <groupId>org.junit</groupId>
@@ -65,9 +72,9 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.glassfish.jersey</groupId>
-        <artifactId>jersey-bom</artifactId>
-        <version>3.1.10</version>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>${version.testcontainers}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

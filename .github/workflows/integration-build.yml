@@ -176,18 +176,19 @@ jobs:
             exit 0
           fi
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+      - name: Archive Wildfly
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wildfly
+          path: |
+            ${{ github.workspace }}/**/wildfly-35.0.1.Final/**
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@v4
         with:
           report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml
           require_passed_tests: true
-      - name: Archive Wildfly
-        uses: actions/upload-artifact@v4
-        with:
-          name: wildfly
-          path: |
-            **/wildfly-35.0.1.Final/**
       - name: Upload Artifacts
         if: always()
         uses: actions/upload-artifact@v4

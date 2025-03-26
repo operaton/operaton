@@ -19,7 +19,6 @@
 
     <redirect.test.output>true</redirect.test.output>
 
-    <weld.version>6.0.1.Final</weld.version>
     <install.skip>true</install.skip>
   </properties>
 
@@ -39,14 +38,12 @@
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
-        <version>${weld.version}</version>
       </dependency>
 
       <!-- Deployed programmatically by DeploymentHelper -->
       <dependency>
         <groupId>org.jboss.weld.servlet</groupId>
         <artifactId>weld-servlet-shaded</artifactId>
-        <version>${weld.version}</version>
       </dependency>
 
     </dependencies>

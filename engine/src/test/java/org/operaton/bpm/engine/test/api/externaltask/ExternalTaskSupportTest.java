@@ -24,30 +24,33 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
+@ExtendWith(ProcessEngineExtension.class)
 public class ExternalTaskSupportTest {
 
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
-
+  protected RepositoryService repositoryService;
+  protected RuntimeService runtimeService;
+  protected ExternalTaskService externalTaskService;
+  
   @Parameters
   public static Collection<Object[]> processResources() {
     return Arrays.asList(new Object[][] {
@@ -63,33 +66,32 @@ public class ExternalTaskSupportTest {
 
   protected String deploymentId;
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    deploymentId = rule.getRepositoryService()
+    deploymentId = repositoryService
         .createDeployment()
         .addClasspathResource(processDefinitionResource)
         .deploy()
         .getId();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     if (deploymentId != null) {
-      rule.getRepositoryService().deleteDeployment(deploymentId, true);
+      repositoryService.deleteDeployment(deploymentId, true);
     }
   }
 
-  @Test
+  @TestTemplate
   public void testExternalTaskSupport() {
     // given
-    ProcessDefinition processDefinition = rule.getRepositoryService().createProcessDefinitionQuery().singleResult();
+    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     // when
-    ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceById(processDefinition.getId());
+    ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
 
     // then
-    List<LockedExternalTask> externalTasks = rule
-        .getExternalTaskService()
+    List<LockedExternalTask> externalTasks = externalTaskService
         .fetchAndLock(1, "aWorker")
         .topic("externalTaskTopic", 5000L)
         .execute();
@@ -98,20 +100,19 @@ public class ExternalTaskSupportTest {
     assertThat(externalTasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     // and it is possible to complete the external task successfully and end the process instance
-    rule.getExternalTaskService().complete(externalTasks.get(0).getId(), "aWorker");
+    externalTaskService.complete(externalTasks.get(0).getId(), "aWorker");
 
-    assertThat(rule.getRuntimeService().createProcessInstanceQuery().count()).isZero();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
-  @Test
+  @TestTemplate
   public void testExternalTaskProperties() {
     // given
-    ProcessDefinition processDefinition = rule.getRepositoryService().createProcessDefinitionQuery().singleResult();
-    rule.getRuntimeService().startProcessInstanceById(processDefinition.getId());
+    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
+    runtimeService.startProcessInstanceById(processDefinition.getId());
 
     // when
-    List<LockedExternalTask> externalTasks = rule
-        .getExternalTaskService()
+    List<LockedExternalTask> externalTasks = externalTaskService
         .fetchAndLock(1, "aWorker")
         .topic("externalTaskTopic", 5000L)
         .includeExtensionProperties()

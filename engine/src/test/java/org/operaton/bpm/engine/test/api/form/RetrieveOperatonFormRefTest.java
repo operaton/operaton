@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +30,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.io.TempDir;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -39,33 +44,29 @@ import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
+import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.OperatonFormUtils;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TemporaryFolder;
 
 public class RetrieveOperatonFormRefTest {
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected static final String TASK_FORM_CONTENT_V1 = "{\"id\"=\"myTaskForm\",\"type\": \"default\",\"components\": []}";
   protected static final String TASK_FORM_CONTENT_V2 = "{\"id\"=\"myTaskForm\",\"type\": \"default\",\"components\":[{\"key\": \"textfield1\",\"label\": \"Text Field\",\"type\": \"textfield\"}]}";
   protected static final String START_FORM_CONTENT_V1 = "{\"id\"=\"myStartForm\",\"type\": \"default\",\"components\": []}";
   protected static final String START_FORM_CONTENT_V2 = "{\"id\"=\"myStartForm\",\"type\": \"default\",\"components\":[{\"key\": \"textfield1\",\"label\": \"Text Field\",\"type\": \"textfield\"}]}";
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected TemporaryFolder tempFolder = new TemporaryFolder();
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule).around(tempFolder);
+  @TempDir
+  protected File tempFolder;
 
   private RuntimeService runtimeService;
   private TaskService taskService;
@@ -73,16 +74,7 @@ public class RetrieveOperatonFormRefTest {
   private FormService formService;
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-    formService = engineRule.getFormService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     List<org.operaton.bpm.engine.repository.Deployment> deployments = repositoryService.createDeploymentQuery().list();
     for (org.operaton.bpm.engine.repository.Deployment deployment : deployments) {
@@ -487,18 +479,19 @@ public class RetrieveOperatonFormRefTest {
   }
 
   private void deployUpdateFormResource(String v1Content, String v2Content, String... additionalResourcesForFirstDeployment) throws IOException {
-    FileInputStream form;
     // deploy BPMN with first version of form
-    form = OperatonFormUtils.writeTempFormFile("form.form", v1Content, tempFolder);
-    DeploymentBuilder builder = repositoryService.createDeployment().name(getClass().getSimpleName())
-        .addInputStream("form", form);
-    for (String path : additionalResourcesForFirstDeployment) {
-      builder.addClasspathResource(path);
+    try (FileInputStream form = OperatonFormUtils.writeTempFormFile("form.form", v1Content, tempFolder)) {
+      DeploymentBuilder builder = repositoryService.createDeployment().name(getClass().getSimpleName())
+          .addInputStream("form", form);
+      for (String path : additionalResourcesForFirstDeployment) {
+        builder.addClasspathResource(path);
+      }
+      builder.deploy();
     }
-    builder.deploy();
 
     // deploy second version of form
-    form = OperatonFormUtils.writeTempFormFile("form.form", v2Content, tempFolder);
-    repositoryService.createDeployment().name(getClass().getSimpleName()).addInputStream("form", form).deploy();
+    try (FileInputStream form = OperatonFormUtils.writeTempFormFile("form.form", v2Content, tempFolder)) {
+      repositoryService.createDeployment().name(getClass().getSimpleName()).addInputStream("form", form).deploy();
+    }
   }
 }

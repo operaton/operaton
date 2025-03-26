@@ -16,33 +16,45 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.VariableScope;
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.el.FixedValue;
 import org.operaton.bpm.engine.impl.form.FormException;
 import org.operaton.bpm.engine.impl.form.handler.FormFieldHandler;
-import org.operaton.bpm.engine.impl.form.validator.*;
+import org.operaton.bpm.engine.impl.form.validator.FormFieldValidator;
+import org.operaton.bpm.engine.impl.form.validator.FormFieldValidatorContext;
+import org.operaton.bpm.engine.impl.form.validator.FormValidators;
+import org.operaton.bpm.engine.impl.form.validator.MaxLengthValidator;
+import org.operaton.bpm.engine.impl.form.validator.MaxValidator;
+import org.operaton.bpm.engine.impl.form.validator.MinLengthValidator;
+import org.operaton.bpm.engine.impl.form.validator.MinValidator;
+import org.operaton.bpm.engine.impl.form.validator.ReadOnlyValidator;
+import org.operaton.bpm.engine.impl.form.validator.RequiredValidator;
 import org.operaton.bpm.engine.test.api.runtime.util.TestVariableScope;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class BuiltInValidatorsTest {
+  
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
   public void testDefaultFormFieldValidators() {
 
     // assert default validators are registered
-    FormValidators formValidators = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration().getFormValidators();
+    FormValidators formValidators = processEngineConfiguration.getFormValidators();
 
     Map<String, Class<? extends FormFieldValidator>> validators = formValidators.getValidators();
     assertThat(validators)

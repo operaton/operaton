@@ -16,41 +16,40 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import java.util.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Sebastian Menski
  */
+@ExtendWith(ProcessEngineExtension.class)
 public class FilterPropertiesTest {
-
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected FilterService filterService;
   protected Filter filter;
   protected String nestedJsonObject = "{\"id\":\"nested\"}";
   protected String nestedJsonArray = "[\"a\",\"b\"]";
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    filterService = engineRule.getFilterService();
     filter = filterService.newTaskFilter("name").setOwner("owner").setProperties(new HashMap<>());
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     filterService.createFilterQuery().list().stream().map(Filter::getId).forEach(filterService::deleteFilter);
   }

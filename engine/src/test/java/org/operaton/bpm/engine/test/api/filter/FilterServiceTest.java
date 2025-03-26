@@ -16,31 +16,36 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.HashMap;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import java.util.HashMap;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Sebastian Menski
  */
-public class FilterServiceTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class FilterServiceTest {
 
+  protected FilterService filterService;
+  protected TaskService taskService;
   protected Filter filter;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     filter = filterService.newTaskFilter()
       .setName("name")
@@ -52,7 +57,7 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
     assertThat(filter.getId()).isNotNull();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     // delete all existing filters
     filterService.createTaskFilterQuery().list().forEach(f -> filterService.deleteFilter(f.getId()));

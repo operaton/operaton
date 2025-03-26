@@ -16,29 +16,43 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.EntityTypes;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Sebastian Menski
  */
-public class FilterQueryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class FilterQueryTest {
 
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected FilterService filterService;
+  protected TaskService taskService;
+  protected ManagementService managementService;
+  
   protected List<String> filterIds = new ArrayList<>();
 
-  @Before
+  @BeforeEach
   public void setUp() {
     saveFilter("b", "b");
     saveFilter("d", "d");
@@ -54,7 +68,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     filterIds.add(filter.getId());
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     // delete all filters
     for (Filter filter : filterService.createFilterQuery().list()) {

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
 import java.util.Calendar;
@@ -24,6 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
 import org.operaton.bpm.engine.form.TaskFormData;
@@ -34,12 +41,7 @@ import org.operaton.bpm.engine.impl.form.validator.FormFieldValidatorException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * <p>Testcase verifying support for form metadata provided using
@@ -48,8 +50,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Daniel Meyer
  *
  */
-public class FormDataTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class FormDataTest {
 
+  protected RuntimeService runtimeService;
+  protected TaskService taskService;
+  protected FormService formService;
+  
   @Deployment
   @Test
   public void testGetFormFieldBasicProperties() {

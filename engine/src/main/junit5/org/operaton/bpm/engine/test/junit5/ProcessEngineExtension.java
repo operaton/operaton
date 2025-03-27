@@ -16,10 +16,24 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.extension.AfterAllCallback;
-import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
-import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
@@ -38,6 +52,7 @@ import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.ProcessEngineProvider;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -55,20 +70,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.slf4j.Logger;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 /**
  * JUnit 5 Extension to create and inject a {@link ProcessEngine} into test classes.
@@ -149,8 +150,8 @@ import java.util.stream.Stream;
  * This extension implements multiple JUnit lifecycle callbacks:
  * <ul>
  * <li>{@link TestInstancePostProcessor} - Initializes and injects the process engine instance before each test.</li>
- * <li>{@link BeforeTestExecutionCallback} - Sets up deployment and history level requirements before each test.</li>
- * <li>{@link AfterTestExecutionCallback} - Cleans up deployments, services, and resets the engine state after each test.</li>
+ * <li>{@link BeforeEachCallback} - Sets up deployment and history level requirements before each test.</li>
+ * <li>{@link AfterEachCallback} - Cleans up deployments, services, and resets the engine state after each test.</li>
  * <li>{@link AfterAllCallback} - Clears service references once all tests in a class have been executed.</li>
  * </ul>
  * </p>
@@ -164,8 +165,8 @@ import java.util.stream.Stream;
  * </p>
  */
 public class ProcessEngineExtension implements TestWatcher,
-    TestInstancePostProcessor, BeforeTestExecutionCallback, AfterTestExecutionCallback,
-    AfterAllCallback, ParameterResolver, ProcessEngineServices {
+    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, 
+    AfterAllCallback, ParameterResolver, ProcessEngineServices, ProcessEngineProvider {
 
   protected static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
@@ -236,8 +237,8 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) {
-    LOG.debug("beforeTestExecution: {}", context.getDisplayName());
+  public void beforeEach(ExtensionContext context) throws Exception {
+    LOG.debug("beforeEach: {}", context.getDisplayName());
 
     final Method testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set"));
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
@@ -262,7 +263,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   @Override
-  public void afterTestExecution(ExtensionContext context) {
+  public void afterEach(ExtensionContext context) throws Exception {
     identityService.clearAuthentication();
 
     final String testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set")).getName();
@@ -443,6 +444,7 @@ public class ProcessEngineExtension implements TestWatcher,
     ClockUtil.setCurrentTime(currentTime);
   }
 
+  @Override
   public ProcessEngine getProcessEngine() {
     return processEngine;
   }

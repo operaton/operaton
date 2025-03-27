@@ -24,6 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
@@ -36,17 +40,11 @@ import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
@@ -55,11 +53,10 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
 
   public static final String USER_ID = "userId";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected DecisionService decisionService;
   protected HistoryService historyService;
@@ -68,17 +65,10 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
 
   protected List<String> decisionInstanceIds;
 
-  @Before
+  @BeforeEach
   public void setup() {
-    historyService = engineRule.getHistoryService();
-    decisionService = engineRule.getDecisionService();
-    managementService = engineRule.getManagementService();
-    identityService = engineRule.getIdentityService();
     decisionInstanceIds = new ArrayList<>();
-  }
 
-  @Before
-  public void evaluateDecisionInstances() {
     testRule.deploy("org/operaton/bpm/engine/test/api/dmn/Example.dmn");
 
     VariableMap variables = Variables.createVariables()
@@ -95,7 +85,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     }
   }
 
-  @After
+  @AfterEach
   public void removeBatches() {
     for (Batch batch : managementService.createBatchQuery().list()) {
       managementService.deleteBatch(batch.getId(), true);
@@ -107,7 +97,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     }
   }
 
-  @After
+  @AfterEach
   public void clearAuthentication() {
     identityService.clearAuthentication();
   }

@@ -16,23 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.management.JobDefinition;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.operaton.bpm.engine.ProcessEngineProvider;
+import org.operaton.bpm.engine.batch.Batch;
+import org.operaton.bpm.engine.management.JobDefinition;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+
 public class BatchModificationHelper extends BatchHelper {
 
-  protected ProcessEngineTestRule testRule;
   protected List<String> currentProcessInstances;
 
-  public BatchModificationHelper(ProcessEngineRule engineRule) {
+  public BatchModificationHelper(ProcessEngineProvider engineRule) {
     super(engineRule);
-    this.testRule = new ProcessEngineTestRule(engineRule);
     currentProcessInstances = new ArrayList<>();
   }
 

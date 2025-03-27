@@ -16,42 +16,37 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.DefaultPriorityProvider;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
+@ExtendWith(ProcessEngineExtension.class)
 public class HistoryCleanupJobPriorityTest {
 
   private static final Long CUSTOM_PRIORITY = 10L;
-
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected ProcessEngineConfigurationImpl config;
   protected HistoryService historyService;
 
   protected long defaultHistoryCleanupJobPriority;
 
-  @Before
+  @BeforeEach
   public void setup() {
-    config = engineRule.getProcessEngineConfiguration();
-    historyService = engineRule.getHistoryService();
     defaultHistoryCleanupJobPriority = config.getHistoryCleanupJobPriority();
   }
 
-  @After
+  @AfterEach
   public void reset() {
     config.setHistoryCleanupJobPriority(defaultHistoryCleanupJobPriority);
     resetDatabase();

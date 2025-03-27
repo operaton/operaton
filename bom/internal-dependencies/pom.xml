@@ -21,7 +21,7 @@
 
   <properties>
     <version.slf4j>2.0.16</version.slf4j>
-    <version.bouncycastle>1.47</version.bouncycastle>
+    <version.bouncycastle>1.70</version.bouncycastle>
     <version.jetty>12.0.16</version.jetty>
   </properties>
 

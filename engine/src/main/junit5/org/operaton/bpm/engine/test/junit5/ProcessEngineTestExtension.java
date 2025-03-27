@@ -176,7 +176,7 @@ public class ProcessEngineTestExtension
   public ProcessDefinition deployForTenantAndGetDefinition(String tenant, String classpathResource) {
     Deployment deployment = deploy(createDeploymentBuilder().tenantId(tenant), Collections.<BpmnModelInstance>emptyList(), Collections.singletonList(classpathResource));
 
-    return processEngineRule.getRepositoryService()
+    return processEngine.getRepositoryService()
       .createProcessDefinitionQuery()
       .deploymentId(deployment.getId())
       .singleResult();
@@ -185,7 +185,7 @@ public class ProcessEngineTestExtension
   public ProcessDefinition deployForTenantAndGetDefinition(String tenant, BpmnModelInstance bpmnModel) {
     Deployment deployment = deploy(createDeploymentBuilder().tenantId(tenant), Collections.singletonList(bpmnModel), Collections.<String>emptyList());
 
-    return processEngineRule.getRepositoryService()
+    return processEngine.getRepositoryService()
       .createProcessDefinitionQuery()
       .deploymentId(deployment.getId())
       .singleResult();
@@ -345,22 +345,22 @@ public class ProcessEngineTestExtension
   }
 
   public boolean isHistoryLevelNone() {
-    HistoryLevel historyLevel = processEngineRule.getProcessEngineConfiguration().getHistoryLevel();
+    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getHistoryLevel();
     return HistoryLevel.HISTORY_LEVEL_NONE.equals(historyLevel);
   }
 
   public boolean isHistoryLevelActivity() {
-    HistoryLevel historyLevel = processEngineRule.getProcessEngineConfiguration().getHistoryLevel();
+    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getHistoryLevel();
     return HistoryLevel.HISTORY_LEVEL_ACTIVITY.equals(historyLevel);
   }
 
   public boolean isHistoryLevelAudit() {
-    HistoryLevel historyLevel = processEngineRule.getProcessEngineConfiguration().getHistoryLevel();
+    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getHistoryLevel();
     return HistoryLevel.HISTORY_LEVEL_AUDIT.equals(historyLevel);
   }
 
   public boolean isHistoryLevelFull() {
-    HistoryLevel historyLevel = processEngineRule.getProcessEngineConfiguration().getHistoryLevel();
+    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getHistoryLevel();
     return HistoryLevel.HISTORY_LEVEL_FULL.equals(historyLevel);
   }
 
@@ -394,8 +394,7 @@ public class ProcessEngineTestExtension
     for (final Job job : jobs) {
       final String jobId = job.getId();
 
-      processEngineRule
-        .getProcessEngineConfiguration()
+      ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
         .getCommandExecutorTxRequired()
         .execute((Command<Void>) commandContext -> {
           JobManager jobManager = commandContext.getJobManager();
@@ -430,7 +429,7 @@ public class ProcessEngineTestExtension
   }
 
   public String getDatabaseType() {
-    return processEngineRule.getProcessEngineConfiguration()
+    return ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
         .getDbSqlSessionFactory()
         .getDatabaseType();
   }

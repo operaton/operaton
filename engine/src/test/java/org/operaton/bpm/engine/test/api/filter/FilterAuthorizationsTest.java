@@ -16,33 +16,40 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.EntityTypes;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Sebastian Menski
  */
-public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class FilterAuthorizationsTest {
 
   protected User testUser;
 
@@ -51,7 +58,13 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
   protected Authorization readAuthorization;
   protected Authorization deleteAuthorization;
 
-  @Before
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected IdentityService identityService;
+  protected FilterService filterService;
+  protected AuthorizationService authorizationService;
+  protected TaskService taskService;
+  
+  @BeforeEach
   public void setUp() {
     testUser = createTestUser("test");
 
@@ -64,7 +77,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     identityService.setAuthenticatedUserId(testUser.getId());
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     for (Filter filter : filterService.createFilterQuery().list()) {
@@ -264,12 +277,12 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     Filter filter = createTestFilter();
 
     grantReadFilter(filter.getId());
-    Authorization authorization = processEngine.getAuthorizationService().createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+    Authorization authorization = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
     authorization.addPermission(Permissions.READ);
     authorization.setUserId(Authorization.ANY);
     authorization.setResource(Resources.FILTER);
     authorization.setResourceId(Authorization.ANY);
-    processEngine.getAuthorizationService().saveAuthorization(authorization);
+    authorizationService.saveAuthorization(authorization);
 
     long count = filterService.createFilterQuery().count();
     assertThat(count).isEqualTo(1);
@@ -280,7 +293,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     returnedFilter = filterService.getFilter(filter.getId());
     assertThat(returnedFilter).isNotNull();
 
-    processEngine.getAuthorizationService().deleteAuthorization(authorization.getId());
+    authorizationService.deleteAuthorization(authorization.getId());
   }
 
   @Test
@@ -326,7 +339,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
       .hasMessageContaining("Cannot create default authorization for filter owner *: id cannot be *. * is a reserved identifier.");
   }
 
-  @Ignore("CAM-4889")
+  @Disabled("CAM-4889")
   @Test
   public void testUpdateFilterGenericOwnerId() {
     grantCreateFilter();

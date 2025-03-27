@@ -23,17 +23,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.form.FormProperty;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class FormPropertyDefaultValueTest {
 
+  protected RuntimeService runtimeService;
+  protected TaskService taskService;
+  protected FormService formService;
+  protected RepositoryService repositoryService;
+  
   @Deployment
   @Test
   @SuppressWarnings("deprecation")

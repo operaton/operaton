@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,12 +27,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.EntityTypes;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
@@ -42,6 +51,7 @@ import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.operaton.bpm.engine.impl.TaskQueryProperty;
 import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
 import org.operaton.bpm.engine.impl.VariableOrderProperty;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.json.JsonTaskQueryConverter;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -51,8 +61,9 @@ import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.mock.Mocks;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -63,7 +74,20 @@ import com.google.gson.JsonObject;
 /**
  * @author Sebastian Menski
  */
-public class FilterTaskQueryTest extends PluggableProcessEngineTest {
+public class FilterTaskQueryTest {
+  
+  @RegisterExtension
+  protected static ProcessEngineExtension engine = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engine);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected FilterService filterService;
+  protected TaskService taskService;
+  protected IdentityService identityService;
+  protected RuntimeService runtimeService;
+  protected RepositoryService repositoryService;
+  protected CaseService caseService;
 
   protected Filter testFilter;
 
@@ -96,7 +120,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
   protected JsonTaskQueryConverter queryConverter;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     testFilter = filterService.newTaskFilter("name")
         .setOwner("owner")
@@ -118,7 +142,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     queryConverter = new JsonTaskQueryConverter();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setEnableExpressionsInAdhocQueries(false);
 
@@ -2321,7 +2345,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  @Ignore("CAM-9613")
+  @Disabled("CAM-9613")
   @Test
   public void testDateVariable() {
     // given
@@ -2343,7 +2367,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  @Ignore("CAM-9613")
+  @Disabled("CAM-9613")
   @Test
   public void testByteArrayVariable() {
     // given
@@ -2364,7 +2388,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  @Ignore("CAM-9613")
+  @Disabled("CAM-9613")
   @Test
   public void testLongVariable() {
     // given
@@ -2385,7 +2409,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  @Ignore("CAM-9613")
+  @Disabled("CAM-9613")
   @Test
   public void testShortVariable() {
     // given

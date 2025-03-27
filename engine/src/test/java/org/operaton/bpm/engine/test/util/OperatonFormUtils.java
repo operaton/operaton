@@ -35,14 +35,27 @@ public class OperatonFormUtils {
   }
 
   public static FileInputStream writeTempFormFile(String fileName, String content, TemporaryFolder tempFolder) throws IOException {
-    File formFile = new File(tempFolder.getRoot(), fileName);
-    if(!formFile.exists()) {
-      formFile = tempFolder.newFile(fileName);
-    }
+    return writeTempFormFile(fileName, content, tempFolder.getRoot());
+  }
 
+  public static FileInputStream writeTempFormFile(String fileName, String content, File tempFolder) throws IOException {
+    File formFile = new File(tempFolder, fileName);
+    if(!formFile.exists()) {
+      formFile = newFile(tempFolder, fileName);
+    }
+    
     FileWriter writer = new FileWriter(formFile, false);
     writer.write(content);
     writer.close();
     return new FileInputStream(formFile.getAbsolutePath());
   }
+
+  private static File newFile(File folder, String fileName) throws IOException {
+    File file = new File(folder, fileName);
+    if (!file.createNewFile()) {
+        throw new IOException(
+                "a file with the name \'" + fileName + "\' already exists in the test folder");
+    }
+    return file;
+}
 }

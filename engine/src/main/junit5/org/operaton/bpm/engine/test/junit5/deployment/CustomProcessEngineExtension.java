@@ -26,13 +26,13 @@ public class CustomProcessEngineExtension extends ProcessEngineExtension {
   private static final Logger LOG = LoggerFactory.getLogger(CustomProcessEngineExtension.class);
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) {
+  public void beforeEach(ExtensionContext context) {
     LOG.debug("set mocked deploymentId");
     deploymentId = "mockedDeploymentId";
   }
 
   @Override
-  public void afterTestExecution(ExtensionContext context) {
+  public void afterEach(ExtensionContext context) {
     LOG.debug("no undeployment needed");
   }
 

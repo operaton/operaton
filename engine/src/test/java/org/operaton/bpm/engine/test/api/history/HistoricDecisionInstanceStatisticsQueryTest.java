@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -28,14 +30,10 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatisticsQuery;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -57,17 +55,13 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   protected RepositoryService repositoryService;
   protected HistoryService historyService;
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  @Before
+  @BeforeEach
   public void setUp() {
-    decisionService = engineRule.getDecisionService();
-    repositoryService = engineRule.getRepositoryService();
-    historyService = engineRule.getHistoryService();
     testRule.deploy(DISH_DRG_DMN);
   }
 
@@ -152,7 +146,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  @Ignore("Should throw exception, but does not. See https://github.com/operaton/operaton/issues/438")
+  @Disabled("Should throw exception, but does not. See https://github.com/operaton/operaton/issues/438")
   public void testStatisticForRootDecisionWithNullInstanceConstraintEvaluation() {
     // given
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)

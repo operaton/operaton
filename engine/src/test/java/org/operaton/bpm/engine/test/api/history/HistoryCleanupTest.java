@@ -16,7 +16,39 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.TimeZone;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -44,27 +76,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.Removable;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.junit.*;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * @author Svetlana Dorokhova
  */
@@ -90,22 +106,19 @@ public class HistoryCleanupTest {
   protected String defaultEndTime;
   protected int defaultBatchSize;
 
-  protected ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .cacheForConfigurationResource(false)
+    .configurator(configuration -> {
       configuration.setHistoryCleanupBatchSize(20);
       configuration.setHistoryCleanupBatchThreshold(10);
       configuration.setDefaultNumberOfRetries(5);
       configuration.setHistoryCleanupDegreeOfParallelism(NUMBER_OF_THREADS);
-  });
-
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+    }).build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected Removable removable;
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule)
-      .around(engineRule)
-      .around(testRule);
 
   private final Random random = new Random();
 
@@ -118,15 +131,8 @@ public class HistoryCleanupTest {
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
 
-  @Before
+  @BeforeEach
   public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-    caseService = engineRule.getCaseService();
-    repositoryService = engineRule.getRepositoryService();
-    identityService = engineRule.getIdentityService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     testRule.deploy("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/dmn/Example.dmn", "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithHistoryTimeToLive.cmmn");
     defaultStartTime = processEngineConfiguration.getHistoryCleanupBatchWindowStartTime();
     defaultEndTime = processEngineConfiguration.getHistoryCleanupBatchWindowEndTime();
@@ -134,18 +140,25 @@ public class HistoryCleanupTest {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
 
     identityService.setAuthenticatedUserId(USER_ID);
-    removable = Removable.of(testRule);
+    removable = Removable.of(testRule.getProcessEngine());
+    
   }
 
-  @After
+  @AfterEach
   public void clearDatabase() {
     //reset configuration changes
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(defaultStartTime);
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(defaultEndTime);
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTimeAsDate(null);
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTimeAsDate(null);
     processEngineConfiguration.setHistoryCleanupBatchSize(defaultBatchSize);
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
     processEngineConfiguration.setHistoryCleanupEnabled(true);
-    processEngineConfiguration.setHistoryCleanupDefaultNumberOfRetries(3);
+    processEngineConfiguration.setHistoryCleanupDefaultNumberOfRetries(Integer.MIN_VALUE);
+    processEngineConfiguration.setHistoryTimeToLive(null);
+    processEngineConfiguration.setDefaultNumberOfRetries(5);
+    processEngineConfiguration.setHistoryCleanupDegreeOfParallelism(NUMBER_OF_THREADS);
+    processEngineConfiguration.setHistoryCleanupBatchThreshold(10);
 
     removable.removeAll();
     clearMetrics();
@@ -1073,7 +1086,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Ignore("CAM-10055")
+  @Disabled("CAM-10055")
   /*I can't find the corresponding ticket. On my local machine (Windows) it works, but not in github actions
   It fails because in line 1135 the timestamps are different:
   Locally the results of both are:
@@ -1117,7 +1130,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Ignore("CAM-10055")
+  @Disabled("CAM-10055")
   public void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() throws ParseException {
     //given
     prepareData(5);

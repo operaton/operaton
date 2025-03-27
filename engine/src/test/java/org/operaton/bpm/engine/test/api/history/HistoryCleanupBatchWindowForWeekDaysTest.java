@@ -16,17 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,22 +26,30 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  *
  * @author Svetlana Dorokhova
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryCleanupBatchWindowForWeekDaysTest {
 
@@ -59,28 +57,28 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   protected String defaultEndTime;
   protected int defaultBatchSize;
 
-  protected ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    configuration.setHistoryCleanupBatchSize(20);
-    configuration.setHistoryCleanupBatchThreshold(10);
-    configuration.setDefaultNumberOfRetries(5);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .ensureCleanAfterTest(true)
+    .cacheForConfigurationResource(false)
+    .configurator(configuration -> {
+      configuration.setHistoryCleanupBatchSize(20);
+      configuration.setHistoryCleanupBatchThreshold(10);
+      configuration.setDefaultNumberOfRetries(5);
 
-    configuration.setMondayHistoryCleanupBatchWindowStartTime("22:00");
-    configuration.setMondayHistoryCleanupBatchWindowEndTime("01:00");
-    configuration.setTuesdayHistoryCleanupBatchWindowStartTime("22:00");
-    configuration.setTuesdayHistoryCleanupBatchWindowEndTime("23:00");
-    configuration.setWednesdayHistoryCleanupBatchWindowStartTime("15:00");
-    configuration.setWednesdayHistoryCleanupBatchWindowEndTime("20:00");
-    configuration.setFridayHistoryCleanupBatchWindowStartTime("22:00");
-    configuration.setFridayHistoryCleanupBatchWindowEndTime("01:00");
-    configuration.setSundayHistoryCleanupBatchWindowStartTime("10:00");
-    configuration.setSundayHistoryCleanupBatchWindowEndTime("20:00");
-  });
-
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule).around(engineRule).around(testRule);
+      configuration.setMondayHistoryCleanupBatchWindowStartTime("22:00");
+      configuration.setMondayHistoryCleanupBatchWindowEndTime("01:00");
+      configuration.setTuesdayHistoryCleanupBatchWindowStartTime("22:00");
+      configuration.setTuesdayHistoryCleanupBatchWindowEndTime("23:00");
+      configuration.setWednesdayHistoryCleanupBatchWindowStartTime("15:00");
+      configuration.setWednesdayHistoryCleanupBatchWindowEndTime("20:00");
+      configuration.setFridayHistoryCleanupBatchWindowStartTime("22:00");
+      configuration.setFridayHistoryCleanupBatchWindowEndTime("01:00");
+      configuration.setSundayHistoryCleanupBatchWindowStartTime("10:00");
+      configuration.setSundayHistoryCleanupBatchWindowEndTime("20:00");
+    }).build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private HistoryService historyService;
   private ManagementService managementService;
@@ -88,22 +86,22 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
 
   private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public Date currentDate;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public Date startDateForCheck;
 
-  @Parameterized.Parameter(2)
+  @Parameter(2)
   public Date endDateForCheck;
 
-  @Parameterized.Parameter(3)
+  @Parameter(3)
   public Date startDateForCheckWithDefaultValues;
 
-  @Parameterized.Parameter(4)
+  @Parameter(4)
   public Date endDateForCheckWithDefaultValues;
 
-  @Parameterized.Parameters
+  @Parameters
   public static Collection<Object[]> scenarios() throws ParseException {
     return Arrays.asList(new Object[][] {
         {  sdf.parse("2018-05-14T10:00:00"), sdf.parse("2018-05-14T22:00:00"), sdf.parse("2018-05-15T01:00:00"), null, null},  //monday
@@ -116,25 +114,21 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
         {  sdf.parse("2018-05-20T09:00:00"), sdf.parse("2018-05-20T10:00:00"), sdf.parse("2018-05-20T20:00:00"), null, null }} ); //sunday
   }
 
-  @Before
+  @BeforeEach
   public void init() {
-    historyService = engineRule.getHistoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    managementService = engineRule.getManagementService();
-
     defaultStartTime = processEngineConfiguration.getHistoryCleanupBatchWindowStartTime();
 
     defaultEndTime = processEngineConfiguration.getHistoryCleanupBatchWindowEndTime();
     defaultBatchSize = processEngineConfiguration.getHistoryCleanupBatchSize();
   }
 
-  @After
+  @AfterEach
   public void clearDatabase() {
     //reset configuration changes
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(defaultStartTime);
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(defaultEndTime);
     processEngineConfiguration.setHistoryCleanupBatchSize(defaultBatchSize);
-
+    
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
       List<Job> jobs = managementService.createJobQuery().list();
@@ -149,7 +143,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     });
   }
 
-  @Test
+  @TestTemplate
   public void testScheduleJobForBatchWindow() {
 
     ClockUtil.setCurrentTime(currentDate);
@@ -173,7 +167,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     assertThat(endDateForCheck.before(job.getDuedate())).isTrue();
   }
 
-  @Test
+  @TestTemplate
   public void testScheduleJobForBatchWindowWithDefaultWindowConfigured() {
     ClockUtil.setCurrentTime(currentDate);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
@@ -207,7 +201,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     assertThat(endDateForCheckWithDefaultValues.before(job.getDuedate())).isTrue();
   }
 
-  @Test
+  @TestTemplate
   public void testScheduleJobForBatchWindowWithShortcutConfiguration() {
     ClockUtil.setCurrentTime(currentDate);
     processEngineConfiguration.setThursdayHistoryCleanupBatchWindowStartTime("23:00");
@@ -215,7 +209,6 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     processEngineConfiguration.setSaturdayHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setSaturdayHistoryCleanupBatchWindowEndTime("00:00");
     processEngineConfiguration.initHistoryCleanup();
-
 
     Job job = historyService.cleanUpHistoryAsync();
 
@@ -241,6 +234,14 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     job = historyService.cleanUpHistoryAsync();
 
     assertThat(endDateForCheckWithDefaultValues.before(job.getDuedate())).isTrue();
+
+    // reset configuration for test independence
+    processEngineConfiguration.setSaturdayHistoryCleanupBatchWindowStartTime(null);
+    processEngineConfiguration.setSaturdayHistoryCleanupBatchWindowEndTime(null);
+    processEngineConfiguration.setThursdayHistoryCleanupBatchWindowStartTime(null);
+    processEngineConfiguration.setThursdayHistoryCleanupBatchWindowEndTime(null);
+    processEngineConfiguration.getHistoryCleanupBatchWindows().clear();
+    processEngineConfiguration.initHistoryCleanup();
   }
 
 }

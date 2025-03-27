@@ -25,6 +25,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -33,24 +37,18 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  *
  * @author Anna Pazola
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryCleanupBatchWindowForEveryDayTest {
 
@@ -58,18 +56,16 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
   protected String defaultEndTime;
   protected int defaultBatchSize;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    configuration.setHistoryCleanupBatchSize(20);
-    configuration.setHistoryCleanupBatchThreshold(10);
-    configuration.setDefaultNumberOfRetries(5);
-  });
-
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .cacheForConfigurationResource(false)
+    .configurator(configuration -> {
+      configuration.setHistoryCleanupBatchSize(20);
+      configuration.setHistoryCleanupBatchThreshold(10);
+      configuration.setDefaultNumberOfRetries(5);
+    }).build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private HistoryService historyService;
   private ManagementService managementService;
@@ -77,22 +73,22 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
 
   private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public String startTime;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public String endTime;
 
-  @Parameterized.Parameter(2)
+  @Parameter(2)
   public Date startDateForCheck;
 
-  @Parameterized.Parameter(3)
+  @Parameter(3)
   public Date endDateForCheck;
 
-  @Parameterized.Parameter(4)
+  @Parameter(4)
   public Date currentDate;
 
-  @Parameterized.Parameters
+  @Parameters
   public static Collection<Object[]> scenarios() throws ParseException {
     return Arrays.asList(new Object[][] {
         // inside the batch window on the same day
@@ -111,18 +107,14 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
         { "22:00", "23:00", sdf.parse("2017-09-07T22:00:00"), sdf.parse("2017-09-07T23:00:00"), sdf.parse("2017-09-07T00:15:00")} });
   }
 
-  @Before
+  @BeforeEach
   public void init() {
-    historyService = engineRule.getHistoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    managementService = engineRule.getManagementService();
-
     defaultStartTime = processEngineConfiguration.getHistoryCleanupBatchWindowStartTime();
     defaultEndTime = processEngineConfiguration.getHistoryCleanupBatchWindowEndTime();
     defaultBatchSize = processEngineConfiguration.getHistoryCleanupBatchSize();
   }
 
-  @After
+  @AfterEach
   public void clearDatabase() {
     //reset configuration changes
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(defaultStartTime);
@@ -143,7 +135,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
     });
   }
 
-  @Test
+  @TestTemplate
   public void testScheduleJobForBatchWindow() {
     ClockUtil.setCurrentTime(currentDate);
 

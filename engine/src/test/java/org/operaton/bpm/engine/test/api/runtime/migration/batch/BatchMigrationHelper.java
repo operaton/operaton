@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.api.runtime.BatchHelper;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,19 @@ import java.util.Map;
 public class BatchMigrationHelper extends BatchHelper {
 
   protected MigrationTestRule migrationRule;
+  protected MigrationTestExtension migrationExtension;
 
   public ProcessDefinition sourceProcessDefinition;
   public ProcessDefinition targetProcessDefinition;
 
+
   public BatchMigrationHelper(ProcessEngineProvider processEngineProvider) {
-    this(processEngineProvider, null);
+    super(processEngineProvider);
+  }
+
+  public BatchMigrationHelper(ProcessEngineProvider processEngineProvider, MigrationTestExtension migrationExtension) {
+    super(processEngineProvider);
+    this.migrationExtension = migrationExtension;
   }
 
   public BatchMigrationHelper(ProcessEngineProvider processEngineProvider, MigrationTestRule migrationRule) {
@@ -61,14 +69,24 @@ public class BatchMigrationHelper extends BatchHelper {
   }
 
   public Batch migrateProcessInstancesAsync(int numberOfProcessInstances) {
-    sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    targetProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    if (migrationRule != null) {
+      sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+      targetProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    } else {
+      sourceProcessDefinition = migrationExtension.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+      targetProcessDefinition = migrationExtension.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    }
     return migrateProcessInstancesAsync(numberOfProcessInstances, sourceProcessDefinition, targetProcessDefinition);
   }
 
   public Batch migrateProcessInstancesAsyncForTenant(int numberOfProcessInstances, String tenantId) {
-    sourceProcessDefinition = migrationRule.deployForTenantAndGetDefinition(tenantId, ProcessModels.ONE_TASK_PROCESS);
-    targetProcessDefinition = migrationRule.deployForTenantAndGetDefinition(tenantId, ProcessModels.ONE_TASK_PROCESS);
+    if (migrationRule != null) {
+      sourceProcessDefinition = migrationRule.deployForTenantAndGetDefinition(tenantId, ProcessModels.ONE_TASK_PROCESS);
+      targetProcessDefinition = migrationRule.deployForTenantAndGetDefinition(tenantId, ProcessModels.ONE_TASK_PROCESS);
+    } else {
+      sourceProcessDefinition = migrationExtension.deployForTenantAndGetDefinition(tenantId, ProcessModels.ONE_TASK_PROCESS);
+      targetProcessDefinition = migrationExtension.deployForTenantAndGetDefinition(tenantId, ProcessModels.ONE_TASK_PROCESS);
+    }
     return migrateProcessInstancesAsync(numberOfProcessInstances, sourceProcessDefinition, targetProcessDefinition);
   }
 

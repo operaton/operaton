@@ -34,16 +34,9 @@
         <type>pom</type>
       </dependency>
 
-
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
-      </dependency>
-
-      <!-- Deployed programmatically by DeploymentHelper -->
-      <dependency>
-        <groupId>org.jboss.weld.servlet</groupId>
-        <artifactId>weld-servlet-shaded</artifactId>
       </dependency>
 
     </dependencies>

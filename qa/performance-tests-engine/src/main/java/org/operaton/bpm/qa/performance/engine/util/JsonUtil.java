@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.qa.performance.engine.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 
 import java.io.File;
 import java.nio.file.Files;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 /**
  * @author Daniel Meyer
@@ -72,11 +72,8 @@ public class JsonUtil {
   public static ObjectMapper getMapper() {
     if (mapper == null) {
       mapper = new ObjectMapper();
-      SerializationConfig config = mapper.getSerializationConfig()
-          .withSerializationInclusion(Inclusion.NON_EMPTY)
-          .without(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS);
-      mapper.setSerializationConfig(config);
-
+      mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+      mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
     return mapper;
   }

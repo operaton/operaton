@@ -21,7 +21,6 @@
 
   <properties>
     <version.slf4j>2.0.16</version.slf4j>
-    <version.bouncycastle>1.47</version.bouncycastle>
     <version.jetty>12.0.16</version.jetty>
   </properties>
 
@@ -403,23 +402,6 @@
         <version>5.1.5.Final</version>
         <type>pom</type>
         <scope>import</scope>
-      </dependency>
-
-      <!-- licensing dependencies -->
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk15on</artifactId>
-        <version>${version.bouncycastle}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-ext-jdk15on</artifactId>
-        <version>${version.bouncycastle}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcpg-jdk15on</artifactId>
-        <version>${version.bouncycastle}</version>
       </dependency>
 
       <dependency>

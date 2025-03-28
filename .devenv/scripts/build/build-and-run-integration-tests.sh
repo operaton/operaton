@@ -7,7 +7,7 @@ DATABASE="h2"
 DISTRO="tomcat"
 VALID_TEST_SUITES=("engine" "webapps")
 VALID_DISTROS=("operaton" "tomcat" "wildfly")
-VALID_DATABASES=("h2" "postgresql")
+VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb", "oracle" "db2" "sqlserver")
 
 ##########################################################################
 check_valid_values() {
@@ -103,14 +103,7 @@ run_tests () {
       ;;
   esac
 
-  case "$DATABASE" in
-    h2)
-      PROFILES+=(h2)
-      ;;
-    postgresql)
-      PROFILES+=(postgresql)
-      ;;
-  esac
+  PROFILES+=($DATABASE)
 
   echo "ℹ️ Running $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
   echo "./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f $QA_DIR"

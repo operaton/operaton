@@ -56,6 +56,12 @@ on:
         options:
           - '["h2"]'
           - '["postgresql"]'
+          - '["postgresql-xa"]'
+          - '["mariadb"]'
+          - '["mssql"]'
+          - '["mysql"]'
+          - '["oracle"]'
+          - '["db2"]'
           - '["h2", "postgresql"]'
       dry_run:
         description: 'Release: Skips remote operations when true'

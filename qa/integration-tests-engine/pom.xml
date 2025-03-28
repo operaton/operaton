@@ -40,12 +40,6 @@
         <artifactId>weld-core-bom</artifactId>
       </dependency>
 
-      <!-- Deployed programmatically by DeploymentHelper -->
-      <dependency>
-        <groupId>org.jboss.weld.servlet</groupId>
-        <artifactId>weld-servlet-shaded</artifactId>
-      </dependency>
-
     </dependencies>
   </dependencyManagement>
 

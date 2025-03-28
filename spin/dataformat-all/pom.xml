@@ -54,6 +54,7 @@
               <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
               <artifactSet>
                 <excludes>
+                  <exclude>jakarta.*:*</exclude>
                   <exclude>org.operaton.commons:*</exclude>
                   <exclude>org.operaton.spin:operaton-spin-core</exclude>
                   <exclude>org.slf4j:*</exclude>
@@ -71,14 +72,6 @@
                 <relocation>
                   <pattern>com.jayway</pattern>
                   <shadedPattern>spinjar.com.jayway</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>jakarta.xml.bind</pattern>
-                  <shadedPattern>spinjar.jakarta.xml.bind</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>jakarta.activation</pattern>
-                  <shadedPattern>spinjar.jakarta.activation</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>net.minidev</pattern>

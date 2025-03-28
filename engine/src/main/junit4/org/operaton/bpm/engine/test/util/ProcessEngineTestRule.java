@@ -16,14 +16,9 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import junit.framework.AssertionFailedError;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -52,10 +47,14 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
 
-import junit.framework.AssertionFailedError;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProcessEngineTestRule extends TestWatcher {
 
@@ -222,7 +221,8 @@ public class ProcessEngineTestRule extends TestWatcher {
         timer.cancel();
       }
       if (areJobsAvailable) {
-        throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded");
+        var jobIds = availableJobs().stream().map(Job::getId).toList();
+        throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + jobIds);
       }
 
     } finally {
@@ -230,14 +230,14 @@ public class ProcessEngineTestRule extends TestWatcher {
     }
   }
 
+  protected List<Job> availableJobs() {
+    return processEngine.getManagementService().createJobQuery().list().stream()
+            .filter(job -> !job.isSuspended() && job.getRetries() > 0 && (job.getDuedate() == null || ClockUtil.getCurrentTime().after(job.getDuedate())))
+            .toList();
+  }
+
   protected boolean areJobsAvailable() {
-    List<Job> list = processEngine.getManagementService().createJobQuery().list();
-    for (Job job : list) {
-      if (!job.isSuspended() && job.getRetries() > 0 && (job.getDuedate() == null || ClockUtil.getCurrentTime().after(job.getDuedate()))) {
-        return true;
-      }
-    }
-    return false;
+    return !availableJobs().isEmpty();
   }
 
   /**

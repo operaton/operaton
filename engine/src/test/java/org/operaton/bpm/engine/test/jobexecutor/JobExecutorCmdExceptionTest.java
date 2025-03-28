@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobCmd;
@@ -28,10 +31,6 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
 import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -55,6 +54,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
   public void tearDown() {
     processEngineConfiguration.getJobHandlers().remove(tweetExceptionHandler.getType());
     processEngineConfiguration.getJobHandlers().remove(nestedCommandExceptionHandler.getType());
+    managementService.createJobQuery().active().list().forEach(job -> managementService.deleteJob(job.getId()));
     clearDatabase();
   }
 

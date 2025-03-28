@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
@@ -59,7 +60,6 @@ import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Test;
 
 /**
  * @author Tassilo Weidner
@@ -735,7 +735,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     String processInstanceId = runtimeService.createProcessInstanceQuery()
       .activityIdIn("userTask")

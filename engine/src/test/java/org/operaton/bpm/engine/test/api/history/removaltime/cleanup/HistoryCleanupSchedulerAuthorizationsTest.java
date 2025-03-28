@@ -25,48 +25,39 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 public class HistoryCleanupSchedulerAuthorizationsTest extends AbstractHistoryCleanupSchedulerTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(AbstractHistoryCleanupSchedulerTest::configure);
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .cacheForConfigurationResource(false)
+    .configurator(
+        AbstractHistoryCleanupSchedulerTest::configure
+      ).build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
   protected AuthorizationService authorizationService;
 
-  @Before
+  @BeforeEach
   public void init() {
-    engineConfiguration = engineRule.getProcessEngineConfiguration();
-    initEngineConfiguration(engineConfiguration);
-
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    authorizationService = engineRule.getAuthorizationService();
+    initEngineConfiguration(engineRule, engineConfiguration);
 
     engineConfiguration.setEnableHistoricInstancePermissions(true);
     engineConfiguration.setAuthorizationEnabled(false);

@@ -27,6 +27,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.DecisionService;
@@ -70,29 +75,23 @@ import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeRule;
-import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeRule.TestProcessBuilder;
+import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeExtension;
+import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeExtension.TestProcessBuilder;
 import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(HISTORY_FULL)
 public class BatchSetRemovalTimeInChunksTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
-  protected BatchSetRemovalTimeRule testRule = new BatchSetRemovalTimeRule(engineRule, engineTestRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  protected static BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
 
   protected final Date REMOVAL_TIME = testRule.REMOVAL_TIME;
 
@@ -112,25 +111,14 @@ public class BatchSetRemovalTimeInChunksTest {
   protected int defaultMaxUpdateRows;
   protected int defaultInvocationsPerBatchJob;
 
-  @Before
+  @BeforeEach
   public void setup() {
-    engineConfiguration = engineRule.getProcessEngineConfiguration();
-
     defaultMaxUpdateRows = engineConfiguration.getRemovalTimeUpdateChunkSize();
     defaultInvocationsPerBatchJob = engineConfiguration.getInvocationsPerBatchJob();
     engineConfiguration.setRemovalTimeUpdateChunkSize(1);
-
-    runtimeService = engineRule.getRuntimeService();
-    decisionService = engineRule.getDecisionService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-    taskService = engineRule.getTaskService();
-    identityService = engineRule.getIdentityService();
-    externalTaskService = engineRule.getExternalTaskService();
-    authorizationService = engineRule.getAuthorizationService();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     engineConfiguration.setRemovalTimeUpdateChunkSize(defaultMaxUpdateRows);
     engineConfiguration.setInvocationsPerBatchJob(defaultInvocationsPerBatchJob);

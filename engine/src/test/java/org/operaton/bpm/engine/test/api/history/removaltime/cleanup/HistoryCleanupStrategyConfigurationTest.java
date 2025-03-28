@@ -24,41 +24,36 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_NONE;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Tassilo Weidner
  */
 public class HistoryCleanupStrategyConfigurationTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected static ProcessEngineConfigurationImpl engineConfiguration;
 
-  @Before
+  @BeforeEach
   public void init() {
-    engineConfiguration = engineRule.getProcessEngineConfiguration();
-
     engineConfiguration
       .setHistoryCleanupStrategy(null)
       .setHistoryRemovalTimeStrategy(null)
       .initHistoryCleanup();
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDown() {
     engineConfiguration
       .setHistoryRemovalTimeStrategy(null)

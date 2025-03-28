@@ -16,7 +16,40 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.cleanup;
 
-import org.operaton.bpm.engine.*;
+import static org.apache.commons.lang3.time.DateUtils.addDays;
+import static org.apache.commons.lang3.time.DateUtils.addMinutes;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
+import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -24,7 +57,31 @@ import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.history.*;
+import org.operaton.bpm.engine.history.CleanableHistoricBatchReportResult;
+import org.operaton.bpm.engine.history.CleanableHistoricDecisionInstanceReportResult;
+import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
+import org.operaton.bpm.engine.history.HistoricActivityInstance;
+import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
+import org.operaton.bpm.engine.history.HistoricDecisionInstance;
+import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
+import org.operaton.bpm.engine.history.HistoricDetail;
+import org.operaton.bpm.engine.history.HistoricDetailQuery;
+import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
+import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
+import org.operaton.bpm.engine.history.HistoricIdentityLinkLog;
+import org.operaton.bpm.engine.history.HistoricIdentityLinkLogQuery;
+import org.operaton.bpm.engine.history.HistoricIncident;
+import org.operaton.bpm.engine.history.HistoricIncidentQuery;
+import org.operaton.bpm.engine.history.HistoricJobLog;
+import org.operaton.bpm.engine.history.HistoricJobLogQuery;
+import org.operaton.bpm.engine.history.HistoricProcessInstance;
+import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
+import org.operaton.bpm.engine.history.HistoricTaskInstance;
+import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
+import org.operaton.bpm.engine.history.HistoricVariableInstance;
+import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
+import org.operaton.bpm.engine.history.UserOperationLogEntry;
+import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.DefaultHistoryRemovalTimeProvider;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -39,26 +96,13 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.resources.GetByteArrayCommand;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.*;
-import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
-
-import java.util.*;
-import java.util.function.Supplier;
-
-import org.junit.*;
-import org.junit.rules.RuleChain;
-
-import static org.apache.commons.lang3.time.DateUtils.addDays;
-import static org.apache.commons.lang3.time.DateUtils.addMinutes;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner
@@ -66,11 +110,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredHistoryLevel(HISTORY_FULL)
 public class HistoryCleanupRemovalTimeTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected FormService formService;
@@ -87,21 +130,8 @@ public class HistoryCleanupRemovalTimeTest {
 
   protected Set<String> jobIds;
 
-  @Before
+  @BeforeEach
   public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    formService = engineRule.getFormService();
-    historyService = engineRule.getHistoryService();
-    taskService = engineRule.getTaskService();
-    managementService = engineRule.getManagementService();
-    repositoryService = engineRule.getRepositoryService();
-    identityService = engineRule.getIdentityService();
-    externalTaskService = engineRule.getExternalTaskService();
-    decisionService = engineRule.getDecisionService();
-    authorizationService = engineRule.getAuthorizationService();
-
-    engineConfiguration = engineRule.getProcessEngineConfiguration();
-
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
@@ -126,7 +156,7 @@ public class HistoryCleanupRemovalTimeTest {
     jobIds = new HashSet<>();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     clearMeterLog();
 
@@ -136,7 +166,7 @@ public class HistoryCleanupRemovalTimeTest {
     }
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDownAfterAll() {
     if (engineConfiguration != null) {
       engineConfiguration

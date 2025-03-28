@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.batch;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -37,15 +38,11 @@ import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
 
 /**
  * @author Tassilo Weidner
@@ -53,12 +50,12 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
 @RequiredHistoryLevel(HISTORY_FULL)
 public class BatchSetRemovalTimeUserOperationLogTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
-  protected BatchSetRemovalTimeRule testRule = new BatchSetRemovalTimeRule(engineRule, engineTestRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  protected static BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
 
   protected RuntimeService runtimeService;
   protected DecisionService decisionService;
@@ -66,21 +63,12 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   protected ManagementService managementService;
   protected IdentityService identityService;
 
-  @Before
-  public void assignServices() {
-    runtimeService = engineRule.getRuntimeService();
-    decisionService = engineRule.getDecisionService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-    identityService = engineRule.getIdentityService();
-  }
-
-  @After
+  @AfterEach
   public void clearAuth() {
     identityService.clearAuthentication();
   }
 
-  @After
+  @AfterEach
   public void clearDatabase() {
     List<Batch> batches = managementService.createBatchQuery()
       .type(Batch.TYPE_HISTORIC_PROCESS_INSTANCE_DELETION)

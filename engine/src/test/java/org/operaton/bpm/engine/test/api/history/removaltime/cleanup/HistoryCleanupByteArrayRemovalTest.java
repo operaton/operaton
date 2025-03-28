@@ -25,6 +25,12 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL
 import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
 
 import java.util.Map;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -36,73 +42,64 @@ import org.operaton.bpm.engine.impl.history.event.HistoricJobLogEvent;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupRemovalTime;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.resources.GetByteArrayCommand;
-import org.operaton.bpm.engine.test.util.EntityRemoveRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.RemoveAfter;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(HISTORY_FULL)
 public class HistoryCleanupByteArrayRemovalTest {
 
-  private ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(config -> {
-
-    config.setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
-        .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
-        .initHistoryRemovalTime();
-
-    config.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
-
-    config.setHistoryCleanupBatchSize(MAX_BATCH_SIZE);
-    config.setHistoryCleanupBatchWindowStartTime(null);
-    config.setHistoryCleanupDegreeOfParallelism(1);
-
-    config.setBatchOperationHistoryTimeToLive(null);
-    config.setBatchOperationsForHistoryCleanup(null);
-
-    config.setHistoryTimeToLive(null);
-
-    config.setTaskMetricsEnabled(false);
-    config.setTaskMetricsTimeToLive(null);
-
-    config.initHistoryCleanup();
-  });
-
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected EntityRemoveRule entityRemoveRule = EntityRemoveRule.ofLazyRule(() -> testRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule)
-      .around(engineRule)
-      .around(testRule)
-      .around(entityRemoveRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .cacheForConfigurationResource(false)
+    .configurator(config -> {
+      config.setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
+      .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
+      .initHistoryRemovalTime();
+      
+      config.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
+      
+      config.setHistoryCleanupBatchSize(MAX_BATCH_SIZE);
+      config.setHistoryCleanupBatchWindowStartTime(null);
+      config.setHistoryCleanupDegreeOfParallelism(1);
+      
+      config.setBatchOperationHistoryTimeToLive(null);
+      config.setBatchOperationsForHistoryCleanup(null);
+      
+      config.setHistoryTimeToLive(null);
+      
+      config.setTaskMetricsEnabled(false);
+      config.setTaskMetricsTimeToLive(null);
+      
+      config.initHistoryCleanup();
+    }).build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private ManagementService managementService;
   private HistoryService historyService;
   private ProcessEngineConfigurationImpl engineConfiguration;
 
-  @Before
+  @BeforeEach
   public void init() {
-    ProcessEngine processEngine = bootstrapRule.getProcessEngine();
+    ProcessEngine processEngine = engineRule.getProcessEngine();
 
     managementService = processEngine.getManagementService();
     historyService = processEngine.getHistoryService();
     engineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     restoreCleanupJobHandler();
     testRule.deleteHistoryCleanupJobs();
+  }
+
+  @AfterAll
+  public static void stop() {
+    engineRule.getProcessEngine().close();
   }
 
   @Test

@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 
 import java.io.ByteArrayInputStream;
@@ -28,6 +30,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -70,16 +76,13 @@ import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Tassilo Weidner
  */
 public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -87,7 +90,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
       .initHistoryRemovalTime();
   }
 
-  @After
+  @AfterEach
   public void clearDatabase() {
     clearAuthorization();
   }

@@ -16,6 +16,22 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.cleanup;
 
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
+import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
+
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -27,13 +43,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.*;
-import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
-
-import java.util.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Tassilo Weidner
@@ -45,7 +55,8 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
   protected static HistoryLevel customHistoryLevel = new CustomHistoryLevelRemovalTime();
 
   protected static ProcessEngineConfigurationImpl engineConfiguration;
-
+  private static ProcessEngineExtension engineRule;
+  
   protected Set<String> jobIds = new HashSet<>();
 
   protected HistoryService historyService;
@@ -53,7 +64,8 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
 
   protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
-  public void initEngineConfiguration(ProcessEngineConfigurationImpl engineConfiguration) {
+  public void initEngineConfiguration(ProcessEngineExtension engineRule, ProcessEngineConfigurationImpl engineConfiguration) {
+    AbstractHistoryCleanupSchedulerTest.engineRule = engineRule;
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
@@ -68,7 +80,7 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
     engineConfiguration.initHistoryCleanup();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     clearMeterLog();
 
@@ -78,24 +90,24 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
     }
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDownAfterAll() {
-    if (engineConfiguration != null) {
-      engineConfiguration
-        .setHistoryRemovalTimeProvider(null)
-        .setHistoryRemovalTimeStrategy(null)
-        .initHistoryRemovalTime();
+    engineConfiguration
+      .setHistoryRemovalTimeProvider(null)
+      .setHistoryRemovalTimeStrategy(null)
+      .initHistoryRemovalTime();
 
-      engineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
+    engineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
 
-      engineConfiguration.setHistoryCleanupBatchSize(MAX_BATCH_SIZE);
-      engineConfiguration.setHistoryCleanupBatchWindowStartTime(null);
-      engineConfiguration.setHistoryCleanupDegreeOfParallelism(1);
+    engineConfiguration.setHistoryCleanupBatchSize(MAX_BATCH_SIZE);
+    engineConfiguration.setHistoryCleanupBatchWindowStartTime(null);
+    engineConfiguration.setHistoryCleanupDegreeOfParallelism(1);
 
-      engineConfiguration.initHistoryCleanup();
-    }
+    engineConfiguration.initHistoryCleanup();
 
     ClockUtil.reset();
+    
+    engineRule.getProcessEngine().close();
   }
 
   // helper /////////////////////////////////////////////////////////////////

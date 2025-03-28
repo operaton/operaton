@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -71,16 +74,13 @@ import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Tassilo Weidner
  */
 public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -88,7 +88,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .initHistoryRemovalTime();
   }
 
-  @After
+  @AfterEach
   public void clearDatabase() {
     clearAuthorization();
   }

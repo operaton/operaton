@@ -19,10 +19,12 @@ package org.operaton.bpm.run.test.config.rest;
 import org.operaton.bpm.run.test.AbstractRestTest;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("application.wadl is not available")
 class WadlUnsetTest extends AbstractRestTest {
 
   @Test

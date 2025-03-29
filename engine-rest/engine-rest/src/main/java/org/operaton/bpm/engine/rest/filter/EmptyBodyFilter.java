@@ -35,7 +35,7 @@ public class EmptyBodyFilter extends AbstractEmptyBodyFilter {
     return new HttpServletRequestWrapper(req) {
 
       @Override
-      public ServletInputStream getInputStream() throws IOException {
+      public ServletInputStream getInputStream() {
 
         return new ServletInputStream() {
 

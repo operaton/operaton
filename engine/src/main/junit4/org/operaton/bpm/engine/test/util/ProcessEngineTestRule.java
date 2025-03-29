@@ -217,12 +217,12 @@ public class ProcessEngineTestRule extends TestWatcher {
           }
         }
       } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
       } finally {
         timer.cancel();
       }
       if (areJobsAvailable) {
-        var jobIds = availableJobs().stream().map(Job::getId).toList();
-        throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + jobIds);
+        throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + availableJobs());
       }
 
     } finally {

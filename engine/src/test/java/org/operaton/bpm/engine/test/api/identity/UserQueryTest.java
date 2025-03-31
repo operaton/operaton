@@ -21,22 +21,31 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 
 /**
  * @author Joram Barrez
  */
-public class UserQueryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class UserQueryTest {
 
-  @Before
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected IdentityService identityService;
+  protected ManagementService managementService;
+
+  @BeforeEach
   public void setUp() {
 
 
@@ -66,7 +75,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     return user;
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("fozzie");

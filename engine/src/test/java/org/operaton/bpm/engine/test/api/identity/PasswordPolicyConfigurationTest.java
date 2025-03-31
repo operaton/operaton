@@ -16,36 +16,27 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+@ExtendWith(ProcessEngineExtension.class)
 public class PasswordPolicyConfigurationTest {
-
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
+  @BeforeEach
   public void init() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setPasswordPolicy(null).setEnablePasswordPolicy(false);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setPasswordPolicy(null).setEnablePasswordPolicy(false);
   }

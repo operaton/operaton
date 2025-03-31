@@ -19,14 +19,11 @@ package org.operaton.bpm.engine.test.api.identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Daniel Meyer
@@ -36,15 +33,12 @@ public class ReadOnlyIdentityServiceTest {
 
   protected static final String CONFIGURATION_RESOURCE = "org/operaton/bpm/engine/test/api/identity/read.only.identity.service.operaton.cfg.xml";
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(CONFIGURATION_RESOURCE);
-
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-
+  @RegisterExtension
+  public ProcessEngineExtension engineRule = ProcessEngineExtension.builder().configurationResource(CONFIGURATION_RESOURCE).build();
+  
   protected IdentityService identityService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     identityService = engineRule.getIdentityService();
 

@@ -20,6 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.apache.commons.lang3.tuple.Triple;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -32,29 +36,22 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Tobias Metzke
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+@ExtendWith(ProcessEngineExtension.class)
+@ExtendWith(ProcessEngineTestExtension.class)
 public class IdentityServiceUserOperationLogTest {
 
   protected static final String TEST_USER_ID = "newTestUser";
   protected static final String TEST_GROUP_ID = "newTestGroup";
   protected static final String TEST_TENANT_ID = "newTestTenant";
-
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   protected RepositoryService repositoryService;
   protected IdentityService identityService;
@@ -63,19 +60,12 @@ public class IdentityServiceUserOperationLogTest {
 
   protected UserOperationLogQuery query;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  @Before
+  @BeforeEach
   public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    repositoryService = engineRule.getRepositoryService();
-    identityService = engineRule.getIdentityService();
-    historyService = engineRule.getHistoryService();
     query = historyService.createUserOperationLogQuery();
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());

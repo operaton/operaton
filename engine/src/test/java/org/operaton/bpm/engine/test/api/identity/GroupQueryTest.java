@@ -21,21 +21,26 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 
 /**
  * @author Joram Barrez
  */
-public class GroupQueryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class GroupQueryTest {
 
-  @Before
+  protected IdentityService identityService;
+
+  @BeforeEach
   public void setUp() {
 
 
@@ -73,7 +78,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
     return group;
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("fozzie");

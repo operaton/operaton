@@ -16,12 +16,16 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
@@ -31,28 +35,15 @@ import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+@ExtendWith(ProcessEngineExtension.class)
 public class AuthorizationQueryAuthorizationsTest {
-
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected AuthorizationService authorizationService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
-  public void init() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    authorizationService = engineRule.getAuthorizationService();
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();

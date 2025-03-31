@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.identity;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
@@ -24,6 +25,9 @@ import static org.operaton.bpm.engine.authorization.Resources.USER;
 
 import java.util.Collections;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
@@ -31,39 +35,18 @@ import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.Test.None;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+@ExtendWith(ProcessEngineExtension.class)
+@ExtendWith(ProcessEngineTestExtension.class)
 public class AdminGroupsTest {
-
-  protected ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule();
-
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule).around(engineRule).around(testRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;
   protected AuthorizationService authorizationService;
 
-  @Before
-  public void init() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    identityService = engineRule.getIdentityService();
-    authorizationService = engineRule.getAuthorizationService();
-
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
@@ -96,7 +79,7 @@ public class AdminGroupsTest {
       .hasMessageContaining("Required admin authenticated group or user.");
   }
 
-  @Test(expected = None.class)
+  @Test
   public void testWithAdminGroup() {
     processEngineConfiguration.getAdminGroups().add("adminGroup");
 
@@ -112,8 +95,7 @@ public class AdminGroupsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // when
-    identityService.unlockUser("jonny1");
-
+    assertAll(() -> identityService.unlockUser("jonny1"));
     // then no exception
   }
 }

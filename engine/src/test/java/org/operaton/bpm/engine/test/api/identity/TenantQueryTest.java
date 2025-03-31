@@ -20,18 +20,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.TenantQuery;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+@ExtendWith(ProcessEngineExtension.class)
 public class TenantQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
@@ -40,15 +40,10 @@ public class TenantQueryTest {
   protected static final String USER = "user";
   protected static final String GROUP = "group";
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
   protected IdentityService identityService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    identityService = engineRule.getIdentityService();
-
     createTenant(TENANT_ONE, "Tenant_1");
     createTenant(TENANT_TWO, "Tenant_2");
 
@@ -168,14 +163,14 @@ public class TenantQueryTest {
   }
 
   protected Tenant createTenant(String id, String name) {
-    Tenant tenant = engineRule.getIdentityService().newTenant(id);
+    Tenant tenant = identityService.newTenant(id);
     tenant.setName(name);
     identityService.saveTenant(tenant);
 
     return tenant;
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     identityService.deleteTenant(TENANT_ONE);
     identityService.deleteTenant(TENANT_TWO);

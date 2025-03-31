@@ -16,30 +16,46 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.OptimisticLockingException;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.exception.NullValueException;
-import org.operaton.bpm.engine.identity.*;
+import org.operaton.bpm.engine.identity.Group;
+import org.operaton.bpm.engine.identity.Picture;
+import org.operaton.bpm.engine.identity.Tenant;
+import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.identity.Account;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.*;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
 
 /**
  * @author Frederik Heremans
@@ -51,21 +67,15 @@ public class IdentityServiceTest {
   private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
   protected IdentityService identityService;
   protected ProcessEngine processEngine;
 
-  @Before
-  public void init() {
-    identityService = engineRule.getIdentityService();
-  }
-
-  @After
+  @AfterEach
   public void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());

@@ -16,8 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -31,13 +36,9 @@ import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.TenantQuery;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+@ExtendWith(ProcessEngineExtension.class)
 public class IdentityServiceTenantTest {
 
   protected static final String USER_ONE = "user1";
@@ -51,18 +52,10 @@ public class IdentityServiceTenantTest {
 
   private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
   protected IdentityService identityService;
   protected ProcessEngine processEngine;
 
-  @Before
-  public void initService() {
-    identityService = engineRule.getIdentityService();
-  }
-
-  @After
+  @AfterEach
   public void cleanUp() {
     identityService.deleteTenant(TENANT_ONE);
     identityService.deleteTenant(TENANT_TWO);

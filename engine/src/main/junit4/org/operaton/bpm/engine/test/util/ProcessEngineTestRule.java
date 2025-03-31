@@ -217,7 +217,6 @@ public class ProcessEngineTestRule extends TestWatcher {
           }
         }
       } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
       } finally {
         timer.cancel();
       }

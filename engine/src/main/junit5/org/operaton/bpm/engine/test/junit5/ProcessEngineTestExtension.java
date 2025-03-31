@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -244,22 +245,21 @@ public class ProcessEngineTestExtension
         timer.cancel();
       }
       if (areJobsAvailable) {
-        throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded");
+        throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + availableJobs());
       }
-
     } finally {
       jobExecutor.shutdown();
     }
   }
 
+  protected List<Job> availableJobs() {
+    return processEngine.getManagementService().createJobQuery().list().stream()
+            .filter(job -> !job.isSuspended() && job.getRetries() > 0 && (job.getDuedate() == null || ClockUtil.getCurrentTime().after(job.getDuedate())))
+            .toList();
+  }
+
   protected boolean areJobsAvailable() {
-    List<Job> list = processEngine.getManagementService().createJobQuery().list();
-    for (Job job : list) {
-      if (!job.isSuspended() && job.getRetries() > 0 && (job.getDuedate() == null || ClockUtil.getCurrentTime().after(job.getDuedate()))) {
-        return true;
-      }
-    }
-    return false;
+    return !availableJobs().isEmpty();
   }
 
   /**

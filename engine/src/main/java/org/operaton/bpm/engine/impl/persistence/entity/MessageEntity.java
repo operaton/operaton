@@ -85,6 +85,7 @@ public class MessageEntity extends JobEntity {
            + ", exceptionByteArrayId=" + exceptionByteArrayId
            + ", exceptionMessage=" + exceptionMessage
            + ", deploymentId=" + deploymentId
+           + ", createTime=" + createTime
            + "]";
   }
 

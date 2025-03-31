@@ -79,7 +79,7 @@ public class EnsureDbCleanTest {
     }
 
     @RegisterExtension
-    ProcessEngineExtension extension = ProcessEngineExtension.builder()
+    static ProcessEngineExtension extension = ProcessEngineExtension.builder()
       // fail if DB is dirty after test
       .ensureCleanAfterTest(true)
       .build();

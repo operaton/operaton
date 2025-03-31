@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment;
 
+import org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep;
+import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.*;
+import static org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep.CATALINA_HOME;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,6 +41,10 @@ import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatfor
 import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_LOCATION;
 import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_SYSTEM_PROPERTY;
 import static org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep.CATALINA_HOME;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 /**
  * Checks the correct retrieval of bpm-platform.xml file through JNDI,
@@ -220,16 +228,16 @@ class BpmPlatformXmlLocationTest {
 
   public static class MockContextFactory implements InitialContextFactory {
 	  private static final ThreadLocal<Context> currentContext = new ThreadLocal<>();
-	  
+
 	  @Override
 	  public Context getInitialContext(Hashtable<?, ?> environment) throws NamingException {
 		  return currentContext.get();
 	  }
-	  
+
 	  public static void setCurrentContext(Context context) {
 		  currentContext.set(context);
 	  }
-	  
+
 	  public static void clearCurrentContext() {
 		  currentContext.remove();
 	  }

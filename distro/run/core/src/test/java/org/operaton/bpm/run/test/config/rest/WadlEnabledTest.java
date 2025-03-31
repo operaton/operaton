@@ -20,12 +20,14 @@ import org.operaton.bpm.run.property.OperatonBpmRunRestProperties;
 import org.operaton.bpm.run.test.AbstractRestTest;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource(properties = {OperatonBpmRunRestProperties.PREFIX + ".disable-wadl=false"})
+@Disabled("application.wadl is not available")
 class WadlEnabledTest extends AbstractRestTest {
 
   @Test

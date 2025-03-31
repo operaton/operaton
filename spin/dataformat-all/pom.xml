@@ -82,24 +82,8 @@
                   <shadedPattern>spinjar.com.sun.istack</shadedPattern>
                 </relocation>
                 <relocation>
-                  <pattern>com.sun.activation</pattern>
-                  <shadedPattern>spinjar.com.sun.activation</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>com.sun.xml.bind</pattern>
-                  <shadedPattern>spinjar.com.sun.xml.bind</shadedPattern>
-                </relocation>
-                <relocation>
                   <pattern>com.sun.xml.txw2</pattern>
                   <shadedPattern>spinjar.com.sun.xml.txw2</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>javax.xml.bind</pattern>
-                  <shadedPattern>spinjar.javax.xml.bind</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>javax.activation</pattern>
-                  <shadedPattern>spinjar.javax.activation</shadedPattern>
                 </relocation>
               </relocations>
               <transformers>

@@ -198,7 +198,10 @@
             <configuration>
               <sources>
                 <source>${project.build.directory}/operaton-openapi-client/src/main/java</source>
+<!--                <source>1.8</source>   &lt;!&ndash; Change to 1.8 or 11 based on your Java version &ndash;&gt;-->
               </sources>
+<!--              <target>1.8</target>   &lt;!&ndash; Change to 1.8 or 11 based on your Java version &ndash;&gt;-->
+
             </configuration>
           </execution>
         </executions>

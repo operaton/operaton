@@ -157,7 +157,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     assertThat(job.getRetries()).isEqualTo(3);
 
     // if we execute the job
-    testRule.waitForJobExecutorToProcessAllJobs(6000);
+    testRule.waitForJobExecutorToProcessAllJobs();
 
     // the job is still present
     job = managementService.createJobQuery().singleResult();
@@ -186,7 +186,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     assertThat(job.getRetries()).isEqualTo(3);
 
     // if we execute the job
-    testRule.waitForJobExecutorToProcessAllJobs(6000);
+    testRule.waitForJobExecutorToProcessAllJobs();
 
     // the job is still present
     job = managementService.createJobQuery().singleResult();

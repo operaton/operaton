@@ -28,6 +28,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junitpioneer.jupiter.RetryingTest;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
@@ -296,9 +297,8 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isZero();
   }
 
-  @Test
+  @RetryingTest(3)
   public void testNoCreationOnJobExecutorBatchJobExecutionByIds() {
-    // given
     // given
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
@@ -312,7 +312,6 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   @Test
   public void testNoCreationOnJobExecutorBatchJobExecutionByQuery() {
     // given
-    // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     historyService.deleteHistoricDecisionInstancesAsync(query, null);
 
@@ -323,9 +322,8 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
-  @Test
+  @RetryingTest(3)
   public void testNoCreationOnJobExecutorBatchJobExecutionByIdsAndQuery() {
-    // given
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, query, null);

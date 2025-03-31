@@ -20,11 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -33,9 +30,11 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 
 public class ReducedJobExceptionLoggingTest {
 

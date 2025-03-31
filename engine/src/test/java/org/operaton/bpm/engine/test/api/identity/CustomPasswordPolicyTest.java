@@ -19,39 +19,34 @@ package org.operaton.bpm.engine.test.api.identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.PasswordPolicy;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Miklas Boskamp
  */
+@ExtendWith(ProcessEngineExtension.class)
 public class CustomPasswordPolicyTest {
-
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   private ProcessEngineConfigurationImpl processEngineConfiguration;
   private IdentityService identityService;
 
-  @Before
+  @BeforeEach
   public void init() {
-    identityService = engineRule.getIdentityService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setPasswordPolicy(new DefaultPasswordPolicyImpl());
     processEngineConfiguration.setEnablePasswordPolicy(true);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     // reset configuration
     processEngineConfiguration.setPasswordPolicy(null);

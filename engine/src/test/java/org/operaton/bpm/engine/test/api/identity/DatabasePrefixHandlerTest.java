@@ -18,15 +18,15 @@ package org.operaton.bpm.engine.test.api.identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.digest.DatabasePrefixHandler;
-import org.junit.Before;
-import org.junit.Test;
 
 public class DatabasePrefixHandlerTest {
 
   DatabasePrefixHandler prefixHandler;
 
-  @Before
+  @BeforeEach
   public void inti() {
     prefixHandler = new DatabasePrefixHandler();
   }

@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -39,7 +41,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
@@ -49,23 +56,27 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.TenantQuery;
 import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TenantEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class IdentityServiceAuthorizationsTest {
 
   private static final String USER_ID = "jonny2";
+  
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected AuthorizationService authorizationService;
+  protected IdentityService identityService;
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
@@ -1259,13 +1270,13 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     Tenant tenantOne = identityService.newTenant("tenantOne");
     identityService.saveTenant(tenantOne);
 
-    engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
+    processEngineConfiguration.setAuthorizationEnabled(true);
 
     identityService.createTenantUserMembership("tenantOne", "userOne");
     identityService.createTenantUserMembership("tenantOne", "userTwo");
 
     // assume
-    List<Authorization> authorizations = engineRule.getAuthorizationService()
+    List<Authorization> authorizations = authorizationService
         .createAuthorizationQuery()
         .list();
 
@@ -1279,7 +1290,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     identityService.deleteTenantUserMembership("tenantOne", "userOne");
 
     // then
-    authorizations = engineRule.getAuthorizationService()
+    authorizations = authorizationService
         .createAuthorizationQuery()
         .list();
 
@@ -1301,13 +1312,13 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     Tenant tenantOne = identityService.newTenant("tenantOne");
     identityService.saveTenant(tenantOne);
 
-    engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
+    processEngineConfiguration.setAuthorizationEnabled(true);
 
     identityService.createTenantGroupMembership("tenantOne", "groupOne");
     identityService.createTenantGroupMembership("tenantOne", "groupTwo");
 
     // assume
-    List<Authorization> authorizations = engineRule.getAuthorizationService()
+    List<Authorization> authorizations = authorizationService
         .createAuthorizationQuery()
         .list();
 
@@ -1321,7 +1332,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     identityService.deleteTenantGroupMembership("tenantOne", "groupOne");
 
     // then
-    authorizations = engineRule.getAuthorizationService()
+    authorizations = authorizationService
         .createAuthorizationQuery()
         .list();
 

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
@@ -23,16 +24,19 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 import static org.operaton.bpm.engine.authorization.Resources.GROUP;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.auth.DefaultAuthorizationProvider;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * <p>Test authorizations provided by {@link DefaultAuthorizationProvider}</p>
@@ -40,9 +44,14 @@ import org.junit.Test;
  * @author Daniel Meyer
  *
  */
-public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class DefaultAuthorizationProviderTest {
 
-  @Before
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected IdentityService identityService;
+  protected AuthorizationService authorizationService;
+
+  @BeforeEach
   public void setUp() {
     // we are jonny
     identityService.setAuthenticatedUserId("jonny");
@@ -73,7 +82,7 @@ public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest
 
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     List<Authorization> jonnysAuths = authorizationService.createAuthorizationQuery().userIdIn("jonny").list();

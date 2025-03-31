@@ -23,6 +23,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.identity.User;
@@ -35,21 +39,10 @@ import org.operaton.bpm.engine.impl.digest.ShaHashDigest;
 import org.operaton.bpm.engine.test.api.identity.util.MyConstantSaltGenerator;
 import org.operaton.bpm.engine.test.api.identity.util.MyCustomPasswordEncryptor;
 import org.operaton.bpm.engine.test.api.identity.util.MyCustomPasswordEncryptorCreatingPrefixThatCannotBeResolved;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+@ExtendWith(ProcessEngineExtension.class)
 public class PasswordHashingTest {
-
-  protected static ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected static ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   protected static final String PASSWORD = "password";
   protected static final String USER_NAME = "johndoe";
@@ -64,17 +57,14 @@ public class PasswordHashingTest {
   protected SaltGenerator operatonDefaultSaltGenerator;
 
 
-  @Before
+  @BeforeEach
   public void initialize() {
-    runtimeService = engineRule.getRuntimeService();
-    identityService = engineRule.getIdentityService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     operatonDefaultEncryptor = processEngineConfiguration.getPasswordEncryptor();
     operatonDefaultPasswordChecker = processEngineConfiguration.getCustomPasswordChecker();
     operatonDefaultSaltGenerator = processEngineConfiguration.getSaltGenerator();
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     removeAllUser();
     resetEngineConfiguration();

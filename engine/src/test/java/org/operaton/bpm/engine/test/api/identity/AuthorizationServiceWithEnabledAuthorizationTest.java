@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.identity;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
@@ -25,33 +26,41 @@ import static org.operaton.bpm.engine.test.api.identity.TestPermissions.CREATE;
 import static org.operaton.bpm.engine.test.api.identity.TestPermissions.DELETE;
 import static org.operaton.bpm.engine.test.api.identity.TestPermissions.READ;
 import static org.operaton.bpm.engine.test.api.identity.TestPermissions.UPDATE;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Stefan Hentschel.
  */
-public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class AuthorizationServiceWithEnabledAuthorizationTest {
 
-  @Before
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected AuthorizationService authorizationService;
+  protected IdentityService identityService;
+  
+  @BeforeEach
   public void setUp() {
 
     processEngineConfiguration.setAuthorizationEnabled(true);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();

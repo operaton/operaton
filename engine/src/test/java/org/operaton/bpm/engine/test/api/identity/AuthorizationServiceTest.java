@@ -16,12 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.authorization.*;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
@@ -38,24 +34,52 @@ import static org.operaton.bpm.engine.authorization.Resources.REPORT;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.authorization.BatchPermissions;
+import org.operaton.bpm.engine.authorization.Permission;
+import org.operaton.bpm.engine.authorization.Permissions;
+import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
+import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
+import org.operaton.bpm.engine.authorization.Resource;
+import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class AuthorizationServiceTest extends PluggableProcessEngineTest {
+public class AuthorizationServiceTest {
 
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected AuthorizationService authorizationService;
+  protected IdentityService identityService;
+  
   protected String testUserId = "test";
   protected String testGroupId = "accounting";
 
-  @After
+  @AfterEach
   public void tearDown() {
     cleanupAfterTest();
 

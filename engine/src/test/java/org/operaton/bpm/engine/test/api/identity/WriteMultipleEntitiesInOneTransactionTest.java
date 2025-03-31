@@ -20,15 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Simon Jonischkeit
@@ -36,18 +33,10 @@ import org.junit.Test;
  */
 public class WriteMultipleEntitiesInOneTransactionTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/api/identity/WriteMultipleEntitiesInOneTransactionTest.operaton.cfg.xml");
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().configurationResource("org/operaton/bpm/engine/test/api/identity/WriteMultipleEntitiesInOneTransactionTest.operaton.cfg.xml").build();
 
   protected IdentityService identityService;
-
-  @Before
-  public void setUp() {
-    identityService = engineRule.getIdentityService();
-  }
 
   @Test
   public void testWriteMultipleEntitiesInOneTransaction(){

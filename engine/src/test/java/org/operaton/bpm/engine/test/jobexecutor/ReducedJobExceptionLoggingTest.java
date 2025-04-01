@@ -47,7 +47,7 @@ public class ReducedJobExceptionLoggingTest {
 
   private RuntimeService runtimeService;
   private ManagementService managementService;
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
+  private ProcessEngineConfigurationImpl processEngineConfiguration; 
 
   @Before
   public void init() {

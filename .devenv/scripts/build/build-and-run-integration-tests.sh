@@ -60,9 +60,15 @@ run_build () {
   fi
   if [[ "$DISTRO" == "tomcat" ]]; then
     PROFILES+=(tomcat distro-tomcat)
+    if [[ "$TEST_SUITE" == "engine" ]]; then
+      MVN_ARGS+=(-Dskip.frontend.build=true)
+    fi
   fi
   if [[ "$DISTRO" == "wildfly" ]]; then
     PROFILES+=(wildfly distro-wildfly)
+    if [[ "$TEST_SUITE" == "engine" ]]; then
+      MVN_ARGS+=(-Dskip.frontend.build=true)
+    fi
   fi
 
   echo "ℹ️ Building $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
@@ -78,6 +84,7 @@ run_build () {
 ##########################################################################
 run_tests () {
   PROFILES=()
+  MVN_ARGS+=(clean verify)
 
   case "$TEST_SUITE" in
     engine)
@@ -91,23 +98,23 @@ run_tests () {
   case "$DISTRO" in
     operaton)
       PROFILES+=(integration-test-operaton-run)
-      QA_DIR=distro/run/qa
+      MVN_ARGS+=(-f distro/run/qa)
       ;;
     tomcat)
       PROFILES+=(tomcat)
-      QA_DIR=qa
+      MVN_ARGS+=(-f qa)
       ;;
     wildfly)
       PROFILES+=(wildfly)
-      QA_DIR=qa
+      MVN_ARGS+=(-f qa)
       ;;
   esac
 
   PROFILES+=($DATABASE)
 
   echo "ℹ️ Running $TEST_SUITE integration tests for distro $DISTRO with $DATABASE database using profiles: [${PROFILES[*]}]"
-  echo "./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f $QA_DIR"
-  ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f $QA_DIR
+  echo "./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
+  ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Build failed"
     popd > /dev/null

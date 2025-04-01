@@ -36,7 +36,7 @@ public class EmptyContextProvider implements JaxBContextProvider {
     try {
       return JAXBContext.newInstance();
     } catch (JAXBException e) {
-      throw LOG.unableToCreateContext(e);
+      throw LOG.unableToCreateContext(e, "");
     }
   }
 

@@ -35,6 +35,15 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -57,9 +66,21 @@
                   <exclude>org.operaton.commons:*</exclude>
                   <exclude>org.operaton.spin:operaton-spin-core</exclude>
                   <exclude>org.slf4j:*</exclude>
+                  <exclude>org.junit.jupiter:*</exclude>
+                  <exclude>org.junit.platform:*</exclude>
+                  <exclude>org.opentest4j:*</exclude>
+                  <exclude>org.apiguardian:*</exclude>
                 </excludes>
               </artifactSet>
               <relocations>
+                <relocation>
+                  <pattern>jakarta.activation</pattern>
+                  <shadedPattern>spinjar.jakarta.activation</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>jakarta.xml</pattern>
+                  <shadedPattern>spinjar.jakarta.xml</shadedPattern>
+                </relocation>
                 <relocation>
                   <pattern>com.fasterxml</pattern>
                   <shadedPattern>spinjar.com.fasterxml</shadedPattern>
@@ -73,49 +94,29 @@
                   <shadedPattern>spinjar.com.minidev</shadedPattern>
                 </relocation>
                 <relocation>
-                  <pattern>org.objectweb</pattern>
-                  <shadedPattern>spinjar.com.objectweb</shadedPattern>
-                </relocation>
-
-                <relocation>
-                  <pattern>com.sun.istack</pattern>
-                  <shadedPattern>spinjar.com.sun.istack</shadedPattern>
+                  <pattern>org.glassfish</pattern>
+                  <shadedPattern>spinjar.org.glassfish</shadedPattern>
                 </relocation>
                 <relocation>
-                  <pattern>com.sun.activation</pattern>
-                  <shadedPattern>spinjar.com.sun.activation</shadedPattern>
+                  <pattern>com.sun</pattern>
+                  <shadedPattern>spinjar.com.sun</shadedPattern>
                 </relocation>
                 <relocation>
-                  <pattern>com.sun.xml.bind</pattern>
-                  <shadedPattern>spinjar.com.sun.xml.bind</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>com.sun.xml.txw2</pattern>
-                  <shadedPattern>spinjar.com.sun.xml.txw2</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>javax.xml.bind</pattern>
-                  <shadedPattern>spinjar.javax.xml.bind</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>javax.activation</pattern>
-                  <shadedPattern>spinjar.javax.activation</shadedPattern>
+                  <pattern>org.eclipse</pattern>
+                  <shadedPattern>spinjar.org.eclipse</shadedPattern>
                 </relocation>
               </relocations>
               <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer" />
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
               </transformers>
               <filters>
                 <filter>
-                  <artifact>com.sun.xml.bind:*</artifact>
-                  <excludes>
-                    <exclude>META-INF/services/javax.xml.bind.JAXBContext</exclude>
-                  </excludes>
-                </filter>
-                <filter>
                   <artifact>*:*</artifact>
                   <excludes>
                     <exclude>module-info.class</exclude>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
                   </excludes>
                 </filter>
               </filters>

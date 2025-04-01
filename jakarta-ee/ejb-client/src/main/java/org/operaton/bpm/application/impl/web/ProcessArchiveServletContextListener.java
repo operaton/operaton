@@ -20,6 +20,7 @@ import jakarta.ejb.EJB;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 
+import java.util.Objects;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 
@@ -39,6 +40,7 @@ public class ProcessArchiveServletContextListener implements ServletContextListe
   public void contextInitialized(ServletContextEvent contextEvent) {
     String contextPath = contextEvent.getServletContext().getContextPath();
 
+    Objects.requireNonNull(defaultEjbProcessApplication, "Cannot inject ProcessApplicationInterface EJB. Make sure the ProcessApplication is deployed as EJB.");
     defaultEjbProcessApplication.getProperties().put(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH, contextPath);
   }
 

@@ -25,7 +25,7 @@
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
     <version.groovy>4.0.25</version.groovy>
     <version.graal.js>21.3.12</version.graal.js>
-    <version.nashorn>15.4</version.nashorn>
+    <version.nashorn>15.6</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <version.commons-codec>1.17.2</version.commons-codec>
     <version.gson>2.8.9</version.gson>

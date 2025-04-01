@@ -155,7 +155,10 @@ public class DomXmlLogger extends SpinLogger {
     return new SpinXmlDataFormatException(exceptionMessage("029", "Cannot create marshaller"), cause);
   }
 
-  public SpinXmlDataFormatException unableToCreateContext(Throwable cause) {
+  public SpinXmlDataFormatException unableToCreateContext(Throwable cause, String additionalInfo) {
+    if (!additionalInfo.isEmpty()) {
+      XML_DOM_LOGGER.logDebug("030", "Unable to create JAXBContext. Additional info: {}", additionalInfo);
+    }
     return new SpinXmlDataFormatException(exceptionMessage("030", "Cannot create context"), cause);
   }
 

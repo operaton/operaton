@@ -17,10 +17,17 @@
 package org.operaton.spin.impl.xml.dom.format.spi;
 
 import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContextFactory;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Collections;
+import java.util.ServiceLoader;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.operaton.spin.impl.xml.dom.DomXmlLogger;
 
 /**
@@ -35,11 +42,35 @@ public class DefaultJaxBContextProvider implements JaxBContextProvider {
   private static final DomXmlLogger LOG = DomXmlLogger.XML_DOM_LOGGER;
 
   public JAXBContext getContext(Class<?>... types) {
+    var additionalInfo = new StringBuilder();
     try {
-      return JAXBContext.newInstance(types);
+      var serviceLoader = ServiceLoader.load(JAXBContextFactory.class);
+      switch ((int) serviceLoader.stream().count()) {
+        case 0:
+          ClassLoader cl = Thread.currentThread().getContextClassLoader();
+          logClassLoader(cl, additionalInfo);
+          throw new JAXBException("No JAXBContextFactory implementation found");
+        case 1:
+          return serviceLoader.iterator().next().createContext(types, Collections.emptyMap());
+        default:
+          throw new JAXBException("Multiple JAXBContextFactory implementations found: " + serviceLoader.stream().map(sl -> sl.get().getClass()));
+      }
     }
     catch (JAXBException e) {
-      throw LOG.unableToCreateContext(e);
+      throw LOG.unableToCreateContext(e, additionalInfo.toString());
+    }
+  }
+
+  private void logClassLoader(ClassLoader cl, StringBuilder sb) {
+    if (cl instanceof URLClassLoader urlClassLoader) {
+      var urls = Stream.of(urlClassLoader.getURLs()).map(URL::toString).collect(Collectors.joining(","));
+      sb.append("java.net.URLClassLoader: ").append(urls);
+    } else {
+      sb.append(cl.getClass().getName());
+    };
+    if (cl.getParent() != null) {
+      sb.append("\n -> ");
+      logClassLoader(cl.getParent(), sb);
     }
   }
 

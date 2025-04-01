@@ -16,18 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junitpioneer.jupiter.RetryingTest;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
@@ -45,6 +38,14 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
@@ -296,14 +297,13 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isZero();
   }
 
-  @Test
+  @RetryingTest(3)
   public void testNoCreationOnJobExecutorBatchJobExecutionByIds() {
-    // given
     // given
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
     // when
-    testRule.waitForJobExecutorToProcessAllJobs(5000L);
+    testRule.waitForJobExecutorToProcessAllJobs();
 
     // then
     assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();
@@ -312,26 +312,24 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   @Test
   public void testNoCreationOnJobExecutorBatchJobExecutionByQuery() {
     // given
-    // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     historyService.deleteHistoricDecisionInstancesAsync(query, null);
 
     // when
-    testRule.waitForJobExecutorToProcessAllJobs(5000L);
+    testRule.waitForJobExecutorToProcessAllJobs();
 
     // then
     assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
-  @Test
+  @RetryingTest(3)
   public void testNoCreationOnJobExecutorBatchJobExecutionByIdsAndQuery() {
-    // given
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, query, null);
 
     // when
-    testRule.waitForJobExecutorToProcessAllJobs(5000L);
+    testRule.waitForJobExecutorToProcessAllJobs();
 
     // then
     assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();

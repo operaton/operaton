@@ -35,6 +35,15 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -54,7 +63,6 @@
               <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
               <artifactSet>
                 <excludes>
-                  <exclude>jakarta.*:*</exclude>
                   <exclude>org.operaton.commons:*</exclude>
                   <exclude>org.operaton.spin:operaton-spin-core</exclude>
                   <exclude>org.slf4j:*</exclude>
@@ -65,6 +73,14 @@
                 </excludes>
               </artifactSet>
               <relocations>
+                <relocation>
+                  <pattern>jakarta.activation</pattern>
+                  <shadedPattern>spinjar.jakarta.activation</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>jakarta.xml</pattern>
+                  <shadedPattern>spinjar.jakarta.xml</shadedPattern>
+                </relocation>
                 <relocation>
                   <pattern>com.fasterxml</pattern>
                   <shadedPattern>spinjar.com.fasterxml</shadedPattern>

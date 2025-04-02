@@ -66,8 +66,7 @@ jobs:
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
-        #https://github.com/marketplace/actions/junit-report-action
-        uses: mikepenz/action-junit-report@v4
+        uses: mikepenz/action-junit-report@cf701569b05ccdd861a76b8607a66d76f6fd4857 #v5.5.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true

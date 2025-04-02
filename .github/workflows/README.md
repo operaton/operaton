@@ -40,7 +40,7 @@ This directory contains the GitHub Actions workflows for the Operaton project. E
 |----------------------------------------|---------|---------------------------------------------------------|
 | `actions/checkout`                     | v4      | Checks out the repository code.                         |
 | `actions/cache`                        | v4      | Caches dependencies to improve workflow execution time. |
-| `mikepenz/action-junit-report`         | v4      | Publishes JUnit test reports.                           |
+| `mikepenz/action-junit-report`         | v5.5.1  | Publishes JUnit test reports.                           |
 | `actions/upload-artifact`              | v4      | Uploads build artifacts.                                |
 | `actions/setup-java`                   | v4      | Sets up the Java environment.                           |
 | `stefanzweifel/git-auto-commit-action` | v5      | Automatically commits changes to the repository.        |

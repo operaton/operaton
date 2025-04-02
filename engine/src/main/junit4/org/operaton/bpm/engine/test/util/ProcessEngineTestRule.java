@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.util;
 
 import junit.framework.AssertionFailedError;
+import org.awaitility.core.ConditionTimeoutException;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -54,7 +55,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 public class ProcessEngineTestRule extends TestWatcher {
 
@@ -202,28 +205,11 @@ public class ProcessEngineTestRule extends TestWatcher {
     }
 
     try {
-      Timer timer = new Timer();
-      InterruptTask task = new InterruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean areJobsAvailable = true;
-      try {
-        while (areJobsAvailable && !task.isTimeLimitExceeded()) {
-          Thread.sleep(intervalMillis);
-          try {
-            areJobsAvailable = areJobsAvailable();
-          } catch(Throwable t) {
-            // Ignore, possible that exception occurs due to locking/updating of table on MSSQL when
-            // isolation level doesn't allow READ of the table
-          }
-        }
-      } catch (InterruptedException e) {
-      } finally {
-        timer.cancel();
-      }
-      if (areJobsAvailable) {
+      await().pollDelay(intervalMillis, MILLISECONDS)
+              .atMost(maxMillisToWait, MILLISECONDS)
+              .until(() -> !areJobsAvailable());
+    } catch (ConditionTimeoutException e) {
         throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + availableJobs());
-      }
-
     } finally {
       jobExecutor.shutdown();
     }

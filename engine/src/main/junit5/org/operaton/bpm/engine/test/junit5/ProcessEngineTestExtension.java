@@ -15,7 +15,9 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.awaitility.core.ConditionTimeoutException;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -226,27 +229,11 @@ public class ProcessEngineTestExtension
     }
 
     try {
-      Timer timer = new Timer();
-      InterruptTask task = new InterruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean areJobsAvailable = true;
-      try {
-        while (areJobsAvailable && !task.isTimeLimitExceeded()) {
-          Thread.sleep(intervalMillis);
-          try {
-            areJobsAvailable = areJobsAvailable();
-          } catch(Throwable t) {
-            // Ignore, possible that exception occurs due to locking/updating of table on MSSQL when
-            // isolation level doesn't allow READ of the table
-          }
-        }
-      } catch (InterruptedException e) {
-      } finally {
-        timer.cancel();
-      }
-      if (areJobsAvailable) {
-        throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + availableJobs());
-      }
+      await().pollDelay(intervalMillis, MILLISECONDS)
+              .atMost(maxMillisToWait, MILLISECONDS)
+              .until(() -> !areJobsAvailable());
+    } catch (ConditionTimeoutException e) {
+      throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + availableJobs());
     } finally {
       jobExecutor.shutdown();
     }

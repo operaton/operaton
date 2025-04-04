@@ -1350,13 +1350,6 @@ libraries: https://github.com/unicode-org/icu/edit/main/icu4c/LICENSE
 Licensed under Unicode
 
 ===========================================================================================
-com.jayway.jsonpath:json-path:jar:2.9.0
-https://github.com/json-path/JsonPath
-Copyright 2011 the original author or authors
-
-Licensed under Apache 2.0
-
-===========================================================================================
 com.lihaoyi:fastparse_2.13:jar:3.0.2
 https://github.com/com-lihaoyi/fastparse
 Copyright (c) 2014 Li Haoyi (haoyi.sg@gmail.com)

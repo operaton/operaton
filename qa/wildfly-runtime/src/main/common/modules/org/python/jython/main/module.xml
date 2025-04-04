@@ -1,6 +1,6 @@
 <module xmlns="urn:jboss:module:1.0" name="org.python.jython">
   <resources>
-    <resource-root path="jython-2.5.3.jar" />
+    <resource-root path="jython-@version.jython@.jar" />
   </resources>
 
   <dependencies>

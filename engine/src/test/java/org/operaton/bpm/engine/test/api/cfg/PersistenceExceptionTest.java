@@ -36,7 +36,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Svetlana Dorokhova.
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class PersistenceExceptionTest {
+class PersistenceExceptionTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -46,12 +46,12 @@ public class PersistenceExceptionTest {
   private RuntimeService runtimeService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     runtimeService = engineRule.getRuntimeService();
   }
 
   @Test
-  public void testPersistenceExceptionContainsRealCause() {
+  void testPersistenceExceptionContainsRealCause() {
     assumeFalse(engineRule.getProcessEngineConfiguration().getDatabaseType().equals(DbSqlSessionFactory.MARIADB));
     StringBuffer longString = new StringBuffer();
     for (int i = 0; i < 100; i++) {

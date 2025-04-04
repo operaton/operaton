@@ -32,10 +32,10 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 /**
  * @author Daniel Meyer
  */
-public class DatabaseTablePrefixTest {
+class DatabaseTablePrefixTest {
 
   @Test
-  public void shouldPerformDatabaseSchemaOperationCreate() throws Exception{
+  void shouldPerformDatabaseSchemaOperationCreate() throws Exception{
 
     // both process engines will be using this datasource.
     PooledDataSource pooledDataSource = new PooledDataSource(ReflectUtil.getClassLoader(),

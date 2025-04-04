@@ -36,12 +36,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Joram Barrez
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class GroupQueryTest {
+class GroupQueryTest {
 
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
 
     createGroup("muppets", "Muppet show characters_", "user");
@@ -79,7 +79,7 @@ public class GroupQueryTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("fozzie");
     identityService.deleteUser("mispiggy");
@@ -95,13 +95,13 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryById() {
+  void testQueryById() {
     GroupQuery query = identityService.createGroupQuery().groupId("muppets");
     verifyQueryResults(query, 1);
   }
 
   @Test
-  public void testQueryByInvalidId() {
+  void testQueryByInvalidId() {
     GroupQuery query = identityService.createGroupQuery().groupId("invalid");
     verifyQueryResults(query, 0);
     var groupQuery = identityService.createGroupQuery();
@@ -115,7 +115,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByIdIn() {
+  void testQueryByIdIn() {
     // empty list
     assertThat(identityService.createGroupQuery().groupIdIn("a", "b").list()).isEmpty();
 
@@ -142,7 +142,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByName() {
+  void testQueryByName() {
     GroupQuery query = identityService.createGroupQuery().groupName("Muppet show characters_");
     verifyQueryResults(query, 1);
 
@@ -151,7 +151,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidName() {
+  void testQueryByInvalidName() {
     GroupQuery query = identityService.createGroupQuery().groupName("invalid");
     verifyQueryResults(query, 0);
     var groupQuery = identityService.createGroupQuery();
@@ -165,7 +165,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByNameLike() {
+  void testQueryByNameLike() {
     GroupQuery query = identityService.createGroupQuery().groupNameLike("%Famous%");
     verifyQueryResults(query, 2);
 
@@ -180,7 +180,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidNameLike() {
+  void testQueryByInvalidNameLike() {
     GroupQuery query = identityService.createGroupQuery().groupNameLike("%invalid%");
     verifyQueryResults(query, 0);
     var groupQuery = identityService.createGroupQuery();
@@ -194,7 +194,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByType() {
+  void testQueryByType() {
     GroupQuery query = identityService.createGroupQuery().groupType("user");
     verifyQueryResults(query, 3);
 
@@ -203,7 +203,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidType() {
+  void testQueryByInvalidType() {
     GroupQuery query = identityService.createGroupQuery().groupType("invalid");
     verifyQueryResults(query, 0);
     var groupQuery = identityService.createGroupQuery();
@@ -217,7 +217,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByMember() {
+  void testQueryByMember() {
     GroupQuery query = identityService.createGroupQuery().groupMember("fozzie");
     verifyQueryResults(query, 2);
 
@@ -239,7 +239,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidMember() {
+  void testQueryByInvalidMember() {
     GroupQuery query = identityService.createGroupQuery().groupMember("invalid");
     verifyQueryResults(query, 0);
     var groupQuery = identityService.createGroupQuery();
@@ -253,7 +253,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryByMemberOfTenant() {
+  void testQueryByMemberOfTenant() {
     GroupQuery query = identityService.createGroupQuery().memberOfTenant("nonExisting");
     verifyQueryResults(query, 0);
 
@@ -265,7 +265,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     // asc
     assertThat(identityService.createGroupQuery().orderByGroupId().asc().count()).isEqualTo(4);
     assertThat(identityService.createGroupQuery().orderByGroupName().asc().count()).isEqualTo(4);
@@ -293,7 +293,7 @@ public class GroupQueryTest {
   }
 
   @Test
-  public void testQueryInvalidSortingUsage() {
+  void testQueryInvalidSortingUsage() {
     var groupQuery = identityService.createGroupQuery().orderByGroupId().orderByGroupName();
     try {
       groupQuery.list();

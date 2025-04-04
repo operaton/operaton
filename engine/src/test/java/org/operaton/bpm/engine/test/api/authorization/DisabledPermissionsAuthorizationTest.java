@@ -85,7 +85,7 @@ public class DisabledPermissionsAuthorizationTest {
   TaskService taskService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authRule.createUserAndGroup(USER_ID, "group");
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     repositoryService = engineRule.getRepositoryService();
@@ -96,14 +96,14 @@ public class DisabledPermissionsAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.disableAuthorization();
     authRule.deleteUsersAndGroups();
     processEngineConfiguration.setDisabledPermissions(null);
   }
 
   @Test
-  public void testIsUserAuthorizedForIgnoredPermission() {
+  void testIsUserAuthorizedForIgnoredPermission() {
     // given
     processEngineConfiguration.setDisabledPermissions(List.of(READ.name()));
 
@@ -118,7 +118,7 @@ public class DisabledPermissionsAuthorizationTest {
   }
 
   @Test
-  public void testCustomPermissionDuplicateValue() {
+  void testCustomPermissionDuplicateValue() {
     // given
     processEngineConfiguration.setDisabledPermissions(List.of(ProcessInstancePermissions.SUSPEND.name()));
     Resource resource1 = TestResource.RESOURCE1;
@@ -143,7 +143,7 @@ public class DisabledPermissionsAuthorizationTest {
   // i.e. the query doesn't fail if all permissions are disabled in the specific authorization check
 
   @Test
-  public void testGetVariableIgnoreTaskRead() {
+  void testGetVariableIgnoreTaskRead() {
     // given
     processEngineConfiguration.setDisabledPermissions(List.of(TaskPermissions.READ.name()));
     String taskId = "taskId";
@@ -163,7 +163,7 @@ public class DisabledPermissionsAuthorizationTest {
   }
 
   @Test
-  public void testQueryTaskIgnoreTaskRead() {
+  void testQueryTaskIgnoreTaskRead() {
     // given
     List<String> permissions = new ArrayList<>();
     permissions.add(TaskPermissions.READ.name());
@@ -187,7 +187,7 @@ public class DisabledPermissionsAuthorizationTest {
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testDeleteHistoricProcessInstanceIgnoreDeleteHistory() {
+  void testDeleteHistoricProcessInstanceIgnoreDeleteHistory() {
     // given
     processEngineConfiguration.setDisabledPermissions(List.of(Permissions.DELETE_HISTORY.name()));
 
@@ -202,7 +202,7 @@ public class DisabledPermissionsAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testQueryDeploymentIgnoreRead() {
+  void testQueryDeploymentIgnoreRead() {
     // given
     engineRule.getProcessEngineConfiguration().setDisabledPermissions(List.of(READ.name()));
 
@@ -216,7 +216,7 @@ public class DisabledPermissionsAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testStartableInTasklistIgnoreRead() {
+  void testStartableInTasklistIgnoreRead() {
     // given
     processEngineConfiguration.setDisabledPermissions(List.of(READ.name()));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, "oneTaskProcess", USER_ID, CREATE_INSTANCE);
@@ -237,7 +237,7 @@ public class DisabledPermissionsAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml")
-  public void testDeploymentStatisticsIgnoreReadInstance() {
+  void testDeploymentStatisticsIgnoreReadInstance() {
     // given
     processEngineConfiguration.setDisabledPermissions(List.of(READ_INSTANCE.name()));
 
@@ -263,7 +263,7 @@ public class DisabledPermissionsAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml")
-  public void testActivityStatisticsIgnoreRead() {
+  void testActivityStatisticsIgnoreRead() {
     // given
     List<String> permissions = new ArrayList<>();
     permissions.add(READ.name());
@@ -287,7 +287,7 @@ public class DisabledPermissionsAuthorizationTest {
   @Test
   @Disabled("CAM-9888")
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
-  public void testFetchAndLockIgnoreRead() {
+  void testFetchAndLockIgnoreRead() {
     // given
     List<String> permissions = new ArrayList<>();
     permissions.add(READ.name());

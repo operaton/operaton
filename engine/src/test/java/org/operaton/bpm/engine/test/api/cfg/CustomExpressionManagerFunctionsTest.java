@@ -39,13 +39,13 @@ public class CustomExpressionManagerFunctionsTest {
   protected RuntimeService runtimeService;
 
   @BeforeEach
-  public void initializeServices() {
+  void initializeServices() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     runtimeService = engineRule.getRuntimeService();
   }
 
   @Test
-  public void shouldResolveCustomFunction() {
+  void shouldResolveCustomFunction() {
     // given
     processEngineConfiguration.getExpressionManager().addFunction("foobar", ReflectUtil.getMethod(TestFunctions.class, "foobar"));
     testRule.deploy(Bpmn.createExecutableProcess("process")
@@ -62,7 +62,7 @@ public class CustomExpressionManagerFunctionsTest {
   }
 
   @Test
-  public void shouldResolveCustomPrefixedFunction() {
+  void shouldResolveCustomPrefixedFunction() {
     // given
     processEngineConfiguration.getExpressionManager().addFunction("foo:bar", ReflectUtil.getMethod(TestFunctions.class, "foobar"));
     testRule.deploy(Bpmn.createExecutableProcess("process")

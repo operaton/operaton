@@ -34,27 +34,27 @@ import org.operaton.bpm.engine.impl.test.TestHelper;
 /**
  * @author Christian Lipphardt
  */
-public class DatabaseHistoryPropertyTest {
+class DatabaseHistoryPropertyTest {
 
 
   private static ProcessEngineImpl processEngineImpl;
 
   // make sure schema is dropped
   @AfterEach
-  public void cleanup() {
+  void cleanup() {
     processEngineImpl.close();
     processEngineImpl = null;
   }
 
   @Test
-  public void schemaCreatedByEngineAndDatabaseSchemaUpdateTrue() {
+  void schemaCreatedByEngineAndDatabaseSchemaUpdateTrue() {
     processEngineImpl = createProcessEngineImpl("true", true);
 
     assertHistoryLevel();
   }
 
   @Test
-  public void schemaCreatedByUserAndDatabaseSchemaUpdateTrue() {
+  void schemaCreatedByUserAndDatabaseSchemaUpdateTrue() {
     processEngineImpl = createProcessEngineImpl("true", false);
     // simulate manual schema creation by user
     TestHelper.createSchema(processEngineImpl.getProcessEngineConfiguration());
@@ -72,7 +72,7 @@ public class DatabaseHistoryPropertyTest {
   }
 
   @Test
-  public void schemaCreatedByUserAndDatabaseSchemaUpdateFalse() {
+  void schemaCreatedByUserAndDatabaseSchemaUpdateFalse() {
     processEngineImpl = createProcessEngineImpl("false", false);
     // simulate manual schema creation by user
     TestHelper.createSchema(processEngineImpl.getProcessEngineConfiguration());

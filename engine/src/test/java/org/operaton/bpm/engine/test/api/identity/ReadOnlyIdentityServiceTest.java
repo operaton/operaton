@@ -39,14 +39,14 @@ public class ReadOnlyIdentityServiceTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     identityService = engineRule.getIdentityService();
 
     assertThat(identityService.isReadOnly()).isTrue();
   }
 
   @Test
-  public void newUser() {
+  void newUser() {
     // when/then
     assertThatThrownBy(() -> identityService.newUser("user"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -54,7 +54,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void saveUser() {
+  void saveUser() {
     // when/then
     assertThatThrownBy(() -> identityService.saveUser(null))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -62,7 +62,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void deleteUser() {
+  void deleteUser() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteUser("user"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -70,7 +70,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void newGroup() {
+  void newGroup() {
     // when/then
     assertThatThrownBy(() -> identityService.newGroup("group"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -78,7 +78,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void saveGroup() {
+  void saveGroup() {
     // when/then
     assertThatThrownBy(() -> identityService.saveGroup(null))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -86,7 +86,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void deleteGroup() {
+  void deleteGroup() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteGroup("group"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -94,7 +94,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void newTenant() {
+  void newTenant() {
     // when/then
     assertThatThrownBy(() -> identityService.newTenant("tenant"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -102,7 +102,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void saveTenant() {
+  void saveTenant() {
     // when/then
     assertThatThrownBy(() -> identityService.saveTenant(null))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -110,7 +110,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void deleteTenant() {
+  void deleteTenant() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteTenant("tenant"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -118,7 +118,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void createGroupMembership() {
+  void createGroupMembership() {
     // when/then
     assertThatThrownBy(() -> identityService.createMembership("user", "group"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -126,7 +126,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void deleteGroupMembership() {
+  void deleteGroupMembership() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteMembership("user", "group"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -134,7 +134,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void createTenantUserMembership() {
+  void createTenantUserMembership() {
     // when/then
     assertThatThrownBy(() -> identityService.createTenantUserMembership("tenant", "user"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -142,7 +142,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void createTenantGroupMembership() {
+  void createTenantGroupMembership() {
     // when/then
     assertThatThrownBy(() -> identityService.createTenantGroupMembership("tenant", "group"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -150,7 +150,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void deleteTenantUserMembership() {
+  void deleteTenantUserMembership() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteTenantUserMembership("tenant", "user"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -158,7 +158,7 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void deleteTenantGroupMembership() {
+  void deleteTenantGroupMembership() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteTenantGroupMembership("tenant", "group"))
       .isInstanceOf(UnsupportedOperationException.class)
@@ -166,12 +166,12 @@ public class ReadOnlyIdentityServiceTest {
   }
 
   @Test
-  public void checkPassword() {
+  void checkPassword() {
     assertThat(identityService.checkPassword("user", "password")).isFalse();
   }
 
   @Test
-  public void createQuery() {
+  void createQuery() {
     assertThat(identityService.createUserQuery().list()).isNotNull();
     assertThat(identityService.createGroupQuery().list()).isNotNull();
     assertThat(identityService.createTenantQuery().list()).isNotNull();

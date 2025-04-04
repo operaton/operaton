@@ -46,7 +46,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  */
 @ExtendWith(ProcessEngineExtension.class)
 @ExtendWith(ProcessEngineTestExtension.class)
-public class CaseServiceProcessTaskTest {
+class CaseServiceProcessTaskTest {
 
   protected final String DEFINITION_KEY = "oneProcessTaskCase";
   protected final String PROCESS_TASK_KEY = "PI_ProcessTask_1";
@@ -55,12 +55,12 @@ public class CaseServiceProcessTaskTest {
   protected TaskService taskService;
   protected CaseService caseService;
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
   })
   @Test
-  public void testStart() {
+  void testStart() {
     // given
     String caseInstanceId = createCaseInstance(DEFINITION_KEY).getId();
 
@@ -94,12 +94,12 @@ public class CaseServiceProcessTaskTest {
     }
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testManualStart() {
+  void testManualStart() {
     // given
     String caseInstanceId = createCaseInstance(DEFINITION_KEY).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -122,12 +122,12 @@ public class CaseServiceProcessTaskTest {
     assertThat(processTask.isActive()).isTrue();
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testManualStartWithVariables() {
+  void testManualStartWithVariables() {
     // given
     String caseInstanceId = createCaseInstance(DEFINITION_KEY).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -170,12 +170,12 @@ public class CaseServiceProcessTaskTest {
 
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testManualStartWithLocalVariable() {
+  void testManualStartWithLocalVariable() {
     // given
     String caseInstanceId = createCaseInstance(DEFINITION_KEY).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -228,11 +228,11 @@ public class CaseServiceProcessTaskTest {
 
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"
-      })
+  })
   @Test
-  public void testReenableAnEnabledProcessTask() {
+  void testReenableAnEnabledProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -248,12 +248,12 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testReenableADisabledProcessTask() {
+  void testReenableADisabledProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -275,12 +275,12 @@ public class CaseServiceProcessTaskTest {
     assertThat(processTask.isEnabled()).isTrue();
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testReenableAnActiveProcessTask() {
+  void testReenableAnActiveProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -293,9 +293,9 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
   @Test
-  public void testDisableAnEnabledProcessTask() {
+  void testDisableAnEnabledProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -313,9 +313,9 @@ public class CaseServiceProcessTaskTest {
     assertThat(processTask.isDisabled()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
   @Test
-  public void testDisableADisabledProcessTask() {
+  void testDisableADisabledProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -333,12 +333,12 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testDisableAnActiveProcessTask() {
+  void testDisableAnActiveProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -351,9 +351,9 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
   @Test
-  public void testManualStartOfADisabledProcessTask() {
+  void testManualStartOfADisabledProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -371,12 +371,12 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testManualStartOfAnActiveProcessTask() {
+  void testManualStartOfAnActiveProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -390,12 +390,12 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testComplete() {
+  void testComplete() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -409,12 +409,12 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testCompleteProcessInstanceShouldCompleteProcessTask() {
+  void testCompleteProcessInstanceShouldCompleteProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -437,9 +437,9 @@ public class CaseServiceProcessTaskTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testDisableShouldCompleteCaseInstance() {
+  void testDisableShouldCompleteCaseInstance() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -464,9 +464,9 @@ public class CaseServiceProcessTaskTest {
     assertThat(caseInstance.isCompleted()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testCompleteAnEnabledProcessTask() {
+  void testCompleteAnEnabledProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -480,9 +480,9 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
   @Test
-  public void testCompleteADisabledProcessTask() {
+  void testCompleteADisabledProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -500,9 +500,9 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testClose() {
+  void testClose() {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
@@ -516,12 +516,12 @@ public class CaseServiceProcessTaskTest {
       .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testTerminate() {
+  void testTerminate() {
     // given
     createCaseInstance(DEFINITION_KEY);
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK_KEY);
@@ -536,12 +536,12 @@ public class CaseServiceProcessTaskTest {
 
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testTerminateNonFluent() {
+  void testTerminateNonFluent() {
     // given
     createCaseInstance(DEFINITION_KEY);
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK_KEY);
@@ -556,12 +556,12 @@ public class CaseServiceProcessTaskTest {
 
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testTerminateNonActiveProcessTask() {
+  void testTerminateNonActiveProcessTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK_KEY);

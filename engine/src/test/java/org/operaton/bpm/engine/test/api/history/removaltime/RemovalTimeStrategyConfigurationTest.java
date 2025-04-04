@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * @author Tassilo Weidner
  */
-public class RemovalTimeStrategyConfigurationTest {
+class RemovalTimeStrategyConfigurationTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -46,7 +46,7 @@ public class RemovalTimeStrategyConfigurationTest {
   protected static ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @BeforeEach
-  public void init() {
+  void init() {
     processEngineConfiguration
       .setHistoryRemovalTimeStrategy(null)
       .setHistoryRemovalTimeProvider(null)
@@ -54,7 +54,7 @@ public class RemovalTimeStrategyConfigurationTest {
   }
 
   @AfterAll
-  public static void tearDown() {
+  static void tearDown() {
     processEngineConfiguration
       .setHistoryRemovalTimeStrategy(null)
       .setHistoryRemovalTimeProvider(null)
@@ -62,7 +62,7 @@ public class RemovalTimeStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldAutomaticallyConfigure() {
+  void shouldAutomaticallyConfigure() {
     // given
 
     processEngineConfiguration
@@ -78,7 +78,7 @@ public class RemovalTimeStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureToStart() {
+  void shouldConfigureToStart() {
     // given
 
     processEngineConfiguration
@@ -94,7 +94,7 @@ public class RemovalTimeStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureToEnd() {
+  void shouldConfigureToEnd() {
     // given
 
     processEngineConfiguration
@@ -110,7 +110,7 @@ public class RemovalTimeStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureToNone() {
+  void shouldConfigureToNone() {
     // given
 
     processEngineConfiguration
@@ -126,7 +126,7 @@ public class RemovalTimeStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureWithoutProvider() {
+  void shouldConfigureWithoutProvider() {
     // given
 
     processEngineConfiguration
@@ -142,7 +142,7 @@ public class RemovalTimeStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureWithNotExistentStrategy() {
+  void shouldConfigureWithNotExistentStrategy() {
     // given
     processEngineConfiguration.setHistoryRemovalTimeStrategy("notExistentStrategy");
 

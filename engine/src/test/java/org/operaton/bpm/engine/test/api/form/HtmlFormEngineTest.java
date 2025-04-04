@@ -49,9 +49,9 @@ public class HtmlFormEngineTest {
   protected TaskService taskService;
   protected FormService formService;
   protected RuntimeService runtimeService;
-  
+
   @Test
-  public void testIsDefaultFormEngine() {
+  void testIsDefaultFormEngine() {
 
     // make sure the html form engine is the default form engine:
     Map<String, FormEngine> formEngines = processEngineConfiguration.getFormEngines();
@@ -60,14 +60,14 @@ public class HtmlFormEngineTest {
   }
 
   @Test
-  public void testTransformNullFormData() {
+  void testTransformNullFormData() {
     HtmlFormEngine formEngine = new HtmlFormEngine();
     assertThat(formEngine.renderStartForm(null)).isNull();
     assertThat(formEngine.renderTaskForm(null)).isNull();
   }
 
   @Test
-  public void testHtmlElementWriter() {
+  void testHtmlElementWriter() {
 
     String htmlString = new HtmlDocumentBuilder(new HtmlElementWriter("someTagName"))
       .endElement()
@@ -135,7 +135,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testRenderEmptyStartForm() {
+  void testRenderEmptyStartForm() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -145,7 +145,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testRenderStartForm() {
+  void testRenderStartForm() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -159,7 +159,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testRenderEnumField() {
+  void testRenderEnumField() {
 
     runtimeService.startProcessInstanceByKey("HtmlFormEngineTest.testRenderEnumField");
 
@@ -176,7 +176,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testRenderTaskForm() {
+  void testRenderTaskForm() {
 
     runtimeService.startProcessInstanceByKey("HtmlFormEngineTest.testRenderTaskForm");
 
@@ -193,7 +193,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testRenderDateField() {
+  void testRenderDateField() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     String renderedForm = (String) formService.getRenderedStartForm(processDefinition.getId());
@@ -206,7 +206,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testRenderDateFieldWithPattern() {
+  void testRenderDateFieldWithPattern() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     String renderedForm = (String) formService.getRenderedStartForm(processDefinition.getId());
@@ -219,7 +219,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testLegacyFormPropertySupport() {
+  void testLegacyFormPropertySupport() {
 
     runtimeService.startProcessInstanceByKey("HtmlFormEngineTest.testLegacyFormPropertySupport");
 
@@ -236,7 +236,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testLegacyFormPropertySupportReadOnly() {
+  void testLegacyFormPropertySupportReadOnly() {
 
     runtimeService.startProcessInstanceByKey("HtmlFormEngineTest.testLegacyFormPropertySupportReadOnly");
 
@@ -253,7 +253,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testLegacyFormPropertySupportRequired() {
+  void testLegacyFormPropertySupportRequired() {
 
     runtimeService.startProcessInstanceByKey("HtmlFormEngineTest.testLegacyFormPropertySupportRequired");
 
@@ -270,7 +270,7 @@ public class HtmlFormEngineTest {
 
   @Deployment
   @Test
-  public void testBusinessKey() {
+  void testBusinessKey() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 

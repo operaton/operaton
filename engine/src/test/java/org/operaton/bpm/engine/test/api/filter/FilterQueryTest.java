@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Sebastian Menski
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class FilterQueryTest {
+class FilterQueryTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected FilterService filterService;
@@ -53,7 +53,7 @@ public class FilterQueryTest {
   protected List<String> filterIds = new ArrayList<>();
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     saveFilter("b", "b");
     saveFilter("d", "d");
     saveFilter("a", "a");
@@ -69,7 +69,7 @@ public class FilterQueryTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     // delete all filters
     for (Filter filter : filterService.createFilterQuery().list()) {
       filterService.deleteFilter(filter.getId());
@@ -77,7 +77,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryNoCriteria() {
+  void testQueryNoCriteria() {
     FilterQuery query = filterService.createFilterQuery();
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
@@ -91,7 +91,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByFilterId() {
+  void testQueryByFilterId() {
     FilterQuery query = filterService.createFilterQuery().filterId(filterIds.get(0));
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
@@ -99,7 +99,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidFilterId() {
+  void testQueryByInvalidFilterId() {
     FilterQuery query = filterService.createFilterQuery().filterId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -111,7 +111,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByResourceType() {
+  void testQueryByResourceType() {
     FilterQuery query = filterService.createFilterQuery().filterResourceType(EntityTypes.TASK);
     try {
       query.singleResult();
@@ -125,7 +125,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidResourceType() {
+  void testQueryByInvalidResourceType() {
     FilterQuery query = filterService.createFilterQuery().filterResourceType("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -137,7 +137,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByName() {
+  void testQueryByName() {
     FilterQuery query = filterService.createFilterQuery().filterName("a");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
@@ -145,7 +145,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByNameLike() {
+  void testQueryByNameLike() {
     FilterQuery query = filterService.createFilterQuery().filterNameLike("%\\_");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
@@ -153,7 +153,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidName() {
+  void testQueryByInvalidName() {
     FilterQuery query = filterService.createFilterQuery().filterName("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -165,7 +165,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByOwner() {
+  void testQueryByOwner() {
     FilterQuery query = filterService.createFilterQuery().filterOwner("a");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
@@ -173,7 +173,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidOwner() {
+  void testQueryByInvalidOwner() {
     FilterQuery query = filterService.createFilterQuery().filterOwner("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -185,7 +185,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQueryPaging() {
+  void testQueryPaging() {
     FilterQuery query = filterService.createFilterQuery();
 
     assertThat(query.listPage(0, Integer.MAX_VALUE)).hasSize(4);
@@ -206,7 +206,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     List<String> sortedIds = new ArrayList<>(filterIds);
     Collections.sort(sortedIds);
     assertThat(filterService.createFilterQuery().orderByFilterId().asc().list()).hasSize(4);
@@ -255,7 +255,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testNativeQuery() {
+  void testNativeQuery() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     assertThat(managementService.getTableName(Filter.class)).isEqualTo(tablePrefix + "ACT_RU_FILTER");
     assertThat(managementService.getTableName(FilterEntity.class)).isEqualTo(tablePrefix + "ACT_RU_FILTER");
@@ -275,7 +275,7 @@ public class FilterQueryTest {
   }
 
   @Test
-  public void testNativeQueryPaging() {
+  void testNativeQueryPaging() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     assertThat(managementService.getTableName(Filter.class)).isEqualTo(tablePrefix + "ACT_RU_FILTER");
     assertThat(managementService.getTableName(FilterEntity.class)).isEqualTo(tablePrefix + "ACT_RU_FILTER");

@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 /**
  * @author Ronny Bräunlich
  */
-public class DatabaseTableSchemaTest {
+class DatabaseTableSchemaTest {
 
   private static final String SCHEMA_NAME = "SCHEMA1";
   private static final String PREFIX_NAME = "PREFIX1_";
@@ -49,13 +49,13 @@ public class DatabaseTableSchemaTest {
   private PooledDataSource pooledDataSource;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     pooledDataSource = new PooledDataSource(ReflectUtil.getClassLoader(), "org.h2.Driver",
         "jdbc:h2:mem:DatabaseTableSchemaTest;DB_CLOSE_DELAY=1000", "sa", "");
   }
 
   @AfterEach
-  public void tearDown() throws SQLException {
+  void tearDown() throws SQLException {
 
     Connection connection = pooledDataSource.getConnection();
     connection.createStatement().execute("SHUTDOWN");
@@ -63,7 +63,7 @@ public class DatabaseTableSchemaTest {
   }
 
   @Test
-  public void testPerformDatabaseSchemaOperationCreateTwice() throws Exception {
+  void testPerformDatabaseSchemaOperationCreateTwice() throws Exception {
 
     final Connection connection = pooledDataSource.getConnection();
     connection.createStatement().execute("drop schema if exists " + SCHEMA_NAME + " cascade");
@@ -95,7 +95,7 @@ public class DatabaseTableSchemaTest {
   }
 
   @Test
-  public void testTablePresentWithSchemaAndPrefix() throws SQLException {
+  void testTablePresentWithSchemaAndPrefix() throws SQLException {
 
     Connection connection = pooledDataSource.getConnection();
     connection.createStatement().execute("drop schema if exists " + SCHEMA_NAME + " cascade");
@@ -123,7 +123,7 @@ public class DatabaseTableSchemaTest {
   }
 
   @Test
-  public void testCreateConfigurationWithMismatchtingSchemaAndPrefix() {
+  void testCreateConfigurationWithMismatchtingSchemaAndPrefix() {
     StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
     configuration.setDatabaseSchema("foo");
     configuration.setDatabaseTablePrefix("bar");
@@ -134,7 +134,7 @@ public class DatabaseTableSchemaTest {
   }
 
   @Test
-  public void testCreateConfigurationWithMissingDotInSchemaAndPrefix() {
+  void testCreateConfigurationWithMissingDotInSchemaAndPrefix() {
     StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
     configuration.setDatabaseSchema("foo");
     configuration.setDatabaseTablePrefix("foo");

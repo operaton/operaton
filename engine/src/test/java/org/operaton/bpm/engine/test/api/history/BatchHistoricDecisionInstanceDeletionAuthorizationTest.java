@@ -115,7 +115,7 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
   }
 
   @BeforeEach
-  public void executeDecisionInstances() {
+  void executeDecisionInstances() {
     decisionInstanceIds = new ArrayList<>();
     testRule.deploy("org/operaton/bpm/engine/test/api/dmn/Example.dmn");
 
@@ -134,12 +134,12 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     for (Batch batch : managementService.createBatchQuery().list()) {
       managementService.deleteBatch(batch.getId(), true);
     }

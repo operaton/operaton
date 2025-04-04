@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class BulkHistoryDeleteCmmnDisabledTest {
+class BulkHistoryDeleteCmmnDisabledTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -57,7 +57,7 @@ public class BulkHistoryDeleteCmmnDisabledTest {
   private HistoryService historyService;
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
 
       List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
@@ -86,8 +86,8 @@ public class BulkHistoryDeleteCmmnDisabledTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/dmn/Example.dmn" })
-  public void historyCleanUpWithDisabledCmmn() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/dmn/Example.dmn"})
+  void historyCleanUpWithDisabledCmmn() {
     // given
     prepareHistoricProcesses(5);
     prepareHistoricDecisions(5);

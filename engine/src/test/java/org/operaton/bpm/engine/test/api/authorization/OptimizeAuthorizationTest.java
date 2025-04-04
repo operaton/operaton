@@ -43,13 +43,13 @@ public class OptimizeAuthorizationTest {
   AuthorizationService authorizationService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     authorizationService = engineRule.getAuthorizationService();
   }
 
   @Test
-  public void testOptimizePermissionExists() {
+  void testOptimizePermissionExists() {
     // given
     authRule.createGrantAuthorization(Resources.OPTIMIZE, ANY, USER_ID, OptimizePermissions.ALL);
 
@@ -62,7 +62,7 @@ public class OptimizeAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.disableAuthorization();
     authRule.deleteUsersAndGroups();
   }

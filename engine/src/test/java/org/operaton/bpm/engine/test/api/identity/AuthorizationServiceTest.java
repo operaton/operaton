@@ -65,7 +65,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Daniel Meyer
  *
  */
-public class AuthorizationServiceTest {
+class AuthorizationServiceTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -80,13 +80,13 @@ public class AuthorizationServiceTest {
   protected String testGroupId = "accounting";
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     cleanupAfterTest();
 
   }
 
   @Test
-  public void testGlobalAuthorizationType() {
+  void testGlobalAuthorizationType() {
     Authorization globalAuthorization = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
     // I can set userId = null
     globalAuthorization.setUserId(null);
@@ -117,7 +117,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testGrantAuthorizationType() {
+  void testGrantAuthorizationType() {
     Authorization grantAuthorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     // I can set userId = null
     grantAuthorization.setUserId(null);
@@ -137,7 +137,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testRevokeAuthorizationType() {
+  void testRevokeAuthorizationType() {
     Authorization revokeAuthorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
     // I can set userId = null
     revokeAuthorization.setUserId(null);
@@ -157,7 +157,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testDeleteNonExistingAuthorization() {
+  void testDeleteNonExistingAuthorization() {
 
     try {
       authorizationService.deleteAuthorization("nonExisting");
@@ -169,7 +169,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testCreateAuthorizationWithUserId() {
+  void testCreateAuthorizationWithUserId() {
 
     Resource resource1 = TestResource.RESOURCE1;
 
@@ -193,7 +193,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testCreateAuthorizationWithGroupId() {
+  void testCreateAuthorizationWithGroupId() {
 
     Resource resource1 = TestResource.RESOURCE1;
 
@@ -217,7 +217,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testInvalidCreateAuthorization() {
+  void testInvalidCreateAuthorization() {
 
     Resource resource1 = TestResource.RESOURCE1;
 
@@ -273,7 +273,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testUniqueUserConstraints() {
+  void testUniqueUserConstraints() {
 
     Resource resource1 = TestResource.RESOURCE1;
 
@@ -326,7 +326,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testUniqueGroupConstraints() {
+  void testUniqueGroupConstraints() {
 
     Resource resource1 = TestResource.RESOURCE1;
 
@@ -380,7 +380,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testGlobalUniqueConstraints() {
+  void testGlobalUniqueConstraints() {
 
     Resource resource1 = TestResource.RESOURCE1;
 
@@ -406,7 +406,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testUpdateNewAuthorization() {
+  void testUpdateNewAuthorization() {
 
     Resource resource1 = TestResource.RESOURCE1;
     Resource resource2 = TestResource.RESOURCE2;
@@ -445,7 +445,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testUpdatePersistentAuthorization() {
+  void testUpdatePersistentAuthorization() {
 
     Resource resource1 = TestResource.RESOURCE1;
     Resource resource2 = TestResource.RESOURCE2;
@@ -483,7 +483,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testPermissions() {
+  void testPermissions() {
 
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setResource(Resources.USER);
@@ -546,7 +546,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testGrantAuthPermissions() {
+  void testGrantAuthPermissions() {
 
     AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GRANT);
     authorization.setResource(Resources.DEPLOYMENT);
@@ -577,7 +577,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testGlobalAuthPermissions() {
+  void testGlobalAuthPermissions() {
 
     AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GRANT);
     authorization.setResource(Resources.DEPLOYMENT);
@@ -608,7 +608,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testRevokeAuthPermissions() {
+  void testRevokeAuthPermissions() {
 
     AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_REVOKE);
     authorization.setResource(Resources.DEPLOYMENT);
@@ -634,7 +634,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testGlobalGrantAuthorizationCheck() {
+  void testGlobalGrantAuthorizationCheck() {
     Resource resource1 = TestResource.RESOURCE1;
 
     // create global authorization which grants all permissions to all users (on resource1):
@@ -662,7 +662,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testDisabledAuthorizationCheck() {
+  void testDisabledAuthorizationCheck() {
     // given
     Resource resource1 = TestResource.RESOURCE1;
 
@@ -674,7 +674,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testConcurrentIsUserAuthorized() throws Exception {
+  void testConcurrentIsUserAuthorized() throws Exception {
     int threadCount = 2;
     int invocationCount = 500;
     ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
@@ -713,7 +713,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testReportResourceAuthorization() {
+  void testReportResourceAuthorization() {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId(testUserId);
     authorization.addPermission(ALL);
@@ -727,7 +727,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testReportResourcePermissions() {
+  void testReportResourcePermissions() {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId(testUserId);
     authorization.addPermission(CREATE);
@@ -747,7 +747,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testDashboardResourceAuthorization() {
+  void testDashboardResourceAuthorization() {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId(testUserId);
     authorization.addPermission(ALL);
@@ -761,7 +761,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testDashboardResourcePermission() {
+  void testDashboardResourcePermission() {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId(testUserId);
     authorization.addPermission(CREATE);
@@ -781,7 +781,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testIsPermissionGrantedAccess() {
+  void testIsPermissionGrantedAccess() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     String userId = "userId";
@@ -800,7 +800,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testIsPermissionGrantedRetryJob() {
+  void testIsPermissionGrantedRetryJob() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     String userId = "userId";
@@ -819,7 +819,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testIsPermissionGrantedBatchResource() {
+  void testIsPermissionGrantedBatchResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     String userId = "userId";
@@ -842,7 +842,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testIsPermissionRevokedAccess() {
+  void testIsPermissionRevokedAccess() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
     String userId = "userId";
@@ -861,7 +861,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testIsPermissionRevokedRetryJob() {
+  void testIsPermissionRevokedRetryJob() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
     String userId = "userId";
@@ -880,7 +880,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void testIsPermissionRevokedBatchResource() {
+  void testIsPermissionRevokedBatchResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
     String userId = "userId";
@@ -903,7 +903,7 @@ public class AuthorizationServiceTest {
   }
 
   @Test
-  public void shouldFailSaveAuthorizationWithIncompatibleResourceAndPermission() {
+  void shouldFailSaveAuthorizationWithIncompatibleResourceAndPermission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("testUser");

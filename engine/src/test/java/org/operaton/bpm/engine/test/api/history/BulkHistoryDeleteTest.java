@@ -103,12 +103,12 @@ public class BulkHistoryDeleteTest {
   public static final String USER_ID = "demo";
 
   @BeforeEach
-  public void init() {
+  void init() {
     identityService.setAuthenticatedUserId(USER_ID);
   }
 
   @BeforeEach
-  public void enableDmnFeelLegacyBehavior() {
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
         .getDmnEngineConfiguration();
@@ -119,7 +119,7 @@ public class BulkHistoryDeleteTest {
   }
 
   @AfterEach
-  public void disableDmnFeelLegacyBehavior() {
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -131,13 +131,13 @@ public class BulkHistoryDeleteTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.clearAuthentication();
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupHistoryTaskIdentityLink() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupHistoryTaskIdentityLink() {
     //given
     final List<String> ids = prepareHistoricProcesses();
     List<Task> taskList = taskService.createTaskQuery().list();
@@ -154,8 +154,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupHistoryActivityInstances() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupHistoryActivityInstances() {
     //given
     final List<String> ids = prepareHistoricProcesses();
 
@@ -170,8 +170,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupTaskAttachmentWithContent() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupTaskAttachmentWithContent() {
     //given
     final List<String> ids = prepareHistoricProcesses();
 
@@ -200,8 +200,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupProcessInstanceAttachmentWithContent() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupProcessInstanceAttachmentWithContent() {
     //given
     final List<String> ids = prepareHistoricProcesses();
 
@@ -240,8 +240,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupTaskComment() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupTaskComment() {
     //given
     final List<String> ids = prepareHistoricProcesses();
 
@@ -261,8 +261,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupProcessInstanceComment() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupProcessInstanceComment() {
     //given
     final List<String> ids = prepareHistoricProcesses();
 
@@ -281,8 +281,8 @@ public class BulkHistoryDeleteTest {
 
   @Test
   @Deployment(resources = {
-      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupHistoricVariableInstancesAndHistoricDetails() {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupHistoricVariableInstancesAndHistoricDetails() {
     //given
     final List<String> ids = prepareHistoricProcesses();
 
@@ -302,8 +302,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupHistoryTaskForm() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupHistoryTaskForm() {
     //given
     final List<String> ids = prepareHistoricProcesses();
 
@@ -326,7 +326,7 @@ public class BulkHistoryDeleteTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
-  public void testCleanupHistoricExternalTaskLog() {
+  void testCleanupHistoricExternalTaskLog() {
     //given
     final List<String> ids = prepareHistoricProcesses("oneExternalTaskProcess");
 
@@ -359,8 +359,8 @@ public class BulkHistoryDeleteTest {
 
   @Test
   @Deployment(resources = {
-      "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  public void testCleanupHistoricIncidents() {
+      "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+  void testCleanupHistoricIncidents() {
     //given
     List<String> ids = prepareHistoricProcesses("failingProcess");
 
@@ -379,8 +379,8 @@ public class BulkHistoryDeleteTest {
 
   @Test
   @Deployment(resources = {
-      "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  public void testCleanupHistoricJobLogs() {
+      "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+  void testCleanupHistoricJobLogs() {
     //given
     List<String> ids = prepareHistoricProcesses("failingProcess", null, 1);
 
@@ -414,8 +414,8 @@ public class BulkHistoryDeleteTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml" })
-  public void testCleanupHistoryDecisionData() {
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"})
+  void testCleanupHistoryDecisionData() {
     //given
     List<String> ids = prepareHistoricProcesses("testProcess", Variables.createVariables().putValue("pojo", new TestPojo("okay", 13.37)));
 
@@ -455,8 +455,8 @@ public class BulkHistoryDeleteTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml" })
-  public void testCleanupFakeHistoryDecisionData() {
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"})
+  void testCleanupFakeHistoryDecisionData() {
     //given
     List<String> ids = Arrays.asList("aFake");
 
@@ -487,8 +487,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml" })
-  public void testCleanupHistoryStandaloneDecisionData() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"})
+  void testCleanupHistoryStandaloneDecisionData() {
     //given
     for (int i = 0; i < 5; i++) {
       engineRule.getDecisionService().evaluateDecisionByKey("testDecision").variables(Variables.createVariables().putValue("pojo", new TestPojo("okay", 13.37))).evaluate();
@@ -527,8 +527,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupHistoryEmptyProcessIdsException() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupHistoryEmptyProcessIdsException() {
     //given
     final List<String> ids = prepareHistoricProcesses();
     runtimeService.deleteProcessInstances(ids, null, true, true);
@@ -551,8 +551,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testCleanupHistoryProcessesNotFinishedException() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testCleanupHistoryProcessesNotFinishedException() {
     //given
     final List<String> ids = prepareHistoricProcesses();
     runtimeService.deleteProcessInstances(ids.subList(1, ids.size()), null, true, true);
@@ -631,8 +631,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstance() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstance() {
     // given
     // create case instances
     int instanceCount = 10;
@@ -651,8 +651,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseActivityInstance() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseActivityInstance() {
     // given
     // create case instance
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
@@ -671,8 +671,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceTask() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceTask() {
     // given
     // create case instance
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
@@ -691,8 +691,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceTaskComment() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceTaskComment() {
     // given
     // create case instance
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
@@ -714,8 +714,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceTaskDetails() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceTaskDetails() {
     // given
     // create case instance
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase");
@@ -741,8 +741,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceTaskIdentityLink() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceTaskIdentityLink() {
     // given
     // create case instance
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
@@ -764,8 +764,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceTaskAttachmentByteArray() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceTaskAttachmentByteArray() {
     // given
     // create case instance
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase");
@@ -790,8 +790,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceTaskAttachmentUrl() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceTaskAttachmentUrl() {
     // given
     // create case instance
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
@@ -813,8 +813,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceVariables() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceVariables() {
     // given
     // create case instances
     List<String> caseInstanceIds = new ArrayList<>();
@@ -838,8 +838,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceComplexVariable() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceComplexVariable() {
     // given
     // create case instances
     VariableMap variables = Variables.createVariables();
@@ -865,8 +865,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceDetails() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceDetails() {
     // given
     // create case instances
     String variableNameCase1 = "varName1";
@@ -892,8 +892,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testCleanupHistoryCaseInstanceOperationLog() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testCleanupHistoryCaseInstanceOperationLog() {
     // given
     // create case instances
     int instanceCount = 10;

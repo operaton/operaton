@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class ProcessEngineContextTest {
+class ProcessEngineContextTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -49,13 +49,13 @@ public class ProcessEngineContextTest {
       .done();
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testHelper.deploy(SIMPLE_PROCESS);
     engineRule.getRuntimeService().startProcessInstanceByKey(SIMPLE_PROCESS_KEY);
   }
 
   @Test
-  public void shouldUseFreshCacheOnNewCommandContext() {
+  void shouldUseFreshCacheOnNewCommandContext() {
     /* The test ensures that when `ProcessEngineContext#requiresNew()` is called,
     a fresh cache is used for the new command, and no cached data of the outer command
     cache is available (i.e. only persisted data is available).
@@ -88,7 +88,7 @@ public class ProcessEngineContextTest {
   }
 
   @Test
-  public void shouldUseSameCommandContextOnTxRequired() throws Exception {
+  void shouldUseSameCommandContextOnTxRequired() throws Exception {
     /* The test ensures that, even if the `requiresNew()` method is called on a command,
     inner commands still reuse the current CommandContext (unless otherwise specified)
      */

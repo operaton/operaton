@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Tobias Metzke
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class DecisionServiceUserOperationLogTest {
+class DecisionServiceUserOperationLogTest {
 
   protected static final String DMN_DECISION_TABLE = "org/operaton/bpm/engine/test/api/dmn/Example.dmn";
   protected static final String DMN_DECISION_TABLE_V2 = "org/operaton/bpm/engine/test/api/dmn/Example_v2.dmn";
@@ -66,12 +66,12 @@ public class DecisionServiceUserOperationLogTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     identityService.clearAuthentication();
   }
 
   @BeforeEach
-  public void enableDmnFeelLegacyBehavior() {
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -82,7 +82,7 @@ public class DecisionServiceUserOperationLogTest {
   }
 
   @AfterEach
-  public void disableDmnFeelLegacyBehavior() {
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -95,7 +95,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-  public void logCreationOnEvaluateDecisionTableById() {
+  void logCreationOnEvaluateDecisionTableById() {
     // given
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
@@ -110,7 +110,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-  public void logCreationOnEvaluateDecisionTableByKey() {
+  void logCreationOnEvaluateDecisionTableByKey() {
     // given
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
@@ -125,7 +125,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-  public void logCreationOnEvaluateDecisionTableByKeyAndLatestVersion() {
+  void logCreationOnEvaluateDecisionTableByKeyAndLatestVersion() {
     testRule.deploy(DMN_DECISION_TABLE_V2);
 
     // given
@@ -142,7 +142,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-  public void logCreationOnEvaluateDecisionTableByKeyAndVersion() {
+  void logCreationOnEvaluateDecisionTableByKeyAndVersion() {
     testRule.deploy(DMN_DECISION_TABLE_V2);
 
     // given
@@ -159,7 +159,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-  public void logCreationOnEvaluateDecisionTableByKeyAndNullVersion() {
+  void logCreationOnEvaluateDecisionTableByKeyAndNullVersion() {
     testRule.deploy(DMN_DECISION_TABLE_V2);
 
     // given
@@ -176,7 +176,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void logCreationOnEvaluateDecisionById() {
+  void logCreationOnEvaluateDecisionById() {
     // given
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
@@ -191,7 +191,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void logCreationOnEvaluateDecisionByKey() {
+  void logCreationOnEvaluateDecisionByKey() {
     // given
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
@@ -206,7 +206,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void logCreationOnEvaluateDecisionByKeyAndLatestVersion() {
+  void logCreationOnEvaluateDecisionByKeyAndLatestVersion() {
     testRule.deploy(DMN_DECISION_LITERAL_EXPRESSION_V2);
 
     // given
@@ -223,7 +223,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void logCreationOnEvaluateDecisionByKeyAndVersion() {
+  void logCreationOnEvaluateDecisionByKeyAndVersion() {
     testRule.deploy(DMN_DECISION_LITERAL_EXPRESSION_V2);
 
     // given
@@ -240,7 +240,7 @@ public class DecisionServiceUserOperationLogTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void logCreationOnEvaluateDecisionByKeyAndNullVersion() {
+  void logCreationOnEvaluateDecisionByKeyAndNullVersion() {
     testRule.deploy(DMN_DECISION_LITERAL_EXPRESSION_V2);
 
     // given

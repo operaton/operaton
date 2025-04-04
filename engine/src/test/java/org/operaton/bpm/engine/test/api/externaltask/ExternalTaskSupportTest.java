@@ -67,7 +67,7 @@ public class ExternalTaskSupportTest {
   protected String deploymentId;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     deploymentId = repositoryService
         .createDeployment()
         .addClasspathResource(processDefinitionResource)
@@ -76,7 +76,7 @@ public class ExternalTaskSupportTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (deploymentId != null) {
       repositoryService.deleteDeployment(deploymentId, true);
     }

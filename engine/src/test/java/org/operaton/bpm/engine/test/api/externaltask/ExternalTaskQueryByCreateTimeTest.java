@@ -59,18 +59,18 @@ public class ExternalTaskQueryByCreateTimeTest {
   protected CaseService caseService;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     // given four process definitions with one external task each, external tasks have priorities 4, 3, 0, and 0
     deployProcessesWithExternalTasks();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     ClockUtil.reset();
   }
 
   @Test
-  public void shouldHaveNonNullCreateTime() {
+  void shouldHaveNonNullCreateTime() {
     // given
     runtimeService.startProcessInstanceByKey("process1");
 
@@ -85,7 +85,7 @@ public class ExternalTaskQueryByCreateTimeTest {
   }
 
   @Test
-  public void shouldProduceEventWithCreateTimeValue() {
+  void shouldProduceEventWithCreateTimeValue() {
     // given
     runtimeService.startProcessInstanceByKey("process1");
 
@@ -105,7 +105,7 @@ public class ExternalTaskQueryByCreateTimeTest {
   }
 
   @Test
-  public void shouldReturnTasksInDescOrder() {
+  void shouldReturnTasksInDescOrder() {
     // given
     startProcessInstanceAfter("process1", 1);
     startProcessInstanceAfter("process2", 1);
@@ -128,7 +128,7 @@ public class ExternalTaskQueryByCreateTimeTest {
   }
 
   @Test
-  public void shouldReturnTasksInAscOrder() {
+  void shouldReturnTasksInAscOrder() {
     // given
     startProcessInstanceAfter("process1", 1);
     startProcessInstanceAfter("process2", 1);
@@ -153,7 +153,7 @@ public class ExternalTaskQueryByCreateTimeTest {
   // Multi-Level Sorting with CreateTime & Priority
 
   @Test
-  public void shouldReturnTasksInCreateTimeAscOrderOnPriorityEquality() {
+  void shouldReturnTasksInCreateTimeAscOrderOnPriorityEquality() {
     // given
     startProcessInstanceAfter("process1", 1);
     startProcessInstanceAfter("process2", 1);
@@ -179,7 +179,7 @@ public class ExternalTaskQueryByCreateTimeTest {
   }
 
   @Test
-  public void shouldReturnTasksInCreateTimeDescOrderOnPriorityEquality() {
+  void shouldReturnTasksInCreateTimeDescOrderOnPriorityEquality() {
     // given
     startProcessInstanceAfter("process1", 1);
     startProcessInstanceAfter("process2", 1);
@@ -205,7 +205,7 @@ public class ExternalTaskQueryByCreateTimeTest {
   }
 
   @Test
-  public void shouldReturnTasksInPriorityAscOnCreateTimeEquality() {
+  void shouldReturnTasksInPriorityAscOnCreateTimeEquality() {
     var now = ClockTestUtil.setClockToDateWithoutMilliseconds();
 
     // given
@@ -235,7 +235,7 @@ public class ExternalTaskQueryByCreateTimeTest {
   }
 
   @Test
-  public void shouldReturnTasksInPriorityDescOnCreateTimeEquality() {
+  void shouldReturnTasksInPriorityDescOnCreateTimeEquality() {
     var now = ClockTestUtil.setClockToDateWithoutMilliseconds();
 
     // given

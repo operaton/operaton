@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class HistoryCleanupTaskMetricsTest {
+class HistoryCleanupTaskMetricsTest {
 
   private static final String DEFAULT_TTL_DAYS = "P5D";
 
@@ -73,25 +73,25 @@ public class HistoryCleanupTaskMetricsTest {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @BeforeEach
-  public void init() {
+  void init() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
   }
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     testRule.deleteHistoryCleanupJobs();
     managementService.deleteTaskMetrics(null);
     managementService.deleteMetrics(null);
   }
 
   @AfterEach
-  public void resetConfiguration() {
+  void resetConfiguration() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
     processEngineConfiguration.setTaskMetricsTimeToLive(null);
   }
 
   @Test
-  public void shouldCleanupTaskMetrics() {
+  void shouldCleanupTaskMetrics() {
     // given
     initTaskMetricHistoryTimeToLive(DEFAULT_TTL_DAYS);
     int daysInThePast = -11;
@@ -109,7 +109,7 @@ public class HistoryCleanupTaskMetricsTest {
   }
 
   @Test
-  public void shouldProvideCleanupMetricsForTaskMetrics() {
+  void shouldProvideCleanupMetricsForTaskMetrics() {
     // given
     initTaskMetricHistoryTimeToLive(DEFAULT_TTL_DAYS);
     int daysInThePast = -11;
@@ -126,7 +126,7 @@ public class HistoryCleanupTaskMetricsTest {
   }
 
   @Test
-  public void shouldFailWithInvalidConfiguration() {
+  void shouldFailWithInvalidConfiguration() {
     // given
     processEngineConfiguration.setTaskMetricsTimeToLive("PD");
 
@@ -137,7 +137,7 @@ public class HistoryCleanupTaskMetricsTest {
   }
 
   @Test
-  public void shouldFailWithInvalidConfigurationNegativeTTL() {
+  void shouldFailWithInvalidConfigurationNegativeTTL() {
     // given
     processEngineConfiguration.setTaskMetricsTimeToLive("P-1D");
 

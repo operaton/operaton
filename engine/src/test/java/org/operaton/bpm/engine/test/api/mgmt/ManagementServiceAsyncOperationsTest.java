@@ -46,7 +46,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * @author Askar Akhmerov
  */
-public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperationsTest {
+class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperationsTest {
   protected static final int RETRIES = 5;
   protected static final java.lang.String TEST_PROCESS = "exceptionInJobExecution";
 
@@ -63,7 +63,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   boolean tearDownEnsureJobDueDateNotNull;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     initDefaults(engineRule);
     prepareData();
   }
@@ -78,7 +78,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processInstanceIds = null;
     if(tearDownEnsureJobDueDateNotNull) {
       engineConfiguration.setEnsureJobDueDateNotNull(false);
@@ -86,7 +86,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithJobList() {
+  void testSetJobsRetryAsyncWithJobList() {
     //when
     Batch batch = managementService.setJobRetriesAsync(ids, RETRIES);
     completeSeedJobs(batch);
@@ -99,7 +99,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void shouldSetInvocationsPerBatchTypeForJobsByJobIds() {
+  void shouldSetInvocationsPerBatchTypeForJobsByJobIds() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()
@@ -117,7 +117,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithProcessList() {
+  void testSetJobsRetryAsyncWithProcessList() {
     //when
     Batch batch = managementService.setJobRetriesAsync(processInstanceIds, (ProcessInstanceQuery) null, RETRIES);
     completeSeedJobs(batch);
@@ -130,7 +130,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithProcessListInDifferentDeployments() {
+  void testSetJobsRetryAsyncWithProcessListInDifferentDeployments() {
     // given a second deployment
     prepareData();
     ProcessDefinitionQuery definitionQuery = engineRule.getRepositoryService().createProcessDefinitionQuery();
@@ -163,7 +163,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithEmptyJobList() {
+  void testSetJobsRetryAsyncWithEmptyJobList() {
     // given
     List<String> jobIds = emptyList();
     // when/then
@@ -172,7 +172,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithEmptyProcessList() {
+  void testSetJobsRetryAsyncWithEmptyProcessList() {
     // given
     List<String> jobIds = emptyList();
     // when/then
@@ -181,7 +181,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithNonExistingJobID() {
+  void testSetJobsRetryAsyncWithNonExistingJobID() {
     //given
     ids.add("aFake");
 
@@ -197,7 +197,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithNonExistingProcessID() {
+  void testSetJobsRetryAsyncWithNonExistingProcessID() {
     //given
     processInstanceIds.add("aFake");
 
@@ -213,7 +213,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithJobQueryAndList() {
+  void testSetJobsRetryAsyncWithJobQueryAndList() {
     //given
     List<String> extraPi = startTestProcesses(1);
     JobQuery query = managementService.createJobQuery().processInstanceId(extraPi.get(0));
@@ -230,7 +230,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithProcessQueryAndList() {
+  void testSetJobsRetryAsyncWithProcessQueryAndList() {
     //given
     List<String> extraPi = startTestProcesses(1);
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processInstanceId(extraPi.get(0));
@@ -247,7 +247,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithJobQuery() {
+  void testSetJobsRetryAsyncWithJobQuery() {
     //given
     JobQuery query = managementService.createJobQuery();
 
@@ -263,7 +263,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithProcessQuery() {
+  void testSetJobsRetryAsyncWithProcessQuery() {
     //given
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
@@ -280,7 +280,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void testSetJobsRetryAsyncWithHistoryProcessQuery() {
+  void testSetJobsRetryAsyncWithHistoryProcessQuery() {
     //given
     HistoricProcessInstanceQuery historicProcessInstanceQuery =
         historyService.createHistoricProcessInstanceQuery();
@@ -299,7 +299,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void testSetJobsRetryAsyncWithRuntimeAndHistoryProcessQuery() {
+  void testSetJobsRetryAsyncWithRuntimeAndHistoryProcessQuery() {
     //given
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()
         .processInstanceId(processInstanceIds.get(0));
@@ -321,7 +321,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithEmptyJobQuery() {
+  void testSetJobsRetryAsyncWithEmptyJobQuery() {
     //given
     JobQuery query = managementService.createJobQuery().suspended();
 
@@ -331,7 +331,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithEmptyProcessQuery() {
+  void testSetJobsRetryAsyncWithEmptyProcessQuery() {
     //given
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().suspended();
 
@@ -341,7 +341,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithNonExistingIDAsJobQuery() {
+  void testSetJobsRetryAsyncWithNonExistingIDAsJobQuery() {
     //given
     JobQuery query = managementService.createJobQuery().jobId("aFake");
 
@@ -351,7 +351,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithNonExistingIDAsProcessQuery() {
+  void testSetJobsRetryAsyncWithNonExistingIDAsProcessQuery() {
     //given
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processInstanceId("aFake");
 
@@ -361,7 +361,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithNullJobList() {
+  void testSetJobsRetryAsyncWithNullJobList() {
 
     // when/then
     assertThatThrownBy(() -> managementService.setJobRetriesAsync((List<String>) null, RETRIES))
@@ -369,21 +369,21 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithNullJobQuery() {
+  void testSetJobsRetryAsyncWithNullJobQuery() {
     // when/then
     assertThatThrownBy(() -> managementService.setJobRetriesAsync((JobQuery) null, RETRIES))
       .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithNullProcessQuery() {
+  void testSetJobsRetryAsyncWithNullProcessQuery() {
     // when/then
     assertThatThrownBy(() -> managementService.setJobRetriesAsync(null, (ProcessInstanceQuery) null, RETRIES))
       .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
-  public void testSetJobsRetryAsyncWithNegativeRetries() {
+  void testSetJobsRetryAsyncWithNegativeRetries() {
     //given
     JobQuery query = managementService.createJobQuery();
 
@@ -394,7 +394,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSetJobDueDateOnJobRetryAsyncByJobQuery() {
+  void shouldSetJobDueDateOnJobRetryAsyncByJobQuery() {
     //given
     JobQuery query = managementService.createJobQuery();
 
@@ -416,7 +416,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSetJobDueDateOnJobRetryAsyncByProcessInstanceIds() {
+  void shouldSetJobDueDateOnJobRetryAsyncByProcessInstanceIds() {
     //given
 
     //when
@@ -436,7 +436,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void shouldSetJobDueDateOnJobRetryAsyncByProcessInstanceQuery() {
+  void shouldSetJobDueDateOnJobRetryAsyncByProcessInstanceQuery() {
     //given
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
@@ -457,7 +457,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSetJobDueDateOnJobRetryAsyncByHistoricProcessInstanceQuery() {
+  void shouldSetJobDueDateOnJobRetryAsyncByHistoricProcessInstanceQuery() {
     //given
     HistoricProcessInstanceQuery historicProcessInstanceQuery =
         historyService.createHistoricProcessInstanceQuery();
@@ -480,7 +480,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSetDueDateNull() {
+  void shouldSetDueDateNull() {
     // given
     engineConfiguration.setEnsureJobDueDateNotNull(false);
     HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
@@ -508,7 +508,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void shouldSetJobDueDateOnJobRetryAsyncByJobIds() {
+  void shouldSetJobDueDateOnJobRetryAsyncByJobIds() {
     //given
 
     //when
@@ -526,7 +526,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void shouldThrowErrorOnEmptySetRetryByJobsBuilderConfig() {
+  void shouldThrowErrorOnEmptySetRetryByJobsBuilderConfig() {
     // given
     var setJobRetriesByJobsAsyncBuilder = managementService.setJobRetriesByJobsAsync(RETRIES);
 
@@ -538,7 +538,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   @Test
-  public void shouldThrowErrorOnEmptySetRetryByProcessBuilderConfig() {
+  void shouldThrowErrorOnEmptySetRetryByProcessBuilderConfig() {
     // given
     var setJobRetriesByProcessAsyncBuilder = managementService.setJobRetriesByProcessAsync(RETRIES);
 
@@ -551,7 +551,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSetInvocationsPerBatchTypeForJobsByProcessInstanceIds() {
+  void shouldSetInvocationsPerBatchTypeForJobsByProcessInstanceIds() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()

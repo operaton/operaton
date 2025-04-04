@@ -49,7 +49,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.RemoveAfter;
 
 @RequiredHistoryLevel(HISTORY_FULL)
-public class HistoryCleanupByteArrayRemovalTest {
+class HistoryCleanupByteArrayRemovalTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -83,7 +83,7 @@ public class HistoryCleanupByteArrayRemovalTest {
   private ProcessEngineConfigurationImpl engineConfiguration;
 
   @BeforeEach
-  public void init() {
+  void init() {
     ProcessEngine processEngine = engineRule.getProcessEngine();
 
     managementService = processEngine.getManagementService();
@@ -92,19 +92,19 @@ public class HistoryCleanupByteArrayRemovalTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     restoreCleanupJobHandler();
     testRule.deleteHistoryCleanupJobs();
   }
 
   @AfterAll
-  public static void stop() {
+  static void stop() {
     engineRule.getProcessEngine().close();
   }
 
   @Test
   @RemoveAfter
-  public void shouldHaveRemovalTimeOnFailingHistoryCleanupJob() {
+  void shouldHaveRemovalTimeOnFailingHistoryCleanupJob() {
     // given
     engineConfiguration.setHistoryCleanupJobLogTimeToLive("1");
     overrideFailingCleanupJobHandler();

@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class InstallationCfgTest {
+class InstallationCfgTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -35,12 +35,12 @@ public class InstallationCfgTest {
   protected ProcessEngineConfigurationImpl configuration;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     configuration = engineRule.getProcessEngineConfiguration();
   }
 
   @Test
-  public void shouldInitializeInstallationId() {
+  void shouldInitializeInstallationId() {
     // given default configuration
 
     // when enigne is spun

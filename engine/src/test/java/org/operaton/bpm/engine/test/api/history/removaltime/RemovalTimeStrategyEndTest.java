@@ -80,10 +80,10 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author Tassilo Weidner
  */
-public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
+class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
@@ -91,7 +91,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     clearAuthorization();
   }
 
@@ -119,9 +119,9 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionInstance() {
+  void shouldResolveHistoricDecisionInstance() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
       .operatonHistoryTimeToLive(5)
@@ -164,9 +164,9 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionInputInstance() {
+  void shouldResolveHistoricDecisionInputInstance() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
       .operatonHistoryTimeToLive(5)
@@ -217,9 +217,9 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionOutputInstance() {
+  void shouldResolveHistoricDecisionOutputInstance() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
       .operatonHistoryTimeToLive(5)
@@ -267,7 +267,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricProcessInstance() {
+  void shouldResolveHistoricProcessInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -302,7 +302,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricActivityInstance() {
+  void shouldResolveHistoricActivityInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -342,7 +342,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
    */
   @Test
   @RequiredDatabase(excludes = {DbSqlSessionFactory.MARIADB, DbSqlSessionFactory.MYSQL})
-  public void shouldResolveHistoricActivityInstanceInConcurrentEnvironment() {
+  void shouldResolveHistoricActivityInstanceInConcurrentEnvironment() {
     // given
     int degreeOfParallelism = 30;
 
@@ -365,7 +365,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricTaskInstance() {
+  void shouldResolveHistoricTaskInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -396,7 +396,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricTaskAuthorization_HistoricTaskInstance() {
+  void shouldResolveHistoricTaskAuthorization_HistoricTaskInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -443,7 +443,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResetAuthorizationAfterUpdate_HistoricTaskInstance() {
+  void shouldResetAuthorizationAfterUpdate_HistoricTaskInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -488,7 +488,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAuthorizationAfterUpdate_HistoricTaskInstance() {
+  void shouldResolveAuthorizationAfterUpdate_HistoricTaskInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -540,7 +540,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricTaskAuthorization_HistoricProcessInstance() {
+  void shouldResolveHistoricTaskAuthorization_HistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -595,7 +595,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResetAuthorizationAfterUpdate_HistoricProcessInstance() {
+  void shouldResetAuthorizationAfterUpdate_HistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -654,7 +654,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAuthorizationAfterUpdate_HistoricProcessInstance() {
+  void shouldResolveAuthorizationAfterUpdate_HistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -711,7 +711,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldWriteHistoryAndResolveHistoricTaskAuthorizationInDifferentTransactions() {
+  void shouldWriteHistoryAndResolveHistoricTaskAuthorizationInDifferentTransactions() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -752,7 +752,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldWriteHistoryAndResolveHistoricTaskAuthorizationInSameTransaction() {
+  void shouldWriteHistoryAndResolveHistoricTaskAuthorizationInSameTransaction() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -791,7 +791,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveVariableInstance() {
+  void shouldResolveVariableInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -826,7 +826,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricDetailByVariableInstanceUpdate() {
+  void shouldResolveHistoricDetailByVariableInstanceUpdate() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -867,7 +867,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricDetailByFormProperty() {
+  void shouldResolveHistoricDetailByFormProperty() {
     // given
     DeploymentWithDefinitions deployment = testRule.deploy(CALLING_PROCESS);
 
@@ -902,7 +902,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveIncident() {
+  void shouldResolveIncident() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -953,7 +953,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
    * See https://app.camunda.com/jira/browse/CAM-9505
    */
   @Test
-  public void shouldResolveIncidentWithPreservedCreateTime() {
+  void shouldResolveIncidentWithPreservedCreateTime() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -991,7 +991,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveStandaloneIncident() {
+  void shouldNotResolveStandaloneIncident() {
     // given
     ClockUtil.setCurrentTime(END_DATE);
 
@@ -1022,7 +1022,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveExternalTaskLog() {
+  void shouldResolveExternalTaskLog() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -1068,7 +1068,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
    * See https://app.camunda.com/jira/browse/CAM-9505
    */
   @Test
-  public void shouldResolveExternalTaskLogWithTimestampPreserved() {
+  void shouldResolveExternalTaskLogWithTimestampPreserved() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -1102,7 +1102,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveJobLog() {
+  void shouldResolveJobLog() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1149,7 +1149,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
    * See https://app.camunda.com/jira/browse/CAM-9505
    */
   @Test
-  public void shouldResolveJobLogWithTimestampPreserved() {
+  void shouldResolveJobLogWithTimestampPreserved() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1183,7 +1183,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_SetJobRetries() {
+  void shouldResolveUserOperationLog_SetJobRetries() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1227,7 +1227,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_SetExternalTaskRetries() {
+  void shouldResolveUserOperationLog_SetExternalTaskRetries() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -1275,7 +1275,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_ClaimTask() {
+  void shouldResolveUserOperationLog_ClaimTask() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1310,7 +1310,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_CreateAttachment() {
+  void shouldResolveUserOperationLog_CreateAttachment() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1350,7 +1350,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
    * See https://app.camunda.com/jira/browse/CAM-9505
    */
   @Test
-  public void shouldResolveUserOperationLogWithTimestampPreserved() {
+  void shouldResolveUserOperationLogWithTimestampPreserved() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1378,7 +1378,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveIdentityLink_AddCandidateUser() {
+  void shouldResolveIdentityLink_AddCandidateUser() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1419,7 +1419,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
    * See https://app.camunda.com/jira/browse/CAM-9505
    */
   @Test
-  public void shouldResolveIdentityLinkWithTimePreserved() {
+  void shouldResolveIdentityLinkWithTimePreserved() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1446,7 +1446,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveIdentityLink_AddCandidateUser() {
+  void shouldNotResolveIdentityLink_AddCandidateUser() {
     // given
     ClockUtil.setCurrentTime(END_DATE);
 
@@ -1470,7 +1470,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByProcessInstanceId() {
+  void shouldResolveCommentByProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1508,7 +1508,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByTaskId() {
+  void shouldResolveCommentByTaskId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1541,7 +1541,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveCommentByWrongTaskIdAndProcessInstanceId() {
+  void shouldNotResolveCommentByWrongTaskIdAndProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1572,7 +1572,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByTaskIdAndWrongProcessInstanceId() {
+  void shouldResolveCommentByTaskIdAndWrongProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1605,7 +1605,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByProcessInstanceId() {
+  void shouldResolveAttachmentByProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1643,7 +1643,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByTaskId() {
+  void shouldResolveAttachmentByTaskId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1676,7 +1676,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveAttachmentByWrongTaskIdAndProcessInstanceId() {
+  void shouldNotResolveAttachmentByWrongTaskIdAndProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1707,7 +1707,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByTaskIdAndWrongProcessInstanceId() {
+  void shouldResolveAttachmentByTaskIdAndWrongProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1742,7 +1742,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_CreateAttachmentByTask() {
+  void shouldResolveByteArray_CreateAttachmentByTask() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1775,7 +1775,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_CreateAttachmentByProcessInstance() {
+  void shouldResolveByteArray_CreateAttachmentByProcessInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1813,7 +1813,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_SetVariable() {
+  void shouldResolveByteArray_SetVariable() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1848,7 +1848,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_UpdateVariable() {
+  void shouldResolveByteArray_UpdateVariable() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1888,7 +1888,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_JobLog() {
+  void shouldResolveByteArray_JobLog() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1939,7 +1939,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_ExternalTaskLog() {
+  void shouldResolveByteArray_ExternalTaskLog() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -1989,9 +1989,9 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldResolveByteArray_DecisionInput() {
+  void shouldResolveByteArray_DecisionInput() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
       .operatonHistoryTimeToLive(5)
@@ -2035,9 +2035,9 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldResolveByteArray_DecisionOutput() {
+  void shouldResolveByteArray_DecisionOutput() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -2080,10 +2080,10 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/HistoricRootProcessInstanceTest.shouldResolveByteArray_DecisionOutputLiteralExpression.dmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/history/removaltime/HistoricRootProcessInstanceTest.shouldResolveByteArray_DecisionOutputLiteralExpression.dmn"
   })
-  public void shouldResolveByteArray_DecisionOutputLiteralExpression() {
+  void shouldResolveByteArray_DecisionOutputLiteralExpression() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -2126,7 +2126,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatch() {
+  void shouldResolveBatch() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2159,7 +2159,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchJobLog() {
+  void shouldResolveBatchJobLog() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2194,7 +2194,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchJobLog_ByteArray() {
+  void shouldResolveBatchJobLog_ByteArray() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2252,7 +2252,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
    * See https://app.camunda.com/jira/browse/CAM-9505
    */
   @Test
-  public void shouldResolveBatchJobLogWithTimestampPreserved() {
+  void shouldResolveBatchJobLogWithTimestampPreserved() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2289,7 +2289,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchIncident_SeedJob() {
+  void shouldResolveBatchIncident_SeedJob() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2326,7 +2326,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchIncident_BatchJob() {
+  void shouldResolveBatchIncident_BatchJob() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2376,7 +2376,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchIncident_MonitorJob() {
+  void shouldResolveBatchIncident_MonitorJob() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2423,7 +2423,7 @@ public class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
    * See https://app.camunda.com/jira/browse/CAM-9505
    */
   @Test
-  public void shouldNotUpdateCreateTimeForIncidentRelatedToBatch() {
+  void shouldNotUpdateCreateTimeForIncidentRelatedToBatch() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();

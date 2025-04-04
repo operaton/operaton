@@ -47,7 +47,7 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricBatchQueryTest {
+class HistoricBatchQueryTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -60,17 +60,17 @@ public class HistoricBatchQueryTest {
   protected HistoryService historyService;
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
   @AfterEach
-  public void resetClock() {
+  void resetClock() {
     ClockUtil.reset();
   }
 
   @Test
-  public void testBatchQuery() {
+  void testBatchQuery() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);
@@ -92,7 +92,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryResult() {
+  void testBatchQueryResult() {
     Date startDate = new Date(10000L);
     Date endDate = new Date(40000L);
 
@@ -125,7 +125,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryById() {
+  void testBatchQueryById() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -139,7 +139,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByIdNull() {
+  void testBatchQueryByIdNull() {
     var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
       historicBatchQuery.batchId(null);
@@ -151,7 +151,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByType() {
+  void testBatchQueryByType() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -164,7 +164,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByNonExistingType() {
+  void testBatchQueryByNonExistingType() {
     // given
     helper.migrateProcessInstancesAsync(1);
 
@@ -176,7 +176,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchByState() {
+  void testBatchByState() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);
@@ -201,7 +201,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByTypeNull() {
+  void testBatchQueryByTypeNull() {
     var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
       historicBatchQuery.type(null);
@@ -213,7 +213,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryCount() {
+  void testBatchQueryCount() {
     // given
     helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -226,7 +226,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderByIdAsc() {
+  void testBatchQueryOrderByIdAsc() {
     // given
     helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -239,7 +239,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderByIdDec() {
+  void testBatchQueryOrderByIdDec() {
     // given
     helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -252,7 +252,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderByStartTimeAsc() {
+  void testBatchQueryOrderByStartTimeAsc() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
     helper.migrateProcessInstancesAsync(1);
@@ -267,7 +267,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderByStartTimeDec() {
+  void testBatchQueryOrderByStartTimeDec() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
     helper.migrateProcessInstancesAsync(1);
@@ -282,7 +282,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderByEndTimeAsc() {
+  void testBatchQueryOrderByEndTimeAsc() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
@@ -300,7 +300,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderByEndTimeDec() {
+  void testBatchQueryOrderByEndTimeDec() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
@@ -318,7 +318,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderingPropertyWithoutOrder() {
+  void testBatchQueryOrderingPropertyWithoutOrder() {
     var historicBatchQuery = historyService.createHistoricBatchQuery().orderById();
     try {
       historicBatchQuery.singleResult();
@@ -330,7 +330,7 @@ public class HistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderWithoutOrderingProperty() {
+  void testBatchQueryOrderWithoutOrderingProperty() {
     var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
       historicBatchQuery.asc();

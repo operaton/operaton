@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Askar Akhmerov
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricDecisionInstanceStatisticsQueryTest {
+class HistoricDecisionInstanceStatisticsQueryTest {
 
   protected static final String DISH_DRG_DMN = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
   protected static final String SCORE_DRG_DMN = "org/operaton/bpm/engine/test/dmn/deployment/drdScore.dmn11.xml";
@@ -61,12 +61,12 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deploy(DISH_DRG_DMN);
   }
 
   @Test
-  public void testStatisticForRootDecisionEvaluation() {
+  void testStatisticForRootDecisionEvaluation() {
     // given
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
@@ -91,7 +91,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForRootDecisionWithInstanceConstraintEvaluation() {
+  void testStatisticForRootDecisionWithInstanceConstraintEvaluation() {
     // given
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
@@ -126,7 +126,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForRootDecisionWithFakeInstanceConstraintEvaluation() {
+  void testStatisticForRootDecisionWithFakeInstanceConstraintEvaluation() {
     // given
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
@@ -147,7 +147,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
 
   @Test
   @Disabled("Should throw exception, but does not. See https://github.com/operaton/operaton/issues/438")
-  public void testStatisticForRootDecisionWithNullInstanceConstraintEvaluation() {
+  void testStatisticForRootDecisionWithNullInstanceConstraintEvaluation() {
     // given
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
@@ -170,7 +170,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForChildDecisionEvaluation() {
+  void testStatisticForChildDecisionEvaluation() {
     // given
     decisionService.evaluateDecisionTableByKey("season")
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21))
@@ -191,7 +191,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticConstrainedToOneDRD() {
+  void testStatisticConstrainedToOneDRD() {
     // given
     testRule.deploy(SCORE_DRG_DMN);
 
@@ -221,7 +221,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticDoesNotExistForFakeId() {
+  void testStatisticDoesNotExistForFakeId() {
     assertThat(
         historyService.createHistoricDecisionInstanceStatisticsQuery(
             NON_EXISTING).count()).isZero();
@@ -233,7 +233,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticThrowsExceptionOnNullConstraintsCount() {
+  void testStatisticThrowsExceptionOnNullConstraintsCount() {
     // when/then
     var historicDecisionInstanceStatisticsQuery = historyService.createHistoricDecisionInstanceStatisticsQuery(null);
     assertThatThrownBy(historicDecisionInstanceStatisticsQuery::count)
@@ -241,7 +241,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticThrowsExceptionOnNullConstraintsList() {
+  void testStatisticThrowsExceptionOnNullConstraintsList() {
     // when/then
     var historicDecisionInstanceStatisticsQuery = historyService.createHistoricDecisionInstanceStatisticsQuery(null);
     assertThatThrownBy(historicDecisionInstanceStatisticsQuery::list)
@@ -249,7 +249,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForNotEvaluatedDRD() {
+  void testStatisticForNotEvaluatedDRD() {
     // given
     DecisionRequirementsDefinition decisionRequirementsDefinition =
         repositoryService.createDecisionRequirementsDefinitionQuery().singleResult();

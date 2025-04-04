@@ -29,15 +29,15 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguratio
  * @author Daniel Meyer
  *
  */
-public class DefaultUserPermissionNameForTaskCfgTest {
+class DefaultUserPermissionNameForTaskCfgTest {
 
   @Test
-  public void updateIsDefaultTaskPermission() {
+  void updateIsDefaultTaskPermission() {
     assertThat(new StandaloneInMemProcessEngineConfiguration().getDefaultUserPermissionNameForTask()).isEqualTo("UPDATE");
   }
 
   @Test
-  public void shouldInitUpdatePermission() {
+  void shouldInitUpdatePermission() {
     TestProcessEngineCfg testProcessEngineCfg = new TestProcessEngineCfg();
 
     // given
@@ -51,7 +51,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
   }
 
   @Test
-  public void shouldInitTaskWorkPermission() {
+  void shouldInitTaskWorkPermission() {
     TestProcessEngineCfg testProcessEngineCfg = new TestProcessEngineCfg();
 
     // given
@@ -65,7 +65,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnUnsupportedPermission() {
+  void shouldThrowExceptionOnUnsupportedPermission() {
     TestProcessEngineCfg testProcessEngineCfg = new TestProcessEngineCfg();
 
     // given
@@ -83,7 +83,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnNullPermissionName() {
+  void shouldThrowExceptionOnNullPermissionName() {
     TestProcessEngineCfg testProcessEngineCfg = new TestProcessEngineCfg();
 
     // given
@@ -101,7 +101,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
   }
 
   @Test
-  public void shouldNotInitIfAlreadySet() {
+  void shouldNotInitIfAlreadySet() {
     TestProcessEngineCfg testProcessEngineCfg = new TestProcessEngineCfg();
 
     // given
@@ -115,7 +115,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
   }
 
   @Test
-  public void shouldInitTaskPermission() {
+  void shouldInitTaskPermission() {
     ProcessEngine engine = null;
     try {
       // if

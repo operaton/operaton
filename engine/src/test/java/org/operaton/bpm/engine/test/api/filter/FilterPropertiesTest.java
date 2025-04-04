@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Sebastian Menski
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class FilterPropertiesTest {
+class FilterPropertiesTest {
 
   protected FilterService filterService;
   protected Filter filter;
@@ -45,24 +45,24 @@ public class FilterPropertiesTest {
   protected String nestedJsonArray = "[\"a\",\"b\"]";
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     filter = filterService.newTaskFilter("name").setOwner("owner").setProperties(new HashMap<>());
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     filterService.createFilterQuery().list().stream().map(Filter::getId).forEach(filterService::deleteFilter);
   }
 
 
   @Test
-  public void testPropertiesFromNull() {
+  void testPropertiesFromNull() {
     filter.setProperties(null);
     assertThat(filter.getProperties()).isNull();
   }
 
   @Test
-  public void testPropertiesInternalFromNull() {
+  void testPropertiesInternalFromNull() {
     // given
     Filter noPropsFilter = filterService.
             newTaskFilter("no props filter")
@@ -81,7 +81,7 @@ public class FilterPropertiesTest {
   }
 
   @Test
-  public void testPropertiesFromMap() {
+  void testPropertiesFromMap() {
     Map<String, Object> properties = new HashMap<>();
     properties.put("color", "#123456");
     properties.put("priority", 42);
@@ -94,7 +94,7 @@ public class FilterPropertiesTest {
   }
 
   @Test
-  public void testNullProperty() {
+  void testNullProperty() {
     // given
     Map<String, Object> properties = new HashMap<>();
     properties.put("null", null);
@@ -114,7 +114,7 @@ public class FilterPropertiesTest {
   }
 
   @Test
-  public void testMapContainingListProperty() {
+  void testMapContainingListProperty() {
     // given
     Map properties = Collections.singletonMap("foo", Collections.singletonList("bar"));
 
@@ -134,7 +134,7 @@ public class FilterPropertiesTest {
   }
 
   @Test
-  public void testMapContainingMapProperty() {
+  void testMapContainingMapProperty() {
     // given
     Map properties = Collections.singletonMap("foo", Collections.singletonMap("bar", "foo"));
 
@@ -155,7 +155,7 @@ public class FilterPropertiesTest {
   }
 
   @Test
-  public void testMapContainingMapContainingListProperty() {
+  void testMapContainingMapContainingListProperty() {
     // given
     Map properties = Collections.singletonMap("foo", Collections.singletonMap("bar", Collections.singletonList("foo")));
 
@@ -177,7 +177,7 @@ public class FilterPropertiesTest {
   }
 
   @Test
-  public void testMapContainingListContainingMapProperty_DeserializePrimitives() {
+  void testMapContainingListContainingMapProperty_DeserializePrimitives() {
     // given
     Map<String, Object> primitives = new HashMap<>();
     primitives.put("string", "aStringValue");
@@ -213,7 +213,7 @@ public class FilterPropertiesTest {
   }
 
   @Test
-  public void testMapContainingMapContainingListProperty_DeserializePrimitives() {
+  void testMapContainingMapContainingListProperty_DeserializePrimitives() {
     // given
     List<Object> primitives = new ArrayList<>();
     primitives.add("aStringValue");

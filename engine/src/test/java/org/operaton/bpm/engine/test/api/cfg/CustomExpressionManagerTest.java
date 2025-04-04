@@ -32,12 +32,12 @@ import org.operaton.bpm.engine.impl.el.DateTimeFunctions;
 /**
  * @author Thorben Lindhauer
  */
-public class CustomExpressionManagerTest {
+class CustomExpressionManagerTest {
 
   protected ProcessEngine engine;
 
   @Test
-  public void testBuiltinFunctionMapperRegistration() {
+  void testBuiltinFunctionMapperRegistration() {
     // given a process engine configuration with a custom function mapper
     ProcessEngineConfigurationImpl config = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration()
         .setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName());
@@ -63,7 +63,7 @@ public class CustomExpressionManagerTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (engine != null) {
       engine.close();
       engine = null;

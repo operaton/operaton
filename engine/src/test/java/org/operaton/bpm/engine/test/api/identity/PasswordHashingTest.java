@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.test.api.identity.util.MyCustomPasswordEncryptorC
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class PasswordHashingTest {
+class PasswordHashingTest {
 
   protected static final String PASSWORD = "password";
   protected static final String USER_NAME = "johndoe";
@@ -58,14 +58,14 @@ public class PasswordHashingTest {
 
 
   @BeforeEach
-  public void initialize() {
+  void initialize() {
     operatonDefaultEncryptor = processEngineConfiguration.getPasswordEncryptor();
     operatonDefaultPasswordChecker = processEngineConfiguration.getCustomPasswordChecker();
     operatonDefaultSaltGenerator = processEngineConfiguration.getSaltGenerator();
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     removeAllUser();
     resetEngineConfiguration();
   }
@@ -83,7 +83,7 @@ public class PasswordHashingTest {
   }
 
   @Test
-  public void saltHashingOnHashedPasswordWithoutSaltThrowsNoError() {
+  void saltHashingOnHashedPasswordWithoutSaltThrowsNoError() {
     // given
     processEngineConfiguration.setSaltGenerator(new MyConstantSaltGenerator(null));
     User user = identityService.newUser(USER_NAME);
@@ -97,7 +97,7 @@ public class PasswordHashingTest {
   }
 
   @Test
-  public void enteringTheSamePasswordShouldProduceTwoDifferentEncryptedPassword() {
+  void enteringTheSamePasswordShouldProduceTwoDifferentEncryptedPassword() {
     // given
     User user1 = identityService.newUser(USER_NAME);
     user1.setPassword(PASSWORD);
@@ -113,7 +113,7 @@ public class PasswordHashingTest {
   }
 
   @Test
-  public void ensurePasswordIsCorrectlyHashedWithSHA1() {
+  void ensurePasswordIsCorrectlyHashedWithSHA1() {
     // given
     setDefaultEncryptor(new ShaHashDigest());
     processEngineConfiguration.setSaltGenerator(new MyConstantSaltGenerator("12345678910"));
@@ -130,7 +130,7 @@ public class PasswordHashingTest {
   }
 
   @Test
-  public void ensurePasswordIsCorrectlyHashedWithSHA512() {
+  void ensurePasswordIsCorrectlyHashedWithSHA512() {
     // given
     processEngineConfiguration.setSaltGenerator(new MyConstantSaltGenerator("12345678910"));
     User user = identityService.newUser(USER_NAME);
@@ -147,7 +147,7 @@ public class PasswordHashingTest {
   }
 
   @Test
-  public void twoEncryptorsWithSamePrefixThrowError() {
+  void twoEncryptorsWithSamePrefixThrowError() {
 
     // given two algorithms with the same prefix
     List<PasswordEncryptor> additionalEncryptorsForPasswordChecking = new LinkedList<>();
@@ -161,7 +161,7 @@ public class PasswordHashingTest {
   }
 
   @Test
-  public void prefixThatCannotBeResolvedThrowsError() {
+  void prefixThatCannotBeResolvedThrowsError() {
     // given
     setDefaultEncryptor(new MyCustomPasswordEncryptorCreatingPrefixThatCannotBeResolved());
     User user = identityService.newUser(USER_NAME);
@@ -176,7 +176,7 @@ public class PasswordHashingTest {
   }
 
   @Test
-  public void plugInCustomPasswordEncryptor() {
+  void plugInCustomPasswordEncryptor() {
     // given
     setEncryptors(new MyCustomPasswordEncryptor(PASSWORD, ALGORITHM_NAME), Collections.<PasswordEncryptor>emptyList());
     User user = identityService.newUser(USER_NAME);
@@ -191,7 +191,7 @@ public class PasswordHashingTest {
   }
 
   @Test
-  public void useSeveralCustomEncryptors() {
+  void useSeveralCustomEncryptors() {
 
     // given three users with different hashed passwords
     processEngineConfiguration.setSaltGenerator(new MyConstantSaltGenerator("12345678910"));

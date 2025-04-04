@@ -59,7 +59,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
   protected HistoryService historyService;
 
   @BeforeEach
-  public void setupHistoricService() {
+  void setupHistoricService() {
     historyService = engineRule.getHistoryService();
   }
 

@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.variable.Variables;
 /**
  * @author Philipp Ossler
  */
-public class DecisionServiceTest {
+class DecisionServiceTest {
 
   protected static final String DMN_DECISION_TABLE = "org/operaton/bpm/engine/test/api/dmn/Example.dmn";
   protected static final String DMN_DECISION_TABLE_V2 = "org/operaton/bpm/engine/test/api/dmn/Example_v2.dmn";
@@ -65,7 +65,7 @@ public class DecisionServiceTest {
   protected RepositoryService repositoryService;
 
   @BeforeEach
-  public void enableDmnFeelLegacyBehavior() {
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -76,7 +76,7 @@ public class DecisionServiceTest {
   }
 
   @AfterEach
-  public void disableDmnFeelLegacyBehavior() {
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -89,7 +89,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-	public void evaluateDecisionTableById() {
+  void evaluateDecisionTableById() {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableById(decisionDefinition.getId(), createVariables());
@@ -99,7 +99,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-	public void evaluateDecisionTableByKey() {
+  void evaluateDecisionTableByKey() {
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY, createVariables());
 
     assertThatDecisionHasResult(decisionResult, RESULT_OF_FIRST_VERSION);
@@ -107,7 +107,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-	public void evaluateDecisionTableByKeyAndLatestVersion() {
+  void evaluateDecisionTableByKeyAndLatestVersion() {
     testRule.deploy(DMN_DECISION_TABLE_V2);
 
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY, createVariables());
@@ -117,7 +117,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-	public void evaluateDecisionTableByKeyAndVersion() {
+  void evaluateDecisionTableByKeyAndVersion() {
     testRule.deploy(DMN_DECISION_TABLE_V2);
 
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKeyAndVersion(DECISION_DEFINITION_KEY, 1, createVariables());
@@ -127,7 +127,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-	public void evaluateDecisionTableByKeyAndNullVersion() {
+  void evaluateDecisionTableByKeyAndNullVersion() {
     testRule.deploy(DMN_DECISION_TABLE_V2);
 
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKeyAndVersion(DECISION_DEFINITION_KEY, null, createVariables());
@@ -136,28 +136,28 @@ public class DecisionServiceTest {
   }
 
   @Test
-	public void evaluateDecisionTableByNullId() {
+  void evaluateDecisionTableByNullId() {
     assertThatThrownBy(() -> decisionService.evaluateDecisionTableById(null, null))
       .isInstanceOf(NotValidException.class)
       .hasMessageContaining("either decision definition id or key must be set");
   }
 
   @Test
-	public void evaluateDecisionTableByNonExistingId() {
+  void evaluateDecisionTableByNonExistingId() {
     assertThatThrownBy(() -> decisionService.evaluateDecisionTableById("unknown", null))
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("no deployed decision definition found with id 'unknown'");
   }
 
   @Test
-	public void evaluateDecisionTableByNullKey() {
+  void evaluateDecisionTableByNullKey() {
     assertThatThrownBy(() -> decisionService.evaluateDecisionTableByKey(null, null))
       .isInstanceOf(NotValidException.class)
       .hasMessageContaining("either decision definition id or key must be set");
   }
 
   @Test
-	public void evaluateDecisionTableByNonExistingKey() {
+  void evaluateDecisionTableByNonExistingKey() {
     assertThatThrownBy(() -> decisionService.evaluateDecisionTableByKey("unknown", null))
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("no decision definition deployed with key 'unknown'");
@@ -165,7 +165,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_TABLE)
   @Test
-	public void evaluateDecisionTableByKeyWithNonExistingVersion() {
+  void evaluateDecisionTableByKeyWithNonExistingVersion() {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
     String key = decisionDefinition.getKey();
@@ -176,7 +176,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void evaluateDecisionById() {
+  void evaluateDecisionById() {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
     DmnDecisionResult decisionResult = decisionService
@@ -189,7 +189,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void evaluateDecisionByKey() {
+  void evaluateDecisionByKey() {
     DmnDecisionResult decisionResult = decisionService
         .evaluateDecisionByKey(DECISION_DEFINITION_KEY)
         .variables(createVariables())
@@ -200,7 +200,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void evaluateDecisionByKeyAndLatestVersion() {
+  void evaluateDecisionByKeyAndLatestVersion() {
     testRule.deploy(DMN_DECISION_LITERAL_EXPRESSION_V2);
 
     DmnDecisionResult decisionResult = decisionService
@@ -213,7 +213,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void evaluateDecisionByKeyAndVersion() {
+  void evaluateDecisionByKeyAndVersion() {
     testRule.deploy(DMN_DECISION_LITERAL_EXPRESSION_V2);
 
     DmnDecisionResult decisionResult = decisionService
@@ -227,7 +227,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void evaluateDecisionByKeyAndNullVersion() {
+  void evaluateDecisionByKeyAndNullVersion() {
     testRule.deploy(DMN_DECISION_LITERAL_EXPRESSION_V2);
 
     DmnDecisionResult decisionResult = decisionService
@@ -240,7 +240,7 @@ public class DecisionServiceTest {
   }
 
   @Test
-  public void evaluateDecisionByNullId() {
+  void evaluateDecisionByNullId() {
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(null);
     assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(NotValidException.class)
@@ -248,7 +248,7 @@ public class DecisionServiceTest {
   }
 
   @Test
-  public void evaluateDecisionByNonExistingId() {
+  void evaluateDecisionByNonExistingId() {
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionById("unknown");
     assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(NotFoundException.class)
@@ -256,7 +256,7 @@ public class DecisionServiceTest {
   }
 
   @Test
-  public void evaluateDecisionByNullKey() {
+  void evaluateDecisionByNullKey() {
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(null);
     assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(NotValidException.class)
@@ -264,7 +264,7 @@ public class DecisionServiceTest {
   }
 
   @Test
-  public void evaluateDecisionByNonExistingKey() {
+  void evaluateDecisionByNonExistingKey() {
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey("unknown");
     assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(NotFoundException.class)
@@ -273,7 +273,7 @@ public class DecisionServiceTest {
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
   @Test
-  public void evaluateDecisionByKeyWithNonExistingVersion() {
+  void evaluateDecisionByKeyWithNonExistingVersion() {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
     var decisionsEvaluationBuilder = decisionService
         .evaluateDecisionByKey(decisionDefinition.getKey())
@@ -284,9 +284,9 @@ public class DecisionServiceTest {
       .hasMessageContaining("no decision definition deployed with key = 'decision' and version = '42'");
   }
 
-  @Deployment( resources = DRD_DISH_DECISION_TABLE )
+  @Deployment(resources = DRD_DISH_DECISION_TABLE)
   @Test
-  public void evaluateDecisionWithRequiredDecisions() {
+  void evaluateDecisionWithRequiredDecisions() {
 
     DmnDecisionTableResult decisionResult = decisionService.evaluateDecisionTableByKey("dish-decision", Variables.createVariables()
           .putValue("temperature", 32)

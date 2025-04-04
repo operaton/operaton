@@ -81,7 +81,7 @@ public class HistoricDecisionInstanceStatisticsAuthorizationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testHelper.deploy(DISH_DRG_DMN);
     decisionService = engineRule.getDecisionService();
     historyService = engineRule.getHistoryService();
@@ -97,7 +97,7 @@ public class HistoricDecisionInstanceStatisticsAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 

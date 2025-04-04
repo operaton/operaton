@@ -33,7 +33,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class DatabaseHistoryPropertyAutoTest {
+class DatabaseHistoryPropertyAutoTest {
 
   protected List<ProcessEngineImpl> processEngines = new ArrayList<>();
 
@@ -55,7 +55,7 @@ public class DatabaseHistoryPropertyAutoTest {
 
 
   @Test
-  public void failWhenSecondEngineDoesNotHaveTheSameHistoryLevel() {
+  void failWhenSecondEngineDoesNotHaveTheSameHistoryLevel() {
     buildEngine(config("true", ProcessEngineConfiguration.HISTORY_FULL));
     ProcessEngineConfigurationImpl config = config(ProcessEngineConfiguration.HISTORY_AUDIT);
 
@@ -65,7 +65,7 @@ public class DatabaseHistoryPropertyAutoTest {
   }
 
   @Test
-  public void secondEngineCopiesHistoryLevelFromFirst() {
+  void secondEngineCopiesHistoryLevelFromFirst() {
     // given
     buildEngine(config("true", ProcessEngineConfiguration.HISTORY_FULL));
 
@@ -79,7 +79,7 @@ public class DatabaseHistoryPropertyAutoTest {
   }
 
   @Test
-  public void usesDefaultValueAuditWhenNoValueIsConfigured() {
+  void usesDefaultValueAuditWhenNoValueIsConfigured() {
     final ProcessEngineConfigurationImpl config = config("true", ProcessEngineConfiguration.HISTORY_AUTO);
     ProcessEngineImpl processEngine = buildEngine(config);
 
@@ -91,7 +91,7 @@ public class DatabaseHistoryPropertyAutoTest {
   }
 
   @AfterEach
-  public void after() {
+  void after() {
     for (ProcessEngineImpl engine : processEngines) {
       // no need to drop schema when testing with h2
       engine.close();

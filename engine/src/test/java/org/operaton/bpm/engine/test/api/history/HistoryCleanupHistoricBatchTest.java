@@ -64,7 +64,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoryCleanupHistoricBatchTest {
+class HistoryCleanupHistoricBatchTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -89,12 +89,12 @@ public class HistoryCleanupHistoricBatchTest {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @BeforeEach
-  public void init() {
+  void init() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
   }
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     migrationHelper.removeAllRunningAndHistoricBatches();
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
@@ -117,14 +117,14 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @AfterEach
-  public void resetConfiguration() {
+  void resetConfiguration() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
     processEngineConfiguration.setBatchOperationHistoryTimeToLive(null);
     processEngineConfiguration.setBatchOperationsForHistoryCleanup(null);
   }
 
   @Test
-  public void testCleanupHistoricBatch() {
+  void testCleanupHistoricBatch() {
     initBatchOperationHistoryTimeToLive(DEFAULT_TTL_DAYS);
     int daysInThePast = -11;
 
@@ -141,7 +141,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testCleanupHistoricJobLog() {
+  void testCleanupHistoricJobLog() {
     initBatchOperationHistoryTimeToLive(DEFAULT_TTL_DAYS);
     int daysInThePast = -11;
 
@@ -159,7 +159,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testCleanupHistoricIncident() {
+  void testCleanupHistoricIncident() {
     initBatchOperationHistoryTimeToLive(DEFAULT_TTL_DAYS);
     ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), -11));
 
@@ -195,7 +195,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testHistoryCleanupBatchMetrics() {
+  void testHistoryCleanupBatchMetrics() {
     initBatchOperationHistoryTimeToLive(DEFAULT_TTL_DAYS);
     // given
     int daysInThePast = -11;
@@ -212,7 +212,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testBatchOperationTypeConfigurationOnly() {
+  void testBatchOperationTypeConfigurationOnly() {
     Map<String, String> map = new HashMap<>();
     map.put("instance-migration", "P2D");
     map.put("instance-deletion", DEFAULT_TTL_DAYS);
@@ -263,7 +263,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testMixedConfiguration() {
+  void testMixedConfiguration() {
     Map<String, String> map = new HashMap<>();
     map.put("instance-modification", "P20D");
     processEngineConfiguration.setBatchOperationHistoryTimeToLive(DEFAULT_TTL_DAYS);
@@ -308,7 +308,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testWrongGlobalConfiguration() {
+  void testWrongGlobalConfiguration() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("PD");
 
@@ -319,7 +319,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testWrongSpecificConfiguration() {
+  void testWrongSpecificConfiguration() {
     // given
     Map<String, String> map = new HashMap<>();
     map.put("instance-modification", "PD");
@@ -334,7 +334,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testWrongGlobalConfigurationNegativeTTL() {
+  void testWrongGlobalConfigurationNegativeTTL() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P-1D");
 
@@ -345,7 +345,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   @Test
-  public void testWrongSpecificConfigurationNegativeTTL() {
+  void testWrongSpecificConfigurationNegativeTTL() {
     // given
     Map<String, String> map = new HashMap<>();
     map.put("instance-modification", "P-5D");

@@ -38,7 +38,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author Tassilo Weidner
  */
-public class HistoryCleanupSchedulerCommentsTest extends AbstractHistoryCleanupSchedulerTest {
+class HistoryCleanupSchedulerCommentsTest extends AbstractHistoryCleanupSchedulerTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -51,7 +51,7 @@ public class HistoryCleanupSchedulerCommentsTest extends AbstractHistoryCleanupS
   protected TaskService taskService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     initEngineConfiguration(engineRule, engineConfiguration);
   }
 
@@ -63,7 +63,7 @@ public class HistoryCleanupSchedulerCommentsTest extends AbstractHistoryCleanupS
     .endEvent().done();
 
   @Test
-  public void shouldScheduleToNow() {
+  void shouldScheduleToNow() {
     // given
     testRule.deploy(PROCESS);
 
@@ -99,7 +99,7 @@ public class HistoryCleanupSchedulerCommentsTest extends AbstractHistoryCleanupS
   }
 
   @Test
-  public void shouldScheduleToLater() {
+  void shouldScheduleToLater() {
     // given
     testRule.deploy(PROCESS);
 

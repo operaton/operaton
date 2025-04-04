@@ -89,14 +89,14 @@ public class UpdateJobAuthorizationTest {
   protected String deploymentId;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     managementService = engineRule.getManagementService();
     runtimeService = engineRule.getRuntimeService();
     authRule.createUserAndGroup("userId", "groupId");
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 

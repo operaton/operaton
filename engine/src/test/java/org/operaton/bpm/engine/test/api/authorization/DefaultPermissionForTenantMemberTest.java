@@ -51,7 +51,7 @@ public class DefaultPermissionForTenantMemberTest {
 
 
   @BeforeEach
-  public void init() {
+  void init() {
     identityService = engineRule.getIdentityService();
     authorizationService = engineRule.getAuthorizationService();
 
@@ -67,7 +67,7 @@ public class DefaultPermissionForTenantMemberTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.clearAuthentication();
 
     identityService.deleteUser(USER_ID);
@@ -79,7 +79,7 @@ public class DefaultPermissionForTenantMemberTest {
   }
 
   @Test
-  public void testCreateTenantUserMembership() {
+  void testCreateTenantUserMembership() {
 
     identityService.createTenantUserMembership(TENANT_ONE, USER_ID);
 
@@ -97,7 +97,7 @@ public class DefaultPermissionForTenantMemberTest {
   }
 
   @Test
-  public void testCreateAndDeleteTenantUserMembership() {
+  void testCreateAndDeleteTenantUserMembership() {
 
     identityService.createTenantUserMembership(TENANT_ONE, USER_ID);
 
@@ -115,7 +115,7 @@ public class DefaultPermissionForTenantMemberTest {
   }
 
   @Test
-  public void testCreateAndDeleteTenantUserMembershipForMultipleTenants() {
+  void testCreateAndDeleteTenantUserMembershipForMultipleTenants() {
 
     createTenant(TENANT_TWO);
 
@@ -136,7 +136,7 @@ public class DefaultPermissionForTenantMemberTest {
   }
 
   @Test
-  public void testCreateTenantGroupMembership() {
+  void testCreateTenantGroupMembership() {
 
     identityService.createTenantGroupMembership(TENANT_ONE, GROUP_ID);
 
@@ -154,7 +154,7 @@ public class DefaultPermissionForTenantMemberTest {
   }
 
   @Test
-  public void testCreateAndDeleteTenantGroupMembership() {
+  void testCreateAndDeleteTenantGroupMembership() {
 
     identityService.createTenantGroupMembership(TENANT_ONE, GROUP_ID);
 
@@ -172,7 +172,7 @@ public class DefaultPermissionForTenantMemberTest {
   }
 
   @Test
-  public void testCreateAndDeleteTenantGroupMembershipForMultipleTenants() {
+  void testCreateAndDeleteTenantGroupMembershipForMultipleTenants() {
 
     createTenant(TENANT_TWO);
 

@@ -68,7 +68,7 @@ public class UserOperationIdTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     runtimeService = engineRule.getRuntimeService();
     repositoryService = engineRule.getRepositoryService();
     historyService = engineRule.getHistoryService();
@@ -78,8 +78,8 @@ public class UserOperationIdTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testResolveTaskOperationId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testResolveTaskOperationId() {
     // given
     identityService.setAuthenticatedUserId("demo");
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -98,8 +98,8 @@ public class UserOperationIdTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testSubmitTaskFormOperationId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testSubmitTaskFormOperationId() {
     // given
     identityService.setAuthenticatedUserId("demo");
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -118,8 +118,8 @@ public class UserOperationIdTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testSetTaskVariablesOperationId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testSetTaskVariablesOperationId() {
     // given
     identityService.setAuthenticatedUserId("demo");
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -138,8 +138,8 @@ public class UserOperationIdTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testWithoutAuthentication() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testWithoutAuthentication() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -161,7 +161,7 @@ public class UserOperationIdTest {
   }
 
   @Test
-  public void testSetTaskVariablesInServiceTask() {
+  void testSetTaskVariablesInServiceTask() {
     // given
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -186,8 +186,8 @@ public class UserOperationIdTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testStartProcessOperationId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testStartProcessOperationId() {
     // given
     identityService.setAuthenticatedUserId("demo");
 
@@ -207,8 +207,8 @@ public class UserOperationIdTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testStartProcessAtActivityOperationId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testStartProcessAtActivityOperationId() {
     // given
     identityService.setAuthenticatedUserId("demo");
 

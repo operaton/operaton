@@ -94,7 +94,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     ClockUtil.setCurrentTime(TEST_DATE);
     decisionInstanceIds = new ArrayList<>();
     defaultEnsureJobDueDateSet = configuration.isEnsureJobDueDateNotNull();
@@ -122,14 +122,14 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @AfterEach
-  public void restoreEngineSettings() {
+  void restoreEngineSettings() {
     configuration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     configuration.setInvocationsPerBatchJob(defaultInvocationsPerBatchJob);
     configuration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
     ClockUtil.reset();
   }

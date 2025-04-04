@@ -117,7 +117,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     taskService = engineRule.getTaskService();
     runtimeService = engineRule.getRuntimeService();
@@ -131,7 +131,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
     processEngineConfiguration.setEnforceSpecificVariablePermission(ensureSpecificVariablePermission);
     engineRule.getRepositoryService().deleteDeployment(deploymentId, true);

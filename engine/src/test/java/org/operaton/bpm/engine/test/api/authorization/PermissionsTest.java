@@ -30,10 +30,10 @@ import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
 
-public class PermissionsTest {
+class PermissionsTest {
 
   @Test
-  public void testNewPermissionsIntegrityToOld() {
+  void testNewPermissionsIntegrityToOld() {
     for (Permissions permission : Permissions.values()) {
       String permissionName = permission.getName();
       for (Resource resource : permission.getTypes()) {
@@ -57,12 +57,12 @@ public class PermissionsTest {
   }
 
   @Test
-  public void testPermissionsValues() {
+  void testPermissionsValues() {
     verifyValuesAreUniqueAndPowerOfTwo(Permissions.values(), Permissions.class.getSimpleName());
   }
 
   @Test
-  public void testRestOfPermissionsEnumValues() {
+  void testRestOfPermissionsEnumValues() {
     for (Class<? extends Enum<? extends Permission>> permissionsClass : ResourceTypeUtil.getPermissionEnums().values()) {
       if(!permissionsClass.equals(Permissions.class)) {
         verifyValuesAreUniqueAndPowerOfTwo((Permission[])permissionsClass.getEnumConstants(), permissionsClass.getSimpleName());
@@ -71,7 +71,7 @@ public class PermissionsTest {
   }
 
   @Test
-  public void testThatPermissionsEnumContainsAllPermissions() {
+  void testThatPermissionsEnumContainsAllPermissions() {
     // when
     Map<Integer, Class<? extends Enum<? extends Permission>>> permissionEnums = ResourceTypeUtil.getPermissionEnums();
 

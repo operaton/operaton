@@ -39,14 +39,14 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Joram Barrez
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class UserQueryTest {
+class UserQueryTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;
   protected ManagementService managementService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
 
     createUser("kermit", "Kermit_", "The_frog", "kermit_@muppetshow.com");
@@ -76,7 +76,7 @@ public class UserQueryTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("fozzie");
     identityService.deleteUser("gonzo");
@@ -90,19 +90,19 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByNoCriteria() {
+  void testQueryByNoCriteria() {
     UserQuery query = identityService.createUserQuery();
     verifyQueryResults(query, 3);
   }
 
   @Test
-  public void testQueryById() {
+  void testQueryById() {
     UserQuery query = identityService.createUserQuery().userId("kermit");
     verifyQueryResults(query, 1);
   }
 
   @Test
-  public void testQueryByInvalidId() {
+  void testQueryByInvalidId() {
     UserQuery query = identityService.createUserQuery().userId("invalid");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
@@ -116,7 +116,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByFirstName() {
+  void testQueryByFirstName() {
     UserQuery query = identityService.createUserQuery().userFirstName("Gonzo");
     verifyQueryResults(query, 1);
 
@@ -125,7 +125,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidFirstName() {
+  void testQueryByInvalidFirstName() {
     UserQuery query = identityService.createUserQuery().userFirstName("invalid");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userFirstName(null);
@@ -139,7 +139,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByFirstNameLike() {
+  void testQueryByFirstNameLike() {
     UserQuery query = identityService.createUserQuery().userFirstNameLike("%o%");
     verifyQueryResults(query, 2);
 
@@ -151,7 +151,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidFirstNameLike() {
+  void testQueryByInvalidFirstNameLike() {
     UserQuery query = identityService.createUserQuery().userFirstNameLike("%mispiggy%");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
@@ -165,7 +165,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByLastName() {
+  void testQueryByLastName() {
     UserQuery query = identityService.createUserQuery().userLastName("Bear");
     verifyQueryResults(query, 1);
 
@@ -174,7 +174,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidLastName() {
+  void testQueryByInvalidLastName() {
     UserQuery query = identityService.createUserQuery().userLastName("invalid");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userLastName(null);
@@ -188,7 +188,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByLastNameLike() {
+  void testQueryByLastNameLike() {
     UserQuery query = identityService.createUserQuery().userLastNameLike("%\\_frog%");
     verifyQueryResults(query, 1);
 
@@ -197,7 +197,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidLastNameLike() {
+  void testQueryByInvalidLastNameLike() {
     UserQuery query = identityService.createUserQuery().userLastNameLike("%invalid%");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
@@ -211,13 +211,13 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByEmail() {
+  void testQueryByEmail() {
     UserQuery query = identityService.createUserQuery().userEmail("kermit_@muppetshow.com");
     verifyQueryResults(query, 1);
   }
 
   @Test
-  public void testQueryByInvalidEmail() {
+  void testQueryByInvalidEmail() {
     UserQuery query = identityService.createUserQuery().userEmail("invalid");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery().userEmail(null);
@@ -231,7 +231,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByEmailLike() {
+  void testQueryByEmailLike() {
     UserQuery query = identityService.createUserQuery().userEmailLike("%muppetshow.com");
     verifyQueryResults(query, 3);
 
@@ -240,7 +240,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidEmailLike() {
+  void testQueryByInvalidEmailLike() {
     UserQuery query = identityService.createUserQuery().userEmailLike("%invalid%");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
@@ -254,7 +254,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     // asc
     assertThat(identityService.createUserQuery().orderByUserId().asc().count()).isEqualTo(3);
     assertThat(identityService.createUserQuery().orderByUserEmail().asc().count()).isEqualTo(3);
@@ -276,7 +276,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryInvalidSortingUsage() {
+  void testQueryInvalidSortingUsage() {
     var userQuery1 = identityService.createUserQuery().orderByUserId();
     try {
       userQuery1.list();
@@ -295,7 +295,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByMemberOfGroup() {
+  void testQueryByMemberOfGroup() {
     UserQuery query = identityService.createUserQuery().memberOfGroup("muppets");
     verifyQueryResults(query, 3);
 
@@ -307,7 +307,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidMemberOfGroup() {
+  void testQueryByInvalidMemberOfGroup() {
     UserQuery query = identityService.createUserQuery().memberOfGroup("invalid");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
@@ -321,7 +321,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByMemberOfTenant() {
+  void testQueryByMemberOfTenant() {
     UserQuery query = identityService.createUserQuery().memberOfTenant("nonExisting");
     verifyQueryResults(query, 0);
 
@@ -355,7 +355,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testQueryByIdIn() {
+  void testQueryByIdIn() {
 
     // empty list
     assertThat(identityService.createUserQuery().userIdIn("a", "b").list()).isEmpty();
@@ -383,7 +383,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testNativeQuery() {
+  void testNativeQuery() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     // just test that the query will be constructed and executed, details are tested in the TaskQueryTest
     assertThat(managementService.getTableName(UserEntity.class)).isEqualTo(tablePrefix + "ACT_ID_USER");
@@ -395,7 +395,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testNativeQueryOrLike() {
+  void testNativeQueryOrLike() {
     String searchPattern = "%frog";
 
     String fromWhereClauses = String.format("FROM %s WHERE FIRST_ LIKE #{searchPattern} OR LAST_ LIKE #{searchPattern} OR EMAIL_ LIKE #{searchPattern}",
@@ -406,7 +406,7 @@ public class UserQueryTest {
   }
 
   @Test
-  public void testNativeQueryPaging() {
+  void testNativeQueryPaging() {
     assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(1, 2)).hasSize(2);
     assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(2, 1)).hasSize(1);
   }

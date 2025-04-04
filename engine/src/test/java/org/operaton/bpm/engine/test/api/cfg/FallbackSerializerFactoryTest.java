@@ -37,13 +37,13 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Thorben Lindhauer
  *
  */
-public class FallbackSerializerFactoryTest {
+class FallbackSerializerFactoryTest {
 
   protected ProcessEngine processEngine;
   protected String deployment;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
 
     if (processEngine != null) {
       if (deployment != null) {
@@ -55,7 +55,7 @@ public class FallbackSerializerFactoryTest {
   }
 
   @Test
-  public void testFallbackSerializer() {
+  void testFallbackSerializer() {
     // given
     // that the process engine is configured with a fallback serializer factory
      ProcessEngineConfigurationImpl engineConfiguration = new StandaloneInMemProcessEngineConfiguration()
@@ -82,7 +82,7 @@ public class FallbackSerializerFactoryTest {
   }
 
   @Test
-  public void testFallbackSerializerDoesNotOverrideRegularSerializer() {
+  void testFallbackSerializerDoesNotOverrideRegularSerializer() {
     // given
     // that the process engine is configured with a serializer for a certain format
     // and a fallback serializer factory for the same format

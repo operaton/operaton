@@ -66,7 +66,7 @@ public class BulkHistoryDeleteProcessInstancesAuthorizationTest {
   private RuntimeService runtimeService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     authRule.createUserAndGroup("demo", "groupId");
   }
 
@@ -95,7 +95,7 @@ public class BulkHistoryDeleteProcessInstancesAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 

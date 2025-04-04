@@ -108,14 +108,14 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
   }
 
   @BeforeEach
-  public void init() {
+  void init() {
     defaultStartTime = processEngineConfiguration.getHistoryCleanupBatchWindowStartTime();
     defaultEndTime = processEngineConfiguration.getHistoryCleanupBatchWindowEndTime();
     defaultBatchSize = processEngineConfiguration.getHistoryCleanupBatchSize();
   }
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     //reset configuration changes
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(defaultStartTime);
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(defaultEndTime);

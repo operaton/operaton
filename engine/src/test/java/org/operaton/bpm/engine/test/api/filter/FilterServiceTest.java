@@ -46,7 +46,7 @@ public class FilterServiceTest {
   protected Filter filter;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     filter = filterService.newTaskFilter()
       .setName("name")
       .setOwner("owner")
@@ -58,13 +58,13 @@ public class FilterServiceTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     // delete all existing filters
     filterService.createTaskFilterQuery().list().forEach(f -> filterService.deleteFilter(f.getId()));
   }
 
   @Test
-  public void testCreateFilter() {
+  void testCreateFilter() {
     assertThat(filter).isNotNull();
 
     Filter filter2 = filterService.getFilter(filter.getId());
@@ -74,7 +74,7 @@ public class FilterServiceTest {
   }
 
   @Test
-  public void testCreateInvalidFilter() {
+  void testCreateInvalidFilter() {
     assertThatThrownBy(() -> filter.setName(null))
       .isInstanceOf(ProcessEngineException.class);// when
 
@@ -86,7 +86,7 @@ public class FilterServiceTest {
   }
 
   @Test
-  public void testUpdateFilter() {
+  void testUpdateFilter() {
     filter.setName("newName");
     filter.setOwner("newOwner");
     filter.setQuery(taskService.createTaskQuery());
@@ -100,7 +100,7 @@ public class FilterServiceTest {
   }
 
   @Test
-  public void testExtendFilter() {
+  void testExtendFilter() {
     TaskQuery extendingQuery = taskService.createTaskQuery()
       .taskName("newName")
       .taskOwner("newOwner");
@@ -113,7 +113,7 @@ public class FilterServiceTest {
   }
 
   @Test
-  public void testQueryFilter() {
+  void testQueryFilter() {
 
     Filter filter2 = filterService.createTaskFilterQuery()
       .filterId(filter.getId())
@@ -131,7 +131,7 @@ public class FilterServiceTest {
   }
 
   @Test
-  public void testQueryUnknownFilter() {
+  void testQueryUnknownFilter() {
     Filter unknownFilter = filterService.createTaskFilterQuery()
       .filterId("unknown")
       .singleResult();
@@ -147,7 +147,7 @@ public class FilterServiceTest {
   }
 
   @Test
-  public void testDeleteFilter() {
+  void testDeleteFilter() {
     filterService.deleteFilter(filter.getId());
 
     filter = filterService.getFilter(filter.getId());
@@ -155,7 +155,7 @@ public class FilterServiceTest {
   }
 
   @Test
-  public void testDeleteUnknownFilter() {
+  void testDeleteUnknownFilter() {
     filterService.deleteFilter(filter.getId());
     long count = filterService.createFilterQuery().count();
     assertThat(count).isZero();

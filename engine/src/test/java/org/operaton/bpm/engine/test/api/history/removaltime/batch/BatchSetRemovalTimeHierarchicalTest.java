@@ -74,7 +74,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Tassilo Weidner
  */
 @RequiredHistoryLevel(HISTORY_FULL)
-public class BatchSetRemovalTimeHierarchicalTest {
+class BatchSetRemovalTimeHierarchicalTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -96,9 +96,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTime_DecisionInstance() {
+  void shouldSetRemovalTime_DecisionInstance() {
     // given
     testRule.process()
       .call()
@@ -142,9 +142,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeToStandaloneDecision_RootDecisionInstance() {
+  void shouldSetRemovalTimeToStandaloneDecision_RootDecisionInstance() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -183,9 +183,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeToStandaloneDecision_ChildDecisionInstance() {
+  void shouldSetRemovalTimeToStandaloneDecision_ChildDecisionInstance() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -224,9 +224,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTime_DecisionInputInstance() {
+  void shouldSetRemovalTime_DecisionInputInstance() {
     // given
     testRule.process()
       .call()
@@ -278,9 +278,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_RootDecisionInputInstance() {
+  void shouldSetRemovalTimeForStandaloneDecision_RootDecisionInputInstance() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -325,9 +325,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_ChildDecisionInputInstance() {
+  void shouldSetRemovalTimeForStandaloneDecision_ChildDecisionInputInstance() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -372,9 +372,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTime_DecisionOutputInstance() {
+  void shouldSetRemovalTime_DecisionOutputInstance() {
     // given
     testRule.process()
       .call()
@@ -424,9 +424,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_RootDecisionOutputInstance() {
+  void shouldSetRemovalTimeForStandaloneDecision_RootDecisionOutputInstance() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -471,9 +471,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_ChildDecisionOutputInstance() {
+  void shouldSetRemovalTimeForStandaloneDecision_ChildDecisionOutputInstance() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -517,7 +517,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ProcessInstance() {
+  void shouldSetRemovalTime_ProcessInstance() {
     // given
     testRule.process().call().userTask().deploy().start();
 
@@ -547,7 +547,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ActivityInstance() {
+  void shouldSetRemovalTime_ActivityInstance() {
     // given
     testRule.process().call().userTask().deploy().start();
 
@@ -580,7 +580,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_TaskInstance() {
+  void shouldSetRemovalTime_TaskInstance() {
     // given
     testRule.process().call().userTask().deploy().start();
 
@@ -609,7 +609,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_HistoricTaskInstanceAuthorization() {
+  void shouldSetRemovalTime_HistoricTaskInstanceAuthorization() {
     // given
     testRule.getProcessEngineConfiguration()
         .setEnableHistoricInstancePermissions(true);
@@ -648,7 +648,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldNotSetRemovalTime_HistoricTaskInstancePermissionsDisabled() {
+  void shouldNotSetRemovalTime_HistoricTaskInstancePermissionsDisabled() {
     // given
     testRule.getProcessEngineConfiguration()
         .setEnableHistoricInstancePermissions(true);
@@ -684,7 +684,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_HistoricProcessInstanceAuthorization() {
+  void shouldSetRemovalTime_HistoricProcessInstanceAuthorization() {
     // given
     testRule.getProcessEngineConfiguration()
         .setEnableHistoricInstancePermissions(true);
@@ -738,7 +738,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldNotSetRemovalTime_HistoricProcessInstancePermissionsDisabled() {
+  void shouldNotSetRemovalTime_HistoricProcessInstancePermissionsDisabled() {
     // given
     testRule.getProcessEngineConfiguration()
         .setEnableHistoricInstancePermissions(false);
@@ -791,7 +791,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_VariableInstance() {
+  void shouldSetRemovalTime_VariableInstance() {
     // given
     testRule.process().call().userTask().deploy()
       .startWithVariables(
@@ -823,7 +823,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_Detail() {
+  void shouldSetRemovalTime_Detail() {
     // given
     testRule.process().call().userTask().deploy()
       .startWithVariables(
@@ -855,7 +855,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ExternalTaskLog() {
+  void shouldSetRemovalTime_ExternalTaskLog() {
     // given
     testRule.process().call().externalTask().deploy().start();
 
@@ -884,7 +884,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_JobLog() {
+  void shouldSetRemovalTime_JobLog() {
     // given
     testRule.process().call().async().userTask().deploy().start();
 
@@ -917,7 +917,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_Incident() {
+  void shouldSetRemovalTime_Incident() {
     // given
     String rootProcessInstanceId = testRule.process().call().async().userTask().deploy().start();
 
@@ -959,7 +959,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_OperationLog() {
+  void shouldSetRemovalTime_OperationLog() {
     // given
     String processInstanceId = testRule.process().call().async().userTask().deploy().start();
 
@@ -992,7 +992,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_IdentityLinkLog() {
+  void shouldSetRemovalTime_IdentityLinkLog() {
     // given
     testRule.process().call().userTask().deploy().start();
 
@@ -1021,7 +1021,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_CommentByTaskId() {
+  void shouldSetRemovalTime_CommentByTaskId() {
     // given
     testRule.process().call().userTask().deploy().start();
 
@@ -1059,7 +1059,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_CommentByProcessInstanceId() {
+  void shouldSetRemovalTime_CommentByProcessInstanceId() {
     // given
     String processInstanceId = testRule.process().call().userTask().deploy().start();
 
@@ -1090,7 +1090,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_AttachmentByTaskId() {
+  void shouldSetRemovalTime_AttachmentByTaskId() {
     // given
     testRule.process().call().userTask().deploy().start();
 
@@ -1125,7 +1125,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_AttachmentByProcessInstanceId() {
+  void shouldSetRemovalTime_AttachmentByProcessInstanceId() {
     // given
     String processInstanceId = testRule.process().call().userTask().deploy().start();
 
@@ -1155,7 +1155,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ByteArray_AttachmentByTaskId() {
+  void shouldSetRemovalTime_ByteArray_AttachmentByTaskId() {
     // given
     testRule.process().call().userTask().deploy().start();
 
@@ -1192,7 +1192,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ByteArray_AttachmentByProcessInstanceId() {
+  void shouldSetRemovalTime_ByteArray_AttachmentByProcessInstanceId() {
     // given
     String processInstanceId = testRule.process().call().userTask().deploy().start();
 
@@ -1226,7 +1226,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ByteArray_Variable() {
+  void shouldSetRemovalTime_ByteArray_Variable() {
     // given
     testRule.process().call().userTask().deploy()
       .startWithVariables(
@@ -1264,7 +1264,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ByteArray_JobLog() {
+  void shouldSetRemovalTime_ByteArray_JobLog() {
     // given
     testRule.process().call().async().scriptTask().deploy().start();
 
@@ -1306,7 +1306,7 @@ public class BatchSetRemovalTimeHierarchicalTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ByteArray_ExternalTaskLog() {
+  void shouldSetRemovalTime_ByteArray_ExternalTaskLog() {
     // given
     testRule.process().call().externalTask().deploy().start();
 
@@ -1351,9 +1351,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldSetRemovalTime_ByteArray_DecisionInputInstance() {
+  void shouldSetRemovalTime_ByteArray_DecisionInputInstance() {
     // given
     testRule.process()
       .call()
@@ -1400,9 +1400,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/drd.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/removaltime/drd.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_ByteArray_RootDecisionInputInstance() {
+  void shouldSetRemovalTimeForStandaloneDecision_ByteArray_RootDecisionInputInstance() {
     // given
     decisionService.evaluateDecisionByKey("root")
       .variables(
@@ -1444,9 +1444,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/drd.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/removaltime/drd.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_ByteArray_ChildDecisionInputInstance() {
+  void shouldSetRemovalTimeForStandaloneDecision_ByteArray_ChildDecisionInputInstance() {
     // given
     decisionService.evaluateDecisionByKey("root")
       .variables(
@@ -1488,9 +1488,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldSetRemovalTime_ByteArray_DecisionOutputInstance() {
+  void shouldSetRemovalTime_ByteArray_DecisionOutputInstance() {
     // given
     testRule.process()
       .call()
@@ -1537,9 +1537,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/drd.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/removaltime/drd.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_ByteArray_RootDecisionOutputInstance() {
+  void shouldSetRemovalTimeForStandaloneDecision_ByteArray_RootDecisionOutputInstance() {
     // given
     decisionService.evaluateDecisionByKey("root")
       .variables(
@@ -1581,9 +1581,9 @@ public class BatchSetRemovalTimeHierarchicalTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/drd.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/removaltime/drd.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_ByteArray_ChildDecisionOutputInstance() {
+  void shouldSetRemovalTimeForStandaloneDecision_ByteArray_ChildDecisionOutputInstance() {
     // given
     decisionService.evaluateDecisionByKey("root")
       .variables(

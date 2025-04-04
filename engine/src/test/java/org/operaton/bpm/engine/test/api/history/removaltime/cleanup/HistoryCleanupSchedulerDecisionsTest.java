@@ -42,7 +42,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author Tassilo Weidner
  */
-public class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanupSchedulerTest {
+class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanupSchedulerTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -56,7 +56,7 @@ public class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanup
   protected RuntimeService runtimeService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     initEngineConfiguration(engineRule, engineConfiguration);
   }
 
@@ -76,9 +76,9 @@ public class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanup
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldScheduleToNowByDecisionInputs() {
+  void shouldScheduleToNowByDecisionInputs() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 
@@ -106,9 +106,9 @@ public class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanup
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldScheduleToLaterByDecisionInputs() {
+  void shouldScheduleToLaterByDecisionInputs() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 
@@ -136,9 +136,9 @@ public class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanup
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/cleanup/decisonWithThreeOutputs.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/removaltime/cleanup/decisonWithThreeOutputs.dmn11.xml"
   })
-  public void shouldScheduleToNowByDecisionOutputs() {
+  void shouldScheduleToNowByDecisionOutputs() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 
@@ -166,9 +166,9 @@ public class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanup
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/cleanup/decisonWithThreeOutputs.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/removaltime/cleanup/decisonWithThreeOutputs.dmn11.xml"
   })
-  public void shouldScheduleToLaterByDecisionOutputs() {
+  void shouldScheduleToLaterByDecisionOutputs() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 

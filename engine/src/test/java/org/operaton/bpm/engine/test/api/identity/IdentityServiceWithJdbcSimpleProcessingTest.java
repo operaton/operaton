@@ -31,12 +31,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Svetlana Dorokhova.
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class IdentityServiceWithJdbcSimpleProcessingTest {
+class IdentityServiceWithJdbcSimpleProcessingTest {
 
   protected IdentityService identityService;
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -46,7 +46,7 @@ public class IdentityServiceWithJdbcSimpleProcessingTest {
   }
 
   @Test
-  public void testUserOptimisticLockingException() {
+  void testUserOptimisticLockingException() {
     User user = identityService.newUser("kermit");
     identityService.saveUser(user);
 
@@ -65,7 +65,7 @@ public class IdentityServiceWithJdbcSimpleProcessingTest {
   }
 
   @Test
-  public void testGroupOptimisticLockingException() {
+  void testGroupOptimisticLockingException() {
     Group group = identityService.newGroup("group");
     identityService.saveGroup(group);
 

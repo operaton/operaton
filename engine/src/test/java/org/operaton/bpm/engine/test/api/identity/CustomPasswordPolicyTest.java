@@ -35,19 +35,19 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Miklas Boskamp
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class CustomPasswordPolicyTest {
+class CustomPasswordPolicyTest {
 
   private ProcessEngineConfigurationImpl processEngineConfiguration;
   private IdentityService identityService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     processEngineConfiguration.setPasswordPolicy(new DefaultPasswordPolicyImpl());
     processEngineConfiguration.setEnablePasswordPolicy(true);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     // reset configuration
     processEngineConfiguration.setPasswordPolicy(null);
     processEngineConfiguration.setEnablePasswordPolicy(false);
@@ -56,14 +56,14 @@ public class CustomPasswordPolicyTest {
   }
 
   @Test
-  public void testPasswordPolicyConfiguration() {
+  void testPasswordPolicyConfiguration() {
     PasswordPolicy policy = processEngineConfiguration.getPasswordPolicy();
     assertThat(policy.getClass().isAssignableFrom(DefaultPasswordPolicyImpl.class)).isTrue();
     assertThat(policy.getRules()).hasSize(6);
   }
 
   @Test
-  public void testCustomPasswordPolicyWithCompliantPassword() {
+  void testCustomPasswordPolicyWithCompliantPassword() {
     User user = identityService.newUser("user");
     user.setPassword("this-is-1-STRONG-password");
     identityService.saveUser(user);
@@ -71,7 +71,7 @@ public class CustomPasswordPolicyTest {
   }
 
   @Test
-  public void testCustomPasswordPolicyWithNonCompliantPassword() {
+  void testCustomPasswordPolicyWithNonCompliantPassword() {
     // given
     User user = identityService.newUser("user");
     user.setPassword("weakpassword");

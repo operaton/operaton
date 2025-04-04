@@ -85,12 +85,12 @@ public class DeleteHistoricBatchAuthorizationTest {
   protected Batch batch;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
   }
 
   @BeforeEach
-  public void deployProcessesAndCreateMigrationPlan() {
+  void deployProcessesAndCreateMigrationPlan() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -101,12 +101,12 @@ public class DeleteHistoricBatchAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 
   @AfterEach
-  public void deleteBatch() {
+  void deleteBatch() {
     engineRule.getManagementService().deleteBatch(batch.getId(), true);
   }
 

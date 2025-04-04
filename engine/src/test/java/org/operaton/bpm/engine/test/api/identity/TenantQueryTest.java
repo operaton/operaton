@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class TenantQueryTest {
+class TenantQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -43,7 +43,7 @@ public class TenantQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     createTenant(TENANT_ONE, "Tenant_1");
     createTenant(TENANT_TWO, "Tenant_2");
 
@@ -60,7 +60,7 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryById() {
+  void queryById() {
     TenantQuery query = identityService.createTenantQuery().tenantId(TENANT_ONE);
 
     assertThat(query.count()).isEqualTo(1L);
@@ -72,14 +72,14 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryByNonExistingId() {
+  void queryByNonExistingId() {
     TenantQuery query = identityService.createTenantQuery().tenantId("nonExisting");
 
     assertThat(query.count()).isZero();
   }
 
   @Test
-  public void queryByIdIn() {
+  void queryByIdIn() {
     TenantQuery query = identityService.createTenantQuery();
 
     assertThat(query.tenantIdIn("non", "existing").count()).isZero();
@@ -87,7 +87,7 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryByName() {
+  void queryByName() {
     TenantQuery query = identityService.createTenantQuery();
 
     assertThat(query.tenantName("nonExisting").count()).isZero();
@@ -96,7 +96,7 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryByNameLike() {
+  void queryByNameLike() {
     TenantQuery query = identityService.createTenantQuery();
 
     assertThat(query.tenantNameLike("%nonExisting%").count()).isZero();
@@ -105,7 +105,7 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryByUser() {
+  void queryByUser() {
     TenantQuery query = identityService.createTenantQuery();
 
     assertThat(query.userMember("nonExisting").count()).isZero();
@@ -114,7 +114,7 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryByGroup() {
+  void queryByGroup() {
     TenantQuery query = identityService.createTenantQuery();
 
     assertThat(query.groupMember("nonExisting").count()).isZero();
@@ -123,7 +123,7 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryByUserIncludingGroups() {
+  void queryByUserIncludingGroups() {
     TenantQuery query = identityService.createTenantQuery().userMember(USER);
 
     assertThat(query.includingGroupsOfUser(false).count()).isEqualTo(1L);
@@ -131,7 +131,7 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryOrderById() {
+  void queryOrderById() {
     // ascending
     List<Tenant> tenants = identityService.createTenantQuery().orderByTenantId().asc().list();
     assertThat(tenants).hasSize(2);
@@ -147,7 +147,7 @@ public class TenantQueryTest {
   }
 
   @Test
-  public void queryOrderByName() {
+  void queryOrderByName() {
     // ascending
     List<Tenant> tenants = identityService.createTenantQuery().orderByTenantName().asc().list();
     assertThat(tenants).hasSize(2);
@@ -171,7 +171,7 @@ public class TenantQueryTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.deleteTenant(TENANT_ONE);
     identityService.deleteTenant(TENANT_TWO);
 

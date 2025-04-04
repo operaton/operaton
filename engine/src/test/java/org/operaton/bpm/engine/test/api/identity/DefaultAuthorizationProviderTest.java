@@ -45,14 +45,14 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class DefaultAuthorizationProviderTest {
+class DefaultAuthorizationProviderTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;
   protected AuthorizationService authorizationService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     // we are jonny
     identityService.setAuthenticatedUserId("jonny");
     // make sure we can do stuff:
@@ -83,7 +83,7 @@ public class DefaultAuthorizationProviderTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     List<Authorization> jonnysAuths = authorizationService.createAuthorizationQuery().userIdIn("jonny").list();
     for (Authorization authorization : jonnysAuths) {
@@ -93,7 +93,7 @@ public class DefaultAuthorizationProviderTest {
   }
 
   @Test
-  public void testCreateUser() {
+  void testCreateUser() {
     // initially there are no authorizations for jonny2:
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("jonny2").count()).isZero();
 
@@ -116,7 +116,7 @@ public class DefaultAuthorizationProviderTest {
   }
 
   @Test
-  public void testCreateGroup() {
+  void testCreateGroup() {
     // initially there are no authorizations for group "sales":
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("sales").count()).isZero();
 

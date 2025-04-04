@@ -106,7 +106,7 @@ public class HandleTaskAuthorizationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     taskService = engineRule.getTaskService();
     runtimeService = engineRule.getRuntimeService();
@@ -116,7 +116,7 @@ public class HandleTaskAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
     repositoryService.deleteDeployment(deploymentId, true);
   }

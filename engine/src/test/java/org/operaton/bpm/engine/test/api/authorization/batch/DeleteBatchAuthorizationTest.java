@@ -89,12 +89,12 @@ public class DeleteBatchAuthorizationTest {
   protected boolean cascade;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
   }
 
   @BeforeEach
-  public void deployProcessesAndCreateMigrationPlan() {
+  void deployProcessesAndCreateMigrationPlan() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -105,12 +105,12 @@ public class DeleteBatchAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 
   @AfterEach
-  public void deleteBatch() {
+  void deleteBatch() {
     if (authRule.scenarioFailed()) {
       engineRule.getManagementService().deleteBatch(batch.getId(), true);
     }

@@ -49,15 +49,15 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  */
 @ExtendWith(ProcessEngineExtension.class)
 @ExtendWith(ProcessEngineTestExtension.class)
-public class CaseServiceCaseInstanceTest {
+class CaseServiceCaseInstanceTest {
 
   protected RepositoryService repositoryService;
   protected RuntimeService runtimeService;
   protected CaseService caseService;
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByKey() {
+  void testCreateByKey() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -94,7 +94,7 @@ public class CaseServiceCaseInstanceTest {
   }
 
   @Test
-  public void testCreateByInvalidKey() {
+  void testCreateByInvalidKey() {
     CaseInstanceBuilder caseDefinitionWithInvalidKey = caseService.withCaseDefinitionByKey("invalid");
     assertThatThrownBy(caseDefinitionWithInvalidKey::create)
         .isInstanceOf(NotFoundException.class);
@@ -105,9 +105,9 @@ public class CaseServiceCaseInstanceTest {
         .isInstanceOf(NotValidException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateById() {
+  void testCreateById() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
       .createCaseDefinitionQuery()
@@ -145,7 +145,7 @@ public class CaseServiceCaseInstanceTest {
   }
 
   @Test
-  public void testCreateByInvalidId() {
+  void testCreateByInvalidId() {
     CaseInstanceBuilder builderForInvalidCaseDefinition = caseService.withCaseDefinition("invalid");
     assertThatThrownBy(builderForInvalidCaseDefinition::create)
         .isInstanceOf(NotFoundException.class);
@@ -155,9 +155,9 @@ public class CaseServiceCaseInstanceTest {
         .isInstanceOf(NotValidException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByKeyWithBusinessKey() {
+  void testCreateByKeyWithBusinessKey() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
       .createCaseDefinitionQuery()
@@ -195,9 +195,9 @@ public class CaseServiceCaseInstanceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByIdWithBusinessKey() {
+  void testCreateByIdWithBusinessKey() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
       .createCaseDefinitionQuery()
@@ -235,9 +235,9 @@ public class CaseServiceCaseInstanceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByKeyWithVariable() {
+  void testCreateByKeyWithVariable() {
     // given a deployed case definition
 
     // when
@@ -278,9 +278,9 @@ public class CaseServiceCaseInstanceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByKeyWithVariables() {
+  void testCreateByKeyWithVariables() {
     // given a deployed case definition
     Map<String, Object> variables = new HashMap<>();
 
@@ -324,9 +324,9 @@ public class CaseServiceCaseInstanceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByIdWithVariable() {
+  void testCreateByIdWithVariable() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -371,9 +371,9 @@ public class CaseServiceCaseInstanceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByIdWithVariables() {
+  void testCreateByIdWithVariables() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -422,9 +422,9 @@ public class CaseServiceCaseInstanceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testManualStart() {
+  void testManualStart() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -445,9 +445,9 @@ public class CaseServiceCaseInstanceTest {
         .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testDisable() {
+  void testDisable() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -469,9 +469,9 @@ public class CaseServiceCaseInstanceTest {
         .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testReenable() {
+  void testReenable() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -493,9 +493,9 @@ public class CaseServiceCaseInstanceTest {
         .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testCompleteWithEnabledTask() {
+  void testCompleteWithEnabledTask() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -534,9 +534,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(caseInstance.isCompleted()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
   @Test
-  public void testCompleteWithEnabledStage() {
+  void testCompleteWithEnabledStage() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -589,9 +589,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(caseInstance.isCompleted()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCompleteWithActiveTask() {
+  void testCompleteWithActiveTask() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -631,9 +631,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(caseInstance.isActive()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
   @Test
-  public void testCompleteWithActiveStage() {
+  void testCompleteWithActiveStage() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -674,9 +674,9 @@ public class CaseServiceCaseInstanceTest {
   }
 
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/emptyCasePlanModelCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/emptyCasePlanModelCase.cmmn"})
   @Test
-  public void testAutoCompletionOfEmptyCase() {
+  void testAutoCompletionOfEmptyCase() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -699,9 +699,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(caseInstance.isCompleted()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCloseAnActiveCaseInstance() {
+  void testCloseAnActiveCaseInstance() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -729,9 +729,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(caseInstance.isActive()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testCloseACompletedCaseInstance() {
+  void testCloseACompletedCaseInstance() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -768,9 +768,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(caseInstance).isNull();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testTerminateActiveCaseInstance() {
+  void testTerminateActiveCaseInstance() {
     // given:
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -796,9 +796,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(queryCaseExecutionByActivityId("PI_HumanTask_1")).isNull();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testTerminateNonActiveCaseInstance() {
+  void testTerminateNonActiveCaseInstance() {
     // given:
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -827,9 +827,9 @@ public class CaseServiceCaseInstanceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testTerminateActiveCaseInstanceNonFluent() {
+  void testTerminateActiveCaseInstanceNonFluent() {
     // given:
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -854,9 +854,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(queryCaseExecutionByActivityId("PI_HumanTask_1")).isNull();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByKeyNonFluent() {
+  void testCreateByKeyNonFluent() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -890,9 +890,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByIdNonFluent() {
+  void testCreateByIdNonFluent() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -926,9 +926,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByKeyWithBusinessKeyNonFluent() {
+  void testCreateByKeyWithBusinessKeyNonFluent() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -962,9 +962,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByIdWithBusinessKeyNonFluent() {
+  void testCreateByIdWithBusinessKeyNonFluent() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -998,9 +998,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByKeyWithVariablesNonFluent() {
+  void testCreateByKeyWithVariablesNonFluent() {
     // given a deployed case definition
 
     // when
@@ -1021,9 +1021,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstance.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByIdWithVariablesNonFluent() {
+  void testCreateByIdWithVariablesNonFluent() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -1047,9 +1047,9 @@ public class CaseServiceCaseInstanceTest {
     assertThat(variable.getValue()).isEqualTo("aValue");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByKeyWithVariablesAndBusinessKeyNonFluent() {
+  void testCreateByKeyWithVariablesAndBusinessKeyNonFluent() {
     // given a deployed case definition
 
     // when
@@ -1067,9 +1067,9 @@ public class CaseServiceCaseInstanceTest {
         .count()).isEqualTo(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCreateByIdWithVariablesAndBusinessKeyNonFluent() {
+  void testCreateByIdWithVariablesAndBusinessKeyNonFluent() {
     // given a deployed case definition
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -1091,9 +1091,9 @@ public class CaseServiceCaseInstanceTest {
         .count()).isEqualTo(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testCloseNonFluent() {
+  void testCloseNonFluent() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService

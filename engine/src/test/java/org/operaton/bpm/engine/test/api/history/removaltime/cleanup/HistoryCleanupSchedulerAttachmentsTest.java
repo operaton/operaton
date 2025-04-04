@@ -40,7 +40,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author Tassilo Weidner
  */
-public class HistoryCleanupSchedulerAttachmentsTest extends AbstractHistoryCleanupSchedulerTest {
+class HistoryCleanupSchedulerAttachmentsTest extends AbstractHistoryCleanupSchedulerTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -55,7 +55,7 @@ public class HistoryCleanupSchedulerAttachmentsTest extends AbstractHistoryClean
   protected TaskService taskService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     initEngineConfiguration(engineRule, engineConfiguration);
   }
 
@@ -69,7 +69,7 @@ public class HistoryCleanupSchedulerAttachmentsTest extends AbstractHistoryClean
   protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   @Test
-  public void shouldScheduleToNow() {
+  void shouldScheduleToNow() {
     // given
     testRule.deploy(PROCESS);
 
@@ -105,7 +105,7 @@ public class HistoryCleanupSchedulerAttachmentsTest extends AbstractHistoryClean
   }
 
   @Test
-  public void shouldScheduleToLater() {
+  void shouldScheduleToLater() {
     // given
     testRule.deploy(PROCESS);
 

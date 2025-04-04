@@ -67,7 +67,7 @@ public class BulkHistoryDeleteDecisionInstancesAuthorizationTest {
   private DecisionService decisionService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     authRule.createUserAndGroup("demo", "groupId");
   }
 
@@ -99,7 +99,7 @@ public class BulkHistoryDeleteDecisionInstancesAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 

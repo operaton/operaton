@@ -51,7 +51,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author Askar Akhmerov
  */
-public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTest {
+class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -61,14 +61,14 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   protected MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     initDefaults(engineRule);
   }
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithList() {
+  void testDeleteProcessInstancesAsyncWithList() {
     // given
     List<String> processIds = startTestProcesses(2);
 
@@ -87,7 +87,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithLargeList() {
+  void testDeleteProcessInstancesAsyncWithLargeList() {
     // given
     engineRule.getProcessEngineConfiguration().setBatchJobsPerSeed(1010);
     List<String> processIds = startTestProcesses(1100);
@@ -114,7 +114,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithListOnly() {
+  void testDeleteProcessInstancesAsyncWithListOnly() {
     // given
     List<String> processIds = startTestProcesses(2);
 
@@ -133,7 +133,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithFake() {
+  void testDeleteProcessInstancesAsyncWithFake() {
     // given
     List<String> processIds = startTestProcesses(2);
     processIds.add("aFake");
@@ -158,7 +158,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithNullList() {
+  void testDeleteProcessInstancesAsyncWithNullList() {
 
     // when/then
     assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(null, null, TESTING_INSTANCE_DELETE))
@@ -170,7 +170,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithEmptyList() {
+  void testDeleteProcessInstancesAsyncWithEmptyList() {
     // given
     List<String> emptyProcessInstanceIds = new ArrayList<>();
 
@@ -184,7 +184,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithQuery() {
+  void testDeleteProcessInstancesAsyncWithQuery() {
     // given
     List<String> processIds = startTestProcesses(2);
     ProcessInstanceQuery processInstanceQuery = runtimeService
@@ -205,7 +205,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithQueryOnly() {
+  void testDeleteProcessInstancesAsyncWithQueryOnly() {
     // given
     List<String> processIds = startTestProcesses(2);
     ProcessInstanceQuery processInstanceQuery = runtimeService
@@ -226,7 +226,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithQueryWithoutDeleteReason() {
+  void testDeleteProcessInstancesAsyncWithQueryWithoutDeleteReason() {
     // given
     List<String> processIds = startTestProcesses(2);
     ProcessInstanceQuery processInstanceQuery = runtimeService
@@ -248,7 +248,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithHistoryQuery() {
+  void testDeleteProcessInstancesAsyncWithHistoryQuery() {
     // given
     List<String> processIds = startTestProcesses(2);
     HistoricProcessInstanceQuery historicProcessInstanceQuery =
@@ -272,7 +272,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithRuntimeAndHistoryQuery() {
+  void testDeleteProcessInstancesAsyncWithRuntimeAndHistoryQuery() {
     // given
     List<String> processIds = startTestProcesses(2);
     HistoricProcessInstanceQuery historicProcessInstanceQuery =
@@ -298,7 +298,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithNullQueryParameter() {
+  void testDeleteProcessInstancesAsyncWithNullQueryParameter() {
 
     // when/then
     assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(null, null, TESTING_INSTANCE_DELETE))
@@ -309,7 +309,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithInvalidQueryParameter() {
+  void testDeleteProcessInstancesAsyncWithInvalidQueryParameter() {
     // given
     startTestProcesses(2);
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()
@@ -327,7 +327,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteProcessInstancesAsyncWithSkipCustomListeners() {
+  void testDeleteProcessInstancesAsyncWithSkipCustomListeners() {
 
     // given
     IncrementCounterListener.counter = 0;
@@ -352,7 +352,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteProcessInstancesAsyncWithSkipSubprocesses() {
+  void testDeleteProcessInstancesAsyncWithSkipSubprocesses() {
 
     // given
     BpmnModelInstance callingInstance = ProcessModels.newModel(ONE_TASK_PROCESS)
@@ -384,10 +384,10 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     assertThat(subInstance).isNotNull();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml")
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void shouldApplySkipIoMappingOnDeleteProcessInstancesAsync() {
+  void shouldApplySkipIoMappingOnDeleteProcessInstancesAsync() {
     // given a process instance
     var instanceId1 = runtimeService.startProcessInstanceByKey("ioMappingProcess").getProcessInstanceId();
     var instanceId2 = runtimeService.startProcessInstanceByKey("ioMappingProcess").getProcessInstanceId();
@@ -408,10 +408,10 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(2);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml")
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void shouldNotApplySkipIoMappingOnDeleteProcessInstancesAsyncFalse() {
+  void shouldNotApplySkipIoMappingOnDeleteProcessInstancesAsyncFalse() {
     // given a process instance
     var instanceId1 = runtimeService.startProcessInstanceByKey("ioMappingProcess").getProcessInstanceId();
     var instanceId2 = runtimeService.startProcessInstanceByKey("ioMappingProcess").getProcessInstanceId();
@@ -433,7 +433,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteProcessInstancesAsyncWithoutSkipSubprocesses() {
+  void testDeleteProcessInstancesAsyncWithoutSkipSubprocesses() {
 
     // given
     BpmnModelInstance callingInstance = ProcessModels.newModel(ONE_TASK_PROCESS)
@@ -467,7 +467,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
 
   @Test
-  public void testInvokeListenersWhenDeletingProcessInstancesAsync() {
+  void testInvokeListenersWhenDeletingProcessInstancesAsync() {
 
     // given
     IncrementCounterListener.counter = 0;
@@ -492,7 +492,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteProcessInstancesAsyncWithListInDifferentDeployments() {
+  void testDeleteProcessInstancesAsyncWithListInDifferentDeployments() {
     // given
     ProcessDefinition sourceDefinition1 = testRule
         .deployAndGetDefinition(modify(ProcessModels.ONE_TASK_PROCESS).changeElementId(ProcessModels.PROCESS_KEY, "ONE_TASK_PROCESS"));
@@ -546,7 +546,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldSetInvocationsPerBatchType() {
+  void shouldSetInvocationsPerBatchType() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()

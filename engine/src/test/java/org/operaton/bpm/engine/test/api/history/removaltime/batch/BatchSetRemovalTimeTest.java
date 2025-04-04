@@ -70,7 +70,7 @@ import org.operaton.bpm.engine.variable.Variables;
  */
 
 @RequiredHistoryLevel(HISTORY_FULL)
-public class BatchSetRemovalTimeTest {
+class BatchSetRemovalTimeTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -89,7 +89,7 @@ public class BatchSetRemovalTimeTest {
   protected ManagementService managementService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     ClockUtil.reset();
     managementService.createBatchQuery().list().forEach(b -> managementService.deleteBatch(b.getId(), true));
     historyService.createHistoricBatchQuery().list().forEach(b -> historyService.deleteHistoricBatch(b.getId()));
@@ -98,9 +98,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotSetRemovalTime_DmnDisabled() {
+  void shouldNotSetRemovalTime_DmnDisabled() {
     // given
     testRule.getProcessEngineConfiguration()
       .setDmnEnabled(false);
@@ -138,9 +138,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotSetRemovalTimeInHierarchy_DmnDisabled() {
+  void shouldNotSetRemovalTimeInHierarchy_DmnDisabled() {
     // given
     testRule.getProcessEngineConfiguration()
       .setDmnEnabled(false);
@@ -184,9 +184,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotSetRemovalTimeForStandaloneDecision_DmnDisabled() {
+  void shouldNotSetRemovalTimeForStandaloneDecision_DmnDisabled() {
     // given
     testRule.getProcessEngineConfiguration()
       .setDmnEnabled(false);
@@ -224,7 +224,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldCreateDeploymentAwareBatchJobs_ProcessInstances() {
+  void shouldCreateDeploymentAwareBatchJobs_ProcessInstances() {
     // given
     testRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(2);
@@ -254,9 +254,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldCreateDeploymentAwareBatchJobs_StandaloneDecision() {
+  void shouldCreateDeploymentAwareBatchJobs_StandaloneDecision() {
     // given
     testRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(3);
@@ -298,7 +298,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_MultipleInvocationsPerBatchJob() {
+  void shouldSetRemovalTime_MultipleInvocationsPerBatchJob() {
     // given
     testRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(2);
@@ -331,9 +331,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_MultipleInvocationsPerBatchJob() {
+  void shouldSetRemovalTimeForStandaloneDecision_MultipleInvocationsPerBatchJob() {
     // given
     testRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(2);
@@ -371,7 +371,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_MultipleInvocationsPerBatchJob() {
+  void shouldSetRemovalTimeForBatch_MultipleInvocationsPerBatchJob() {
     // given
     testRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(2);
@@ -410,7 +410,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_SingleInvocationPerBatchJob() {
+  void shouldSetRemovalTime_SingleInvocationPerBatchJob() {
     // given
     testRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(1);
@@ -443,9 +443,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_SingleInvocationPerBatchJob() {
+  void shouldSetRemovalTimeForStandaloneDecision_SingleInvocationPerBatchJob() {
     // given
     testRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(1);
@@ -483,7 +483,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_SingleInvocationPerBatchJob() {
+  void shouldSetRemovalTimeForBatch_SingleInvocationPerBatchJob() {
     // given
     testRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(1);
@@ -522,7 +522,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotSetRemovalTime_BaseTimeNone() {
+  void shouldNotSetRemovalTime_BaseTimeNone() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_NONE)
@@ -552,7 +552,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldClearRemovalTime_BaseTimeNone() {
+  void shouldClearRemovalTime_BaseTimeNone() {
     // given
     testRule.process().ttl(5).serviceTask().deploy().start();
 
@@ -583,9 +583,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotSetRemovalTimeForStandaloneDecision_BaseTimeNone() {
+  void shouldNotSetRemovalTimeForStandaloneDecision_BaseTimeNone() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_NONE)
@@ -627,9 +627,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldClearRemovalTimeForStandaloneDecision_BaseTimeNone() {
+  void shouldClearRemovalTimeForStandaloneDecision_BaseTimeNone() {
     testRule.updateHistoryTimeToLiveDmn("dish-decision", 5);
 
     // given
@@ -670,7 +670,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotSetRemovalTimeInHierarchy_BaseTimeNone() {
+  void shouldNotSetRemovalTimeInHierarchy_BaseTimeNone() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_NONE)
@@ -703,7 +703,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldClearRemovalTimeInHierarchy_BaseTimeNone() {
+  void shouldClearRemovalTimeInHierarchy_BaseTimeNone() {
     // given
     testRule.process().ttl(5).call().serviceTask().deploy().start();
 
@@ -737,9 +737,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotSetRemovalTimeForStandaloneDecisionInHierarchy_BaseTimeNone() {
+  void shouldNotSetRemovalTimeForStandaloneDecisionInHierarchy_BaseTimeNone() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_NONE)
@@ -782,9 +782,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldClearRemovalTimeForStandaloneDecisionInHierarchy_BaseTimeNone() {
+  void shouldClearRemovalTimeForStandaloneDecisionInHierarchy_BaseTimeNone() {
     // given
     testRule.updateHistoryTimeToLiveDmn("dish-decision", 5);
 
@@ -826,7 +826,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotSetRemovalTimeForBatch_BaseTimeNone() {
+  void shouldNotSetRemovalTimeForBatch_BaseTimeNone() {
     // given
     ProcessEngineConfigurationImpl configuration = testRule.getProcessEngineConfiguration();
     configuration.setHistoryCleanupStrategy("endTimeBased");
@@ -871,7 +871,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldClearRemovalTimeForBatch_BaseTimeNone() {
+  void shouldClearRemovalTimeForBatch_BaseTimeNone() {
     // given
     ProcessEngineConfigurationImpl configuration = testRule.getProcessEngineConfiguration();
 
@@ -916,7 +916,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_BaseTimeStart() {
+  void shouldSetRemovalTime_BaseTimeStart() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -949,9 +949,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_BaseTimeStart() {
+  void shouldSetRemovalTimeForStandaloneDecision_BaseTimeStart() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -992,7 +992,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_BaseTimeStart() {
+  void shouldSetRemovalTimeForBatch_BaseTimeStart() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
     historyService.deleteHistoricProcessInstancesAsync(Collections.singletonList(processInstanceId), "");
@@ -1028,7 +1028,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeInHierarchy_BaseTimeStart() {
+  void shouldSetRemovalTimeInHierarchy_BaseTimeStart() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -1064,9 +1064,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeInHierarchyForStandaloneDecision_BaseTimeStart() {
+  void shouldSetRemovalTimeInHierarchyForStandaloneDecision_BaseTimeStart() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -1108,7 +1108,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotSetRemovalTime_BaseTimeEnd() {
+  void shouldNotSetRemovalTime_BaseTimeEnd() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -1138,7 +1138,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldClearRemovalTime_BaseTimeEnd() {
+  void shouldClearRemovalTime_BaseTimeEnd() {
     // given
     testRule.process().ttl(5).userTask().deploy().start();
 
@@ -1168,7 +1168,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotSetRemovalTimeForBatch_BaseTimeEnd() {
+  void shouldNotSetRemovalTimeForBatch_BaseTimeEnd() {
     // given
     ProcessEngineConfigurationImpl configuration = testRule.getProcessEngineConfiguration();
 
@@ -1208,7 +1208,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldClearRemovalTimeForBatch_BaseTimeEnd() {
+  void shouldClearRemovalTimeForBatch_BaseTimeEnd() {
     // given
     ProcessEngineConfigurationImpl configuration = testRule.getProcessEngineConfiguration();
     configuration.setBatchOperationHistoryTimeToLive("P5D");
@@ -1246,7 +1246,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotSetRemovalTimeInHierarchy_BaseTimeEnd() {
+  void shouldNotSetRemovalTimeInHierarchy_BaseTimeEnd() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -1279,7 +1279,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldClearRemovalTimeInHierarchy_BaseTimeEnd() {
+  void shouldClearRemovalTimeInHierarchy_BaseTimeEnd() {
     // given
     testRule.process().call().ttl(5).userTask().deploy().start();
 
@@ -1312,7 +1312,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_BaseTimeEnd() {
+  void shouldSetRemovalTime_BaseTimeEnd() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -1345,9 +1345,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_BaseTimeEnd() {
+  void shouldSetRemovalTimeForStandaloneDecision_BaseTimeEnd() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -1388,7 +1388,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_BaseTimeEnd() {
+  void shouldSetRemovalTimeForBatch_BaseTimeEnd() {
     // given
     ProcessEngineConfigurationImpl configuration = testRule.getProcessEngineConfiguration();
 
@@ -1432,7 +1432,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeInHierarchy_BaseTimeEnd() {
+  void shouldSetRemovalTimeInHierarchy_BaseTimeEnd() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -1468,9 +1468,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeInHierarchyForStandaloneDecision_BaseTimeEnd() {
+  void shouldSetRemovalTimeInHierarchyForStandaloneDecision_BaseTimeEnd() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -1512,7 +1512,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_Null() {
+  void shouldSetRemovalTime_Null() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -1543,9 +1543,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_Null() {
+  void shouldSetRemovalTimeForStandaloneDecision_Null() {
     // given
     testRule.updateHistoryTimeToLiveDmn("dish-decision", 5);
 
@@ -1582,7 +1582,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_Null() {
+  void shouldSetRemovalTimeForBatch_Null() {
     // given
     ProcessEngineConfigurationImpl configuration = testRule.getProcessEngineConfiguration();
 
@@ -1619,7 +1619,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeInHierarchy_Null() {
+  void shouldSetRemovalTimeInHierarchy_Null() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -1653,9 +1653,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeInHierarchyForStandaloneDecision_Null() {
+  void shouldSetRemovalTimeInHierarchyForStandaloneDecision_Null() {
     // given
     testRule.updateHistoryTimeToLiveDmn("dish-decision", 5);
 
@@ -1693,7 +1693,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_Absolute() {
+  void shouldSetRemovalTime_Absolute() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -1724,9 +1724,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_Absolute() {
+  void shouldSetRemovalTimeForStandaloneDecision_Absolute() {
     // given
     testRule.updateHistoryTimeToLiveDmn("dish-decision", 5);
 
@@ -1763,7 +1763,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_Absolute() {
+  void shouldSetRemovalTimeForBatch_Absolute() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
     historyService.deleteHistoricProcessInstancesAsync(Collections.singletonList(processInstanceId), "");
@@ -1795,7 +1795,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeInHierarchy_Absolute() {
+  void shouldSetRemovalTimeInHierarchy_Absolute() {
     // given
     testRule.getProcessEngineConfiguration()
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -1829,9 +1829,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeInHierarchyForStandaloneDecision_Absolute() {
+  void shouldSetRemovalTimeInHierarchyForStandaloneDecision_Absolute() {
     // given
     testRule.updateHistoryTimeToLiveDmn("dish-decision", 5);
 
@@ -1869,7 +1869,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeInHierarchy_ByChildInstance() {
+  void shouldSetRemovalTimeInHierarchy_ByChildInstance() {
     // given
     String rootProcessInstance = testRule.process().call().ttl(5).userTask().deploy().start();
 
@@ -1900,9 +1900,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeInHierarchyForStandaloneDecision_ByChildInstance() {
+  void shouldSetRemovalTimeInHierarchyForStandaloneDecision_ByChildInstance() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -1941,7 +1941,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ByIds() {
+  void shouldSetRemovalTime_ByIds() {
     // given
     testRule.process().call().userTask().deploy().start();
 
@@ -1974,7 +1974,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowBadUserRequestException_NotExistingIds() {
+  void shouldThrowBadUserRequestException_NotExistingIds() {
     // given
     var setRemovalTimeToHistoricProcessInstancesBuilder = historyService.setRemovalTimeToHistoricProcessInstances()
       .absoluteRemovalTime(REMOVAL_TIME)
@@ -1988,9 +1988,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_ByIds() {
+  void shouldSetRemovalTimeForStandaloneDecision_ByIds() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -2030,7 +2030,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowBadUserRequestExceptionForStandaloneDecision_NotExistingIds() {
+  void shouldThrowBadUserRequestExceptionForStandaloneDecision_NotExistingIds() {
     // given
     var setRemovalTimeToHistoricDecisionInstancesBuilder = historyService.setRemovalTimeToHistoricDecisionInstances()
       .absoluteRemovalTime(REMOVAL_TIME)
@@ -2043,7 +2043,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_ByIds() {
+  void shouldSetRemovalTimeForBatch_ByIds() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
 
@@ -2081,7 +2081,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowBadUserRequestExceptionForBatch_NotExistingIds() {
+  void shouldThrowBadUserRequestExceptionForBatch_NotExistingIds() {
     // given
     var setRemovalTimeToHistoricBatchesBuilder = historyService.setRemovalTimeToHistoricBatches()
       .absoluteRemovalTime(REMOVAL_TIME)
@@ -2094,7 +2094,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowBadUserRequestException() {
+  void shouldThrowBadUserRequestException() {
     // given
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
     var setRemovalTimeToHistoricProcessInstancesBuilder = historyService.setRemovalTimeToHistoricProcessInstances()
@@ -2108,7 +2108,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowBadUserRequestExceptionForStandaloneDecision() {
+  void shouldThrowBadUserRequestExceptionForStandaloneDecision() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     var setRemovalTimeToHistoricDecisionInstancesBuilder = historyService.setRemovalTimeToHistoricDecisionInstances()
@@ -2122,7 +2122,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowBadUserRequestExceptionForBatch() {
+  void shouldThrowBadUserRequestExceptionForBatch() {
     // given
     HistoricBatchQuery query = historyService.createHistoricBatchQuery();
     var setRemovalTimeToHistoricBatchesBuilder = historyService.setRemovalTimeToHistoricBatches()
@@ -2136,7 +2136,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldProduceHistory() {
+  void shouldProduceHistory() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -2160,9 +2160,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldProduceHistoryForStandaloneDecision() {
+  void shouldProduceHistoryForStandaloneDecision() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -2190,7 +2190,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldProduceHistoryForBatch() {
+  void shouldProduceHistoryForBatch() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
     Batch batch = historyService.deleteHistoricProcessInstancesAsync(Collections.singletonList(processInstanceId), "");
@@ -2217,7 +2217,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowExceptionIfNoRemovalTimeSettingDefined()
+  void shouldThrowExceptionIfNoRemovalTimeSettingDefined()
   {
     // given
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
@@ -2232,7 +2232,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowExceptionIfNoRemovalTimeSettingDefinedForStandaloneDecision() {
+  void shouldThrowExceptionIfNoRemovalTimeSettingDefinedForStandaloneDecision() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
@@ -2246,7 +2246,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowExceptionIfNoRemovalTimeSettingDefinedForBatch() {
+  void shouldThrowExceptionIfNoRemovalTimeSettingDefinedForBatch() {
     // given
     HistoricBatchQuery query = historyService.createHistoricBatchQuery();
 
@@ -2260,7 +2260,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowExceptionIfNoQueryAndNoIdsDefined()
+  void shouldThrowExceptionIfNoQueryAndNoIdsDefined()
   {
     // given
     SetRemovalTimeToHistoricProcessInstancesBuilder batchBuilder = historyService.setRemovalTimeToHistoricProcessInstances()
@@ -2273,7 +2273,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowExceptionIfNoQueryAndNoIdsDefinedForStandaloneDecision()
+  void shouldThrowExceptionIfNoQueryAndNoIdsDefinedForStandaloneDecision()
   {
     // given
     SetRemovalTimeToHistoricDecisionInstancesBuilder batchBuilder = historyService.setRemovalTimeToHistoricDecisionInstances()
@@ -2286,7 +2286,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldThrowExceptionIfNoQueryAndNoIdsDefinedForBatch()
+  void shouldThrowExceptionIfNoQueryAndNoIdsDefinedForBatch()
   {
     // given
     SetRemovalTimeToHistoricBatchesBuilder batchBuilder = historyService.setRemovalTimeToHistoricBatches()
@@ -2299,7 +2299,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_BothQueryAndIdsDefined() {
+  void shouldSetRemovalTime_BothQueryAndIdsDefined() {
     // given
     String rootProcessInstanceId = testRule.process().call().userTask().deploy().start();
 
@@ -2331,9 +2331,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_BothQueryAndIdsDefined() {
+  void shouldSetRemovalTimeForStandaloneDecision_BothQueryAndIdsDefined() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -2379,7 +2379,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_BothQueryAndIdsDefined() {
+  void shouldSetRemovalTimeForBatch_BothQueryAndIdsDefined() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
     Batch batchOne = historyService.deleteHistoricProcessInstancesAsync(Collections.singletonList(processInstanceId), "");
@@ -2420,7 +2420,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTime_ExistingAndNotExistingId() {
+  void shouldSetRemovalTime_ExistingAndNotExistingId() {
     // given
     String processInstanceId = testRule.process().userTask().deploy().start();
 
@@ -2447,9 +2447,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetRemovalTimeForStandaloneDecision_ExistingAndNotExistingId() {
+  void shouldSetRemovalTimeForStandaloneDecision_ExistingAndNotExistingId() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -2489,7 +2489,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetRemovalTimeForBatch_ExistingAndNotExistingId() {
+  void shouldSetRemovalTimeForBatch_ExistingAndNotExistingId() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
     Batch batchOne = historyService.deleteHistoricProcessInstancesAsync(Collections.singletonList(processInstanceId), "");
@@ -2522,7 +2522,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void ThrowBadUserRequestException_SelectMultipleModes_ModeCleared() {
+  void ThrowBadUserRequestException_SelectMultipleModes_ModeCleared() {
     // given
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builder = historyService.setRemovalTimeToHistoricProcessInstances();
     builder.calculatedRemovalTime();
@@ -2534,7 +2534,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void ThrowBadUserRequestException_SelectMultipleModes_ModeAbsolute() {
+  void ThrowBadUserRequestException_SelectMultipleModes_ModeAbsolute() {
     // given
     SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder builder = historyService.setRemovalTimeToHistoricProcessInstances();
     builder.calculatedRemovalTime();
@@ -2547,7 +2547,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void ThrowBadUserRequestExceptionForStandaloneDecision_SelectMultipleModes_ModeCleared() {
+  void ThrowBadUserRequestExceptionForStandaloneDecision_SelectMultipleModes_ModeCleared() {
     // given
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builder = historyService.setRemovalTimeToHistoricDecisionInstances();
     builder.calculatedRemovalTime();
@@ -2559,7 +2559,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void ThrowBadUserRequestExceptionForStandaloneDecision_SelectMultipleModes_ModeAbsolute() {
+  void ThrowBadUserRequestExceptionForStandaloneDecision_SelectMultipleModes_ModeAbsolute() {
     // given
     SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder builder = historyService.setRemovalTimeToHistoricDecisionInstances();
     builder.calculatedRemovalTime();
@@ -2572,7 +2572,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void ThrowBadUserRequestExceptionForBatch_SelectMultipleModes_ModeCleared() {
+  void ThrowBadUserRequestExceptionForBatch_SelectMultipleModes_ModeCleared() {
     // given
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builder = historyService.setRemovalTimeToHistoricBatches();
     builder.calculatedRemovalTime();
@@ -2584,7 +2584,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void ThrowBadUserRequestExceptionForBatch_SelectMultipleModes_ModeAbsolute() {
+  void ThrowBadUserRequestExceptionForBatch_SelectMultipleModes_ModeAbsolute() {
     // given
     SetRemovalTimeSelectModeForHistoricBatchesBuilder builder = historyService.setRemovalTimeToHistoricBatches();
     builder.calculatedRemovalTime();
@@ -2597,7 +2597,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSeeCleanableButNotFinishedProcessInstanceInReport() {
+  void shouldSeeCleanableButNotFinishedProcessInstanceInReport() {
     // given
     String processInstanceId = testRule.process().userTask().deploy().start();
 
@@ -2618,7 +2618,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSeeCleanableAndFinishedProcessInstanceInReport() {
+  void shouldSeeCleanableAndFinishedProcessInstanceInReport() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
 
@@ -2640,9 +2640,9 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSeeCleanableAndFinishedDecisionInstanceInReport() {
+  void shouldSeeCleanableAndFinishedDecisionInstanceInReport() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
       .variables(
@@ -2673,7 +2673,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSeeCleanableButNotFinishedBatchInReport() {
+  void shouldSeeCleanableButNotFinishedBatchInReport() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
     Batch batchOne = historyService.deleteHistoricProcessInstancesAsync(Collections.singletonList(processInstanceId), "");
@@ -2697,7 +2697,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSeeCleanableAndFinishedBatchInReport() {
+  void shouldSeeCleanableAndFinishedBatchInReport() {
     // given
     String processInstanceId = testRule.process().serviceTask().deploy().start();
     Batch batchOne = historyService.deleteHistoricProcessInstancesAsync(Collections.singletonList(processInstanceId), "");
@@ -2723,7 +2723,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetInvocationsPerBatchTypeForProcesses() {
+  void shouldSetInvocationsPerBatchTypeForProcesses() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()
@@ -2745,7 +2745,7 @@ public class BatchSetRemovalTimeTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetInvocationsPerBatchTypeForDecisions() {
+  void shouldSetInvocationsPerBatchTypeForDecisions() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()
@@ -2769,7 +2769,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetInvocationsPerBatchTypeForBatches() {
+  void shouldSetInvocationsPerBatchTypeForBatches() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()
@@ -2791,7 +2791,7 @@ public class BatchSetRemovalTimeTest {
   }
 
   @Test
-  public void shouldSetExecutionStartTimeInBatchAndHistoryForBatches() {
+  void shouldSetExecutionStartTimeInBatchAndHistoryForBatches() {
     // given
     ClockUtil.setCurrentTime(CURRENT_DATE);
     String processInstanceId = testRule.process().serviceTask().deploy().start();
@@ -2818,7 +2818,7 @@ public class BatchSetRemovalTimeTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml")
-  public void shouldSetExecutionStartTimeInBatchAndHistoryForDecisions() {
+  void shouldSetExecutionStartTimeInBatchAndHistoryForDecisions() {
     // given
     ClockUtil.setCurrentTime(CURRENT_DATE);
     decisionService.evaluateDecisionByKey("dish-decision")

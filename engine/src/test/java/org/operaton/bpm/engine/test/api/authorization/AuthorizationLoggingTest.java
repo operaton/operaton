@@ -48,7 +48,7 @@ public class AuthorizationLoggingTest {
       .level(Level.DEBUG);
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(false);
     AuthorizationService authorizationService = engineRule.getAuthorizationService();
     for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
@@ -57,7 +57,7 @@ public class AuthorizationLoggingTest {
   }
 
   @Test
-  public void shouldLogOnDebugLevel() {
+  void shouldLogOnDebugLevel() {
     // given
     AuthorizationScenario scenario = new AuthorizationScenario().withoutAuthorizations();
 

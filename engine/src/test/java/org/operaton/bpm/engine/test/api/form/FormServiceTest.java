@@ -95,7 +95,7 @@ import org.operaton.commons.utils.IoUtil;
  * @author Tom Baeyens
  * @author Falko Menge (operaton)
  */
-public class FormServiceTest {
+class FormServiceTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -116,26 +116,26 @@ public class FormServiceTest {
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @BeforeEach
-  public void init() {
+  void init() {
     identityService.saveUser(identityService.newUser("fozzie"));
     identityService.saveGroup(identityService.newGroup("management"));
     identityService.createMembership("fozzie", "management");
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.deleteGroup("management");
     identityService.deleteUser("fozzie");
 
     VariablesRecordingListener.reset();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/util/approve.html",
       "org/operaton/bpm/engine/test/api/form/util/request.html",
-      "org/operaton/bpm/engine/test/api/form/util/adjustRequest.html" })
+      "org/operaton/bpm/engine/test/api/form/util/adjustRequest.html"})
   @Test
-  public void testGetStartFormByProcessDefinitionId() {
+  void testGetStartFormByProcessDefinitionId() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions).hasSize(1);
     ProcessDefinition processDefinition = processDefinitions.get(0);
@@ -144,9 +144,9 @@ public class FormServiceTest {
     assertThat(startForm).isNotNull();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetStartFormByProcessDefinitionIdWithoutStartform() {
+  void testGetStartFormByProcessDefinitionIdWithoutStartform() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions).hasSize(1);
     ProcessDefinition processDefinition = processDefinitions.get(0);
@@ -156,26 +156,26 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetStartFormByKeyNullKey() {
+  void testGetStartFormByKeyNullKey() {
     assertThatThrownBy(() -> formService.getRenderedStartForm(null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
-  public void testGetStartFormByIdNullId() {
+  void testGetStartFormByIdNullId() {
     assertThatThrownBy(() -> formService.getRenderedStartForm(null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
-  public void testGetStartFormByIdUnexistingProcessDefinitionId() {
+  void testGetStartFormByIdUnexistingProcessDefinitionId() {
     assertThatThrownBy(() -> formService.getRenderedStartForm("unexistingId"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no deployed process definition found with id");
   }
 
   @Test
-  public void testGetTaskFormNullTaskId() {
+  void testGetTaskFormNullTaskId() {
     try {
       formService.getRenderedTaskForm(null);
       fail("ProcessEngineException expected");
@@ -185,7 +185,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetTaskFormUnexistingTaskId() {
+  void testGetTaskFormUnexistingTaskId() {
     assertThatThrownBy(() -> formService.getRenderedTaskForm("unexistingtask"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Task 'unexistingtask' not found");
@@ -193,7 +193,7 @@ public class FormServiceTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testTaskFormPropertyDefaultsAndFormRendering() {
+  void testTaskFormPropertyDefaultsAndFormRendering() {
 
     final String deploymentId = testRule.deploy("org/operaton/bpm/engine/test/api/form/FormsProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/start.html",
@@ -248,7 +248,7 @@ public class FormServiceTest {
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testFormPropertyHandlingDeprecated() {
+  void testFormPropertyHandlingDeprecated() {
     Map<String, String> properties = new HashMap<>();
     properties.put("room", "5b"); // default
     properties.put("speaker", "Mike"); // variable name mapping
@@ -330,7 +330,7 @@ public class FormServiceTest {
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testFormPropertyHandling() {
+  void testFormPropertyHandling() {
     Map<String, Object> properties = new HashMap<>();
     properties.put("room", "5b"); // default
     properties.put("speaker", "Mike"); // variable name mapping
@@ -409,7 +409,7 @@ public class FormServiceTest {
   @Deployment
   @Test
   @SuppressWarnings({"unchecked", "deprecation"})
-  public void testFormPropertyDetails() {
+  void testFormPropertyDetails() {
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
     StartFormData startFormData = formService.getStartFormData(procDefId);
     FormProperty property = startFormData.getFormProperties().get(0);
@@ -456,7 +456,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testInvalidFormKeyReference() {
+  void testInvalidFormKeyReference() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     assertThatThrownBy(() -> formService.getRenderedStartForm(processDefinitionId, "juel"))
@@ -466,7 +466,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testSubmitStartFormDataWithBusinessKey() {
+  void testSubmitStartFormDataWithBusinessKey() {
     Map<String, Object> properties = new HashMap<>();
     properties.put("duration", "45");
     properties.put("speaker", "Mike");
@@ -480,7 +480,7 @@ public class FormServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/FormsProcess.bpmn20.xml"})
   @Test
-  public void testSubmitStartFormDataTypedVariables() {
+  void testSubmitStartFormDataTypedVariables() {
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     String stringValue = "some string";
@@ -505,7 +505,7 @@ public class FormServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/FormsProcess.bpmn20.xml"})
   @Test
-  public void testSubmitTaskFormDataTypedVariables() {
+  void testSubmitTaskFormDataTypedVariables() {
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     ProcessInstance processInstance = formService.submitStartForm(procDefId, createVariables());
@@ -533,7 +533,7 @@ public class FormServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/FormsProcess.bpmn20.xml"})
   @Test
-  public void testSubmitFormVariablesNull() {
+  void testSubmitFormVariablesNull() {
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     // assert that I can submit the start form with variables null
@@ -547,7 +547,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testSubmitTaskFormForStandaloneTask() {
+  void testSubmitTaskFormForStandaloneTask() {
     // given
     String id = "standaloneTask";
     Task task = taskService.newTask(id);
@@ -571,9 +571,9 @@ public class FormServiceTest {
     taskService.deleteTask(id, true);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testSubmitTaskFormForCmmnHumanTask() {
+  void testSubmitTaskFormForCmmnHumanTask() {
     caseService.createCaseInstanceByKey("oneTaskCase");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -604,7 +604,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testSubmitStartFormWithBusinessKey() {
+  void testSubmitStartFormWithBusinessKey() {
     Map<String, Object> properties = new HashMap<>();
     properties.put("duration", 45L);
     properties.put("speaker", "Mike");
@@ -622,7 +622,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testSubmitStartFormWithoutProperties() {
+  void testSubmitStartFormWithoutProperties() {
     Map<String, Object> properties = new HashMap<>();
     properties.put("duration", 45L);
     properties.put("speaker", "Mike");
@@ -639,7 +639,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testSubmitStartFormWithExecutionListenerOnStartEvent() {
+  void testSubmitStartFormWithExecutionListenerOnStartEvent() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess()
         .operatonHistoryTimeToLive(180)
@@ -667,7 +667,7 @@ public class FormServiceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testSubmitStartFormWithAsyncStartEvent() {
+  void testSubmitStartFormWithAsyncStartEvent() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess()
         .operatonHistoryTimeToLive(180)
@@ -695,7 +695,7 @@ public class FormServiceTest {
 
 
   @Test
-  public void testSubmitStartFormWithAsyncStartEventExecuteJob() {
+  void testSubmitStartFormWithAsyncStartEventExecuteJob() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess()
         .operatonHistoryTimeToLive(180)
@@ -742,7 +742,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetStartFormKeyEmptyArgument() {
+  void testGetStartFormKeyEmptyArgument() {
     assertThatThrownBy(() -> formService.getStartFormKey(null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("The process definition id is mandatory, but 'null' has been provided.");
@@ -754,7 +754,7 @@ public class FormServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/form/FormsProcess.bpmn20.xml")
   @Test
-  public void testGetStartFormKey() {
+  void testGetStartFormKey() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
     String expectedFormKey = formService.getStartFormData(processDefinitionId).getFormKey();
     String actualFormKey = formService.getStartFormKey(processDefinitionId);
@@ -762,7 +762,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetTaskFormKeyEmptyArguments() {
+  void testGetTaskFormKeyEmptyArguments() {
     assertThatThrownBy(() -> formService.getTaskFormKey(null, "23"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("The process definition id is mandatory, but 'null' has been provided.");
@@ -782,7 +782,7 @@ public class FormServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/form/FormsProcess.bpmn20.xml")
   @Test
-  public void testGetTaskFormKey() {
+  void testGetTaskFormKey() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
     runtimeService.startProcessInstanceById(processDefinitionId);
     Task task = taskService.createTaskQuery().singleResult();
@@ -794,16 +794,16 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testGetTaskFormKeyWithExpression() {
+  void testGetTaskFormKeyWithExpression() {
     runtimeService.startProcessInstanceByKey("FormsProcess", CollectionUtil.singletonMap("dynamicKey", "test"));
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();
     assertThat(formService.getTaskFormData(task.getId()).getFormKey()).isEqualTo("test");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/form/FormServiceTest.startFormFields.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/FormServiceTest.startFormFields.bpmn20.xml"})
   @Test
-  public void testGetStartFormVariables() {
+  void testGetStartFormVariables() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -851,9 +851,9 @@ public class FormServiceTest {
     assertThat(variables).hasSize(4);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/form/FormServiceTest.startFormFieldsUnknownType.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/FormServiceTest.startFormFieldsUnknownType.bpmn20.xml"})
   @Test
-  public void testGetStartFormVariablesEnumType() {
+  void testGetStartFormVariablesEnumType() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -862,9 +862,9 @@ public class FormServiceTest {
     assertThat(startFormVariables.getValueTyped("enumField").getType()).isEqualTo(ValueType.STRING);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/form/FormServiceTest.taskFormFields.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/FormServiceTest.taskFormFields.bpmn20.xml"})
   @Test
-  public void testGetTaskFormVariables() {
+  void testGetTaskFormVariables() {
 
     Map<String, Object> processVars = new HashMap<>();
     processVars.put("someString", "initialValue");
@@ -941,7 +941,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetTaskFormVariables_StandaloneTask() {
+  void testGetTaskFormVariables_StandaloneTask() {
 
     Map<String, Object> processVars = new HashMap<>();
     processVars.put("someString", "initialValue");
@@ -1006,10 +1006,10 @@ public class FormServiceTest {
     taskService.deleteTask(task.getId(), true);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   @SuppressWarnings("unchecked")
-  public void testSubmitStartFormWithObjectVariables() {
+  void testSubmitStartFormWithObjectVariables() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -1029,10 +1029,10 @@ public class FormServiceTest {
 
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml"})
   @Test
   @SuppressWarnings("unchecked")
-  public void testSubmitTaskFormWithObjectVariables() {
+  void testSubmitTaskFormWithObjectVariables() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition).isNotNull();
@@ -1057,9 +1057,9 @@ public class FormServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/task/TaskServiceTest.testCompleteTaskWithVariablesInReturn.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.testCompleteTaskWithVariablesInReturn.bpmn20.xml"})
   @Test
-  public void testSubmitTaskFormWithVariablesInReturn() {
+  void testSubmitTaskFormWithVariablesInReturn() {
     String processVarName = "processVar";
     String processVarValue = "processVarValue";
 
@@ -1098,9 +1098,9 @@ public class FormServiceTest {
             .containsEntry(taskVarName, taskVarValue);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/twoParallelTasksProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/twoParallelTasksProcess.bpmn20.xml"})
   @Test
-  public void testSubmitTaskFormWithVariablesInReturnParallel() {
+  void testSubmitTaskFormWithVariablesInReturnParallel() {
     String processVarName = "processVar";
     String processVarValue = "processVarValue";
 
@@ -1147,7 +1147,7 @@ public class FormServiceTest {
    * Loading all variables may be expensive.
    */
   @Test
-  public void testSubmitTaskFormAndDoNotDeserializeVariables()
+  void testSubmitTaskFormAndDoNotDeserializeVariables()
   {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
@@ -1181,10 +1181,9 @@ public class FormServiceTest {
   }
 
 
-
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml")
-  public void testSubmitTaskFormWithVariablesInReturnShouldDeserializeObjectValue()
+  void testSubmitTaskFormWithVariablesInReturnShouldDeserializeObjectValue()
   {
     // given
     ObjectValue value = Variables.objectValue("value").create();
@@ -1205,7 +1204,7 @@ public class FormServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml")
-  public void testSubmitTaskFormWithVariablesInReturnShouldNotDeserializeObjectValue()
+  void testSubmitTaskFormWithVariablesInReturnShouldNotDeserializeObjectValue()
   {
     // given
     ObjectValue value = Variables.objectValue("value").create();
@@ -1227,7 +1226,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testSubmitTaskFormContainingReadonlyVariable() {
+  void testSubmitTaskFormContainingReadonlyVariable() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
@@ -1243,7 +1242,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testGetTaskFormWithoutLabels() {
+  void testGetTaskFormWithoutLabels() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -1268,7 +1267,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testDeployTaskFormWithoutFieldTypes() {
+  void testDeployTaskFormWithoutFieldTypes() {
     var deploymentBuilder = repositoryService
       .createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/form/FormServiceTest.testDeployTaskFormWithoutFieldTypes.bpmn20.xml");
@@ -1280,7 +1279,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testGetStartFormWithoutLabels() {
+  void testGetStartFormWithoutLabels() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
 
@@ -1304,7 +1303,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testDeployStartFormWithoutFieldTypes() {
+  void testDeployStartFormWithoutFieldTypes() {
     // when
     var deploymentBuilder = repositoryService
       .createDeployment()
@@ -1317,13 +1316,13 @@ public class FormServiceTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/form/util/approve.html",
-    "org/operaton/bpm/engine/test/api/form/util/request.html",
-    "org/operaton/bpm/engine/test/api/form/util/adjustRequest.html" })
+      "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/form/util/approve.html",
+      "org/operaton/bpm/engine/test/api/form/util/request.html",
+      "org/operaton/bpm/engine/test/api/form/util/adjustRequest.html"})
   @Test
   @SuppressWarnings("deprecation")
-  public void testTaskFormsWithVacationRequestProcess() {
+  void testTaskFormsWithVacationRequestProcess() {
 
     // Get start form
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -1355,7 +1354,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testTaskFormUnavailable() {
+  void testTaskFormUnavailable() {
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
     assertThat(formService.getRenderedStartForm(procDefId)).isNull();
 
@@ -1366,7 +1365,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testBusinessKey() {
+  void testBusinessKey() {
     // given
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
@@ -1380,7 +1379,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
-  public void testSubmitStartFormWithFormFieldMarkedAsBusinessKey() {
+  void testSubmitStartFormWithFormFieldMarkedAsBusinessKey() {
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
     ProcessInstance pi = formService.submitStartForm(procDefId, "foo", Variables.createVariables().putValue("secondParam", "bar"));
 
@@ -1391,11 +1390,11 @@ public class FormServiceTest {
     assertThat(result.get(0).getName()).isEqualTo("secondParam");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/start.html",
-      "org/operaton/bpm/engine/test/api/form/task.html" })
+      "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
-  public void testGetDeployedStartForm() {
+  void testGetDeployedStartForm() {
     // given
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
@@ -1409,11 +1408,11 @@ public class FormServiceTest {
     assertThat(fileAsString).isEqualTo(deployedStartFormAsString);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/EmbeddedDeployedFormsProcess.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/EmbeddedDeployedFormsProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/start.html",
-      "org/operaton/bpm/engine/test/api/form/task.html" })
+      "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
-  public void testGetEmbeddedDeployedStartForm() {
+  void testGetEmbeddedDeployedStartForm() {
     // given
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
@@ -1427,11 +1426,11 @@ public class FormServiceTest {
     assertThat(fileAsString).isEqualTo(deployedStartFormAsString);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/DeployedOperatonFormsProcess.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedOperatonFormsProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/start.html",
-      "org/operaton/bpm/engine/test/api/form/task.html" })
+      "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
-  public void testGetDeployedOperatonStartForm() {
+  void testGetDeployedOperatonStartForm() {
     // given
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
@@ -1446,17 +1445,17 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetDeployedStartFormWithNullProcDefId() {
+  void testGetDeployedStartFormWithNullProcDefId() {
     assertThatThrownBy(() -> formService.getDeployedStartForm(null))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Process definition id cannot be null: processDefinitionId is null");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/start.html",
-      "org/operaton/bpm/engine/test/api/form/task.html" })
+      "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
-  public void testGetDeployedTaskForm() {
+  void testGetDeployedTaskForm() {
     // given
     runtimeService.startProcessInstanceByKey("FormsProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -1471,10 +1470,10 @@ public class FormServiceTest {
     assertThat(fileAsString).isEqualTo(deployedStartFormAsString);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/DeployedFormsCase.cmmn11.xml",
-    "org/operaton/bpm/engine/test/api/form/task.html" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedFormsCase.cmmn11.xml",
+      "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
-  public void testGetDeployedTaskForm_Case() {
+  void testGetDeployedTaskForm_Case() {
     // given
     caseService.createCaseInstanceByKey("Case_1");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -1489,11 +1488,11 @@ public class FormServiceTest {
     assertThat(fileAsString).isEqualTo(deployedStartFormAsString);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/EmbeddedDeployedFormsProcess.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/EmbeddedDeployedFormsProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/start.html",
-      "org/operaton/bpm/engine/test/api/form/task.html" })
+      "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
-  public void testGetEmbeddedDeployedTaskForm() {
+  void testGetEmbeddedDeployedTaskForm() {
     // given
     runtimeService.startProcessInstanceByKey("FormsProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -1508,11 +1507,11 @@ public class FormServiceTest {
     assertThat(fileAsString).isEqualTo(deployedStartFormAsString);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/DeployedOperatonFormsProcess.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedOperatonFormsProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/start.html",
-      "org/operaton/bpm/engine/test/api/form/task.html" })
+      "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
-  public void testGetDeployedOperatonTaskForm() {
+  void testGetDeployedOperatonTaskForm() {
     // given
     runtimeService.startProcessInstanceByKey("FormsProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -1528,16 +1527,16 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetDeployedTaskFormWithNullTaskId() {
+  void testGetDeployedTaskFormWithNullTaskId() {
     assertThatThrownBy(() -> formService.getDeployedTaskForm(null))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Task id cannot be null: taskId is null");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/form/task.html" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
-  public void testGetDeployedStartForm_DeploymentNotFound() {
+  void testGetDeployedStartForm_DeploymentNotFound() {
     // given
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
@@ -1547,10 +1546,10 @@ public class FormServiceTest {
       .hasMessageContaining("The form with the resource name 'org/operaton/bpm/engine/test/api/form/start.html' cannot be found in deployment");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/form/start.html" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/form/start.html"})
   @Test
-  public void testGetDeployedTaskForm_DeploymentNotFound() {
+  void testGetDeployedTaskForm_DeploymentNotFound() {
     // given
     runtimeService.startProcessInstanceByKey("FormsProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -1562,7 +1561,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetDeployedStartForm_FormKeyNotSet() {
+  void testGetDeployedStartForm_FormKeyNotSet() {
     // given
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
@@ -1574,7 +1573,7 @@ public class FormServiceTest {
   }
 
   @Test
-  public void testGetDeployedTaskForm_FormKeyNotSet() {
+  void testGetDeployedTaskForm_FormKeyNotSet() {
     // given
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey("Process");
@@ -1587,9 +1586,9 @@ public class FormServiceTest {
   }
 
   @Deployment(resources = {
-      "org/operaton/bpm/engine/test/api/form/FormServiceTest.testGetDeployedStartFormWithWrongKeyFormat.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/api/form/FormServiceTest.testGetDeployedStartFormWithWrongKeyFormat.bpmn20.xml"})
   @Test
-  public void testGetDeployedStartFormWithWrongKeyFormat() {
+  void testGetDeployedStartFormWithWrongKeyFormat() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     // when
@@ -1600,9 +1599,9 @@ public class FormServiceTest {
   }
 
   @Deployment(resources = {
-      "org/operaton/bpm/engine/test/api/form/FormServiceTest.testGetDeployedTaskFormWithWrongKeyFormat.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/api/form/FormServiceTest.testGetDeployedTaskFormWithWrongKeyFormat.bpmn20.xml"})
   @Test
-  public void testGetDeployedTaskFormWithWrongKeyFormat() {
+  void testGetDeployedTaskFormWithWrongKeyFormat() {
     runtimeService.startProcessInstanceByKey("FormsProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
 
@@ -1615,9 +1614,9 @@ public class FormServiceTest {
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/form/FormServiceTest.shouldSubmitStartFormUsingFormKeyAndOperatonFormDefinition.bpmn",
-      "org/operaton/bpm/engine/test/api/form/start.form" })
+      "org/operaton/bpm/engine/test/api/form/start.form"})
   @Test
-  public void shouldSubmitStartFormUsingFormKeyAndOperatonFormDefinition() {
+  void shouldSubmitStartFormUsingFormKeyAndOperatonFormDefinition() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("OperatonStartFormProcess").singleResult();
@@ -1635,9 +1634,9 @@ public class FormServiceTest {
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/form/FormServiceTest.shouldSubmitTaskFormUsingFormKeyAndOperatonFormDefinition.bpmn",
-  "org/operaton/bpm/engine/test/api/form/task.form" })
+      "org/operaton/bpm/engine/test/api/form/task.form"})
   @Test
-  public void shouldSubmitTaskFormUsingFormKeyAndOperatonFormDefinition() {
+  void shouldSubmitTaskFormUsingFormKeyAndOperatonFormDefinition() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("OperatonTaskFormProcess");
 
@@ -1655,9 +1654,9 @@ public class FormServiceTest {
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/form/FormServiceTest.shouldSubmitStartFormUsingFormRefAndOperatonFormDefinition.bpmn",
-  "org/operaton/bpm/engine/test/api/form/start.form" })
+      "org/operaton/bpm/engine/test/api/form/start.form"})
   @Test
-  public void shouldSubmitStartFormUsingFormRefAndOperatonFormDefinition() {
+  void shouldSubmitStartFormUsingFormRefAndOperatonFormDefinition() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("OperatonStartFormProcess").singleResult();
@@ -1676,9 +1675,9 @@ public class FormServiceTest {
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/form/FormServiceTest.shouldSubmitTaskFormUsingFormRefAndOperatonFormDefinition.bpmn",
-  "org/operaton/bpm/engine/test/api/form/task.form" })
+      "org/operaton/bpm/engine/test/api/form/task.form"})
   @Test
-  public void shouldSubmitTaskFormUsingFormRefAndOperatonFormDefinition() {
+  void shouldSubmitTaskFormUsingFormRefAndOperatonFormDefinition() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("OperatonTaskFormProcess");
 

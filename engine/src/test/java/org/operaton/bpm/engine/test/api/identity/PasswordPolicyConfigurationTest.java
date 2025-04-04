@@ -27,22 +27,22 @@ import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class PasswordPolicyConfigurationTest {
+class PasswordPolicyConfigurationTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @BeforeEach
-  public void init() {
+  void init() {
     processEngineConfiguration.setPasswordPolicy(null).setEnablePasswordPolicy(false);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setPasswordPolicy(null).setEnablePasswordPolicy(false);
   }
 
   @Test
-  public void testInitialConfiguration() {
+  void testInitialConfiguration() {
     // given initial configuration
 
     // when
@@ -54,7 +54,7 @@ public class PasswordPolicyConfigurationTest {
   }
 
   @Test
-  public void testAutoConfigurationDefaultPasswordPolicy() {
+  void testAutoConfigurationDefaultPasswordPolicy() {
     // given
 
     processEngineConfiguration.setEnablePasswordPolicy(true);
@@ -68,7 +68,7 @@ public class PasswordPolicyConfigurationTest {
   }
 
   @Test
-  public void testFullPasswordPolicyConfiguration() {
+  void testFullPasswordPolicyConfiguration() {
     // given
     processEngineConfiguration.setEnablePasswordPolicy(true);
     processEngineConfiguration.setPasswordPolicy(new DefaultPasswordPolicyImpl());

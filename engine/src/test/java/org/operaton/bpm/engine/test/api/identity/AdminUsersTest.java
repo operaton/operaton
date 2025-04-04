@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
 @ExtendWith(ProcessEngineTestExtension.class)
-public class AdminUsersTest {
+class AdminUsersTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;
@@ -45,7 +45,7 @@ public class AdminUsersTest {
   protected ManagementService managementService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
   }
@@ -58,7 +58,7 @@ public class AdminUsersTest {
   }
 
   @Test
-  public void testWithoutAdminUser() {
+  void testWithoutAdminUser() {
     processEngineConfiguration.setAuthorizationEnabled(false);
 
     identityService.setAuthentication("adminUser", null, null);
@@ -79,7 +79,7 @@ public class AdminUsersTest {
   }
 
   @Test
-  public void testWithAdminUser() {
+  void testWithAdminUser() {
     processEngineConfiguration.getAdminUsers().add("adminUser");
 
     processEngineConfiguration.setAuthorizationEnabled(false);

@@ -47,7 +47,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 @ExtendWith(ProcessEngineExtension.class)
 @ExtendWith(ProcessEngineTestExtension.class)
-public class IdentityServiceUserOperationLogTest {
+class IdentityServiceUserOperationLogTest {
 
   protected static final String TEST_USER_ID = "newTestUser";
   protected static final String TEST_GROUP_ID = "newTestGroup";
@@ -61,12 +61,12 @@ public class IdentityServiceUserOperationLogTest {
   protected UserOperationLogQuery query;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     query = historyService.createUserOperationLogQuery();
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -80,7 +80,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogUserCreation() {
+  void shouldLogUserCreation() {
     // given
     assertThat(query.count()).isZero();
     identityService.setAuthenticatedUserId("userId");
@@ -94,7 +94,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogUserCreationFailure() {
+  void shouldNotLogUserCreationFailure() {
     // given
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     assertThat(query.count()).isZero();
@@ -113,7 +113,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogUserUpdate() {
+  void shouldLogUserUpdate() {
     // given
     User newUser = identityService.newUser(TEST_USER_ID);
     identityService.saveUser(newUser);
@@ -130,7 +130,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogUserDeletion() {
+  void shouldLogUserDeletion() {
     // given
     User newUser = identityService.newUser(TEST_USER_ID);
     identityService.saveUser(newUser);
@@ -146,7 +146,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogUserDeletionOnNonExisting() {
+  void shouldNotLogUserDeletionOnNonExisting() {
     // given
     assertThat(query.count()).isZero();
 
@@ -160,7 +160,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogUserUnlock() {
+  void shouldLogUserUnlock() {
     // given
     User newUser = identityService.newUser(TEST_USER_ID);
     newUser.setPassword("right");
@@ -178,7 +178,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogUserUnlockOnNonExistingUser() {
+  void shouldNotLogUserUnlockOnNonExistingUser() {
     // given
     assertThat(query.count()).isZero();
 
@@ -192,7 +192,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogUserUnlockOnNonExistingLock() {
+  void shouldNotLogUserUnlockOnNonExistingLock() {
     // given
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     assertThat(query.count()).isZero();
@@ -207,7 +207,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogGroupCreation() {
+  void shouldLogGroupCreation() {
     // given
     assertThat(query.count()).isZero();
     identityService.setAuthenticatedUserId("userId");
@@ -221,7 +221,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogGroupCreationFailure() {
+  void shouldNotLogGroupCreationFailure() {
     // given
     identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID));
     assertThat(query.count()).isZero();
@@ -239,7 +239,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogGroupUpdate() {
+  void shouldLogGroupUpdate() {
     // given
     Group newGroup = identityService.newGroup(TEST_GROUP_ID);
     identityService.saveGroup(newGroup);
@@ -256,7 +256,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogGroupDeletion() {
+  void shouldLogGroupDeletion() {
     // given
     Group newGroup = identityService.newGroup(TEST_GROUP_ID);
     identityService.saveGroup(newGroup);
@@ -272,7 +272,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogGroupDeletionOnNonExisting() {
+  void shouldNotLogGroupDeletionOnNonExisting() {
     // given
     assertThat(query.count()).isZero();
 
@@ -286,7 +286,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantCreation() {
+  void shouldLogTenantCreation() {
     // given
     assertThat(query.count()).isZero();
     identityService.setAuthenticatedUserId("userId");
@@ -300,7 +300,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogTenantCreationFailure() {
+  void shouldNotLogTenantCreationFailure() {
     // given
     identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID));
     assertThat(query.count()).isZero();
@@ -318,7 +318,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantUpdate() {
+  void shouldLogTenantUpdate() {
     // given
     Tenant newTenant = identityService.newTenant(TEST_TENANT_ID);
     identityService.saveTenant(newTenant);
@@ -335,7 +335,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantDeletion() {
+  void shouldLogTenantDeletion() {
     // given
     Tenant newTenant = identityService.newTenant(TEST_TENANT_ID);
     identityService.saveTenant(newTenant);
@@ -351,7 +351,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogTenantDeletionOnNonExisting() {
+  void shouldNotLogTenantDeletionOnNonExisting() {
     // given
     assertThat(query.count()).isZero();
 
@@ -365,7 +365,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogGroupMembershipCreation() {
+  void shouldLogGroupMembershipCreation() {
     // given
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID));
@@ -383,7 +383,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogGroupMembershipCreationFailure() {
+  void shouldNotLogGroupMembershipCreationFailure() {
     // given
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID));
@@ -402,7 +402,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogGroupMembershipDeletion() {
+  void shouldLogGroupMembershipDeletion() {
     // given
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID));
@@ -421,7 +421,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogGroupMembershipDeletionOnNonExisting() {
+  void shouldNotLogGroupMembershipDeletionOnNonExisting() {
     // given
     assertThat(query.count()).isZero();
     identityService.setAuthenticatedUserId("userId");
@@ -435,7 +435,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantUserMembershipCreation() {
+  void shouldLogTenantUserMembershipCreation() {
     // given
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID));
@@ -453,7 +453,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogTenantUserMembershipCreationFailure() {
+  void shouldNotLogTenantUserMembershipCreationFailure() {
     // given
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID));
@@ -472,7 +472,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantUserMembershipDeletion() {
+  void shouldLogTenantUserMembershipDeletion() {
     // given
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID));
@@ -491,7 +491,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogTenantUserMembershipDeletionOnNonExisting() {
+  void shouldNotLogTenantUserMembershipDeletionOnNonExisting() {
     // given
     assertThat(query.count()).isZero();
     identityService.setAuthenticatedUserId("userId");
@@ -505,7 +505,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantGroupMembershipCreation() {
+  void shouldLogTenantGroupMembershipCreation() {
     // given
     identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID));
     identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID));
@@ -523,7 +523,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogTenantGroupMembershipCreationFailure() {
+  void shouldNotLogTenantGroupMembershipCreationFailure() {
     // given
     identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID));
     identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID));
@@ -542,7 +542,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantGroupMembershipDeletion() {
+  void shouldLogTenantGroupMembershipDeletion() {
     // given
     identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID));
     identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID));
@@ -561,7 +561,7 @@ public class IdentityServiceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogTenantGroupMembershipDeletionOnNonExisting() {
+  void shouldNotLogTenantGroupMembershipDeletionOnNonExisting() {
     // given
     assertThat(query.count()).isZero();
     identityService.setAuthenticatedUserId("userId");

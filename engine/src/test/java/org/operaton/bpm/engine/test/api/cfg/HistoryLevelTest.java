@@ -25,12 +25,12 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 
-public class HistoryLevelTest {
+class HistoryLevelTest {
 
   protected ProcessEngine processEngine;
 
   @Test
-  public void shouldInitHistoryLevelByObject() {
+  void shouldInitHistoryLevelByObject() {
     ProcessEngineConfigurationImpl config = createConfig();
     config.setHistoryLevel(HistoryLevel.HISTORY_LEVEL_FULL);
 
@@ -42,7 +42,7 @@ public class HistoryLevelTest {
   }
 
   @Test
-  public void shouldInitHistoryLevelByString() {
+  void shouldInitHistoryLevelByString() {
     ProcessEngineConfigurationImpl config = createConfig();
     config.setHistory(HistoryLevel.HISTORY_LEVEL_FULL.getName());
 
@@ -68,7 +68,7 @@ public class HistoryLevelTest {
   }
 
   @AfterEach
-  public void closeEngine() {
+  void closeEngine() {
     processEngine.close();
   }
 

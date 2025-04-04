@@ -60,7 +60,7 @@ import org.operaton.bpm.engine.test.junit5.WatchLogger;
 /**
  * @author Frederik Heremans
  */
-public class IdentityServiceTest {
+class IdentityServiceTest {
 
   private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
 
@@ -76,7 +76,7 @@ public class IdentityServiceTest {
   protected ProcessEngine processEngine;
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -107,12 +107,12 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testIsReadOnly() {
+  void testIsReadOnly() {
     assertThat(identityService.isReadOnly()).isFalse();
   }
 
   @Test
-  public void testUserInfo() {
+  void testUserInfo() {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
 
@@ -130,7 +130,7 @@ public class IdentityServiceTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testUserAccount() {
+  void testUserAccount() {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
 
@@ -182,7 +182,7 @@ public class IdentityServiceTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testUserAccountDetails() {
+  void testUserAccountDetails() {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
 
@@ -197,7 +197,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCreateExistingUser() {
+  void testCreateExistingUser() {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
 
@@ -215,7 +215,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testUpdateUser() {
+  void testUpdateUser() {
     // First, create a new user
     User user = identityService.newUser("johndoe");
     user.setFirstName("John");
@@ -241,7 +241,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testUserPicture() {
+  void testUserPicture() {
     // First, create a new user
     User user = identityService.newUser("johndoe");
     identityService.saveUser(user);
@@ -274,7 +274,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCreateExistingGroup() {
+  void testCreateExistingGroup() {
     Group group = identityService.newGroup("greatGroup");
     identityService.saveGroup(group);
 
@@ -292,7 +292,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testUpdateGroup() {
+  void testUpdateGroup() {
     Group group = identityService.newGroup("sales");
     group.setName("Sales");
     identityService.saveGroup(group);
@@ -308,19 +308,19 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void findUserByUnexistingId() {
+  void findUserByUnexistingId() {
     User user = identityService.createUserQuery().userId("unexistinguser").singleResult();
     assertThat(user).isNull();
   }
 
   @Test
-  public void findGroupByUnexistingId() {
+  void findGroupByUnexistingId() {
     Group group = identityService.createGroupQuery().groupId("unexistinggroup").singleResult();
     assertThat(group).isNull();
   }
 
   @Test
-  public void testCreateMembershipUnexistingGroup() {
+  void testCreateMembershipUnexistingGroup() {
     User johndoe = identityService.newUser("johndoe");
     identityService.saveUser(johndoe);
     String userId = johndoe.getId();
@@ -332,7 +332,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCreateMembershipUnexistingUser() {
+  void testCreateMembershipUnexistingUser() {
     Group sales = identityService.newGroup("sales");
     identityService.saveGroup(sales);
     String groupId = sales.getId();
@@ -344,7 +344,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCreateMembershipAlreadyExisting() {
+  void testCreateMembershipAlreadyExisting() {
     Group sales = identityService.newGroup("sales");
     identityService.saveGroup(sales);
     User johndoe = identityService.newUser("johndoe");
@@ -361,7 +361,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSaveGroupNullArgument() {
+  void testSaveGroupNullArgument() {
     // when/then
     assertThatThrownBy(() -> identityService.saveGroup(null))
       .isInstanceOf(ProcessEngineException.class)
@@ -369,7 +369,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSaveUserNullArgument() {
+  void testSaveUserNullArgument() {
     // when/then
     assertThatThrownBy(() -> identityService.saveUser(null))
       .isInstanceOf(ProcessEngineException.class)
@@ -377,7 +377,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testFindGroupByIdNullArgument() {
+  void testFindGroupByIdNullArgument() {
     var groupQuery = identityService.createGroupQuery();
     // when/then
     assertThatThrownBy(() -> groupQuery.groupId(null))
@@ -386,7 +386,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCreateMembershipNullUserArgument() {
+  void testCreateMembershipNullUserArgument() {
     // when/then
     assertThatThrownBy(() -> identityService.createMembership(null, "group"))
       .isInstanceOf(ProcessEngineException.class)
@@ -394,7 +394,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCreateMembershipNullGroupArgument() {
+  void testCreateMembershipNullGroupArgument() {
     // when/then
     assertThatThrownBy(() -> identityService.createMembership("userId", null))
       .isInstanceOf(ProcessEngineException.class)
@@ -402,7 +402,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testFindGroupsByUserIdNullArguments() {
+  void testFindGroupsByUserIdNullArguments() {
     var groupQuery = identityService.createGroupQuery();
     // when/then
     assertThatThrownBy(() -> groupQuery.groupMember(null))
@@ -411,13 +411,13 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testFindUsersByGroupUnexistingGroup() {
+  void testFindUsersByGroupUnexistingGroup() {
     List<User> users = identityService.createUserQuery().memberOfGroup("unexistinggroup").list();
     assertThat(users).isNotNull().isEmpty();
   }
 
   @Test
-  public void testDeleteGroupNullArguments() {
+  void testDeleteGroupNullArguments() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteGroup(null))
       .isInstanceOf(ProcessEngineException.class)
@@ -425,7 +425,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testDeleteMembership() {
+  void testDeleteMembership() {
     Group sales = identityService.newGroup("sales");
     identityService.saveGroup(sales);
 
@@ -448,7 +448,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testDeleteMembershipWhenUserIsNoMember() {
+  void testDeleteMembershipWhenUserIsNoMember() {
     Group sales = identityService.newGroup("sales");
     identityService.saveGroup(sales);
 
@@ -464,7 +464,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testDeleteMembershipUnexistingGroup() {
+  void testDeleteMembershipUnexistingGroup() {
     User johndoe = identityService.newUser("johndoe");
     identityService.saveUser(johndoe);
     // No exception should be thrown when group doesn't exist
@@ -474,7 +474,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testDeleteMembershipUnexistingUser() {
+  void testDeleteMembershipUnexistingUser() {
     Group sales = identityService.newGroup("sales");
     identityService.saveGroup(sales);
     // No exception should be thrown when user doesn't exist
@@ -484,7 +484,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testDeleteMemberschipNullUserArgument() {
+  void testDeleteMemberschipNullUserArgument() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteMembership(null, "group"))
       .isInstanceOf(ProcessEngineException.class)
@@ -492,7 +492,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testDeleteMemberschipNullGroupArgument() {
+  void testDeleteMemberschipNullGroupArgument() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteMembership("user", null))
       .isInstanceOf(ProcessEngineException.class)
@@ -500,7 +500,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testDeleteUserNullArguments() {
+  void testDeleteUserNullArguments() {
     // when/then
     assertThatThrownBy(() -> identityService.deleteUser(null))
       .isInstanceOf(ProcessEngineException.class)
@@ -508,7 +508,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testDeleteUserUnexistingUserId() {
+  void testDeleteUserUnexistingUserId() {
     // No exception should be thrown. Deleting an unexisting user should
     // be ignored silently
     assertThatCode(() -> identityService.deleteUser("unexistinguser"))
@@ -516,7 +516,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCheckPassword() {
+  void testCheckPassword() {
 
     // store user with password
     User user = identityService.newUser("secureUser");
@@ -531,7 +531,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testUpdatePassword() {
+  void testUpdatePassword() {
 
     // store user with password
     User user = identityService.newUser("secureUser");
@@ -550,14 +550,14 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCheckPasswordNullSafe() {
+  void testCheckPasswordNullSafe() {
     assertThat(identityService.checkPassword("userId", null)).isFalse();
     assertThat(identityService.checkPassword(null, "passwd")).isFalse();
     assertThat(identityService.checkPassword(null, null)).isFalse();
   }
 
   @Test
-  public void testUserOptimisticLockingException() {
+  void testUserOptimisticLockingException() {
     User user = identityService.newUser("kermit");
     identityService.saveUser(user);
 
@@ -575,7 +575,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testGroupOptimisticLockingException() {
+  void testGroupOptimisticLockingException() {
     Group group = identityService.newGroup("group");
     identityService.saveGroup(group);
 
@@ -593,7 +593,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSaveUserWithGenericResourceId() {
+  void testSaveUserWithGenericResourceId() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
@@ -608,7 +608,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSaveGroupWithGenericResourceId() {
+  void testSaveGroupWithGenericResourceId() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
@@ -623,7 +623,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSetAuthenticatedIdToGenericId() {
+  void testSetAuthenticatedIdToGenericId() {
 
     // when/then
     assertThatThrownBy(() -> identityService.setAuthenticatedUserId("*"))
@@ -632,7 +632,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSetAuthenticationUserIdToGenericId() {
+  void testSetAuthenticationUserIdToGenericId() {
     List<String> tenentIds = List.of("*");
     // when/then
     assertThatThrownBy(() -> identityService.setAuthentication("aUserId", tenentIds))
@@ -641,7 +641,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSetAuthenticatedTenantIdToGenericId() {
+  void testSetAuthenticatedTenantIdToGenericId() {
     List<String> tenantIds = List.of("*");
     // when/then
     assertThatThrownBy(() -> identityService.setAuthentication(null, null, tenantIds))
@@ -650,7 +650,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSetAuthenticatedUserId() {
+  void testSetAuthenticatedUserId() {
     identityService.setAuthenticatedUserId("john");
 
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
@@ -662,7 +662,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSetAuthenticatedUserAndGroups() {
+  void testSetAuthenticatedUserAndGroups() {
     List<String> groups = Arrays.asList("sales", "development");
 
     identityService.setAuthentication("john", groups);
@@ -676,7 +676,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSetAuthenticatedUserGroupsAndTenants() {
+  void testSetAuthenticatedUserGroupsAndTenants() {
     List<String> groups = Arrays.asList("sales", "development");
     List<String> tenants = Arrays.asList("tenant1", "tenant2");
 
@@ -691,7 +691,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testAuthentication() {
+  void testAuthentication() {
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");
     identityService.saveUser(user);
@@ -704,7 +704,7 @@ public class IdentityServiceTest {
 
   @Test
   @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
-  public void testUnsuccessfulAttemptsResultInBlockedUser() throws ParseException {
+  void testUnsuccessfulAttemptsResultInBlockedUser() throws ParseException {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");
@@ -725,7 +725,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSuccessfulLoginAfterFailureAndDelay() {
+  void testSuccessfulLoginAfterFailureAndDelay() {
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");
     identityService.saveUser(user);
@@ -741,7 +741,7 @@ public class IdentityServiceTest {
 
   @Test
   @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
-  public void testSuccessfulLoginAfterFailureWithoutDelay() {
+  void testSuccessfulLoginAfterFailureWithoutDelay() {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");
@@ -765,7 +765,7 @@ public class IdentityServiceTest {
 
   @Test
   @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
-  public void testUnsuccessfulLoginAfterFailureWithoutDelay() {
+  void testUnsuccessfulLoginAfterFailureWithoutDelay() {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");
@@ -786,7 +786,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testFindGroupsByUserAndType() {
+  void testFindGroupsByUserAndType() {
     Group sales = identityService.newGroup("sales");
     sales.setType("hierarchy");
     identityService.saveGroup(sales);
@@ -844,7 +844,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testUser() {
+  void testUser() {
     User user = identityService.newUser("johndoe");
     user.setFirstName("John");
     user.setLastName("Doe");
@@ -861,7 +861,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testGroup() {
+  void testGroup() {
     Group group = identityService.newGroup("sales");
     group.setName("Sales division");
     identityService.saveGroup(group);
@@ -874,7 +874,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testMembership() {
+  void testMembership() {
     Group sales = identityService.newGroup("sales");
     identityService.saveGroup(sales);
 
@@ -920,7 +920,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testInvalidUserId() {
+  void testInvalidUserId() {
     String invalidId = "john doe";
     User user = identityService.newUser(invalidId);
 
@@ -933,7 +933,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testInvalidUserIdOnSave() {
+  void testInvalidUserIdOnSave() {
     String invalidId = "john doe";
     User updatedUser = identityService.newUser("john");
     updatedUser.setId(invalidId);
@@ -947,7 +947,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testInvalidGroupId() {
+  void testInvalidGroupId() {
     String invalidId = "john's group";
     Group group = identityService.newGroup(invalidId);
     try {
@@ -959,7 +959,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testInvalidGroupIdOnSave() {
+  void testInvalidGroupIdOnSave() {
     String invalidId = "john's group";
     Group updatedGroup = identityService.newGroup("group");
     updatedGroup.setId(invalidId);
@@ -973,7 +973,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testOperatonAdminId() {
+  void testOperatonAdminId() {
     String operatonAdminID = "operaton-admin";
     try {
       identityService.newUser(operatonAdminID);
@@ -985,7 +985,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testCustomResourceWhitelist() {
+  void testCustomResourceWhitelist() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/custom.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
@@ -1024,7 +1024,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void testSeparateResourceWhitelistPatterns() {
+  void testSeparateResourceWhitelistPatterns() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/custom.resource.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
@@ -1066,13 +1066,13 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void shouldCreateUserWithEmptyUserId() {
+  void shouldCreateUserWithEmptyUserId() {
     User user = identityService.newUser("");
     assertThat(user).isNotNull();
   }
 
   @Test
-  public void shouldNotIncludePlaintextPasswordInUserToString() {
+  void shouldNotIncludePlaintextPasswordInUserToString() {
     // given
     User user = identityService.newUser("id");
 
@@ -1087,7 +1087,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  public void shouldNotIncludeHashedPasswordAndSaltInUserToString() {
+  void shouldNotIncludeHashedPasswordAndSaltInUserToString() {
     // given
     User user = identityService.newUser("id");
 

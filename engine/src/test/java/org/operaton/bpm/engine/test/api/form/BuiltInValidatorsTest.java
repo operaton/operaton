@@ -46,12 +46,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class BuiltInValidatorsTest {
+class BuiltInValidatorsTest {
   
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  public void testDefaultFormFieldValidators() {
+  void testDefaultFormFieldValidators() {
 
     // assert default validators are registered
     FormValidators formValidators = processEngineConfiguration.getFormValidators();
@@ -68,7 +68,7 @@ public class BuiltInValidatorsTest {
   }
 
   @Test
-  public void testRequiredValidator() {
+  void testRequiredValidator() {
     RequiredValidator validator = new RequiredValidator();
     TestValidatorContext validatorContext = new TestValidatorContext(null);
 
@@ -93,7 +93,7 @@ public class BuiltInValidatorsTest {
   }
 
   @Test
-  public void testReadOnlyValidator() {
+  void testReadOnlyValidator() {
     ReadOnlyValidator validator = new ReadOnlyValidator();
 
     assertThat(validator.validate("", null)).isFalse();
@@ -104,7 +104,7 @@ public class BuiltInValidatorsTest {
   }
 
   @Test
-  public void testMinValidator() {
+  void testMinValidator() {
     MinValidator validator = new MinValidator();
 
     assertThat(validator.validate(null, null)).isTrue();
@@ -126,7 +126,7 @@ public class BuiltInValidatorsTest {
   }
 
   @Test
-  public void testMaxValidator() {
+  void testMaxValidator() {
     MaxValidator validator = new MaxValidator();
 
     assertThat(validator.validate(null, null)).isTrue();
@@ -148,7 +148,7 @@ public class BuiltInValidatorsTest {
   }
 
   @Test
-  public void testMaxLengthValidator() {
+  void testMaxLengthValidator() {
     MaxLengthValidator validator = new MaxLengthValidator();
 
     assertThat(validator.validate(null, null)).isTrue();
@@ -163,7 +163,7 @@ public class BuiltInValidatorsTest {
   }
 
   @Test
-  public void testMinLengthValidator() {
+  void testMinLengthValidator() {
     MinLengthValidator validator = new MinLengthValidator();
 
     assertThat(validator.validate(null, null)).isTrue();

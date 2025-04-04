@@ -78,10 +78,10 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author Tassilo Weidner
  */
-public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
+class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
@@ -89,7 +89,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     clearAuthorization();
   }
 
@@ -119,9 +119,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionInstance() {
+  void shouldResolveHistoricDecisionInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -153,9 +153,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveStandaloneHistoricDecisionInstance() {
+  void shouldResolveStandaloneHistoricDecisionInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery()
@@ -183,9 +183,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionInputInstance() {
+  void shouldResolveHistoricDecisionInputInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -221,9 +221,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveStandaloneHistoricDecisionInputInstance() {
+  void shouldResolveStandaloneHistoricDecisionInputInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery()
@@ -255,9 +255,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotResolveHistoricDecisionInputInstance() {
+  void shouldNotResolveHistoricDecisionInputInstance() {
     // given
 
     // when
@@ -282,9 +282,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionOutputInstance() {
+  void shouldResolveHistoricDecisionOutputInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -319,9 +319,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveStandaloneHistoricDecisionOutputInstance() {
+  void shouldResolveStandaloneHistoricDecisionOutputInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -356,9 +356,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotResolveHistoricDecisionOutputInstance() {
+  void shouldNotResolveHistoricDecisionOutputInstance() {
     // given
 
     // when
@@ -381,7 +381,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricProcessInstance() {
+  void shouldResolveHistoricProcessInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -406,7 +406,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricActivityInstance() {
+  void shouldResolveHistoricActivityInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -431,7 +431,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricTaskInstance() {
+  void shouldResolveHistoricTaskInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -456,7 +456,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricTaskAuthorization_HistoricTaskInstance() {
+  void shouldResolveHistoricTaskAuthorization_HistoricTaskInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -494,7 +494,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResetAuthorizationAfterUpdate_HistoricTaskInstance() {
+  void shouldResetAuthorizationAfterUpdate_HistoricTaskInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -533,7 +533,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAuthorizationAfterUpdate_HistoricTaskInstance() {
+  void shouldResolveAuthorizationAfterUpdate_HistoricTaskInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -579,7 +579,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricTaskAuthorization_HistoricProcessInstance() {
+  void shouldResolveHistoricTaskAuthorization_HistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -619,7 +619,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResetAuthorizationAfterUpdate_HistoricProcessInstance() {
+  void shouldResetAuthorizationAfterUpdate_HistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -672,7 +672,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAuthorizationAfterUpdate_HistoricProcessInstance() {
+  void shouldResolveAuthorizationAfterUpdate_HistoricProcessInstance() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -722,7 +722,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldWriteHistoryAndResolveHistoricTaskAuthorizationInDifferentTransactions() {
+  void shouldWriteHistoryAndResolveHistoricTaskAuthorizationInDifferentTransactions() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -757,7 +757,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldWriteHistoryAndResolveHistoricTaskAuthorizationInSameTransaction() {
+  void shouldWriteHistoryAndResolveHistoricTaskAuthorizationInSameTransaction() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -790,7 +790,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveHistoricTaskInstance() {
+  void shouldNotResolveHistoricTaskInstance() {
     // given
     Task task = taskService.newTask();
 
@@ -810,7 +810,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveVariableInstance() {
+  void shouldResolveVariableInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -834,7 +834,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricDetailByVariableInstanceUpdate() {
+  void shouldResolveHistoricDetailByVariableInstanceUpdate() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -864,7 +864,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricDetailByFormProperty() {
+  void shouldResolveHistoricDetailByFormProperty() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -891,7 +891,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveIncident() {
+  void shouldResolveIncident() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -928,7 +928,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveStandaloneIncident() {
+  void shouldNotResolveStandaloneIncident() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -963,7 +963,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveExternalTaskLog() {
+  void shouldResolveExternalTaskLog() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -994,7 +994,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveJobLog() {
+  void shouldResolveJobLog() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1029,7 +1029,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveJobLog() {
+  void shouldNotResolveJobLog() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1052,7 +1052,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_SetJobRetries() {
+  void shouldResolveUserOperationLog_SetJobRetries() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1084,7 +1084,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_SetExternalTaskRetries() {
+  void shouldResolveUserOperationLog_SetExternalTaskRetries() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1119,7 +1119,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_ClaimTask() {
+  void shouldResolveUserOperationLog_ClaimTask() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1146,7 +1146,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_CreateAttachment() {
+  void shouldResolveUserOperationLog_CreateAttachment() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1173,7 +1173,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveIdentityLink_AddCandidateUser() {
+  void shouldResolveIdentityLink_AddCandidateUser() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1202,7 +1202,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveIdentityLink_AddCandidateUser() {
+  void shouldNotResolveIdentityLink_AddCandidateUser() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1226,7 +1226,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByProcessInstanceId() {
+  void shouldResolveCommentByProcessInstanceId() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1256,7 +1256,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByTaskId() {
+  void shouldResolveCommentByTaskId() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1283,7 +1283,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveCommentByWrongTaskIdAndProcessInstanceId() {
+  void shouldNotResolveCommentByWrongTaskIdAndProcessInstanceId() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1311,7 +1311,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByTaskIdAndWrongProcessInstanceId() {
+  void shouldResolveCommentByTaskIdAndWrongProcessInstanceId() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1338,7 +1338,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveCommentByWrongProcessInstanceId() {
+  void shouldNotResolveCommentByWrongProcessInstanceId() {
     // given
 
     // when
@@ -1357,7 +1357,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveCommentByWrongTaskId() {
+  void shouldNotResolveCommentByWrongTaskId() {
     // given
 
     // when
@@ -1376,7 +1376,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByProcessInstanceId() {
+  void shouldResolveAttachmentByProcessInstanceId() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1406,7 +1406,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByTaskId() {
+  void shouldResolveAttachmentByTaskId() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1433,7 +1433,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveAttachmentByWrongTaskIdAndProcessInstanceId() {
+  void shouldNotResolveAttachmentByWrongTaskIdAndProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1459,7 +1459,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByTaskIdAndWrongProcessInstanceId() {
+  void shouldResolveAttachmentByTaskIdAndWrongProcessInstanceId() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1488,7 +1488,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveAttachmentByWrongTaskId() {
+  void shouldNotResolveAttachmentByWrongTaskId() {
     // given
 
     // when
@@ -1507,7 +1507,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_CreateAttachmentByTask() {
+  void shouldResolveByteArray_CreateAttachmentByTask() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1534,7 +1534,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_CreateAttachmentByProcessInstance() {
+  void shouldResolveByteArray_CreateAttachmentByProcessInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1564,7 +1564,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_SetVariable() {
+  void shouldResolveByteArray_SetVariable() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1591,7 +1591,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_UpdateVariable() {
+  void shouldResolveByteArray_UpdateVariable() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1621,7 +1621,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_JobLog() {
+  void shouldResolveByteArray_JobLog() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1660,7 +1660,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_ExternalTaskLog() {
+  void shouldResolveByteArray_ExternalTaskLog() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1702,9 +1702,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldResolveByteArray_DecisionInput() {
+  void shouldResolveByteArray_DecisionInput() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1739,9 +1739,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldResolveByteArray_StandaloneDecisionInput() {
+  void shouldResolveByteArray_StandaloneDecisionInput() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery()
@@ -1773,9 +1773,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldResolveByteArray_DecisionOutput() {
+  void shouldResolveByteArray_DecisionOutput() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1807,11 +1807,12 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     // then
     assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
+
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldResolveByteArray_StandaloneDecisionOutput() {
+  void shouldResolveByteArray_StandaloneDecisionOutput() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery()
@@ -1842,10 +1843,10 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/HistoricRootProcessInstanceTest.shouldResolveByteArray_DecisionOutputLiteralExpression.dmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/history/removaltime/HistoricRootProcessInstanceTest.shouldResolveByteArray_DecisionOutputLiteralExpression.dmn"
   })
-  public void shouldResolveByteArray_DecisionOutputLiteralExpression() {
+  void shouldResolveByteArray_DecisionOutputLiteralExpression() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
 
@@ -1879,10 +1880,10 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/api/history/removaltime/HistoricRootProcessInstanceTest.shouldResolveByteArray_DecisionOutputLiteralExpression.dmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/history/removaltime/HistoricRootProcessInstanceTest.shouldResolveByteArray_DecisionOutputLiteralExpression.dmn"
   })
-  public void shouldResolveByteArray_StandaloneDecisionOutputLiteralExpression() {
+  void shouldResolveByteArray_StandaloneDecisionOutputLiteralExpression() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery()
@@ -1913,7 +1914,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatch() {
+  void shouldResolveBatch() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -1955,7 +1956,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchJobLog() {
+  void shouldResolveBatchJobLog() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -1989,7 +1990,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchJobLog_ByteArray() {
+  void shouldResolveBatchJobLog_ByteArray() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2040,7 +2041,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchIncident_SeedJob() {
+  void shouldResolveBatchIncident_SeedJob() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2072,7 +2073,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchIncident_BatchJob() {
+  void shouldResolveBatchIncident_BatchJob() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
@@ -2113,7 +2114,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveBatchIncident_MonitorJob() {
+  void shouldResolveBatchIncident_MonitorJob() {
     // given
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();

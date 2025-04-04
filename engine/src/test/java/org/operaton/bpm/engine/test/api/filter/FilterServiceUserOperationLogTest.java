@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 @ExtendWith(ProcessEngineExtension.class)
-public class FilterServiceUserOperationLogTest {
+class FilterServiceUserOperationLogTest {
 
   protected FilterService filterService;
   protected HistoryService historyService;
@@ -47,7 +47,7 @@ public class FilterServiceUserOperationLogTest {
   protected IdentityService identityService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     // delete all existing filters
     for (Filter filter : filterService.createTaskFilterQuery().list()) {
       filterService.deleteFilter(filter.getId());
@@ -55,7 +55,7 @@ public class FilterServiceUserOperationLogTest {
   }
 
   @Test
-  public void testCreateFilter() {
+  void testCreateFilter() {
     // given
     Filter filter = filterService.newTaskFilter()
         .setName("name")
@@ -79,7 +79,7 @@ public class FilterServiceUserOperationLogTest {
   }
 
   @Test
-  public void testUpdateFilter() {
+  void testUpdateFilter() {
     // given
     Filter filter = filterService.newTaskFilter()
         .setName("name")
@@ -105,7 +105,7 @@ public class FilterServiceUserOperationLogTest {
   }
 
   @Test
-  public void testDeleteFilter() {
+  void testDeleteFilter() {
     // given
     Filter filter = filterService.newTaskFilter()
         .setName("name")

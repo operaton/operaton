@@ -108,7 +108,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     taskService = engineRule.getTaskService();
     runtimeService = engineRule.getRuntimeService();
@@ -118,7 +118,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
     taskService.deleteTask(taskId, true);
     for (HistoricVariableInstance historicVariableInstance : historyService.createHistoricVariableInstanceQuery().includeDeleted().list()) {

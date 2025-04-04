@@ -89,7 +89,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
     repositoryService = engineRule.getRepositoryService();
     runtimeService = engineRule.getRuntimeService();
@@ -98,7 +98,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
     repositoryService = null;
     runtimeService = null;

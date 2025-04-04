@@ -34,21 +34,21 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguratio
  * @author Daniel Meyer
  *
  */
-public class SharedSqlSessionFactoryCfgTest {
+class SharedSqlSessionFactoryCfgTest {
 
   @BeforeEach
   @AfterEach
-  public void cleanCachedSessionFactory() {
+  void cleanCachedSessionFactory() {
     ProcessEngineConfigurationImpl.cachedSqlSessionFactory = null;
   }
 
   @Test
-  public void shouldNotReuseSqlSessionFactoryByDefault() {
+  void shouldNotReuseSqlSessionFactoryByDefault() {
     assertThat(new StandaloneInMemProcessEngineConfiguration().isUseSharedSqlSessionFactory()).isFalse();
   }
 
   @Test
-  public void shouldCacheDbSqlSessionFactoryIfConfigured() {
+  void shouldCacheDbSqlSessionFactoryIfConfigured() {
     final TestEngineCfg cfg = new TestEngineCfg();
 
     // given
@@ -62,7 +62,7 @@ public class SharedSqlSessionFactoryCfgTest {
   }
 
   @Test
-  public void shouldNotCacheDbSqlSessionFactoryIfNotConfigured() {
+  void shouldNotCacheDbSqlSessionFactoryIfNotConfigured() {
     final TestEngineCfg cfg = new TestEngineCfg();
 
     // if
@@ -74,7 +74,7 @@ public class SharedSqlSessionFactoryCfgTest {
   }
 
   @Test
-  public void shouldReuseCachedSqlSessionFactoryIfConfigured() {
+  void shouldReuseCachedSqlSessionFactoryIfConfigured() {
     final TestEngineCfg cfg = new TestEngineCfg();
     SqlSessionFactory existingSessionFactory = mock(SqlSessionFactory.class);
 
@@ -91,7 +91,7 @@ public class SharedSqlSessionFactoryCfgTest {
   }
 
   @Test
-  public void shouldNotReuseCachedSqlSessionIfNotConfigured() {
+  void shouldNotReuseCachedSqlSessionIfNotConfigured() {
     final TestEngineCfg cfg = new TestEngineCfg();
     SqlSessionFactory existingSessionFactory = mock(SqlSessionFactory.class);
 

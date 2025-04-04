@@ -39,14 +39,14 @@ import org.operaton.bpm.engine.impl.dmn.el.ProcessEngineJuelElProvider;
 /**
  * @author Philipp Ossler
  */
-public class DmnEngineConfigurationTest {
+class DmnEngineConfigurationTest {
 
   protected static final String CONFIGURATION_XML = "org/operaton/bpm/engine/test/api/cfg/custom-dmn-operaton.cfg.xml";
 
   protected ProcessEngine engine;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (engine != null) {
       engine.close();
       engine = null;
@@ -54,7 +54,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setDefaultInputExpressionLanguage() {
+  void setDefaultInputExpressionLanguage() {
     // given a DMN engine configuration with default expression language
     DefaultDmnEngineConfiguration dmnEngineConfiguration = (DefaultDmnEngineConfiguration) DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
     dmnEngineConfiguration.setDefaultInputExpressionExpressionLanguage("groovy");
@@ -70,7 +70,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setCustomPostTableExecutionListener() {
+  void setCustomPostTableExecutionListener() {
     // given a DMN engine configuration with custom listener
     DefaultDmnEngineConfiguration dmnEngineConfiguration = (DefaultDmnEngineConfiguration) DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
     DmnDecisionTableEvaluationListener customEvaluationListener = mock(DmnDecisionTableEvaluationListener.class);
@@ -89,7 +89,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setFeelEngineFactory() {
+  void setFeelEngineFactory() {
     // given a DMN engine configuration with feel engine factory
     DefaultDmnEngineConfiguration dmnEngineConfiguration = (DefaultDmnEngineConfiguration) DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
     FeelEngineFactory feelEngineFactory = mock(FeelEngineFactory.class);
@@ -106,7 +106,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setScriptEngineResolver() {
+  void setScriptEngineResolver() {
     // given a DMN engine configuration with script engine resolver
     DefaultDmnEngineConfiguration dmnEngineConfiguration = (DefaultDmnEngineConfiguration) DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
     DmnScriptEngineResolver scriptEngineResolver = mock(DmnScriptEngineResolver.class);
@@ -123,7 +123,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setElProvider() {
+  void setElProvider() {
     // given a DMN engine configuration with el provider
     DefaultDmnEngineConfiguration dmnEngineConfiguration = (DefaultDmnEngineConfiguration) DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
     ElProvider elProvider = mock(ElProvider.class);
@@ -140,7 +140,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setProcessEngineElProviderByDefault() {
+  void setProcessEngineElProviderByDefault() {
     // given a default DMN engine configuration without el provider
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
 
@@ -152,7 +152,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setProvidedElProvider() {
+  void setProvidedElProvider() {
     // given provided a el provider in process engine configuration
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     ElProvider elProvider = mock(ElProvider.class);
@@ -166,7 +166,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setProcessEngineScriptEnginesByDefault() {
+  void setProcessEngineScriptEnginesByDefault() {
     // given a default DMN engine configuration without script engine resolver
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
 
@@ -178,7 +178,7 @@ public class DmnEngineConfigurationTest {
   }
 
   @Test
-  public void setDmnEngineConfigurationOverXmlConfiguration() {
+  void setDmnEngineConfigurationOverXmlConfiguration() {
     // given an embedded DMN engine configuration in XML process engine configuration
     // with default expression language
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration

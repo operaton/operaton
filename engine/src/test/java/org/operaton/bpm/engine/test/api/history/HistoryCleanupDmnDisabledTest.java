@@ -47,7 +47,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class HistoryCleanupDmnDisabledTest {
+class HistoryCleanupDmnDisabledTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -63,7 +63,7 @@ public class HistoryCleanupDmnDisabledTest {
   private ManagementService managementService;
 
   @AfterEach
-  public void clearDatabase(){
+  void clearDatabase(){
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
 
       List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
@@ -92,7 +92,7 @@ public class HistoryCleanupDmnDisabledTest {
   @Test
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void historyCleanupWithDisabledDmn() {
+  void historyCleanupWithDisabledDmn() {
 
     prepareHistoricProcesses("oneTaskProcess");
 

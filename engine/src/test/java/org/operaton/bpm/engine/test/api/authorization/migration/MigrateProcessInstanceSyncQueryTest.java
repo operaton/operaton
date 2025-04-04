@@ -56,13 +56,13 @@ public class MigrateProcessInstanceSyncQueryTest {
   protected List<Authorization> authorizations;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authorizations = new ArrayList<>();
     authRule.createUserAndGroup("userId", "groupId");
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     for (Authorization authorization : authorizations) {
       engineRule.getAuthorizationService().deleteAuthorization(authorization.getId());
     }
@@ -71,7 +71,7 @@ public class MigrateProcessInstanceSyncQueryTest {
   }
 
   @Test
-  public void testMigrateWithQuery() {
+  void testMigrateWithQuery() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.ONE_TASK_PROCESS)

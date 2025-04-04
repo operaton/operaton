@@ -30,11 +30,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-public class ForceCloseMybatisConnectionPoolTest {
+class ForceCloseMybatisConnectionPoolTest {
 
 
   @Test
-  public void testForceCloseMybatisConnectionPoolTrue() {
+  void testForceCloseMybatisConnectionPoolTrue() {
 
     // given
     // that the process engine is configured with forceCloseMybatisConnectionPool = true
@@ -60,7 +60,7 @@ public class ForceCloseMybatisConnectionPoolTest {
   }
 
   @Test
-  public void testForceCloseMybatisConnectionPoolFalse() {
+  void testForceCloseMybatisConnectionPoolFalse() {
 
     // given
     // that the process engine is configured with forceCloseMybatisConnectionPool = false

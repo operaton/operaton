@@ -65,7 +65,7 @@ public class ResourceAuthorizationProviderTest {
   protected Group testGroup;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setResourceAuthorizationProvider(new MyResourceAuthorizationProvider());
 
@@ -83,7 +83,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
@@ -97,7 +97,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @Test
-  public void testNewTaskAssignee() {
+  void testNewTaskAssignee() {
     // given
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -127,7 +127,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @Test
-  public void testNewTaskOwner() {
+  void testNewTaskOwner() {
     // given
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -157,7 +157,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @Test
-  public void testAddCandidateUser() {
+  void testAddCandidateUser() {
     // given
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -178,7 +178,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @Test
-  public void testAddUserIdentityLink() {
+  void testAddUserIdentityLink() {
     // given
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -199,7 +199,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @Test
-  public void testAddCandidateGroup() {
+  void testAddCandidateGroup() {
     // given
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -220,7 +220,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @Test
-  public void testAddGroupIdentityLink() {
+  void testAddGroupIdentityLink() {
     // given
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -241,7 +241,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @Test
-  public void testDeleteUserIdentityLink() {
+  void testDeleteUserIdentityLink() {
     // given
     MyResourceAuthorizationProvider.clearProperties();
 
@@ -263,7 +263,7 @@ public class ResourceAuthorizationProviderTest {
   }
 
   @Test
-  public void testDeleteGroupIdentityLink() {
+  void testDeleteGroupIdentityLink() {
     // given
     MyResourceAuthorizationProvider.clearProperties();
 

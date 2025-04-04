@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * @author Tassilo Weidner
  */
-public class HistoryCleanupStrategyConfigurationTest {
+class HistoryCleanupStrategyConfigurationTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -46,7 +46,7 @@ public class HistoryCleanupStrategyConfigurationTest {
   protected static ProcessEngineConfigurationImpl engineConfiguration;
 
   @BeforeEach
-  public void init() {
+  void init() {
     engineConfiguration
       .setHistoryCleanupStrategy(null)
       .setHistoryRemovalTimeStrategy(null)
@@ -54,7 +54,7 @@ public class HistoryCleanupStrategyConfigurationTest {
   }
 
   @AfterAll
-  public static void tearDown() {
+  static void tearDown() {
     engineConfiguration
       .setHistoryRemovalTimeStrategy(null)
       .initHistoryRemovalTime();
@@ -64,7 +64,7 @@ public class HistoryCleanupStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldAutomaticallyConfigure() {
+  void shouldAutomaticallyConfigure() {
     // given
 
     engineConfiguration
@@ -78,7 +78,7 @@ public class HistoryCleanupStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureToRemovalTimeBased() {
+  void shouldConfigureToRemovalTimeBased() {
     // given
 
     engineConfiguration
@@ -92,7 +92,7 @@ public class HistoryCleanupStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureToRemovalTimeBasedWithRemovalTimeStrategyToEnd() {
+  void shouldConfigureToRemovalTimeBasedWithRemovalTimeStrategyToEnd() {
     // given
 
     engineConfiguration
@@ -108,7 +108,7 @@ public class HistoryCleanupStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureToRemovalTimeBasedWithRemovalTimeStrategyToStart() {
+  void shouldConfigureToRemovalTimeBasedWithRemovalTimeStrategyToStart() {
     // given
 
     engineConfiguration
@@ -125,7 +125,7 @@ public class HistoryCleanupStrategyConfigurationTest {
 
 
   @Test
-  public void shouldConfigureToEndTimeBased() {
+  void shouldConfigureToEndTimeBased() {
     // given
 
     engineConfiguration
@@ -139,7 +139,7 @@ public class HistoryCleanupStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureWithNotExistentStrategy() {
+  void shouldConfigureWithNotExistentStrategy() {
     // given
 
     engineConfiguration
@@ -152,7 +152,7 @@ public class HistoryCleanupStrategyConfigurationTest {
   }
 
   @Test
-  public void shouldConfigureToRemovalTimeBasedWithRemovalTimeStrategyToNone() {
+  void shouldConfigureToRemovalTimeBasedWithRemovalTimeStrategyToNone() {
     // given
 
     engineConfiguration

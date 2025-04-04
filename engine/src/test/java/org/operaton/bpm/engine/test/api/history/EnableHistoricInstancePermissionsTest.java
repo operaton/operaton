@@ -30,18 +30,18 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class EnableHistoricInstancePermissionsTest {
+class EnableHistoricInstancePermissionsTest {
 
   protected ProcessEngineConfigurationImpl config;
   protected AuthorizationService authorizationService;
 
   @AfterEach
-  public void resetConfig() {
+  void resetConfig() {
     config.setEnableHistoricInstancePermissions(false);
   }
 
   @Test
-  public void shouldBeFalseByDefault() {
+  void shouldBeFalseByDefault() {
     // given
 
     // when
@@ -52,7 +52,7 @@ public class EnableHistoricInstancePermissionsTest {
   }
 
   @Test
-  public void shouldBeConfiguredToTrue() {
+  void shouldBeConfiguredToTrue() {
     // given
 
     // when
@@ -64,7 +64,7 @@ public class EnableHistoricInstancePermissionsTest {
   }
 
   @Test
-  public void shouldBeConfiguredToFalse() {
+  void shouldBeConfiguredToFalse() {
     // given
 
     // when
@@ -76,7 +76,7 @@ public class EnableHistoricInstancePermissionsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenHistoricInstancePermissionsAreDisabled_Task() {
+  void shouldThrowExceptionWhenHistoricInstancePermissionsAreDisabled_Task() {
     // given
     config.setEnableHistoricInstancePermissions(false);
 
@@ -89,7 +89,7 @@ public class EnableHistoricInstancePermissionsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenHistoricInstancePermissionsAreDisabled_ProcessInstance() {
+  void shouldThrowExceptionWhenHistoricInstancePermissionsAreDisabled_ProcessInstance() {
     // given
     config.setEnableHistoricInstancePermissions(false);
 

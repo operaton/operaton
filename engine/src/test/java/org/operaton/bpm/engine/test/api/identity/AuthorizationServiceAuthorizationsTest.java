@@ -56,23 +56,23 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class AuthorizationServiceAuthorizationsTest {
+class AuthorizationServiceAuthorizationsTest {
 
   private static final String JONNY_2 = "jonny2";
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected AuthorizationService authorizationService;
   protected IdentityService identityService;
-  
+
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
 
   }
 
   @Test
-  public void testCreateAuthorization() {
+  void testCreateAuthorization() {
 
     // add base permission which allows nobody to create authorizations
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
@@ -116,7 +116,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testDeleteAuthorization() {
+  void testDeleteAuthorization() {
 
     // create global auth
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
@@ -145,7 +145,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testUserUpdateAuthorizations() {
+  void testUserUpdateAuthorizations() {
 
     // create global auth
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
@@ -186,7 +186,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testAuthorizationQueryAuthorizations() {
+  void testAuthorizationQueryAuthorizations() {
 
     // we are jonny2
     String authUserId = "jonny2";
@@ -210,7 +210,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testSaveAuthorizationAddPermissionWithInvalidResource() {
+  void testSaveAuthorizationAddPermissionWithInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -246,7 +246,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testSaveAuthorizationMultipleResourcesIncludingInvalidResource() {
+  void testSaveAuthorizationMultipleResourcesIncludingInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -267,7 +267,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testSaveAuthorizationRemovePermissionWithInvalidResource() {
+  void testSaveAuthorizationRemovePermissionWithInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
     authorization.setUserId("userId");
@@ -303,7 +303,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testSaveAuthorizationSetPermissionsWithInvalidResource() {
+  void testSaveAuthorizationSetPermissionsWithInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -339,7 +339,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testSaveAuthorizationSetPermissionsWithValidResource() {
+  void testSaveAuthorizationSetPermissionsWithValidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -364,7 +364,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testIsUserAuthorizedWithInvalidResource() {
+  void testIsUserAuthorizedWithInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     String userId = "userId";
@@ -406,7 +406,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testIsUserAuthorizedWithInvalidResourceMultiplePermissions() {
+  void testIsUserAuthorizedWithInvalidResourceMultiplePermissions() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     String userId = "userId";
@@ -435,7 +435,7 @@ public class AuthorizationServiceAuthorizationsTest {
   }
 
   @Test
-  public void testIsUserAuthorizedWithValidResourceImpl() {
+  void testIsUserAuthorizedWithValidResourceImpl() {
     // given
     ResourceImpl resource = new ResourceImpl("application", 0);
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);

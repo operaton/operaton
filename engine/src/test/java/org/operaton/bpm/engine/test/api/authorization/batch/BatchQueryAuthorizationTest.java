@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
  * @author Thorben Lindhauer
  *
  */
-public class BatchQueryAuthorizationTest {
+class BatchQueryAuthorizationTest {
 
   @RegisterExtension
   private static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -55,12 +55,12 @@ public class BatchQueryAuthorizationTest {
   protected Batch batch2;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authRule.createUserAndGroup("user", "group");
   }
 
   @BeforeEach
-  public void deployProcessesAndCreateMigrationPlan() {
+  void deployProcessesAndCreateMigrationPlan() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -82,18 +82,18 @@ public class BatchQueryAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 
   @AfterEach
-  public void deleteBatches() {
+  void deleteBatches() {
     engineRule.getManagementService().deleteBatch(batch1.getId(), true);
     engineRule.getManagementService().deleteBatch(batch2.getId(), true);
   }
 
   @Test
-  public void testQueryList() {
+  void testQueryList() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, batch1.getId(), "user", Permissions.READ);
 
@@ -108,7 +108,7 @@ public class BatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, batch1.getId(), "user", Permissions.READ);
 
@@ -122,7 +122,7 @@ public class BatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryNoAuthorizations() {
+  void testQueryNoAuthorizations() {
     // when
     authRule.enableAuthorization("user");
     long count = engineRule.getManagementService().createBatchQuery().count();
@@ -133,7 +133,7 @@ public class BatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryListAccessAll() {
+  void testQueryListAccessAll() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, ANY, "user", Permissions.READ);
 
@@ -147,7 +147,7 @@ public class BatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryListMultiple() {
+  void testQueryListMultiple() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, batch1.getId(), "user", Permissions.READ);
     authRule.createGrantAuthorization(Resources.BATCH, ANY, "user", Permissions.READ);
@@ -162,7 +162,7 @@ public class BatchQueryAuthorizationTest {
   }
 
   @Test
-  public void shouldFindEmptyBatchListWithRevokedReadPermissionOnAllBatches() {
+  void shouldFindEmptyBatchListWithRevokedReadPermissionOnAllBatches() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, ANY, ANY, Permissions.READ);
     authRule.createRevokeAuthorization(Resources.BATCH, ANY, "user", Permissions.READ);
@@ -177,7 +177,7 @@ public class BatchQueryAuthorizationTest {
   }
 
   @Test
-  public void shouldFindNoBatchWithRevokedReadPermissionOnAllBatches() {
+  void shouldFindNoBatchWithRevokedReadPermissionOnAllBatches() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, ANY, ANY, Permissions.READ);
     authRule.createRevokeAuthorization(Resources.BATCH, ANY, "user", Permissions.READ);

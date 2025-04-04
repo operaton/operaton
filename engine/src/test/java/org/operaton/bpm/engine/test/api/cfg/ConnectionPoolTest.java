@@ -31,10 +31,10 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 /**
  * @author Joram Barrez
  */
-public class ConnectionPoolTest {
+class ConnectionPoolTest {
 
   @Test
-  public void testMyBatisConnectionPoolProperlyConfigured() {
+  void testMyBatisConnectionPoolProperlyConfigured() {
     ProcessEngineConfigurationImpl config = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/cfg/connection-pool.operaton.cfg.xml");
 

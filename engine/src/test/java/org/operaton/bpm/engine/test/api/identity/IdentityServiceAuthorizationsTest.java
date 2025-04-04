@@ -68,7 +68,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class IdentityServiceAuthorizationsTest {
+class IdentityServiceAuthorizationsTest {
 
   private static final String USER_ID = "jonny2";
   
@@ -77,14 +77,14 @@ public class IdentityServiceAuthorizationsTest {
   protected IdentityService identityService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
 
   }
 
   @Test
-  public void shouldCreateTransientUserWithoutPermission() {
+  void shouldCreateTransientUserWithoutPermission() {
     // given nobody has CREATE permission on USER resource
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
     basePerms.setResource(USER);
@@ -106,7 +106,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testUserInsertionAuthorizations() {
+  void testUserInsertionAuthorizations() {
 
     // add base permission which allows nobody to create users:
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
@@ -134,7 +134,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testUserDeleteAuthorizations() {
+  void testUserDeleteAuthorizations() {
 
     // crate user while still in god-mode:
     User jonny1 = identityService.newUser("jonny1");
@@ -165,7 +165,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantAuthorizationAfterDeleteUser() {
+  void testTenantAuthorizationAfterDeleteUser() {
     // given jonny2 who is allowed to do user operations
     User jonny = identityService.newUser(USER_ID);
     identityService.saveUser(jonny);
@@ -203,7 +203,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testUserUpdateAuthorizations() {
+  void testUserUpdateAuthorizations() {
 
     // insert user while still in god-mode:
     identityService.saveUser(identityService.newUser("jonny1"));
@@ -240,7 +240,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testUserUnlock() {
+  void testUserUnlock() {
 
     // crate user while still in god-mode:
     String userId = "jonny";
@@ -280,7 +280,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testUserUnlockWithoutAuthorization() {
+  void testUserUnlockWithoutAuthorization() {
     // create user while still in god-mode:
     String userId = "jonny";
     User jonny = identityService.newUser(userId);
@@ -320,7 +320,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void shouldCreateTransientGroupWithoutPermission() {
+  void shouldCreateTransientGroupWithoutPermission() {
     // given nobody has CREATE permission on GROUP resource
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
     basePerms.setResource(GROUP);
@@ -342,7 +342,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testGroupInsertionAuthorizations() {
+  void testGroupInsertionAuthorizations() {
 
     // add base permission which allows nobody to create groups:
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
@@ -370,7 +370,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testGroupDeleteAuthorizations() {
+  void testGroupDeleteAuthorizations() {
 
     // crate group while still in god-mode:
     Group group1 = identityService.newGroup("group1");
@@ -402,7 +402,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantAuthorizationAfterDeleteGroup() {
+  void testTenantAuthorizationAfterDeleteGroup() {
     // given jonny2 who is allowed to do group operations
     User jonny = identityService.newUser(USER_ID);
     identityService.saveUser(jonny);
@@ -440,7 +440,7 @@ public class IdentityServiceAuthorizationsTest {
 
 
   @Test
-  public void testGroupUpdateAuthorizations() {
+  void testGroupUpdateAuthorizations() {
 
     // crate group while still in god-mode:
     Group group1 = identityService.newGroup("group1");
@@ -480,7 +480,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void shouldCreateTransientTenantWithoutPermission() {
+  void shouldCreateTransientTenantWithoutPermission() {
     // given nobody has CREATE permission on TENANT resource
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
     basePerms.setResource(TENANT);
@@ -502,7 +502,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantInsertionAuthorizations() {
+  void testTenantInsertionAuthorizations() {
 
     // add base permission which allows nobody to create tenants:
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
@@ -530,7 +530,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantDeleteAuthorizations() {
+  void testTenantDeleteAuthorizations() {
 
     // create tenant
     Tenant tenant = new TenantEntity("tenant");
@@ -561,7 +561,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantUpdateAuthorizations() {
+  void testTenantUpdateAuthorizations() {
 
     // create tenant
     Tenant tenant = new TenantEntity("tenant");
@@ -600,7 +600,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testMembershipCreateAuthorizations() {
+  void testMembershipCreateAuthorizations() {
 
     User jonny1 = identityService.newUser("jonny1");
     identityService.saveUser(jonny1);
@@ -632,7 +632,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testMembershipDeleteAuthorizations() {
+  void testMembershipDeleteAuthorizations() {
 
     User jonny1 = identityService.newUser("jonny1");
     identityService.saveUser(jonny1);
@@ -664,7 +664,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void shouldKeepAuthorizationsForAnyUser() {
+  void shouldKeepAuthorizationsForAnyUser() {
     // given
     Group myGroup = identityService.newGroup("myGroup");
     identityService.saveGroup(myGroup);
@@ -694,7 +694,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void shouldRemoveAuthorizationForUserAndKeepAuthorizationsForAnyUser() {
+  void shouldRemoveAuthorizationForUserAndKeepAuthorizationsForAnyUser() {
     // given
     Group myGroup = identityService.newGroup("myGroup");
     identityService.saveGroup(myGroup);
@@ -727,7 +727,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantUserMembershipCreateAuthorizations() {
+  void testTenantUserMembershipCreateAuthorizations() {
 
     User jonny1 = identityService.newUser("jonny1");
     identityService.saveUser(jonny1);
@@ -759,7 +759,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantGroupMembershipCreateAuthorizations() {
+  void testTenantGroupMembershipCreateAuthorizations() {
 
     Group group1 = identityService.newGroup("group1");
     identityService.saveGroup(group1);
@@ -791,7 +791,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantUserMembershipDeleteAuthorizations() {
+  void testTenantUserMembershipDeleteAuthorizations() {
 
     User jonny1 = identityService.newUser("jonny1");
     identityService.saveUser(jonny1);
@@ -823,7 +823,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantGroupMembershipDeleteAuthorizations() {
+  void testTenantGroupMembershipDeleteAuthorizations() {
 
     Group group1 = identityService.newGroup("group1");
     identityService.saveGroup(group1);
@@ -855,7 +855,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testUserQueryAuthorizations() {
+  void testUserQueryAuthorizations() {
 
     // we are jonny2
     String authUserId = "jonny2";
@@ -938,7 +938,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testUserQueryAuthorizationsMultipleGroups() {
+  void testUserQueryAuthorizationsMultipleGroups() {
 
     // we are jonny2
     String authUserId = "jonny2";
@@ -1102,7 +1102,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testGroupQueryAuthorizations() {
+  void testGroupQueryAuthorizations() {
 
     // we are jonny2
     String authUserId = "jonny2";
@@ -1184,7 +1184,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void testTenantQueryAuthorizations() {
+  void testTenantQueryAuthorizations() {
     // we are jonny2
     String authUserId = "jonny2";
     identityService.setAuthenticatedUserId(authUserId);
@@ -1259,7 +1259,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void shouldDeleteTenantUserMembership() {
+  void shouldDeleteTenantUserMembership() {
     // given
     User userOne = identityService.newUser("userOne");
     identityService.saveUser(userOne);
@@ -1301,7 +1301,7 @@ public class IdentityServiceAuthorizationsTest {
   }
 
   @Test
-  public void shouldDeleteTenantGroupMembership() {
+  void shouldDeleteTenantGroupMembership() {
     // given
     Group groupOne = identityService.newGroup("groupOne");
     identityService.saveGroup(groupOne);

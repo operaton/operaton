@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Daniel Meyer
  *
  */
-public class AuthorizationQueryTest {
+class AuthorizationQueryTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -47,7 +47,7 @@ public class AuthorizationQueryTest {
   protected AuthorizationService authorizationService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
 
     Resource resource1 = TestResource.RESOURCE1;
@@ -64,8 +64,9 @@ public class AuthorizationQueryTest {
     createAuthorization(null, "group3", resource2, "resource2-3", TestPermissions.DELETE);
 
   }
+
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     List<Authorization> list = authorizationService.createAuthorizationQuery().list();
     for (Authorization authorization : list) {
       authorizationService.deleteAuthorization(authorization.getId());
@@ -89,7 +90,7 @@ public class AuthorizationQueryTest {
   }
 
   @Test
-  public void testValidQueryCounts() {
+  void testValidQueryCounts() {
 
     Resource resource1 = TestResource.RESOURCE1;
     Resource resource2 = TestResource.RESOURCE2;
@@ -139,7 +140,7 @@ public class AuthorizationQueryTest {
   }
 
   @Test
-  public void testValidQueryLists() {
+  void testValidQueryLists() {
 
     Resource resource1 = TestResource.RESOURCE1;
     Resource resource2 = TestResource.RESOURCE2;
@@ -187,7 +188,7 @@ public class AuthorizationQueryTest {
   }
 
   @Test
-  public void testOrderByQueries() {
+  void testOrderByQueries() {
 
     Resource resource1 = TestResource.RESOURCE1;
     Resource resource2 = TestResource.RESOURCE2;
@@ -235,7 +236,7 @@ public class AuthorizationQueryTest {
   }
 
   @Test
-  public void testInvalidOrderByQueries() {
+  void testInvalidOrderByQueries() {
     var authorizationQuery = authorizationService.createAuthorizationQuery().orderByResourceType().orderByResourceId();
     try {
       authorizationQuery.list();
@@ -267,7 +268,7 @@ public class AuthorizationQueryTest {
   }
 
   @Test
-  public void testInvalidQueries() {
+  void testInvalidQueries() {
 
     // cannot query for user id and group id at the same time
 

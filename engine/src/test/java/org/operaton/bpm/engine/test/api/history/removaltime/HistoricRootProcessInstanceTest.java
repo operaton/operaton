@@ -64,7 +64,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author Tassilo Weidner
  */
-public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
+class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   protected final String CALLED_PROCESS_KEY = "calledProcess";
 
@@ -89,9 +89,9 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionInstance() {
+  void shouldResolveHistoricDecisionInstance() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
     .startEvent()
@@ -118,9 +118,9 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionInputInstance() {
+  void shouldResolveHistoricDecisionInputInstance() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
     .startEvent()
@@ -151,9 +151,9 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotResolveHistoricDecisionInputInstance() {
+  void shouldNotResolveHistoricDecisionInputInstance() {
     // given
 
     // when
@@ -178,9 +178,9 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldResolveHistoricDecisionOutputInstance() {
+  void shouldResolveHistoricDecisionOutputInstance() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
     .startEvent()
@@ -210,9 +210,9 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotResolveHistoricDecisionOutputInstance() {
+  void shouldNotResolveHistoricDecisionOutputInstance() {
     // given
 
     // when
@@ -235,7 +235,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricProcessInstance() {
+  void shouldResolveHistoricProcessInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -256,7 +256,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricActivityInstance() {
+  void shouldResolveHistoricActivityInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -277,7 +277,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricTaskInstance() {
+  void shouldResolveHistoricTaskInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -298,7 +298,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveHistoricTaskInstance() {
+  void shouldNotResolveHistoricTaskInstance() {
     // given
     Task task = taskService.newTask();
 
@@ -318,7 +318,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricVariableInstance() {
+  void shouldResolveHistoricVariableInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -339,7 +339,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricDetailByVariableInstanceUpdate() {
+  void shouldResolveHistoricDetailByVariableInstanceUpdate() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -365,7 +365,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveHistoricDetailByFormProperty() {
+  void shouldResolveHistoricDetailByFormProperty() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -388,7 +388,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveIncident() {
+  void shouldResolveIncident() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -419,7 +419,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveStandaloneIncident() {
+  void shouldNotResolveStandaloneIncident() {
     // given
     testRule.deploy(CALLED_PROCESS);
 
@@ -450,7 +450,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveExternalTaskLog() {
+  void shouldResolveExternalTaskLog() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -476,7 +476,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveJobLog() {
+  void shouldResolveJobLog() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -505,7 +505,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveJobLog() {
+  void shouldNotResolveJobLog() {
     // given
     testRule.deploy(CALLED_PROCESS);
 
@@ -526,7 +526,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_SetJobRetries() {
+  void shouldResolveUserOperationLog_SetJobRetries() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -554,7 +554,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_SetExternalTaskRetries() {
+  void shouldResolveUserOperationLog_SetExternalTaskRetries() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -584,7 +584,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_ClaimTask() {
+  void shouldResolveUserOperationLog_ClaimTask() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -609,7 +609,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveUserOperationLog_CreateAttachment() {
+  void shouldResolveUserOperationLog_CreateAttachment() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -632,7 +632,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveIdentityLink_AddCandidateUser() {
+  void shouldResolveIdentityLink_AddCandidateUser() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -658,7 +658,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveIdentityLink_AddCandidateUser() {
+  void shouldNotResolveIdentityLink_AddCandidateUser() {
     // given
     Task aTask = taskService.newTask();
     taskService.saveTask(aTask);
@@ -680,7 +680,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByProcessInstanceId() {
+  void shouldResolveCommentByProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -706,7 +706,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByTaskId() {
+  void shouldResolveCommentByTaskId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -729,7 +729,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveCommentByWrongTaskIdAndProcessInstanceId() {
+  void shouldNotResolveCommentByWrongTaskIdAndProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -755,7 +755,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveCommentByTaskIdAndWrongProcessInstanceId() {
+  void shouldResolveCommentByTaskIdAndWrongProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -778,7 +778,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveCommentByWrongProcessInstanceId() {
+  void shouldNotResolveCommentByWrongProcessInstanceId() {
     // given
 
     // when
@@ -797,7 +797,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveCommentByWrongTaskId() {
+  void shouldNotResolveCommentByWrongTaskId() {
     // given
 
     // when
@@ -816,7 +816,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByProcessInstanceId() {
+  void shouldResolveAttachmentByProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -842,7 +842,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByTaskId() {
+  void shouldResolveAttachmentByTaskId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -865,7 +865,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveAttachmentByWrongTaskIdAndProcessInstanceId() {
+  void shouldNotResolveAttachmentByWrongTaskIdAndProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -891,7 +891,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAttachmentByTaskIdAndWrongProcessInstanceId() {
+  void shouldResolveAttachmentByTaskIdAndWrongProcessInstanceId() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -916,7 +916,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotResolveAttachmentByWrongTaskId() {
+  void shouldNotResolveAttachmentByWrongTaskId() {
     // given
 
     // when
@@ -935,7 +935,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_CreateAttachmentByTask() {
+  void shouldResolveByteArray_CreateAttachmentByTask() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -958,7 +958,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_CreateAttachmentByProcessInstance() {
+  void shouldResolveByteArray_CreateAttachmentByProcessInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -984,7 +984,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_SetVariable() {
+  void shouldResolveByteArray_SetVariable() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1007,7 +1007,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_UpdateVariable() {
+  void shouldResolveByteArray_UpdateVariable() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1033,7 +1033,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_JobLog() {
+  void shouldResolveByteArray_JobLog() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1066,7 +1066,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveByteArray_ExternalTaskLog() {
+  void shouldResolveByteArray_ExternalTaskLog() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -1103,9 +1103,9 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldResolveByteArray_DecisionInput() {
+  void shouldResolveByteArray_DecisionInput() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
       .startEvent()
@@ -1135,9 +1135,9 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"
   })
-  public void shouldResolveByteArray_DecisionOutput() {
+  void shouldResolveByteArray_DecisionOutput() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
       .startEvent()
@@ -1167,7 +1167,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
   @Test
   @Deployment
-  public void shouldResolveByteArray_DecisionOutputLiteralExpression() {
+  void shouldResolveByteArray_DecisionOutputLiteralExpression() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
       .startEvent()
@@ -1196,7 +1196,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
   }
 
   @Test
-  public void shouldResolveAuthorization() {
+  void shouldResolveAuthorization() {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 

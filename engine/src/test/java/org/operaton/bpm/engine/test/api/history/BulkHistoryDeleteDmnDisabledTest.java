@@ -38,7 +38,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class BulkHistoryDeleteDmnDisabledTest {
+class BulkHistoryDeleteDmnDisabledTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -51,7 +51,7 @@ public class BulkHistoryDeleteDmnDisabledTest {
   private HistoryService historyService;
 
   @Test
-  public void bulkHistoryDeleteWithDisabledDmn() {
+  void bulkHistoryDeleteWithDisabledDmn() {
     BpmnModelInstance model = Bpmn.createExecutableProcess("someProcess")
         .operatonHistoryTimeToLive(180)
         .startEvent()

@@ -60,7 +60,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class ExternalTaskQueryTest {
+class ExternalTaskQueryTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final String TOPIC_NAME = "externalTaskTopic";
@@ -76,18 +76,18 @@ public class ExternalTaskQueryTest {
   protected ExternalTaskService externalTaskService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     ClockUtil.setCurrentTime(new Date());
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     ClockUtil.reset();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testSingleResult() {
+  void testSingleResult() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -111,21 +111,21 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testList() {
+  void testList() {
     startInstancesByKey("oneExternalTaskProcess", 5);
     assertThat(externalTaskService.createExternalTaskQuery().list()).hasSize(5);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testCount() {
+  void testCount() {
     startInstancesByKey("oneExternalTaskProcess", 5);
     assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(5);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByLockState() {
+  void testQueryByLockState() {
     // given
     startInstancesByKey("oneExternalTaskProcess", 5);
     lockInstances(TOPIC_NAME, 10000L, 3, WORKER_ID);
@@ -148,7 +148,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     // given
     org.operaton.bpm.engine.repository.Deployment secondDeployment = repositoryService
       .createDeployment()
@@ -187,7 +187,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
     // given
     startInstancesByKey("parallelExternalTaskProcess", 3);
 
@@ -206,7 +206,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByActivityIdIn() {
+  void testQueryByActivityIdIn() {
     // given
     startInstancesByKey("parallelExternalTaskProcess", 3);
 
@@ -226,7 +226,7 @@ public class ExternalTaskQueryTest {
   }
 
   @Test
-  public void testFailQueryByActivityIdInNull() {
+  void testFailQueryByActivityIdInNull() {
     // given
     var externalTaskQuery = externalTaskService.createExternalTaskQuery();
 
@@ -239,7 +239,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByTopicName() {
+  void testQueryByTopicName() {
     // given
     startInstancesByKey("parallelExternalTaskProcess", 3);
 
@@ -258,7 +258,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     // given
     List<ProcessInstance> processInstances = startInstancesByKey("oneExternalTaskProcess", 3);
 
@@ -275,7 +275,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByLargeListOfProcessInstanceIdIn() {
+  void testQueryByLargeListOfProcessInstanceIdIn() {
     // given
     List<String> processInstances = new ArrayList<>();
     for (int i = 0; i < 1001; i++) {
@@ -299,7 +299,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByProcessInstanceIdIn() {
+  void testQueryByProcessInstanceIdIn() {
     // given
     List<ProcessInstance> processInstances = startInstancesByKey("oneExternalTaskProcess", 3);
 
@@ -321,7 +321,7 @@ public class ExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingProcessInstanceId() {
+  void testQueryByNonExistingProcessInstanceId() {
     ExternalTaskQuery query = externalTaskService
         .createExternalTaskQuery()
         .processInstanceIdIn("nonExisting");
@@ -330,7 +330,7 @@ public class ExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceIdNull() {
+  void testQueryByProcessInstanceIdNull() {
     // given
     var externalTaskQuery = externalTaskService.createExternalTaskQuery();
     // when
@@ -342,7 +342,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByExecutionId() {
+  void testQueryByExecutionId() {
     // given
     List<ProcessInstance> processInstances = startInstancesByKey("oneExternalTaskProcess", 3);
 
@@ -366,7 +366,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByWorkerId() {
+  void testQueryByWorkerId() {
     // given
     startInstancesByKey("oneExternalTaskProcess", 10);
     lockInstances(TOPIC_NAME, 10000L, 3, "worker1");
@@ -387,7 +387,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByLockExpirationTime() {
+  void testQueryByLockExpirationTime() {
     // given
     startInstancesByKey("oneExternalTaskProcess", 10);
     lockInstances(TOPIC_NAME, 5000L, 3, WORKER_ID);
@@ -420,7 +420,7 @@ public class ExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryWithNullValues() {
+  void testQueryWithNullValues() {
     var externalTaskQuery = externalTaskService.createExternalTaskQuery();
     assertThatThrownBy(() -> externalTaskQuery.externalTaskId(null))
       .isInstanceOf(NullValueException.class)
@@ -460,9 +460,9 @@ public class ExternalTaskQueryTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
 
     startInstancesByKey("oneExternalTaskProcess", 5);
     startInstancesByKey("twoExternalTaskProcess", 5);
@@ -515,7 +515,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryBySuspensionState() {
+  void testQueryBySuspensionState() {
     // given
     startInstancesByKey("oneExternalTaskProcess", 5);
     suspendInstances(3);
@@ -539,7 +539,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByRetries() {
+  void testQueryByRetries() {
     // given
     startInstancesByKey("oneExternalTaskProcess", 5);
 
@@ -567,7 +567,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryById() {
+  void testQueryById() {
     // given
     startInstancesByKey("oneExternalTaskProcess", 2);
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
@@ -585,7 +585,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByIds() {
+  void testQueryByIds() {
     // given
     startInstancesByKey("oneExternalTaskProcess", 3);
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
@@ -599,7 +599,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByIdsWithNull() {
+  void testQueryByIdsWithNull() {
     // given
     Set<String> ids = null;
     var externalTaskQuery = externalTaskService.createExternalTaskQuery();
@@ -612,7 +612,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByIdsWithEmptyList() {
+  void testQueryByIdsWithEmptyList() {
     // given
     Set<String> ids = new HashSet<>();
     var externalTaskQuery = externalTaskService.createExternalTaskQuery();
@@ -625,7 +625,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByBusinessKey() {
+  void testQueryByBusinessKey() {
     // given
     String businessKey = "theUltimateKey";
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", businessKey);
@@ -640,7 +640,7 @@ public class ExternalTaskQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryListByBusinessKey() {
+  void testQueryListByBusinessKey() {
     for (int i = 0; i < 5; i++) {
       runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", "businessKey" + i);
     }
@@ -653,7 +653,7 @@ public class ExternalTaskQueryTest {
   }
 
   @Test
-  public void shouldCheckPresenceOfVersionTag() {
+  void shouldCheckPresenceOfVersionTag() {
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .operatonVersionTag("1.2.3.4")
         .startEvent()

@@ -83,13 +83,13 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
     repositoryService = engineRule.getRepositoryService();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 

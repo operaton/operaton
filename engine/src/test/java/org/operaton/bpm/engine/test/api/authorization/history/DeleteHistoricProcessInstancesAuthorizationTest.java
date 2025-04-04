@@ -95,7 +95,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
     runtimeService = engineRule.getRuntimeService();
     managementService = engineRule.getManagementService();
@@ -121,7 +121,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 

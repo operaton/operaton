@@ -58,7 +58,7 @@ public class ExternalTaskConditionsTest {
     .done();
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
     MockitoAnnotations.openMocks(this);
 
@@ -72,7 +72,7 @@ public class ExternalTaskConditionsTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
 
     ProcessEngineImpl.EXT_TASK_CONDITIONS.removeConsumer(condition);
 
@@ -82,7 +82,7 @@ public class ExternalTaskConditionsTest {
   }
 
   @Test
-  public void shouldSignalConditionOnTaskCreate() {
+  void shouldSignalConditionOnTaskCreate() {
 
     // when
     runtimeService
@@ -93,7 +93,7 @@ public class ExternalTaskConditionsTest {
   }
 
   @Test
-  public void shouldSignalConditionOnTaskCreateMultipleTimes() {
+  void shouldSignalConditionOnTaskCreateMultipleTimes() {
 
     // when
     runtimeService
@@ -106,7 +106,7 @@ public class ExternalTaskConditionsTest {
   }
 
   @Test
-  public void shouldSignalConditionOnUnlock() {
+  void shouldSignalConditionOnUnlock() {
 
     // given
 

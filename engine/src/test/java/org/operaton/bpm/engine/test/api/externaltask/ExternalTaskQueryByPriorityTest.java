@@ -40,14 +40,14 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Christopher Zell
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class ExternalTaskQueryByPriorityTest {
+class ExternalTaskQueryByPriorityTest {
   
   protected RuntimeService runtimeService;
   protected ExternalTaskService externalTaskService;
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
   @Test
-  public void testOrderByPriority() {
+  void testOrderByPriority() {
     // given five jobs with priorities from 1 to 5
     //each process has two external tasks - one with priority expression and one without priority
     List<ProcessInstance> instances = new ArrayList<>();
@@ -64,7 +64,7 @@ public class ExternalTaskQueryByPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
   @Test
-  public void testFilterByExternalTaskPriorityLowerThanOrEquals() {
+  void testFilterByExternalTaskPriorityLowerThanOrEquals() {
     // given five jobs with priorities from 1 to 5
     //each process has two external tasks - one with priority expression and one without priority
     List<ProcessInstance> instances = new ArrayList<>();
@@ -86,7 +86,7 @@ public class ExternalTaskQueryByPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
   @Test
-  public void testFilterByExternalTaskPriorityLowerThanOrEqualsAndHigherThanOrEqual() {
+  void testFilterByExternalTaskPriorityLowerThanOrEqualsAndHigherThanOrEqual() {
     // given five jobs with priorities from 1 to 5
     List<ProcessInstance> instances = new ArrayList<>();
 
@@ -106,7 +106,7 @@ public class ExternalTaskQueryByPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
   @Test
-  public void testFilterByExternalTaskPriorityHigherThanOrEquals() {
+  void testFilterByExternalTaskPriorityHigherThanOrEquals() {
     // given five jobs with priorities from 1 to 5
     List<ProcessInstance> instances = new ArrayList<>();
 
@@ -133,7 +133,7 @@ public class ExternalTaskQueryByPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
   @Test
-  public void testFilterByExternalTaskPriorityLowerAndHigher() {
+  void testFilterByExternalTaskPriorityLowerAndHigher() {
     // given five jobs with priorities from 1 to 5
     List<ProcessInstance> instances = new ArrayList<>();
 

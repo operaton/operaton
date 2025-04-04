@@ -90,7 +90,7 @@ public class HistoryServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testHistoricProcessInstanceQuery() {
+  void testHistoricProcessInstanceQuery() {
     // With a clean ProcessEngine, no instances should be available
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
@@ -105,7 +105,7 @@ public class HistoryServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testHistoricProcessInstanceQueryOrderBy() {
+  void testHistoricProcessInstanceQueryOrderBy() {
     // With a clean ProcessEngine, no instances should be available
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
@@ -133,7 +133,7 @@ public class HistoryServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testHistoricTaskInstanceQueryTaskNameCaseInsensitive() {
+  void testHistoricTaskInstanceQueryTaskNameCaseInsensitive() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
@@ -153,7 +153,7 @@ public class HistoryServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testHistoricTaskInstanceQueryTaskNameLikeCaseInsensitive() {
+  void testHistoricTaskInstanceQueryTaskNameLikeCaseInsensitive() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
@@ -173,7 +173,7 @@ public class HistoryServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testHistoricTaskInstanceQueryTaskDescriptionCaseInsensitive() {
+  void testHistoricTaskInstanceQueryTaskDescriptionCaseInsensitive() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
@@ -193,7 +193,7 @@ public class HistoryServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testHistoricTaskInstanceQueryTaskDescriptionLikeCaseInsensitive() {
+  void testHistoricTaskInstanceQueryTaskDescriptionLikeCaseInsensitive() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
@@ -214,7 +214,7 @@ public class HistoryServiceTest {
   @SuppressWarnings("deprecation") // deprecated method is tested here
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testHistoricProcessInstanceUserIdAndActivityId() {
+  void testHistoricProcessInstanceUserIdAndActivityId() {
     identityService.setAuthenticatedUserId("johndoe");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
@@ -232,7 +232,7 @@ public class HistoryServiceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/history/orderProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/history/checkCreditProcess.bpmn20.xml"})
   @Test
-  public void testOrderProcessWithCallActivity() {
+  void testOrderProcessWithCallActivity() {
     // After the process has started, the 'verify credit history' task should be
     // active
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("orderProcess");
@@ -255,7 +255,7 @@ public class HistoryServiceTest {
       "org/operaton/bpm/engine/test/api/history/orderProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/history/checkCreditProcess.bpmn20.xml"})
   @Test
-  public void testHistoricProcessInstanceQueryByProcessDefinitionKey() {
+  void testHistoricProcessInstanceQueryByProcessDefinitionKey() {
 
     String processDefinitionKey = ONE_TASK_PROCESS;
     runtimeService.startProcessInstanceByKey(processDefinitionKey);
@@ -282,9 +282,9 @@ public class HistoryServiceTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/runtime/otherOneTaskProcess.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/api/runtime/otherOneTaskProcess.bpmn20.xml"})
   @Test
-  public void testHistoricProcessInstanceQueryByProcessInstanceIds() {
+  void testHistoricProcessInstanceQueryByProcessInstanceIds() {
     HashSet<String> processInstanceIds = new HashSet<>();
     for (int i = 0; i < 4; i++) {
       processInstanceIds.add(runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, i + "").getId());
@@ -311,7 +311,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testHistoricProcessInstanceQueryByProcessInstanceIdsEmpty() {
+  void testHistoricProcessInstanceQueryByProcessInstanceIdsEmpty() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     var processInstanceIds = new HashSet<String>();
     try {
@@ -323,7 +323,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testHistoricProcessInstanceQueryByProcessInstanceIdsNull() {
+  void testHistoricProcessInstanceQueryByProcessInstanceIdsNull() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.processInstanceIds(null);
@@ -334,7 +334,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testQueryByRootProcessInstances() {
+  void testQueryByRootProcessInstances() {
     // given
     String superProcess = "calling";
     String subProcess = "called";
@@ -366,7 +366,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testQueryByRootProcessInstancesAndSuperProcess() {
+  void testQueryByRootProcessInstancesAndSuperProcess() {
     var historicProcessInstanceQuery1 = historyService.createHistoricProcessInstanceQuery()
       .rootProcessInstances();
 
@@ -395,7 +395,7 @@ public class HistoryServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
   @Test
-  public void testHistoricVariableInstancesOnParallelExecution() {
+  void testHistoricVariableInstancesOnParallelExecution() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("rootValue", "test");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("concurrent", vars);
@@ -423,7 +423,7 @@ public class HistoryServiceTest {
    */
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryStringVariable() {
+  void testQueryStringVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     String processInstance1 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, vars).getId();
@@ -508,7 +508,7 @@ public class HistoryServiceTest {
    */
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryDateVariable() throws Exception {
+  void testQueryDateVariable() throws Exception {
     Map<String, Object> vars = new HashMap<>();
     Date date1 = Calendar.getInstance().getTime();
     vars.put("dateVar", date1);
@@ -606,7 +606,7 @@ public class HistoryServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryMultipleVariableValuesEquals() {
+  void testQueryMultipleVariableValuesEquals() {
     // given
     String var1 = "var1";
     String var2 = "var2";
@@ -635,7 +635,7 @@ public class HistoryServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryMultipleVariableValuesEqualsAndNotEquals() {
+  void testQueryMultipleVariableValuesEqualsAndNotEquals() {
     // given
     String var1 = "var1";
     String var2 = "var2";
@@ -664,7 +664,7 @@ public class HistoryServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testNativeHistoricProcessInstanceTest() {
+  void testNativeHistoricProcessInstanceTest() {
     // just test that the query will be constructed and executed, details are tested in the TaskQueryTest
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
@@ -674,7 +674,7 @@ public class HistoryServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testNativeHistoricTaskInstanceTest() {
+  void testNativeHistoricTaskInstanceTest() {
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
     assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
@@ -683,7 +683,7 @@ public class HistoryServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testNativeHistoricActivityInstanceTest() {
+  void testNativeHistoricActivityInstanceTest() {
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
     assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
@@ -692,7 +692,7 @@ public class HistoryServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testNativeHistoricVariableInstanceTest() {
+  void testNativeHistoricVariableInstanceTest() {
     Date date = Calendar.getInstance().getTime();
     Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
@@ -713,7 +713,7 @@ public class HistoryServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsNumber() {
+  void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
         Collections.singletonMap("var", 123L));
@@ -756,7 +756,7 @@ public class HistoryServiceTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstance() {
+  void testDeleteProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
 
@@ -771,7 +771,7 @@ public class HistoryServiceTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteRunningProcessInstance() {
+  void testDeleteRunningProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
     var processInstanceId = processInstance.getId();
@@ -784,7 +784,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceWithFake() {
+  void testDeleteProcessInstanceWithFake() {
     try {
       historyService.deleteHistoricProcessInstance("aFake");
       fail("ProcessEngineException expected");
@@ -794,12 +794,12 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceIfExistsWithFake() {
+  void testDeleteProcessInstanceIfExistsWithFake() {
     assertThatCode(() -> historyService.deleteHistoricProcessInstanceIfExists("aFake")).doesNotThrowAnyException();
   }
 
   @Test
-  public void testDeleteProcessInstanceNullId() {
+  void testDeleteProcessInstanceNullId() {
     try {
       historyService.deleteHistoricProcessInstance(null);
       fail("ProcessEngineException expected");
@@ -811,7 +811,7 @@ public class HistoryServiceTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstances() {
+  void testDeleteProcessInstances() {
     //given
     List<String> ids = prepareHistoricProcesses();
 
@@ -822,9 +822,9 @@ public class HistoryServiceTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesWithFake() {
+  void testDeleteProcessInstancesWithFake() {
     //given
     List<String> ids = prepareHistoricProcesses();
     ids.add("aFake");
@@ -839,9 +839,9 @@ public class HistoryServiceTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(2);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesIfExistsWithFake() {
+  void testDeleteProcessInstancesIfExistsWithFake() {
     //given
     List<String> ids = prepareHistoricProcesses();
     ids.add("aFake");
@@ -853,9 +853,9 @@ public class HistoryServiceTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesWithNull() {
+  void testDeleteProcessInstancesWithNull() {
     try {
       //when
       historyService.deleteHistoricProcessInstances(null);
@@ -866,9 +866,9 @@ public class HistoryServiceTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteHistoricVariableAndDetails() {
+  void testDeleteHistoricVariableAndDetails() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
@@ -913,9 +913,9 @@ public class HistoryServiceTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteHistoricVariableAndDetailsOnRunningInstance() {
+  void testDeleteHistoricVariableAndDetailsOnRunningInstance() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
@@ -952,9 +952,9 @@ public class HistoryServiceTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteHistoricVariableAndDetailsOnRunningInstanceAndSetAgain() {
+  void testDeleteHistoricVariableAndDetailsOnRunningInstanceAndSetAgain() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
@@ -996,7 +996,7 @@ public class HistoryServiceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testDeleteHistoricVariableAndDetailsFromCase() {
+  void testDeleteHistoricVariableAndDetailsFromCase() {
     // given
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
     caseService.setVariable(caseInstanceId, "myVariable", 1);
@@ -1021,7 +1021,7 @@ public class HistoryServiceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testDeleteHistoricVariableAndDetailsFromCaseAndSetAgain() {
+  void testDeleteHistoricVariableAndDetailsFromCaseAndSetAgain() {
     // given
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
     caseService.setVariable(caseInstanceId, "myVariable", 1);
@@ -1046,7 +1046,7 @@ public class HistoryServiceTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testDeleteHistoricVariableAndDetailsFromStandaloneTask() {
+  void testDeleteHistoricVariableAndDetailsFromStandaloneTask() {
     // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
@@ -1071,7 +1071,7 @@ public class HistoryServiceTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testDeleteHistoricVariableAndDetailsFromStandaloneTaskAndSetAgain() {
+  void testDeleteHistoricVariableAndDetailsFromStandaloneTaskAndSetAgain() {
     // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
@@ -1098,7 +1098,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testDeleteUnknownHistoricVariable() {
+  void testDeleteUnknownHistoricVariable() {
     try {
       // when
       historyService.deleteHistoricVariableInstance("fakeID");
@@ -1110,7 +1110,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testDeleteHistoricVariableWithNull() {
+  void testDeleteHistoricVariableWithNull() {
     try{
       // when
       historyService.deleteHistoricVariableInstance(null);
@@ -1122,9 +1122,9 @@ public class HistoryServiceTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteAllHistoricVariablesAndDetails() {
+  void testDeleteAllHistoricVariablesAndDetails() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
@@ -1165,9 +1165,9 @@ public class HistoryServiceTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteAllHistoricVariablesAndDetailsOnRunningInstance() {
+  void testDeleteAllHistoricVariablesAndDetailsOnRunningInstance() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
@@ -1217,9 +1217,9 @@ public class HistoryServiceTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteAllHistoricVariablesAndDetailsOnRunningInstanceAndSetAgain() {
+  void testDeleteAllHistoricVariablesAndDetailsOnRunningInstanceAndSetAgain() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
@@ -1263,9 +1263,9 @@ public class HistoryServiceTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteAllHistoricVariablesOnEmpty() {
+  void testDeleteAllHistoricVariablesOnEmpty() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
@@ -1290,7 +1290,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testDeleteAllHistoricVariablesOnUnkownProcessInstance() {
+  void testDeleteAllHistoricVariablesOnUnkownProcessInstance() {
     try {
       // when
       historyService.deleteHistoricVariableInstancesByProcessInstanceId("fakeID");
@@ -1302,7 +1302,7 @@ public class HistoryServiceTest {
   }
 
   @Test
-  public void testDeleteAllHistoricVariablesWithNull() {
+  void testDeleteAllHistoricVariablesWithNull() {
     try {
       // when
       historyService.deleteHistoricVariableInstancesByProcessInstanceId(null);

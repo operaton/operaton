@@ -52,7 +52,7 @@ import org.operaton.commons.utils.cache.Cache;
 /**
  * @author Johannes Heinemann
  */
-public class DeploymentCacheCfgTest {
+class DeploymentCacheCfgTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension cacheFactoryEngineRule = ProcessEngineExtension.builder()
@@ -72,7 +72,7 @@ public class DeploymentCacheCfgTest {
   ManagementService managementService;
 
   @BeforeEach
-  public void initialize() {
+  void initialize() {
     repositoryService = cacheFactoryEngineRule.getRepositoryService();
     processEngineConfiguration = cacheFactoryEngineRule.getProcessEngineConfiguration();
     runtimeService = cacheFactoryEngineRule.getRuntimeService();
@@ -81,7 +81,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testPlugInOwnCacheImplementation() {
+  void testPlugInOwnCacheImplementation() {
 
     // given
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
@@ -94,7 +94,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testDefaultCacheRemovesElementWhenMaxSizeIsExceeded() {
+  void testDefaultCacheRemovesElementWhenMaxSizeIsExceeded() {
     // The engine rule sets the maximum number of elements of the to 2.
     // Accordingly, one process should not be contained in the cache anymore at the end.
 
@@ -130,7 +130,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testDisableQueryOfProcessDefinitionAddModelInstancesToDeploymentCache() {
+  void testDisableQueryOfProcessDefinitionAddModelInstancesToDeploymentCache() {
 
     // given
     deploy(ProcessModels.ONE_TASK_PROCESS_WITH_DOCUMENTATION);
@@ -149,7 +149,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testEnableQueryOfProcessDefinitionAddModelInstancesToDeploymentCache() {
+  void testEnableQueryOfProcessDefinitionAddModelInstancesToDeploymentCache() {
 
     // given
     deploy(ProcessModels.ONE_TASK_PROCESS_WITH_DOCUMENTATION);
@@ -169,7 +169,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testDescriptionIsNullWhenFetchProcessDefinitionDescriptionIsDisabled() {
+  void testDescriptionIsNullWhenFetchProcessDefinitionDescriptionIsDisabled() {
 
     // given
     deploy(ProcessModels.ONE_TASK_PROCESS_WITH_DOCUMENTATION);
@@ -185,7 +185,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testDescriptionIsAvailableWhenFetchProcessDefinitionDescriptionIsEnabled() {
+  void testDescriptionIsAvailableWhenFetchProcessDefinitionDescriptionIsEnabled() {
 
     // given
     deploy(ProcessModels.ONE_TASK_PROCESS_WITH_DOCUMENTATION);
@@ -203,7 +203,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testLoadProcessDefinitionsFromDBWhenNotExistingInCacheAnymore() {
+  void testLoadProcessDefinitionsFromDBWhenNotExistingInCacheAnymore() {
 
     // given more processes to deploy than capacity in the cache
     int numberOfProcessesToDeploy = 10;
@@ -221,7 +221,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testSequentialCallActivityCall() {
+  void testSequentialCallActivityCall() {
 
     // given a number process definitions which call each other by call activities (0->1->2->0->4),
     // which stops after the first repetition of 0 in 4
@@ -242,7 +242,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testSequentialCallActivityCallAsynchronously() {
+  void testSequentialCallActivityCallAsynchronously() {
 
     // given a number process definitions which call each other by call activities (0->1->2->0->4),
     // which stops after the first repetition of 0 in 4
@@ -268,7 +268,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testSequentialCallActivityAsynchronousWithUnfinishedExecution() {
+  void testSequentialCallActivityAsynchronousWithUnfinishedExecution() {
 
     // given a number process definitions which call each other by call activities (0->1->2->0->4),
     // which stops after the first repetition of 0
@@ -289,7 +289,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void shouldNotAddIdentityLinksAfterRecache() {
+  void shouldNotAddIdentityLinksAfterRecache() {
     // given cache size + 1 deployed process
     testRule.deploy(createModel("1"));
     testRule.deploy(createModel("2"));

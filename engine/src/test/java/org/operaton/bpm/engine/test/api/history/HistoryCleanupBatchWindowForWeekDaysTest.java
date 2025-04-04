@@ -115,7 +115,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   }
 
   @BeforeEach
-  public void init() {
+  void init() {
     defaultStartTime = processEngineConfiguration.getHistoryCleanupBatchWindowStartTime();
 
     defaultEndTime = processEngineConfiguration.getHistoryCleanupBatchWindowEndTime();
@@ -123,7 +123,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   }
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     //reset configuration changes
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(defaultStartTime);
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(defaultEndTime);

@@ -69,12 +69,12 @@ public class HistoricBatchQueryAuthorizationTest {
   protected Batch batch2;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     authRule.createUserAndGroup("user", "group");
   }
 
   @BeforeEach
-  public void deployProcessesAndCreateMigrationPlan() {
+  void deployProcessesAndCreateMigrationPlan() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -96,7 +96,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
     removeAllRunningAndHistoricBatches();
     engineRule.getProcessEngineConfiguration().setBatchOperationHistoryTimeToLive(null);
@@ -118,7 +118,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryList() {
+  void testQueryList() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, batch1.getId(), "user", Permissions.READ_HISTORY);
 
@@ -133,7 +133,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, batch1.getId(), "user", Permissions.READ_HISTORY);
 
@@ -147,7 +147,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryNoAuthorizations() {
+  void testQueryNoAuthorizations() {
     // when
     authRule.enableAuthorization("user");
     long count = engineRule.getHistoryService().createHistoricBatchQuery().count();
@@ -158,7 +158,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryListAccessAll() {
+  void testQueryListAccessAll() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, ANY, "user", Permissions.READ_HISTORY);
 
@@ -172,7 +172,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testQueryListMultiple() {
+  void testQueryListMultiple() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, ANY, "user", Permissions.READ_HISTORY);
     authRule.createGrantAuthorization(Resources.BATCH, batch1.getId(), "user", Permissions.READ_HISTORY);
@@ -187,7 +187,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void shouldFindEmptyBatchListWithRevokedReadHistoryPermissionOnAllBatches() {
+  void shouldFindEmptyBatchListWithRevokedReadHistoryPermissionOnAllBatches() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, ANY, ANY, Permissions.READ_HISTORY);
     authRule.createRevokeAuthorization(Resources.BATCH, ANY, "user", Permissions.READ_HISTORY);
@@ -202,7 +202,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void shouldNotFindBatchWithRevokedReadHistoryPermissionOnAllBatches() {
+  void shouldNotFindBatchWithRevokedReadHistoryPermissionOnAllBatches() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, ANY, ANY, Permissions.READ_HISTORY);
     authRule.createRevokeAuthorization(Resources.BATCH, ANY, "user", Permissions.READ_HISTORY);
@@ -217,7 +217,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testHistoryCleanupReportQueryWithPermissions() {
+  void testHistoryCleanupReportQueryWithPermissions() {
     // given
     authRule.createGrantAuthorization(Resources.BATCH, ANY, "user", Permissions.READ_HISTORY);
     String migrationOperationsTTL = "P0D";
@@ -232,7 +232,7 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   @Test
-  public void testHistoryCleanupReportQueryWithoutPermission() {
+  void testHistoryCleanupReportQueryWithoutPermission() {
     // given
     String migrationOperationsTTL = "P0D";
     prepareBatch(migrationOperationsTTL);

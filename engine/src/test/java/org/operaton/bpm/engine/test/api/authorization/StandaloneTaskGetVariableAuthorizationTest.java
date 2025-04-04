@@ -91,7 +91,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     taskService = engineRule.getTaskService();
     runtimeService = engineRule.getRuntimeService();
@@ -103,7 +103,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
     taskService.deleteTask(taskId, true);
     processEngineConfiguration.setEnforceSpecificVariablePermission(ensureSpecificVariablePermission);

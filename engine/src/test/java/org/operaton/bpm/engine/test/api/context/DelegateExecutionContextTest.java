@@ -43,7 +43,7 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class DelegateExecutionContextTest {
+class DelegateExecutionContextTest {
 
   protected static final BpmnModelInstance SERVICE_TASK_DELEGATE_PROCESS = Bpmn.createExecutableProcess()
       .operatonHistoryTimeToLive(180)
@@ -95,12 +95,12 @@ public class DelegateExecutionContextTest {
   TaskService taskService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     Mocks.reset();
   }
 
   @Test
-  public void testDelegateExecutionContext() {
+  void testDelegateExecutionContext() {
     // given
     ProcessDefinition definition = testHelper.deployAndGetDefinition(SERVICE_TASK_DELEGATE_PROCESS);
     // a process instance with a service task and a java delegate
@@ -112,7 +112,7 @@ public class DelegateExecutionContextTest {
   }
 
   @Test
-  public void testDelegateExecutionContextWithExecutionListener() {
+  void testDelegateExecutionContextWithExecutionListener() {
     //given
     ProcessDefinition definition = testHelper.deployAndGetDefinition(EXEUCTION_LISTENER_PROCESS);
     // a process instance with a service task and an execution listener
@@ -124,7 +124,7 @@ public class DelegateExecutionContextTest {
   }
 
   @Test
-  public void shouldCreateEventSubscription_IntermediateSignalEvent() {
+  void shouldCreateEventSubscription_IntermediateSignalEvent() {
     // given
     // register Bean
     Mocks.register("delegateExecutionContextBean", new DelegateExecutionContextBean());
@@ -141,7 +141,7 @@ public class DelegateExecutionContextTest {
   }
 
   @Test
-  public void shouldCreateEventSubscription_EventSubprocess() {
+  void shouldCreateEventSubscription_EventSubprocess() {
     // given
     // register Bean
     Mocks.register("delegateExecutionContextBean", new DelegateExecutionContextBean());
@@ -162,7 +162,7 @@ public class DelegateExecutionContextTest {
 
   @Deployment
   @Test
-  public void shouldCreateEventSubscription_ProcessInstanceModification_EventSubprocess() {
+  void shouldCreateEventSubscription_ProcessInstanceModification_EventSubprocess() {
     // given
     // register Bean
     Mocks.register("delegateExecutionContextBean", new DelegateExecutionContextBean());
@@ -190,7 +190,7 @@ public class DelegateExecutionContextTest {
 
   @Deployment
   @Test
-  public void shouldCreateEventSubscription_ProcessIstantiation_EventSubprocess() {
+  void shouldCreateEventSubscription_ProcessIstantiation_EventSubprocess() {
     // given
     // register Bean
     Mocks.register("delegateExecutionContextBean", new DelegateExecutionContextBean());

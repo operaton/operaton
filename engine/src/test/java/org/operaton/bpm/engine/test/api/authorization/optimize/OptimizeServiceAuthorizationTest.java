@@ -141,7 +141,7 @@ public class OptimizeServiceAuthorizationTest {
   protected ManagementService managementService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
     identityService = engineRule.getIdentityService();
     repositoryService = engineRule.getRepositoryService();
@@ -168,7 +168,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
       engineRule.getProcessEngineConfiguration().getDmnEngineConfiguration();
 

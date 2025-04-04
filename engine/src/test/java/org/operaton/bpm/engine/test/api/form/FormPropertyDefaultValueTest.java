@@ -38,17 +38,17 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class FormPropertyDefaultValueTest {
+class FormPropertyDefaultValueTest {
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
   protected FormService formService;
   protected RepositoryService repositoryService;
-  
+
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testDefaultValue() {
+  void testDefaultValue() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormPropertyDefaultValueTest.testDefaultValue");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -80,11 +80,11 @@ public class FormPropertyDefaultValueTest {
     assertThat(runtimeService.getVariable(processInstance.getId(), "longProperty")).isEqualTo(42L);
     assertThat(runtimeService.getVariable(processInstance.getId(), "longExpressionProperty")).isEqualTo(1L);
   }
-  
+
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testStartFormDefaultValue() {
+  void testStartFormDefaultValue() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("FormPropertyDefaultValueTest.testDefaultValue")
       .latestVersion()

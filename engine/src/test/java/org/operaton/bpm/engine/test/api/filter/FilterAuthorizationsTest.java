@@ -49,7 +49,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Sebastian Menski
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class FilterAuthorizationsTest {
+class FilterAuthorizationsTest {
 
   protected User testUser;
 
@@ -63,9 +63,9 @@ public class FilterAuthorizationsTest {
   protected FilterService filterService;
   protected AuthorizationService authorizationService;
   protected TaskService taskService;
-  
+
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testUser = createTestUser("test");
 
     createAuthorization = createAuthorization(Permissions.CREATE, Authorization.ANY);
@@ -78,7 +78,7 @@ public class FilterAuthorizationsTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     for (Filter filter : filterService.createFilterQuery().list()) {
       filterService.deleteFilter(filter.getId());
@@ -92,27 +92,27 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testCreateFilterNotPermitted() {
+  void testCreateFilterNotPermitted() {
     assertThatThrownBy(() -> filterService.newTaskFilter())
       .isInstanceOf(AuthorizationException.class);
   }
 
   @Test
-  public void testCreateFilterPermitted() {
+  void testCreateFilterPermitted() {
     grantCreateFilter();
     Filter filter = filterService.newTaskFilter();
     assertThat(filter).isNotNull();
   }
 
   @Test
-  public void testSaveFilterNotPermitted() {
+  void testSaveFilterNotPermitted() {
     Filter filter = new FilterEntity(EntityTypes.TASK);
     assertThatThrownBy(() -> filterService.saveFilter(filter))
       .isInstanceOf(AuthorizationException.class);
   }
 
   @Test
-  public void testSaveFilterPermitted() {
+  void testSaveFilterPermitted() {
     Filter filter = new FilterEntity(EntityTypes.TASK)
       .setName("testFilter");
 
@@ -124,7 +124,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testUpdateFilterNotPermitted() {
+  void testUpdateFilterNotPermitted() {
     Filter filter = createTestFilter();
 
     filter.setName("anotherName");
@@ -134,7 +134,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testUpdateFilterPermitted() {
+  void testUpdateFilterPermitted() {
     Filter filter = createTestFilter();
 
     filter.setName("anotherName");
@@ -146,7 +146,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testDeleteFilterNotPermitted() {
+  void testDeleteFilterNotPermitted() {
     String filterId = createTestFilter().getId();
 
     assertThatThrownBy(() -> filterService.deleteFilter(filterId))
@@ -154,7 +154,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testDeleteFilterPermitted() {
+  void testDeleteFilterPermitted() {
     Filter filter = createTestFilter();
 
     grantDeleteFilter(filter.getId());
@@ -166,7 +166,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testReadFilterNotPermitted() {
+  void testReadFilterNotPermitted() {
     Filter filter = createTestFilter();
 
     long count = filterService.createFilterQuery().count();
@@ -197,7 +197,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testReadFilterPermitted() {
+  void testReadFilterPermitted() {
     Filter filter = createTestFilter();
 
     grantReadFilter(filter.getId());
@@ -239,7 +239,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void shouldNotFindFilterWithRevokedReadPermissionOnAnyFilter() {
+  void shouldNotFindFilterWithRevokedReadPermissionOnAnyFilter() {
     Filter filter = createTestFilter();
 
     grantReadFilter(filter.getId());
@@ -273,7 +273,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testReadFilterPermittedWithMultiple() {
+  void testReadFilterPermittedWithMultiple() {
     Filter filter = createTestFilter();
 
     grantReadFilter(filter.getId());
@@ -297,7 +297,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testDefaultFilterAuthorization() {
+  void testDefaultFilterAuthorization() {
     // create two other users beside testUser
     User ownerUser = createTestUser("ownerUser");
     User anotherUser = createTestUser("anotherUser");
@@ -328,7 +328,7 @@ public class FilterAuthorizationsTest {
   }
 
   @Test
-  public void testCreateFilterGenericOwnerId() {
+  void testCreateFilterGenericOwnerId() {
     grantCreateFilter();
 
     Filter filter = filterService.newTaskFilter("someName");
@@ -341,7 +341,7 @@ public class FilterAuthorizationsTest {
 
   @Disabled("CAM-4889")
   @Test
-  public void testUpdateFilterGenericOwnerId() {
+  void testUpdateFilterGenericOwnerId() {
     grantCreateFilter();
 
     Filter filter = filterService.newTaskFilter("someName");

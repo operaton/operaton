@@ -48,7 +48,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Tassilo Weidner
  */
 @RequiredHistoryLevel(HISTORY_FULL)
-public class BatchSetRemovalTimeUserOperationLogTest {
+class BatchSetRemovalTimeUserOperationLogTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -64,12 +64,12 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   protected IdentityService identityService;
 
   @AfterEach
-  public void clearAuth() {
+  void clearAuth() {
     identityService.clearAuthentication();
   }
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     List<Batch> batches = managementService.createBatchQuery()
       .type(Batch.TYPE_HISTORIC_PROCESS_INSTANCE_DELETION)
       .list();
@@ -85,7 +85,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances() {
+  void shouldWriteUserOperationLogForProcessInstances() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -109,7 +109,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_ModeCalculatedRemovalTime() {
+  void shouldWriteUserOperationLogForProcessInstances_ModeCalculatedRemovalTime() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -133,7 +133,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_ModeAbsoluteRemovalTime() {
+  void shouldWriteUserOperationLogForProcessInstances_ModeAbsoluteRemovalTime() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -157,7 +157,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_RemovalTime() {
+  void shouldWriteUserOperationLogForProcessInstances_RemovalTime() {
     // given
     Date removalTime = new Date();
 
@@ -183,7 +183,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_RemovalTimeNull() {
+  void shouldWriteUserOperationLogForProcessInstances_RemovalTimeNull() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -207,7 +207,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_NrOfInstances() {
+  void shouldWriteUserOperationLogForProcessInstances_NrOfInstances() {
     // given
     testRule.process().serviceTask().deploy().start();
     testRule.process().serviceTask().deploy().start();
@@ -232,7 +232,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_AsyncTrue() {
+  void shouldWriteUserOperationLogForProcessInstances_AsyncTrue() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -256,7 +256,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_HierarchicalTrue() {
+  void shouldWriteUserOperationLogForProcessInstances_HierarchicalTrue() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -281,7 +281,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_HierarchicalFalse() {
+  void shouldWriteUserOperationLogForProcessInstances_HierarchicalFalse() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -305,7 +305,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_UpdateInChunksTrue() {
+  void shouldWriteUserOperationLogForProcessInstances_UpdateInChunksTrue() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -330,7 +330,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_UpdateInChunksFalse() {
+  void shouldWriteUserOperationLogForProcessInstances_UpdateInChunksFalse() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -354,7 +354,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_ChunkSize() {
+  void shouldWriteUserOperationLogForProcessInstances_ChunkSize() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -380,7 +380,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForProcessInstances_ChunkSizeNull() {
+  void shouldWriteUserOperationLogForProcessInstances_ChunkSizeNull() {
     // given
     testRule.process().serviceTask().deploy().start();
 
@@ -405,9 +405,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances() {
+  void shouldWriteUserOperationLogForDecisionInstances() {
     // given
     evaluate();
 
@@ -432,9 +432,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances_ModeCalculatedRemovalTime() {
+  void shouldWriteUserOperationLogForDecisionInstances_ModeCalculatedRemovalTime() {
     // given
     evaluate();
 
@@ -459,9 +459,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances_ModeAbsoluteRemovalTime() {
+  void shouldWriteUserOperationLogForDecisionInstances_ModeAbsoluteRemovalTime() {
     // given
     evaluate();
 
@@ -486,9 +486,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances_RemovalTime() {
+  void shouldWriteUserOperationLogForDecisionInstances_RemovalTime() {
     // given
     Date removalTime = new Date();
 
@@ -515,9 +515,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances_RemovalTimeNull() {
+  void shouldWriteUserOperationLogForDecisionInstances_RemovalTimeNull() {
     // given
     evaluate();
 
@@ -542,9 +542,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances_NrOfInstances() {
+  void shouldWriteUserOperationLogForDecisionInstances_NrOfInstances() {
     // given
     evaluate();
 
@@ -569,9 +569,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances_AsyncTrue() {
+  void shouldWriteUserOperationLogForDecisionInstances_AsyncTrue() {
     // given
     evaluate();
 
@@ -596,9 +596,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances_HierarchicalTrue() {
+  void shouldWriteUserOperationLogForDecisionInstances_HierarchicalTrue() {
     // given
     evaluate();
 
@@ -624,9 +624,9 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldWriteUserOperationLogForDecisionInstances_HierarchicalFalse() {
+  void shouldWriteUserOperationLogForDecisionInstances_HierarchicalFalse() {
     // given
     evaluate();
 
@@ -650,7 +650,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForBatches() {
+  void shouldWriteUserOperationLogForBatches() {
     // given
     createBatch(1);
 
@@ -674,7 +674,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForBatches_ModeCalculatedRemovalTime() {
+  void shouldWriteUserOperationLogForBatches_ModeCalculatedRemovalTime() {
     // given
     createBatch(1);
 
@@ -698,7 +698,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForBatches_ModeAbsoluteRemovalTime() {
+  void shouldWriteUserOperationLogForBatches_ModeAbsoluteRemovalTime() {
     // given
     createBatch(1);
 
@@ -722,7 +722,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForBatches_RemovalTime() {
+  void shouldWriteUserOperationLogForBatches_RemovalTime() {
     // given
     Date removalTime = new Date();
 
@@ -748,7 +748,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForBatches_RemovalTimeNull() {
+  void shouldWriteUserOperationLogForBatches_RemovalTimeNull() {
     // given
     createBatch(1);
 
@@ -772,7 +772,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForBatches_NrOfInstances() {
+  void shouldWriteUserOperationLogForBatches_NrOfInstances() {
     // given
     createBatch(2);
 
@@ -796,7 +796,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   }
 
   @Test
-  public void shouldWriteUserOperationLogForBatches_AsyncTrue() {
+  void shouldWriteUserOperationLogForBatches_AsyncTrue() {
     // given
     createBatch(1);
 

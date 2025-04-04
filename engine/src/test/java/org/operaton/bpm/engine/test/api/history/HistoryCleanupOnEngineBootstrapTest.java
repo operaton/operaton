@@ -49,14 +49,14 @@ import org.springframework.beans.factory.BeanCreationException;
  * @author Nikola Koevski
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoryCleanupOnEngineBootstrapTest {
+class HistoryCleanupOnEngineBootstrapTest {
 
   private static final String ENGINE_NAME = "engineWithHistoryCleanupBatchWindow";
 
   private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
   @Test
-  public void testConsecutiveEngineBootstrapHistoryCleanupJobReconfiguration() {
+  void testConsecutiveEngineBootstrapHistoryCleanupJobReconfiguration() {
 
     // given
     // create history cleanup job
@@ -85,7 +85,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testDecreaseNumberOfHistoryCleanupJobs() {
+  void testDecreaseNumberOfHistoryCleanupJobs() {
     // given
     // create history cleanup job
     ProcessEngine engine = ProcessEngineConfiguration
@@ -116,7 +116,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testIncreaseNumberOfHistoryCleanupJobs() {
+  void testIncreaseNumberOfHistoryCleanupJobs() {
     // given
     // create history cleanup job
     ProcessEngine engine = ProcessEngineConfiguration
@@ -177,7 +177,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testBatchWindowXmlConfigParsingException() {
+  void testBatchWindowXmlConfigParsingException() {
     // when/then
     assertThatThrownBy(() -> ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-batch-window-map-wrong-values.operaton.cfg.xml"))
@@ -187,7 +187,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testBatchWindowMapInXmlConfig() throws ParseException {
+  void testBatchWindowMapInXmlConfig() throws ParseException {
     // given
     //we're on Monday
     ClockUtil.setCurrentTime(sdf.parse("2018-05-14T22:00:00"));
@@ -228,7 +228,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testHistoryCleanupJobScheduled() {
+  void testHistoryCleanupJobScheduled() {
 
     final ProcessEngineConfigurationImpl standaloneInMemProcessEngineConfiguration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
     standaloneInMemProcessEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
@@ -251,7 +251,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void shouldCreateHistoryCleanupJobLogs() {
+  void shouldCreateHistoryCleanupJobLogs() {
 
     final ProcessEngineConfigurationImpl standaloneInMemProcessEngineConfiguration =
         (ProcessEngineConfigurationImpl)ProcessEngineConfiguration
@@ -276,7 +276,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testBatchWindowOneDayOfWeek() throws ParseException {
+  void testBatchWindowOneDayOfWeek() throws ParseException {
     ClockUtil.setCurrentTime(sdf.parse("2018-05-14T22:00:00"));       //monday
     //given
     final ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
@@ -317,7 +317,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testBatchWindow24Hours() throws ParseException {
+  void testBatchWindow24Hours() throws ParseException {
     //given
     final ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
     //we have batch window for 24 hours

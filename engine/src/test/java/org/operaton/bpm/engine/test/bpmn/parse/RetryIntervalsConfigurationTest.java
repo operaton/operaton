@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
+class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
   private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String PROCESS_ID = "process";
@@ -56,13 +56,13 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     initDefaults(engineRule);
     engineRule.getProcessEngineConfiguration().setFailedJobRetryTimeCycle("PT5M,PT20M, PT3M");
   }
-  
+
   @Test
-  public void testRetryGlobalConfiguration() throws ParseException {
+  void testRetryGlobalConfiguration() throws ParseException {
     // given global retry conf. ("PT5M,PT20M, PT3M")
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTask();
     testRule.deploy(bpmnModelInstance);
@@ -99,7 +99,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   @Test
-  public void testRetryGlobalConfigurationWithExecutionListener() throws ParseException {
+  void testRetryGlobalConfigurationWithExecutionListener() throws ParseException {
     // given
     engineRule.getProcessEngineConfiguration().setFailedJobRetryTimeCycle("PT5M");
 
@@ -133,7 +133,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   @Test
-  public void testRetryMixConfiguration() throws ParseException {
+  void testRetryMixConfiguration() throws ParseException {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("R3/PT1M");
 
@@ -161,7 +161,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   @Test
-  public void testRetryIntervals() throws ParseException {
+  void testRetryIntervals() throws ParseException {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT3M, PT10M,PT8M");
     testRule.deploy(bpmnModelInstance);
@@ -199,7 +199,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   @Test
-  public void testSingleRetryInterval() throws ParseException {
+  void testSingleRetryInterval() throws ParseException {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT8M ");
     testRule.deploy(bpmnModelInstance);
@@ -225,7 +225,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   @Test
-  public void testRetryWithVarList() {
+  void testRetryWithVarList() {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("${var}");
     testRule.deploy(bpmnModelInstance);
@@ -247,7 +247,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   @Test
-  public void testIntervalsAfterUpdateRetries() throws ParseException {
+  void testIntervalsAfterUpdateRetries() throws ParseException {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT3M, PT10M,PT8M");
     testRule.deploy(bpmnModelInstance);
@@ -300,7 +300,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   @Test
-  public void testMixConfigurationWithinOneProcess() throws ParseException {
+  void testMixConfigurationWithinOneProcess() throws ParseException {
     // given
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
@@ -348,7 +348,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   @Test
-  public void testlocalConfigurationWithNestedChangingExpression() throws ParseException {
+  void testlocalConfigurationWithNestedChangingExpression() throws ParseException {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()

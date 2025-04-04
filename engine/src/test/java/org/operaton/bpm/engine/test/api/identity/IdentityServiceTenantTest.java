@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class IdentityServiceTenantTest {
+class IdentityServiceTenantTest {
 
   protected static final String USER_ONE = "user1";
   protected static final String USER_TWO = "user2";
@@ -56,7 +56,7 @@ public class IdentityServiceTenantTest {
   protected ProcessEngine processEngine;
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     identityService.deleteTenant(TENANT_ONE);
     identityService.deleteTenant(TENANT_TWO);
 
@@ -81,7 +81,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void createTenant() {
+  void createTenant() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     tenant.setName("Tenant");
     identityService.saveTenant(tenant);
@@ -93,7 +93,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void createExistingTenant() {
+  void createExistingTenant() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     tenant.setName("Tenant");
     identityService.saveTenant(tenant);
@@ -112,7 +112,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void updateTenant() {
+  void updateTenant() {
     // create
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     tenant.setName("Tenant");
@@ -130,7 +130,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void testInvalidTenantId() {
+  void testInvalidTenantId() {
     String invalidId = "john's tenant";
     Tenant tenant = identityService.newTenant(invalidId);
     try {
@@ -142,7 +142,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void testInvalidTenantIdOnUpdate() {
+  void testInvalidTenantIdOnUpdate() {
     String invalidId = "john's tenant";
     Tenant updatedTenant = identityService.newTenant("john");
     updatedTenant.setId(invalidId);
@@ -156,7 +156,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void testCustomCreateTenantWhitelistPattern() {
+  void testCustomCreateTenantWhitelistPattern() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
@@ -174,7 +174,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void testCustomTenantWhitelistPattern() {
+  void testCustomTenantWhitelistPattern() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
@@ -195,7 +195,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void deleteTenant() {
+  void deleteTenant() {
     // create
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
@@ -211,7 +211,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void updateTenantOptimisticLockingException() {
+  void updateTenantOptimisticLockingException() {
     // create
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
@@ -231,7 +231,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void createTenantWithGenericResourceId() {
+  void createTenantWithGenericResourceId() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
@@ -244,7 +244,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void createTenantMembershipUnexistingTenant() {
+  void createTenantMembershipUnexistingTenant() {
     User user = identityService.newUser(USER_ONE);
     identityService.saveUser(user);
     String userId = user.getId();
@@ -255,7 +255,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void createTenantMembershipUnexistingUser() {
+  void createTenantMembershipUnexistingUser() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
     String tenantId = tenant.getId();
@@ -266,7 +266,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void createTenantMembershipUnexistingGroup() {
+  void createTenantMembershipUnexistingGroup() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
     String tenantId = tenant.getId();
@@ -278,7 +278,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void createTenantUserMembershipAlreadyExisting() {
+  void createTenantUserMembershipAlreadyExisting() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
 
@@ -292,7 +292,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void createTenantGroupMembershipAlreadyExisting() {
+  void createTenantGroupMembershipAlreadyExisting() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
 
@@ -306,7 +306,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void deleteTenantUserMembership() {
+  void deleteTenantUserMembership() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
 
@@ -329,7 +329,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void deleteTenantGroupMembership() {
+  void deleteTenantGroupMembership() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
 
@@ -352,7 +352,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void deleteTenantMembershipsWileDeleteUser() {
+  void deleteTenantMembershipsWileDeleteUser() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
 
@@ -369,7 +369,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void deleteTenantMembershipsWhileDeleteGroup() {
+  void deleteTenantMembershipsWhileDeleteGroup() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
 
@@ -386,7 +386,7 @@ public class IdentityServiceTenantTest {
   }
 
   @Test
-  public void deleteTenantMembershipsOfTenant() {
+  void deleteTenantMembershipsOfTenant() {
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     identityService.saveTenant(tenant);
 

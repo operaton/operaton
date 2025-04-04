@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class HistoryCleanupSchedulerTaskMetricsTest extends AbstractHistoryCleanupSchedulerTest {
+class HistoryCleanupSchedulerTaskMetricsTest extends AbstractHistoryCleanupSchedulerTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -49,7 +49,7 @@ public class HistoryCleanupSchedulerTaskMetricsTest extends AbstractHistoryClean
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
-  public void init() {
+  void init() {
     initEngineConfiguration(engineRule, engineConfiguration);
   }
 
@@ -65,7 +65,7 @@ public class HistoryCleanupSchedulerTaskMetricsTest extends AbstractHistoryClean
   protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   @Test
-  public void shouldScheduleToNow() {
+  void shouldScheduleToNow() {
     // given
     engineConfiguration.setTaskMetricsTimeToLive("P5D");
     engineConfiguration.setHistoryCleanupBatchSize(5);
@@ -96,7 +96,7 @@ public class HistoryCleanupSchedulerTaskMetricsTest extends AbstractHistoryClean
   }
 
   @Test
-  public void shouldScheduleToLater() {
+  void shouldScheduleToLater() {
     // given
     engineConfiguration.setTaskMetricsTimeToLive("P5D");
     engineConfiguration.setHistoryCleanupBatchSize(6);

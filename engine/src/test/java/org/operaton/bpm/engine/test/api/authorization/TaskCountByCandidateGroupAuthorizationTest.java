@@ -57,7 +57,7 @@ public class TaskCountByCandidateGroupAuthorizationTest {
   protected String userId = "user";
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     taskService = processEngineRule.getTaskService();
     identityService = processEngineRule.getIdentityService();
     authorizationService = processEngineRule.getAuthorizationService();
@@ -65,7 +65,7 @@ public class TaskCountByCandidateGroupAuthorizationTest {
   }
 
   @Test
-  public void shouldFetchTaskCountWithAuthorization() {
+  void shouldFetchTaskCountWithAuthorization() {
     // given
     User user = identityService.newUser(userId);
     identityService.saveUser(user);
@@ -90,7 +90,7 @@ public class TaskCountByCandidateGroupAuthorizationTest {
   }
 
   @Test
-  public void shouldFailToFetchTaskCountWithMissingAuthorization() {
+  void shouldFailToFetchTaskCountWithMissingAuthorization() {
     // given
     boolean testFailed = false;
     processEngineConfiguration.setAuthorizationEnabled(true);

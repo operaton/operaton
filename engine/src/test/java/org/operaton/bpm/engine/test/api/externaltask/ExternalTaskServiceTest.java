@@ -108,21 +108,21 @@ public class ExternalTaskServiceTest {
   protected ExternalTaskService externalTaskService;
   protected TaskService taskService;
   protected HistoryService historyService;
-  
+
   @BeforeEach
-  public void setUp() throws Exception {
+  void setUp() throws Exception {
     // get rid of the milliseconds because of MySQL datetime precision
     Date now = formatter.parse(formatter.format(new Date()));
     ClockUtil.setCurrentTime(now);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     ClockUtil.reset();
   }
 
   @Test
-  public void testFailOnMalformedPriorityInput() {
+  void testFailOnMalformedPriorityInput() {
     var deploymentBuilder = repositoryService
       .createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/externaltask/externalTaskInvalidPriority.bpmn20.xml");
@@ -139,7 +139,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetch() {
+  void testFetch() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -173,7 +173,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml")
   @Test
-  public void testFetchWithPriority() {
+  void testFetchWithPriority() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess");
 
@@ -211,7 +211,7 @@ public class ExternalTaskServiceTest {
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml"
   })
   @Test
-  public void shouldFetchWithCreateTimeDESCAndPriority() {
+  void shouldFetchWithCreateTimeDESCAndPriority() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess"); // priority 7 & null
     ClockTestUtil.incrementClock(60_000);
@@ -254,7 +254,7 @@ public class ExternalTaskServiceTest {
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml"
   })
   @Test
-  public void shouldFetchWithCreateTimeASCAndPriority() {
+  void shouldFetchWithCreateTimeASCAndPriority() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess"); // priority 7 & null
     ClockTestUtil.incrementClock(60_000);
@@ -298,7 +298,7 @@ public class ExternalTaskServiceTest {
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml"
   })
   @Test
-  public void shouldFetchWithCreateTimeASCWithoutPriority() {
+  void shouldFetchWithCreateTimeASCWithoutPriority() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess"); // priority 7 & null
     ClockTestUtil.incrementClock(60_000);
@@ -328,7 +328,7 @@ public class ExternalTaskServiceTest {
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml"
   })
   @Test
-  public void shouldFetchWithCreateTimeDESCWithoutPriority() {
+  void shouldFetchWithCreateTimeDESCWithoutPriority() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess"); // priority 7 & null
     ClockTestUtil.incrementClock(60_000);
@@ -358,7 +358,7 @@ public class ExternalTaskServiceTest {
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml"
   })
   @Test
-  public void shouldIgnoreCreateOrderingWhenCreateTimeIsNotConfigured() {
+  void shouldIgnoreCreateOrderingWhenCreateTimeIsNotConfigured() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess"); // priority 7 & null
     ClockTestUtil.incrementClock(60_000);
@@ -389,7 +389,7 @@ public class ExternalTaskServiceTest {
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml"
   })
   @Test
-  public void shouldIgnoreCreateTimeConfigWhenOrderIsNull() {
+  void shouldIgnoreCreateTimeConfigWhenOrderIsNull() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess"); // priority 7 & null
     ClockTestUtil.incrementClock(60_000);
@@ -409,7 +409,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnSubscribeWithInvalidOrderConfig() {
+  void shouldThrowExceptionOnSubscribeWithInvalidOrderConfig() {
     // given
     var externalTaskQueryTopicBuilder = externalTaskService.fetchAndLock().orderByCreateTime();
     // when
@@ -420,7 +420,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnChainedSortingConfigs() {
+  void shouldThrowExceptionOnChainedSortingConfigs() {
     // given
     var fetchAndLockBuilder = externalTaskService.fetchAndLock().orderByCreateTime().desc();
     // when
@@ -431,7 +431,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnUnspecifiedSortingField() {
+  void shouldThrowExceptionOnUnspecifiedSortingField() {
     // given
     var fetchAndLockBuilder = externalTaskService.fetchAndLock();
     // when
@@ -443,7 +443,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml")
   @Test
-  public void testFetchProcessWithPriority() {
+  void testFetchProcessWithPriority() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess");
 
@@ -463,7 +463,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpressionProcess.bpmn20.xml")
   @Test
-  public void testFetchProcessWithPriorityExpression() {
+  void testFetchProcessWithPriorityExpression() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
                                              Variables.createVariables().putValue("priority", 18));
@@ -484,7 +484,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
   @Test
-  public void testFetchWithPriorityExpression() {
+  void testFetchWithPriorityExpression() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
                                                         Variables.createVariables().putValue("priority", 18));
@@ -519,7 +519,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml")
   @Test
-  public void testFetchWithPriorityOrdering() {
+  void testFetchWithPriorityOrdering() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess");
 
@@ -535,7 +535,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml")
   @Test
-  public void testFetchNextWithPriority() {
+  void testFetchNextWithPriority() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess");
 
@@ -571,7 +571,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment
   @Test
-  public void testFetchTopicSelection() {
+  void testFetchTopicSelection() {
     // given
     runtimeService.startProcessInstanceByKey("twoTopicsProcess");
 
@@ -594,7 +594,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchWithoutTopicName() {
+  void testFetchWithoutTopicName() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     var externalTaskQueryTopicBuilder = externalTaskService
@@ -610,7 +610,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchNullWorkerId() {
+  void testFetchNullWorkerId() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     var externalTaskQueryTopicBuilder = externalTaskService
@@ -626,7 +626,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchNegativeNumberOfTasks() {
+  void testFetchNegativeNumberOfTasks() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     var externalTaskQueryTopicBuilder = externalTaskService
@@ -642,7 +642,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchLessTasksThanExist() {
+  void testFetchLessTasksThanExist() {
     // given
     for (int i = 0; i < 10; i++) {
       runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
@@ -657,7 +657,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchNegativeLockTime() {
+  void testFetchNegativeLockTime() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     var externalTaskQueryTopicBuilder = externalTaskService
@@ -673,7 +673,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchZeroLockTime() {
+  void testFetchZeroLockTime() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     var externalTaskQueryTopicBuilder = externalTaskService
@@ -689,7 +689,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchNoTopics() {
+  void testFetchNoTopics() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -703,7 +703,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment
   @Test
-  public void testFetchVariables() {
+  void testFetchVariables() {
     // given
     runtimeService.startProcessInstanceByKey("subProcessExternalTask",
           Variables.createVariables().putValue("processVar1", 42).putValue("processVar2", 43));
@@ -727,7 +727,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchVariables.bpmn20.xml")
   @Test
-  public void testShouldNotFetchSerializedVariables() {
+  void testShouldNotFetchSerializedVariables() {
     // given
     ExternalTaskCustomValue customValue = new ExternalTaskCustomValue();
     customValue.setTestValue("value1");
@@ -755,7 +755,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchVariables.bpmn20.xml")
   @Test
-  public void testFetchSerializedVariables() {
+  void testFetchSerializedVariables() {
     // given
     ExternalTaskCustomValue customValue = new ExternalTaskCustomValue();
     customValue.setTestValue("value1");
@@ -780,9 +780,9 @@ public class ExternalTaskServiceTest {
     assertThat(receivedCustomValue.getTestValue()).isEqualTo("value1");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskVariablesTest.testExternalTaskVariablesLocal.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskVariablesTest.testExternalTaskVariablesLocal.bpmn20.xml"})
   @Test
-  public void testFetchOnlyLocalVariables() {
+  void testFetchOnlyLocalVariables() {
 
     VariableMap globalVars = Variables.putValue("globalVar", "globalVal");
 
@@ -819,9 +819,9 @@ public class ExternalTaskServiceTest {
     assertThat(variables.getValue("localVar", String.class)).isEqualTo("localVal");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskVariablesTest.testExternalTaskVariablesLocal.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskVariablesTest.testExternalTaskVariablesLocal.bpmn20.xml"})
   @Test
-  public void testFetchNonExistingLocalVariables() {
+  void testFetchNonExistingLocalVariables() {
 
     VariableMap globalVars = Variables.putValue("globalVar", "globalVal");
 
@@ -845,7 +845,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchVariables.bpmn20.xml")
   @Test
-  public void testFetchAllVariables() {
+  void testFetchAllVariables() {
     // given
     runtimeService.startProcessInstanceByKey("subProcessExternalTask",
         Variables.createVariables()
@@ -891,7 +891,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchNonExistingVariable() {
+  void testFetchNonExistingVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -909,7 +909,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment
   @Test
-  public void testFetchMultipleTopics() {
+  void testFetchMultipleTopics() {
     // given a process instance with external tasks for topics "topic1", "topic2", and "topic3"
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");
 
@@ -946,7 +946,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment
   @Test
-  public void testFetchMultipleTopicsWithVariables() {
+  void testFetchMultipleTopicsWithVariables() {
     // given a process instance with external tasks for topics "topic1" and "topic2"
     // both have local variables "var1" and "var2"
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess",
@@ -980,7 +980,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchMultipleTopics.bpmn20.xml")
   @Test
-  public void testFetchMultipleTopicsMaxTasks() {
+  void testFetchMultipleTopicsMaxTasks() {
     // given
     for (int i = 0; i < 10; i++) {
       runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");
@@ -999,7 +999,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchSuspendedTask() {
+  void testFetchSuspendedTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -1034,7 +1034,7 @@ public class ExternalTaskServiceTest {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchAndLockWithInitialBuilder() {
+  void testFetchAndLockWithInitialBuilder() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -1050,10 +1050,10 @@ public class ExternalTaskServiceTest {
     assertThat(tasks).hasSize(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml"})
   @Test
-  public void testFetchByProcessDefinitionId() {
+  void testFetchByProcessDefinitionId() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess");
@@ -1072,7 +1072,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchByProcessDefinitionIdCombination() {
+  void testFetchByProcessDefinitionIdCombination() {
     // given
     String topicName1 = "topic1";
     String topicName2 = "topic2";
@@ -1114,7 +1114,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchByProcessDefinitionIdIn() {
+  void testFetchByProcessDefinitionIdIn() {
     // given
     String topicName1 = "topic1";
     String topicName2 = "topic2";
@@ -1166,10 +1166,10 @@ public class ExternalTaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml"})
   @Test
-  public void testFetchByProcessDefinitionIds() {
+  void testFetchByProcessDefinitionIds() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     String processDefinitionId1 = processInstance1.getProcessDefinitionId();
@@ -1187,10 +1187,10 @@ public class ExternalTaskServiceTest {
     assertThat(externalTasks).isEmpty();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml"})
   @Test
-  public void testFetchByProcessDefinitionKey() {
+  void testFetchByProcessDefinitionKey() {
     // given
     String processDefinitionKey1 = "oneExternalTaskProcess";
     runtimeService.startProcessInstanceByKey(processDefinitionKey1);
@@ -1208,10 +1208,10 @@ public class ExternalTaskServiceTest {
     assertThat(externalTasks.get(0).getProcessDefinitionKey()).isEqualTo(processDefinitionKey2);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml"})
   @Test
-  public void testFetchByProcessDefinitionKeyIn() {
+  void testFetchByProcessDefinitionKeyIn() {
     // given
     String processDefinitionKey1 = "oneExternalTaskProcess";
     runtimeService.startProcessInstanceByKey(processDefinitionKey1);
@@ -1229,10 +1229,10 @@ public class ExternalTaskServiceTest {
     assertThat(externalTasks.get(0).getProcessDefinitionKey()).isEqualTo(processDefinitionKey2);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityProcess.bpmn20.xml"})
   @Test
-  public void testFetchByProcessDefinitionKeys() {
+  void testFetchByProcessDefinitionKeys() {
     // given
     String processDefinitionKey1 = "oneExternalTaskProcess";
     runtimeService.startProcessInstanceByKey(processDefinitionKey1);
@@ -1252,7 +1252,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchByProcessDefinitionIdAndKey() {
+  void testFetchByProcessDefinitionIdAndKey() {
     // given
     String topicName1 = "topic1";
     String topicName2 = "topic2";
@@ -1297,9 +1297,9 @@ public class ExternalTaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void testFetchWithoutTenant() {
+  void testFetchWithoutTenant() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -1313,9 +1313,9 @@ public class ExternalTaskServiceTest {
     assertThat(externalTasks).hasSize(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldLockExternalTask() {
+  void shouldLockExternalTask() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().notLocked().singleResult();
@@ -1334,9 +1334,9 @@ public class ExternalTaskServiceTest {
         .isEqualTo(lockExpirationTime);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldLockExternalTaskWithExpiredLock() throws java.text.ParseException {
+  void shouldLockExternalTaskWithExpiredLock() throws java.text.ParseException {
     // given
     // a second worker
     String aSecondWorkerId = "aSecondWorkerId";
@@ -1366,9 +1366,9 @@ public class ExternalTaskServiceTest {
         .isEqualTo(lockExpirationTime);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldLockAlreadyLockedExternalTaskWithSameWorker() {
+  void shouldLockAlreadyLockedExternalTaskWithSameWorker() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -1387,9 +1387,9 @@ public class ExternalTaskServiceTest {
     assertThat(firstLockExpirationTime).isBefore(secondLockExpirationTime);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldFailToLockAlreadyLockedExternalTask() {
+  void shouldFailToLockAlreadyLockedExternalTask() {
     // given
     String aSecondWorkerId = "aSecondWorkerId";
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
@@ -1405,9 +1405,9 @@ public class ExternalTaskServiceTest {
       + "'. It is locked by worker '" + WORKER_ID + "'.");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldReportMissingWorkerIdOnLockExternalTask() {
+  void shouldReportMissingWorkerIdOnLockExternalTask() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().notLocked().singleResult();
@@ -1419,9 +1419,9 @@ public class ExternalTaskServiceTest {
       .hasMessageContaining("workerId is null");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldReportMissingExternalTaskIdOnLockExternalTask() {
+  void shouldReportMissingExternalTaskIdOnLockExternalTask() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -1431,9 +1431,9 @@ public class ExternalTaskServiceTest {
       .hasMessageContaining("Cannot find external task with id null: externalTask is null");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldReportNonexistentExternalTaskIdOnLockExternalTask() {
+  void shouldReportNonexistentExternalTaskIdOnLockExternalTask() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -1444,9 +1444,9 @@ public class ExternalTaskServiceTest {
           "externalTask is null");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldFailToLockExternalTaskWithNullLockDuration() {
+  void shouldFailToLockExternalTaskWithNullLockDuration() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -1456,9 +1456,9 @@ public class ExternalTaskServiceTest {
       .hasMessageContaining("lockDuration is not greater than 0");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldFailToLockExternalTaskWithNegativeLockDuration() {
+  void shouldFailToLockExternalTaskWithNegativeLockDuration() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -1470,7 +1470,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testComplete() {
+  void testComplete() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
@@ -1496,7 +1496,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testCompleteWithVariables() {
+  void testCompleteWithVariables() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
@@ -1522,7 +1522,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testCompleteWithWrongWorkerId() {
+  void testCompleteWithWrongWorkerId() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
@@ -1541,14 +1541,14 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void testCompleteNonExistingTask() {
+  void testCompleteNonExistingTask() {
     assertThatThrownBy(() -> externalTaskService.complete("nonExistingTaskId", WORKER_ID))
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("Cannot find external task with id nonExistingTaskId");
   }
 
   @Test
-  public void testCompleteNullTaskId() {
+  void testCompleteNullTaskId() {
     assertThatThrownBy(() -> externalTaskService.complete(null, WORKER_ID))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot find external task with id null");
@@ -1556,7 +1556,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testCompleteNullWorkerId() {
+  void testCompleteNullWorkerId() {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
     List<LockedExternalTask> tasks = externalTaskService.fetchAndLock(1, WORKER_ID)
@@ -1574,7 +1574,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testCompleteSuspendedTask() {
+  void testCompleteSuspendedTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(5, WORKER_ID)
@@ -1606,7 +1606,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinition.bpmn20.xml"})
-  public void shouldEvaluateNestedErrorEventDefinitionsOnComplete() {
+  void shouldEvaluateNestedErrorEventDefinitionsOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1630,7 +1630,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml"})
-  public void shouldEvaluateNestedErrorEventDefinitionsOnCompleteWithVariables() {
+  void shouldEvaluateNestedErrorEventDefinitionsOnCompleteWithVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1656,7 +1656,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml"})
-  public void shouldEvaluateNestedErrorEventDefinitionsOnCompleteWithLocalVariables() {
+  void shouldEvaluateNestedErrorEventDefinitionsOnCompleteWithLocalVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1682,7 +1682,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml")
-  public void shouldFailNestedErrorEventDefinitionsWhenVariableWasNotProvidedByClientOnComplete() {
+  void shouldFailNestedErrorEventDefinitionsWhenVariableWasNotProvidedByClientOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1701,7 +1701,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml"})
-  public void shouldKeepVariablesAfterEvaluateNestedErrorEventDefinitionsOnCompleteWithVariables() {
+  void shouldKeepVariablesAfterEvaluateNestedErrorEventDefinitionsOnCompleteWithVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1731,7 +1731,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml"})
-  public void shouldNotKeepVariablesAfterEvaluateNestedErrorEventDefinitionsOnCompleteWithLocalVariables() {
+  void shouldNotKeepVariablesAfterEvaluateNestedErrorEventDefinitionsOnCompleteWithLocalVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1760,7 +1760,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionTrueAndOutputMapping.bpmn20.xml"})
-  public void shouldNotFailOutputMappingAfterNestedErrorEventDefinitionsOnComplete() {
+  void shouldNotFailOutputMappingAfterNestedErrorEventDefinitionsOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1790,7 +1790,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionTrueAndOutputMapping.bpmn20.xml")
-  public void shouldFailOutputMappingAfterNestedErrorEventDefinitionsWhenVariableWasNotProvidedByClientOnComplete() {
+  void shouldFailOutputMappingAfterNestedErrorEventDefinitionsWhenVariableWasNotProvidedByClientOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1808,7 +1808,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinition.bpmn20.xml"})
-  public void shouldEvaluateNestedErrorEventDefinitionsOnFailure() {
+  void shouldEvaluateNestedErrorEventDefinitionsOnFailure() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1832,7 +1832,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml"})
-  public void shouldEvaluateNestedErrorEventDefinitionsOnFailWithVariables() {
+  void shouldEvaluateNestedErrorEventDefinitionsOnFailWithVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1858,7 +1858,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml"})
-  public void shouldEvaluateNestedErrorEventDefinitionsOnFailWithLocalVariables() {
+  void shouldEvaluateNestedErrorEventDefinitionsOnFailWithLocalVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1884,7 +1884,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml")
-  public void shouldNotFailNestedErrorEventDefinitionsWhenVariableWasNotProvidedByClientOnFail() {
+  void shouldNotFailNestedErrorEventDefinitionsWhenVariableWasNotProvidedByClientOnFail() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1925,7 +1925,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml"})
-  public void shouldKeepVariablesAfterEvaluateNestedErrorEventDefinitionsOnFailWithVariables() {
+  void shouldKeepVariablesAfterEvaluateNestedErrorEventDefinitionsOnFailWithVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1955,7 +1955,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionVariableExpression.bpmn20.xml"})
-  public void shouldNotKeepVariablesAfterEvaluateNestedErrorEventDefinitionsOnFailWithLocalVariables() {
+  void shouldNotKeepVariablesAfterEvaluateNestedErrorEventDefinitionsOnFailWithLocalVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -1984,7 +1984,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionTrueAndOutputMapping.bpmn20.xml"})
-  public void shouldNotFailOutputMappingAfterNestedErrorEventDefinitionsOnFail() {
+  void shouldNotFailOutputMappingAfterNestedErrorEventDefinitionsOnFail() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -2014,7 +2014,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionTrueAndOutputMapping.bpmn20.xml")
-  public void shouldFailOutputMappingAfterNestedErrorEventDefinitionsWhenVariableWasNotProvidedByClientOnFail() {
+  void shouldFailOutputMappingAfterNestedErrorEventDefinitionsWhenVariableWasNotProvidedByClientOnFail() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -2034,7 +2034,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionExpressionIncludesErrorMessage.bpmn20.xml"})
-  public void shouldResolveExpressionWithErrorMessageInNestedErrorEventDefinitionOnFailure() {
+  void shouldResolveExpressionWithErrorMessageInNestedErrorEventDefinitionOnFailure() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -2059,7 +2059,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionExpressionIncludesNullErrorMessage.bpmn20.xml"})
-  public void shouldResolveExpressionWithErrorMessageInNestedErrorEventDefinitionOnComplete() {
+  void shouldResolveExpressionWithErrorMessageInNestedErrorEventDefinitionOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> externalTasks = externalTaskService
@@ -2084,7 +2084,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionExpressionIncludesNullErrorMessage.bpmn20.xml"})
-  public void shouldResolveExpressionWithErrorMessageInNestedErrorEventDefinitionOnCompleteWithMultipleActivities() {
+  void shouldResolveExpressionWithErrorMessageInNestedErrorEventDefinitionOnCompleteWithMultipleActivities() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> lockedExternalTasks = externalTaskService
@@ -2114,7 +2114,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithTwoNestedErrorEventDefinitionExpressions.bpmn20.xml"})
-  public void shouldResolveFirstOfTwoExpressionsInNestedErrorEventDefinitionOnComplete() {
+  void shouldResolveFirstOfTwoExpressionsInNestedErrorEventDefinitionOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> lockedExternalTasks = externalTaskService
@@ -2141,7 +2141,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithTwoNestedErrorEventDefinitionExpressions.bpmn20.xml"})
-  public void shouldResolveSecondOfTwoExpressionsInNestedErrorEventDefinitionOnComplete() {
+  void shouldResolveSecondOfTwoExpressionsInNestedErrorEventDefinitionOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> lockedExternalTasks = externalTaskService
@@ -2168,7 +2168,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithTwoNestedErrorEventDefinitionExpressions.bpmn20.xml"})
-  public void shouldResolveBothOfTwoExpressionsInNestedErrorEventDefinitionOnComplete() {
+  void shouldResolveBothOfTwoExpressionsInNestedErrorEventDefinitionOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> lockedExternalTasks = externalTaskService
@@ -2195,7 +2195,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionEmptyExpression.bpmn20.xml"})
-  public void shouldIgnoreEmptyExpressionInNestedErrorEventDefinitionOnComplete() {
+  void shouldIgnoreEmptyExpressionInNestedErrorEventDefinitionOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> lockedExternalTasks = externalTaskService
@@ -2217,7 +2217,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.externalTaskWithNestedErrorEventDefinitionEmptyExpression.bpmn20.xml"})
-  public void shouldIgnoreNullExpressionInNestedErrorEventDefinitionOnComplete() {
+  void shouldIgnoreNullExpressionInNestedErrorEventDefinitionOnComplete() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithNestedErrorEventDefinition");
     List<LockedExternalTask> lockedExternalTasks = externalTaskService
@@ -2239,7 +2239,7 @@ public class ExternalTaskServiceTest {
 
   @Test
   @Deployment
-  public void shouldThrowProcessEngineExceptionWhenOtherResourceIsNotFound() {
+  void shouldThrowProcessEngineExceptionWhenOtherResourceIsNotFound() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalAndScriptTask");
     List<LockedExternalTask> lockedExternalTasks = externalTaskService
@@ -2259,7 +2259,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testLocking() {
+  void testLocking() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2291,7 +2291,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testCompleteLockExpiredTask() {
+  void testCompleteLockExpiredTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2315,7 +2315,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testCompleteReclaimedLockExpiredTask() {
+  void testCompleteReclaimedLockExpiredTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2352,7 +2352,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testDeleteProcessInstance() {
+  void testDeleteProcessInstance() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2367,7 +2367,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment
   @Test
-  public void testExternalTaskExecutionTreeExpansion() {
+  void testExternalTaskExecutionTreeExpansion() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("boundaryExternalTaskProcess");
 
@@ -2398,7 +2398,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment
   @Test
-  public void testExternalTaskExecutionTreeCompaction() {
+  void testExternalTaskExecutionTreeCompaction() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentExternalTaskProcess");
 
@@ -2427,7 +2427,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUnlock() {
+  void testUnlock() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2451,14 +2451,14 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void testUnlockNullTaskId() {
+  void testUnlockNullTaskId() {
     assertThatThrownBy(() -> externalTaskService.unlock(null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("externalTaskId is null");
   }
 
   @Test
-  public void testUnlockNonExistingTask() {
+  void testUnlockNonExistingTask() {
     assertThatThrownBy(() -> externalTaskService.unlock("nonExistingId"))
       // not found exception lets client distinguish this from other failures
       .isInstanceOf(NotFoundException.class)
@@ -2467,7 +2467,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailure() {
+  void testHandleFailure() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2507,7 +2507,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureWithErrorDetails() {
+  void testHandleFailureWithErrorDetails() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2561,7 +2561,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureZeroRetries() {
+  void testHandleFailureZeroRetries() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2612,7 +2612,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureZeroRetriesAfterIncidentsAreResolved() {
+  void testHandleFailureZeroRetriesAfterIncidentsAreResolved() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2659,7 +2659,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureAndDeleteProcessInstance() {
+  void testHandleFailureAndDeleteProcessInstance() {
     // given a failed external task with incident
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2681,7 +2681,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureThenComplete() {
+  void testHandleFailureThenComplete() {
     // given a failed external task with incident
     runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
@@ -2705,7 +2705,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureWithWrongWorkerId() {
+  void testHandleFailureWithWrongWorkerId() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2726,7 +2726,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureNonExistingTask() {
+  void testHandleFailureNonExistingTask() {
     assertThatThrownBy(() -> externalTaskService.handleFailure("nonExistingTaskId", WORKER_ID, ERROR_MESSAGE, 5, LOCK_TIME))
       .withFailMessage("exception expected")
       // not found exception lets client distinguish this from other failures
@@ -2736,7 +2736,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureNullTaskId() {
+  void testHandleFailureNullTaskId() {
     assertThatThrownBy(() -> externalTaskService.handleFailure(null, WORKER_ID, ERROR_MESSAGE, 5, LOCK_TIME))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot find external task with id " + null);
@@ -2744,7 +2744,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureNullWorkerId() {
+  void testHandleFailureNullWorkerId() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2763,7 +2763,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureNegativeLockDuration() {
+  void testHandleFailureNegativeLockDuration() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2782,7 +2782,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureNegativeRetries() {
+  void testHandleFailureNegativeRetries() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2801,7 +2801,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureNullErrorMessage() {
+  void testHandleFailureNullErrorMessage() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2822,7 +2822,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleFailureSuspendedTask() {
+  void testHandleFailureSuspendedTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(5, WORKER_ID)
@@ -2855,7 +2855,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testSetRetries() {
+  void testSetRetries() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(5, WORKER_ID)
@@ -2873,7 +2873,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testSetRetriesResolvesFailureIncident() {
+  void testSetRetriesResolvesFailureIncident() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(5, WORKER_ID)
@@ -2912,7 +2912,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testSetRetriesToZero() {
+  void testSetRetriesToZero() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(5, WORKER_ID)
@@ -2947,7 +2947,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testSetRetriesToZeroAfterFailureWithRetriesLeft() {
+  void testSetRetriesToZeroAfterFailureWithRetriesLeft() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -2992,7 +2992,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testSetRetriesNegative() {
+  void testSetRetriesNegative() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(5, WORKER_ID)
@@ -3008,7 +3008,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void testSetRetriesNonExistingTask() {
+  void testSetRetriesNonExistingTask() {
     assertThatThrownBy(() -> externalTaskService.setRetries("someExternalTaskId", 5))
       // not found exception lets client distinguish this from other failures
       .isInstanceOf(NotFoundException.class)
@@ -3016,7 +3016,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void testSetRetriesNullTaskId() {
+  void testSetRetriesNullTaskId() {
     assertThatThrownBy(() -> externalTaskService.setRetries((String)null, 5))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("externalTaskId is null");
@@ -3025,7 +3025,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testSetPriority() {
+  void testSetPriority() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(5, WORKER_ID)
@@ -3043,14 +3043,14 @@ public class ExternalTaskServiceTest {
 
 
   @Test
-  public void testSetPriorityNonExistingTask() {
+  void testSetPriorityNonExistingTask() {
     assertThatThrownBy(() -> externalTaskService.setPriority("someExternalTaskId", 5))
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("externalTask is null");
   }
 
   @Test
-  public void testSetPriorityNullTaskId() {
+  void testSetPriorityNullTaskId() {
     assertThatThrownBy(() -> externalTaskService.setPriority(null, 5))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("externalTaskId is null");
@@ -3058,7 +3058,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml")
   @Test
-  public void testAfterSetPriorityFetchHigherTask() {
+  void testAfterSetPriorityFetchHigherTask() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess");
 
@@ -3082,7 +3082,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testSetPriorityLockExpiredTask() {
+  void testSetPriorityLockExpiredTask() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3106,7 +3106,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment
   @Test
-  public void testCancelExternalTaskWithBoundaryEvent() {
+  void testCancelExternalTaskWithBoundaryEvent() {
     // given
     runtimeService.startProcessInstanceByKey("boundaryExternalTaskProcess");
     assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(1);
@@ -3126,7 +3126,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnError() {
+  void testHandleBpmnError() {
     //given
     runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
     // when
@@ -3142,7 +3142,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorWithoutDefinedBoundary() {
+  void testHandleBpmnErrorWithoutDefinedBoundary() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3183,7 +3183,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorLockExpiredTask() {
+  void testHandleBpmnErrorLockExpiredTask() {
     //given
     runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
     // when
@@ -3209,7 +3209,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorReclaimedLockExpiredTaskWithoutDefinedBoundary() {
+  void testHandleBpmnErrorReclaimedLockExpiredTaskWithoutDefinedBoundary() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     handleBpmnErrorReclaimedLockExpiredTask(false);
@@ -3218,7 +3218,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorReclaimedLockExpiredTaskWithBoundary() {
+  void testHandleBpmnErrorReclaimedLockExpiredTaskWithBoundary() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
     //then
@@ -3267,7 +3267,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void testHandleBpmnErrorNonExistingTask() {
+  void testHandleBpmnErrorNonExistingTask() {
     assertThatThrownBy(() -> externalTaskService.handleBpmnError("nonExistingTaskId", WORKER_ID, "ERROR-OCCURED"))
       .isInstanceOf(NotFoundException.class)
       // not found exception lets client distinguish this from other failures
@@ -3275,7 +3275,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void testHandleBpmnNullTaskId() {
+  void testHandleBpmnNullTaskId() {
     assertThatThrownBy(() -> externalTaskService.handleBpmnError(null, WORKER_ID, "ERROR-OCCURED"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot find external task with id " + null);
@@ -3284,7 +3284,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnNullErrorCode() {
+  void testHandleBpmnNullErrorCode() {
     //given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3303,7 +3303,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorNullWorkerId() {
+  void testHandleBpmnErrorNullWorkerId() {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
     List<LockedExternalTask> tasks = externalTaskService.fetchAndLock(1, WORKER_ID)
@@ -3320,7 +3320,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorSuspendedTask() {
+  void testHandleBpmnErrorSuspendedTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(5, WORKER_ID)
@@ -3340,7 +3340,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorPassVariablesBoundaryEvent() {
+  void testHandleBpmnErrorPassVariablesBoundaryEvent() {
     //given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
@@ -3374,7 +3374,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void testHandleBpmnErrorPassVariablesEventSubProcess() {
+  void testHandleBpmnErrorPassVariablesEventSubProcess() {
     // when
     BpmnModelInstance process =
         Bpmn.createExecutableProcess("process")
@@ -3434,7 +3434,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment
   @Test
-  public void testHandleBpmnErrorPassMessageEventSubProcess() {
+  void testHandleBpmnErrorPassMessageEventSubProcess() {
     //given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3467,7 +3467,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorReclaimedLockExpiredTaskWithBoundaryAndPassVariables() {
+  void testHandleBpmnErrorReclaimedLockExpiredTaskWithBoundaryAndPassVariables() {
     // given
     runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
     // then
@@ -3476,7 +3476,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateRetriesByExternalTaskIds() {
+  void testUpdateRetriesByExternalTaskIds() {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
@@ -3501,7 +3501,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateRetriesByExternalTaskIdArray() {
+  void testUpdateRetriesByExternalTaskIdArray() {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
@@ -3526,7 +3526,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateRetriesByProcessInstanceIds() {
+  void testUpdateRetriesByProcessInstanceIds() {
     // given
     List<String> processInstances = startProcessInstance("oneExternalTaskProcess", 5);
 
@@ -3544,7 +3544,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateRetriesByProcessInstanceIdArray() {
+  void testUpdateRetriesByProcessInstanceIdArray() {
     // given
     List<String> processInstances = startProcessInstance("oneExternalTaskProcess", 5);
 
@@ -3562,7 +3562,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateRetriesByExternalTaskQuery() {
+  void testUpdateRetriesByExternalTaskQuery() {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
 
@@ -3582,7 +3582,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateRetriesByProcessInstanceQuery() {
+  void testUpdateRetriesByProcessInstanceQuery() {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
 
@@ -3605,7 +3605,7 @@ public class ExternalTaskServiceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateRetriesByHistoricProcessInstanceQuery() {
+  void testUpdateRetriesByHistoricProcessInstanceQuery() {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
 
@@ -3628,7 +3628,7 @@ public class ExternalTaskServiceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testUpdateRetriesByAllParameters() {
+  void testUpdateRetriesByAllParameters() {
     // given
     List<String> ids = startProcessInstance("oneExternalTaskProcess", 5);
 
@@ -3669,7 +3669,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTime() {
+  void testExtendLockTime() {
     final Date oldCurrentTime = ClockUtil.getCurrentTime();
     try {
       // given
@@ -3696,7 +3696,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTimeThatExpired() {
+  void testExtendLockTimeThatExpired() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3719,7 +3719,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTimeWithoutLock() {
+  void testExtendLockTimeWithoutLock() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3735,7 +3735,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTimeWithNullLockTime() {
+  void testExtendLockTimeWithNullLockTime() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3757,7 +3757,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTimeWithNegativeLockTime() {
+  void testExtendLockTimeWithNegativeLockTime() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3779,7 +3779,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTimeWithNullWorkerId() {
+  void testExtendLockTimeWithNullWorkerId() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3801,7 +3801,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTimeWithDifferentWorkerId() {
+  void testExtendLockTimeWithDifferentWorkerId() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3823,7 +3823,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTimeWithNullExternalTask() {
+  void testExtendLockTimeWithNullExternalTask() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3844,14 +3844,14 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testExtendLockTimeForUnexistingExternalTask() {
+  void testExtendLockTimeForUnexistingExternalTask() {
     assertThatThrownBy(() -> externalTaskService.extendLock("unexisting", WORKER_ID, 100))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot find external task with id unexisting");
   }
 
   @Test
-  public void testCompleteWithLocalVariables() {
+  void testCompleteWithLocalVariables() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process").startEvent().serviceTask("externalTask")
         .operatonType("external").operatonTopic("foo").operatonTaskPriority("100")
@@ -3882,7 +3882,7 @@ public class ExternalTaskServiceTest {
   }
 
   @Test
-  public void testCompleteWithNonLocalVariables() {
+  void testCompleteWithNonLocalVariables() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process").startEvent().serviceTask("externalTask")
         .operatonType("external").operatonTopic("foo").operatonTaskPriority("100")
@@ -3908,7 +3908,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testFetchWithEmptyListOfVariables() {
+  void testFetchWithEmptyListOfVariables() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
@@ -3926,7 +3926,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByBusinessKey() {
+  void testQueryByBusinessKey() {
     // given
     String topicName1 = "topic1";
     String topicName2 = "topic2";
@@ -3972,7 +3972,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByBusinessKeyCombination1() {
+  void testQueryByBusinessKeyCombination1() {
     // given
     String topicName1 = "topic1";
     String topicName2 = "topic2";
@@ -4013,7 +4013,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByBusinessKeyCombination2() {
+  void testQueryByBusinessKeyCombination2() {
     // given
     String topicName1 = "topic1";
     String topicName2 = "topic2";
@@ -4054,7 +4054,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testQueryByBusinessKeyLocking() {
+  void testQueryByBusinessKeyLocking() {
     // given
     String topicName1 = "topic1";
     String topicName2 = "topic2";
@@ -4104,7 +4104,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testVariableValueTopicQuery.bpmn20.xml")
   @Test
-  public void testTopicQueryByVariableValue() {
+  void testTopicQueryByVariableValue() {
     // given
     String topicName1 = "testTopic1";
     String topicName2 = "testTopic2";
@@ -4148,7 +4148,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testVariableValueTopicQuery.bpmn20.xml")
   @Test
-  public void testTopicQueryByVariableValueLocking() {
+  void testTopicQueryByVariableValueLocking() {
     // given
     String topicName1 = "testTopic1";
     String topicName2 = "testTopic2";
@@ -4198,7 +4198,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testVariableValueTopicQuery.bpmn20.xml")
   @Test
-  public void testTopicQueryByVariableValues() {
+  void testTopicQueryByVariableValues() {
     // given
     String topicName1 = "testTopic1";
     String topicName2 = "testTopic2";
@@ -4262,7 +4262,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testVariableValueTopicQuery.bpmn20.xml")
   @Test
-  public void testTopicQueryByBusinessKeyAndVariableValue() {
+  void testTopicQueryByBusinessKeyAndVariableValue() {
     // given
     String topicName1 = "testTopic1";
     String topicName2 = "testTopic2";
@@ -4320,7 +4320,7 @@ public class ExternalTaskServiceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchAndLockByProcessDefinitionVersionTag.bpmn20.xml"})
   @Test
-  public void testFetchAndLockByProcessDefinitionVersionTag() {
+  void testFetchAndLockByProcessDefinitionVersionTag() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess"); // no version tag
     runtimeService.startProcessInstanceByKey("testFetchAndLockByProcessDefinitionVersionTag"); // version tag: version X.Y
@@ -4339,7 +4339,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchMultipleTopics.bpmn20.xml"})
   @Test
-  public void testGetTopicNamesWithLockedTasks(){
+  void testGetTopicNamesWithLockedTasks(){
     //given
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");
     externalTaskService.fetchAndLock(1, WORKER_ID)
@@ -4355,7 +4355,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchMultipleTopics.bpmn20.xml"})
   @Test
-  public void testGetTopicNamesWithUnlockedTasks(){
+  void testGetTopicNamesWithUnlockedTasks(){
     //given
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");
     externalTaskService.fetchAndLock(1, WORKER_ID)
@@ -4371,7 +4371,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchMultipleTopics.bpmn20.xml"})
   @Test
-  public void testGetTopicNamesWithRetries(){
+  void testGetTopicNamesWithRetries(){
     //given
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");
 
@@ -4392,7 +4392,7 @@ public class ExternalTaskServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchMultipleTopics.bpmn20.xml"})
   @Test
-  public void testGetTopicNamesAreDistinct(){
+  void testGetTopicNamesAreDistinct(){
     //given
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");
@@ -4404,9 +4404,9 @@ public class ExternalTaskServiceTest {
     assertThat(result).containsExactlyInAnyOrder("topic1", "topic2", "topic3");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchAndLockWithExtensionProperties.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchAndLockWithExtensionProperties.bpmn20.xml"})
   @Test
-  public void testFetchAndLockWithExtensionProperties_shouldReturnProperties() {
+  void testFetchAndLockWithExtensionProperties_shouldReturnProperties() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithCustomProperties");
 
@@ -4420,9 +4420,9 @@ public class ExternalTaskServiceTest {
         entry("property3", "value3"));
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchAndLockWithoutExtensionProperties.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchAndLockWithoutExtensionProperties.bpmn20.xml"})
   @Test
-  public void testFetchAndLockWithExtensionProperties_shouldReturnEmptyMap() {
+  void testFetchAndLockWithExtensionProperties_shouldReturnEmptyMap() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithoutCustomProperties");
 
@@ -4435,9 +4435,9 @@ public class ExternalTaskServiceTest {
     assertThat(lockedExternalTasks.get(0).getExtensionProperties()).isEmpty();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchAndLockWithExtensionProperties.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchAndLockWithExtensionProperties.bpmn20.xml"})
   @Test
-  public void testFetchAndLockWithoutExtensionProperties_shouldReturnEmptyMap() {
+  void testFetchAndLockWithoutExtensionProperties_shouldReturnEmptyMap() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithCustomProperties");
 

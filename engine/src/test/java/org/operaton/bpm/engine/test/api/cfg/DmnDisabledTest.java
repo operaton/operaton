@@ -33,20 +33,20 @@ import org.junit.jupiter.api.Test;
  * @author Roman Smirnov
  *
  */
-public class DmnDisabledTest {
+class DmnDisabledTest {
 
   protected static ProcessEngineImpl processEngineImpl;
 
   // make sure schema is dropped
   @AfterEach
-  public void cleanup() {
+  void cleanup() {
     TestHelper.dropSchema(processEngineImpl.getProcessEngineConfiguration());
     processEngineImpl.close();
     processEngineImpl = null;
   }
 
   @Test
-  public void disabledDmn() {
+  void disabledDmn() {
     processEngineImpl = createProcessEngineImpl(false);
 
     // simulate manual schema creation by user

@@ -21,7 +21,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junitpioneer.jupiter.RetryingTest;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
@@ -68,7 +67,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   protected List<String> decisionInstanceIds;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     decisionInstanceIds = new ArrayList<>();
 
     testRule.deploy("org/operaton/bpm/engine/test/api/dmn/Example.dmn");
@@ -88,7 +87,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     for (Batch batch : managementService.createBatchQuery().list()) {
       managementService.deleteBatch(batch.getId(), true);
     }
@@ -100,12 +99,12 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @AfterEach
-  public void clearAuthentication() {
+  void clearAuthentication() {
     identityService.clearAuthentication();
   }
 
   @Test
-  public void testCreationByIds() {
+  void testCreationByIds() {
     // when
     identityService.setAuthenticatedUserId(USER_ID);
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, "a-delete-reason");
@@ -153,7 +152,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
-  public void testCreationByQuery() {
+  void testCreationByQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
 
@@ -204,7 +203,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
-  public void testCreationByIdsAndQuery() {
+  void testCreationByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
 
@@ -255,7 +254,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
-  public void testNoCreationOnSyncBatchJobExecution() {
+  void testNoCreationOnSyncBatchJobExecution() {
     // given
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
@@ -269,7 +268,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
-  public void testNoCreationOnSyncBatchJobExecutionByIds() {
+  void testNoCreationOnSyncBatchJobExecutionByIds() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(query, null);
@@ -284,7 +283,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
-  public void testNoCreationOnSyncBatchJobExecutionByIdsAndQuery() {
+  void testNoCreationOnSyncBatchJobExecutionByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, query, null);
@@ -300,7 +299,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
 
   @Test
   @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
-  public void testNoCreationOnJobExecutorBatchJobExecutionByIds() {
+  void testNoCreationOnJobExecutorBatchJobExecutionByIds() {
     // given
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
@@ -313,7 +312,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
 
   @Test
   @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
-  public void testNoCreationOnJobExecutorBatchJobExecutionByQuery() {
+  void testNoCreationOnJobExecutorBatchJobExecutionByQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     historyService.deleteHistoricDecisionInstancesAsync(query, null);
@@ -327,7 +326,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
 
   @Test
   @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
-  public void testNoCreationOnJobExecutorBatchJobExecutionByIdsAndQuery() {
+  void testNoCreationOnJobExecutorBatchJobExecutionByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, query, null);

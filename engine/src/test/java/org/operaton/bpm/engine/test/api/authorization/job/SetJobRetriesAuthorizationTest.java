@@ -117,13 +117,13 @@ public class SetJobRetriesAuthorizationTest {
   protected String deploymentId;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     managementService = engineRule.getManagementService();
     authRule.createUserAndGroup("userId", "groupId");
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     authRule.deleteUsersAndGroups();
   }
 

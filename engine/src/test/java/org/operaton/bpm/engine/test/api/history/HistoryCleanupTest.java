@@ -81,11 +81,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.Removable;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+
 /**
  * @author Svetlana Dorokhova
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoryCleanupTest {
+class HistoryCleanupTest {
   private static final int PROCESS_INSTANCES_COUNT = 3;
   private static final int DECISIONS_IN_PROCESS_INSTANCES = 3;
   private static final int DECISION_INSTANCES_COUNT = 10;
@@ -132,7 +133,7 @@ public class HistoryCleanupTest {
 
 
   @BeforeEach
-  public void init() {
+  void init() {
     testRule.deploy("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/dmn/Example.dmn", "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithHistoryTimeToLive.cmmn");
     defaultStartTime = processEngineConfiguration.getHistoryCleanupBatchWindowStartTime();
     defaultEndTime = processEngineConfiguration.getHistoryCleanupBatchWindowEndTime();
@@ -145,7 +146,7 @@ public class HistoryCleanupTest {
   }
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     //reset configuration changes
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(defaultStartTime);
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(defaultEndTime);
@@ -174,7 +175,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testHistoryCleanupManualRun() {
+  void testHistoryCleanupManualRun() {
     //given
     prepareData(15);
 
@@ -198,7 +199,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenCleanupDisabled_1() {
+  void shouldThrowExceptionWhenCleanupDisabled_1() {
     // given
     processEngineConfiguration.setHistoryCleanupEnabled(false);
 
@@ -209,7 +210,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenCleanupDisabled_2() {
+  void shouldThrowExceptionWhenCleanupDisabled_2() {
     // given
     processEngineConfiguration.setHistoryCleanupEnabled(false);
 
@@ -220,7 +221,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testDataSplitBetweenThreads() {
+  void testDataSplitBetweenThreads() {
     //given
     prepareData(15);
 
@@ -285,7 +286,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testHistoryCleanupMetrics() {
+  void testHistoryCleanupMetrics() {
     //given
     processEngineConfiguration.setHistoryCleanupMetricsEnabled(true);
     prepareData(15);
@@ -308,7 +309,7 @@ public class HistoryCleanupTest {
 
 
   @Test
-  public void testHistoryCleanupMetricsExtend() {
+  void testHistoryCleanupMetricsExtend() {
     Date currentDate = new Date();
     // given
     processEngineConfiguration.setHistoryCleanupMetricsEnabled(true);
@@ -351,9 +352,9 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupOnlyDecisionInstancesRemoved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupOnlyDecisionInstancesRemoved() {
     // given
     prepareInstances(null, HISTORY_TIME_TO_LIVE, null);
 
@@ -368,8 +369,8 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml", "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
-  public void testHistoryCleanupOnlyProcessInstancesRemoved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml", "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupOnlyProcessInstancesRemoved() {
     // given
     prepareInstances(HISTORY_TIME_TO_LIVE, null, null);
 
@@ -384,9 +385,9 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupOnlyCaseInstancesRemoved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupOnlyCaseInstancesRemoved() {
     // given
     prepareInstances(null, null, HISTORY_TIME_TO_LIVE);
 
@@ -402,9 +403,9 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupOnlyDecisionInstancesNotRemoved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupOnlyDecisionInstancesNotRemoved() {
     // given
     prepareInstances(HISTORY_TIME_TO_LIVE, null, HISTORY_TIME_TO_LIVE);
 
@@ -419,9 +420,9 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupOnlyProcessInstancesNotRemoved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupOnlyProcessInstancesNotRemoved() {
     // given
     prepareInstances(null, HISTORY_TIME_TO_LIVE, HISTORY_TIME_TO_LIVE);
 
@@ -436,9 +437,9 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupOnlyCaseInstancesNotRemoved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupOnlyCaseInstancesNotRemoved() {
     // given
     prepareInstances(HISTORY_TIME_TO_LIVE, HISTORY_TIME_TO_LIVE, null);
 
@@ -454,9 +455,9 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupEverythingRemoved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupEverythingRemoved() {
     // given
     prepareInstances(HISTORY_TIME_TO_LIVE, HISTORY_TIME_TO_LIVE, HISTORY_TIME_TO_LIVE);
 
@@ -469,9 +470,9 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn" })
-  public void testHistoryCleanupNothingRemoved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/businessruletask/DmnBusinessRuleTaskTest.testDecisionRef.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml", "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn"})
+  void testHistoryCleanupNothingRemoved() {
     // given
     prepareInstances(null, null, null);
 
@@ -529,7 +530,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testHistoryCleanupWithinBatchWindow() {
+  void testHistoryCleanupWithinBatchWindow() {
     //given
     prepareData(15);
 
@@ -548,7 +549,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testHistoryCleanupJobNullTTL() {
+  void testHistoryCleanupJobNullTTL() {
     //given
     removeHistoryTimeToLive();
 
@@ -577,8 +578,8 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml" })
-  public void testHistoryCleanupJobDefaultTTL() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml"})
+  void testHistoryCleanupJobDefaultTTL() {
     //given
     prepareBPMNData(15, "twoTasksProcess");
 
@@ -591,7 +592,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testFindHistoryCleanupJob() {
+  void testFindHistoryCleanupJob() {
     //given
     historyService.cleanUpHistoryAsync(true).getId();
 
@@ -603,7 +604,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testRescheduleForNever() {
+  void testRescheduleForNever() {
     //given
 
     //force creation of job
@@ -633,7 +634,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void shouldResolveIncidentAndApplyHistoryCleanupDefaultRetriesConfig() {
+  void shouldResolveIncidentAndApplyHistoryCleanupDefaultRetriesConfig() {
     //given
     processEngineConfiguration.setHistoryCleanupDefaultNumberOfRetries(10);
     String jobId = historyService.cleanUpHistoryAsync(true).getId();
@@ -651,7 +652,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void shouldResolveIncidentAndApplyDefaultRetriesConfig() {
+  void shouldResolveIncidentAndApplyDefaultRetriesConfig() {
     //given
     String jobId = historyService.cleanUpHistoryAsync(true).getId();
     imitateFailedJob(jobId);
@@ -678,7 +679,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdManualRun() {
+  void testLessThanThresholdManualRun() {
     //given
     prepareData(5);
 
@@ -695,7 +696,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testNotEnoughTimeToDeleteEverything() {
+  void testNotEnoughTimeToDeleteEverything() {
     //given
     //we have something to clean up
     prepareData(80);
@@ -723,7 +724,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testManualRunDoesNotRespectBatchWindow() {
+  void testManualRunDoesNotRespectBatchWindow() {
     //given
     //we have something to clean up
     int processInstanceCount = 40;
@@ -752,7 +753,7 @@ public class HistoryCleanupTest {
 
 
   @Test
-  public void testLessThanThresholdWithinBatchWindow() {
+  void testLessThanThresholdWithinBatchWindow() {
     //given
     prepareData(5);
 
@@ -797,7 +798,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdWithinBatchWindowAgain() {
+  void testLessThanThresholdWithinBatchWindowAgain() {
     //given
     prepareData(5);
 
@@ -838,7 +839,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdWithinBatchWindowMaxDelayReached() {
+  void testLessThanThresholdWithinBatchWindowMaxDelayReached() {
     //given
     prepareData(5);
 
@@ -878,7 +879,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdCloseToBatchWindowEndTime() {
+  void testLessThanThresholdCloseToBatchWindowEndTime() {
     //given
     prepareData(5);
 
@@ -917,7 +918,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdOutsideBatchWindow() {
+  void testLessThanThresholdOutsideBatchWindow() {
     //given
     prepareData(5);
 
@@ -952,7 +953,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdOutsideBatchWindowAfterMidnight() {
+  void testLessThanThresholdOutsideBatchWindowAfterMidnight() {
     //given
     prepareData(5);
 
@@ -984,7 +985,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdOutsideBatchWindowBeforeMidnight() {
+  void testLessThanThresholdOutsideBatchWindowBeforeMidnight() {
     //given
     prepareData(5);
 
@@ -1016,7 +1017,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdWithinBatchWindowBeforeMidnight() {
+  void testLessThanThresholdWithinBatchWindowBeforeMidnight() {
     //given
     prepareData(5);
 
@@ -1051,7 +1052,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdWithinBatchWindowAfterMidnight() {
+  void testLessThanThresholdWithinBatchWindowAfterMidnight() {
     //given
     prepareData(5);
 
@@ -1085,8 +1086,6 @@ public class HistoryCleanupTest {
     assertResult(0);
   }
 
-  @Test
-  @Disabled("CAM-10055")
   /*I can't find the corresponding ticket. On my local machine (Windows) it works, but not in github actions
   It fails because in line 1135 the timestamps are different:
   Locally the results of both are:
@@ -1098,7 +1097,9 @@ public class HistoryCleanupTest {
     Tue May 28 2019 22:00:00 GMT+0000
    */
 
-  public void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws ParseException {
+  @Test
+  @Disabled("CAM-10055")
+  void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws ParseException {
     //given
     prepareData(5);
 
@@ -1131,7 +1132,7 @@ public class HistoryCleanupTest {
 
   @Test
   @Disabled("CAM-10055")
-  public void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() throws ParseException {
+  void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() throws ParseException {
     //given
     prepareData(5);
 
@@ -1165,7 +1166,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfiguration() {
+  void testConfiguration() {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00+0200");
     processEngineConfiguration.initHistoryCleanup();
     Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
@@ -1216,7 +1217,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testHistoryCleanupHelper() throws ParseException {
+  void testHistoryCleanupHelper() throws ParseException {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("22:00+0100");
     processEngineConfiguration.initHistoryCleanup();
 
@@ -1230,7 +1231,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongStartTime() {
+  void testConfigurationFailureWrongStartTime() {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00");
 
@@ -1241,7 +1242,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongDayOfTheWeekStartTime() {
+  void testConfigurationFailureWrongDayOfTheWeekStartTime() {
     // when/then
     assertThatThrownBy(() -> new BatchWindowConfiguration("23", "01:00"))
       .isInstanceOf(ProcessEngineException.class)
@@ -1249,7 +1250,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongDayOfTheWeekEndTime() {
+  void testConfigurationFailureWrongDayOfTheWeekEndTime() {
     // when/then
     assertThatThrownBy(() -> new BatchWindowConfiguration("23:00", "01"))
       .isInstanceOf(ProcessEngineException.class)
@@ -1257,7 +1258,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongDegreeOfParallelism() {
+  void testConfigurationFailureWrongDegreeOfParallelism() {
     processEngineConfiguration.setHistoryCleanupDegreeOfParallelism(0);
 
     // when/then
@@ -1275,7 +1276,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongEndTime() {
+  void testConfigurationFailureWrongEndTime() {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("wrongValue");
 
@@ -1286,7 +1287,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongBatchSize() {
+  void testConfigurationFailureWrongBatchSize() {
     processEngineConfiguration.setHistoryCleanupBatchSize(501);
 
     // when/then
@@ -1296,7 +1297,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongBatchSize2() {
+  void testConfigurationFailureWrongBatchSize2() {
     processEngineConfiguration.setHistoryCleanupBatchSize(-5);
 
     // when/then
@@ -1306,7 +1307,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongBatchThreshold() {
+  void testConfigurationFailureWrongBatchThreshold() {
     processEngineConfiguration.setHistoryCleanupBatchThreshold(-1);
 
     // when/then
@@ -1316,7 +1317,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureMalformedHistoryTimeToLive() {
+  void testConfigurationFailureMalformedHistoryTimeToLive() {
     processEngineConfiguration.setHistoryTimeToLive("PP5555DDDD");
 
     // when/then
@@ -1326,7 +1327,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureInvalidHistoryTimeToLive() {
+  void testConfigurationFailureInvalidHistoryTimeToLive() {
     processEngineConfiguration.setHistoryTimeToLive("invalidValue");
 
     // when/then
@@ -1336,7 +1337,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureNegativeHistoryTimeToLive() {
+  void testConfigurationFailureNegativeHistoryTimeToLive() {
     processEngineConfiguration.setHistoryTimeToLive("-6");
 
     // when/then
@@ -1346,7 +1347,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void shouldApplyGlobalJobRetries() {
+  void shouldApplyGlobalJobRetries() {
     // given
     engineRule.getProcessEngineConfiguration().setDefaultNumberOfRetries(7);
 
@@ -1358,7 +1359,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void shouldApplyLocalJobRetries() {
+  void shouldApplyLocalJobRetries() {
     // given
     engineRule.getProcessEngineConfiguration().setDefaultNumberOfRetries(7);
     engineRule.getProcessEngineConfiguration().setHistoryCleanupDefaultNumberOfRetries(1);
@@ -1371,7 +1372,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void shouldApplyCleanupJobRetries() {
+  void shouldApplyCleanupJobRetries() {
     // given
     engineRule.getProcessEngineConfiguration().setHistoryCleanupDefaultNumberOfRetries(22);
 
@@ -1383,7 +1384,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void shouldDisableRetriesOnCleanupJob() {
+  void shouldDisableRetriesOnCleanupJob() {
     //given
     ProcessEngineConfigurationImpl configuration = engineRule.getProcessEngineConfiguration();
     configuration.setHistoryCleanupDefaultNumberOfRetries(0);

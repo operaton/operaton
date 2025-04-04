@@ -48,27 +48,27 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Stefan Hentschel.
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class AuthorizationServiceWithEnabledAuthorizationTest {
+class AuthorizationServiceWithEnabledAuthorizationTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected AuthorizationService authorizationService;
   protected IdentityService identityService;
-  
+
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
     processEngineConfiguration.setAuthorizationEnabled(true);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
 
   }
 
   @Test
-  public void testAuthorizationCheckEmptyDb() {
+  void testAuthorizationCheckEmptyDb() {
     Resource resource1 = TestResource.RESOURCE1;
     Resource resource2 = TestResource.RESOURCE2;
 
@@ -85,7 +85,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest {
   }
 
   @Test
-  public void testUserOverrideGlobalGrantAuthorizationCheck() {
+  void testUserOverrideGlobalGrantAuthorizationCheck() {
     Resource resource1 = TestResource.RESOURCE1;
 
     // create global authorization which grants all permissions to all users  (on resource1):
@@ -123,7 +123,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest {
   }
 
   @Test
-  public void testGroupOverrideGlobalGrantAuthorizationCheck() {
+  void testGroupOverrideGlobalGrantAuthorizationCheck() {
     Resource resource1 = TestResource.RESOURCE1;
 
     // create global authorization which grants all permissions to all users  (on resource1):
@@ -169,7 +169,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest {
   }
 
   @Test
-  public void testUserOverrideGlobalRevokeAuthorizationCheck() {
+  void testUserOverrideGlobalRevokeAuthorizationCheck() {
     Resource resource1 = TestResource.RESOURCE1;
 
     // create global authorization which revokes all permissions to all users  (on resource1):
@@ -201,7 +201,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest {
   }
 
   @Test
-  public void testNullAuthorizationCheckUserGroup() {
+  void testNullAuthorizationCheckUserGroup() {
     try {
       authorizationService.isUserAuthorized(null, null, UPDATE, TestResource.RESOURCE1);
       fail("Expected NullValueException");
@@ -211,7 +211,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest {
   }
 
   @Test
-  public void testNullAuthorizationCheckPermission() {
+  void testNullAuthorizationCheckPermission() {
     try {
       authorizationService.isUserAuthorized("jonny", null, null, TestResource.RESOURCE1);
       fail("Expected NullValueException");
@@ -221,7 +221,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest {
   }
 
   @Test
-  public void testNullAuthorizationCheckResource() {
+  void testNullAuthorizationCheckResource() {
     try {
       authorizationService.isUserAuthorized("jonny", null, UPDATE, null);
       fail("Expected NullValueException");
@@ -231,7 +231,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest {
   }
 
   @Test
-  public void testUserOverrideGroupOverrideGlobalAuthorizationCheck() {
+  void testUserOverrideGroupOverrideGlobalAuthorizationCheck() {
     Resource resource1 = TestResource.RESOURCE1;
 
     // create global authorization which grants all permissions to all users  (on resource1):
@@ -272,7 +272,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest {
   }
 
   @Test
-  public void testEnabledAuthorizationCheck() {
+  void testEnabledAuthorizationCheck() {
     // given
     Resource resource1 = TestResource.RESOURCE1;
 

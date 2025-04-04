@@ -32,7 +32,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
  * @author Daniel Meyer
  *
  */
-public class DelegateExecutionHierarchyTest {
+class DelegateExecutionHierarchyTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -40,15 +40,15 @@ public class DelegateExecutionHierarchyTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   RuntimeService runtimeService;
-  
+
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     AssertingJavaDelegate.clear();
 
   }
 
   @Test
-  public void testSingleNonScopeActivity() {
+  void testSingleNonScopeActivity() {
 
    testRule.deploy(Bpmn.createExecutableProcess("testProcess")
       .startEvent()
@@ -69,7 +69,7 @@ public class DelegateExecutionHierarchyTest {
   }
 
   @Test
-  public void testConcurrentServiceTasks() {
+  void testConcurrentServiceTasks() {
 
    testRule.deploy(Bpmn.createExecutableProcess("testProcess")
       .startEvent()
@@ -96,7 +96,7 @@ public class DelegateExecutionHierarchyTest {
   }
 
   @Test
-  public void testTaskInsideEmbeddedSubprocess() {
+  void testTaskInsideEmbeddedSubprocess() {
    testRule.deploy(Bpmn.createExecutableProcess("testProcess")
         .startEvent()
         .subProcess()
@@ -120,7 +120,7 @@ public class DelegateExecutionHierarchyTest {
   }
 
   @Test
-  public void testSubProcessInstance() {
+  void testSubProcessInstance() {
 
    testRule.deploy(
       Bpmn.createExecutableProcess("testProcess")

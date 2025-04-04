@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class HistoryCleanupJobPriorityTest {
+class HistoryCleanupJobPriorityTest {
 
   private static final Long CUSTOM_PRIORITY = 10L;
 
@@ -42,12 +42,12 @@ public class HistoryCleanupJobPriorityTest {
   protected long defaultHistoryCleanupJobPriority;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     defaultHistoryCleanupJobPriority = config.getHistoryCleanupJobPriority();
   }
 
   @AfterEach
-  public void reset() {
+  void reset() {
     config.setHistoryCleanupJobPriority(defaultHistoryCleanupJobPriority);
     resetDatabase();
   }
@@ -67,7 +67,7 @@ public class HistoryCleanupJobPriorityTest {
   }
 
   @Test
-  public void historyCleanupJobShouldHaveDefaultPriority() {
+  void historyCleanupJobShouldHaveDefaultPriority() {
     // when
     historyService.cleanUpHistoryAsync(true);
     List<Job> historyCleanupJobs = historyService.findHistoryCleanupJobs();
@@ -78,7 +78,7 @@ public class HistoryCleanupJobPriorityTest {
   }
 
   @Test
-  public void historyCleanupJobShouldGetPriorityFromProcessEngineConfiguration() {
+  void historyCleanupJobShouldGetPriorityFromProcessEngineConfiguration() {
     // given
     config.setHistoryCleanupJobPriority(CUSTOM_PRIORITY);
 

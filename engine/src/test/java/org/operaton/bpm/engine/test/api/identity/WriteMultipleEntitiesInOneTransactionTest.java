@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Simon Jonischkeit
  *
  */
-public class WriteMultipleEntitiesInOneTransactionTest {
+class WriteMultipleEntitiesInOneTransactionTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().configurationResource("org/operaton/bpm/engine/test/api/identity/WriteMultipleEntitiesInOneTransactionTest.operaton.cfg.xml").build();
@@ -39,7 +39,7 @@ public class WriteMultipleEntitiesInOneTransactionTest {
   protected IdentityService identityService;
 
   @Test
-  public void testWriteMultipleEntitiesInOneTransaction(){
+  void testWriteMultipleEntitiesInOneTransaction(){
 
     // the identity service provider registered with the engine creates a user, a group, and a membership
     // in the following call:

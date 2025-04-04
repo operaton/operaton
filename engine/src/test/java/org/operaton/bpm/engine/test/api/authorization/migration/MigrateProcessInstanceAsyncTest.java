@@ -121,13 +121,13 @@ public class MigrateProcessInstanceAsyncTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     batch = null;
     authRule.createUserAndGroup("userId", "groupId");
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (batch != null) {
       engineRule.getManagementService().deleteBatch(batch.getId(), true);
     }

@@ -74,7 +74,7 @@ import com.google.gson.JsonObject;
 /**
  * @author Sebastian Menski
  */
-public class FilterTaskQueryTest {
+class FilterTaskQueryTest {
   
   @RegisterExtension
   protected static ProcessEngineExtension engine = ProcessEngineExtension.builder().build();
@@ -121,7 +121,7 @@ public class FilterTaskQueryTest {
   protected JsonTaskQueryConverter queryConverter;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testFilter = filterService.newTaskFilter("name")
         .setOwner("owner")
         .setQuery(taskService.createTaskQuery())
@@ -143,7 +143,7 @@ public class FilterTaskQueryTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setEnableExpressionsInAdhocQueries(false);
 
     Mocks.reset();
@@ -165,7 +165,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testEmptyQuery() {
+  void testEmptyQuery() {
     TaskQuery emptyQuery = taskService.createTaskQuery();
     String emptyQueryJson = "{}";
 
@@ -176,7 +176,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQuery() {
+  void testTaskQuery() {
     // create query
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskId(testString);
@@ -427,7 +427,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryByBusinessKeyExpression() {
+  void testTaskQueryByBusinessKeyExpression() {
     // given
     String aBusinessKey = "business key";
     Mocks.register("aBusinessKey", aBusinessKey);
@@ -450,7 +450,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryByBusinessKeyExpressionInAdhocQuery() {
+  void testTaskQueryByBusinessKeyExpressionInAdhocQuery() {
     // given
     processEngineConfiguration.setEnableExpressionsInAdhocQueries(true);
 
@@ -473,7 +473,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryByBusinessKeyLikeExpression() {
+  void testTaskQueryByBusinessKeyLikeExpression() {
     // given
     String aBusinessKey = "business key";
     Mocks.register("aBusinessKeyLike", "%" + aBusinessKey.substring(5));
@@ -496,7 +496,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryByBusinessKeyLikeExpressionInAdhocQuery() {
+  void testTaskQueryByBusinessKeyLikeExpressionInAdhocQuery() {
     // given
     processEngineConfiguration.setEnableExpressionsInAdhocQueries(true);
 
@@ -532,7 +532,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryByFollowUpBeforeOrNotExistent() {
+  void testTaskQueryByFollowUpBeforeOrNotExistent() {
     // create query
     TaskQueryImpl query = new TaskQueryImpl();
 
@@ -552,7 +552,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryByFollowUpBeforeOrNotExistentExtendingQuery() {
+  void testTaskQueryByFollowUpBeforeOrNotExistentExtendingQuery() {
     // create query
     TaskQueryImpl query = new TaskQueryImpl();
 
@@ -589,7 +589,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryByFollowUpBeforeOrNotExistentExpression() {
+  void testTaskQueryByFollowUpBeforeOrNotExistentExpression() {
     // create query
     TaskQueryImpl query = new TaskQueryImpl();
 
@@ -609,7 +609,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryByFollowUpBeforeOrNotExistentExpressionExtendingQuery() {
+  void testTaskQueryByFollowUpBeforeOrNotExistentExpressionExtendingQuery() {
     // create query
     TaskQueryImpl query = new TaskQueryImpl();
 
@@ -646,7 +646,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateUser() {
+  void testTaskQueryCandidateUser() {
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateUser(testUser.getId());
     query.taskCandidateUserExpression(testUser.getId());
@@ -659,7 +659,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateGroup() {
+  void testTaskQueryCandidateGroup() {
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateGroup(testGroup.getId());
     query.taskCandidateGroupExpression(testGroup.getId());
@@ -672,7 +672,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateGroupLike() {
+  void testTaskQueryCandidateGroupLike() {
     // given
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateGroupLike(testGroup.getId());
@@ -687,7 +687,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateUserIncludeAssignedTasks() {
+  void testTaskQueryCandidateUserIncludeAssignedTasks() {
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateUser(testUser.getId());
     query.includeAssignedTasks();
@@ -700,7 +700,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateUserExpressionIncludeAssignedTasks() {
+  void testTaskQueryCandidateUserExpressionIncludeAssignedTasks() {
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateUserExpression(testString);
     query.includeAssignedTasks();
@@ -713,7 +713,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateGroupIncludeAssignedTasks() {
+  void testTaskQueryCandidateGroupIncludeAssignedTasks() {
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateGroup(testGroup.getId());
     query.includeAssignedTasks();
@@ -726,7 +726,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateGroupExpressionIncludeAssignedTasks() {
+  void testTaskQueryCandidateGroupExpressionIncludeAssignedTasks() {
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateGroupExpression(testString);
     query.includeAssignedTasks();
@@ -739,7 +739,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateGroupLikeIncludeAssignedTasks() {
+  void testTaskQueryCandidateGroupLikeIncludeAssignedTasks() {
     // given
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateGroupLike(testGroup.getId());
@@ -756,7 +756,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateGroupsIncludeAssignedTasks() {
+  void testTaskQueryCandidateGroupsIncludeAssignedTasks() {
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateGroupIn(testCandidateGroups);
     query.includeAssignedTasks();
@@ -769,7 +769,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryCandidateGroupsExpressionIncludeAssignedTasks() {
+  void testTaskQueryCandidateGroupsExpressionIncludeAssignedTasks() {
     TaskQueryImpl query = new TaskQueryImpl();
     query.taskCandidateGroupInExpression(testString);
     query.includeAssignedTasks();
@@ -782,7 +782,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExecuteTaskQueryList() {
+  void testExecuteTaskQueryList() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskNameLike("Task%");
 
@@ -796,7 +796,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingTaskQueryList() {
+  void testExtendingTaskQueryList() {
     TaskQuery query = taskService.createTaskQuery();
 
     saveQuery(query);
@@ -820,7 +820,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingTaskQueryWithAssigneeIn() {
+  void testExtendingTaskQueryWithAssigneeIn() {
     // given
     Task task = taskService.newTask("assigneeTask");
     task.setName("Task 4");
@@ -845,7 +845,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingTaskQueryWithAssigneeNotIn() {
+  void testExtendingTaskQueryWithAssigneeNotIn() {
     // given
     Task task = taskService.newTask("assigneeTask");
     task.setName("Task 5");
@@ -870,7 +870,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingEmptyTaskQueryWithCandidateGroupLike() {
+  void testExtendingEmptyTaskQueryWithCandidateGroupLike() {
     // given 3 test tasks created during setup
     TaskQuery query = taskService.createTaskQuery();
     saveQuery(query);
@@ -887,7 +887,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingCandidateGroupLikeTaskQueryWithEmpty() {
+  void testExtendingCandidateGroupLikeTaskQueryWithEmpty() {
     // given 3 existing tasks but only 1 unassigned task that matches the initial filter
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupLike("%count%");
     saveQuery(query);
@@ -903,7 +903,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingCandidateGroupLikeTaskQueryWithCandidateGroupLike() {
+  void testExtendingCandidateGroupLikeTaskQueryWithCandidateGroupLike() {
     // given 3 existing tasks but zero match the initial filter
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupLike("HR");
     saveQuery(query);
@@ -920,7 +920,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingTaskQueryListWithCandidateGroups() {
+  void testExtendingTaskQueryListWithCandidateGroups() {
     TaskQuery query = taskService.createTaskQuery();
 
     List<String> candidateGroups = new ArrayList<>();
@@ -946,7 +946,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingTaskQueryListWithIncludeAssignedTasks() {
+  void testExtendingTaskQueryListWithIncludeAssignedTasks() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.taskCandidateGroup("accounting");
@@ -967,7 +967,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendTaskQueryWithCandidateUserExpressionAndIncludeAssignedTasks() {
+  void testExtendTaskQueryWithCandidateUserExpressionAndIncludeAssignedTasks() {
     // create an empty query and save it as a filter
     TaskQuery emptyQuery = taskService.createTaskQuery();
     Filter emptyFilter = filterService.newTaskFilter("empty");
@@ -994,7 +994,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendTaskQueryWithCandidateGroupExpressionAndIncludeAssignedTasks() {
+  void testExtendTaskQueryWithCandidateGroupExpressionAndIncludeAssignedTasks() {
     // create an empty query and save it as a filter
     TaskQuery emptyQuery = taskService.createTaskQuery();
     Filter emptyFilter = filterService.newTaskFilter("empty");
@@ -1021,7 +1021,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendTaskQueryWithCandidateGroupInAndCandidateGroup() {
+  void testExtendTaskQueryWithCandidateGroupInAndCandidateGroup() {
     // create a query with candidate group in and save it as a filter
     TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList("testGroup", "testGroup2"));
     assertThat(candidateGroupInQuery.getCandidateGroups()).hasSize(2);
@@ -1042,7 +1042,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryWithCandidateGroupInExpressionAndCandidateGroup() {
+  void testTaskQueryWithCandidateGroupInExpressionAndCandidateGroup() {
     // create a query with candidate group in expression and candidate group at once
     TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupInExpression("${'test'}").taskCandidateGroup("testGroup");
     assertThat(candidateGroupInQuery.getExpressions()).containsEntry("taskCandidateGroupIn", "${'test'}");
@@ -1050,7 +1050,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskQueryWithCandidateGroupInAndCandidateGroupExpression() {
+  void testTaskQueryWithCandidateGroupInAndCandidateGroupExpression() {
     // create a query with candidate group in and candidate group expression
     TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList("testGroup", "testGroup2")).taskCandidateGroupExpression("${'test'}");
     assertThat(candidateGroupInQuery.getExpressions()).containsEntry("taskCandidateGroup", "${'test'}");
@@ -1060,7 +1060,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendTaskQueryWithCandidateGroupInExpressionAndIncludeAssignedTasks() {
+  void testExtendTaskQueryWithCandidateGroupInExpressionAndIncludeAssignedTasks() {
     // create an empty query and save it as a filter
     TaskQuery emptyQuery = taskService.createTaskQuery();
     Filter emptyFilter = filterService.newTaskFilter("empty");
@@ -1087,7 +1087,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExecuteTaskQueryListPage() {
+  void testExecuteTaskQueryListPage() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskNameLike("Task%");
 
@@ -1101,7 +1101,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingTaskQueryListPage() {
+  void testExtendingTaskQueryListPage() {
     TaskQuery query = taskService.createTaskQuery();
 
     saveQuery(query);
@@ -1123,7 +1123,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExecuteTaskQuerySingleResult() {
+  void testExecuteTaskQuerySingleResult() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskDelegationState(DelegationState.PENDING);
 
@@ -1135,7 +1135,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testFailTaskQuerySingleResult() {
+  void testFailTaskQuerySingleResult() {
     TaskQuery query = taskService.createTaskQuery();
 
     saveQuery(query);
@@ -1146,7 +1146,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingTaskQuerySingleResult() {
+  void testExtendingTaskQuerySingleResult() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskDelegationState(DelegationState.PENDING);
 
@@ -1179,7 +1179,7 @@ public class FilterTaskQueryTest {
    * </p>
    */
   @Test
-  public void testTaskQueryLookupByNameCaseInsensitive() {
+  void testTaskQueryLookupByNameCaseInsensitive() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskName("task 1");
     saveQuery(query);
@@ -1206,7 +1206,7 @@ public class FilterTaskQueryTest {
    * </p>
    */
   @Test
-  public void testTaskQueryLookupByDescriptionCaseInsensitive() {
+  void testTaskQueryLookupByDescriptionCaseInsensitive() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskDescription("description 1");
     saveQuery(query);
@@ -1233,7 +1233,7 @@ public class FilterTaskQueryTest {
    * </p>
    */
   @Test
-  public void testTaskQueryLookupByNameLikeCaseInsensitive() {
+  void testTaskQueryLookupByNameLikeCaseInsensitive() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskNameLike("%task%");
     saveQuery(query);
@@ -1254,7 +1254,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExecuteTaskQueryCount() {
+  void testExecuteTaskQueryCount() {
     TaskQuery query = taskService.createTaskQuery();
 
     saveQuery(query);
@@ -1271,7 +1271,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingTaskQueryCount() {
+  void testExtendingTaskQueryCount() {
     TaskQuery query = taskService.createTaskQuery();
 
     saveQuery(query);
@@ -1294,7 +1294,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testSpecialExtendingQuery() {
+  void testSpecialExtendingQuery() {
     TaskQuery query = taskService.createTaskQuery();
 
     saveQuery(query);
@@ -1304,7 +1304,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingSorting() {
+  void testExtendingSorting() {
     // create empty query
     TaskQueryImpl query = (TaskQueryImpl) taskService.createTaskQuery();
     saveQuery(query);
@@ -1348,7 +1348,7 @@ public class FilterTaskQueryTest {
    */
   @SuppressWarnings("deprecation")
   @Test
-  public void testDeprecatedOrderingFormatDeserializationSingleOrdering() {
+  void testDeprecatedOrderingFormatDeserializationSingleOrdering() {
     String sortByNameAsc = "RES." + TaskQueryProperty.NAME.getName() + " " + Direction.ASCENDING.getName();
 
     JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
@@ -1377,7 +1377,7 @@ public class FilterTaskQueryTest {
    */
   @SuppressWarnings("deprecation")
   @Test
-  public void testDeprecatedOrderingFormatDeserializationSecondaryOrdering() {
+  void testDeprecatedOrderingFormatDeserializationSecondaryOrdering() {
     String sortByNameAsc = "RES." + TaskQueryProperty.NAME.getName() + " " + Direction.ASCENDING.getName();
     String secondaryOrdering = sortByNameAsc + ", RES." + TaskQueryProperty.ASSIGNEE.getName() + " " + Direction.DESCENDING.getName();
 
@@ -1415,7 +1415,7 @@ public class FilterTaskQueryTest {
    */
   @SuppressWarnings("deprecation")
   @Test
-  public void testDeprecatedOrderingFormatDeserializationFunctionOrdering() {
+  void testDeprecatedOrderingFormatDeserializationFunctionOrdering() {
     String orderingWithFunction = "LOWER(RES." + TaskQueryProperty.NAME.getName() + ") asc";
 
     JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
@@ -1438,9 +1438,9 @@ public class FilterTaskQueryTest {
     assertThat(orderingProperty.getQueryProperty().getFunction()).isEqualTo(TaskQueryProperty.NAME_CASE_INSENSITIVE.getFunction());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/oneTaskWithFormKeyProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/oneTaskWithFormKeyProcess.bpmn20.xml"})
   @Test
-    public void testInitializeFormKeysEnabled() {
+  void testInitializeFormKeysEnabled() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     TaskQuery query = taskService.createTaskQuery()
@@ -1460,7 +1460,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendingVariableQuery() {
+  void testExtendingVariableQuery() {
     TaskQuery taskQuery = taskService.createTaskQuery().processVariableValueEquals("hello", "world");
     saveQuery(taskQuery);
 
@@ -1524,7 +1524,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testExtendTaskQueryByOrderByProcessVariable() {
+  void testExtendTaskQueryByOrderByProcessVariable() {
     ProcessInstance instance500 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("var", 500));
     ProcessInstance instance1000 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
@@ -1568,7 +1568,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testExtendTaskQueryByOrderByTaskVariable() {
+  void testExtendTaskQueryByOrderByTaskVariable() {
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -1618,7 +1618,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testExtendTaskQueryByTaskVariableIgnoreCase() {
+  void testExtendTaskQueryByTaskVariableIgnoreCase() {
     String variableName = "variableName";
     String variableValueCamelCase = "someVariableValue";
     String variableValueLowerCase = variableValueCamelCase.toLowerCase();
@@ -1712,7 +1712,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExtendTaskQueryByCaseInstanceVariableIgnoreCase() {
+  void testExtendTaskQueryByCaseInstanceVariableIgnoreCase() {
     String variableName = "variableName";
     String variableValueCamelCase = "someVariableValue";
     String variableValueLowerCase = variableValueCamelCase.toLowerCase();
@@ -1828,7 +1828,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testExtendTaskQueryByProcessVariableIgnoreCase() {
+  void testExtendTaskQueryByProcessVariableIgnoreCase() {
     String variableName = "variableName";
     String variableValueCamelCase = "someVariableValue";
     String variableValueLowerCase = variableValueCamelCase.toLowerCase();
@@ -1937,7 +1937,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendTaskQuery_ORInExtendingQuery() {
+  void testExtendTaskQuery_ORInExtendingQuery() {
     // given
     createTasksForOrQueries();
 
@@ -1967,7 +1967,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendTaskQuery_ORInExtendedQuery() {
+  void testExtendTaskQuery_ORInExtendedQuery() {
     // given
     createTasksForOrQueries();
 
@@ -1997,7 +1997,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendTaskQuery_ORInBothExtendedAndExtendingQuery() {
+  void testExtendTaskQuery_ORInBothExtendedAndExtendingQuery() {
     // given
     createTasksForOrQueries();
 
@@ -2030,7 +2030,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testOrderByVariables() {
+  void testOrderByVariables() {
     // given
     TaskQueryImpl query = (TaskQueryImpl) taskService.createTaskQuery()
         .orderByProcessVariable("foo", ValueType.STRING).asc()
@@ -2059,7 +2059,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testBooleanVariable() {
+  void testBooleanVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("booleanVariable", true));
@@ -2079,7 +2079,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testIntVariable() {
+  void testIntVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("intVariable", 7));
@@ -2099,7 +2099,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testIntOutOfRangeVariable() {
+  void testIntOutOfRangeVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("longVariable", Integer.MAX_VALUE+1L));
@@ -2119,7 +2119,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDoubleVariable() {
+  void testDoubleVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("doubleVariable", 88.89D));
@@ -2139,7 +2139,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testStringVariable() {
+  void testStringVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("stringVariable", "aVariableValue"));
@@ -2159,7 +2159,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testNullVariable() {
+  void testNullVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("nullVariable", null));
@@ -2179,7 +2179,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDueDate() {
+  void testDueDate() {
     // given
     Date date = new Date();
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
@@ -2206,7 +2206,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testWithoutDueDate() {
+  void testWithoutDueDate() {
     // given
     Task task = taskService.newTask();
     task.setDueDate(new Date());
@@ -2225,7 +2225,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testExtendQueryByWithoutDueDate() {
+  void testExtendQueryByWithoutDueDate() {
     // given
     Task task = taskService.newTask();
     task.setDueDate(new Date());
@@ -2245,7 +2245,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testTaskIdInPositive() {
+  void testTaskIdInPositive() {
     // given
     List<Task> existingTasks = taskService.createTaskQuery().list();
     String task1 = existingTasks.get(0).getId();
@@ -2267,7 +2267,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testAssigneeInPositive() {
+  void testAssigneeInPositive() {
     // given
     TaskQueryImpl taskQuery = new TaskQueryImpl();
     taskQuery.taskAssigneeIn(testString);
@@ -2286,7 +2286,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testAssigneeNotInPositive() {
+  void testAssigneeNotInPositive() {
     // given
     TaskQueryImpl taskQuery = new TaskQueryImpl();
     taskQuery.taskAssigneeNotIn(testString);
@@ -2305,7 +2305,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testAssigneeInNegative() {
+  void testAssigneeInNegative() {
     // given
     TaskQueryImpl taskQuery = new TaskQueryImpl();
 
@@ -2325,7 +2325,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void testAssigneeNotInNegative() {
+  void testAssigneeNotInNegative() {
     // given
     TaskQueryImpl taskQuery = new TaskQueryImpl();
 
@@ -2347,7 +2347,7 @@ public class FilterTaskQueryTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Disabled("CAM-9613")
   @Test
-  public void testDateVariable() {
+  void testDateVariable() {
     // given
     Date date = new Date();
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
@@ -2369,7 +2369,7 @@ public class FilterTaskQueryTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Disabled("CAM-9613")
   @Test
-  public void testByteArrayVariable() {
+  void testByteArrayVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("bytesVariable", "aByteArray".getBytes()));
@@ -2390,7 +2390,7 @@ public class FilterTaskQueryTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Disabled("CAM-9613")
   @Test
-  public void testLongVariable() {
+  void testLongVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("longVariable", 7L));
@@ -2411,7 +2411,7 @@ public class FilterTaskQueryTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Disabled("CAM-9613")
   @Test
-  public void testShortVariable() {
+  void testShortVariable() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Variables.createVariables().putValue("shortVariable", (short) 7));
@@ -2431,7 +2431,7 @@ public class FilterTaskQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testExtendingTaskQueryWithProcessInstanceIn() {
+  void testExtendingTaskQueryWithProcessInstanceIn() {
     // given
     String firstId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
     String secondId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
@@ -2453,7 +2453,7 @@ public class FilterTaskQueryTest {
   }
 
   @Test
-  public void shouldDeserializeOrQueryWithCandidateGroupAndUser() {
+  void shouldDeserializeOrQueryWithCandidateGroupAndUser() {
     // given
     TaskQuery query = taskService.createTaskQuery()
         .or()

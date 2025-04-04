@@ -59,7 +59,7 @@ public class ProcessEngineCharacterEncodingTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setDefaultCharset(defaultCharset);
     for (Task task : tasks) {
       taskService.deleteTask(task.getId(), true);
@@ -67,7 +67,7 @@ public class ProcessEngineCharacterEncodingTest {
   }
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     defaultCharset = processEngineConfiguration.getDefaultCharset();
     processEngineConfiguration.setDefaultCharset(charset);
   }

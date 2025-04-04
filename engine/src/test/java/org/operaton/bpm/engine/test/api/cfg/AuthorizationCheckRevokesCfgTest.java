@@ -49,7 +49,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
  * @author Daniel Meyer
  *
  */
-public class AuthorizationCheckRevokesCfgTest {
+class AuthorizationCheckRevokesCfgTest {
 
   private static final List<String> AUTHENTICATED_GROUPS = Arrays.asList("aGroup");
   private static final String AUTHENTICATED_USER_ID = "userId";
@@ -60,7 +60,7 @@ public class AuthorizationCheckRevokesCfgTest {
   DbEntityManager mockedEntityManager;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
 
     mockedCmdContext = mock(CommandContext.class);
     mockedConfiguration = mock(ProcessEngineConfigurationImpl.class);
@@ -79,13 +79,13 @@ public class AuthorizationCheckRevokesCfgTest {
   }
 
   @AfterEach
-  public void cleanup() {
+  void cleanup() {
     Context.removeCommandContext();
     Context.removeProcessEngineConfiguration();
   }
 
   @Test
-  public void shouldUseCfgValue_always() {
+  void shouldUseCfgValue_always() {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
@@ -101,7 +101,7 @@ public class AuthorizationCheckRevokesCfgTest {
   }
 
   @Test
-  public void shouldUseCfgValue_never() {
+  void shouldUseCfgValue_never() {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
@@ -118,7 +118,7 @@ public class AuthorizationCheckRevokesCfgTest {
   }
 
   @Test
-  public void shouldCheckDbForCfgValue_auto() {
+  void shouldCheckDbForCfgValue_auto() {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
@@ -139,7 +139,7 @@ public class AuthorizationCheckRevokesCfgTest {
   }
 
   @Test
-  public void shouldCheckDbForCfgValueWithNoRevokes_auto() {
+  void shouldCheckDbForCfgValueWithNoRevokes_auto() {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
@@ -160,7 +160,7 @@ public class AuthorizationCheckRevokesCfgTest {
   }
 
   @Test
-  public void shouldCheckDbForCfgCaseInsensitive() {
+  void shouldCheckDbForCfgCaseInsensitive() {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
@@ -181,7 +181,7 @@ public class AuthorizationCheckRevokesCfgTest {
   }
 
   @Test
-  public void shouldCacheCheck() {
+  void shouldCacheCheck() {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
@@ -203,7 +203,7 @@ public class AuthorizationCheckRevokesCfgTest {
   }
 
   @Test
-  public void testAutoIsDefault() {
+  void testAutoIsDefault() {
     assertThat(new StandaloneProcessEngineConfiguration().getAuthorizationCheckRevokes()).isEqualTo(ProcessEngineConfiguration.AUTHORIZATION_CHECK_REVOKE_AUTO);
   }
 

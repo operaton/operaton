@@ -108,7 +108,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Tassilo Weidner
  */
 @RequiredHistoryLevel(HISTORY_FULL)
-public class HistoryCleanupRemovalTimeTest {
+class HistoryCleanupRemovalTimeTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -131,7 +131,7 @@ public class HistoryCleanupRemovalTimeTest {
   protected Set<String> jobIds;
 
   @BeforeEach
-  public void init() {
+  void init() {
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
@@ -157,7 +157,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     clearMeterLog();
 
     for (String jobId : jobIds) {
@@ -167,7 +167,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @AfterAll
-  public static void tearDownAfterAll() {
+  static void tearDownAfterAll() {
     if (engineConfiguration != null) {
       engineConfiguration
         .setHistoryRemovalTimeProvider(null)
@@ -245,9 +245,9 @@ public class HistoryCleanupRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldCleanupDecisionInstance() {
+  void shouldCleanupDecisionInstance() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 
@@ -280,9 +280,9 @@ public class HistoryCleanupRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldCleanupStandaloneDecisionInstance() {
+  void shouldCleanupStandaloneDecisionInstance() {
     // given
     ClockUtil.setCurrentTime(END_DATE);
 
@@ -321,9 +321,9 @@ public class HistoryCleanupRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldReportMetricsForDecisionInstanceCleanup() {
+  void shouldReportMetricsForDecisionInstanceCleanup() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 
@@ -353,9 +353,9 @@ public class HistoryCleanupRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldCleanupDecisionInputInstance() {
+  void shouldCleanupDecisionInputInstance() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 
@@ -392,9 +392,9 @@ public class HistoryCleanupRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldCleanupDecisionOutputInstance() {
+  void shouldCleanupDecisionOutputInstance() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 
@@ -431,7 +431,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupProcessInstance() {
+  void shouldCleanupProcessInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -467,7 +467,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotCleanupProcessInstanceWithoutTTL() {
+  void shouldNotCleanupProcessInstanceWithoutTTL() {
     // given
     testRule.deploy(CALLING_PROCESS_WO_TTL);
 
@@ -503,7 +503,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupProcessInstanceWithoutTTLWithConfigDefault() {
+  void shouldCleanupProcessInstanceWithoutTTLWithConfigDefault() {
     // given
     engineConfiguration.setHistoryTimeToLive("5");
 
@@ -540,7 +540,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldReportMetricsForProcessInstanceCleanup() {
+  void shouldReportMetricsForProcessInstanceCleanup() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -568,7 +568,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupActivityInstance() {
+  void shouldCleanupActivityInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -599,7 +599,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupTaskInstance() {
+  void shouldCleanupTaskInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -630,7 +630,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupTaskInstanceAuthorization() {
+  void shouldCleanupTaskInstanceAuthorization() {
     // given
     engineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -674,7 +674,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupVariableInstance() {
+  void shouldCleanupVariableInstance() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -707,7 +707,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupDetail() {
+  void shouldCleanupDetail() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -746,7 +746,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupIncident() {
+  void shouldCleanupIncident() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -785,7 +785,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupExternalTaskLog() {
+  void shouldCleanupExternalTaskLog() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -827,7 +827,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupJobLog() {
+  void shouldCleanupJobLog() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -871,7 +871,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupHistoryCleanupJobsFromHistoricJobLog() {
+  void shouldCleanupHistoryCleanupJobsFromHistoricJobLog() {
     // given
     engineConfiguration.setHistoryCleanupJobLogTimeToLive("P5D");
 
@@ -891,7 +891,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotCleanupHistoryCleanupJobsFromHistoricJobLog() {
+  void shouldNotCleanupHistoryCleanupJobsFromHistoricJobLog() {
     // given
     engineConfiguration.setHistoryCleanupJobLogTimeToLive(null);
     ClockUtil.setCurrentTime(END_DATE);
@@ -910,7 +910,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupUserOperationLog() {
+  void shouldCleanupUserOperationLog() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -954,7 +954,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupIdentityLink() {
+  void shouldCleanupIdentityLink() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -987,7 +987,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupComment() {
+  void shouldCleanupComment() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1025,7 +1025,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupAttachment() {
+  void shouldCleanupAttachment() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1063,7 +1063,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupByteArray() {
+  void shouldCleanupByteArray() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1109,7 +1109,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupBatch() {
+  void shouldCleanupBatch() {
     // given
     engineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     engineConfiguration.initHistoryCleanup();
@@ -1162,7 +1162,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldReportMetricsForBatchCleanup() {
+  void shouldReportMetricsForBatchCleanup() {
     // given
     engineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     engineConfiguration.initHistoryCleanup();
@@ -1206,7 +1206,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldCleanupTaskMetrics() {
+  void shouldCleanupTaskMetrics() {
     // given
     engineConfiguration.setTaskMetricsEnabled(true);
     engineConfiguration.setTaskMetricsTimeToLive("P5D");
@@ -1235,7 +1235,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldReportMetricsForTaskMetricsCleanup() {
+  void shouldReportMetricsForTaskMetricsCleanup() {
     // given
     engineConfiguration.setTaskMetricsEnabled(true);
     engineConfiguration.setTaskMetricsTimeToLive("P5D");
@@ -1272,9 +1272,9 @@ public class HistoryCleanupRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldDistributeWorkForDecisions() {
+  void shouldDistributeWorkForDecisions() {
     // given
     testRule.deploy(CALLING_PROCESS_CALLS_DMN);
 
@@ -1309,7 +1309,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForProcessInstances() {
+  void shouldDistributeWorkForProcessInstances() {
     // given
     testRule.deploy(PROCESS);
 
@@ -1341,7 +1341,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForActivityInstances() {
+  void shouldDistributeWorkForActivityInstances() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1376,7 +1376,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForTaskInstances() {
+  void shouldDistributeWorkForTaskInstances() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1410,7 +1410,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForAuthorizations() {
+  void shouldDistributeWorkForAuthorizations() {
     // given
     engineConfiguration.setEnableHistoricInstancePermissions(true);
 
@@ -1454,7 +1454,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForVariableInstances() {
+  void shouldDistributeWorkForVariableInstances() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1491,7 +1491,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForDetails() {
+  void shouldDistributeWorkForDetails() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1526,7 +1526,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForIncidents() {
+  void shouldDistributeWorkForIncidents() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1567,7 +1567,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForExternalTaskLogs() {
+  void shouldDistributeWorkForExternalTaskLogs() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("calledProcess")
       .startEvent()
@@ -1613,7 +1613,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForJobLogs() {
+  void shouldDistributeWorkForJobLogs() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1656,7 +1656,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForUserOperationLogs() {
+  void shouldDistributeWorkForUserOperationLogs() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1702,7 +1702,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForIdentityLinkLogs() {
+  void shouldDistributeWorkForIdentityLinkLogs() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1739,7 +1739,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForComment() {
+  void shouldDistributeWorkForComment() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1780,7 +1780,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForAttachment() {
+  void shouldDistributeWorkForAttachment() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1821,7 +1821,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForByteArray() {
+  void shouldDistributeWorkForByteArray() {
     // given
     testRule.deploy(CALLING_PROCESS);
 
@@ -1864,7 +1864,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForBatches() {
+  void shouldDistributeWorkForBatches() {
     // given
     engineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     engineConfiguration.initHistoryCleanup();
@@ -1909,7 +1909,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldDistributeWorkForTaskMetrics() {
+  void shouldDistributeWorkForTaskMetrics() {
     // given
     engineConfiguration.setTaskMetricsEnabled(true);
     engineConfiguration.setTaskMetricsTimeToLive("P5D");
@@ -1942,7 +1942,7 @@ public class HistoryCleanupRemovalTimeTest {
   // report tests //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @Test
-  public void shouldSeeCleanableButNoFinishedProcessInstancesInReport() {
+  void shouldSeeCleanableButNoFinishedProcessInstancesInReport() {
     // given
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -1969,7 +1969,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldSeeFinishedButNoCleanableProcessInstancesInReport() {
+  void shouldSeeFinishedButNoCleanableProcessInstancesInReport() {
     // given
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -1997,7 +1997,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotSeeCleanableProcessInstancesReport() {
+  void shouldNotSeeCleanableProcessInstancesReport() {
     // given
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -2024,9 +2024,9 @@ public class HistoryCleanupRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSeeCleanableDecisionInstancesInReport() {
+  void shouldSeeCleanableDecisionInstancesInReport() {
     // given
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -2058,9 +2058,9 @@ public class HistoryCleanupRemovalTimeTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
+      "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldNotSeeCleanableDecisionInstancesInReport() {
+  void shouldNotSeeCleanableDecisionInstancesInReport() {
     // given
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
@@ -2091,7 +2091,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldSeeCleanableBatchesInReport() {
+  void shouldSeeCleanableBatchesInReport() {
     // given
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -2122,7 +2122,7 @@ public class HistoryCleanupRemovalTimeTest {
   }
 
   @Test
-  public void shouldNotSeeCleanableBatchesInReport() {
+  void shouldNotSeeCleanableBatchesInReport() {
     // given
     engineConfiguration
       .setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)

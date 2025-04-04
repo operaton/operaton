@@ -22,17 +22,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.digest.DatabasePrefixHandler;
 
-public class DatabasePrefixHandlerTest {
+class DatabasePrefixHandlerTest {
 
   DatabasePrefixHandler prefixHandler;
 
   @BeforeEach
-  public void inti() {
+  void inti() {
     prefixHandler = new DatabasePrefixHandler();
   }
 
   @Test
-  public void testGeneratePrefix() {
+  void testGeneratePrefix() {
 
     // given
     String algorithmName = "test";
@@ -45,7 +45,7 @@ public class DatabasePrefixHandlerTest {
   }
 
   @Test
-  public void testRetrieveAlgorithmName(){
+  void testRetrieveAlgorithmName(){
 
     // given
     String encryptedPasswordWithPrefix = "{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
@@ -58,7 +58,7 @@ public class DatabasePrefixHandlerTest {
   }
 
   @Test
-  public void retrieveAlgorithmForInvalidInput() {
+  void retrieveAlgorithmForInvalidInput() {
 
     // given
     String encryptedPasswordWithPrefix = "xxx{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
@@ -71,7 +71,7 @@ public class DatabasePrefixHandlerTest {
   }
 
   @Test
-  public void retrieveAlgorithmWithMissingAlgorithmPrefix() {
+  void retrieveAlgorithmWithMissingAlgorithmPrefix() {
 
     // given
     String encryptedPasswordWithPrefix = "n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
@@ -84,7 +84,7 @@ public class DatabasePrefixHandlerTest {
   }
 
   @Test
-  public void retrieveAlgorithmWithErroneousAlgorithmPrefix() {
+  void retrieveAlgorithmWithErroneousAlgorithmPrefix() {
 
     // given
     String encryptedPasswordWithPrefix = "{SHAn3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
@@ -97,7 +97,7 @@ public class DatabasePrefixHandlerTest {
   }
 
   @Test
-  public void removePrefix() {
+  void removePrefix() {
 
     // given
     String encryptedPasswordWithPrefix = "{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
@@ -111,7 +111,7 @@ public class DatabasePrefixHandlerTest {
   }
 
   @Test
-  public void removePrefixForInvalidInput() {
+  void removePrefixForInvalidInput() {
 
     // given
     String encryptedPasswordWithPrefix = "xxx{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
@@ -125,7 +125,7 @@ public class DatabasePrefixHandlerTest {
   }
 
   @Test
-  public void removePrefixWithMissingAlgorithmPrefix() {
+  void removePrefixWithMissingAlgorithmPrefix() {
 
     // given
     String encryptedPasswordWithPrefix = "n3fE9/7XOmgD3BkeJlC+JLyb/Qg=";
@@ -139,7 +139,7 @@ public class DatabasePrefixHandlerTest {
   }
 
   @Test
-  public void removePrefixWithErroneousAlgorithmPrefix() {
+  void removePrefixWithErroneousAlgorithmPrefix() {
 
     // given
     String encryptedPasswordWithPrefix = "SHAn3fE9}/7XOmgD3BkeJlC+JLyb/Qg=";

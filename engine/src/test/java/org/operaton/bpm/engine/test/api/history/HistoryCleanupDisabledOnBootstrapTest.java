@@ -49,12 +49,12 @@ public class HistoryCleanupDisabledOnBootstrapTest {
   public static ProcessEngineConfigurationImpl engineConfiguration;
 
   @AfterEach
-  public void resetConfig() {
+  void resetConfig() {
     engineConfiguration.setHistoryCleanupEnabled(true);
   }
 
   @Test
-  public void shouldNotCreateJobs() {
+  void shouldNotCreateJobs() {
     // given
 
     // when

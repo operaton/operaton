@@ -51,15 +51,15 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class FormDataTest {
+class FormDataTest {
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
   protected FormService formService;
-  
+
   @Deployment
   @Test
-  public void testGetFormFieldBasicProperties() {
+  void testGetFormFieldBasicProperties() {
 
     runtimeService.startProcessInstanceByKey("FormDataTest.testGetFormFieldBasicProperties");
 
@@ -90,7 +90,7 @@ public class FormDataTest {
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testGetFormFieldBuiltInTypes() {
+  void testGetFormFieldBuiltInTypes() {
 
     runtimeService.startProcessInstanceByKey("FormDataTest.testGetFormFieldBuiltInTypes");
 
@@ -150,7 +150,7 @@ public class FormDataTest {
 
   @Deployment
   @Test
-  public void testGetFormFieldProperties() {
+  void testGetFormFieldProperties() {
 
     runtimeService.startProcessInstanceByKey("FormDataTest.testGetFormFieldProperties");
 
@@ -170,7 +170,7 @@ public class FormDataTest {
 
   @Deployment
   @Test
-  public void testGetFormFieldValidationConstraints() {
+  void testGetFormFieldValidationConstraints() {
 
     runtimeService.startProcessInstanceByKey("FormDataTest.testGetFormFieldValidationConstraints");
 
@@ -193,7 +193,7 @@ public class FormDataTest {
 
   @Deployment
   @Test
-  public void testFormFieldSubmit() {
+  void testFormFieldSubmit() {
 
     // valid submit
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormDataTest.testFormFieldSubmit");
@@ -242,7 +242,7 @@ public class FormDataTest {
 
   @Deployment
   @Test
-  public void testSubmitFormDataWithEmptyDate() {
+  void testSubmitFormDataWithEmptyDate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormDataTest.testSubmitFormDataWithEmptyDate");
     Task task = taskService.createTaskQuery().singleResult();
@@ -260,7 +260,7 @@ public class FormDataTest {
 
   @Deployment
   @Test
-  public void testMissingFormVariables()
+  void testMissingFormVariables()
   {
     // given process definition with defined form variables
     // when start process instance with no variables
@@ -286,7 +286,7 @@ public class FormDataTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/form/FormDataTest.testDoubleQuotesAreEscapedInGeneratedTaskForms.bpmn20.xml")
   @Test
-  public void testDoubleQuotesAreEscapedInGeneratedTaskForms() {
+  void testDoubleQuotesAreEscapedInGeneratedTaskForms() {
 
     // given
     HashMap<String, Object> variables = new HashMap<>();

@@ -38,19 +38,19 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class AuthorizationQueryAuthorizationsTest {
+class AuthorizationQueryAuthorizationsTest {
 
   protected AuthorizationService authorizationService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
   }
 
   @Test
-  public void testQuerySingleCorrectPermission() {
+  void testQuerySingleCorrectPermission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -70,7 +70,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQuerySingleIncorrectPermission() {
+  void testQuerySingleIncorrectPermission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -90,7 +90,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryPermissionsWithWrongResource() {
+  void testQueryPermissionsWithWrongResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -126,7 +126,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryPermissionWithMixedResource() {
+  void testQueryPermissionWithMixedResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -149,7 +149,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryPermissionsWithMixedResource() {
+  void testQueryPermissionsWithMixedResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -183,7 +183,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryCorrectAndIncorrectPermission() {
+  void testQueryCorrectAndIncorrectPermission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -207,7 +207,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void shouldNotFindAllAuthorizationsWithRevokedReadPermissionOnOneAuthorization() {
+  void shouldNotFindAllAuthorizationsWithRevokedReadPermissionOnOneAuthorization() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");

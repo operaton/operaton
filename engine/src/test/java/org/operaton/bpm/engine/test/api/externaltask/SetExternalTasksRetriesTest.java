@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.test.api.AbstractAsyncOperationsTest;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
+class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
   protected static final int RETRIES = 5;
 
@@ -62,7 +62,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   protected List<String> processInstanceIds;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     initDefaults(engineRule);
     externalTaskService = engineRule.getExternalTaskService();
     deployTestProcesses();
@@ -87,12 +87,12 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processInstanceIds = null;
   }
 
   @Test
-  public void shouldSetExternalTaskRetriesSync() {
+  void shouldSetExternalTaskRetriesSync() {
 
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery().list();
     ArrayList<String> externalTaskIds = new ArrayList<>();
@@ -110,7 +110,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldFailForNonExistingExternalTaskIdSync() {
+  void shouldFailForNonExistingExternalTaskIdSync() {
 
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery().list();
     ArrayList<String> externalTaskIds = new ArrayList<>();
@@ -129,7 +129,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldFailForNullExternalTaskIdSync() {
+  void shouldFailForNullExternalTaskIdSync() {
 
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery().list();
     ArrayList<String> externalTaskIds = new ArrayList<>();
@@ -148,7 +148,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldFailForNullExternalTaskIdsSync() {
+  void shouldFailForNullExternalTaskIdsSync() {
     try {
       externalTaskService.setRetries((List<String>) null, 10);
       fail("exception expected");
@@ -158,7 +158,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldFailForNonExistingExternalTaskIdAsync() {
+  void shouldFailForNonExistingExternalTaskIdAsync() {
 
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery().list();
     ArrayList<String> externalTaskIds = new ArrayList<>();
@@ -178,7 +178,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldFailForNullExternalTaskIdAsync() {
+  void shouldFailForNullExternalTaskIdAsync() {
 
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery().list();
     ArrayList<String> externalTaskIds = new ArrayList<>();
@@ -197,7 +197,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldFailForNullExternalTaskIdsAsync() {
+  void shouldFailForNullExternalTaskIdsAsync() {
     try {
       externalTaskService.setRetriesAsync((List<String>) null, null, 10);
       fail("exception expected");
@@ -207,7 +207,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldFailForNegativeRetriesSync() {
+  void shouldFailForNegativeRetriesSync() {
 
     List<String> externalTaskIds = Arrays.asList("externalTaskId");
 
@@ -220,7 +220,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldFailForNegativeRetriesAsync() {
+  void shouldFailForNegativeRetriesAsync() {
 
     List<String> externalTaskIds = Arrays.asList("externalTaskId");
 
@@ -235,7 +235,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldSetExternalTaskRetriesWithQueryAsync() {
+  void shouldSetExternalTaskRetriesWithQueryAsync() {
 
     ExternalTaskQuery externalTaskQuery = engineRule.getExternalTaskService().createExternalTaskQuery();
 
@@ -251,7 +251,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldSetExternalTaskRetriesWithListAsync() {
+  void shouldSetExternalTaskRetriesWithListAsync() {
 
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery().list();
     ArrayList<String> externalTaskIds = new ArrayList<>();
@@ -271,7 +271,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldSetExternalTaskRetriesWithListAsyncInDifferentDeployments() {
+  void shouldSetExternalTaskRetriesWithListAsyncInDifferentDeployments() {
     // given multiple deployments
     deployTestProcesses();
     ProcessDefinitionQuery definitionQuery = engineRule.getRepositoryService().createProcessDefinitionQuery()
@@ -313,7 +313,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldSetExternalTaskRetriesWithListAndQueryAsync() {
+  void shouldSetExternalTaskRetriesWithListAndQueryAsync() {
 
     ExternalTaskQuery externalTaskQuery = externalTaskService.createExternalTaskQuery();
     List<ExternalTask> externalTasks = externalTaskQuery.list();
@@ -336,7 +336,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldSetExternalTaskRetriesWithLargeList() {
+  void shouldSetExternalTaskRetriesWithLargeList() {
     // given
     engineRule.getProcessEngineConfiguration().setBatchJobsPerSeed(1010);
     List<String> processIds = startProcessInstance(PROCESS_DEFINITION_KEY, 1100);
@@ -363,7 +363,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldSetExternalTaskRetriesWithDifferentListAndQueryAsync() {
+  void shouldSetExternalTaskRetriesWithDifferentListAndQueryAsync() {
     // given
     ExternalTaskQuery externalTaskQuery = externalTaskService.createExternalTaskQuery().processInstanceId(processInstanceIds.get(0));
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery().processInstanceId(processInstanceIds.get(processInstanceIds.size()-1)).list();
@@ -386,7 +386,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldUpdateRetriesByExternalTaskIds() {
+  void shouldUpdateRetriesByExternalTaskIds() {
     // given
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
     List<String> externalTaskIds = Arrays.asList(
@@ -411,7 +411,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldUpdateRetriesByExternalTaskIdArray() {
+  void shouldUpdateRetriesByExternalTaskIdArray() {
     // given
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
     List<String> externalTaskIds = Arrays.asList(
@@ -436,7 +436,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldUpdateRetriesByProcessInstanceIds() {
+  void shouldUpdateRetriesByProcessInstanceIds() {
     // when
     Batch batch = externalTaskService.updateRetries().processInstanceIds(processInstanceIds).setAsync(RETRIES);
     executeSeedAndBatchJobs(batch);
@@ -451,7 +451,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldUpdateRetriesByProcessInstanceIdArray() {
+  void shouldUpdateRetriesByProcessInstanceIdArray() {
     // given
 
     // when
@@ -468,7 +468,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldUpdateRetriesByExternalTaskQuery() {
+  void shouldUpdateRetriesByExternalTaskQuery() {
     // given
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
 
@@ -486,7 +486,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldUpdateRetriesByProcessInstanceQuery() {
+  void shouldUpdateRetriesByProcessInstanceQuery() {
     // given
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
@@ -505,7 +505,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void shouldUpdateRetriesByHistoricProcessInstanceQuery() {
+  void shouldUpdateRetriesByHistoricProcessInstanceQuery() {
     // given
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 
@@ -524,7 +524,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void shouldUpdateRetriesByAllParameters() {
+  void shouldUpdateRetriesByAllParameters() {
     // given
     ExternalTask externalTask = externalTaskService
         .createExternalTaskQuery()
@@ -595,7 +595,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  public void shouldSetInvocationsPerBatchType() {
+  void shouldSetInvocationsPerBatchType() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()

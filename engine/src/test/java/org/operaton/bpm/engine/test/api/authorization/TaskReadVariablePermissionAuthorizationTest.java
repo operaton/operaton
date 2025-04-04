@@ -87,7 +87,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   }
 
   @BeforeEach
-  public void init() {
+  void init() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     identityService = engineRule.getIdentityService();
     authorizationService = engineRule.getAuthorizationService();
@@ -105,7 +105,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     authRule.disableAuthorization();
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());

@@ -56,7 +56,7 @@ import org.operaton.bpm.engine.variable.value.StringValue;
  * @author Roman Smirnov
  *
  */
-public class CaseServiceTest {
+class CaseServiceTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
@@ -66,30 +66,30 @@ public class CaseServiceTest {
   protected CaseService caseService;
   protected RepositoryService repositoryService;
   protected RuntimeService runtimeService;
-  
+
   @Test
-  public void testCreateCaseInstanceQuery() {
+  void testCreateCaseInstanceQuery() {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
 
     assertThat(query).isNotNull();
   }
 
   @Test
-  public void testCreateCaseExecutionQuery() {
+  void testCreateCaseExecutionQuery() {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     assertThat(query).isNotNull();
   }
 
   @Test
-  public void testWithCaseExecution() {
+  void testWithCaseExecution() {
     CaseExecutionCommandBuilder builder = caseService.withCaseExecution("aCaseExecutionId");
 
     assertThat(builder).isNotNull();
   }
 
   @Test
-  public void testManualStartInvalidCaseExecution() {
+  void testManualStartInvalidCaseExecution() {
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
     assertThatThrownBy(commandBuilder::manualStart)
       .isInstanceOf(NotFoundException.class);
@@ -100,7 +100,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testCompleteInvalidCaseExecution() {
+  void testCompleteInvalidCaseExecution() {
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
     assertThatThrownBy(commandBuilder::complete)
       .withFailMessage("The case execution should not be found.")
@@ -113,7 +113,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testCloseInvalidCaseExecution() {
+  void testCloseInvalidCaseExecution() {
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
     assertThatThrownBy(commandBuilder::close)
       .withFailMessage("The case execution should not be found.")
@@ -126,7 +126,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testTerminateInvalidCaseExecution() {
+  void testTerminateInvalidCaseExecution() {
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
     assertThatThrownBy(commandBuilder::terminate)
       .withFailMessage("The case execution should not be found.")
@@ -138,9 +138,9 @@ public class CaseServiceTest {
       .isInstanceOf(NotValidException.class);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariable() {
+  void testExecuteSetVariable() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -204,9 +204,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariableTyped() {
+  void testExecuteSetVariableTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -270,9 +270,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariables() {
+  void testExecuteSetVariables() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -339,9 +339,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariablesTyped() {
+  void testExecuteSetVariablesTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -408,9 +408,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariableAndVariables() {
+  void testExecuteSetVariableAndVariables() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -482,9 +482,9 @@ public class CaseServiceTest {
   }
 
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariableAndVariablesTyped() {
+  void testExecuteSetVariableAndVariablesTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -555,9 +555,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariableLocal() {
+  void testExecuteSetVariableLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -640,9 +640,9 @@ public class CaseServiceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariablesLocal() {
+  void testExecuteSetVariablesLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -727,9 +727,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariablesLocalTyped() {
+  void testExecuteSetVariablesLocalTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -788,9 +788,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariableLocalAndVariablesLocal() {
+  void testExecuteSetVariableLocalAndVariablesLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -882,9 +882,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteSetVariableAndVariablesLocal() {
+  void testExecuteSetVariableAndVariablesLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -973,9 +973,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveVariable() {
+  void testExecuteRemoveVariable() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1023,9 +1023,9 @@ public class CaseServiceTest {
     assertThat(result).isEmpty();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveVariables() {
+  void testExecuteRemoveVariables() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1077,9 +1077,9 @@ public class CaseServiceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveVariableAndVariables() {
+  void testExecuteRemoveVariableAndVariables() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1132,9 +1132,9 @@ public class CaseServiceTest {
     assertThat(result).isEmpty();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveVariableLocal() {
+  void testExecuteRemoveVariableLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1186,9 +1186,9 @@ public class CaseServiceTest {
     assertThat(result).isEmpty();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveVariablesLocal() {
+  void testExecuteRemoveVariablesLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1244,9 +1244,9 @@ public class CaseServiceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveVariableLocalAndVariablesLocal() {
+  void testExecuteRemoveVariableLocalAndVariablesLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1303,9 +1303,9 @@ public class CaseServiceTest {
     assertThat(result).isEmpty();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveVariableAndVariablesLocal() {
+  void testExecuteRemoveVariableAndVariablesLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1362,9 +1362,9 @@ public class CaseServiceTest {
     assertThat(result).isEmpty();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveAndSetSameVariable() {
+  void testExecuteRemoveAndSetSameVariable() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1398,9 +1398,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testExecuteRemoveAndSetSameLocal() {
+  void testExecuteRemoveAndSetSameLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1434,9 +1434,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariables() {
+  void testGetVariables() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1467,9 +1467,9 @@ public class CaseServiceTest {
     assertThat(caseService.getVariablesTyped(caseExecutionId, true)).isEqualTo(variables);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesTyped() {
+  void testGetVariablesTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1501,7 +1501,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testGetVariablesInvalidCaseExecutionId() {
+  void testGetVariablesInvalidCaseExecutionId() {
 
     try {
       caseService.getVariables("invalid");
@@ -1518,9 +1518,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesWithVariableNames() {
+  void testGetVariablesWithVariableNames() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1557,9 +1557,9 @@ public class CaseServiceTest {
   }
 
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesWithVariableNamesTyped() {
+  void testGetVariablesWithVariableNamesTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1596,7 +1596,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testGetVariablesWithVariablesNamesInvalidCaseExecutionId() {
+  void testGetVariablesWithVariablesNamesInvalidCaseExecutionId() {
 
     try {
       caseService.getVariables("invalid", null);
@@ -1613,9 +1613,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesLocal() {
+  void testGetVariablesLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1650,9 +1650,9 @@ public class CaseServiceTest {
     assertThat(caseService.getVariablesLocal(caseExecutionId)).isEqualTo(variables);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesLocalTyped() {
+  void testGetVariablesLocalTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1688,7 +1688,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testGetVariablesLocalInvalidCaseExecutionId() {
+  void testGetVariablesLocalInvalidCaseExecutionId() {
 
     try {
       caseService.getVariablesLocal("invalid");
@@ -1705,9 +1705,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesLocalWithVariableNames() {
+  void testGetVariablesLocalWithVariableNames() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1746,9 +1746,9 @@ public class CaseServiceTest {
     assertThat(caseService.getVariablesLocal(caseExecutionId, names)).isEqualTo(variables);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesLocalWithVariableNamesTyped() {
+  void testGetVariablesLocalWithVariableNamesTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1786,8 +1786,9 @@ public class CaseServiceTest {
 
     assertThat(caseService.getVariablesLocal(caseExecutionId, names)).isEqualTo(variables);
   }
+
   @Test
-  public void testGetVariablesLocalWithVariablesNamesInvalidCaseExecutionId() {
+  void testGetVariablesLocalWithVariablesNamesInvalidCaseExecutionId() {
 
     try {
       caseService.getVariablesLocal("invalid", null);
@@ -1804,9 +1805,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariable() {
+  void testGetVariable() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1839,7 +1840,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testGetVariableInvalidCaseExecutionId() {
+  void testGetVariableInvalidCaseExecutionId() {
     try {
       caseService.getVariable("invalid", "aVariableName");
       fail("The case execution should not be found.");
@@ -1855,9 +1856,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariableLocal() {
+  void testGetVariableLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1893,7 +1894,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testGetVariableLocalInvalidCaseExecutionId() {
+  void testGetVariableLocalInvalidCaseExecutionId() {
     try {
       caseService.getVariableLocal("invalid", "aVariableName");
       fail("The case execution should not be found.");
@@ -1909,9 +1910,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariableTyped() {
+  void testGetVariableTyped() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -1949,7 +1950,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testGetVariableTypedInvalidCaseExecutionId() {
+  void testGetVariableTypedInvalidCaseExecutionId() {
     try {
       caseService.getVariableTyped("invalid", "aVariableName");
       fail("The case execution should not be found.");
@@ -1965,9 +1966,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testSetVariable() {
+  void testSetVariable() {
     // given:
     // a deployed case definition
     // and an active case instance
@@ -2010,9 +2011,9 @@ public class CaseServiceTest {
     assertThat(variable.getValue()).isEqualTo("abc");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testSetVariables() {
+  void testSetVariables() {
     // given:
     // a deployed case definition
     // and an active case instance
@@ -2074,9 +2075,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testSetVariableLocal() {
+  void testSetVariableLocal() {
     // given:
     // a deployed case definition
     // an active case instance
@@ -2119,9 +2120,9 @@ public class CaseServiceTest {
     assertThat(variable.getValue()).isEqualTo("abc");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testSetVariablesLocal() {
+  void testSetVariablesLocal() {
     // given:
     // a deployed case definition
     // and an active case instance
@@ -2183,9 +2184,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariableTypedLocal() {
+  void testGetVariableTypedLocal() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -2226,7 +2227,7 @@ public class CaseServiceTest {
   }
 
   @Test
-  public void testGetVariableLocalTypedInvalidCaseExecutionId() {
+  void testGetVariableLocalTypedInvalidCaseExecutionId() {
     try {
       caseService.getVariableLocalTyped("invalid", "aVariableName");
       fail("The case execution should not be found.");
@@ -2242,9 +2243,9 @@ public class CaseServiceTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testRemoveVariable() {
+  void testRemoveVariable() {
     // given:
     // a deployed case definition
     // and an active case instance
@@ -2267,9 +2268,9 @@ public class CaseServiceTest {
     assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testRemoveVariables() {
+  void testRemoveVariables() {
     // given:
     // a deployed case definition
     // and an active case instance
@@ -2299,9 +2300,9 @@ public class CaseServiceTest {
     assertThat(variable.getName()).isEqualTo("aThirdVariable");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testRemoveVariableLocal() {
+  void testRemoveVariableLocal() {
     // given:
     // a deployed case definition
     // and an active case instance
@@ -2331,9 +2332,9 @@ public class CaseServiceTest {
     assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testRemoveVariablesLocal() {
+  void testRemoveVariablesLocal() {
     // given:
     // a deployed case definition
     // and an active case instance
@@ -2373,7 +2374,7 @@ public class CaseServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/loan-application.cmmn")
   @Test
-  public void testCreateCaseInstanceById() {
+  void testCreateCaseInstanceById() {
     // given
     // there exists a deployment containing a case definition with key "loanApplication"
 
@@ -2409,7 +2410,7 @@ public class CaseServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/loan-application.cmmn")
   @Test
-  public void testCreateCaseInstanceByKey() {
+  void testCreateCaseInstanceByKey() {
     // given
     // there exists a deployment containing a case definition with key "loanApplication"
 
@@ -2445,7 +2446,7 @@ public class CaseServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/loan-application.cmmn")
   @Test
-  public void testCaseExecutionQuery() {
+  void testCaseExecutionQuery() {
     // given
     // there exists a deployment containing a case definition with key "loanApplication"
 
@@ -2505,7 +2506,7 @@ public class CaseServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/loan-application.cmmn")
   @Test
-  public void testCaseInstanceQuery() {
+  void testCaseInstanceQuery() {
     // given
     // there exists a deployment containing a case definition with key "loanApplication"
 
@@ -2539,9 +2540,9 @@ public class CaseServiceTest {
     assertThat(caseInstances).hasSize(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesByEmptyList() {
+  void testGetVariablesByEmptyList() {
     // given
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 
@@ -2552,9 +2553,9 @@ public class CaseServiceTest {
     assertThat(variables).isNotNull().isEmpty();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesTypedByEmptyList() {
+  void testGetVariablesTypedByEmptyList() {
     // given
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 
@@ -2565,9 +2566,9 @@ public class CaseServiceTest {
     assertThat(variables).isNotNull().isEmpty();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesLocalByEmptyList() {
+  void testGetVariablesLocalByEmptyList() {
     // given
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 
@@ -2578,9 +2579,9 @@ public class CaseServiceTest {
     assertThat(variables).isNotNull().isEmpty();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testGetVariablesLocalTypedByEmptyList() {
+  void testGetVariablesLocalTypedByEmptyList() {
     // given
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 

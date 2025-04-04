@@ -46,7 +46,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricInstanceForCleanupQueryTest {
+class HistoricInstanceForCleanupQueryTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -61,7 +61,7 @@ public class HistoricInstanceForCleanupQueryTest {
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @AfterEach
-  public void clearDatabase() {
+  void clearDatabase() {
     helper.removeAllRunningAndHistoricBatches();
 
     clearMetrics();
@@ -77,7 +77,7 @@ public class HistoricInstanceForCleanupQueryTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testSortHistoricBatchesForCleanup() {
+  void testSortHistoricBatchesForCleanup() {
     Date startDate = ClockUtil.getCurrentTime();
     int daysInThePast = -11;
     ClockUtil.setCurrentTime(DateUtils.addDays(startDate, daysInThePast));

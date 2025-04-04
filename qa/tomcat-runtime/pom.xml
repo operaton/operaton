@@ -223,13 +223,25 @@
                       <version>${version.asm}</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
+                    <!-- JNA is needed for the testcontainers to work -->
+                    <artifactItem>
+                      <groupId>net.java.dev.jna</groupId>
+                      <artifactId>jna</artifactId>
+                      <version>${version.jna}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>net.java.dev.jna</groupId>
+                      <artifactId>jna-platform</artifactId>
+                      <version>${version.jna}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
                     <artifactItem>
                       <groupId>org.testcontainers</groupId>
                       <artifactId>testcontainers</artifactId>
                       <version>${version.testcontainers}</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
-
                     <artifactItem>
                       <groupId>org.testcontainers</groupId>
                       <artifactId>jdbc</artifactId>

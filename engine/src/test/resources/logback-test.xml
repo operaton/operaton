@@ -10,7 +10,7 @@
 
   <logger name="org.apache.ibatis" level="info" />
 
-  <logger name="javax.activation" level="info" />
+  <logger name="jakarta.activation" level="info" />
 
   <logger name="org.springframework" level="info" />
 

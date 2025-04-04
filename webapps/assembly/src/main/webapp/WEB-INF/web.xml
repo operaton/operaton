@@ -148,7 +148,7 @@
     <servlet-name>Cockpit Api</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
-      <param-name>javax.ws.rs.Application</param-name>
+      <param-name>jakarta.ws.rs.Application</param-name>
       <param-value>org.operaton.bpm.cockpit.impl.web.CockpitApplication</param-value>
     </init-param>
     <init-param>
@@ -166,7 +166,7 @@
     <servlet-name>Admin Api</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
-      <param-name>javax.ws.rs.Application</param-name>
+      <param-name>jakarta.ws.rs.Application</param-name>
       <param-value>org.operaton.bpm.admin.impl.web.AdminApplication</param-value>
     </init-param>
     <init-param>
@@ -184,7 +184,7 @@
     <servlet-name>Tasklist Api</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
-      <param-name>javax.ws.rs.Application</param-name>
+      <param-name>jakarta.ws.rs.Application</param-name>
       <param-value>org.operaton.bpm.tasklist.impl.web.TasklistApplication</param-value>
     </init-param>
     <init-param>
@@ -202,7 +202,7 @@
     <servlet-name>Engine Api</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
-      <param-name>javax.ws.rs.Application</param-name>
+      <param-name>jakarta.ws.rs.Application</param-name>
       <param-value>org.operaton.bpm.webapp.impl.engine.EngineRestApplication</param-value>
     </init-param>
     <init-param>
@@ -220,7 +220,7 @@
     <servlet-name>Welcome Api</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
-      <param-name>javax.ws.rs.Application</param-name>
+      <param-name>jakarta.ws.rs.Application</param-name>
       <param-value>org.operaton.bpm.welcome.impl.web.WelcomeApplication</param-value>
     </init-param>
     <init-param>

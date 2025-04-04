@@ -63,7 +63,7 @@
     <servlet-name>Engine API</servlet-name>
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
-      <param-name>javax.ws.rs.Application</param-name>
+      <param-name>jakarta.ws.rs.Application</param-name>
       <param-value>org.operaton.bpm.engine.rest.impl.application.DefaultApplication</param-value>
     </init-param>
     <async-supported>true</async-supported>

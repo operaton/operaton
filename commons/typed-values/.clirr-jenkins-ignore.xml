@@ -17,6 +17,6 @@
   </difference>
   <difference>
     <differenceType>8001</differenceType>
-    <className>operatonjar/javax/activation/**/*</className>
+    <className>operatonjar/jakarta/activation/**/*</className>
   </difference>
 </differences>

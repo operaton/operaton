@@ -1,6 +1,6 @@
-<module xmlns="urn:jboss:module:1.0" name="org.operaton.spin.operaton-spin-dataformat-xml-dom-jakarta">
+<module xmlns="urn:jboss:module:1.0" name="org.operaton.spin.operaton-spin-dataformat-xml-dom">
   <resources>
-    <resource-root path="operaton-spin-dataformat-xml-dom-jakarta-@project.version@.jar" />
+    <resource-root path="operaton-spin-dataformat-xml-dom-@project.version@.jar" />
   </resources>
 
   <dependencies>

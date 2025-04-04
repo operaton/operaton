@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.history;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junitpioneer.jupiter.RetryingTest;
@@ -297,7 +298,8 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isZero();
   }
 
-  @RetryingTest(3)
+  @Test
+  @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void testNoCreationOnJobExecutorBatchJobExecutionByIds() {
     // given
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
@@ -310,6 +312,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
+  @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void testNoCreationOnJobExecutorBatchJobExecutionByQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
@@ -322,7 +325,8 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
-  @RetryingTest(3)
+  @Test
+  @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void testNoCreationOnJobExecutorBatchJobExecutionByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);

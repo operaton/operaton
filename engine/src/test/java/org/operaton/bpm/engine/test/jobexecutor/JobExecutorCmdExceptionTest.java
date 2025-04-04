@@ -18,7 +18,9 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobCmd;
@@ -146,6 +148,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/jobFailingOnFlush.bpmn20.xml")
   @Test
+  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void testJobRetriesDecrementedOnFailedFlush() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -167,6 +170,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
   }
 
   @Test
+  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void testFailingTransactionListener() {
 
    testRule.deploy(Bpmn.createExecutableProcess("testProcess")

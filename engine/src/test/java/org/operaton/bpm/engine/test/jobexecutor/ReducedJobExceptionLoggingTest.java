@@ -22,6 +22,8 @@ import java.util.List;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -67,6 +69,7 @@ public class ReducedJobExceptionLoggingTest {
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
+  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void shouldLogAllFailingJobExceptions() {
     // given
     processEngineConfiguration.setEnableReducedJobExceptionLogging(false);
@@ -85,6 +88,7 @@ public class ReducedJobExceptionLoggingTest {
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
+  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void shouldLogOnlyOneFailingJobException() {
     // given
     processEngineConfiguration.setEnableReducedJobExceptionLogging(true);

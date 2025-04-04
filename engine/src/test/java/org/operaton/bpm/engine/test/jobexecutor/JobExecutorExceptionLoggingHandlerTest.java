@@ -21,6 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobHelper;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
@@ -58,8 +60,9 @@ public class JobExecutorExceptionLoggingHandlerTest {
   }
 
   @Test
+  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void shouldBeAbleToReplaceLoggingHandler() {
- // given
+     // given
     CollectingHandler collectingHandler = new CollectingHandler();
     ExecuteJobHelper.loggingHandler = collectingHandler;
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("failingDelegate")

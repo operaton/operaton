@@ -28,6 +28,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openapitools.client.ApiException;
@@ -37,6 +38,10 @@ import org.openapitools.client.model.ProcessInstanceQueryDto;
 import org.openapitools.client.model.SuspensionStateDto;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ProcessInstanceTest {
 
@@ -44,8 +49,23 @@ public class ProcessInstanceTest {
 
   final ProcessInstanceApi api = new ProcessInstanceApi();
 
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(8080);
+ @Rule
+public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
+
+
+    @Before
+    public void setUp() {
+        // Dynamically set the basePath for the API to match WireMock's port
+        String currentBasePath = api.getApiClient().getBasePath();
+        try {
+            URL url = new URL(currentBasePath);
+            String newBasePath = url.getProtocol() + "://" + url.getHost() + ":" + wireMockRule.port() + url.getPath();
+            api.getApiClient().setBasePath(newBasePath);
+        } catch (MalformedURLException e) {
+            // Fallback if URL parsing fails
+            api.getApiClient().setBasePath("http://localhost:" + wireMockRule.port());
+        }
+    }
 
   @Test
   public void shouldQueryProcessInstancesCount() throws ApiException {

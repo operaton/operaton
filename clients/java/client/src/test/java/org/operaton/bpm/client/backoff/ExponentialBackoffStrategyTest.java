@@ -21,6 +21,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
 
+import java.util.List;
+
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -79,7 +81,7 @@ class ExponentialBackoffStrategyTest {
     // when
     // reach maximum waiting time
     for (int i=0; i<8; i++) {
-      backoffStrategy.reconfigure(Lists.emptyList());
+      backoffStrategy.reconfigure(List.of());
     }
 
     // then

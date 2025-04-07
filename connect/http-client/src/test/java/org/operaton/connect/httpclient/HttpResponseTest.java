@@ -19,6 +19,8 @@ package org.operaton.connect.httpclient;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
@@ -37,11 +39,12 @@ class HttpResponseTest {
     connector.addRequestInterceptor(new DebugRequestInterceptor(testResponse));
   }
 
-  @Test
-  void responseCode() {
-    testResponse.statusCode(123);
+  @ParameterizedTest
+  @ValueSource(ints = {123, 200, 400, 500})
+  void testResponseCodes(int code) {
+    testResponse.statusCode(code);
     HttpResponse response = getResponse();
-    assertThat(response.getStatusCode()).isEqualTo(123);
+    assertThat(response.getStatusCode()).isEqualTo(code);
   }
 
   @Test
@@ -89,36 +92,6 @@ class HttpResponseTest {
 
   protected HttpResponse getResponse() {
     return connector.createRequest().url("http://operaton.com").get().execute();
-  }
-
-  @Test
-  void testSuccessfulResponseCode() {
-    // given
-    testResponse.statusCode(200);
-    // when
-    HttpResponse response = getResponse();
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(200);
-  }
-
-  @Test
-  void testResponseErrorCodeForMalformedRequest() {
-    // given
-    testResponse.statusCode(400);
-    // when
-    HttpResponse response = getResponse();
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(400);
-  }
-
-  @Test
-  void testResponseErrorCodeForServerError() {
-    // given
-    testResponse.statusCode(500);
-    // when
-    HttpResponse response = getResponse();
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(500);
   }
 
   @Test

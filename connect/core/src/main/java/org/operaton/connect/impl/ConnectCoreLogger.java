@@ -36,7 +36,9 @@ public class ConnectCoreLogger extends ConnectLogger {
     return new ConnectorException(exceptionMessage("003", "Unable to close response"), cause);
   }
 
-  public void connectorProviderDiscovered(ConnectorProvider provider, String connectorId, Connector connectorInstance) {
+  public void connectorProviderDiscovered(ConnectorProvider provider,
+                                          String connectorId,
+                                          Connector<?> connectorInstance) {
     if (isInfoEnabled()) {
       logInfo("004", "Discovered provider for connector id '{}' and class '{}': '{}'",
         connectorId, connectorInstance.getClass().getName(), provider.getClass().getName());
@@ -47,7 +49,7 @@ public class ConnectCoreLogger extends ConnectLogger {
     return new ConnectorException(exceptionMessage("005", "Multiple providers found for connector '{}'", connectorId));
   }
 
-  public void connectorConfiguratorDiscovered(ConnectorConfigurator configurator) {
+  public void connectorConfiguratorDiscovered(ConnectorConfigurator<?> configurator) {
     if (isInfoEnabled()) {
       logInfo("006", "Discovered configurator for connector class '{}': '{}'",
         configurator.getConnectorClass().getName(), configurator.getClass().getName());

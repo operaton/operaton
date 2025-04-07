@@ -61,8 +61,8 @@ public class JsonTestConstants {
 
     OrderDetails orderDetails = new OrderDetails();
     orderDetails.setArticle("operatonBPM");
-    orderDetails.setPrice(32000.45);
-    orderDetails.setRoundedPrice(32000);
+    orderDetails.setPrice(1234567.13d);
+    orderDetails.setRoundedPrice(1234567L);
 
     List<String> currencies = new ArrayList<>();
     currencies.add("euro");
@@ -92,8 +92,8 @@ public class JsonTestConstants {
     OrderDetails orderDetails = order.getOrderDetails();
     assertThat(orderDetails).isNotNull();
     assertThat(orderDetails.getArticle()).isEqualTo("operatonBPM");
-    assertThat(orderDetails.getPrice()).isBetween(32000.44449, 32000.45001);
-    assertThat(orderDetails.getRoundedPrice()).isEqualTo(32000);
+    assertThat(orderDetails.getPrice()).isEqualTo(1234567.13d);
+    assertThat(orderDetails.getRoundedPrice()).isEqualTo(1234567L);
     assertThat(orderDetails.getCurrencies()).containsExactly("euro", "dollar");
 
     List<RegularCustomer> customers = order.getCustomers();

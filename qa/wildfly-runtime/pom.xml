@@ -41,6 +41,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>jdbc</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython</artifactId>
       <scope>runtime</scope>

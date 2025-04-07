@@ -60,7 +60,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   private RuntimeService runtimeService;
   private AuthorizationService authorizationService;
   private TaskService taskService;
-
+  private HistoryService historyService;
 
   @Before
   public void init() {
@@ -71,6 +71,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
     runtimeService = engineRule.getRuntimeService();
     authorizationService = engineRule.getAuthorizationService();
     taskService = engineRule.getTaskService();
+    historyService = engineRule.getHistoryService();
 
     createUser(userId);
   }
@@ -85,6 +86,9 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
     }
     for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
       authorizationService.deleteAuthorization(authorization.getId());
+    }
+    for (HistoricTaskInstance task : historyService.createHistoricTaskInstanceQuery().list()) {
+      historyService.deleteHistoricTaskInstance(task.getId());
     }
     ClockUtil.reset();
   }
@@ -155,7 +159,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("process");
 
     // when
-    List<HistoricTaskInstance> runningHistoricTaskInstances =                                               
+    List<HistoricTaskInstance> runningHistoricTaskInstances =
       optimizeService.getRunningHistoricTaskInstances(null, now, 10);
 
     // then

@@ -266,7 +266,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
               public final boolean equals(Object o) {
                 if (!(o instanceof Map.Entry))
                   return false;
-                Entry e = (Entry) o;
+                Entry<?, ?> e = (Entry<?, ?>) o;
                 Object k1 = getKey();
                 Object k2 = e.getKey();
                 if (k1 == k2 || (k1 != null && k1.equals(k2))) {

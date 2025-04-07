@@ -181,7 +181,7 @@ public class HttpRequestConfigTest {
     RequestConfig config = configBuilder.build();
 
     // then
-    assertThat(config.isDecompressionEnabled()).isFalse();
+    assertThat(config.isContentCompressionEnabled()).isFalse();
   }
 
   @Test

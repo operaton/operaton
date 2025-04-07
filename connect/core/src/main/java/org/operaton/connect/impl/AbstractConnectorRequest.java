@@ -30,11 +30,11 @@ import org.operaton.connect.spi.ConnectorResponse;
  */
 public abstract class AbstractConnectorRequest<R extends ConnectorResponse> implements ConnectorRequest<R> {
 
-  protected Connector connector;
+  protected Connector<ConnectorRequest<R>> connector;
 
   protected Map<String, Object> requestParameters = new HashMap<>();
 
-  protected AbstractConnectorRequest(Connector connector) {
+  protected AbstractConnectorRequest(Connector<ConnectorRequest<R>> connector) {
     this.connector = connector;
   }
 

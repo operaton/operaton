@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 
 public class SchemaValidator {
@@ -39,7 +40,7 @@ public class SchemaValidator {
     JsonNode schemaNode = mapper.readTree(new File(jsonSchemaPath));
     JsonNode inputNode = mapper.readTree(new File(inputFile));
 
-    JsonSchemaFactory factory = JsonSchemaFactory.getInstance();
+    JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
     JsonSchema schema = factory.getSchema(schemaNode);
 
     Set<ValidationMessage> errors = schema.validate(inputNode);

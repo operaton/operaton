@@ -23,6 +23,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collection;
 import java.util.Date;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -30,15 +35,9 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.Metrics;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
-import org.junit.After;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Daniel Meyer
@@ -46,17 +45,16 @@ import org.junit.rules.RuleChain;
  */
 public class MetricsTest {
 
-  protected static final ProcessEngineRule ENGINE_RULE = new ProvidedProcessEngineRule();
-  protected static final ProcessEngineTestRule TEST_RULE = new ProcessEngineTestRule(ENGINE_RULE);
+  @RegisterExtension
+  protected static ProcessEngineExtension ENGINE_RULE = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension TEST_RULE = new ProcessEngineTestExtension(ENGINE_RULE);
 
-  @ClassRule
-  public static final RuleChain RULE_CHAIN = RuleChain.outerRule(ENGINE_RULE).around(TEST_RULE);
+  protected RuntimeService runtimeService;
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected ManagementService managementService;
 
-  protected static RuntimeService runtimeService;
-  protected static ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected static ManagementService managementService;
-
-  protected static void clearMetrics() {
+  protected void clearMetrics() {
     Collection<Meter> meters = processEngineConfiguration.getMetricsRegistry().getDbMeters().values();
     for (Meter meter : meters) {
       meter.getAndClear();
@@ -65,12 +63,8 @@ public class MetricsTest {
     processEngineConfiguration.setDbMetricsReporterActivate(false);
   }
 
-  @BeforeClass
-  public static void initMetrics() {
-    runtimeService = ENGINE_RULE.getRuntimeService();
-    processEngineConfiguration = ENGINE_RULE.getProcessEngineConfiguration();
-    managementService = ENGINE_RULE.getManagementService();
-
+  @BeforeEach
+  public void initMetrics() {
     //clean up before start
     clearMetrics();
     TEST_RULE.deploy(Bpmn.createExecutableProcess("testProcess")
@@ -81,7 +75,7 @@ public class MetricsTest {
         .done());
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     clearMetrics();
   }

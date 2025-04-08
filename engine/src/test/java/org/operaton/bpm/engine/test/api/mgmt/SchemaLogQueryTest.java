@@ -16,6 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.schemaLogEntryByTimestamp;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -23,27 +34,14 @@ import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManagerFactory;
 import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
-
-import java.util.Date;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Miklas Boskamp
  *
  */
+@ExtendWith(ProcessEngineExtension.class)
 public class SchemaLogQueryTest {
-
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected ManagementService managementService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -51,11 +49,8 @@ public class SchemaLogQueryTest {
   protected SchemaLogEntryEntity dummySchemaLogEntry;
   protected long initialEntryCount;
 
-  @Before
+  @BeforeEach
   public void init() {
-    managementService = engineRule.getManagementService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-
     initialEntryCount = managementService.createSchemaLogQuery().count();
     dummySchemaLogEntry = createDummySchemaLogEntry();
   }

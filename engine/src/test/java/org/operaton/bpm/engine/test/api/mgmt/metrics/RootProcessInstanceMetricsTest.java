@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collections;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.management.MetricsQuery;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -28,7 +29,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.CallActivity;
-import org.junit.Test;
 
 public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
 

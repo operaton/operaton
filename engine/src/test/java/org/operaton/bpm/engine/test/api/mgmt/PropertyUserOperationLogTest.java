@@ -18,48 +18,34 @@ package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Tobias Metzke
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+@ExtendWith(ProcessEngineExtension.class)
 public class PropertyUserOperationLogTest {
 
   private static final String USER_ID = "testUserId";
   private static final String PROPERTY_NAME = "TEST_PROPERTY";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
   protected HistoryService historyService;
   protected IdentityService identityService;
   protected ManagementService managementService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule);
-
-  @Before
-  public void setUp() {
-    historyService = engineRule.getHistoryService();
-    identityService = engineRule.getIdentityService();
-    managementService = engineRule.getManagementService();
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     managementService.deleteProperty(PROPERTY_NAME);
   }

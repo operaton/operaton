@@ -23,14 +23,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.management.DeploymentStatistics;
 import org.operaton.bpm.engine.management.IncidentStatistics;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
+public class DeploymentStatisticsQueryTest {
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected RuntimeService runtimeService;
+  protected ManagementService managementService;
+  protected RepositoryService repositoryService;
 
   @Test
   public void testDeploymentStatisticsQuery() {

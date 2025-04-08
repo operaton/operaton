@@ -20,8 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Frederik Heremans
@@ -29,7 +32,11 @@ import org.junit.Test;
  * @author Saeid Mizaei
  * @author Joram Barrez
  */
-public class ManagementServiceTableCountTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class ManagementServiceTableCountTest {
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected ManagementService managementService;
 
   @Test
   public void testTableCount() {

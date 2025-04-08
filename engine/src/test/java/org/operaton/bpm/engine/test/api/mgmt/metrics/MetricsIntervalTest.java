@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.management.MetricIntervalValue;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.management.MetricsQuery;
 import org.joda.time.DateTime;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *

@@ -21,9 +21,7 @@ import static org.awaitility.Awaitility.await;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import org.awaitility.core.ConditionTimeoutException;
@@ -85,6 +83,7 @@ public class ProcessEngineTestExtension
   
   public ProcessEngineTestExtension(ProcessEngineExtension processEngineExtension) {
     this.processEngineRule = processEngineExtension;
+    this.processEngine = processEngineRule.getProcessEngine();
   }
 
   public ProcessEngine getProcessEngine() {

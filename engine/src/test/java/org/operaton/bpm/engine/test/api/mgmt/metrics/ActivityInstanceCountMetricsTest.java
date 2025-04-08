@@ -20,13 +20,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.model.bpmn.Bpmn;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer

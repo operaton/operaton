@@ -37,6 +37,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
+import org.operaton.bpm.client.UrlResolver;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.backoff.ExponentialBackoffStrategy;
 import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
@@ -71,7 +72,6 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
 
   protected static final ExternalTaskClientLogger LOG = ExternalTaskClientLogger.CLIENT_LOGGER;
 
-  protected String baseUrl;
   protected String workerId;
   protected int maxTasks;
   protected boolean usePriority;
@@ -94,6 +94,7 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
   protected boolean isAutoFetchingEnabled;
   protected BackoffStrategy backoffStrategy;
   protected boolean isBackoffStrategyDisabled;
+  protected UrlResolver urlResolver;
 
   public ExternalTaskClientBuilderImpl() {
     // default values
@@ -110,7 +111,12 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
 
   @Override
   public ExternalTaskClientBuilder baseUrl(String baseUrl) {
-    this.baseUrl = baseUrl;
+    this.urlResolver = new PermanentUrlResolver(baseUrl);
+    return this;
+  }
+
+  public ExternalTaskClientBuilder urlResolver(UrlResolver urlResolver) {
+    this.urlResolver = urlResolver;
     return this;
   }
 
@@ -227,7 +233,7 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
       throw LOG.lockDurationIsNotGreaterThanZeroException(lockDuration);
     }
 
-    if (baseUrl == null || baseUrl.isEmpty()) {
+    if (urlResolver == null || getBaseUrl() == null || getBaseUrl().isEmpty()) {
       throw LOG.baseUrlNullException();
     }
 
@@ -246,7 +252,9 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
   }
 
   protected void initBaseUrl() {
-    baseUrl = sanitizeUrl(baseUrl);
+    if (this.urlResolver instanceof PermanentUrlResolver permanentUrlResolver) {
+      permanentUrlResolver.setBaseUrl(sanitizeUrl(this.urlResolver.getBaseUrl()));
+    }
   }
 
   protected String sanitizeUrl(String url) {
@@ -320,8 +328,8 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
     httpClientBuilder.addRequestInterceptorLast(requestInterceptorHandler);
     RequestExecutor requestExecutor = new RequestExecutor(httpClientBuilder.build(), objectMapper);
 
-    engineClient = new EngineClient(workerId, maxTasks, asyncResponseTimeout, baseUrl, requestExecutor,
-        usePriority, orderingConfig);
+    engineClient = new EngineClient(workerId, maxTasks, asyncResponseTimeout, urlResolver, requestExecutor, usePriority,
+        orderingConfig);
   }
 
   protected void initTopicSubscriptionManager() {
@@ -360,12 +368,11 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
 
     String dataFormatName = provider.getDataFormatName();
 
-    if(!dataFormats.containsKey(dataFormatName)) {
+    if (!dataFormats.containsKey(dataFormatName)) {
       DataFormat dataFormatInstance = provider.createInstance();
       dataFormats.put(dataFormatName, dataFormatInstance);
       LOG.logDataFormat(dataFormatInstance);
-    }
-    else {
+    } else {
       throw LOG.multipleProvidersForDataformat(dataFormatName);
     }
   }
@@ -405,7 +412,7 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
   }
 
   public String getBaseUrl() {
-    return baseUrl;
+    return urlResolver.getBaseUrl();
   }
 
   protected String getWorkerId() {

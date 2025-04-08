@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
+import org.operaton.bpm.client.UrlResolver;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.backoff.ErrorAwareBackoffStrategy;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
@@ -237,6 +238,53 @@ class ClientIT {
       // when + then
       assertThatThrownBy(() ->
               client.set(externalTaskClientBuilder.build())
+      ).isInstanceOf(ExternalTaskClientException.class);
+    }
+    finally {
+      if (client.get() != null) {
+        client.get().stop();
+      }
+    }
+  }
+
+  @Test
+  public void shouldThrowExceptionDueToBaseUrlResolverIsNull() {
+    AtomicReference<ExternalTaskClient> client = new AtomicReference<>();
+
+    try {
+      // given
+      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
+
+      // when + then
+      assertThatThrownBy(() ->
+              client.set(externalTaskClientBuilder
+                    .urlResolver(null)
+                    .build())
+      ).isInstanceOf(ExternalTaskClientException.class);
+
+    }
+    finally {
+      if (client.get() != null) {
+        client.get().stop();
+      }
+    }
+  }
+
+  @Test
+  public void shouldThrowExceptionDueToBaseUrlAndBaseUrlResolverIsNull() {
+    AtomicReference<ExternalTaskClient> client = new AtomicReference<>();
+
+    try {
+      // given
+      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
+
+      // when + then
+      assertThatThrownBy(() ->
+              client.set(externalTaskClientBuilder
+                      .baseUrl(null)
+                      .urlResolver(null)
+                      .build())
+
       ).isInstanceOf(ExternalTaskClientException.class);
     }
     finally {

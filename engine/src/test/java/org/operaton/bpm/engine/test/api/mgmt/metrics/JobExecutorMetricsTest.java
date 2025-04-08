@@ -24,6 +24,9 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.CallerRunsRejectedJobsHandler;
@@ -34,9 +37,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper.ThreadControl;
 import org.operaton.bpm.engine.test.jobexecutor.ControllableJobExecutor;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 
 /**
@@ -48,7 +48,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
   protected JobExecutor defaultJobExecutor;
   protected ProcessEngine processEngine;
 
-  @Before
+  @BeforeEach
   public void saveJobExecutor() {
     processEngine = engineRule.getProcessEngine();
     defaultJobExecutor = processEngineConfiguration.getJobExecutor();
@@ -57,7 +57,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
     processEngine.getManagementService().deleteMetrics(null);
   }
 
-  @After
+  @AfterEach
   public void restoreJobExecutor() {
     processEngineConfiguration.setJobExecutor(defaultJobExecutor);
   }

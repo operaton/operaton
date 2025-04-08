@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -26,13 +29,8 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.Meter;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
@@ -40,11 +38,10 @@ import org.junit.rules.RuleChain;
  */
 public abstract class AbstractMetricsTest {
 
-  protected final ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected final ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;
@@ -54,20 +51,12 @@ public abstract class AbstractMetricsTest {
   protected RepositoryService repositoryService;
   protected ManagementService managementService;
 
-  @Before
+  @BeforeEach
   public void initializeServices() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    caseService = engineRule.getCaseService();
-    historyService = engineRule.getHistoryService();
-    repositoryService = engineRule.getRepositoryService();
-    managementService = engineRule.getManagementService();
-
     clearMetrics();
   }
 
-  @After
+  @AfterEach
   public void cleanUpMetrics() {
     clearMetrics();
   }

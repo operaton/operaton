@@ -25,10 +25,10 @@ import static org.operaton.bpm.engine.management.Metrics.PROCESS_INSTANCES;
 import java.util.Date;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
@@ -39,14 +39,14 @@ import org.operaton.bpm.engine.telemetry.ApplicationServer;
 import org.operaton.bpm.engine.telemetry.Metric;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 public class ManagementServiceGetTelemetryDataTest {
 
   protected static final String IS_TELEMETRY_ENABLED_CMD_NAME = "IsTelemetryEnabledCmd";
 
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
   protected ProcessEngineConfigurationImpl configuration;
   protected ManagementServiceImpl managementService;
@@ -55,9 +55,8 @@ public class ManagementServiceGetTelemetryDataTest {
 
   protected TelemetryDataImpl defaultTelemetryData;
 
-  @Before
+  @BeforeEach
   public void setup() {
-    configuration = engineRule.getProcessEngineConfiguration();
     managementService = (ManagementServiceImpl) engineRule.getManagementService();
     metricsRegistry = configuration.getMetricsRegistry();
 
@@ -66,7 +65,7 @@ public class ManagementServiceGetTelemetryDataTest {
     clearTelemetry();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     clearTelemetry();
 

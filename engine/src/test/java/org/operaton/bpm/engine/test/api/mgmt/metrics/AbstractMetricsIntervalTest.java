@@ -21,20 +21,18 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * Represents the abstract metrics interval test class, which contains methods
@@ -44,16 +42,16 @@ import org.junit.rules.RuleChain;
  */
 public abstract class AbstractMetricsIntervalTest {
 
-  protected final ProcessEngineRule ENGINE_RULE = new ProvidedProcessEngineRule();
-  protected final ProcessEngineTestRule TEST_RULE = new ProcessEngineTestRule(ENGINE_RULE);
+  @RegisterExtension
+  protected static ProcessEngineExtension ENGINE_RULE = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension TEST_RULE = new ProcessEngineTestExtension(ENGINE_RULE);
+
   protected final String REPORTER_ID = "REPORTER_ID";
   protected static final int DEFAULT_INTERVAL = 15;
   protected static final int DEFAULT_INTERVAL_MILLIS = 15 * 60 * 1000;
   protected static final int MIN_OCCURENCE = 1;
   protected static final int MAX_OCCURENCE = 250;
-
-  @Rule
-  public RuleChain RULE_CHAIN = RuleChain.outerRule(ENGINE_RULE).around(TEST_RULE);
 
   protected RuntimeService runtimeService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -111,7 +109,7 @@ public abstract class AbstractMetricsIntervalTest {
     }
   }
 
-  @Before
+  @BeforeEach
   public void initMetrics() {
     runtimeService = ENGINE_RULE.getRuntimeService();
     processEngineConfiguration = ENGINE_RULE.getProcessEngineConfiguration();
@@ -129,7 +127,7 @@ public abstract class AbstractMetricsIntervalTest {
     generateMeterData(3, DEFAULT_INTERVAL_MILLIS);
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     ClockUtil.reset();
     processEngineConfiguration.setDbMetricsReporterActivate(false);

@@ -25,6 +25,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -104,6 +105,7 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)
   public @interface Parameters {
+    String name() default "";
   }
 
   @Retention(RetentionPolicy.RUNTIME)
@@ -139,6 +141,10 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
       throw new ExtensionConfigurationException("No static @Parameters method found in " + testClass.getName());
     }
 
+    // Retrieve the name pattern from the annotation.
+    Parameters parametersAnnotation = parametersMethod.getAnnotation(Parameters.class);
+    String displayNameFormat = parametersAnnotation.name();
+
     Object parametersResult;
     try {
       parametersMethod.setAccessible(true);
@@ -153,14 +159,16 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
 
     @SuppressWarnings("unchecked")
     Collection<Object> parameterSets = (Collection<Object>) parametersResult;
-    return parameterSets.stream().map(params -> new ParameterizedTestInvocationContext(params));
+    return parameterSets.stream().map(params -> new ParameterizedTestInvocationContext(params, displayNameFormat));
   }
 
   private static class ParameterizedTestInvocationContext implements TestTemplateInvocationContext {
 
     private final Object[] parameters;
+    private final String displayNameFormat;
 
-    ParameterizedTestInvocationContext(Object parameters) {
+    ParameterizedTestInvocationContext(Object parameters, String displayNameFormat) {
+      this.displayNameFormat = displayNameFormat;
       if (parameters instanceof Object[]) {
         this.parameters = (Object[]) parameters;
       } else {
@@ -170,7 +178,9 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
 
     @Override
     public String getDisplayName(int invocationIndex) {
-      return "Parameters: " + Arrays.toString(parameters);
+      if ("".equals(displayNameFormat))
+        return "Parameters: " + Arrays.toString(parameters);
+      return MessageFormat.format(displayNameFormat, parameters);
     }
 
     @Override

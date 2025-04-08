@@ -16,6 +16,27 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -37,37 +58,23 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import static org.assertj.core.api.Assertions.*;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Joram Barrez
  * @author Falko Menge
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class JobQueryTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;
@@ -94,10 +101,10 @@ public class JobQueryTest {
   private static final long ONE_SECOND = 1000L;
   private static final String EXCEPTION_MESSAGE = "java.lang.RuntimeException: This is an exception thrown from scriptTask";
 
-  @Parameterized.Parameter
+  @Parameter
   public boolean ensureJobDueDateSet;
 
-  @Parameterized.Parameters(name = "Job DueDate is set: {0}")
+  @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { false },
@@ -110,12 +117,8 @@ public class JobQueryTest {
    *   - 3 process instances, each with one timer, each firing at t1/t2/t3 + 1 hour (see process)
    *   - 1 message
    */
-  @Before
+  @BeforeEach
   public void setUp() {
-    processEngineConfiguration = rule.getProcessEngineConfiguration();
-    runtimeService = rule.getRuntimeService();
-    repositoryService = rule.getRepositoryService();
-    managementService = rule.getManagementService();
     commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
 
     defaultEnsureJobDueDateSet = processEngineConfiguration.isEnsureJobDueDateNotNull();
@@ -167,20 +170,20 @@ public class JobQueryTest {
     });
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     repositoryService.deleteDeployment(deploymentId, true);
     commandExecutor.execute(new DeleteJobsCmd(messageId, true));
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByNoCriteria() {
     JobQuery query = managementService.createJobQuery();
     verifyQueryResults(query, 4);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByActivityId(){
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
 
@@ -188,7 +191,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 3);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByInvalidActivityId(){
     JobQuery query = managementService.createJobQuery().activityId("invalid");
     verifyQueryResults(query, 0);
@@ -202,7 +205,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testByJobDefinitionId() {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
 
@@ -210,7 +213,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 3);
   }
 
-  @Test
+  @TestTemplate
   public void testByInvalidJobDefinitionId() {
     JobQuery query = managementService.createJobQuery().jobDefinitionId("invalid");
     verifyQueryResults(query, 0);
@@ -224,13 +227,13 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessInstanceId() {
     JobQuery query = managementService.createJobQuery().processInstanceId(processInstanceIdOne);
     verifyQueryResults(query, 1);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByInvalidProcessInstanceId() {
     JobQuery query = managementService.createJobQuery().processInstanceId("invalid");
     verifyQueryResults(query, 0);
@@ -244,7 +247,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByExecutionId() {
     Job job = managementService.createJobQuery().processInstanceId(processInstanceIdOne).singleResult();
     JobQuery query = managementService.createJobQuery().executionId(job.getExecutionId());
@@ -252,7 +255,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByInvalidExecutionId() {
     JobQuery query = managementService.createJobQuery().executionId("invalid");
     verifyQueryResults(query, 0);
@@ -266,7 +269,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().list().get(0);
 
@@ -274,7 +277,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 3);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByInvalidProcessDefinitionId() {
     JobQuery query = managementService.createJobQuery().processDefinitionId("invalid");
     verifyQueryResults(query, 0);
@@ -288,7 +291,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobQueryTest.testTimeCycleQueryByProcessDefinitionId.bpmn20.xml"})
   public void testTimeCycleQueryByProcessDefinitionId() {
     String processDefinitionId = repositoryService
@@ -310,13 +313,13 @@ public class JobQueryTest {
     assertThat(anotherJobId).isNotEqualTo(jobId);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessDefinitionKey() {
     JobQuery query = managementService.createJobQuery().processDefinitionKey("timerOnTask");
     verifyQueryResults(query, 3);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByInvalidProcessDefinitionKey() {
     JobQuery query = managementService.createJobQuery().processDefinitionKey("invalid");
     verifyQueryResults(query, 0);
@@ -330,7 +333,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobQueryTest.testTimeCycleQueryByProcessDefinitionId.bpmn20.xml"})
   public void testTimeCycleQueryByProcessDefinitionKey() {
     JobQuery query = managementService.createJobQuery().processDefinitionKey("process");
@@ -346,7 +349,7 @@ public class JobQueryTest {
     assertThat(anotherJobId).isNotEqualTo(jobId);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByRetriesLeft() {
     JobQuery query = managementService.createJobQuery().withRetriesLeft();
     verifyQueryResults(query, 4);
@@ -356,7 +359,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 3);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByExecutable() {
     long testTime = ensureJobDueDateSet? messageDueDate.getTime() : timerThreeFireTime.getTime();
     int expectedCount = ensureJobDueDateSet? 0 : 1;
@@ -374,19 +377,19 @@ public class JobQueryTest {
     verifyQueryResults(query, expectedCount); // 1, since a message is always executable when retries > 0
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByOnlyTimers() {
     JobQuery query = managementService.createJobQuery().timers();
     verifyQueryResults(query, 3);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByOnlyMessages() {
     JobQuery query = managementService.createJobQuery().messages();
     verifyQueryResults(query, 1);
   }
 
-  @Test
+  @TestTemplate
   public void testInvalidOnlyTimersUsage() {
     var jobQuery = managementService.createJobQuery().timers();
     try {
@@ -397,7 +400,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByDuedateLowerThen() {
     JobQuery query = managementService.createJobQuery().duedateLowerThen(testStartTime);
     verifyQueryResults(query, 0);
@@ -417,7 +420,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByDuedateLowerThenOrEqual() {
     JobQuery query = managementService.createJobQuery().duedateLowerThenOrEquals(testStartTime);
     verifyQueryResults(query, 0);
@@ -437,7 +440,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByDuedateHigherThen() {
     int startTimeExpectedCount = ensureJobDueDateSet? 4 : 3;
     int timerOneExpectedCount = ensureJobDueDateSet? 3 : 2;
@@ -462,7 +465,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByDuedateHigherThenOrEqual() {
     int startTimeExpectedCount = ensureJobDueDateSet? 4 : 3;
     int timerOneExpectedCount = ensureJobDueDateSet? 3 : 2;
@@ -490,7 +493,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByDuedateCombinations() {
     JobQuery query = managementService.createJobQuery()
         .duedateHigherThan(testStartTime)
@@ -503,7 +506,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByCreateTimeCombinations() {
     JobQuery query = managementService.createJobQuery()
             .processInstanceId(processInstanceIdOne);
@@ -532,7 +535,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
   }
 
-  @Test
+  @TestTemplate
   public void shouldReturnNoJobDueToExcludingCriteria() {
     JobQuery query = managementService.createJobQuery().processInstanceId(processInstanceIdOne);
 
@@ -544,7 +547,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
   }
 
-  @Test
+  @TestTemplate
   public void shouldReturnJobDueToIncludingCriteria() {
     JobQuery query = managementService.createJobQuery().processInstanceId(processInstanceIdOne);
 
@@ -556,7 +559,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   public void testQueryByException() {
     JobQuery query = managementService.createJobQuery().withException();
@@ -568,7 +571,7 @@ public class JobQueryTest {
     verifyFailedJob(query, processInstance);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   public void testQueryByExceptionMessage() {
     JobQuery query = managementService.createJobQuery().exceptionMessage(EXCEPTION_MESSAGE);
@@ -582,7 +585,7 @@ public class JobQueryTest {
     verifyFailedJob(query, processInstance);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   public void testQueryByExceptionMessageEmpty() {
     JobQuery query = managementService.createJobQuery().exceptionMessage("");
@@ -594,7 +597,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByExceptionMessageNull() {
     var jobQuery = managementService.createJobQuery();
     try {
@@ -605,7 +608,7 @@ public class JobQueryTest {
     }
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   public void testQueryByFailedActivityId(){
     JobQuery query = managementService.createJobQuery().failedActivityId("theScriptTask");
@@ -617,7 +620,7 @@ public class JobQueryTest {
     verifyFailedJob(query, processInstance);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByInvalidFailedActivityId(){
     JobQuery query = managementService.createJobQuery().failedActivityId("invalid");
     verifyQueryResults(query, 0);
@@ -632,7 +635,7 @@ public class JobQueryTest {
   }
 
 
-  @Test
+  @TestTemplate
   public void testJobQueryWithExceptions() {
 
     createJobWithoutExceptionMsg();
@@ -659,7 +662,7 @@ public class JobQueryTest {
 
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByNoRetriesLeft() {
     JobQuery query = managementService.createJobQuery().noRetriesLeft();
     verifyQueryResults(query, 0);
@@ -669,13 +672,13 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByActive() {
     JobQuery query = managementService.createJobQuery().active();
     verifyQueryResults(query, 4);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryBySuspended() {
     JobQuery query = managementService.createJobQuery().suspended();
     verifyQueryResults(query, 0);
@@ -684,7 +687,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 3);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByJobIdsWithOneId() {
     // given
     String id = managementService.createJobQuery().processInstanceId(processInstanceIdOne).singleResult().getId();
@@ -694,7 +697,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByJobIdsWithMultipleIds() {
     // given
     Set<String> ids = managementService.createJobQuery().list().stream()
@@ -705,7 +708,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 4);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByJobIdsWithMultipleIdsIncludingFakeIds() {
     // given
     Set<String> ids = new HashSet<>();
@@ -717,7 +720,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 4);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByJobIdsWithEmptyList() {
     // given
     var jobQuery = managementService.createJobQuery();
@@ -729,7 +732,7 @@ public class JobQueryTest {
       .hasMessageContaining("Set of job ids is empty");
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByJobIdsWithNull() {
     // given
     var jobQuery = managementService.createJobQuery();
@@ -741,7 +744,7 @@ public class JobQueryTest {
       .hasMessageContaining("Set of job ids is null");
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByJobIdsWithFakeIds() {
     // given
     Set<String> ids = new HashSet<>();
@@ -752,7 +755,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessInstanceIdsWithOneId() {
     // when
     JobQuery query = managementService.createJobQuery().processInstanceIds(Collections.singleton(processInstanceIdOne));
@@ -760,7 +763,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessInstanceIdsWithMultipleIds() {
     // given
     Set<String> ids = new HashSet<>();
@@ -771,7 +774,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 2);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessInstanceIdsWithMultipleIdsIncludingFakeIds() {
     // given
     Set<String> ids = new HashSet<>();
@@ -782,7 +785,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 2);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessInstanceIdsWithEmptyList() {
     // given
     var jobQuery = managementService.createJobQuery();
@@ -794,7 +797,7 @@ public class JobQueryTest {
       .hasMessageContaining("Set of process instance ids is empty");
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessInstanceIdsWithNull() {
     // given
     var jobQuery = managementService.createJobQuery();
@@ -806,7 +809,7 @@ public class JobQueryTest {
       .hasMessageContaining("Set of process instance ids is null");
   }
 
-  @Test
+  @TestTemplate
   public void testQueryByProcessInstanceIdsWithFakeIds() {
     // given
     Set<String> ids = new HashSet<>();
@@ -819,7 +822,7 @@ public class JobQueryTest {
 
   //sorting //////////////////////////////////////////
 
-  @Test
+  @TestTemplate
   public void testQuerySorting() {
     // asc
     assertThat(managementService.createJobQuery().orderByJobId().asc().count()).isEqualTo(4);
@@ -863,7 +866,7 @@ public class JobQueryTest {
     assertThat(jobs.get(2).getProcessInstanceId()).isEqualTo(processInstanceIdOne);
   }
 
-  @Test
+  @TestTemplate
   public void testQueryInvalidSortingUsage() {
     var jobQuery = managementService.createJobQuery().orderByJobId();
     try {

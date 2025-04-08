@@ -19,18 +19,13 @@ package org.operaton.bpm.engine.test.api.mgmt.metrics;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * Asserts engine functionality is metrics are disabled
@@ -40,24 +35,14 @@ import org.junit.rules.RuleChain;
  */
 public class MetricsDisabledTest {
 
-  @ClassRule
-  public static final ProcessEngineBootstrapRule bootstrapRule =
-      new ProcessEngineBootstrapRule("org/operaton/bpm/engine/test/api/mgmt/metrics/metricsDisabledTest.cfg.xml");
-
-  protected final ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected final ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .configurationResource("org/operaton/bpm/engine/test/api/mgmt/metrics/metricsDisabledTest.cfg.xml").build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;
-
-  @Before
-  public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    managementService = engineRule.getManagementService();
-  }
 
   // (to run, remove "FAILING" from methodname)
   @Test

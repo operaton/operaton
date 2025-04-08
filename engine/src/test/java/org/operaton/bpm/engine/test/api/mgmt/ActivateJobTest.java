@@ -22,21 +22,32 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
 
 /**
  * @author roman.smirnov
  */
-public class ActivateJobTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class ActivateJobTest {
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected ManagementService managementService;
+  protected RuntimeService runtimeService;
+  protected RepositoryService repositoryService;
 
   @Test
   public void testActivationById_shouldThrowProcessEngineException() {

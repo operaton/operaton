@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.spi.DmnEngineMetricCollector;
 import org.operaton.bpm.engine.DecisionService;
@@ -29,9 +32,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.BusinessRuleTask;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class DecisionMetricsTest extends AbstractMetricsTest {
 
@@ -43,7 +43,7 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
 
   protected DecisionService decisionService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration = processEngineConfiguration
         .getDmnEngineConfiguration();
@@ -54,7 +54,7 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
     decisionService = engineRule.getDecisionService();
   }
 
-  @After
+  @AfterEach
   public void restore() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration = processEngineConfiguration
         .getDmnEngineConfiguration();

@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.client;
 
+import java.util.function.Consumer;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.backoff.ExponentialBackoffStrategy;
 import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
-
-import java.util.function.Consumer;
 
 /**
  * <p>A fluent builder to configure the Operaton client</p>
@@ -33,11 +32,43 @@ public interface ExternalTaskClientBuilder {
 
   /**
    * Base url of the Operaton BPM Platform REST API. This information is mandatory.
+   * <p>
+   * If this method is used, it will create a permanent URL resolver with the given baseUrl.
    *
    * @param baseUrl of the Operaton BPM Platform REST API
    * @return the builder
    */
   ExternalTaskClientBuilder baseUrl(String baseUrl);
+
+  /**
+   * URL resolver of the Operaton REST API. This information is mandatory.
+   * <p>
+   * If the server is in a cluster or you are using Spring Cloud, you can create a class which implements UrlResolver..
+   * <p>
+   * this is a sample for Spring Cloud DiscoveryClient
+   * <pre>
+   * {@code
+   * public class CustomUrlResolver implements UrlResolver {
+   * protected String serviceId;
+   *
+   * protected DiscoveryClient discoveryClient;
+   *
+   *   protected String getRandomServiceInstance() {
+   *     List serviceInstances = discoveryClient.getInstances(serviceId);
+   *     Random random = new Random();
+   *
+   *     return serviceInstances.get(random.nextInt(serviceInstances.size())).getUri().toString();
+   *   }
+   *
+   *   public String getBaseUrl() {
+   *     return getRandomServiceInstance();
+   *   }
+   * }
+   * </pre>
+   * @param urlResolver of the Operaton 7 REST API
+   * @return the builder
+   */
+  ExternalTaskClientBuilder urlResolver(UrlResolver urlResolver);
 
   /**
    * A custom worker id the Workflow Engine is aware of. This information is optional.

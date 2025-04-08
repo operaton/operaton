@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.client.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.util.Timeout;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.UrlResolver;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.mockito.ArgumentCaptor;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 
 class ExternalTaskClientBuilderImplTest {
 
@@ -60,6 +61,33 @@ class ExternalTaskClientBuilderImplTest {
       if (client != null) {
         client.stop();
       }
+    }
+  }
+
+  @Test
+ void testCustomBaseUrlResolver() {
+    // given
+    var expectedBaseUrl = "expectedBaseUrl";
+    TestUrlResolver testUrlResolver = new TestUrlResolver(expectedBaseUrl);
+
+    // when
+    var clientBuilder = new ExternalTaskClientBuilderImpl();
+    clientBuilder.urlResolver(testUrlResolver);
+    clientBuilder.build();
+
+    // then
+    assertThat(spy(clientBuilder).engineClient.getBaseUrl()).isEqualTo(expectedBaseUrl);
+  }
+
+  static class TestUrlResolver implements UrlResolver {
+    final String baseUrl;
+
+    public TestUrlResolver(final String baseURl) {
+      this.baseUrl = baseURl;
+    }
+
+    public String getBaseUrl() {
+      return baseUrl;
     }
   }
 

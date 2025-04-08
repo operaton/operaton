@@ -16,43 +16,58 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.jupiter.api.Disabled;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.history.HistoricJobLog;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobCmd;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Tom Baeyens
  * @author Thorben Lindhauer
  */
-public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
+public class JobExecutorCmdExceptionTest {
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
+    .cacheForConfigurationResource(false)
+    .build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected TweetExceptionHandler tweetExceptionHandler = new TweetExceptionHandler();
   protected TweetNestedCommandExceptionHandler nestedCommandExceptionHandler = new TweetNestedCommandExceptionHandler();
+  
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected ManagementService managementService;
+  protected RuntimeService runtimeService;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     processEngineConfiguration.getJobHandlers().put(tweetExceptionHandler.getType(), tweetExceptionHandler);
     processEngineConfiguration.getJobHandlers().put(nestedCommandExceptionHandler.getType(), nestedCommandExceptionHandler);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.getJobHandlers().remove(tweetExceptionHandler.getType());
     processEngineConfiguration.getJobHandlers().remove(nestedCommandExceptionHandler.getType());
@@ -148,7 +163,6 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/jobFailingOnFlush.bpmn20.xml")
   @Test
-  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void testJobRetriesDecrementedOnFailedFlush() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -170,7 +184,6 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void testFailingTransactionListener() {
 
    testRule.deploy(Bpmn.createExecutableProcess("testProcess")

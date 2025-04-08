@@ -16,9 +16,16 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.DecisionService;
@@ -39,14 +46,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
 
@@ -55,7 +54,10 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   public static final String USER_ID = "userId";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
+      .cacheForConfigurationResource(false)
+      .build();
   @RegisterExtension
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
@@ -298,7 +300,6 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
-  @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
   void testNoCreationOnJobExecutorBatchJobExecutionByIds() {
     // given
     historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
@@ -311,7 +312,6 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
-  @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
   void testNoCreationOnJobExecutorBatchJobExecutionByQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
@@ -325,7 +325,6 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   @Test
-  @Disabled("Flaky - see https://github.com/operaton/operaton/issues/671")
   void testNoCreationOnJobExecutorBatchJobExecutionByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);

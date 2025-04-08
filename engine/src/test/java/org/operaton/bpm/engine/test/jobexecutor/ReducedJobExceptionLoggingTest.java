@@ -20,44 +20,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.junit.Ignore;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 
 public class ReducedJobExceptionLoggingTest {
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch("org.operaton.bpm.engine.jobexecutor", Level.DEBUG);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule).around(loggingRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
+    .cacheForConfigurationResource(false)
+    .build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch("org.operaton.bpm.engine.jobexecutor", Level.DEBUG);
 
   private RuntimeService runtimeService;
   private ManagementService managementService;
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    managementService = engineRule.getProcessEngine().getManagementService();
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setEnableReducedJobExceptionLogging(false);
     List<Job> jobs = managementService.createJobQuery().processDefinitionKey("failingProcess").list();
@@ -68,7 +62,6 @@ public class ReducedJobExceptionLoggingTest {
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void shouldLogAllFailingJobExceptions() {
     // given
     processEngineConfiguration.setEnableReducedJobExceptionLogging(false);
@@ -87,7 +80,6 @@ public class ReducedJobExceptionLoggingTest {
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  @Ignore("Flaky - see https://github.com/operaton/operaton/issues/671")
   public void shouldLogOnlyOneFailingJobException() {
     // given
     processEngineConfiguration.setEnableReducedJobExceptionLogging(true);

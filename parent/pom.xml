@@ -17,16 +17,20 @@
   </description>
 
   <properties>
-    <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
     <version.spring-boot>3.4.4</version.spring-boot>
     <version.resteasy>3.15.6.Final</version.resteasy>
     <version.jersey3>3.1.10</version.jersey3>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
     <version.groovy>4.0.26</version.groovy>
+    <version.jython>2.7.2</version.jython>
     <version.graal.js>21.3.12</version.graal.js>
     <version.nashorn>15.6</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
+    <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
+    <version.json-path>2.9.0</version.json-path>
+    <version.json-smart>2.5.2</version.json-smart>
+    <version.accessors-smart>2.5.2</version.accessors-smart>
     <version.commons-codec>1.17.2</version.commons-codec>
     <version.gson>2.8.9</version.gson>
     <version.openjpa>2.4.3</version.openjpa>

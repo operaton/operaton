@@ -197,9 +197,12 @@ public class ProcessInstanceQueryTest {
   @Test
   public void testQueryByProcessDefinitionKeySingleResult() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_DEFINITION_KEY_2);
+    ProcessInstance processInstance = query.singleResult();
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
-    assertThat(query.singleResult()).isNotNull();
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY_2);
+
   }
 
   @Test

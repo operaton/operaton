@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyExternalTaskCmdsTenantCheckTest {
+class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -64,7 +64,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml");
 
@@ -74,7 +74,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   // fetch and lock test cases
   @Test
-  public void testFetchAndLockWithAuthenticatedTenant() {
+  void testFetchAndLockWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -87,7 +87,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testFetchAndLockWithNoAuthenticatedTenant() {
+  void testFetchAndLockWithNoAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null);
 
@@ -100,7 +100,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testFetchAndLockWithDifferentTenant() {
+  void testFetchAndLockWithDifferentTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of("tenantTwo"));
 
@@ -113,7 +113,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testFetchAndLockWithDisabledTenantCheck() {
+  void testFetchAndLockWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -126,7 +126,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testFetchAndLockWithoutTenantId() {
+  void testFetchAndLockWithoutTenantId() {
     // given
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -141,7 +141,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testFetchAndLockWithTenantId() {
+  void testFetchAndLockWithTenantId() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml");
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY_ONE).getId();
@@ -158,7 +158,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testFetchAndLockWithTenantIdIn() {
+  void testFetchAndLockWithTenantIdIn() {
 
     // when
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
@@ -171,7 +171,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testFetchAndLockWithTenantIdInTwoTenants() {
+  void testFetchAndLockWithTenantIdInTwoTenants() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml");
     engineRule.getRuntimeService().startProcessInstanceByKey("twoExternalTaskWithPriorityProcess").getId();
@@ -201,7 +201,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   // complete external task test cases
   @Test
-  public void testCompleteWithAuthenticatedTenant() {
+  void testCompleteWithAuthenticatedTenant() {
 
     String externalTaskId = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -220,7 +220,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testCompleteWithNoAuthenticatedTenant() {
+  void testCompleteWithNoAuthenticatedTenant() {
 
     String externalTaskId = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -241,7 +241,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testCompleteWithDisableTenantCheck() {
+  void testCompleteWithDisableTenantCheck() {
 
     String externalTaskId = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -261,7 +261,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   // handle failure test cases
   @Test
-  public void testHandleFailureWithAuthenticatedTenant() {
+  void testHandleFailureWithAuthenticatedTenant() {
 
     LockedExternalTask task = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -282,7 +282,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testHandleFailureWithNoAuthenticatedTenant() {
+  void testHandleFailureWithNoAuthenticatedTenant() {
 
     LockedExternalTask task = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -300,7 +300,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testHandleFailureWithDisabledTenantCheck() {
+  void testHandleFailureWithDisabledTenantCheck() {
 
     String taskId = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -322,7 +322,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   // handle BPMN error
   @Test
-  public void testHandleBPMNErrorWithAuthenticatedTenant() {
+  void testHandleBPMNErrorWithAuthenticatedTenant() {
 
     String taskId = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -340,7 +340,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testHandleBPMNErrorWithNoAuthenticatedTenant() {
+  void testHandleBPMNErrorWithNoAuthenticatedTenant() {
 
     String taskId = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -359,7 +359,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testHandleBPMNErrorWithDisabledTenantCheck() {
+  void testHandleBPMNErrorWithDisabledTenantCheck() {
 
     String taskId = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -380,7 +380,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   // setRetries test
   @Test
-  public void testSetRetriesWithAuthenticatedTenant() {
+  void testSetRetriesWithAuthenticatedTenant() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -398,7 +398,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testSetRetriesWithNoAuthenticatedTenant() {
+  void testSetRetriesWithNoAuthenticatedTenant() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -417,7 +417,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testSetRetriesWithDisabledTenantCheck() {
+  void testSetRetriesWithDisabledTenantCheck() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -438,7 +438,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   // set priority test cases
   @Test
-  public void testSetPriorityWithAuthenticatedTenant() {
+  void testSetPriorityWithAuthenticatedTenant() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -456,7 +456,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testSetPriorityWithNoAuthenticatedTenant() {
+  void testSetPriorityWithNoAuthenticatedTenant() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -475,7 +475,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testSetPriorityWithDisabledTenantCheck() {
+  void testSetPriorityWithDisabledTenantCheck() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -495,7 +495,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   // unlock test cases
   @Test
-  public void testUnlockWithAuthenticatedTenant() {
+  void testUnlockWithAuthenticatedTenant() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -515,7 +515,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testUnlockWithNoAuthenticatedTenant() {
+  void testUnlockWithNoAuthenticatedTenant() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -533,7 +533,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testUnlockWithDisabledTenantCheck() {
+  void testUnlockWithDisabledTenantCheck() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -551,7 +551,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   // get error details tests
   @Test
-  public void testGetErrorDetailsWithAuthenticatedTenant() {
+  void testGetErrorDetailsWithAuthenticatedTenant() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
@@ -568,7 +568,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetErrorDetailsWithNoAuthenticatedTenant() {
+  void testGetErrorDetailsWithNoAuthenticatedTenant() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
@@ -588,7 +588,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetErrorDetailsWithDisabledTenantCheck() {
+  void testGetErrorDetailsWithDisabledTenantCheck() {
     // given
     String externalTaskId = externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)

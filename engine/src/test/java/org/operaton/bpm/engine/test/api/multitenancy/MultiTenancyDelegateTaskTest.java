@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * Tests if a {@link DelegateTask} has the correct tenant-id. The
  * assertions are checked inside the task listener.
  */
-public class MultiTenancyDelegateTaskTest {
+class MultiTenancyDelegateTaskTest {
 
   protected static final String BPMN = "org/operaton/bpm/engine/test/api/multitenancy/taskListener.bpmn";
 
@@ -47,7 +47,7 @@ public class MultiTenancyDelegateTaskTest {
   protected RepositoryService repositoryService;
 
   @Test
-  public void testSingleExecutionWithUserTask() {
+  void testSingleExecutionWithUserTask() {
     testRule.deployForTenant("tenant1", BPMN);
 
     AssertingTaskListener.addAsserts(hasTenantId("tenant1"));
@@ -62,7 +62,7 @@ public class MultiTenancyDelegateTaskTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     AssertingTaskListener.clear();
 
   }

@@ -55,7 +55,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class IncidentTest {
+class IncidentTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -70,7 +70,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
   @Test
-  public void shouldCreateOneIncident() {
+  void shouldCreateOneIncident() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
@@ -102,7 +102,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
   @Test
-  public void shouldCreateOneIncidentAfterSetRetries() {
+  void shouldCreateOneIncidentAfterSetRetries() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -132,7 +132,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
   @Test
-  public void shouldCreateOneIncidentAfterExecuteJob() {
+  void shouldCreateOneIncidentAfterExecuteJob() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -166,7 +166,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncidentForNestedExecution.bpmn"})
   @Test
-  public void shouldCreateOneIncidentForNestedExecution() {
+  void shouldCreateOneIncidentForNestedExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcessWithNestedExecutions");
 
     testRule.executeAvailableJobs();
@@ -196,7 +196,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldCreateIncidentWithCorrectMessageWhenZeroRetriesAreDefined() {
+  void shouldCreateIncidentWithCorrectMessageWhenZeroRetriesAreDefined() {
     // given
     String key = "process";
     BpmnModelInstance model = Bpmn.createExecutableProcess(key)
@@ -241,7 +241,7 @@ public class IncidentTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateRecursiveIncidents.bpmn",
       "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
   @Test
-  public void shouldCreateRecursiveIncidents() {
+  void shouldCreateRecursiveIncidents() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callFailingProcess");
 
     testRule.executeAvailableJobs();
@@ -299,10 +299,10 @@ public class IncidentTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateRecursiveIncidentsForNestedCallActivity.bpmn",
-  		"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateRecursiveIncidents.bpmn",
-  "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+      "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateRecursiveIncidents.bpmn",
+      "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
   @Test
-  public void shouldCreateRecursiveIncidentsForNestedCallActivity() {
+  void shouldCreateRecursiveIncidentsForNestedCallActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callingFailingCallActivity");
 
     testRule.executeAvailableJobs();
@@ -381,7 +381,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
   @Test
-  public void shouldDeleteIncidentAfterJobHasBeenDeleted() {
+  void shouldDeleteIncidentAfterJobHasBeenDeleted() {
     // start failing process
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
@@ -405,7 +405,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldDeleteIncidentAfterJobWasSuccessfully.bpmn"})
   @Test
-  public void shouldDeleteIncidentAfterJobWasSuccessfully() {
+  void shouldDeleteIncidentAfterJobWasSuccessfully() {
     // Start process instance
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -445,7 +445,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateIncidentOnFailedStartTimerEvent.bpmn"})
   @Test
-  public void shouldCreateIncidentOnFailedStartTimerEvent() {
+  void shouldCreateIncidentOnFailedStartTimerEvent() {
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
     assertThat(jobQuery.count()).isEqualTo(1);
@@ -480,7 +480,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
   @Test
-  public void shouldNotCreateNewIncident() {
+  void shouldNotCreateNewIncident() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -510,7 +510,7 @@ public class IncidentTest {
 
   @Deployment
   @Test
-  public void shouldUpdateIncidentAfterCompaction() {
+  void shouldUpdateIncidentAfterCompaction() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     testRule.executeAvailableJobs();
@@ -530,7 +530,7 @@ public class IncidentTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
   @Test
-  public void shouldNotSetNegativeRetries() {
+  void shouldNotSetNegativeRetries() {
     runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -590,7 +590,7 @@ public class IncidentTest {
 
   @Deployment
   @Test
-  public void shouldSetActivityIdProperty() {
+  void shouldSetActivityIdProperty() {
     testRule.executeAvailableJobs();
 
     Incident incident = runtimeService
@@ -606,7 +606,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldShowFailedActivityIdPropertyForFailingAsyncTask() {
+  void shouldShowFailedActivityIdPropertyForFailingAsyncTask() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -634,7 +634,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldShowFailedActivityIdPropertyForAsyncTaskWithFailingFollowUp() {
+  void shouldShowFailedActivityIdPropertyForAsyncTaskWithFailingFollowUp() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -666,7 +666,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldSetBoundaryEventIncidentActivityId() {
+  void shouldSetBoundaryEventIncidentActivityId() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
         .startEvent()
@@ -692,7 +692,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldSetAnnotationForIncident() {
+  void shouldSetAnnotationForIncident() {
     // given
     String annotation = "my annotation";
     Incident incident = createIncident();
@@ -706,7 +706,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldSetAnnotationForStandaloneIncident() {
+  void shouldSetAnnotationForStandaloneIncident() {
     // given
     String annotation = "my annotation";
     String jobId = createStandaloneIncident();
@@ -724,7 +724,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldFailSetAnnotationForIncidentWithNullId() {
+  void shouldFailSetAnnotationForIncidentWithNullId() {
     // when & then
     assertThatThrownBy(() -> runtimeService.setAnnotationForIncidentById(null, "my annotation"))
       .isInstanceOf(NotValidException.class)
@@ -732,7 +732,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldFailSetAnnotationForIncidentWithNonExistingIncidentId() {
+  void shouldFailSetAnnotationForIncidentWithNonExistingIncidentId() {
     // when & then
     assertThatThrownBy(() -> runtimeService.setAnnotationForIncidentById("not existing", "my annotation"))
       .isInstanceOf(BadUserRequestException.class)
@@ -740,7 +740,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldUpdateAnnotationForIncident() {
+  void shouldUpdateAnnotationForIncident() {
     // given
     String annotation = "my new annotation";
     Incident incident = createIncident();
@@ -755,7 +755,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldClearAnnotationForIncident() {
+  void shouldClearAnnotationForIncident() {
     // given
     Incident incident = createIncident();
     runtimeService.setAnnotationForIncidentById(incident.getId(), "old annotation");
@@ -769,7 +769,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldClearAnnotationForStandaloneIncident() {
+  void shouldClearAnnotationForStandaloneIncident() {
     // given
     String jobId = createStandaloneIncident();
     Incident incident = runtimeService.createIncidentQuery().singleResult();
@@ -787,7 +787,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldFailClearAnnotationForIncidentWithNullId() {
+  void shouldFailClearAnnotationForIncidentWithNullId() {
     // when & then
     assertThatThrownBy(() -> runtimeService.clearAnnotationForIncidentById(null))
       .isInstanceOf(NotValidException.class)
@@ -795,7 +795,7 @@ public class IncidentTest {
   }
 
   @Test
-  public void shouldFailClearAnnotationForIncidentWithNonExistingIncidentId() {
+  void shouldFailClearAnnotationForIncidentWithNonExistingIncidentId() {
     // when & then
     assertThatThrownBy(() -> runtimeService.clearAnnotationForIncidentById("not existing"))
       .isInstanceOf(BadUserRequestException.class)

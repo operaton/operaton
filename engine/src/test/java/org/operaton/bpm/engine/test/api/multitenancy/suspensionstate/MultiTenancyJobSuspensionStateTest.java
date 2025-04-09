@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyJobSuspensionStateTest {
+class MultiTenancyJobSuspensionStateTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -48,7 +48,7 @@ public class MultiTenancyJobSuspensionStateTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -60,7 +60,7 @@ public class MultiTenancyJobSuspensionStateTest {
   }
 
   @Test
-  public void suspendAndActivateJobsForAllTenants() {
+  void suspendAndActivateJobsForAllTenants() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -86,7 +86,7 @@ public class MultiTenancyJobSuspensionStateTest {
   }
 
   @Test
-  public void suspendJobForTenant() {
+  void suspendJobForTenant() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -104,7 +104,7 @@ public class MultiTenancyJobSuspensionStateTest {
   }
 
   @Test
-  public void suspendJobsForNonTenant() {
+  void suspendJobsForNonTenant() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -122,7 +122,7 @@ public class MultiTenancyJobSuspensionStateTest {
   }
 
   @Test
-  public void activateJobsForTenant() {
+  void activateJobsForTenant() {
     // given suspend jobs
     engineRule.getManagementService()
       .updateJobSuspensionState()
@@ -145,7 +145,7 @@ public class MultiTenancyJobSuspensionStateTest {
   }
 
   @Test
-  public void activateJobsForNonTenant() {
+  void activateJobsForNonTenant() {
     // given suspend jobs
     engineRule.getManagementService()
       .updateJobSuspensionState()
@@ -168,7 +168,7 @@ public class MultiTenancyJobSuspensionStateTest {
   }
 
   @Test
-  public void suspendJobNoAuthenticatedTenants() {
+  void suspendJobNoAuthenticatedTenants() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -189,7 +189,7 @@ public class MultiTenancyJobSuspensionStateTest {
   }
 
   @Test
-  public void suspendJobWithAuthenticatedTenant() {
+  void suspendJobWithAuthenticatedTenant() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -212,7 +212,7 @@ public class MultiTenancyJobSuspensionStateTest {
   }
 
   @Test
-  public void suspendJobDisabledTenantCheck() {
+  void suspendJobDisabledTenantCheck() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);

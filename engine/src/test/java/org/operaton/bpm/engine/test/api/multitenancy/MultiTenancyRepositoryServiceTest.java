@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyRepositoryServiceTest {
+class MultiTenancyRepositoryServiceTest {
 
   protected static final String TENANT_TWO = "tenant2";
   protected static final String TENANT_ONE = "tenant1";
@@ -57,7 +57,7 @@ public class MultiTenancyRepositoryServiceTest {
   protected RepositoryService repositoryService;
 
   @Test
-  public void deploymentWithoutTenantId() {
+  void deploymentWithoutTenantId() {
     createDeploymentBuilder()
       .deploy();
 
@@ -70,7 +70,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithTenantId() {
+  void deploymentWithTenantId() {
     createDeploymentBuilder()
       .tenantId(TENANT_ONE)
       .deploy();
@@ -84,7 +84,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void processDefinitionVersionWithTenantId() {
+  void processDefinitionVersionWithTenantId() {
     createDeploymentBuilder()
       .tenantId(TENANT_ONE)
       .deploy();
@@ -114,7 +114,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringForSameTenant() {
+  void deploymentWithDuplicateFilteringForSameTenant() {
     // given: a deployment with tenant ID
     createDeploymentBuilder()
       .enableDuplicateFiltering(false)
@@ -134,7 +134,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringForDifferentTenants() {
+  void deploymentWithDuplicateFilteringForDifferentTenants() {
     // given: a deployment with tenant ID
     createDeploymentBuilder()
       .enableDuplicateFiltering(false)
@@ -154,7 +154,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringIgnoreDeploymentForNoTenant() {
+  void deploymentWithDuplicateFilteringIgnoreDeploymentForNoTenant() {
     // given: a deployment without tenant ID
     createDeploymentBuilder()
       .enableDuplicateFiltering(false)
@@ -173,7 +173,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringIgnoreDeploymentForTenant() {
+  void deploymentWithDuplicateFilteringIgnoreDeploymentForTenant() {
     // given: a deployment with tenant ID
     createDeploymentBuilder()
       .enableDuplicateFiltering(false)
@@ -192,7 +192,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void getPreviousProcessDefinitionWithTenantId() {
+  void getPreviousProcessDefinitionWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, emptyProcess);
     testRule.deployForTenant(TENANT_ONE, emptyProcess);
     testRule.deployForTenant(TENANT_ONE, emptyProcess);
@@ -217,7 +217,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void getPreviousCaseDefinitionWithTenantId() {
+  void getPreviousCaseDefinitionWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, CMMN);
     testRule.deployForTenant(TENANT_ONE, CMMN);
     testRule.deployForTenant(TENANT_ONE, CMMN);
@@ -242,7 +242,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void getPreviousDecisionDefinitionWithTenantId() {
+  void getPreviousDecisionDefinitionWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, DMN);
     testRule.deployForTenant(TENANT_ONE, DMN);
     testRule.deployForTenant(TENANT_ONE, DMN);
@@ -277,7 +277,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     for(Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }

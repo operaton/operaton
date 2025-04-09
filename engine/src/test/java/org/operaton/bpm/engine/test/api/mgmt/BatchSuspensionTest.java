@@ -61,7 +61,7 @@ public class BatchSuspensionTest {
   protected int defaultBatchJobsPerSeed;
 
   @BeforeEach
-  public void saveAndReduceBatchJobsPerSeed() {
+  void saveAndReduceBatchJobsPerSeed() {
     ProcessEngineConfigurationImpl configuration = engineRule.getProcessEngineConfiguration();
     defaultBatchJobsPerSeed = configuration.getBatchJobsPerSeed();
     // reduce number of batch jobs per seed to not have to create a lot of instances
@@ -69,18 +69,18 @@ public class BatchSuspensionTest {
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
   @AfterEach
-  public void resetBatchJobsPerSeed() {
+  void resetBatchJobsPerSeed() {
     engineRule.getProcessEngineConfiguration()
       .setBatchJobsPerSeed(defaultBatchJobsPerSeed);
   }
 
   @Test
-  public void shouldSuspendBatch() {
+  void shouldSuspendBatch() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -93,7 +93,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldFailWhenSuspendingUsingUnknownId() {
+  void shouldFailWhenSuspendingUsingUnknownId() {
     try {
       managementService.suspendBatchById("unknown");
       fail("Exception expected");
@@ -104,7 +104,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldFailWhenSuspendingUsingNullId() {
+  void shouldFailWhenSuspendingUsingNullId() {
     try {
       managementService.suspendBatchById(null);
       fail("Exception expected");
@@ -115,7 +115,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldSuspendSeedJobAndDefinition() {
+  void shouldSuspendSeedJobAndDefinition() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -131,7 +131,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldCreateSuspendedSeedJob() {
+  void shouldCreateSuspendedSeedJob() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(2);
     managementService.suspendBatchById(batch.getId());
@@ -145,7 +145,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldSuspendMonitorJobAndDefinition() {
+  void shouldSuspendMonitorJobAndDefinition() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.executeSeedJob(batch);
@@ -162,7 +162,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldCreateSuspendedMonitorJob() {
+  void shouldCreateSuspendedMonitorJob() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     managementService.suspendBatchById(batch.getId());
@@ -176,7 +176,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldSuspendExecutionJobsAndDefinition() {
+  void shouldSuspendExecutionJobsAndDefinition() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.executeSeedJob(batch);
@@ -193,7 +193,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldCreateSuspendedExecutionJobs() {
+  void shouldCreateSuspendedExecutionJobs() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     managementService.suspendBatchById(batch.getId());
@@ -208,7 +208,7 @@ public class BatchSuspensionTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldCreateUserOperationLogForBatchSuspension() {
+  void shouldCreateUserOperationLogForBatchSuspension() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -229,7 +229,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldActivateBatch() {
+  void shouldActivateBatch() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     managementService.suspendBatchById(batch.getId());
@@ -243,7 +243,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldFailWhenActivatingUsingUnknownId() {
+  void shouldFailWhenActivatingUsingUnknownId() {
     try {
       managementService.activateBatchById("unknown");
       fail("Exception expected");
@@ -254,7 +254,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldFailWhenActivatingUsingNullId() {
+  void shouldFailWhenActivatingUsingNullId() {
     try {
       managementService.activateBatchById(null);
       fail("Exception expected");
@@ -265,7 +265,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldActivateSeedJobAndDefinition() {
+  void shouldActivateSeedJobAndDefinition() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     managementService.suspendBatchById(batch.getId());
@@ -282,7 +282,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldCreateActivatedSeedJob() {
+  void shouldCreateActivatedSeedJob() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(2);
 
@@ -295,7 +295,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldActivateMonitorJobAndDefinition() {
+  void shouldActivateMonitorJobAndDefinition() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     managementService.suspendBatchById(batch.getId());
@@ -313,7 +313,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldCreateActivatedMonitorJob() {
+  void shouldCreateActivatedMonitorJob() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -326,7 +326,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldActivateExecutionJobsAndDefinition() {
+  void shouldActivateExecutionJobsAndDefinition() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     managementService.suspendBatchById(batch.getId());
@@ -344,7 +344,7 @@ public class BatchSuspensionTest {
   }
 
   @Test
-  public void shouldCreateActivatedExecutionJobs() {
+  void shouldCreateActivatedExecutionJobs() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -358,7 +358,7 @@ public class BatchSuspensionTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldCreateUserOperationLogForBatchActivation() {
+  void shouldCreateUserOperationLogForBatchActivation() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     managementService.suspendBatchById(batch.getId());
@@ -381,7 +381,7 @@ public class BatchSuspensionTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUserOperationLogQueryByBatchEntityType() {
+  void testUserOperationLogQueryByBatchEntityType() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);
@@ -401,7 +401,7 @@ public class BatchSuspensionTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUserOperationLogQueryByBatchId() {
+  void testUserOperationLogQueryByBatchId() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);

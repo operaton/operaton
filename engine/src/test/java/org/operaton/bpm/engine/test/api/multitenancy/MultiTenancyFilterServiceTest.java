@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyFilterServiceTest {
+class MultiTenancyFilterServiceTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -57,14 +57,14 @@ public class MultiTenancyFilterServiceTest {
   protected FilterService filterService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     createTaskWithoutTenantId();
     createTaskForTenant(TENANT_ONE);
     createTaskForTenant(TENANT_TWO);
   }
 
   @Test
-  public void testCreateFilterWithTenantIdCriteria() {
+  void testCreateFilterWithTenantIdCriteria() {
     TaskQuery query = taskService.createTaskQuery().tenantIdIn(TENANT_IDS);
     filterId = createFilter(query);
 
@@ -75,7 +75,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testCreateFilterWithNoTenantIdCriteria() {
+  void testCreateFilterWithNoTenantIdCriteria() {
     TaskQuery query = taskService.createTaskQuery().withoutTenantId();
     filterId = createFilter(query);
 
@@ -87,7 +87,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksNoTenantIdSet() {
+  void testFilterTasksNoTenantIdSet() {
     TaskQuery query = taskService.createTaskQuery();
     filterId = createFilter(query);
 
@@ -95,7 +95,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksByTenantIds() {
+  void testFilterTasksByTenantIds() {
     TaskQuery query = taskService.createTaskQuery().tenantIdIn(TENANT_IDS);
     filterId = createFilter(query);
 
@@ -106,7 +106,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksWithoutTenantId() {
+  void testFilterTasksWithoutTenantId() {
     TaskQuery query = taskService.createTaskQuery().withoutTenantId();
     filterId = createFilter(query);
 
@@ -117,7 +117,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksByExtendingQueryWithTenantId() {
+  void testFilterTasksByExtendingQueryWithTenantId() {
     TaskQuery query = taskService.createTaskQuery().taskName("testTask");
     filterId = createFilter(query);
 
@@ -126,7 +126,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksByExtendingQueryWithoutTenantId() {
+  void testFilterTasksByExtendingQueryWithoutTenantId() {
     TaskQuery query = taskService.createTaskQuery().taskName("testTask");
     filterId = createFilter(query);
 
@@ -135,7 +135,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksWithNoAuthenticatedTenants() {
+  void testFilterTasksWithNoAuthenticatedTenants() {
     TaskQuery query = taskService.createTaskQuery();
     filterId = createFilter(query);
 
@@ -145,7 +145,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksWithAuthenticatedTenant() {
+  void testFilterTasksWithAuthenticatedTenant() {
     TaskQuery query = taskService.createTaskQuery();
     filterId = createFilter(query);
 
@@ -155,7 +155,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksWithAuthenticatedTenants() {
+  void testFilterTasksWithAuthenticatedTenants() {
     TaskQuery query = taskService.createTaskQuery();
     filterId = createFilter(query);
 
@@ -165,7 +165,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksByTenantIdNoAuthenticatedTenants() {
+  void testFilterTasksByTenantIdNoAuthenticatedTenants() {
     TaskQuery query = taskService.createTaskQuery().tenantIdIn(TENANT_ONE);
     filterId = createFilter(query);
 
@@ -175,7 +175,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksByTenantIdWithAuthenticatedTenant() {
+  void testFilterTasksByTenantIdWithAuthenticatedTenant() {
     TaskQuery query = taskService.createTaskQuery().tenantIdIn(TENANT_ONE);
     filterId = createFilter(query);
 
@@ -185,7 +185,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksByExtendingQueryWithTenantIdNoAuthenticatedTenants() {
+  void testFilterTasksByExtendingQueryWithTenantIdNoAuthenticatedTenants() {
     TaskQuery query = taskService.createTaskQuery().taskName("testTask");
     filterId = createFilter(query);
 
@@ -196,7 +196,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksByExtendingQueryWithTenantIdAuthenticatedTenant() {
+  void testFilterTasksByExtendingQueryWithTenantIdAuthenticatedTenant() {
     TaskQuery query = taskService.createTaskQuery().taskName("testTask");
     filterId = createFilter(query);
 
@@ -207,7 +207,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @Test
-  public void testFilterTasksWithDisabledTenantCheck() {
+  void testFilterTasksWithDisabledTenantCheck() {
     TaskQuery query = taskService.createTaskQuery();
     filterId = createFilter(query);
 
@@ -242,7 +242,7 @@ public class MultiTenancyFilterServiceTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     filterService.deleteFilter(filterId);
     identityService.clearAuthentication();
     for(String taskId : taskIds) {

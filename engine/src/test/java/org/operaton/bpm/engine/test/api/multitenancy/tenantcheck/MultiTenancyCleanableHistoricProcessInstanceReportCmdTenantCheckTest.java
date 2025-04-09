@@ -41,7 +41,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTest {
+class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -66,7 +66,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     .done();
 
   @Test
-  public void testReportNoAuthenticatedTenants() {
+  void testReportNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
 
@@ -82,7 +82,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
   }
 
   @Test
-  public void testReportWithAuthenticatedTenants() {
+  void testReportWithAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
 
@@ -99,7 +99,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
   }
 
   @Test
-  public void testReportDisabledTenantCheck() {
+  void testReportDisabledTenantCheck() {
     // given
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
@@ -120,7 +120,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
   }
 
   @Test
-  public void testReportTenantIdInNoAuthenticatedTenants() {
+  void testReportTenantIdInNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
@@ -140,7 +140,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
   }
 
   @Test
-  public void testReportTenantIdInWithAuthenticatedTenants() {
+  void testReportTenantIdInWithAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
@@ -161,7 +161,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
   }
 
   @Test
-  public void testReportTenantIdInDisabledTenantCheck() {
+  void testReportTenantIdInDisabledTenantCheck() {
     // given
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
@@ -184,7 +184,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
   }
 
   @Test
-  public void testReportWithoutTenantId() {
+  void testReportWithoutTenantId() {
     // given
     testRule.deploy(BPMN_PROCESS);
 
@@ -199,7 +199,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
   }
 
   @Test
-  public void testReportTenantIdInWithoutTenantId() {
+  void testReportTenantIdInWithoutTenantId() {
     // given
     testRule.deploy(BPMN_PROCESS);
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);

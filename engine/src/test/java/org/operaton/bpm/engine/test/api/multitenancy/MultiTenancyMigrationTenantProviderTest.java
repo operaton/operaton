@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyMigrationTenantProviderTest {
+class MultiTenancyMigrationTenantProviderTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -57,7 +57,7 @@ public class MultiTenancyMigrationTenantProviderTest {
   protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void cannotMigrateInstanceBetweenDifferentTenants() {
+  void cannotMigrateInstanceBetweenDifferentTenants() {
     // given
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenantDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
@@ -84,7 +84,7 @@ public class MultiTenancyMigrationTenantProviderTest {
   }
 
   @Test
-  public void canMigrateInstanceBetweenSameTenantCase2() {
+  void canMigrateInstanceBetweenSameTenantCase2() {
     // given
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -105,7 +105,7 @@ public class MultiTenancyMigrationTenantProviderTest {
   }
 
   @Test
-  public void canMigrateWithProcessInstanceQueryAllInstancesOfAuthenticatedTenant() {
+  void canMigrateWithProcessInstanceQueryAllInstancesOfAuthenticatedTenant() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -133,7 +133,7 @@ public class MultiTenancyMigrationTenantProviderTest {
   }
 
   @Test
-  public void canMigrateWithProcessInstanceQueryAllInstancesOfAuthenticatedTenants() {
+  void canMigrateWithProcessInstanceQueryAllInstancesOfAuthenticatedTenants() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);

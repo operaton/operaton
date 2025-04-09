@@ -41,7 +41,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class MultiTenancyHistoricProcessInstanceQueryTest {
+class MultiTenancyHistoricProcessInstanceQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -56,7 +56,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
       .endEvent()
@@ -72,7 +72,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryNoTenantIdSet() {
+  void shouldQueryNoTenantIdSet() {
     HistoricProcessInstanceQuery query = historyService.
         createHistoricProcessInstanceQuery();
 
@@ -80,7 +80,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantId() {
+  void shouldQueryByTenantId() {
     HistoricProcessInstanceQuery query = historyService
         .createHistoricProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE);
@@ -95,7 +95,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantIds() {
+  void shouldQueryByTenantIds() {
     HistoricProcessInstanceQuery query = historyService
         .createHistoricProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -104,7 +104,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByNonExistingTenantId() {
+  void shouldQueryByNonExistingTenantId() {
     HistoricProcessInstanceQuery query = historyService
         .createHistoricProcessInstanceQuery()
         .tenantIdIn("nonExisting");
@@ -113,7 +113,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByWithoutTenantId() {
+  void shouldQueryByWithoutTenantId() {
     HistoricProcessInstanceQuery query = historyService
       .createHistoricProcessInstanceQuery()
       .withoutTenantId();
@@ -122,7 +122,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldFailQueryByTenantIdNull() {
+  void shouldFailQueryByTenantIdNull() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.tenantIdIn((String) null);
@@ -133,7 +133,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingAsc() {
+  void shouldQuerySortingAsc() {
     List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
         .orderByTenantId()
@@ -146,7 +146,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingDesc() {
+  void shouldQuerySortingDesc() {
     List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
         .orderByTenantId()
@@ -159,7 +159,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryNoAuthenticatedTenants() {
+  void shouldQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
@@ -167,7 +167,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenant() {
+  void shouldQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
 
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
@@ -179,7 +179,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenants() {
+  void shouldQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
@@ -191,7 +191,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryDisabledTenantCheck() {
+  void shouldQueryDisabledTenantCheck() {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

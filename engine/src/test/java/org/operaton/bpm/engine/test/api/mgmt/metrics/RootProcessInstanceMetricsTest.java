@@ -65,7 +65,7 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
   }
 
   @Test
-  public void shouldCountOneRootProcessInstance() {
+  void shouldCountOneRootProcessInstance() {
     // given
     testRule.deploy(BASE_INSTANCE);
 
@@ -86,7 +86,7 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
   }
 
   @Test
-  public void shouldCountRootProcessInstanceWithCallActivities() {
+  void shouldCountRootProcessInstanceWithCallActivities() {
     // given
     BpmnModelInstance callingInstance = getCallingInstance(BASE_INSTANCE_KEY, Collections.EMPTY_MAP);
     testRule.deploy(BASE_INSTANCE, callingInstance);
@@ -108,7 +108,7 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
   }
 
   @Test
-  public void shouldCountRootProcessInstanceAndDecisionInstanceWithBusinessRuleTask() {
+  void shouldCountRootProcessInstanceAndDecisionInstanceWithBusinessRuleTask() {
     // given
     BpmnModelInstance callingInstance = getCallingInstance(CALLED_DMN_INSTANCE_KEY, VARIABLES);
     testRule.deploy(repositoryService.createDeployment()

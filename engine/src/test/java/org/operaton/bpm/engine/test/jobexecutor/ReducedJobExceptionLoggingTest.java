@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
-public class ReducedJobExceptionLoggingTest {
+class ReducedJobExceptionLoggingTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -52,7 +52,7 @@ public class ReducedJobExceptionLoggingTest {
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setEnableReducedJobExceptionLogging(false);
     List<Job> jobs = managementService.createJobQuery().processDefinitionKey("failingProcess").list();
     for (Job job : jobs) {
@@ -61,8 +61,8 @@ public class ReducedJobExceptionLoggingTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  public void shouldLogAllFailingJobExceptions() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+  void shouldLogAllFailingJobExceptions() {
     // given
     processEngineConfiguration.setEnableReducedJobExceptionLogging(false);
 
@@ -79,8 +79,8 @@ public class ReducedJobExceptionLoggingTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  public void shouldLogOnlyOneFailingJobException() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+  void shouldLogOnlyOneFailingJobException() {
     // given
     processEngineConfiguration.setEnableReducedJobExceptionLogging(true);
 

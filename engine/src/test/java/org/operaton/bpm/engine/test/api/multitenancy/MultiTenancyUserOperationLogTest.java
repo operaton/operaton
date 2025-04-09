@@ -71,7 +71,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(HISTORY_FULL)
-public class MultiTenancyUserOperationLogTest {
+class MultiTenancyUserOperationLogTest {
 
   protected static final String USER_ID = "aUserId";
   protected static final String USER_WITHOUT_TENANT = "aUserId1";
@@ -110,18 +110,18 @@ public class MultiTenancyUserOperationLogTest {
   protected boolean isDefaultTenantCheckEnabled;
 
   @BeforeEach
-  public void init() {
+  void init() {
     isDefaultTenantCheckEnabled = configuration.isTenantCheckEnabled();
     configuration.setTenantCheckEnabled(false);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     configuration.setTenantCheckEnabled(isDefaultTenantCheckEnabled);
   }
 
   @Test
-  public void shouldLogUserOperationsWithTenant() {
+  void shouldLogUserOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -149,7 +149,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogIncidentOperationsWithTenant() {
+  void shouldLogIncidentOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -172,7 +172,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogIdentityLinkOperationsWithTenant() {
+  void shouldLogIdentityLinkOperationsWithTenant() {
     //given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     // create a process with a userTask and work with it
@@ -198,7 +198,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogAttachmentOperationsWithTenant() {
+  void shouldLogAttachmentOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     // create a process with a userTask and work with it
@@ -223,7 +223,7 @@ public class MultiTenancyUserOperationLogTest {
 
 
   @Test
-  public void shouldLogTaskOperationsWithTenant() {
+  void shouldLogTaskOperationsWithTenant() {
     //given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     // create a process with a userTask and work with it
@@ -256,7 +256,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogStandaloneTaskOperationsWithTenant() {
+  void shouldLogStandaloneTaskOperationsWithTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
     // create a standalone userTask
@@ -288,7 +288,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogJobDefinitionOperationWithTenant() {
+  void shouldLogJobDefinitionOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL_JOB);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
@@ -308,7 +308,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogJobOperationWithTenant() {
+  void shouldLogJobOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL_JOB);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
@@ -329,7 +329,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogProcessInstanceOperationsWithTenant() {
+  void shouldLogProcessInstanceOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -353,7 +353,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogProcessDefinitionOperationsWithTenant() {
+  void shouldLogProcessDefinitionOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -374,7 +374,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogVariableOperationsWithTenant() {
+  void shouldLogVariableOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     ProcessInstance process = runtimeService.startProcessInstanceByKey(PROCESS_NAME);
@@ -394,7 +394,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogDeployOperationWithTenant() {
+  void shouldLogDeployOperationWithTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
     String deploymentId = testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml").getId();
@@ -412,8 +412,9 @@ public class MultiTenancyUserOperationLogTest {
       assertThat(userOperationLogEntry.getTenantId()).isEqualTo(TENANT_ONE);
     }
   }
+
   @Test
-  public void shouldLogBatchOperationWithTenant() {
+  void shouldLogBatchOperationWithTenant() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(
         testRule.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS),
@@ -435,7 +436,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogExternalTaskOperationWithTenant() {
+  void shouldLogExternalTaskOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml");
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -455,7 +456,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogDecisionDefinitionOperationWithTenant() {
+  void shouldLogDecisionDefinitionOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/dmn/Example.dmn");
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -476,7 +477,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogDecisionInstanceOperationWithTenant() {
+  void shouldLogDecisionInstanceOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/dmn/Example.dmn");
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -502,7 +503,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogDecisionInstancesOperationWithoutTenant() {
+  void shouldLogDecisionInstancesOperationWithoutTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/dmn/Example.dmn");
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -532,7 +533,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogCaseDefinitionOperationWithTenant() {
+  void shouldLogCaseDefinitionOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -553,7 +554,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogCaseInstanceOperationWithTenant() {
+  void shouldLogCaseInstanceOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -587,7 +588,7 @@ public class MultiTenancyUserOperationLogTest {
 
 
   @Test
-  public void shouldLogMetricsOperationWithoutTenant() {
+  void shouldLogMetricsOperationWithoutTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -606,7 +607,7 @@ public class MultiTenancyUserOperationLogTest {
 
 
   @Test
-  public void shouldLogTaskMetricsOperationWithoutTenant() {
+  void shouldLogTaskMetricsOperationWithoutTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -624,7 +625,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogFilterOperationsWithoutTenant() {
+  void shouldLogFilterOperationsWithoutTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
     FilterService filterService = engineRule.getFilterService();
@@ -651,7 +652,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogUserOperationsWithoutTenant() {
+  void shouldLogUserOperationsWithoutTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
 
@@ -674,7 +675,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogGroupOperationsWithoutTenant() {
+  void shouldLogGroupOperationsWithoutTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
 
@@ -697,7 +698,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantOperationsWithoutTenant() {
+  void shouldLogTenantOperationsWithoutTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
 
@@ -721,7 +722,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogGroupMemebershipOperationsWithoutTenant() {
+  void shouldLogGroupMemebershipOperationsWithoutTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
 
@@ -747,7 +748,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogTenantMemebershipOperationsWithoutTenant() {
+  void shouldLogTenantMemebershipOperationsWithoutTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
 
@@ -773,7 +774,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogAuthorizationOperationsWithoutTenant() {
+  void shouldLogAuthorizationOperationsWithoutTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
@@ -804,7 +805,7 @@ public class MultiTenancyUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogPropertyOperationsWithoutTenant() {
+  void shouldLogPropertyOperationsWithoutTenant() {
     // given
     identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
 

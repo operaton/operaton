@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class ProcessDefinitionStatisticsQueryTest {
+class ProcessDefinitionStatisticsQueryTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -50,7 +50,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryWithFailedJobs() {
+  void testProcessDefinitionStatisticsQueryWithFailedJobs() {
     runtimeService.startProcessInstanceByKey("ExampleProcess");
 
     Map<String, Object> parameters = new HashMap<>();
@@ -74,7 +74,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryWithIncidents() {
+  void testProcessDefinitionStatisticsQueryWithIncidents() {
     runtimeService.startProcessInstanceByKey("ExampleProcess");
 
     Map<String, Object> parameters = new HashMap<>();
@@ -104,7 +104,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryWithIncidentType() {
+  void testProcessDefinitionStatisticsQueryWithIncidentType() {
     runtimeService.startProcessInstanceByKey("ExampleProcess");
 
     Map<String, Object> parameters = new HashMap<>();
@@ -134,7 +134,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryWithInvalidIncidentType() {
+  void testProcessDefinitionStatisticsQueryWithInvalidIncidentType() {
     runtimeService.startProcessInstanceByKey("ExampleProcess");
 
     Map<String, Object> parameters = new HashMap<>();
@@ -159,7 +159,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryWithIncidentsAndFailedJobs() {
+  void testProcessDefinitionStatisticsQueryWithIncidentsAndFailedJobs() {
     runtimeService.startProcessInstanceByKey("ExampleProcess");
 
     Map<String, Object> parameters = new HashMap<>();
@@ -191,7 +191,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryWithoutRunningInstances() {
+  void testProcessDefinitionStatisticsQueryWithoutRunningInstances() {
     List<ProcessDefinitionStatistics> statistics =
         managementService
         .createProcessDefinitionStatisticsQuery()
@@ -213,7 +213,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryCount() {
+  void testProcessDefinitionStatisticsQueryCount() {
     runtimeService.startProcessInstanceByKey("ExampleProcess");
 
     testRule.executeAvailableJobs();
@@ -230,7 +230,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testMultiInstanceStatisticsQuery.bpmn20.xml")
-  public void testMultiInstanceProcessDefinitionStatisticsQuery() {
+  void testMultiInstanceProcessDefinitionStatisticsQuery() {
     runtimeService.startProcessInstanceByKey("MIExampleProcess");
 
     List<ProcessDefinitionStatistics> statistics =
@@ -246,7 +246,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testSubprocessStatisticsQuery.bpmn20.xml")
-  public void testSubprocessProcessDefinitionStatisticsQuery() {
+  void testSubprocessProcessDefinitionStatisticsQuery() {
     runtimeService.startProcessInstanceByKey("ExampleProcess");
 
     List<ProcessDefinitionStatistics> statistics =
@@ -262,7 +262,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testCallActivityWithIncidentsWithoutFailedJobs.bpmn20.xml")
-  public void testCallActivityProcessDefinitionStatisticsQuery() {
+  void testCallActivityProcessDefinitionStatisticsQuery() {
     runtimeService.startProcessInstanceByKey("callExampleSubProcess");
 
     testRule.executeAvailableJobs();
@@ -290,7 +290,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryForMultipleVersions() {
+  void testProcessDefinitionStatisticsQueryForMultipleVersions() {
     org.operaton.bpm.engine.repository.Deployment deployment =
         repositoryService.createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
@@ -334,7 +334,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryForMultipleVersionsWithFailedJobsAndIncidents() {
+  void testProcessDefinitionStatisticsQueryForMultipleVersionsWithFailedJobsAndIncidents() {
     org.operaton.bpm.engine.repository.Deployment deployment =
         repositoryService.createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
@@ -397,7 +397,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryForMultipleVersionsWithIncidentType() {
+  void testProcessDefinitionStatisticsQueryForMultipleVersionsWithIncidentType() {
     org.operaton.bpm.engine.repository.Deployment deployment =
         repositoryService.createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
@@ -441,7 +441,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryPagination() {
+  void testProcessDefinitionStatisticsQueryPagination() {
     org.operaton.bpm.engine.repository.Deployment deployment =
         repositoryService.createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQuery.bpmn20.xml")
@@ -467,7 +467,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testCallActivityWithIncidentsWithoutFailedJobs.bpmn20.xml")
-  public void testProcessDefinitionStatisticsQueryWithIncidentsWithoutFailedJobs() {
+  void testProcessDefinitionStatisticsQueryWithIncidentsWithoutFailedJobs() {
     runtimeService.startProcessInstanceByKey("callExampleSubProcess");
 
     testRule.executeAvailableJobs();
@@ -522,7 +522,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
-  public void testQueryByIncidentsWithFailedTimerStartEvent() {
+  void testQueryByIncidentsWithFailedTimerStartEvent() {
 
     testRule.executeAvailableJobs();
 
@@ -551,7 +551,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
-  public void testQueryByIncidentTypeWithFailedTimerStartEvent() {
+  void testQueryByIncidentTypeWithFailedTimerStartEvent() {
 
     testRule.executeAvailableJobs();
 
@@ -580,7 +580,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
-  public void testQueryByFailedJobsWithFailedTimerStartEvent() {
+  void testQueryByFailedJobsWithFailedTimerStartEvent() {
 
     testRule.executeAvailableJobs();
 
@@ -602,7 +602,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
-  public void testQueryByFailedJobsAndIncidentsWithFailedTimerStartEvent() {
+  void testQueryByFailedJobsAndIncidentsWithFailedTimerStartEvent() {
 
     testRule.executeAvailableJobs();
 
@@ -634,7 +634,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testCallActivityWithIncidentsWithoutFailedJobs.bpmn20.xml")
-  public void testIncludeRootIncidentsOnly() {
+  void testIncludeRootIncidentsOnly() {
     runtimeService.startProcessInstanceByKey("callExampleSubProcess");
 
     testRule.executeAvailableJobs();
@@ -669,7 +669,7 @@ public class ProcessDefinitionStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testCallActivityWithIncidentsWithoutFailedJobs.bpmn20.xml")
-  public void testIncludeRootIncidentsFails() {
+  void testIncludeRootIncidentsFails() {
     runtimeService.startProcessInstanceByKey("callExampleSubProcess");
 
     testRule.executeAvailableJobs();
@@ -686,7 +686,7 @@ public class ProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void testProcessDefinitionStatisticsProperties() {
+  void testProcessDefinitionStatisticsProperties() {
     String resourceName = "org/operaton/bpm/engine/test/api/mgmt/ProcessDefinitionStatisticsQueryTest.testProcessDefinitionStatisticsProperties.bpmn20.xml";
     String deploymentId = testRule.deployForTenant("tenant1", resourceName).getId();
 

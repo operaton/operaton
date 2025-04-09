@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class IncidentMultipleProcessingTest {
+ class IncidentMultipleProcessingTest {
 
   private static final StubIncidentHandler JOB_HANDLER = new StubIncidentHandler(Incident.FAILED_JOB_HANDLER_TYPE);
 
@@ -54,13 +54,13 @@ public class IncidentMultipleProcessingTest {
   private RuntimeService runtimeService;
   private ManagementService managementService;
 
-  @BeforeEach
-  public void init() {
+   @BeforeEach
+   void init() {
     JOB_HANDLER.reset();
   }
 
-  @Test
-  public void jobHandlerShouldBeCompositeHandler() {
+   @Test
+   void jobHandlerShouldBeCompositeHandler() {
     IncidentHandler incidentHandler = engineRule.getProcessEngineConfiguration().getIncidentHandler(Incident.FAILED_JOB_HANDLER_TYPE);
 
     assertThat(incidentHandler)
@@ -68,8 +68,8 @@ public class IncidentMultipleProcessingTest {
       .isInstanceOf(CompositeIncidentHandler.class);
   }
 
-  @Test
-  public void externalTaskHandlerShouldBeCompositeHandler() {
+   @Test
+   void externalTaskHandlerShouldBeCompositeHandler() {
     IncidentHandler incidentHandler = engineRule.getProcessEngineConfiguration().getIncidentHandler(Incident.EXTERNAL_TASK_HANDLER_TYPE);
 
     assertThat(incidentHandler)
@@ -77,9 +77,9 @@ public class IncidentMultipleProcessingTest {
       .isInstanceOf(CompositeIncidentHandler.class);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  @Test
-  public void shouldCreateOneIncident() {
+   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+   @Test
+   void shouldCreateOneIncident() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -93,9 +93,9 @@ public class IncidentMultipleProcessingTest {
     assertThat(JOB_HANDLER.getDeleteEvents()).isEmpty();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  @Test
-  public void shouldResolveIncidentAfterJobRetriesRefresh() {
+   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+   @Test
+   void shouldResolveIncidentAfterJobRetriesRefresh() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -117,9 +117,9 @@ public class IncidentMultipleProcessingTest {
     assertThat(JOB_HANDLER.getDeleteEvents()).isEmpty();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  @Test
-  public void shouldDeleteIncidentAfterJobHasBeenDeleted() {
+   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+   @Test
+   void shouldDeleteIncidentAfterJobHasBeenDeleted() {
     // start failing process
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 

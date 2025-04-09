@@ -46,7 +46,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyBatchTest {
+class MultiTenancyBatchTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -67,14 +67,14 @@ public class MultiTenancyBatchTest {
   protected ProcessDefinition sharedDefinition;
 
   @BeforeEach
-  public void deployProcesses() {
+  void deployProcesses() {
     sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     batchHelper.removeAllRunningAndHistoricBatches();
   }
 
@@ -83,7 +83,7 @@ public class MultiTenancyBatchTest {
    * Target: no tenant id
    */
   @Test
-  public void testBatchTenantIdCase1() {
+  void testBatchTenantIdCase1() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(sharedDefinition, sharedDefinition);
 
@@ -96,7 +96,7 @@ public class MultiTenancyBatchTest {
    * Target: no tenant id
    */
   @Test
-  public void testBatchTenantIdCase2() {
+  void testBatchTenantIdCase2() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant1Definition, sharedDefinition);
 
@@ -109,7 +109,7 @@ public class MultiTenancyBatchTest {
    * Target: tenant 1
    */
   @Test
-  public void testBatchTenantIdCase3() {
+  void testBatchTenantIdCase3() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(sharedDefinition, tenant1Definition);
 
@@ -119,7 +119,7 @@ public class MultiTenancyBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricBatchTenantId() {
+  void testHistoricBatchTenantId() {
     // given
     batchHelper.migrateProcessInstanceAsync(tenant1Definition, tenant1Definition);
 
@@ -129,7 +129,7 @@ public class MultiTenancyBatchTest {
   }
 
   @Test
-  public void testBatchJobDefinitionsTenantId() {
+  void testBatchJobDefinitionsTenantId() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant1Definition, tenant1Definition);
 
@@ -145,7 +145,7 @@ public class MultiTenancyBatchTest {
   }
 
   @Test
-  public void testBatchJobsTenantId() {
+  void testBatchJobsTenantId() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant1Definition, tenant1Definition);
 
@@ -163,7 +163,7 @@ public class MultiTenancyBatchTest {
   }
 
   @Test
-  public void testDeleteBatch() {
+  void testDeleteBatch() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant1Definition, tenant1Definition);
 
@@ -177,7 +177,7 @@ public class MultiTenancyBatchTest {
   }
 
   @Test
-  public void testDeleteBatchFailsWithWrongTenant() {
+  void testDeleteBatchFailsWithWrongTenant() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
     var batchId = batch.getId();
@@ -199,7 +199,7 @@ public class MultiTenancyBatchTest {
   }
 
   @Test
-  public void testSuspendBatch() {
+  void testSuspendBatch() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant1Definition, tenant1Definition);
 
@@ -214,7 +214,7 @@ public class MultiTenancyBatchTest {
   }
 
   @Test
-  public void testSuspendBatchFailsWithWrongTenant() {
+  void testSuspendBatchFailsWithWrongTenant() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
     var batchId = batch.getId();
@@ -236,7 +236,7 @@ public class MultiTenancyBatchTest {
   }
 
   @Test
-  public void testActivateBatch() {
+  void testActivateBatch() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant1Definition, tenant1Definition);
     managementService.suspendBatchById(batch.getId());
@@ -252,7 +252,7 @@ public class MultiTenancyBatchTest {
   }
 
   @Test
-  public void testActivateBatchFailsWithWrongTenant() {
+  void testActivateBatchFailsWithWrongTenant() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
     managementService.suspendBatchById(batch.getId());

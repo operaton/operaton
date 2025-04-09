@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Askar Akhmerov
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
+class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String DISH_DRG_DMN = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
@@ -71,7 +71,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
 
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deploy(DISH_DRG_DMN);
 
     decisionService.evaluateDecisionByKey(DISH_DECISION)
@@ -80,7 +80,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     DecisionRequirementsDefinition decisionRequirementsDefinition =
         repositoryService.createDecisionRequirementsDefinitionQuery()
             .singleResult();
@@ -94,7 +94,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     DecisionRequirementsDefinition decisionRequirementsDefinition =
         repositoryService.createDecisionRequirementsDefinitionQuery()
             .singleResult();
@@ -108,7 +108,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     DecisionRequirementsDefinition decisionRequirementsDefinition =
         repositoryService.createDecisionRequirementsDefinitionQuery()
             .singleResult();

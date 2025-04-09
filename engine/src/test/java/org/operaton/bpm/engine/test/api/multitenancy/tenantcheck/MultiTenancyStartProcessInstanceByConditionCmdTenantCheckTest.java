@@ -64,7 +64,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   public RuntimeService runtimeService;
 
   @Test
-  public void testNoAuthenticatedTenants() {
+  void testNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -96,7 +96,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testWithAuthenticatedTenant() {
+  void testWithAuthenticatedTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -128,7 +128,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testWithAuthenticatedTenant2() {
+  void testWithAuthenticatedTenant2() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -159,7 +159,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testDisabledTenantCheck() {
+  void testDisabledTenantCheck() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -183,7 +183,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testFailToEvaluateConditionByProcessDefinitionIdNoAuthenticatedTenants() {
+  void testFailToEvaluateConditionByProcessDefinitionIdNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
@@ -205,7 +205,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testEvaluateConditionByProcessDefinitionIdWithAuthenticatedTenants() {
+  void testEvaluateConditionByProcessDefinitionIdWithAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
@@ -240,7 +240,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
+  void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
     // given
     String processDefId1 = testRule.deployForTenantAndGetDefinition(TENANT_ONE, PROCESS).getId();
     String processDefId2 = testRule.deployForTenantAndGetDefinition(TENANT_ONE, PROCESS).getId();

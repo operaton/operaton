@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyProcessInstanceSuspensionStateTest {
+class MultiTenancyProcessInstanceSuspensionStateTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -60,7 +60,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -72,7 +72,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendAndActivateProcessInstancesForAllTenants() {
+  void suspendAndActivateProcessInstancesForAllTenants() {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -98,7 +98,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceForTenant() {
+  void suspendProcessInstanceForTenant() {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -116,7 +116,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceForNonTenant() {
+  void suspendProcessInstanceForNonTenant() {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -134,7 +134,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void activateProcessInstanceForTenant() {
+  void activateProcessInstanceForTenant() {
     // given suspended process instances
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()
@@ -157,7 +157,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void activateProcessInstanceForNonTenant() {
+  void activateProcessInstanceForNonTenant() {
     // given suspended process instances
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()
@@ -180,7 +180,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendAndActivateProcessInstancesIncludingUserTasksForAllTenants() {
+  void suspendAndActivateProcessInstancesIncludingUserTasksForAllTenants() {
     // given activated user tasks
     TaskQuery query = engineRule.getTaskService().createTaskQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -206,7 +206,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceIncludingUserTaskForTenant() {
+  void suspendProcessInstanceIncludingUserTaskForTenant() {
     // given activated user tasks
     TaskQuery query = engineRule.getTaskService().createTaskQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -224,7 +224,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceIncludingUserTaskForNonTenant() {
+  void suspendProcessInstanceIncludingUserTaskForNonTenant() {
     // given activated user tasks
     TaskQuery query = engineRule.getTaskService().createTaskQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -242,7 +242,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void activateProcessInstanceIncludingUserTaskForTenant() {
+  void activateProcessInstanceIncludingUserTaskForTenant() {
     // given suspended user tasks
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()
@@ -265,7 +265,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void activateProcessInstanceIncludingUserTaskForNonTenant() {
+  void activateProcessInstanceIncludingUserTaskForNonTenant() {
     // given suspended user tasks
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()
@@ -288,7 +288,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendAndActivateProcessInstancesIncludingExternalTasksForAllTenants() {
+  void suspendAndActivateProcessInstancesIncludingExternalTasksForAllTenants() {
     // given activated external tasks
     ExternalTaskQuery query = engineRule.getExternalTaskService().createExternalTaskQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -314,7 +314,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceIncludingExternalTaskForTenant() {
+  void suspendProcessInstanceIncludingExternalTaskForTenant() {
     // given activated external tasks
     ExternalTaskQuery query = engineRule.getExternalTaskService().createExternalTaskQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -332,7 +332,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceIncludingExternalTaskForNonTenant() {
+  void suspendProcessInstanceIncludingExternalTaskForNonTenant() {
     // given activated external tasks
     ExternalTaskQuery query = engineRule.getExternalTaskService().createExternalTaskQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -350,7 +350,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void activateProcessInstanceIncludingExternalTaskForTenant() {
+  void activateProcessInstanceIncludingExternalTaskForTenant() {
     // given suspended external tasks
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()
@@ -373,7 +373,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void activateProcessInstanceIncludingExternalTaskForNonTenant() {
+  void activateProcessInstanceIncludingExternalTaskForNonTenant() {
     // given suspended external tasks
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()
@@ -396,7 +396,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendAndActivateProcessInstancesIncludingJobsForAllTenants() {
+  void suspendAndActivateProcessInstancesIncludingJobsForAllTenants() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -422,7 +422,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceIncludingJobForTenant() {
+  void suspendProcessInstanceIncludingJobForTenant() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -440,7 +440,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceIncludingJobForNonTenant() {
+  void suspendProcessInstanceIncludingJobForNonTenant() {
     // given activated jobs
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -458,7 +458,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void activateProcessInstanceIncludingJobForTenant() {
+  void activateProcessInstanceIncludingJobForTenant() {
     // given suspended job
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()
@@ -481,7 +481,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void activateProcessInstanceIncludingJobForNonTenant() {
+  void activateProcessInstanceIncludingJobForNonTenant() {
     // given suspended jobs
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()
@@ -504,7 +504,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceNoAuthenticatedTenants() {
+  void suspendProcessInstanceNoAuthenticatedTenants() {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -525,7 +525,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void failToSuspendProcessInstanceByProcessDefinitionIdNoAuthenticatedTenants() {
+  void failToSuspendProcessInstanceByProcessDefinitionIdNoAuthenticatedTenants() {
     ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery()
         .processDefinitionKey(PROCESS_DEFINITION_KEY).tenantIdIn(TENANT_ONE).singleResult();
 
@@ -542,7 +542,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceWithAuthenticatedTenant() {
+  void suspendProcessInstanceWithAuthenticatedTenant() {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);
@@ -565,7 +565,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   }
 
   @Test
-  public void suspendProcessInstanceDisabledTenantCheck() {
+  void suspendProcessInstanceDisabledTenantCheck() {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);

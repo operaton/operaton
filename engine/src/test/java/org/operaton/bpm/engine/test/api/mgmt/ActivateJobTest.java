@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author roman.smirnov
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class ActivateJobTest {
+class ActivateJobTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;
@@ -50,7 +50,7 @@ public class ActivateJobTest {
   protected RepositoryService repositoryService;
 
   @Test
-  public void testActivationById_shouldThrowProcessEngineException() {
+  void testActivationById_shouldThrowProcessEngineException() {
     try {
       managementService.activateJobById(null);
       fail("A ProcessEngineException was expected.");
@@ -60,7 +60,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationById_shouldActivateJob() {
+  void testActivationById_shouldActivateJob() {
     // given
 
     // a running process instance with a failed job
@@ -93,7 +93,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationByJobDefinitionId_shouldActivateJob() {
+  void testActivationByJobDefinitionId_shouldActivateJob() {
     // given
 
     // a running process instance with a failed job
@@ -130,7 +130,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivateByProcessInstanceId_shouldActivateJob() {
+  void testActivateByProcessInstanceId_shouldActivateJob() {
     // given
 
     // a running process instance with a failed job
@@ -167,7 +167,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationByProcessDefinitionId_shouldActivateJob() {
+  void testActivationByProcessDefinitionId_shouldActivateJob() {
     // given
     // a deployed process definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -202,7 +202,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationByProcessDefinitionKey_shouldActivateJob() {
+  void testActivationByProcessDefinitionKey_shouldActivateJob() {
     // given
     // a deployed process definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -236,7 +236,7 @@ public class ActivateJobTest {
   }
 
   @Test
-  public void testMultipleActivationByProcessDefinitionKey_shouldActivateJob() {
+  void testMultipleActivationByProcessDefinitionKey_shouldActivateJob() {
     // given
     String key = "suspensionProcess";
 
@@ -274,7 +274,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationByIdUsingBuilder() {
+  void testActivationByIdUsingBuilder() {
     // given
 
     // a running process instance with a failed job
@@ -304,7 +304,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationByJobDefinitionIdUsingBuilder() {
+  void testActivationByJobDefinitionIdUsingBuilder() {
     // given
 
     // a running process instance with a failed job
@@ -335,7 +335,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationByProcessInstanceIdUsingBuilder() {
+  void testActivationByProcessInstanceIdUsingBuilder() {
     // given
 
     // a running process instance with a failed job
@@ -364,7 +364,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationByProcessDefinitionIdUsingBuilder() {
+  void testActivationByProcessDefinitionIdUsingBuilder() {
     // given
 
     // a running process instance with a failed job
@@ -395,7 +395,7 @@ public class ActivateJobTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testActivationByProcessDefinitionKeyUsingBuilder() {
+  void testActivationByProcessDefinitionKeyUsingBuilder() {
     // given
 
     // a running process instance with a failed job

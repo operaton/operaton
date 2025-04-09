@@ -48,7 +48,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricDetailFormPropertyQueryTest {
+class MultiTenancyHistoricDetailFormPropertyQueryTest {
 
   protected static final String TENANT_NULL = null;
   protected static final String TENANT_ONE = "tenant1";
@@ -66,7 +66,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     // given
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
@@ -92,7 +92,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryWithoutTenantId() {
+  void shouldQueryWithoutTenantId() {
     // when
     HistoricDetailQuery query = historyService
         .createHistoricDetailQuery()
@@ -103,7 +103,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryFilterWithoutTenantId() {
+  void shouldQueryFilterWithoutTenantId() {
     // when
     HistoricDetailQuery query = historyService
         .createHistoricDetailQuery()
@@ -115,7 +115,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantId() {
+  void shouldQueryByTenantId() {
     // when
     HistoricDetailQuery queryTenantOne = historyService
         .createHistoricDetailQuery()
@@ -133,7 +133,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantIds() {
+  void shouldQueryByTenantIds() {
     // when
     HistoricDetailQuery query = historyService
         .createHistoricDetailQuery()
@@ -145,7 +145,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryByNonExistingTenantId() {
+  void shouldQueryByNonExistingTenantId() {
     // when
     HistoricDetailQuery query = historyService
         .createHistoricDetailQuery()
@@ -157,7 +157,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldFailQueryByTenantIdNull() {
+  void shouldFailQueryByTenantIdNull() {
     var historicDetailQuery = historyService.createHistoricDetailQuery()
         .formFields();
     try {
@@ -172,7 +172,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingAsc() {
+  void shouldQuerySortingAsc() {
     // when
     List<HistoricDetail> historicDetails = historyService.createHistoricDetailQuery()
         .formFields()
@@ -186,7 +186,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingDesc() {
+  void shouldQuerySortingDesc() {
     // when
     List<HistoricDetail> historicDetails = historyService.createHistoricDetailQuery()
         .formFields()
@@ -200,7 +200,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryNoAuthenticatedTenants() {
+  void shouldQueryNoAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -212,7 +212,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenant() {
+  void shouldQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -228,7 +228,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenants() {
+  void shouldQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -243,7 +243,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   }
 
   @Test
-  public void shouldQueryDisabledTenantCheck() {
+  void shouldQueryDisabledTenantCheck() {
     // given
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);

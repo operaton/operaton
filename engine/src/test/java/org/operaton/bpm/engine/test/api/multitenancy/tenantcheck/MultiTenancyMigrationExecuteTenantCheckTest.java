@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyMigrationExecuteTenantCheckTest {
+class MultiTenancyMigrationExecuteTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -47,7 +47,7 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
   protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void canMigrateWithAuthenticatedTenant() {
+  void canMigrateWithAuthenticatedTenant() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -73,7 +73,7 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
   }
 
   @Test
-  public void cannotMigrateOfNonAuthenticatedTenant() {
+  void cannotMigrateOfNonAuthenticatedTenant() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -99,7 +99,7 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
   }
 
   @Test
-  public void cannotMigrateWithNoAuthenticatedTenant() {
+  void cannotMigrateWithNoAuthenticatedTenant() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -124,7 +124,7 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
   }
 
   @Test
-  public void canMigrateSharedInstanceWithNoTenant() {
+  void canMigrateSharedInstanceWithNoTenant() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -150,7 +150,7 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
   }
 
   @Test
-  public void canMigrateInstanceWithTenantCheckDisabled() {
+  void canMigrateInstanceWithTenantCheckDisabled() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);

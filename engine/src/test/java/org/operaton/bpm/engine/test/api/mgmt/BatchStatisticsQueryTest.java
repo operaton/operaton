@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHe
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
-public class BatchStatisticsQueryTest {
+class BatchStatisticsQueryTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -56,7 +56,7 @@ public class BatchStatisticsQueryTest {
   protected int defaultBatchJobsPerSeed;
 
   @BeforeEach
-  public void saveAndReduceBatchJobsPerSeed() {
+  void saveAndReduceBatchJobsPerSeed() {
     ProcessEngineConfigurationImpl configuration = engineRule.getProcessEngineConfiguration();
     defaultBatchJobsPerSeed = configuration.getBatchJobsPerSeed();
     // reduce number of batch jobs per seed to not have to create a lot of instances
@@ -64,19 +64,19 @@ public class BatchStatisticsQueryTest {
   }
 
   @AfterEach
-  public void resetBatchJobsPerSeed() {
+  void resetBatchJobsPerSeed() {
     engineRule.getProcessEngineConfiguration()
       .setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     ClockUtil.reset();
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
   @Test
-  public void testQuery() {
+  void testQuery() {
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
     assertThat(statistics).isEmpty();
 
@@ -106,7 +106,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryCount() {
+  void testQueryCount() {
     long count = managementService.createBatchStatisticsQuery().count();
     assertThat(count).isZero();
 
@@ -134,7 +134,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryById() {
+  void testQueryById() {
     // given
     helper.createMigrationBatchWithSize(1);
     Batch batch = helper.createMigrationBatchWithSize(1);
@@ -149,7 +149,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryByNullId() {
+  void testQueryByNullId() {
     // given
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     // when
@@ -160,7 +160,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryByUnknownId() {
+  void testQueryByUnknownId() {
     // given
     helper.createMigrationBatchWithSize(1);
     helper.createMigrationBatchWithSize(1);
@@ -175,7 +175,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryByType() {
+  void testQueryByType() {
     // given
     helper.createMigrationBatchWithSize(1);
     helper.createMigrationBatchWithSize(1);
@@ -190,7 +190,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryByNullType() {
+  void testQueryByNullType() {
     // given
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     // when
@@ -201,7 +201,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryByUnknownType() {
+  void testQueryByUnknownType() {
     // given
     helper.createMigrationBatchWithSize(1);
     helper.createMigrationBatchWithSize(1);
@@ -216,7 +216,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryOrderByIdAsc() {
+  void testQueryOrderByIdAsc() {
     // given
     helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -231,7 +231,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryOrderByIdDec() {
+  void testQueryOrderByIdDec() {
     // given
     helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -246,7 +246,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryOrderByStartTimeAsc() {
+  void testQueryOrderByStartTimeAsc() {
     // given
     helper.migrateProcessInstancesAsync(1);
     final long oneHour = 60 * 60 * 1000L;
@@ -263,7 +263,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryOrderByStartTimeDesc() {
+  void testQueryOrderByStartTimeDesc() {
     // given
     helper.migrateProcessInstancesAsync(1);
     final long oneHour = 60 * 60 * 1000L;
@@ -280,7 +280,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryOrderingPropertyWithoutOrder() {
+  void testQueryOrderingPropertyWithoutOrder() {
     // given
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery().orderById();
     // when
@@ -291,7 +291,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryOrderWithoutOrderingProperty() {
+  void testQueryOrderWithoutOrderingProperty() {
     // given
     BatchStatisticsQuery batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     // when
@@ -302,7 +302,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsNoExecutionJobsGenerated() {
+  void testStatisticsNoExecutionJobsGenerated() {
     // given
     helper.createMigrationBatchWithSize(3);
 
@@ -319,7 +319,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsMostExecutionJobsGenerated() {
+  void testStatisticsMostExecutionJobsGenerated() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(13);
 
@@ -338,7 +338,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsAllExecutionJobsGenerated() {
+  void testStatisticsAllExecutionJobsGenerated() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(3);
 
@@ -357,7 +357,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsOneCompletedJob() {
+  void testStatisticsOneCompletedJob() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(3);
 
@@ -377,7 +377,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsOneFailedJob() {
+  void testStatisticsOneFailedJob() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(3);
 
@@ -397,7 +397,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsOneCompletedAndOneFailedJob() {
+  void testStatisticsOneCompletedAndOneFailedJob() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(3);
 
@@ -418,7 +418,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsRetriedFailedJobs() {
+  void testStatisticsRetriedFailedJobs() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(3);
 
@@ -452,7 +452,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsWithDeletedJobs() {
+  void testStatisticsWithDeletedJobs() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(13);
 
@@ -472,7 +472,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsWithNotAllGeneratedAndAlreadyCompletedAndFailedJobs() {
+  void testStatisticsWithNotAllGeneratedAndAlreadyCompletedAndFailedJobs() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(13);
 
@@ -493,7 +493,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testMultipleBatchesStatistics() {
+  void testMultipleBatchesStatistics() {
     // given
     Batch batch1 = helper.createMigrationBatchWithSize(3);
     Batch batch2 = helper.createMigrationBatchWithSize(13);
@@ -543,7 +543,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsSuspend() {
+  void testStatisticsSuspend() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -557,7 +557,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsActivate() {
+  void testStatisticsActivate() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     managementService.suspendBatchById(batch.getId());
@@ -572,7 +572,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsQueryBySuspendedBatches() {
+  void testStatisticsQueryBySuspendedBatches() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);
@@ -591,7 +591,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticsQueryByActiveBatches() {
+  void testStatisticsQueryByActiveBatches() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);
@@ -618,7 +618,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void shouldQueryByFailures() {
+  void shouldQueryByFailures() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(2);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);
@@ -652,7 +652,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void shouldQueryByStartedAfter() {
+  void shouldQueryByStartedAfter() {
     // given
     final long oneMin = 60 * 1000L;
     ClockUtil.setCurrentTime(ClockUtil.getCurrentTime());
@@ -676,7 +676,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void shouldQueryByStartedBefore() {
+  void shouldQueryByStartedBefore() {
     // given
     final long oneMin = 60 * 1000L;
     ClockUtil.setCurrentTime(ClockUtil.getCurrentTime());
@@ -700,7 +700,7 @@ public class BatchStatisticsQueryTest {
   }
 
   @Test
-  public void shouldQueryByCreatedBy() {
+  void shouldQueryByCreatedBy() {
     // given
     engineRule.getIdentityService().setAuthenticatedUserId("user1");
     final Batch batch1 = helper.migrateProcessInstancesAsync(1);

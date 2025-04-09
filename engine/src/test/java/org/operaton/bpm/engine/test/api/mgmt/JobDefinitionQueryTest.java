@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * @author roman.smirnov
  */
-public class JobDefinitionQueryTest {
+class JobDefinitionQueryTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -50,14 +50,14 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByNoCriteria() {
+  void testQueryByNoCriteria() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery();
     verifyQueryResults(query, 4);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByJobDefinitionId() {
+  void testQueryByJobDefinitionId() {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().jobType(TimerStartEventJobHandler.TYPE).singleResult();
 
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().jobDefinitionId(jobDefinition.getId());
@@ -69,7 +69,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByInvalidJobDefinitionId() {
+  void testQueryByInvalidJobDefinitionId() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().jobDefinitionId("invalid");
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
@@ -82,7 +82,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().activityIdIn("ServiceTask_1");
     verifyQueryResults(query, 1);
 
@@ -98,7 +98,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByInvalidActivityId() {
+  void testQueryByInvalidActivityId() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().activityIdIn("invalid");
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
@@ -120,7 +120,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().processDefinitionId(processDefinition.getId());
@@ -129,7 +129,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByInvalidDefinitionId() {
+  void testQueryByInvalidDefinitionId() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().processDefinitionId("invalid");
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
@@ -142,7 +142,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().processDefinitionKey(processDefinition.getKey());
@@ -151,7 +151,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByInvalidDefinitionKey() {
+  void testQueryByInvalidDefinitionKey() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().processDefinitionKey("invalid");
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
@@ -164,7 +164,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByJobType() {
+  void testQueryByJobType() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().jobType(AsyncContinuationJobHandler.TYPE);
     verifyQueryResults(query, 1);
 
@@ -180,7 +180,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByInvalidJobType() {
+  void testQueryByInvalidJobType() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().jobType("invalid");
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
@@ -193,7 +193,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByInvalidJobConfiguration() {
+  void testQueryByInvalidJobConfiguration() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().jobConfiguration("invalid");
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
@@ -206,7 +206,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryByActive() {
+  void testQueryByActive() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().active();
     verifyQueryResults(query, 4);
 
@@ -241,7 +241,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryBySuspended() {
+  void testQueryBySuspended() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().suspended();
     verifyQueryResults(query, 0);
 
@@ -278,7 +278,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryPaging() {
+  void testQueryPaging() {
     assertThat(managementService.createJobDefinitionQuery().listPage(0, 4)).hasSize(4);
     assertThat(managementService.createJobDefinitionQuery().listPage(2, 1)).hasSize(1);
     assertThat(managementService.createJobDefinitionQuery().listPage(1, 2)).hasSize(2);
@@ -289,7 +289,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     // asc
     assertThat(managementService.createJobDefinitionQuery().orderByActivityId().asc().list()).hasSize(4);
     assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().asc().list()).hasSize(4);
@@ -309,7 +309,7 @@ public class JobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryInvalidSortingUsage() {
+  void testQueryInvalidSortingUsage() {
     var jobDefinitionQuery = managementService.createJobDefinitionQuery().orderByJobDefinitionId();
     try {
       jobDefinitionQuery.list();
@@ -329,7 +329,7 @@ public class JobDefinitionQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
-  public void testQueryWithOverridingJobPriority() {
+  void testQueryWithOverridingJobPriority() {
     // given
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().listPage(0, 1).get(0);
     managementService.setOverridingJobPriorityForJobDefinition(jobDefinition.getId(), 42);

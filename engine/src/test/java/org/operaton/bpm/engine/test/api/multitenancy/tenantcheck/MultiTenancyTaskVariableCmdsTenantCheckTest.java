@@ -38,7 +38,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  *
  */
 
-public class MultiTenancyTaskVariableCmdsTenantCheckTest {
+class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -66,7 +66,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   protected String taskId;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     // deploy tenants
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
@@ -83,7 +83,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
   // get task variable
   @Test
-  public void getTaskVariableWithAuthenticatedTenant() {
+  void getTaskVariableWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -91,7 +91,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getTaskVariableWithNoAuthenticatedTenant() {
+  void getTaskVariableWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
 
@@ -105,7 +105,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
 
   @Test
-  public void getTaskVariableWithDisabledTenantCheck() {
+  void getTaskVariableWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -116,7 +116,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
   // get task variable typed
   @Test
-  public void getTaskVariableTypedWithAuthenticatedTenant() {
+  void getTaskVariableTypedWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -126,7 +126,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getTaskVariableTypedWithNoAuthenticatedTenant() {
+  void getTaskVariableTypedWithNoAuthenticatedTenant() {
     // given
     engineRule.getIdentityService().setAuthentication("aUserId", null);
 
@@ -138,7 +138,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getTaskVariableTypedWithDisableTenantCheck() {
+  void getTaskVariableTypedWithDisableTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -149,7 +149,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
   // get task variables
   @Test
-  public void getTaskVariablesWithAuthenticatedTenant() {
+  void getTaskVariablesWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -158,7 +158,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getTaskVariablesWithNoAuthenticatedTenant() {
+  void getTaskVariablesWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
 
@@ -171,7 +171,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getTaskVariablesWithDisabledTenantCheck() {
+  void getTaskVariablesWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -182,7 +182,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
   // set variable test
   @Test
-  public void setTaskVariableWithAuthenticatedTenant() {
+  void setTaskVariableWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.setVariable(taskId, "newVariable", "newValue");
@@ -191,7 +191,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void setTaskVariableWithNoAuthenticatedTenant() {
+  void setTaskVariableWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
 
@@ -204,7 +204,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void setTaskVariableWithDisabledTenantCheck() {
+  void setTaskVariableWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -216,7 +216,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
   // remove variable test
   @Test
-  public void removeTaskVariableWithAuthenticatedTenant() {
+  void removeTaskVariableWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.removeVariable(taskId, VARIABLE_1);
@@ -225,7 +225,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void removeTaskVariablesWithNoAuthenticatedTenant() {
+  void removeTaskVariablesWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
 
@@ -237,7 +237,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void removeTaskVariablesWithDisabledTenantCheck() {
+  void removeTaskVariablesWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);

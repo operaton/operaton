@@ -54,7 +54,7 @@ public class MultiTenancyHistoricProcessInstanceStateTest {
   protected IdentityService identityService;
 
   @Test
-  public void testSuspensionWithTenancy() {
+  void testSuspensionWithTenancy() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .userTask()

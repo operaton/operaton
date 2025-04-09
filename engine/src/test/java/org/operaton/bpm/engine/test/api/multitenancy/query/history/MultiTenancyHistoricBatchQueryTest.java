@@ -51,7 +51,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricBatchQueryTest {
+class MultiTenancyHistoricBatchQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -71,7 +71,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   protected Batch tenant2Batch;
 
   @BeforeEach
-  public void deployProcesses() {
+  void deployProcesses() {
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
@@ -82,12 +82,12 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     batchHelper.removeAllRunningAndHistoricBatches();
   }
 
   @Test
-  public void testHistoricBatchQueryNoAuthenticatedTenant() {
+  void testHistoricBatchQueryNoAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -104,7 +104,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testHistoricBatchQueryAuthenticatedTenant() {
+  void testHistoricBatchQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
 
@@ -121,7 +121,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testHistoricBatchQueryAuthenticatedTenants() {
+  void testHistoricBatchQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -137,7 +137,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testDeleteHistoricBatch() {
+  void testDeleteHistoricBatch() {
     // given
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
 
@@ -150,7 +150,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testDeleteHistoricBatchFailsWithWrongTenant() {
+  void testDeleteHistoricBatchFailsWithWrongTenant() {
     // given
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     var tenant2BatchId = tenant2Batch.getId();
@@ -171,7 +171,7 @@ public class MultiTenancyHistoricBatchQueryTest {
 
 
   @Test
-  public void testHistoricBatchQueryFilterByTenant() {
+  void testHistoricBatchQueryFilterByTenant() {
     // when
     HistoricBatch returnedBatch = historyService.createHistoricBatchQuery().tenantIdIn(TENANT_ONE).singleResult();
 
@@ -181,7 +181,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testHistoricBatchQueryFilterByTenants() {
+  void testHistoricBatchQueryFilterByTenants() {
     // when
     List<HistoricBatch> returnedBatches = historyService.createHistoricBatchQuery()
       .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -196,7 +196,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testHistoricBatchQueryFilterWithoutTenantId() {
+  void testHistoricBatchQueryFilterWithoutTenantId() {
     // when
     HistoricBatch returnedBatch = historyService.createHistoricBatchQuery().withoutTenantId().singleResult();
 
@@ -206,7 +206,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryFailOnNullTenantIdCase1() {
+  void testBatchQueryFailOnNullTenantIdCase1() {
 
     String[] tenantIds = null;
     var historicBatchQuery = historyService.createHistoricBatchQuery();
@@ -220,7 +220,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryFailOnNullTenantIdCase2() {
+  void testBatchQueryFailOnNullTenantIdCase2() {
 
     String[] tenantIds = new String[]{ null };
     var historicBatchQuery = historyService.createHistoricBatchQuery();
@@ -234,7 +234,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testOrderByTenantIdAsc() {
+  void testOrderByTenantIdAsc() {
 
     // when
     List<HistoricBatch> orderedBatches = historyService.createHistoricBatchQuery().orderByTenantId().asc().list();
@@ -244,7 +244,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   @Test
-  public void testOrderByTenantIdDesc() {
+  void testOrderByTenantIdDesc() {
 
     // when
     List<HistoricBatch> orderedBatches = historyService.createHistoricBatchQuery().orderByTenantId().desc().list();

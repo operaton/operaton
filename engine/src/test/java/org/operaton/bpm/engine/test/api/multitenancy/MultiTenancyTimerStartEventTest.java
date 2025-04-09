@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyTimerStartEventTest {
+class MultiTenancyTimerStartEventTest {
 
   protected static final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess()
       .startEvent()
@@ -58,7 +58,7 @@ public class MultiTenancyTimerStartEventTest {
   protected RepositoryService repositoryService;
 
   @Test
-  public void startProcessInstanceWithTenantId() {
+  void startProcessInstanceWithTenantId() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
@@ -73,7 +73,7 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void startProcessInstanceTwoTenants() {
+  void startProcessInstanceTwoTenants() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -91,7 +91,7 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void deleteJobsWhileUndeployment() {
+  void deleteJobsWhileUndeployment() {
 
      Deployment deploymentForTenantOne = testRule.deployForTenant(TENANT_ONE, PROCESS);
      Deployment deploymentForTenantTwo = testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -112,7 +112,7 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void dontCreateNewJobsWhileReDeployment() {
+  void dontCreateNewJobsWhileReDeployment() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -124,7 +124,7 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void failedJobRetryTimeCycle() {
+  void failedJobRetryTimeCycle() {
 
     testRule.deployForTenant(TENANT_ONE, Bpmn.createExecutableProcess("failingProcess")
       .startEvent()
@@ -155,7 +155,7 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void timerStartEventWithTimerCycle() {
+  void timerStartEventWithTimerCycle() {
 
     testRule.deployForTenant(TENANT_ONE, Bpmn.createExecutableProcess()
         .startEvent()

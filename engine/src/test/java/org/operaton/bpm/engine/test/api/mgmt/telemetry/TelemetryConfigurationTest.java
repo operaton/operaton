@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.commons.testing.WatchLogger;
 
-public class TelemetryConfigurationTest {
+class TelemetryConfigurationTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -42,14 +42,14 @@ public class TelemetryConfigurationTest {
   protected IdentityService identityService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.clearAuthentication();
   }
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @SuppressWarnings("deprecation")
-  public void shouldNotRecordUserOperationLog() {
+  void shouldNotRecordUserOperationLog() {
     // given
     configuration.getIdentityService().setAuthenticatedUserId("admin");
 
@@ -62,7 +62,7 @@ public class TelemetryConfigurationTest {
 
   @Test
   @WatchLogger(loggerNames = {"org.operaton.bpm.engine.persistence"}, level = "DEBUG")
-  public void shouldNotLogDefaultTelemetryValue() {
+  void shouldNotLogDefaultTelemetryValue() {
     // given
 
     // then

@@ -42,7 +42,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricIncidentQueryTest {
+class MultiTenancyHistoricIncidentQueryTest {
 
   protected static final BpmnModelInstance BPMN = Bpmn.createExecutableProcess("failingProcess")
       .startEvent()
@@ -66,7 +66,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     // given
     testRule.deployForTenant(TENANT_NULL, BPMN);
     testRule.deployForTenant(TENANT_ONE, BPMN);
@@ -78,7 +78,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryWithoutTenantId() {
+  void shouldQueryWithoutTenantId() {
     // when
     HistoricIncidentQuery query = historyService
         .createHistoricIncidentQuery();
@@ -88,7 +88,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryFilterWithoutTenantId() {
+  void shouldQueryFilterWithoutTenantId() {
     // when
     HistoricIncidentQuery query = historyService
         .createHistoricIncidentQuery()
@@ -99,7 +99,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantId() {
+  void shouldQueryByTenantId() {
     // when
     HistoricIncidentQuery queryTenantOne = historyService
         .createHistoricIncidentQuery()
@@ -115,7 +115,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantIds() {
+  void shouldQueryByTenantIds() {
     // when
     HistoricIncidentQuery query = historyService
         .createHistoricIncidentQuery()
@@ -126,7 +126,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryByNonExistingTenantId() {
+  void shouldQueryByNonExistingTenantId() {
     // when
     HistoricIncidentQuery query = historyService
         .createHistoricIncidentQuery()
@@ -137,7 +137,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldFailQueryByTenantIdNull() {
+  void shouldFailQueryByTenantIdNull() {
     var historicIncidentQuery = historyService.createHistoricIncidentQuery();
     try {
       // when
@@ -151,7 +151,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingAsc() {
+  void shouldQuerySortingAsc() {
     // when
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery()
         .orderByTenantId()
@@ -164,7 +164,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingDesc() {
+  void shouldQuerySortingDesc() {
     // when
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery()
         .orderByTenantId()
@@ -177,7 +177,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryNoAuthenticatedTenants() {
+  void shouldQueryNoAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -189,7 +189,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenant() {
+  void shouldQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -205,7 +205,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenants() {
+  void shouldQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -220,7 +220,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
   }
 
   @Test
-  public void shouldQueryDisabledTenantCheck() {
+  void shouldQueryDisabledTenantCheck() {
     // given
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);

@@ -47,7 +47,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricExternalTaskLogTest {
+class MultiTenancyHistoricExternalTaskLogTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -70,7 +70,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
 
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deployForTenant(TENANT_NULL, ONE_EXTERNAL_TASK_PROCESS);
     testRule.deployForTenant(TENANT_ONE, ONE_EXTERNAL_TASK_PROCESS);
     testRule.deployForTenant(TENANT_TWO, ONE_EXTERNAL_TASK_PROCESS);
@@ -80,7 +80,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryWithoutTenantId() {
+  void shouldQueryWithoutTenantId() {
 
     //given two process with different tenants
 
@@ -93,7 +93,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryFilterWithoutTenantId() {
+  void shouldQueryFilterWithoutTenantId() {
     // given
     startProcessInstanceAndFailExternalTask(TENANT_NULL);
 
@@ -107,7 +107,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryByTenantId() {
+  void shouldQueryByTenantId() {
 
     // given two process with different tenants
 
@@ -125,7 +125,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryByTenantIds() {
+  void shouldQueryByTenantIds() {
 
     //given two process with different tenants
 
@@ -139,7 +139,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryByNonExistingTenantId() {
+  void shouldQueryByNonExistingTenantId() {
 
     //given two process with different tenants
 
@@ -153,7 +153,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldFailQueryByTenantIdNull() {
+  void shouldFailQueryByTenantIdNull() {
     var historicExternalTaskLogQuery = historyService.createHistoricExternalTaskLogQuery();
     try {
       // when
@@ -168,7 +168,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQuerySortingAsc() {
+  void shouldQuerySortingAsc() {
 
     //given two process with different tenants
 
@@ -188,7 +188,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQuerySortingDesc() {
+  void shouldQuerySortingDesc() {
 
     //given two process with different tenants
 
@@ -208,7 +208,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryNoAuthenticatedTenants() {
+  void shouldQueryNoAuthenticatedTenants() {
 
     // given
     identityService.setAuthentication("user", null, null);
@@ -221,7 +221,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenant() {
+  void shouldQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
 
@@ -236,7 +236,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenants() {
+  void shouldQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -250,7 +250,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldQueryDisabledTenantCheck() {
+  void shouldQueryDisabledTenantCheck() {
     // given
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
@@ -263,7 +263,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldGetErrorDetailsNoAuthenticatedTenants() {
+  void shouldGetErrorDetailsNoAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
 
@@ -291,7 +291,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldGetErrorDetailsAuthenticatedTenant() {
+  void shouldGetErrorDetailsAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_ONE));
 
@@ -310,7 +310,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   }
 
   @Test
-  public void shouldGetErrorDetailsAuthenticatedTenants() {
+  void shouldGetErrorDetailsAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 

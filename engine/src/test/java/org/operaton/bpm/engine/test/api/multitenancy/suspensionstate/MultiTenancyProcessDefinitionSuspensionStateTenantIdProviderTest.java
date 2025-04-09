@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
+class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String PROCESS_DEFINITION_KEY = "testProcess";
@@ -53,12 +53,12 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deploy(PROCESS);
   }
 
   @Test
-  public void suspendProcessDefinitionByIdIncludeInstancesFromAllTenants() {
+  void suspendProcessDefinitionByIdIncludeInstancesFromAllTenants() {
     // given active process instances with tenant id of process definition without tenant id
     engineRule.getRuntimeService().createProcessInstanceByKey(PROCESS_DEFINITION_KEY).processDefinitionWithoutTenantId().execute();
 
@@ -85,7 +85,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
   }
 
   @Test
-  public void activateProcessDefinitionByIdIncludeInstancesFromAllTenants() {
+  void activateProcessDefinitionByIdIncludeInstancesFromAllTenants() {
     // given suspended process instances with tenant id of process definition without tenant id
     engineRule.getRuntimeService().createProcessInstanceByKey(PROCESS_DEFINITION_KEY).processDefinitionWithoutTenantId().execute();
 

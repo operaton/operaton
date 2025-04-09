@@ -52,9 +52,9 @@ public class MultiTenancyBusinessRuleTaskTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
-  
+
   @Test
-  public void testEvaluateDecisionWithDeploymentBinding() {
+  void testEvaluateDecisionWithDeploymentBinding() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -83,7 +83,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithLatestBindingSameVersion() {
+  void testEvaluateDecisionWithLatestBindingSameVersion() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -112,7 +112,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithLatestBindingDifferentVersions() {
+  void testEvaluateDecisionWithLatestBindingDifferentVersions() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -143,7 +143,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithVersionBinding() {
+  void testEvaluateDecisionWithVersionBinding() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -176,7 +176,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithVersionTagBinding() {
+  void testEvaluateDecisionWithVersionTagBinding() {
     // given
     testRule.deployForTenant(TENANT_ONE, DMN_FILE_VERSION_TAG);
     testRule.deploy(Bpmn.createExecutableProcess("process")
@@ -202,7 +202,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithVersionTagBinding_ResolveTenantFromDefinition() {
+  void testEvaluateDecisionWithVersionTagBinding_ResolveTenantFromDefinition() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -232,7 +232,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testFailEvaluateDecisionFromOtherTenantWithDeploymentBinding() {
+  void testFailEvaluateDecisionFromOtherTenantWithDeploymentBinding() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -258,7 +258,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testFailEvaluateDecisionFromOtherTenantWithLatestBinding() {
+  void testFailEvaluateDecisionFromOtherTenantWithLatestBinding() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -284,7 +284,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testFailEvaluateDecisionFromOtherTenantWithVersionBinding() {
+  void testFailEvaluateDecisionFromOtherTenantWithVersionBinding() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -313,7 +313,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testFailEvaluateDecisionFromOtherTenantWithVersionTagBinding() {
+  void testFailEvaluateDecisionFromOtherTenantWithVersionTagBinding() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -345,7 +345,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionTenantIdConstant() {
+  void testEvaluateDecisionTenantIdConstant() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -370,7 +370,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithoutTenantIdConstant() {
+  void testEvaluateDecisionWithoutTenantIdConstant() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -395,7 +395,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionTenantIdExpression() {
+  void testEvaluateDecisionTenantIdExpression() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -420,7 +420,7 @@ public class MultiTenancyBusinessRuleTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionTenantIdCompositeExpression() {
+  void testEvaluateDecisionTenantIdCompositeExpression() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
       .startEvent()

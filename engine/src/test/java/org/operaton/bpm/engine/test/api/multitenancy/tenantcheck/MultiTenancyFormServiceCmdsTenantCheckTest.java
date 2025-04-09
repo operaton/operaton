@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyFormServiceCmdsTenantCheckTest {
+class MultiTenancyFormServiceCmdsTenantCheckTest {
  protected static final String TENANT_ONE = "tenant1";
 
   protected static final String PROCESS_DEFINITION_KEY = "formKeyProcess";
@@ -58,7 +58,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
   // GetStartForm test
   @Test
-  public void testGetStartFormWithAuthenticatedTenant() {
+  void testGetStartFormWithAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
@@ -75,7 +75,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetStartFormWithNoAuthenticatedTenant() {
+  void testGetStartFormWithNoAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
     "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
@@ -94,7 +94,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetStartFormWithDisabledTenantCheck() {
+  void testGetStartFormWithDisabledTenantCheck() {
 
     testRule.deployForTenant(TENANT_ONE,
     "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
@@ -114,7 +114,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
   // GetRenderedStartForm
   @Test
-  public void testGetRenderedStartFormWithAuthenticatedTenant() {
+  void testGetRenderedStartFormWithAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
@@ -129,7 +129,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetRenderedStartFormWithNoAuthenticatedTenant() {
+  void testGetRenderedStartFormWithNoAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
@@ -148,7 +148,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetRenderedStartFormWithDisabledTenantCheck() {
+  void testGetRenderedStartFormWithDisabledTenantCheck() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
@@ -165,7 +165,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
   // submitStartForm
   @Test
-  public void testSubmitStartFormWithAuthenticatedTenant() {
+  void testSubmitStartFormWithAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
@@ -183,7 +183,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testSubmitStartFormWithNoAuthenticatedTenant() {
+  void testSubmitStartFormWithNoAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
@@ -206,7 +206,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testSubmitStartFormWithDisabledTenantcheck() {
+  void testSubmitStartFormWithDisabledTenantcheck() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/form/util/VacationRequest_deprecated_forms.bpmn20.xml",
@@ -228,7 +228,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
   // getStartFormKey
   @Test
-  public void testGetStartFormKeyWithAuthenticatedTenant() {
+  void testGetStartFormKeyWithAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
 
@@ -240,7 +240,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetStartFormKeyWithNoAuthenticatedTenant() {
+  void testGetStartFormKeyWithNoAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
 
@@ -256,7 +256,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetStartFormKeyWithDisabledTenantCheck() {
+  void testGetStartFormKeyWithDisabledTenantCheck() {
 
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
 
@@ -272,7 +272,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
   // GetTaskForm test
   @Test
-  public void testGetTaskFormWithAuthenticatedTenant() {
+  void testGetTaskFormWithAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
 
@@ -290,7 +290,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetTaskFormWithNoAuthenticatedTenant() {
+  void testGetTaskFormWithNoAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
 
@@ -308,7 +308,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetTaskFormWithDisabledTenantCheck() {
+  void testGetTaskFormWithDisabledTenantCheck() {
 
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
 
@@ -329,7 +329,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
   // submitTaskForm
   @Test
-  public void testSubmitTaskFormWithAuthenticatedTenant() {
+  void testSubmitTaskFormWithAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
     "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
@@ -352,7 +352,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testSubmitTaskFormWithNoAuthenticatedTenant() {
+  void testSubmitTaskFormWithNoAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
@@ -374,7 +374,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testSubmitTaskFormWithDisabledTenantCheck() {
+  void testSubmitTaskFormWithDisabledTenantCheck() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
@@ -397,7 +397,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
   // getRenderedTaskForm
   @Test
-  public void testGetRenderedTaskFormWithAuthenticatedTenant() {
+  void testGetRenderedTaskFormWithAuthenticatedTenant() {
 
     // deploy tenants
     testRule.deployForTenant(TENANT_ONE,
@@ -419,7 +419,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetRenderedTaskFormWithNoAuthenticatedTenant() {
+  void testGetRenderedTaskFormWithNoAuthenticatedTenant() {
 
     // deploy tenants
     testRule.deployForTenant(TENANT_ONE,
@@ -444,7 +444,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetRenderedTaskFormWithDisabledTenantCheck() {
+  void testGetRenderedTaskFormWithDisabledTenantCheck() {
 
     // deploy tenants
     testRule.deployForTenant(TENANT_ONE,
@@ -468,7 +468,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
   // getTaskFormKey
   @Test
-  public void testGetTaskFormKeyWithAuthenticatedTenant() {
+  void testGetTaskFormKeyWithAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
@@ -483,7 +483,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetTaskFormKeyWithNoAuthenticatedTenant() {
+  void testGetTaskFormKeyWithNoAuthenticatedTenant() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");
@@ -505,7 +505,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetTaskFormKeyWithDisabledTenantCheck() {
+  void testGetTaskFormKeyWithDisabledTenantCheck() {
 
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/authorization/formKeyProcess.bpmn20.xml");

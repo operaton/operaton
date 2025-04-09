@@ -42,7 +42,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricJobLogQueryTest {
+class MultiTenancyHistoricJobLogQueryTest {
 
   protected static final BpmnModelInstance BPMN = Bpmn.createExecutableProcess("failingProcess")
       .startEvent()
@@ -67,7 +67,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     // given
     testRule.deployForTenant(TENANT_NULL, BPMN);
     testRule.deployForTenant(TENANT_ONE, BPMN);
@@ -79,7 +79,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryWithoutTenantId() {
+  void shouldQueryWithoutTenantId() {
     // when
     HistoricJobLogQuery query = historyService
         .createHistoricJobLogQuery();
@@ -89,7 +89,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryFilterWithoutTenantId() {
+  void shouldQueryFilterWithoutTenantId() {
     // when
     HistoricJobLogQuery query = historyService
         .createHistoricJobLogQuery()
@@ -100,7 +100,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantId() {
+  void shouldQueryByTenantId() {
     // when
     HistoricJobLogQuery queryTenantOne = historyService
         .createHistoricJobLogQuery()
@@ -116,7 +116,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantIds() {
+  void shouldQueryByTenantIds() {
     // when
     HistoricJobLogQuery query = historyService
         .createHistoricJobLogQuery()
@@ -127,7 +127,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryByNonExistingTenantId() {
+  void shouldQueryByNonExistingTenantId() {
     // when
     HistoricJobLogQuery query = historyService
         .createHistoricJobLogQuery()
@@ -138,7 +138,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldFailQueryByTenantIdNull() {
+  void shouldFailQueryByTenantIdNull() {
     var historicJobLogQuery = historyService.createHistoricJobLogQuery();
     try {
       // when
@@ -152,7 +152,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingAsc() {
+  void shouldQuerySortingAsc() {
     // when
     List<HistoricJobLog> historicJobLogs = historyService.createHistoricJobLogQuery()
         .orderByTenantId()
@@ -165,7 +165,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingDesc() {
+  void shouldQuerySortingDesc() {
     // when
     List<HistoricJobLog> historicJobLogs = historyService.createHistoricJobLogQuery()
         .orderByTenantId()
@@ -178,7 +178,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryNoAuthenticatedTenants() {
+  void shouldQueryNoAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -190,7 +190,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenant() {
+  void shouldQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -206,7 +206,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenants() {
+  void shouldQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -221,7 +221,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
   }
 
   @Test
-  public void shouldQueryDisabledTenantCheck() {
+  void shouldQueryDisabledTenantCheck() {
     // given
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);

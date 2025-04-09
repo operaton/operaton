@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
+class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -58,7 +58,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   String taskId;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
 
@@ -73,7 +73,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // set Assignee
   @Test
-  public void setAssigneeForTaskWithAuthenticatedTenant() {
+  void setAssigneeForTaskWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -84,7 +84,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void setAssigneeForTaskWithNoAuthenticatedTenant() {
+  void setAssigneeForTaskWithNoAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null);
 
@@ -97,7 +97,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void setAssigneeForTaskWithDisabledTenantCheck() {
+  void setAssigneeForTaskWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -109,7 +109,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // set owner test cases
   @Test
-  public void setOwnerForTaskWithAuthenticatedTenant() {
+  void setOwnerForTaskWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -120,7 +120,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void setOwnerForTaskWithNoAuthenticatedTenant() {
+  void setOwnerForTaskWithNoAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null);
 
@@ -133,7 +133,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void setOwnerForTaskWithDisabledTenantCheck() {
+  void setOwnerForTaskWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -145,7 +145,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // get identity links
   @Test
-  public void getIdentityLinkWithAuthenticatedTenant() {
+  void getIdentityLinkWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.setOwner(taskId, "demo");
@@ -154,7 +154,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void getIdentityLinkWitNoAuthenticatedTenant() {
+  void getIdentityLinkWitNoAuthenticatedTenant() {
 
     taskService.setOwner(taskId, "demo");
     identityService.setAuthentication("aUserId", null);
@@ -168,7 +168,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void getIdentityLinkWithDisabledTenantCheck() {
+  void getIdentityLinkWithDisabledTenantCheck() {
 
     taskService.setOwner(taskId, "demo");
     identityService.setAuthentication("aUserId", null);
@@ -181,7 +181,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // add candidate user
   @Test
-  public void addCandidateUserWithAuthenticatedTenant() {
+  void addCandidateUserWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.addCandidateUser(taskId, "demo");
@@ -191,7 +191,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void addCandidateUserWithNoAuthenticatedTenant() {
+  void addCandidateUserWithNoAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null);
 
@@ -204,7 +204,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void addCandidateUserWithDisabledTenantCheck() {
+  void addCandidateUserWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -218,7 +218,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // add candidate group
   @Test
-  public void addCandidateGroupWithAuthenticatedTenant() {
+  void addCandidateGroupWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.addCandidateGroup(taskId, "demo");
@@ -228,7 +228,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void addCandidateGroupWithNoAuthenticatedTenant() {
+  void addCandidateGroupWithNoAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null);
 
@@ -241,7 +241,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void addCandidateGroupWithDisabledTenantCheck() {
+  void addCandidateGroupWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -255,7 +255,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // delete candidate users
   @Test
-  public void deleteCandidateUserWithAuthenticatedTenant() {
+  void deleteCandidateUserWithAuthenticatedTenant() {
 
     taskService.addCandidateUser(taskId, "demo");
     assertThat(taskService.createTaskQuery().taskCandidateUser("demo").count()).isEqualTo(1L);
@@ -268,7 +268,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteCandidateUserWithNoAuthenticatedTenant() {
+  void deleteCandidateUserWithNoAuthenticatedTenant() {
 
     taskService.addCandidateUser(taskId, "demo");
     identityService.setAuthentication("aUserId", null);
@@ -282,7 +282,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteCandidateUserWithDisabledTenantCheck() {
+  void deleteCandidateUserWithDisabledTenantCheck() {
 
     taskService.addCandidateUser(taskId, "demo");
     identityService.setAuthentication("aUserId", null);
@@ -297,7 +297,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // delete candidate groups
   @Test
-  public void deleteCandidateGroupWithAuthenticatedTenant() {
+  void deleteCandidateGroupWithAuthenticatedTenant() {
 
     taskService.addCandidateGroup(taskId, "demo");
     assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isEqualTo(1L);
@@ -310,7 +310,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteCandidateGroupWithNoAuthenticatedTenant() {
+  void deleteCandidateGroupWithNoAuthenticatedTenant() {
 
     taskService.addCandidateGroup(taskId, "demo");
     identityService.setAuthentication("aUserId", null);
@@ -324,7 +324,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteCandidateGroupWithDisabledTenantCheck() {
+  void deleteCandidateGroupWithDisabledTenantCheck() {
 
     taskService.addCandidateGroup(taskId, "demo");
     identityService.setAuthentication("aUserId", null);
@@ -339,7 +339,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // add user identity link
   @Test
-  public void addUserIdentityLinkWithAuthenticatedTenant() {
+  void addUserIdentityLinkWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.addUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
@@ -349,7 +349,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void addUserIdentityLinkWithNoAuthenticatedTenant() {
+  void addUserIdentityLinkWithNoAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null);
 
@@ -362,7 +362,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void addUserIdentityLinkWithDisabledTenantCheck() {
+  void addUserIdentityLinkWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -376,7 +376,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // add group identity link
   @Test
-  public void addGroupIdentityLinkWithAuthenticatedTenant() {
+  void addGroupIdentityLinkWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.addGroupIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
@@ -386,7 +386,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void addGroupIdentityLinkWithNoAuthenticatedTenant() {
+  void addGroupIdentityLinkWithNoAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null);
 
@@ -399,7 +399,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void addGroupIdentityLinkWithDisabledTenantCheck() {
+  void addGroupIdentityLinkWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -413,7 +413,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // delete user identity link
   @Test
-  public void deleteUserIdentityLinkWithAuthenticatedTenant() {
+  void deleteUserIdentityLinkWithAuthenticatedTenant() {
 
     taskService.addUserIdentityLink(taskId, "demo", IdentityLinkType.ASSIGNEE);
     assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isEqualTo(1L);
@@ -426,7 +426,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteUserIdentityLinkWithNoAuthenticatedTenant() {
+  void deleteUserIdentityLinkWithNoAuthenticatedTenant() {
 
     taskService.addUserIdentityLink(taskId, "demo", IdentityLinkType.ASSIGNEE);
     identityService.setAuthentication("aUserId", null);
@@ -440,7 +440,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteUserIdentityLinkWithDisabledTenantCheck() {
+  void deleteUserIdentityLinkWithDisabledTenantCheck() {
 
     taskService.addUserIdentityLink(taskId, "demo", IdentityLinkType.ASSIGNEE);
     assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isEqualTo(1L);
@@ -457,7 +457,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
   // delete group identity link
   @Test
-  public void deleteGroupIdentityLinkWithAuthenticatedTenant() {
+  void deleteGroupIdentityLinkWithAuthenticatedTenant() {
 
     taskService.addGroupIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isEqualTo(1L);
@@ -470,7 +470,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteGroupIdentityLinkWithNoAuthenticatedTenant() {
+  void deleteGroupIdentityLinkWithNoAuthenticatedTenant() {
 
     taskService.addGroupIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
     identityService.setAuthentication("aUserId", null);
@@ -484,7 +484,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteGroupIdentityLinkWithDisabledTenantCheck() {
+  void deleteGroupIdentityLinkWithDisabledTenantCheck() {
 
     taskService.addGroupIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isEqualTo(1L);

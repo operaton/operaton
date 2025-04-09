@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyExternalTaskQueryTest {
+class MultiTenancyExternalTaskQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -55,7 +55,7 @@ public class MultiTenancyExternalTaskQueryTest {
   protected RuntimeService runtimeService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     BpmnModelInstance process = Bpmn.createExecutableProcess()
       .startEvent()
       .serviceTask()
@@ -72,7 +72,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryWithoutTenantId() {
+  void testQueryWithoutTenantId() {
     ExternalTaskQuery query = externalTaskService
         .createExternalTaskQuery();
 
@@ -80,7 +80,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     ExternalTaskQuery query = externalTaskService
         .createExternalTaskQuery()
         .tenantIdIn(TENANT_ONE);
@@ -95,7 +95,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     ExternalTaskQuery query = externalTaskService
         .createExternalTaskQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -104,7 +104,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     ExternalTaskQuery query = externalTaskService
         .createExternalTaskQuery()
         .tenantIdIn("nonExisting");
@@ -113,7 +113,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testFailQueryByTenantIdNull() {
+  void testFailQueryByTenantIdNull() {
     var externalTaskQuery = externalTaskService.createExternalTaskQuery();
     try {
       externalTaskQuery.tenantIdIn((String) null);
@@ -124,7 +124,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery()
         .orderByTenantId()
         .asc()
@@ -136,7 +136,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery()
         .orderByTenantId()
         .desc()
@@ -148,7 +148,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
@@ -156,7 +156,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
@@ -168,7 +168,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
@@ -179,7 +179,7 @@ public class MultiTenancyExternalTaskQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

@@ -51,12 +51,12 @@ public class TelemetryDynamicDataTest {
   protected ProcessEngine processEngineInMem;
 
   @BeforeEach
-  public void init() {
+  void init() {
     clearMetrics();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     clearMetrics();
 
     if (processEngineInMem != null) {
@@ -79,7 +79,7 @@ public class TelemetryDynamicDataTest {
   }
 
   @Test
-  public void shouldCountCommandsFromEngineStartAfterTelemetryActivation() {
+  void shouldCountCommandsFromEngineStartAfterTelemetryActivation() {
     // when
     processEngineInMem =  new StandaloneInMemProcessEngineConfiguration()
         .setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName())
@@ -104,7 +104,7 @@ public class TelemetryDynamicDataTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldCountAfterCleaning() {
+  void shouldCountAfterCleaning() {
     // given
     clearCommandCounts();
     Map<String, CommandCounter> entries = configuration.getDiagnosticsRegistry().getCommands();
@@ -128,7 +128,7 @@ public class TelemetryDynamicDataTest {
   }
 
   @Test
-  public void shouldCollectInnerClasses() {
+  void shouldCollectInnerClasses() {
     // given default configuration
 
     // when
@@ -144,7 +144,7 @@ public class TelemetryDynamicDataTest {
   }
 
   @Test
-  public void shouldNotCollectAnonymousClasses() {
+  void shouldNotCollectAnonymousClasses() {
     // given default configuration
 
     // when
@@ -165,7 +165,7 @@ public class TelemetryDynamicDataTest {
   }
 
   @Test
-  public void shouldNotCollectLambdas() {
+  void shouldNotCollectLambdas() {
     // given default configuration
 
     // when

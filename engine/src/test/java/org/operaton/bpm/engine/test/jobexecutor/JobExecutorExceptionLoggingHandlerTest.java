@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class JobExecutorExceptionLoggingHandlerTest {
+class JobExecutorExceptionLoggingHandlerTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -46,18 +46,18 @@ public class JobExecutorExceptionLoggingHandlerTest {
   protected ExecuteJobHelper.ExceptionLoggingHandler originalHandler;
 
   @BeforeEach
-  public void init() {
+  void init() {
     originalHandler = ExecuteJobHelper.loggingHandler;
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     // cleanup
     ExecuteJobHelper.loggingHandler = originalHandler;
   }
 
   @Test
-  public void shouldBeAbleToReplaceLoggingHandler() {
+  void shouldBeAbleToReplaceLoggingHandler() {
      // given
     CollectingHandler collectingHandler = new CollectingHandler();
     ExecuteJobHelper.loggingHandler = collectingHandler;

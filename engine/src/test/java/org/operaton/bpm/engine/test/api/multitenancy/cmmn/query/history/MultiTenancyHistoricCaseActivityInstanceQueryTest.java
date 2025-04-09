@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
+class MultiTenancyHistoricCaseActivityInstanceQueryTest {
 
   protected static final String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
 
@@ -59,7 +59,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     // given
     testRule.deployForTenant(TENANT_NULL, CMMN_FILE);
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
@@ -71,7 +71,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryWithoutTenantId() {
+  void shouldQueryWithoutTenantId() {
     // when
     HistoricCaseActivityInstanceQuery query = historyService
         .createHistoricCaseActivityInstanceQuery();
@@ -81,7 +81,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryFilterWithoutTenantId() {
+  void shouldQueryFilterWithoutTenantId() {
     // when
     HistoricCaseActivityInstanceQuery query = historyService
         .createHistoricCaseActivityInstanceQuery()
@@ -92,7 +92,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantId() {
+  void shouldQueryByTenantId() {
     // when
     HistoricCaseActivityInstanceQuery queryTenantOne = historyService
         .createHistoricCaseActivityInstanceQuery()
@@ -108,7 +108,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantIds() {
+  void shouldQueryByTenantIds() {
     // when
     HistoricCaseActivityInstanceQuery query = historyService
         .createHistoricCaseActivityInstanceQuery()
@@ -119,7 +119,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByNonExistingTenantId() {
+  void shouldQueryByNonExistingTenantId() {
     // when
     HistoricCaseActivityInstanceQuery query = historyService
         .createHistoricCaseActivityInstanceQuery()
@@ -130,7 +130,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldFailQueryByTenantIdNull() {
+  void shouldFailQueryByTenantIdNull() {
     var historicCaseActivityInstanceQuery = historyService.createHistoricCaseActivityInstanceQuery();
     try {
       // when
@@ -144,7 +144,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingAsc() {
+  void shouldQuerySortingAsc() {
     // when
     List<HistoricCaseActivityInstance> historicCaseActivityInstances = historyService
         .createHistoricCaseActivityInstanceQuery()
@@ -158,7 +158,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingDesc() {
+  void shouldQuerySortingDesc() {
     // when
     List<HistoricCaseActivityInstance> historicCaseActivityInstances = historyService.createHistoricCaseActivityInstanceQuery()
         .orderByTenantId()
@@ -171,7 +171,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryNoAuthenticatedTenants() {
+  void shouldQueryNoAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -183,7 +183,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenant() {
+  void shouldQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -199,7 +199,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenants() {
+  void shouldQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -214,7 +214,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryDisabledTenantCheck() {
+  void shouldQueryDisabledTenantCheck() {
     // given
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);

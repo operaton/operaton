@@ -35,10 +35,10 @@ import org.operaton.bpm.engine.management.MetricIntervalValue;
  * </p>
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
+class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
 
   @Test
-  public void testTimestampIsInCorrectTimezone() {
+  void testTimestampIsInCorrectTimezone() {
     //given generated metric data started at DEFAULT_INTERVAL ends at 3 * DEFAULT_INTERVAL
 
     //when metric query is executed (hint last interval is returned as first)

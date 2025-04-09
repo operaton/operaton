@@ -59,7 +59,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class TenantIdProviderTest {
+class TenantIdProviderTest {
 
   protected static final String CONFIGURATION_RESOURCE = "org/operaton/bpm/engine/test/api/multitenancy/TenantIdProviderTest.operaton.cfg.xml";
 
@@ -90,14 +90,14 @@ public class TenantIdProviderTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     TestTenantIdProvider.reset();
   }
 
   // root process instance //////////////////////////////////
 
   @Test
-  public void providerCalledForProcessDefinitionWithoutTenantId() {
+  void providerCalledForProcessDefinitionWithoutTenantId() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -113,7 +113,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerNotCalledForProcessDefinitionWithTenantId() {
+  void providerNotCalledForProcessDefinitionWithTenantId() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -129,9 +129,8 @@ public class TenantIdProviderTest {
   }
 
 
-
   @Test
-  public void providerCalledForStartedProcessInstanceByStartFormWithoutTenantId() {
+  void providerCalledForStartedProcessInstanceByStartFormWithoutTenantId() {
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
 
@@ -157,7 +156,7 @@ public class TenantIdProviderTest {
 
 
   @Test
-  public void providerNotCalledForStartedProcessInstanceByStartFormWithTenantId() {
+  void providerNotCalledForStartedProcessInstanceByStartFormWithTenantId() {
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
 
@@ -182,7 +181,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledForStartedProcessInstanceByModificationWithoutTenantId() {
+  void providerCalledForStartedProcessInstanceByModificationWithoutTenantId() {
     // given a deployment without a tenant id
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -202,7 +201,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerNotCalledForStartedProcessInstanceByModificationWithTenantId() {
+  void providerNotCalledForStartedProcessInstanceByModificationWithTenantId() {
     // given a deployment with a tenant id
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -222,7 +221,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithVariables() {
+  void providerCalledWithVariables() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -238,7 +237,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithProcessDefinition() {
+  void providerCalledWithProcessDefinition() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -256,7 +255,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setsTenantId() {
+  void setsTenantId() {
 
     String tenantId = TENANT_ID;
     TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
@@ -272,7 +271,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setNullTenantId() {
+  void setNullTenantId() {
 
     String tenantId = null;
     TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
@@ -290,7 +289,7 @@ public class TenantIdProviderTest {
   // sub process instance //////////////////////////////////
 
   @Test
-  public void providerCalledForProcessDefinitionWithoutTenantId_SubProcessInstance() {
+  void providerCalledForProcessDefinitionWithoutTenantId_SubProcessInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -307,7 +306,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerNotCalledForProcessDefinitionWithTenantId_SubProcessInstance() {
+  void providerNotCalledForProcessDefinitionWithTenantId_SubProcessInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -324,7 +323,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithVariables_SubProcessInstance() {
+  void providerCalledWithVariables_SubProcessInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -341,7 +340,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithProcessDefinition_SubProcessInstance() {
+  void providerCalledWithProcessDefinition_SubProcessInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -360,7 +359,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithSuperProcessInstance() {
+  void providerCalledWithSuperProcessInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -380,7 +379,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setsTenantId_SubProcessInstance() {
+  void setsTenantId_SubProcessInstance() {
 
     String tenantId = TENANT_ID;
     TestTenantIdProvider.delegate = new SetValueOnSubProcessInstanceTenantIdProvider(tenantId);
@@ -401,7 +400,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setNullTenantId_SubProcessInstance() {
+  void setNullTenantId_SubProcessInstance() {
 
     String tenantId = null;
     TestTenantIdProvider.delegate = new SetValueOnSubProcessInstanceTenantIdProvider(tenantId);
@@ -418,7 +417,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void tenantIdInheritedFromSuperProcessInstance() {
+  void tenantIdInheritedFromSuperProcessInstance() {
 
     String tenantId = TENANT_ID;
     TestTenantIdProvider.delegate = new SetValueOnRootProcessInstanceTenantIdProvider(tenantId);
@@ -437,7 +436,7 @@ public class TenantIdProviderTest {
   // process task in case //////////////////////////////
 
   @Test
-  public void providerCalledForProcessDefinitionWithoutTenantId_ProcessTask() {
+  void providerCalledForProcessDefinitionWithoutTenantId_ProcessTask() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -456,7 +455,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerNotCalledForProcessDefinitionWithTenantId_ProcessTask() {
+  void providerNotCalledForProcessDefinitionWithTenantId_ProcessTask() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -475,7 +474,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithVariables_ProcessTask() {
+  void providerCalledWithVariables_ProcessTask() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -498,7 +497,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithProcessDefinition_ProcessTask() {
+  void providerCalledWithProcessDefinition_ProcessTask() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -518,7 +517,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithSuperCaseExecution() {
+  void providerCalledWithSuperCaseExecution() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -540,7 +539,7 @@ public class TenantIdProviderTest {
   // historic decision instance //////////////////////////////////
 
   @Test
-  public void providerCalledForDecisionDefinitionWithoutTenantId() {
+  void providerCalledForDecisionDefinitionWithoutTenantId() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -556,7 +555,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerNotCalledForDecisionDefinitionWithTenantId() {
+  void providerNotCalledForDecisionDefinitionWithTenantId() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -572,7 +571,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithDecisionDefinition() {
+  void providerCalledWithDecisionDefinition() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -590,7 +589,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setsTenantIdForHistoricDecisionInstance() {
+  void setsTenantIdForHistoricDecisionInstance() {
 
     String tenantId = TENANT_ID;
     TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
@@ -606,7 +605,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setNullTenantIdForHistoricDecisionInstance() {
+  void setNullTenantIdForHistoricDecisionInstance() {
 
     String tenantId = null;
     TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
@@ -622,7 +621,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledForHistoricDecisionDefinitionWithoutTenantId_BusinessRuleTask() {
+  void providerCalledForHistoricDecisionDefinitionWithoutTenantId_BusinessRuleTask() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -645,7 +644,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerNotCalledForHistoricDecisionDefinitionWithTenantId_BusinessRuleTask() {
+  void providerNotCalledForHistoricDecisionDefinitionWithTenantId_BusinessRuleTask() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -668,7 +667,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithExecution_BusinessRuleTasks() {
+  void providerCalledWithExecution_BusinessRuleTasks() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -695,7 +694,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setsTenantIdForHistoricDecisionInstance_BusinessRuleTask() {
+  void setsTenantIdForHistoricDecisionInstance_BusinessRuleTask() {
 
     String tenantId = TENANT_ID;
     TestTenantIdProvider.delegate = new SetValueOnHistoricDecisionInstanceTenantIdProvider(tenantId);
@@ -719,7 +718,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setNullTenantIdForHistoricDecisionInstance_BusinessRuleTask() {
+  void setNullTenantIdForHistoricDecisionInstance_BusinessRuleTask() {
 
     String tenantId = null;
     TestTenantIdProvider.delegate = new SetValueOnHistoricDecisionInstanceTenantIdProvider(tenantId);
@@ -749,7 +748,7 @@ public class TenantIdProviderTest {
   // root case instance //////////////////////////////////
 
   @Test
-  public void providerCalledForCaseDefinitionWithoutTenantId() {
+  void providerCalledForCaseDefinitionWithoutTenantId() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -765,7 +764,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerNotCalledForCaseInstanceWithTenantId() {
+  void providerNotCalledForCaseInstanceWithTenantId() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -781,7 +780,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledForCaseInstanceWithVariables() {
+  void providerCalledForCaseInstanceWithVariables() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -797,7 +796,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithCaseDefinition() {
+  void providerCalledWithCaseDefinition() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -815,7 +814,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setsTenantIdForCaseInstance() {
+  void setsTenantIdForCaseInstance() {
 
     String tenantId = TENANT_ID;
     TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
@@ -831,7 +830,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setNullTenantIdForCaseInstance() {
+  void setNullTenantIdForCaseInstance() {
 
     String tenantId = null;
     TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
@@ -849,7 +848,7 @@ public class TenantIdProviderTest {
   // sub case instance //////////////////////////////////
 
   @Test
-  public void providerCalledForCaseDefinitionWithoutTenantId_SubCaseInstance() {
+  void providerCalledForCaseDefinitionWithoutTenantId_SubCaseInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -865,7 +864,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerNotCalledForCaseDefinitionWithTenantId_SubCaseInstance() {
+  void providerNotCalledForCaseDefinitionWithTenantId_SubCaseInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -881,7 +880,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithVariables_SubCaseInstance() {
+  void providerCalledWithVariables_SubCaseInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -897,7 +896,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithCaseDefinition_SubCaseInstance() {
+  void providerCalledWithCaseDefinition_SubCaseInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -915,7 +914,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledWithSuperCaseInstance() {
+  void providerCalledWithSuperCaseInstance() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -935,7 +934,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setsTenantId_SubCaseInstance() {
+  void setsTenantId_SubCaseInstance() {
 
     String tenantId = TENANT_ID;
     TestTenantIdProvider.delegate = new SetValueOnSubCaseInstanceTenantIdProvider(tenantId);
@@ -955,7 +954,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void setNullTenantId_SubCaseInstance() {
+  void setNullTenantId_SubCaseInstance() {
 
     String tenantId = null;
     TestTenantIdProvider.delegate = new SetValueOnSubCaseInstanceTenantIdProvider(tenantId);
@@ -971,7 +970,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void tenantIdInheritedFromSuperCaseInstance() {
+  void tenantIdInheritedFromSuperCaseInstance() {
 
     String tenantId = TENANT_ID;
     TestTenantIdProvider.delegate = new SetValueOnRootCaseInstanceTenantIdProvider(tenantId);
@@ -987,7 +986,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void providerCalledForCaseInstanceWithSuperCaseExecution() {
+  void providerCalledForCaseInstanceWithSuperCaseExecution() {
 
     ContextLoggingTenantIdProvider tenantIdProvider = new ContextLoggingTenantIdProvider();
     TestTenantIdProvider.delegate = tenantIdProvider;
@@ -1008,7 +1007,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void shouldHaveAccessToFormPropertiesFromTenantIdProvider() {
+  void shouldHaveAccessToFormPropertiesFromTenantIdProvider() {
     // given
     String variableKey = "varKey";
     String variableValue = "varValue";
@@ -1037,7 +1036,7 @@ public class TenantIdProviderTest {
   // query activity instances //////////////////////////////////
 
   @Test
-  public void shouldQueryForActivityInstancesIncludeIncidentsForTypeGetInstances() {
+  void shouldQueryForActivityInstancesIncludeIncidentsForTypeGetInstances() {
     // given
     testRule.deploy(TASK_PROCESS);
 
@@ -1060,7 +1059,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void shouldQueryForActivityInstancesIncludeFailedJobsGetInstances() {
+  void shouldQueryForActivityInstancesIncludeFailedJobsGetInstances() {
     // given
     testRule.deploy(TASK_PROCESS);
 
@@ -1083,7 +1082,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void shouldQueryForActivityInstancesIncludeIncidentsGetInstances() {
+  void shouldQueryForActivityInstancesIncludeIncidentsGetInstances() {
     // given
     testRule.deploy(TASK_PROCESS);
 
@@ -1106,7 +1105,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void shouldQueryForActivityInstancesIncludeFailedJobsGetJobs() {
+  void shouldQueryForActivityInstancesIncludeFailedJobsGetJobs() {
     // given
     testRule.deploy(FAILING_PROCESS);
 
@@ -1131,7 +1130,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void shouldQueryForActivityInstancesIncludeIncidentsForTypeGetIncidents() {
+  void shouldQueryForActivityInstancesIncludeIncidentsForTypeGetIncidents() {
     // given
     testRule.deploy(FAILING_PROCESS);
 
@@ -1156,7 +1155,7 @@ public class TenantIdProviderTest {
   }
 
   @Test
-  public void shouldQueryForActivityInstancesIncludeIncidentsGetIncidents() {
+  void shouldQueryForActivityInstancesIncludeIncidentsGetIncidents() {
     // given
     testRule.deploy(FAILING_PROCESS);
 

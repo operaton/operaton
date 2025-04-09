@@ -47,7 +47,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author roman.smirnov
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class SuspendJobDefinitionTest {
+class SuspendJobDefinitionTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;
@@ -55,7 +55,7 @@ public class SuspendJobDefinitionTest {
   protected RepositoryService repositoryService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(commandContext -> {
       commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerSuspendJobDefinitionHandler.TYPE);
@@ -67,7 +67,7 @@ public class SuspendJobDefinitionTest {
   // Test ManagementService#suspendJobDefinitionById() /////////////////////////
 
   @Test
-  public void testSuspensionById_shouldThrowProcessEngineException() {
+  void testSuspensionById_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobDefinitionById(null);
       fail("A ProcessEngineException was expected.");
@@ -77,7 +77,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testSuspensionByIdAndSuspendJobsFlag_shouldThrowProcessEngineException() {
+  void testSuspensionByIdAndSuspendJobsFlag_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobDefinitionById(null, false);
       fail("A ProcessEngineException was expected.");
@@ -94,7 +94,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testSuspensionByIdAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
+  void testSuspensionByIdAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobDefinitionById(null, false, null);
       fail("A ProcessEngineException was expected.");
@@ -128,7 +128,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionById_shouldRetainJobs() {
+  void testSuspensionById_shouldRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -174,7 +174,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByIdAndSuspendJobsFlag_shouldRetainJobs() {
+  void testSuspensionByIdAndSuspendJobsFlag_shouldRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -218,7 +218,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByIdAndSuspendJobsFlag_shouldSuspendJobs() {
+  void testSuspensionByIdAndSuspendJobsFlag_shouldSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -258,7 +258,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionById_shouldExecuteImmediatelyAndRetainJobs() {
+  void testSuspensionById_shouldExecuteImmediatelyAndRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -302,7 +302,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionById_shouldExecuteImmediatelyAndSuspendJobs() {
+  void testSuspensionById_shouldExecuteImmediatelyAndSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -342,7 +342,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionById_shouldExecuteDelayedAndRetainJobs() {
+  void testSuspensionById_shouldExecuteDelayedAndRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -401,7 +401,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionById_shouldExecuteDelayedAndSuspendJobs() {
+  void testSuspensionById_shouldExecuteDelayedAndSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -461,7 +461,7 @@ public class SuspendJobDefinitionTest {
   // Test ManagementService#suspendJobDefinitionByProcessDefinitionId() /////////////////////////
 
   @Test
-  public void testSuspensionByProcessDefinitionId_shouldThrowProcessEngineException() {
+  void testSuspensionByProcessDefinitionId_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobDefinitionByProcessDefinitionId(null);
       fail("A ProcessEngineException was expected.");
@@ -471,7 +471,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testSuspensionByProcessDefinitionIdAndSuspendJobsFlag_shouldThrowProcessEngineException() {
+  void testSuspensionByProcessDefinitionIdAndSuspendJobsFlag_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobDefinitionByProcessDefinitionId(null, false);
       fail("A ProcessEngineException was expected.");
@@ -488,7 +488,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testSuspensionByProcessDefinitionIdAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
+  void testSuspensionByProcessDefinitionIdAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
     Date suspensionDate = new Date();
 
     try {
@@ -523,7 +523,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionId_shouldRetainJobs() {
+  void testSuspensionByProcessDefinitionId_shouldRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -570,7 +570,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionIdAndSuspendJobsFlag_shouldRetainJobs() {
+  void testSuspensionByProcessDefinitionIdAndSuspendJobsFlag_shouldRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -615,7 +615,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionIdAndSuspendJobsFlag_shouldSuspendJobs() {
+  void testSuspensionByProcessDefinitionIdAndSuspendJobsFlag_shouldSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -656,7 +656,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionId_shouldExecuteImmediatelyAndRetainJobs() {
+  void testSuspensionByProcessDefinitionId_shouldExecuteImmediatelyAndRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -698,7 +698,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionId_shouldExecuteImmediatelyAndSuspendJobs() {
+  void testSuspensionByProcessDefinitionId_shouldExecuteImmediatelyAndSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -739,7 +739,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionId_shouldExecuteDelayedAndRetainJobs() {
+  void testSuspensionByProcessDefinitionId_shouldExecuteDelayedAndRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -797,7 +797,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionId_shouldExecuteDelayedAndSuspendJobs() {
+  void testSuspensionByProcessDefinitionId_shouldExecuteDelayedAndSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -854,7 +854,7 @@ public class SuspendJobDefinitionTest {
   // Test ManagementService#suspendJobDefinitionByProcessDefinitionKey() /////////////////////////
 
   @Test
-  public void testSuspensionByProcessDefinitionKey_shouldThrowProcessEngineException() {
+  void testSuspensionByProcessDefinitionKey_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobDefinitionByProcessDefinitionKey(null);
       fail("A ProcessEngineException was expected.");
@@ -864,7 +864,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldThrowProcessEngineException() {
+  void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobDefinitionByProcessDefinitionKey(null, false);
       fail("A ProcessEngineException was expected.");
@@ -881,7 +881,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
+  void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlagAndExecutionDate_shouldThrowProcessEngineException() {
     Date suspensionDate = new Date();
     try {
       managementService.suspendJobDefinitionByProcessDefinitionKey(null, false, null);
@@ -915,7 +915,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionKey_shouldRetainJobs() {
+  void testSuspensionByProcessDefinitionKey_shouldRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -960,7 +960,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldRetainJobs() {
+  void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1002,7 +1002,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldSuspendJobs() {
+  void testSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1042,7 +1042,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionKey_shouldExecuteImmediatelyAndRetainJobs() {
+  void testSuspensionByProcessDefinitionKey_shouldExecuteImmediatelyAndRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1084,7 +1084,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionKey_shouldExecuteImmediatelyAndSuspendJobs() {
+  void testSuspensionByProcessDefinitionKey_shouldExecuteImmediatelyAndSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1124,7 +1124,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionKey_shouldExecuteDelayedAndRetainJobs() {
+  void testSuspensionByProcessDefinitionKey_shouldExecuteDelayedAndRetainJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1180,7 +1180,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionKey_shouldExecuteDelayedAndSuspendJobs() {
+  void testSuspensionByProcessDefinitionKey_shouldExecuteDelayedAndSuspendJobs() {
     // given
     // a deployed process definition with asynchronous continuation
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1238,7 +1238,7 @@ public class SuspendJobDefinitionTest {
   // with same process definition key
 
   @Test
-  public void testMultipleSuspensionByProcessDefinitionKey_shouldRetainJobs() {
+  void testMultipleSuspensionByProcessDefinitionKey_shouldRetainJobs() {
     // given
     String key = "suspensionProcess";
 
@@ -1277,7 +1277,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testMultipleSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldRetainJobs() {
+  void testMultipleSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldRetainJobs() {
     // given
     String key = "suspensionProcess";
 
@@ -1316,7 +1316,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testMultipleSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldSuspendJobs() {
+  void testMultipleSuspensionByProcessDefinitionKeyAndSuspendJobsFlag_shouldSuspendJobs() {
     // given
     String key = "suspensionProcess";
 
@@ -1355,7 +1355,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testMultipleSuspensionByProcessDefinitionKey_shouldExecuteImmediatelyAndRetainJobs() {
+  void testMultipleSuspensionByProcessDefinitionKey_shouldExecuteImmediatelyAndRetainJobs() {
     // given
     String key = "suspensionProcess";
 
@@ -1394,7 +1394,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testMultipleSuspensionByProcessDefinitionKey_shouldExecuteImmediatelyAndSuspendJobs() {
+  void testMultipleSuspensionByProcessDefinitionKey_shouldExecuteImmediatelyAndSuspendJobs() {
     // given
     String key = "suspensionProcess";
 
@@ -1433,7 +1433,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testMultipleSuspensionByProcessDefinitionKey_shouldExecuteDelayedAndRetainJobs() {
+  void testMultipleSuspensionByProcessDefinitionKey_shouldExecuteDelayedAndRetainJobs() {
     // given
     String key = "suspensionProcess";
 
@@ -1488,7 +1488,7 @@ public class SuspendJobDefinitionTest {
   }
 
   @Test
-  public void testMultipleSuspensionByProcessDefinitionKey_shouldExecuteDelayedAndSuspendJobs() {
+  void testMultipleSuspensionByProcessDefinitionKey_shouldExecuteDelayedAndSuspendJobs() {
     // given
     String key = "suspensionProcess";
 
@@ -1545,7 +1545,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByIdUsingBuilder() {
+  void testSuspensionByIdUsingBuilder() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -1572,7 +1572,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionIdUsingBuilder() {
+  void testSuspensionByProcessDefinitionIdUsingBuilder() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -1601,7 +1601,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionByProcessDefinitionKeyUsingBuilder() {
+  void testSuspensionByProcessDefinitionKeyUsingBuilder() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -1628,7 +1628,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testSuspensionJobDefinitionIncludeJobsdUsingBuilder() {
+  void testSuspensionJobDefinitionIncludeJobsdUsingBuilder() {
     // given
     // a deployed process definition with asynchronous continuation
 
@@ -1664,7 +1664,7 @@ public class SuspendJobDefinitionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
   @Test
-  public void testDelayedSuspensionUsingBuilder() {
+  void testDelayedSuspensionUsingBuilder() {
     // given
     // a deployed process definition with asynchronous continuation
 

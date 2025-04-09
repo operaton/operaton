@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class MultiTenancyCommandTenantCheckTest {
+class MultiTenancyCommandTenantCheckTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -37,12 +37,12 @@ public class MultiTenancyCommandTenantCheckTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     identityService.setAuthentication("user", null, null);
   }
 
   @Test
-  public void disableTenantCheckForProcessEngine() {
+  void disableTenantCheckForProcessEngine() {
     // disable tenant check for process engine
     processEngineConfiguration.setTenantCheckEnabled(false);
 
@@ -56,7 +56,7 @@ public class MultiTenancyCommandTenantCheckTest {
   }
 
   @Test
-  public void disableTenantCheckForCommand() {
+  void disableTenantCheckForCommand() {
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
       // disable tenant check for the current command
@@ -77,7 +77,7 @@ public class MultiTenancyCommandTenantCheckTest {
   }
 
   @Test
-  public void disableAndEnableTenantCheckForCommand() {
+  void disableAndEnableTenantCheckForCommand() {
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
@@ -92,7 +92,7 @@ public class MultiTenancyCommandTenantCheckTest {
   }
 
   @Test
-  public void disableTenantCheckForOperatonAdmin() {
+  void disableTenantCheckForOperatonAdmin() {
     identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {

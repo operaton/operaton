@@ -62,7 +62,7 @@ public class MultiTenancyMessageCorrelationTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void correlateMessageToStartEventNoTenantIdSetForNonTenant() {
+  void correlateMessageToStartEventNoTenantIdSetForNonTenant() {
     testRule.deploy(MESSAGE_START_PROCESS);
 
     engineRule.getRuntimeService().createMessageCorrelation("message").correlate();
@@ -73,7 +73,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToStartEventNoTenantIdSetForTenant() {
+  void correlateMessageToStartEventNoTenantIdSetForTenant() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
 
     engineRule.getRuntimeService().createMessageCorrelation("message").correlate();
@@ -83,7 +83,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToStartEventWithoutTenantId() {
+  void correlateMessageToStartEventWithoutTenantId() {
     testRule.deploy(MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
 
@@ -97,7 +97,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToStartEventWithTenantId() {
+  void correlateMessageToStartEventWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
@@ -111,7 +111,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToIntermediateCatchEventNoTenantIdSetForNonTenant() {
+  void correlateMessageToIntermediateCatchEventNoTenantIdSetForNonTenant() {
     testRule.deploy(MESSAGE_CATCH_PROCESS);
 
     engineRule.getRuntimeService().startProcessInstanceByKey("messageCatch");
@@ -123,7 +123,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToIntermediateCatchEventNoTenantIdSetForTenant() {
+  void correlateMessageToIntermediateCatchEventNoTenantIdSetForTenant() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
     engineRule.getRuntimeService().startProcessInstanceByKey("messageCatch");
@@ -135,7 +135,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToIntermediateCatchEventWithoutTenantId() {
+  void correlateMessageToIntermediateCatchEventWithoutTenantId() {
     testRule.deploy(MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
@@ -152,7 +152,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToIntermediateCatchEventWithTenantId() {
+  void correlateMessageToIntermediateCatchEventWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
 
@@ -169,7 +169,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToStartAndIntermediateCatchEventWithoutTenantId() {
+  void correlateMessageToStartAndIntermediateCatchEventWithoutTenantId() {
     testRule.deploy(MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
 
@@ -186,7 +186,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToStartAndIntermediateCatchEventWithTenantId() {
+  void correlateMessageToStartAndIntermediateCatchEventWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
 
@@ -203,7 +203,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToMultipleIntermediateCatchEventsWithoutTenantId() {
+  void correlateMessageToMultipleIntermediateCatchEventsWithoutTenantId() {
     testRule.deploy(MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
@@ -224,7 +224,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessageToMultipleIntermediateCatchEventsWithTenantId() {
+  void correlateMessageToMultipleIntermediateCatchEventsWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
 
@@ -244,7 +244,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateStartMessageWithoutTenantId() {
+  void correlateStartMessageWithoutTenantId() {
     testRule.deploy(MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
 
@@ -258,7 +258,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateStartMessageWithTenantId() {
+  void correlateStartMessageWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
@@ -272,7 +272,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessagesToStartEventsForMultipleTenants() {
+  void correlateMessagesToStartEventsForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
@@ -284,7 +284,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessagesToIntermediateCatchEventsForMultipleTenants() {
+  void correlateMessagesToIntermediateCatchEventsForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
 
@@ -299,7 +299,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void correlateMessagesToStartAndIntermediateCatchEventForMultipleTenants() {
+  void correlateMessagesToStartAndIntermediateCatchEventForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
 
@@ -327,7 +327,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
+  void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
     // given
     String processDefId1 = testRule.deployForTenantAndGetDefinition(TENANT_ONE, MESSAGE_START_PROCESS).getId();
     String processDefId2 = testRule.deployForTenantAndGetDefinition(TENANT_ONE, MESSAGE_START_PROCESS).getId();
@@ -376,7 +376,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void failToCorrelateMessageToStartEventsForMultipleTenants() {
+  void failToCorrelateMessageToStartEventsForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
@@ -389,7 +389,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void failToCorrelateStartMessageForMultipleTenants() {
+  void failToCorrelateStartMessageForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
@@ -403,7 +403,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void failToCorrelateMessageByProcessInstanceIdWithoutTenantId() {
+  void failToCorrelateMessageByProcessInstanceIdWithoutTenantId() {
     // given
     var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message")
       .processInstanceId("id")
@@ -416,7 +416,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void failToCorrelateMessageByProcessInstanceIdAndTenantId() {
+  void failToCorrelateMessageByProcessInstanceIdAndTenantId() {
     // given
     var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message")
       .processInstanceId("id")
@@ -429,7 +429,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void failToCorrelateMessageByProcessDefinitionIdWithoutTenantId() {
+  void failToCorrelateMessageByProcessDefinitionIdWithoutTenantId() {
     // given
     var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message")
       .processDefinitionId("id")
@@ -442,7 +442,7 @@ public class MultiTenancyMessageCorrelationTest {
   }
 
   @Test
-  public void failToCorrelateMessageByProcessDefinitionIdAndTenantId() {
+  void failToCorrelateMessageByProcessDefinitionIdAndTenantId() {
     // given
     var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message")
       .processDefinitionId("id")

@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
+class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -88,7 +88,7 @@ public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void testReportNoAuthenticatedTenants() {
+  void testReportNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 5, 10, TENANT_ONE);
@@ -102,7 +102,7 @@ public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void testReportWithAuthenticatedTenants() {
+  void testReportWithAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 5, 10, TENANT_ONE);
@@ -117,7 +117,7 @@ public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void testReportDisabledTenantCheck() {
+  void testReportDisabledTenantCheck() {
     // given
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 5, 10, TENANT_ONE);
@@ -136,7 +136,7 @@ public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void testReportTenantIdInNoAuthenticatedTenants() {
+  void testReportTenantIdInNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);
     testRule.deployForTenant(TENANT_TWO, CMMN_MODEL);
@@ -156,7 +156,7 @@ public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void testReportTenantIdInWithAuthenticatedTenants() {
+  void testReportTenantIdInWithAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);
     testRule.deployForTenant(TENANT_TWO, CMMN_MODEL);
@@ -177,7 +177,7 @@ public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void testReportTenantIdInDisabledTenantCheck() {
+  void testReportTenantIdInDisabledTenantCheck() {
     // given
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);
     testRule.deployForTenant(TENANT_TWO, CMMN_MODEL);
@@ -200,7 +200,7 @@ public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void testReportWithoutTenantId() {
+  void testReportWithoutTenantId() {
     // given
     testRule.deploy(CMMN_MODEL);
 
@@ -215,7 +215,7 @@ public class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void testReportTenantIdInWithoutTenantId() {
+  void testReportTenantIdInWithoutTenantId() {
     // given
     testRule.deploy(CMMN_MODEL);
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);

@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyIncidentQueryTest {
+class MultiTenancyIncidentQueryTest {
 
   protected static final BpmnModelInstance BPMN = Bpmn.createExecutableProcess("failingProcess")
       .startEvent()
@@ -59,7 +59,7 @@ public class MultiTenancyIncidentQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deployForTenant(TENANT_ONE, BPMN);
     testRule.deployForTenant(TENANT_TWO, BPMN);
 
@@ -68,7 +68,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQueryWithoutTenantId() {
+  void testQueryWithoutTenantId() {
     IncidentQuery query = runtimeService
         .createIncidentQuery();
 
@@ -76,7 +76,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     IncidentQuery query = runtimeService
         .createIncidentQuery()
         .tenantIdIn(TENANT_ONE);
@@ -91,7 +91,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     IncidentQuery query = runtimeService
         .createIncidentQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -100,7 +100,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     IncidentQuery query = runtimeService
         .createIncidentQuery()
         .tenantIdIn("nonExisting");
@@ -109,7 +109,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testFailQueryByTenantIdNull() {
+  void testFailQueryByTenantIdNull() {
     var incidentQuery = runtimeService.createIncidentQuery();
     try {
       incidentQuery.tenantIdIn((String) null);
@@ -120,7 +120,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     List<Incident> incidents = runtimeService.createIncidentQuery()
         .orderByTenantId()
         .asc()
@@ -132,7 +132,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     List<Incident> incidents = runtimeService.createIncidentQuery()
         .orderByTenantId()
         .desc()
@@ -144,7 +144,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     IncidentQuery query = runtimeService.createIncidentQuery();
@@ -152,7 +152,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     IncidentQuery query = runtimeService.createIncidentQuery();
@@ -164,7 +164,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     IncidentQuery query = runtimeService.createIncidentQuery();
@@ -175,7 +175,7 @@ public class MultiTenancyIncidentQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

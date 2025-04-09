@@ -37,7 +37,7 @@ import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 /**
  * @author kristin.polenz
  */
-public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
+class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -56,14 +56,14 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   protected String caseDefinitionId;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL, CMMN_DIAGRAM);
 
     caseDefinitionId = repositoryService.createCaseDefinitionQuery().singleResult().getId();
   }
 
   @Test
-  public void failToGetCaseModelNoAuthenticatedTenants() {
+  void failToGetCaseModelNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -73,7 +73,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getCaseModelWithAuthenticatedTenant() {
+  void getCaseModelWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getCaseModel(caseDefinitionId);
@@ -82,7 +82,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getCaseModelDisabledTenantCheck() {
+  void getCaseModelDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -92,7 +92,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetCaseDiagramNoAuthenticatedTenants() {
+  void failToGetCaseDiagramNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -102,7 +102,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getCaseDiagramWithAuthenticatedTenant() {
+  void getCaseDiagramWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getCaseDiagram(caseDefinitionId);
@@ -111,7 +111,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getCaseDiagramDisabledTenantCheck() {
+  void getCaseDiagramDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -121,7 +121,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetCaseDefinitionNoAuthenticatedTenants() {
+  void failToGetCaseDefinitionNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -132,7 +132,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getCaseDefinitionWithAuthenticatedTenant() {
+  void getCaseDefinitionWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     CaseDefinition definition = repositoryService.getCaseDefinition(caseDefinitionId);
@@ -141,7 +141,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getCaseDefinitionDisabledTenantCheck() {
+  void getCaseDefinitionDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -151,7 +151,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetCmmnModelInstanceNoAuthenticatedTenants() {
+  void failToGetCmmnModelInstanceNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -161,7 +161,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getCmmnModelInstanceWithAuthenticatedTenant() {
+  void getCmmnModelInstanceWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     CmmnModelInstance modelInstance = repositoryService.getCmmnModelInstance(caseDefinitionId);
@@ -170,7 +170,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getCmmnModelInstanceDisabledTenantCheck() {
+  void getCmmnModelInstanceDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -180,7 +180,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveWithAuthenticatedTenant() {
+  void updateHistoryTimeToLiveWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitionId, 6);
@@ -192,7 +192,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveDisabledTenantCheck() {
+  void updateHistoryTimeToLiveDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -205,7 +205,7 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveNoAuthenticatedTenants(){
+  void updateHistoryTimeToLiveNoAuthenticatedTenants(){
     identityService.setAuthentication("user", null, null);
 
     // when/then

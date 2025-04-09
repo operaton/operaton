@@ -37,7 +37,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyUserOperationLogQueryTest {
+class MultiTenancyUserOperationLogQueryTest {
   protected static final String USER_ONE = "aUserId";
   protected static final String USER_TWO = "aUserId1";
   protected static final String USER_WITHOUT_TENANT = "aUserId1";
@@ -60,7 +60,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   protected IdentityService identityService;
 
   @Test
-  public void shouldReturnNoResultsWithoutTenant() {
+  void shouldReturnNoResultsWithoutTenant() {
     // given logs with assigned tenant
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, Arrays.asList(TENANT_ONE));
@@ -82,7 +82,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   }
 
   @Test
-  public void shouldReturnResultsWhenMultipleTenants() {
+  void shouldReturnResultsWhenMultipleTenants() {
     // given task with no tenant, with TENANT_ONE, and with TENANT_TWO
     testRule.deploy(MODEL);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
@@ -119,7 +119,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   }
 
   @Test
-  public void shouldReturnResultsWhenTwoTenant() {
+  void shouldReturnResultsWhenTwoTenant() {
     // given logs with assigned tenant
     // and user belonging to two tenants
     testRule.deployForTenant(TENANT_ONE, MODEL);
@@ -141,7 +141,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   }
 
   @Test
-  public void shouldReturnResultsWithoutTenantId() {
+  void shouldReturnResultsWithoutTenantId() {
     // given task with no tenant, with TENANT_ONE, and with TENANT_TWO
     testRule.deploy(MODEL);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
@@ -178,7 +178,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   }
 
   @Test
-  public void shouldReturnResultsTenantIdIn() {
+  void shouldReturnResultsTenantIdIn() {
     // given task with no tenant, with TENANT_ONE, and with TENANT_TWO
     testRule.deploy(MODEL);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);

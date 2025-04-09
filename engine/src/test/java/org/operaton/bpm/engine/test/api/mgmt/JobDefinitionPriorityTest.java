@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class JobDefinitionPriorityTest {
+class JobDefinitionPriorityTest {
 
   protected static final long EXPECTED_DEFAULT_PRIORITY = 0;
 
@@ -55,7 +55,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
   @Test
-  public void testSetJobDefinitionPriority() {
+  void testSetJobDefinitionPriority() {
     // given a process instance with a job with default priority and a corresponding job definition
     ProcessInstance instance = runtimeService.createProcessInstanceByKey("asyncTaskProcess")
       .startBeforeActivity("task")
@@ -88,7 +88,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
   @Test
-  public void testSetJobDefinitionPriorityWithCascade() {
+  void testSetJobDefinitionPriorityWithCascade() {
     // given a process instance with a job with default priority and a corresponding job definition
     ProcessInstance instance = runtimeService.createProcessInstanceByKey("asyncTaskProcess")
       .startBeforeActivity("task")
@@ -121,7 +121,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testSetJobDefinitionPriorityOverridesBpmnPriority() {
+  void testSetJobDefinitionPriorityOverridesBpmnPriority() {
     // given a process instance with a job with default priority and a corresponding job definition
     ProcessInstance instance = runtimeService.createProcessInstanceByKey("jobPrioProcess")
       .startBeforeActivity("task2")
@@ -155,7 +155,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testSetJobDefinitionPriorityWithCascadeOverridesBpmnPriority() {
+  void testSetJobDefinitionPriorityWithCascadeOverridesBpmnPriority() {
     // given a process instance with a job with default priority and a corresponding job definition
     ProcessInstance instance = runtimeService.createProcessInstanceByKey("jobPrioProcess")
       .startBeforeActivity("task2")
@@ -189,7 +189,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testRedeployOverridesSetJobDefinitionPriority() {
+  void testRedeployOverridesSetJobDefinitionPriority() {
     // given a process instance with a job with default priority and a corresponding job definition
     runtimeService.createProcessInstanceByKey("jobPrioProcess")
       .startBeforeActivity("task2")
@@ -227,7 +227,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
   @Test
-  public void testResetJobDefinitionPriority() {
+  void testResetJobDefinitionPriority() {
 
     // given a job definition
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -254,7 +254,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
   @Test
-  public void testResetJobDefinitionPriorityWhenPriorityIsNull() {
+  void testResetJobDefinitionPriorityWhenPriorityIsNull() {
 
     // given a job definition with null priority
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -271,7 +271,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testGetJobDefinitionDefaultPriority() {
+  void testGetJobDefinitionDefaultPriority() {
     // with a process with job definitions deployed
     // then the definitions have a default null priority, meaning that they don't override the
     // value in the BPMN XML
@@ -285,7 +285,7 @@ public class JobDefinitionPriorityTest {
   }
 
   @Test
-  public void testSetNonExistingJobDefinitionPriority() {
+  void testSetNonExistingJobDefinitionPriority() {
     try {
       managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42);
       fail("should not succeed");
@@ -306,7 +306,7 @@ public class JobDefinitionPriorityTest {
   }
 
   @Test
-  public void testResetNonExistingJobDefinitionPriority() {
+  void testResetNonExistingJobDefinitionPriority() {
     try {
       managementService.clearOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId");
       fail("should not succeed");
@@ -318,7 +318,7 @@ public class JobDefinitionPriorityTest {
   }
 
   @Test
-  public void testSetNullJobDefinitionPriority() {
+  void testSetNullJobDefinitionPriority() {
     try {
       managementService.setOverridingJobPriorityForJobDefinition(null, 42);
       fail("should not succeed");
@@ -337,7 +337,7 @@ public class JobDefinitionPriorityTest {
   }
 
   @Test
-  public void testResetNullJobDefinitionPriority() {
+  void testResetNullJobDefinitionPriority() {
     try {
       managementService.clearOverridingJobPriorityForJobDefinition(null);
       fail("should not succeed");
@@ -349,7 +349,7 @@ public class JobDefinitionPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
   @Test
-  public void testSetJobDefinitionPriorityToExtremeValues() {
+  void testSetJobDefinitionPriorityToExtremeValues() {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
 
     // it is possible to set the max long value

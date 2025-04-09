@@ -35,7 +35,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
  * Tests if a {@link DelegateExecution} has the correct tenant-id. The
  * assertions are checked inside the service tasks.
  */
-public class MultiTenancyDelegateExecutionTest {
+class MultiTenancyDelegateExecutionTest {
 
   protected static final String PROCESS_DEFINITION_KEY = "testProcess";
 
@@ -48,7 +48,7 @@ public class MultiTenancyDelegateExecutionTest {
   protected RuntimeService runtimeService;
 
   @Test
-  public void testSingleExecution() {
+  void testSingleExecution() {
     testRule.deployForTenant("tenant1", Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
       .startEvent()
       .serviceTask()
@@ -62,7 +62,7 @@ public class MultiTenancyDelegateExecutionTest {
   }
 
   @Test
-  public void testConcurrentExecution() {
+  void testConcurrentExecution() {
 
     testRule.deployForTenant("tenant1", Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
       .startEvent()
@@ -83,7 +83,7 @@ public class MultiTenancyDelegateExecutionTest {
   }
 
   @Test
-  public void testEmbeddedSubprocess() {
+  void testEmbeddedSubprocess() {
     testRule.deployForTenant("tenant1", Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
         .subProcess()
@@ -112,7 +112,7 @@ public class MultiTenancyDelegateExecutionTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     AssertingJavaDelegate.clear();
 
   }

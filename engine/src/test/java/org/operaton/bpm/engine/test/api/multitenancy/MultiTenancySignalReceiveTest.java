@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancySignalReceiveTest {
+class MultiTenancySignalReceiveTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -76,7 +76,7 @@ public class MultiTenancySignalReceiveTest {
   protected TaskService taskService;
 
   @Test
-  public void sendSignalToStartEventForNonTenant() {
+  void sendSignalToStartEventForNonTenant() {
     testRule.deploy(SIGNAL_START_PROCESS);
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS);
 
@@ -88,7 +88,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToStartEventForTenant() {
+  void sendSignalToStartEventForTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS);
 
@@ -101,7 +101,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToStartEventWithoutTenantIdForNonTenant() {
+  void sendSignalToStartEventWithoutTenantIdForNonTenant() {
     testRule.deploy(SIGNAL_START_PROCESS);
 
     runtimeService.createSignalEvent("signal").send();
@@ -111,7 +111,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToStartEventWithoutTenantIdForTenant() {
+  void sendSignalToStartEventWithoutTenantIdForTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS);
 
     runtimeService.createSignalEvent("signal").send();
@@ -121,7 +121,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventForNonTenant() {
+  void sendSignalToIntermediateCatchEventForNonTenant() {
     testRule.deploy(SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
 
@@ -136,7 +136,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventForTenant() {
+  void sendSignalToIntermediateCatchEventForTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_CATCH_PROCESS);
 
@@ -152,7 +152,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventWithoutTenantIdForNonTenant() {
+  void sendSignalToIntermediateCatchEventWithoutTenantIdForNonTenant() {
     testRule.deploy(SIGNAL_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("signalCatch").execute();
@@ -164,7 +164,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventWithoutTenantIdForTenant() {
+  void sendSignalToIntermediateCatchEventWithoutTenantIdForTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("signalCatch").execute();
@@ -176,7 +176,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToStartAndIntermediateCatchEventForNonTenant() {
+  void sendSignalToStartAndIntermediateCatchEventForNonTenant() {
     testRule.deploy(SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
 
@@ -192,7 +192,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToStartAndIntermediateCatchEventForTenant() {
+  void sendSignalToStartAndIntermediateCatchEventForTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
 
@@ -208,7 +208,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToStartEventsForMultipleTenants() {
+  void sendSignalToStartEventsForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS);
 
@@ -220,7 +220,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventsForMultipleTenants() {
+  void sendSignalToIntermediateCatchEventsForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_CATCH_PROCESS);
 
@@ -235,7 +235,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void sendSignalToStartAndIntermediateCatchEventForMultipleTenants() {
+  void sendSignalToStartAndIntermediateCatchEventForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS);
 
@@ -249,7 +249,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void failToSendSignalWithExecutionIdForTenant() {
+  void failToSendSignalWithExecutionIdForTenant() {
     // given
     var signalEventReceivedBuilder = runtimeService.createSignalEvent("signal")
       .executionId("id")
@@ -262,7 +262,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void throwIntermediateSignalForTenant() {
+  void throwIntermediateSignalForTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS, SIGNAL_INTERMEDIATE_THROW_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
     testRule.deploy(SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
@@ -280,7 +280,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void throwIntermediateSignalForNonTenant() {
+  void throwIntermediateSignalForNonTenant() {
     testRule.deploy(SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS, SIGNAL_INTERMEDIATE_THROW_PROCESS);
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
 
@@ -294,7 +294,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void throwEndSignalForTenant() {
+  void throwEndSignalForTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS, SIGNAL_END_THROW_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
     testRule.deploy(SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
@@ -312,7 +312,7 @@ public class MultiTenancySignalReceiveTest {
   }
 
   @Test
-  public void throwEndSignalForNonTenant() {
+  void throwEndSignalForNonTenant() {
     testRule.deploy(SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS, SIGNAL_END_THROW_PROCESS);
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
 

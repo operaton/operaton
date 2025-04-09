@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyJobQueryTest {
+class MultiTenancyJobQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -53,7 +53,7 @@ public class MultiTenancyJobQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     BpmnModelInstance asyncTaskProcess = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
       .userTask()
@@ -71,7 +71,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryNoTenantIdSet() {
+  void testQueryNoTenantIdSet() {
     JobQuery query = managementService
         .createJobQuery();
 
@@ -79,7 +79,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     JobQuery query = managementService
         .createJobQuery()
         .tenantIdIn(TENANT_ONE);
@@ -94,7 +94,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     JobQuery query = managementService
         .createJobQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -103,7 +103,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryByJobsWithoutTenantId() {
+  void testQueryByJobsWithoutTenantId() {
     JobQuery query = managementService
         .createJobQuery()
         .withoutTenantId();
@@ -112,7 +112,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIdsIncludeJobsWithoutTenantId() {
+  void testQueryByTenantIdsIncludeJobsWithoutTenantId() {
     JobQuery query = managementService
         .createJobQuery()
         .tenantIdIn(TENANT_ONE)
@@ -136,7 +136,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     JobQuery query = managementService
         .createJobQuery()
         .tenantIdIn("nonExisting");
@@ -145,7 +145,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testFailQueryByTenantIdNull() {
+  void testFailQueryByTenantIdNull() {
     var jobQuery = managementService.createJobQuery();
     try {
       jobQuery.tenantIdIn((String) null);
@@ -156,7 +156,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     // exclude jobs without tenant id because of database-specific ordering
     List<Job> jobs = managementService.createJobQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -170,7 +170,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     // exclude jobs without tenant id because of database-specific ordering
     List<Job> jobs = managementService.createJobQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -184,7 +184,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     JobQuery query = managementService.createJobQuery();
@@ -192,7 +192,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     JobQuery query = managementService.createJobQuery();
@@ -204,7 +204,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     JobQuery query = managementService.createJobQuery();
@@ -216,7 +216,7 @@ public class MultiTenancyJobQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

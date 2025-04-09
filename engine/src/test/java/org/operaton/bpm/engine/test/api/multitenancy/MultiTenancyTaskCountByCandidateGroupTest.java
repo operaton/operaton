@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * @author Stefan Hentschel.
  */
-public class MultiTenancyTaskCountByCandidateGroupTest {
+class MultiTenancyTaskCountByCandidateGroupTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
@@ -58,7 +58,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
   protected List<String> taskIds = new ArrayList<>();
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     createTask(groupId, tenantId);
     createTask(groupId, anotherTenantId);
     createTask(groupId, anotherTenantId);
@@ -67,7 +67,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     processEngineConfiguration.setTenantCheckEnabled(false);
 
     for (String taskId : taskIds) {
@@ -76,7 +76,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
   }
 
   @Test
-  public void shouldOnlyShowTenantSpecificTasks() {
+  void shouldOnlyShowTenantSpecificTasks() {
     // given
 
     identityService.setAuthentication(userId, null, Collections.singletonList(tenantId));

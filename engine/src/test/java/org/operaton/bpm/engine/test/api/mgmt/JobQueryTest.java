@@ -118,7 +118,7 @@ public class JobQueryTest {
    *   - 1 message
    */
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
 
     defaultEnsureJobDueDateSet = processEngineConfiguration.isEnsureJobDueDateNotNull();
@@ -171,7 +171,7 @@ public class JobQueryTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     repositoryService.deleteDeployment(deploymentId, true);
     commandExecutor.execute(new DeleteJobsCmd(messageId, true));
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);

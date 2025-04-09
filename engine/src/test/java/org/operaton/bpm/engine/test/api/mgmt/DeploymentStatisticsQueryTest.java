@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class DeploymentStatisticsQueryTest {
+class DeploymentStatisticsQueryTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -47,7 +47,7 @@ public class DeploymentStatisticsQueryTest {
   protected RepositoryService repositoryService;
 
   @Test
-  public void testDeploymentStatisticsQuery() {
+  void testDeploymentStatisticsQuery() {
     String deploymentName = "my deployment";
 
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
@@ -85,7 +85,7 @@ public class DeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void testDeploymentStatisticsQueryCountAndPaging() {
+  void testDeploymentStatisticsQueryCountAndPaging() {
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testMultiInstanceStatisticsQuery.bpmn20.xml")
         .addClasspathResource("org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testParallelGatewayStatisticsQuery.bpmn20.xml")
@@ -115,8 +115,8 @@ public class DeploymentStatisticsQueryTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testMultiInstanceStatisticsQuery.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
-  public void testDeploymentStatisticsQueryWithFailedJobs() {
+      "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
+  void testDeploymentStatisticsQueryWithFailedJobs() {
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -135,8 +135,8 @@ public class DeploymentStatisticsQueryTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testMultiInstanceStatisticsQuery.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
-  public void testDeploymentStatisticsQueryWithIncidents() {
+      "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
+  void testDeploymentStatisticsQueryWithIncidents() {
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -167,8 +167,8 @@ public class DeploymentStatisticsQueryTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testMultiInstanceStatisticsQuery.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
-  public void testDeploymentStatisticsQueryWithIncidentType() {
+      "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
+  void testDeploymentStatisticsQueryWithIncidentType() {
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -202,8 +202,8 @@ public class DeploymentStatisticsQueryTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testMultiInstanceStatisticsQuery.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
-  public void testDeploymentStatisticsQueryWithInvalidIncidentType() {
+      "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
+  void testDeploymentStatisticsQueryWithInvalidIncidentType() {
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -231,8 +231,8 @@ public class DeploymentStatisticsQueryTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testMultiInstanceStatisticsQuery.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
-  public void testDeploymentStatisticsQueryWithIncidentsAndFailedJobs() {
+      "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
+  void testDeploymentStatisticsQueryWithIncidentsAndFailedJobs() {
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -269,7 +269,7 @@ public class DeploymentStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testCallActivityWithIncidentsWithoutFailedJobs.bpmn20.xml")
-  public void testDeploymentStatisticsQueryWithTwoIncidentsAndOneFailedJobs() {
+  void testDeploymentStatisticsQueryWithTwoIncidentsAndOneFailedJobs() {
     runtimeService.startProcessInstanceByKey("callExampleSubProcess");
 
     testRule.executeAvailableJobs();
@@ -304,7 +304,7 @@ public class DeploymentStatisticsQueryTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testMultiInstanceStatisticsQuery.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testParallelGatewayStatisticsQuery.bpmn20.xml"})
-  public void testDeploymentStatisticsQueryWithoutRunningInstances() {
+  void testDeploymentStatisticsQueryWithoutRunningInstances() {
     List<DeploymentStatistics> statistics =
         managementService.createDeploymentStatisticsQuery().includeFailedJobs().list();
 
@@ -317,7 +317,7 @@ public class DeploymentStatisticsQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
   @Test
-  public void testQueryByIncidentsWithFailedTimerStartEvent() {
+  void testQueryByIncidentsWithFailedTimerStartEvent() {
 
     testRule.executeAvailableJobs();
 
@@ -346,7 +346,7 @@ public class DeploymentStatisticsQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
   @Test
-  public void testQueryByIncidentTypeWithFailedTimerStartEvent() {
+  void testQueryByIncidentTypeWithFailedTimerStartEvent() {
 
     testRule.executeAvailableJobs();
 
@@ -375,7 +375,7 @@ public class DeploymentStatisticsQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
   @Test
-  public void testQueryByFailedJobsWithFailedTimerStartEvent() {
+  void testQueryByFailedJobsWithFailedTimerStartEvent() {
 
     testRule.executeAvailableJobs();
 
@@ -397,7 +397,7 @@ public class DeploymentStatisticsQueryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
   @Test
-  public void testQueryByFailedJobsAndIncidentsWithFailedTimerStartEvent() {
+  void testQueryByFailedJobsAndIncidentsWithFailedTimerStartEvent() {
 
     testRule.executeAvailableJobs();
 

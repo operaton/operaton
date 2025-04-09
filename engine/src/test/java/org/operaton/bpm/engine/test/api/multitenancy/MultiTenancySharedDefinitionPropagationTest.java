@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
-public class MultiTenancySharedDefinitionPropagationTest {
+class MultiTenancySharedDefinitionPropagationTest {
 
   protected static final String PROCESS_DEFINITION_KEY = "testProcess";
 
@@ -45,7 +45,7 @@ public class MultiTenancySharedDefinitionPropagationTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void propagateTenantIdToProcessInstance() {
+  void propagateTenantIdToProcessInstance() {
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
         .userTask()
@@ -61,7 +61,7 @@ public class MultiTenancySharedDefinitionPropagationTest {
   }
 
   @Test
-  public void propagateTenantIdToIntermediateTimerJob() {
+  void propagateTenantIdToIntermediateTimerJob() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .intermediateCatchEvent()
@@ -79,7 +79,7 @@ public class MultiTenancySharedDefinitionPropagationTest {
   }
 
   @Test
-  public void propagateTenantIdToAsyncJob() {
+  void propagateTenantIdToAsyncJob() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .userTask()

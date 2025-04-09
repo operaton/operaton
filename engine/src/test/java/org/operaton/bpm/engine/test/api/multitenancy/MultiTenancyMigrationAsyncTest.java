@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyMigrationAsyncTest {
+class MultiTenancyMigrationAsyncTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -53,12 +53,12 @@ public class MultiTenancyMigrationAsyncTest {
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(defaultEngineRule, migrationRule);
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     batchHelper.removeAllRunningAndHistoricBatches();
   }
 
   @Test
-  public void canMigrateInstanceBetweenSameTenantCase1() {
+  void canMigrateInstanceBetweenSameTenantCase1() {
     // given
     ProcessDefinition sourceDefinition = defaultTestRule.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = defaultTestRule.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -83,7 +83,7 @@ public class MultiTenancyMigrationAsyncTest {
   }
 
   @Test
-  public void cannotMigrateInstanceWithoutTenantIdToDifferentTenant() {
+  void cannotMigrateInstanceWithoutTenantIdToDifferentTenant() {
     // given
     ProcessDefinition sourceDefinition = defaultTestRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = defaultTestRule.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);

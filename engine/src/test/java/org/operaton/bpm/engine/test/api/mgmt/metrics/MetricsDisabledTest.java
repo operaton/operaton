@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Daniel Meyer
  *
  */
-public class MetricsDisabledTest {
+class MetricsDisabledTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -46,7 +46,7 @@ public class MetricsDisabledTest {
 
   // (to run, remove "FAILING" from methodname)
   @Test
-  public void testQueryMetricsIfMetricsIsDisabled() {
+  void testQueryMetricsIfMetricsIsDisabled() {
 
     // given
     // that the metrics are disabled (see xml configuration referenced in constructor)
@@ -60,7 +60,7 @@ public class MetricsDisabledTest {
   }
 
   @Test
-  public void testReportNowIfMetricsDisabled() {
+  void testReportNowIfMetricsDisabled() {
 
     // given
     // that the metrics reporter is disabled

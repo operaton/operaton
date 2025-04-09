@@ -33,13 +33,13 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Joram Barrez
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class ManagementServiceTableCountTest {
+class ManagementServiceTableCountTest {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;
 
   @Test
-  public void testTableCount() {
+  void testTableCount() {
     Map<String, Long> tableCount = managementService.getTableCount();
 
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();

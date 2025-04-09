@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
-public class MultiTenancyJobExecutorTest {
+class MultiTenancyJobExecutorTest {
 
   protected static final String TENANT_ID = "tenant1";
 
@@ -46,7 +46,7 @@ public class MultiTenancyJobExecutorTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void setAuthenticatedTenantForTimerStartEvent() {
+  void setAuthenticatedTenantForTimerStartEvent() {
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess("process")
         .startEvent()
           .timerWithDuration("PT1M")
@@ -65,7 +65,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @Test
-  public void setAuthenticatedTenantForIntermediateTimerEvent() {
+  void setAuthenticatedTenantForIntermediateTimerEvent() {
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess("process")
         .startEvent()
         .intermediateCatchEvent()
@@ -85,7 +85,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @Test
-  public void setAuthenticatedTenantForAsyncJob() {
+  void setAuthenticatedTenantForAsyncJob() {
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -103,7 +103,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @Test
-  public void dontSetAuthenticatedTenantForJobWithoutTenant() {
+  void dontSetAuthenticatedTenantForJobWithoutTenant() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -121,7 +121,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @Test
-  public void dontSetAuthenticatedTenantWhileManualJobExecution() {
+  void dontSetAuthenticatedTenantWhileManualJobExecution() {
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -165,7 +165,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     AssertingJavaDelegate.clear();
   }
 

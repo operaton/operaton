@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
+class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -57,7 +57,7 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
   protected IdentityService identityService;
 
   @Test
-  public void correlateReceivedMessageToIntermediateCatchEventNoAuthenticatedTenants() {
+  void correlateReceivedMessageToIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deploy(MESSAGE_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("messageCatch").execute();
@@ -80,7 +80,7 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateReceivedMessageToIntermediateCatchEventWithAuthenticatedTenant() {
+  void correlateReceivedMessageToIntermediateCatchEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("messageCatch").execute();
@@ -102,7 +102,7 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateReceivedMessageToIntermediateCatchEventDisabledTenantCheck() {
+  void correlateReceivedMessageToIntermediateCatchEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
 
@@ -127,7 +127,7 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
   }
 
   @Test
-  public void failToCorrelateReceivedMessageToIntermediateCatchEventNoAuthenticatedTenants() {
+  void failToCorrelateReceivedMessageToIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("messageCatch").processDefinitionTenantId(TENANT_ONE).execute();

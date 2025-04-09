@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
-public class MultiTenancyDecisionEvaluationTest {
+class MultiTenancyDecisionEvaluationTest {
 
   protected static final String DMN_FILE = "org/operaton/bpm/engine/test/api/dmn/Example.dmn";
   protected static final String DMN_FILE_SECOND_VERSION = "org/operaton/bpm/engine/test/api/dmn/Example_v2.dmn";
@@ -60,7 +60,7 @@ public class MultiTenancyDecisionEvaluationTest {
   protected IdentityService identityService;
 
   @Test
-  public void testFailToEvaluateDecisionByIdWithoutTenantId() {
+  void testFailToEvaluateDecisionByIdWithoutTenantId() {
    testRule.deploy(DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
@@ -77,7 +77,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testFailToEvaluateDecisionByIdWithTenantId() {
+  void testFailToEvaluateDecisionByIdWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
@@ -94,7 +94,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testFailToEvaluateDecisionByKeyForNonExistingTenantID() {
+  void testFailToEvaluateDecisionByKeyForNonExistingTenantID() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
@@ -110,7 +110,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testFailToEvaluateDecisionByKeyForMultipleTenants() {
+  void testFailToEvaluateDecisionByKeyForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
@@ -125,7 +125,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByKeyWithoutTenantId() {
+  void testEvaluateDecisionByKeyWithoutTenantId() {
    testRule.deploy(DMN_FILE);
 
     DmnDecisionResult decisionResult = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
@@ -137,7 +137,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByKeyForAnyTenants() {
+  void testEvaluateDecisionByKeyForAnyTenants() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     DmnDecisionResult decisionResult = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
@@ -149,7 +149,7 @@ public class MultiTenancyDecisionEvaluationTest {
 
 
   @Test
-  public void testEvaluateDecisionByKeyAndTenantId() {
+  void testEvaluateDecisionByKeyAndTenantId() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE_SECOND_VERSION);
 
@@ -162,7 +162,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByKeyLatestVersionAndTenantId() {
+  void testEvaluateDecisionByKeyLatestVersionAndTenantId() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_ONE, DMN_FILE_SECOND_VERSION);
 
@@ -175,7 +175,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByKeyVersionAndTenantId() {
+  void testEvaluateDecisionByKeyVersionAndTenantId() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
@@ -191,7 +191,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByKeyWithoutTenantIdNoAuthenticatedTenants() {
+  void testEvaluateDecisionByKeyWithoutTenantIdNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
    testRule.deploy(DMN_FILE);
@@ -205,7 +205,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testFailToEvaluateDecisionByKeyNoAuthenticatedTenants() {
+  void testFailToEvaluateDecisionByKeyNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
@@ -222,7 +222,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testFailToEvaluateDecisionByKeyWithTenantIdNoAuthenticatedTenants() {
+  void testFailToEvaluateDecisionByKeyWithTenantIdNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
@@ -240,7 +240,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testFailToEvaluateDecisionByIdNoAuthenticatedTenants() {
+  void testFailToEvaluateDecisionByIdNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService
@@ -261,7 +261,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByKeyWithTenantIdAuthenticatedTenant() {
+  void testEvaluateDecisionByKeyWithTenantIdAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
@@ -276,7 +276,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByIdAuthenticatedTenant() {
+  void testEvaluateDecisionByIdAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService
@@ -293,7 +293,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByKeyWithAuthenticatedTenant() {
+  void testEvaluateDecisionByKeyWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
@@ -307,7 +307,7 @@ public class MultiTenancyDecisionEvaluationTest {
   }
 
   @Test
-  public void testEvaluateDecisionByKeyWithTenantIdDisabledTenantCheck() {
+  void testEvaluateDecisionByKeyWithTenantIdDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

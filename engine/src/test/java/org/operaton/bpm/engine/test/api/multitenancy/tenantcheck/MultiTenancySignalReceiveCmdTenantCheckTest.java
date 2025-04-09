@@ -38,7 +38,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author kristin.polenz
  */
-public class MultiTenancySignalReceiveCmdTenantCheckTest {
+class MultiTenancySignalReceiveCmdTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -68,7 +68,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   protected IdentityService identityService;
 
   @Test
-  public void sendSignalToStartEventNoAuthenticatedTenants() {
+  void sendSignalToStartEventNoAuthenticatedTenants() {
     testRule.deploy(SIGNAL_START_PROCESS);
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS);
 
@@ -85,7 +85,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToStartEventWithAuthenticatedTenant() {
+  void sendSignalToStartEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS);
 
@@ -102,7 +102,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToStartEventDisabledTenantCheck() {
+  void sendSignalToStartEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS);
 
@@ -118,7 +118,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventNoAuthenticatedTenants() {
+  void sendSignalToIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deploy(SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
 
@@ -138,7 +138,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventWithAuthenticatedTenant() {
+  void sendSignalToIntermediateCatchEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_CATCH_PROCESS);
 
@@ -158,7 +158,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventDisabledTenantCheck() {
+  void sendSignalToIntermediateCatchEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_CATCH_PROCESS);
 
@@ -177,7 +177,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToStartAndIntermediateCatchEventNoAuthenticatedTenants() {
+  void sendSignalToStartAndIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deploy(SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
 
@@ -197,7 +197,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToStartAndIntermediateCatchEventWithAuthenticatedTenant() {
+  void sendSignalToStartAndIntermediateCatchEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
 
@@ -217,7 +217,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToStartAndIntermediateCatchEventDisabledTenantCheck() {
+  void sendSignalToStartAndIntermediateCatchEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS, SIGNAL_CATCH_PROCESS);
 
@@ -236,7 +236,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void sendSignalToIntermediateCatchEventWithExecutionIdAndAuthenticatedTenant() {
+  void sendSignalToIntermediateCatchEventWithExecutionIdAndAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("signalCatch").processDefinitionTenantId(TENANT_ONE).execute();
@@ -258,7 +258,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void failToSendSignalToIntermediateCatchEventWithExecutionIdAndNoAuthenticatedTenants() {
+  void failToSendSignalToIntermediateCatchEventWithExecutionIdAndNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("signalCatch").processDefinitionTenantId(TENANT_ONE).execute();
@@ -280,7 +280,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void signalIntermediateCatchEventNoAuthenticatedTenants() {
+  void signalIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deploy(SIGNAL_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("signalCatch").execute();
@@ -302,7 +302,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void signalIntermediateCatchEventWithAuthenticatedTenant() {
+  void signalIntermediateCatchEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("signalCatch").processDefinitionTenantId(TENANT_ONE).execute();
@@ -324,7 +324,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void signalIntermediateCatchEventDisabledTenantCheck() {
+  void signalIntermediateCatchEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_CATCH_PROCESS);
 
@@ -349,7 +349,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
   }
 
   @Test
-  public void failToSignalIntermediateCatchEventNoAuthenticatedTenants() {
+  void failToSignalIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("signalCatch").execute();

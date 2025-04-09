@@ -44,7 +44,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
  * @author Tom Baeyens
  * @author Thorben Lindhauer
  */
-public class JobExecutorCmdExceptionTest {
+class JobExecutorCmdExceptionTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -62,13 +62,13 @@ public class JobExecutorCmdExceptionTest {
   protected RuntimeService runtimeService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration.getJobHandlers().put(tweetExceptionHandler.getType(), tweetExceptionHandler);
     processEngineConfiguration.getJobHandlers().put(nestedCommandExceptionHandler.getType(), nestedCommandExceptionHandler);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.getJobHandlers().remove(tweetExceptionHandler.getType());
     processEngineConfiguration.getJobHandlers().remove(nestedCommandExceptionHandler.getType());
     managementService.createJobQuery().active().list().forEach(job -> managementService.deleteJob(job.getId()));
@@ -76,7 +76,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testJobCommandsWith2Exceptions() {
+  void testJobCommandsWith2Exceptions() {
     // create a job
     createJob(TweetExceptionHandler.TYPE);
 
@@ -89,7 +89,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testJobCommandsWith3Exceptions() {
+  void testJobCommandsWith3Exceptions() {
     // set the exceptionsRemaining to 3 so that
     // the created job will fail 3 times and a failed
     // job exists
@@ -108,7 +108,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testMultipleFailingJobs() {
+  void testMultipleFailingJobs() {
     // set the exceptionsRemaining to 600 so that
     // each created job will fail 3 times and 40 failed
     // job exists
@@ -133,7 +133,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testJobCommandsWithNestedFailingCommand() {
+  void testJobCommandsWithNestedFailingCommand() {
     // create a job
     createJob(TweetNestedCommandExceptionHandler.TYPE);
 
@@ -161,9 +161,9 @@ public class JobExecutorCmdExceptionTest {
     assertThat(job.getRetries()).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/jobFailingOnFlush.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/jobFailingOnFlush.bpmn20.xml")
   @Test
-  public void testJobRetriesDecrementedOnFailedFlush() {
+  void testJobRetriesDecrementedOnFailedFlush() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -184,7 +184,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testFailingTransactionListener() {
+  void testFailingTransactionListener() {
 
    testRule.deploy(Bpmn.createExecutableProcess("testProcess")
         .startEvent()

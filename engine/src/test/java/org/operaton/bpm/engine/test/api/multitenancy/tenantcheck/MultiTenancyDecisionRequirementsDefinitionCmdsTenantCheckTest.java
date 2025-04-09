@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  *
  */
 
-public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
+class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String DRG_DMN = "org/operaton/bpm/engine/test/api/multitenancy/DecisionRequirementsGraph.dmn";
@@ -57,14 +57,14 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   protected ProcessEngineConfiguration processEngineConfiguration;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deployForTenant(TENANT_ONE, DRG_DMN, DRD_DMN);
     decisionRequirementsDefinitionId = repositoryService.createDecisionRequirementsDefinitionQuery()
       .singleResult().getId();
   }
 
   @Test
-  public void failToGetDecisionRequirementsDefinitionNoAuthenticatedTenants() {
+  void failToGetDecisionRequirementsDefinitionNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -74,7 +74,7 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionRequirementsDefinitionWithAuthenticatedTenant() {
+  void getDecisionRequirementsDefinitionWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     DecisionRequirementsDefinition definition = repositoryService.getDecisionRequirementsDefinition(decisionRequirementsDefinitionId);
@@ -83,7 +83,7 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionRequirementsDefinitionDisabledTenantCheck() {
+  void getDecisionRequirementsDefinitionDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -93,7 +93,7 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetDecisionRequirementsModelNoAuthenticatedTenants() {
+  void failToGetDecisionRequirementsModelNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -103,7 +103,7 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionRequirementsModelWithAuthenticatedTenant() {
+  void getDecisionRequirementsModelWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getDecisionRequirementsModel(decisionRequirementsDefinitionId);
@@ -112,7 +112,7 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionRequirementsModelDisabledTenantCheck() {
+  void getDecisionRequirementsModelDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -122,7 +122,7 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetDecisionRequirementsDiagramNoAuthenticatedTenants() {
+  void failToGetDecisionRequirementsDiagramNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -132,7 +132,7 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionDiagramWithAuthenticatedTenant() {
+  void getDecisionDiagramWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getDecisionRequirementsDiagram(decisionRequirementsDefinitionId);
@@ -141,7 +141,7 @@ public class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionDiagramDisabledTenantCheck() {
+  void getDecisionDiagramDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

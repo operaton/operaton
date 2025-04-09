@@ -43,13 +43,13 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Thorben Lindhauer
  *
  */
-public class JobExecutorMetricsTest extends AbstractMetricsTest {
+class JobExecutorMetricsTest extends AbstractMetricsTest {
 
   protected JobExecutor defaultJobExecutor;
   protected ProcessEngine processEngine;
 
   @BeforeEach
-  public void saveJobExecutor() {
+  void saveJobExecutor() {
     processEngine = engineRule.getProcessEngine();
     defaultJobExecutor = processEngineConfiguration.getJobExecutor();
 
@@ -58,13 +58,13 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
   }
 
   @AfterEach
-  public void restoreJobExecutor() {
+  void restoreJobExecutor() {
     processEngineConfiguration.setJobExecutor(defaultJobExecutor);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
   @Test
-  public void testJobAcquisitionMetricReporting() {
+  void testJobAcquisitionMetricReporting() {
 
     // given
     for (int i = 0; i < 3; i++) {
@@ -86,7 +86,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
   @Test
-  public void testCompetingJobAcquisitionMetricReporting() {
+  void testCompetingJobAcquisitionMetricReporting() {
     // given
     for (int i = 0; i < 3; i++) {
       runtimeService.startProcessInstanceByKey("asyncServiceTaskProcess");
@@ -139,7 +139,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
   @Test
-  public void testJobExecutionMetricReporting() {
+  void testJobExecutionMetricReporting() {
     // given
     for (int i = 0; i < 3; i++) {
       runtimeService.startProcessInstanceByKey("asyncServiceTaskProcess");
@@ -167,7 +167,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
 
   @Deployment
   @Test
-  public void testJobExecutionMetricExclusiveFollowUp() {
+  void testJobExecutionMetricExclusiveFollowUp() {
     // given
     for (int i = 0; i < 3; i++) {
       runtimeService.startProcessInstanceByKey("exclusiveServiceTasksProcess");
@@ -194,7 +194,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
   @Test
-  public void testJobRejectedExecutionMetricReporting() {
+  void testJobRejectedExecutionMetricReporting() {
     // replace job executor with one that rejects all jobs
     RejectingJobExecutor rejectingExecutor = new RejectingJobExecutor();
     processEngineConfiguration.setJobExecutor(rejectingExecutor);

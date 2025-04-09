@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class SchemaLogQueryTest {
+class SchemaLogQueryTest {
 
   protected ManagementService managementService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -50,14 +50,14 @@ public class SchemaLogQueryTest {
   protected long initialEntryCount;
 
   @BeforeEach
-  public void init() {
+  void init() {
     initialEntryCount = managementService.createSchemaLogQuery().count();
     dummySchemaLogEntry = createDummySchemaLogEntry();
   }
 
   @Test
   @SuppressWarnings("java:S5838")
-  public void testQuerySchemaLogEntryList() {
+  void testQuerySchemaLogEntryList() {
     // given (at least) one schema log entry
 
     // when
@@ -77,7 +77,7 @@ public class SchemaLogQueryTest {
   }
 
   @Test
-  public void testOrderByTimestamp() {
+  void testOrderByTimestamp() {
     // given (at least) two schema log entries
     populateTable();
 
@@ -89,7 +89,7 @@ public class SchemaLogQueryTest {
   }
 
   @Test
-  public void testFilterByVersion() {
+  void testFilterByVersion() {
     // given (at least) two schema log entries
     populateTable();
 
@@ -110,7 +110,7 @@ public class SchemaLogQueryTest {
    * ordering)
    */
   @Test
-  public void testSortedPagedQuery() {
+  void testSortedPagedQuery() {
     // given (at least) two schema log entries
     populateTable();
     // in case of tests that upgrade the schema there are more than two entries we want to check the last page.

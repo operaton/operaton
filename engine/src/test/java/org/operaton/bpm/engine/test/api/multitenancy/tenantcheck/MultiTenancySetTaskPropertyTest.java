@@ -108,7 +108,7 @@ public class MultiTenancySetTaskPropertyTest {
   }
 
   @BeforeEach
-  public void init() {
+  void init() {
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
 
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);

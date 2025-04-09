@@ -40,7 +40,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Deivarayan Azhagappan
  *
  */
-public class MultiTenancySharedDeploymentStatisticsQueryTest {
+class MultiTenancySharedDeploymentStatisticsQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -88,7 +88,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
 
 
   @Test
-  public void activeProcessInstancesCountWithNoAuthenticatedTenant() {
+  void activeProcessInstancesCountWithNoAuthenticatedTenant() {
 
     testRule.deploy(oneTaskProcess);
 
@@ -108,7 +108,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void activeProcessInstancesCountWithAuthenticatedTenant() {
+  void activeProcessInstancesCountWithAuthenticatedTenant() {
 
     testRule.deploy(oneTaskProcess);
     
@@ -128,7 +128,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void activeProcessInstancesCountWithDisabledTenantCheck() {
+  void activeProcessInstancesCountWithDisabledTenantCheck() {
 
     testRule.deploy(oneTaskProcess);
     
@@ -147,7 +147,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void activeProcessInstancesCountWithMultipleAuthenticatedTenants() {
+  void activeProcessInstancesCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(oneTaskProcess);
 
@@ -167,7 +167,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithWithNoAuthenticatedTenant() {
+  void failedJobsCountWithWithNoAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
     
@@ -189,7 +189,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithWithDisabledTenantCheck() {
+  void failedJobsCountWithWithDisabledTenantCheck() {
 
     testRule.deploy(failingProcess);
     
@@ -212,7 +212,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithAuthenticatedTenant() {
+  void failedJobsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -233,7 +233,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithMultipleAuthenticatedTenants() {
+  void failedJobsCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(failingProcess);
 
@@ -254,7 +254,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithNoAuthenticatedTenant() {
+  void incidentsCountWithNoAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -278,7 +278,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithDisabledTenantCheck() {
+  void incidentsCountWithDisabledTenantCheck() {
 
     testRule.deploy(failingProcess);
 
@@ -303,7 +303,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithAuthenticatedTenant() {
+  void incidentsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -327,7 +327,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithMultipleAuthenticatedTenants() {
+  void incidentsCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(failingProcess);
 
@@ -350,7 +350,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithIncidentTypeAndAuthenticatedTenant() {
+  void incidentsCountWithIncidentTypeAndAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -374,7 +374,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void instancesFailedJobsAndIncidentsCountWithAuthenticatedTenant() {
+  void instancesFailedJobsAndIncidentsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess,anotherFailingProcess);
     

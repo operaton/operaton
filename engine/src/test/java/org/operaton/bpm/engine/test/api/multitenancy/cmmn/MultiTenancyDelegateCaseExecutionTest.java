@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * Tests if a {@link DelegateCaseExecution} has the correct tenant-id.
  */
-public class MultiTenancyDelegateCaseExecutionTest {
+class MultiTenancyDelegateCaseExecutionTest {
 
   protected static final String HUMAN_TASK_CMMN_FILE = "org/operaton/bpm/engine/test/api/multitenancy/HumanTaskCaseExecutionListener.cmmn";
   protected static final String CASE_TASK_CMMN_FILE = "org/operaton/bpm/engine/test/api/multitenancy/CaseTaskCaseExecutionListener.cmmn";
@@ -44,12 +44,12 @@ public class MultiTenancyDelegateCaseExecutionTest {
   protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     AssertingCaseExecutionListener.clear();
   }
 
   @Test
-  public void testSingleExecution() {
+  void testSingleExecution() {
     testRule.deployForTenant(TENANT_ID, HUMAN_TASK_CMMN_FILE);
 
     AssertingCaseExecutionListener.addAsserts(hasTenantId("tenant1"));
@@ -58,7 +58,7 @@ public class MultiTenancyDelegateCaseExecutionTest {
   }
 
   @Test
-  public void testCallCaseTask() {
+  void testCallCaseTask() {
     testRule.deployForTenant(TENANT_ID, CMMN_FILE);
     testRule.deploy(CASE_TASK_CMMN_FILE);
 

@@ -45,7 +45,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 *
 */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricIdentityLinkLogQueryTest {
+class MultiTenancyHistoricIdentityLinkLogQueryTest {
 
   private static final String GROUP_1 = "Group1";
   private static final String USER_1 = "User1";
@@ -70,7 +70,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
   protected static final String TENANT_3 = "tenant3";
 
   @BeforeEach
-  public void init() {
+  void init() {
     // create sample identity link
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
     .startEvent()
@@ -86,7 +86,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
   }
 
   @Test
-  public void shouldAddAndDeleteHistoricIdentityLinkForSingleTenant() {
+  void shouldAddAndDeleteHistoricIdentityLinkForSingleTenant() {
     // given
     startProcessInstanceForTenant(TENANT_1);
     HistoricIdentityLinkLogQuery query = historyService
@@ -101,7 +101,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
   }
 
   @Test
-  public void shouldQueryWithoutTenantId() {
+  void shouldQueryWithoutTenantId() {
     // given
     startProcessInstanceForTenant(TENANT_NULL);
     startProcessInstanceForTenant(TENANT_1);
@@ -116,7 +116,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
   }
 
   @Test
-  public void shouldAddHistoricIdentityLinkForMultipleTenants() {
+  void shouldAddHistoricIdentityLinkForMultipleTenants() {
     // given
     startProcessInstanceForTenant(TENANT_1);
     startProcessInstanceForTenant(TENANT_2);
@@ -132,7 +132,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
   }
 
   @Test
-  public void shouldAddAndRemoveHistoricIdentityLinksForProcessDefinitionWithTenantId() {
+  void shouldAddAndRemoveHistoricIdentityLinksForProcessDefinitionWithTenantId() {
     // given
     String resourceName = "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml";
     testRule.deployForTenant(TENANT_1, resourceName);
@@ -166,7 +166,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
 
   @SuppressWarnings("deprecation")
   @Test
-  public void shouldAddIdentityLinksForProcessDefinitionWithTenantId() {
+  void shouldAddIdentityLinksForProcessDefinitionWithTenantId() {
     // given
     String resourceName = "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml";
     testRule.deployForTenant(TENANT_1, resourceName);
@@ -205,7 +205,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
   }
 
   @Test
-  public void shouldUseSingleQueryForMultipleTenants() {
+  void shouldUseSingleQueryForMultipleTenants() {
     // when
     startProcessInstanceForTenant(TENANT_NULL);
     startProcessInstanceForTenant(TENANT_1);

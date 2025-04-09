@@ -44,7 +44,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author kristin.polenz
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
+class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -70,7 +70,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
     .done();
 
   @Test
-  public void getDurationReportByMonthNoAuthenticatedTenants() {
+  void getDurationReportByMonthNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
 
     startAndCompleteProcessInstance(null);
@@ -85,7 +85,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void getDurationReportByMonthWithAuthenticatedTenant() {
+  void getDurationReportByMonthWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
 
     startAndCompleteProcessInstance(null);
@@ -100,7 +100,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void getDurationReportByMonthDisabledTenantCheck() {
+  void getDurationReportByMonthDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
 
     startAndCompleteProcessInstance(null);
@@ -116,7 +116,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void getReportByMultipleProcessDefinitionIdByMonthNoAuthenticatedTenants() {
+  void getReportByMultipleProcessDefinitionIdByMonthNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
 
@@ -137,7 +137,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void getReportByMultipleProcessDefinitionIdByMonthWithAuthenticatedTenant() {
+  void getReportByMultipleProcessDefinitionIdByMonthWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
 
@@ -158,7 +158,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void getReportByMultipleProcessDefinitionIdByMonthDisabledTenantCheck() {
+  void getReportByMultipleProcessDefinitionIdByMonthDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
 
@@ -180,7 +180,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void getReportByProcessDefinitionKeyByMonthNoAuthenticatedTenants() {
+  void getReportByProcessDefinitionKeyByMonthNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
 
@@ -198,7 +198,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void getReportByProcessDefinitionKeyByMonthWithAuthenticatedTenant() {
+  void getReportByProcessDefinitionKeyByMonthWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
 
@@ -216,7 +216,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
   }
 
   @Test
-  public void getReportByProcessDefinitionKeyByMonthDisabledTenantCheck() {
+  void getReportByProcessDefinitionKeyByMonthDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
 

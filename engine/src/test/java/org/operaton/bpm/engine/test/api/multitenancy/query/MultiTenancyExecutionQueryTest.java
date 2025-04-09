@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyExecutionQueryTest {
+class MultiTenancyExecutionQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -51,7 +51,7 @@ public class MultiTenancyExecutionQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
       .userTask()
@@ -68,7 +68,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryNoTenantIdSet() {
+  void testQueryNoTenantIdSet() {
     ExecutionQuery query = runtimeService.
         createExecutionQuery();
 
@@ -76,7 +76,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     ExecutionQuery query = runtimeService
         .createExecutionQuery()
         .tenantIdIn(TENANT_ONE);
@@ -91,7 +91,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     ExecutionQuery query = runtimeService
         .createExecutionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -100,7 +100,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryByExecutionsWithoutTenantId() {
+  void testQueryByExecutionsWithoutTenantId() {
     ExecutionQuery query = runtimeService
         .createExecutionQuery()
         .withoutTenantId();
@@ -109,7 +109,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     ExecutionQuery query = runtimeService
         .createExecutionQuery()
         .tenantIdIn("nonExisting");
@@ -118,7 +118,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testFailQueryByTenantIdNull() {
+  void testFailQueryByTenantIdNull() {
     var executionQuery = runtimeService.createExecutionQuery();
     try {
       executionQuery.tenantIdIn((String) null);
@@ -129,7 +129,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     // exclude executions without tenant id because of database-specific ordering
     List<Execution> executions = runtimeService.createExecutionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -143,7 +143,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     // exclude executions without tenant id because of database-specific ordering
     List<Execution> executions = runtimeService.createExecutionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -157,7 +157,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     ExecutionQuery query = runtimeService.createExecutionQuery();
@@ -165,7 +165,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     ExecutionQuery query = runtimeService.createExecutionQuery();
@@ -177,7 +177,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     ExecutionQuery query = runtimeService.createExecutionQuery();
@@ -189,7 +189,7 @@ public class MultiTenancyExecutionQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

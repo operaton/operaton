@@ -62,7 +62,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deployForTenant(TENANT_NULL, DMN);
     testRule.deployForTenant(TENANT_ONE, DMN);
     testRule.deployForTenant(TENANT_TWO, DMN);
@@ -74,7 +74,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryWithoutTenantId() {
+  void shouldQueryWithoutTenantId() {
     HistoricDecisionInstanceQuery query = historyService.
         createHistoricDecisionInstanceQuery();
 
@@ -82,7 +82,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantId() {
+  void shouldQueryByTenantId() {
     HistoricDecisionInstanceQuery query = historyService
         .createHistoricDecisionInstanceQuery()
         .tenantIdIn(TENANT_ONE);
@@ -97,7 +97,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantIds() {
+  void shouldQueryByTenantIds() {
     // when
     HistoricDecisionInstanceQuery query = historyService
         .createHistoricDecisionInstanceQuery()
@@ -118,7 +118,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldFailQueryByTenantIdNull() {
+  void shouldFailQueryByTenantIdNull() {
     var historicDecisionInstanceQuery = historyService.createHistoricDecisionInstanceQuery();
     try {
       historicDecisionInstanceQuery.tenantIdIn((String) null);
@@ -129,7 +129,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingAsc() {
+  void shouldQuerySortingAsc() {
     // when
     List<HistoricDecisionInstance> historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery()
         .orderByTenantId()
@@ -142,7 +142,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingDesc() {
+  void shouldQuerySortingDesc() {
     // when
     List<HistoricDecisionInstance> historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery()
         .orderByTenantId()
@@ -155,7 +155,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryNoAuthenticatedTenants() {
+  void shouldQueryNoAuthenticatedTenants() {
     // givem
     identityService.setAuthentication("user", null, null);
 
@@ -167,7 +167,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenant() {
+  void shouldQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -183,7 +183,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenants() {
+  void shouldQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -198,7 +198,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryDisabledTenantCheck() {
+  void shouldQueryDisabledTenantCheck() {
     // given
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
@@ -211,7 +211,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryFilterWithoutTenantId() {
+  void shouldQueryFilterWithoutTenantId() {
     // when
     HistoricDecisionInstanceQuery query = historyService
         .createHistoricDecisionInstanceQuery()

@@ -55,7 +55,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author kristin.polenz
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricDataCmdsTenantCheckTest {
+class MultiTenancyHistoricDataCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -95,7 +95,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   protected static final String DMN = "org/operaton/bpm/engine/test/api/multitenancy/simpleDecisionTable.dmn";
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.clearAuthentication();
     for(HistoricTaskInstance instance : historyService.createHistoricTaskInstanceQuery().list()) {
       historyService.deleteHistoricTaskInstance(instance.getId());
@@ -103,7 +103,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteHistoricProcessInstanceNoAuthenticatedTenants() {
+  void failToDeleteHistoricProcessInstanceNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     String processInstanceId = startProcessInstance(null);
 
@@ -116,7 +116,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricProcessInstanceWithAuthenticatedTenant() {
+  void deleteHistoricProcessInstanceWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     String processInstanceId = startProcessInstance(null);
 
@@ -132,7 +132,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricProcessInstanceWithDisabledTenantCheck() {
+  void deleteHistoricProcessInstanceWithDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_PROCESS);
 
@@ -150,7 +150,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteHistoricTaskInstanceNoAuthenticatedTenants() {
+  void failToDeleteHistoricTaskInstanceNoAuthenticatedTenants() {
     String taskId = createTaskForTenant(TENANT_ONE);
 
     identityService.setAuthentication("user", null, null);
@@ -162,7 +162,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricTaskInstanceWithAuthenticatedTenant() {
+  void deleteHistoricTaskInstanceWithAuthenticatedTenant() {
     String taskId = createTaskForTenant(TENANT_ONE);
 
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
@@ -177,7 +177,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricTaskInstanceWithDisabledTenantCheck() {
+  void deleteHistoricTaskInstanceWithDisabledTenantCheck() {
     String taskIdOne = createTaskForTenant(TENANT_ONE);
     String taskIdTwo = createTaskForTenant(TENANT_TWO);
 
@@ -193,7 +193,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteHistoricCaseInstanceNoAuthenticatedTenants() {
+  void failToDeleteHistoricCaseInstanceNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, CMMN_PROCESS_WITH_MANUAL_ACTIVATION);
     String caseInstanceId = createAndCloseCaseInstance(null);
 
@@ -206,7 +206,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricCaseInstanceWithAuthenticatedTenant() {
+  void deleteHistoricCaseInstanceWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, CMMN_PROCESS_WITH_MANUAL_ACTIVATION);
     String caseInstanceId = createAndCloseCaseInstance(null);
 
@@ -222,7 +222,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricCaseInstanceWithDisabledTenantCheck() {
+  void deleteHistoricCaseInstanceWithDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, CMMN_PROCESS_WITH_MANUAL_ACTIVATION);
     testRule.deployForTenant(TENANT_TWO, CMMN_PROCESS_WITH_MANUAL_ACTIVATION);
 
@@ -240,7 +240,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricDecisionInstanceNoAuthenticatedTenants() {
+  void deleteHistoricDecisionInstanceNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, DMN);
 
     String decisionDefinitionId = evaluateDecisionTable(null);
@@ -257,7 +257,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricDecisionInstanceWithAuthenticatedTenant() {
+  void deleteHistoricDecisionInstanceWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, DMN);
     String decisionDefinitionId = evaluateDecisionTable(null);
 
@@ -273,7 +273,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricDecisionInstanceWithDisabledTenantCheck() {
+  void deleteHistoricDecisionInstanceWithDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, DMN);
     testRule.deployForTenant(TENANT_TWO, DMN);
 
@@ -291,7 +291,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteHistoricDecisionInstanceByInstanceIdNoAuthenticatedTenants() {
+  void failToDeleteHistoricDecisionInstanceByInstanceIdNoAuthenticatedTenants() {
 
     // given
     testRule.deployForTenant(TENANT_ONE, DMN);
@@ -311,7 +311,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricDecisionInstanceByInstanceIdWithAuthenticatedTenant() {
+  void deleteHistoricDecisionInstanceByInstanceIdWithAuthenticatedTenant() {
 
     // given
     testRule.deployForTenant(TENANT_ONE, DMN);
@@ -331,7 +331,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricDecisionInstanceByInstanceIdWithDisabledTenantCheck() {
+  void deleteHistoricDecisionInstanceByInstanceIdWithDisabledTenantCheck() {
 
     // given
     testRule.deployForTenant(TENANT_ONE, DMN);
@@ -360,7 +360,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetHistoricJobLogExceptionStacktraceNoAuthenticatedTenants() {
+  void failToGetHistoricJobLogExceptionStacktraceNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, FAILING_BPMN_PROCESS);
     String processInstanceId = startProcessInstance(null);
 
@@ -377,7 +377,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void getHistoricJobLogExceptionStacktraceWithAuthenticatedTenant() {
+  void getHistoricJobLogExceptionStacktraceWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, FAILING_BPMN_PROCESS);
     String processInstanceId = startProcessInstance(null);
 
@@ -394,7 +394,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void getHistoricJobLogExceptionStacktraceWithDisabledTenantCheck() {
+  void getHistoricJobLogExceptionStacktraceWithDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, FAILING_BPMN_PROCESS);
 
     String processInstanceId = startProcessInstance(TENANT_ONE);
@@ -413,7 +413,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteHistoricVariableInstanceNoAuthenticatedTenants() {
+  void failToDeleteHistoricVariableInstanceNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, BPMN_ONETASK_PROCESS);
     String processInstanceId = startProcessInstance(null);
     runtimeService.setVariable(processInstanceId, "myVariable", "testValue");
@@ -430,7 +430,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricVariableInstanceWithAuthenticatedTenant() {
+  void deleteHistoricVariableInstanceWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, BPMN_ONETASK_PROCESS);
     String processInstanceId = startProcessInstance(null);
     runtimeService.setVariable(processInstanceId, "myVariable", "testValue");
@@ -447,7 +447,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricVariableInstanceWithDisabledTenantCheck() {
+  void deleteHistoricVariableInstanceWithDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, BPMN_ONETASK_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_ONETASK_PROCESS);
 
@@ -476,7 +476,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteHistoricVariableInstancesNoAuthenticatedTenants() {
+  void failToDeleteHistoricVariableInstancesNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, BPMN_ONETASK_PROCESS);
     String processInstanceId = startProcessInstance(null);
     runtimeService.setVariable(processInstanceId, "myVariable", "testValue");
@@ -493,7 +493,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricVariableInstancesWithAuthenticatedTenant() {
+  void deleteHistoricVariableInstancesWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, BPMN_ONETASK_PROCESS);
     String processInstanceId = startProcessInstance(null);
     runtimeService.setVariable(processInstanceId, "myVariable", "testValue");
@@ -510,7 +510,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteHistoricVariableInstancesWithDisabledTenantCheck() {
+  void deleteHistoricVariableInstancesWithDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, BPMN_ONETASK_PROCESS);
     testRule.deployForTenant(TENANT_TWO, BPMN_ONETASK_PROCESS);
 

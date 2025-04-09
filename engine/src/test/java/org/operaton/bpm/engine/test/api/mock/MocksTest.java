@@ -35,13 +35,13 @@ import org.operaton.bpm.engine.test.mock.Mocks;
  * @author Tassilo Weidner
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class MocksTest {
+class MocksTest {
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
 
   @Test
-  public void testMethodsOfMocksAPI() {
+  void testMethodsOfMocksAPI() {
     //given
     HashMap<String, Object> map = new HashMap<>();
 
@@ -72,13 +72,13 @@ public class MocksTest {
 
   @Test
   @Deployment
-  public void testMockAvailabilityInScriptTask() {
+  void testMockAvailabilityInScriptTask() {
     testMockAvailability();
   }
 
   @Test
   @Deployment
-  public void testMockAvailabilityInExpressionLanguage() {
+  void testMockAvailabilityInExpressionLanguage() {
     testMockAvailability();
   }
 

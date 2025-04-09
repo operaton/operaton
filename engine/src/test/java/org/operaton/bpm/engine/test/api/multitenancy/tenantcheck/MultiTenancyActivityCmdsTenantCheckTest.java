@@ -37,7 +37,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Deivarayan Azhagappan
  *
  */
-public class MultiTenancyActivityCmdsTenantCheckTest {
+class MultiTenancyActivityCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -60,7 +60,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
   private RuntimeService runtimeService;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
 
@@ -73,7 +73,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
   }
 
   @Test
-  public void getActivityInstanceWithAuthenticatedTenant() {
+  void getActivityInstanceWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -82,7 +82,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
   }
 
   @Test
-  public void getActivityInstanceWithNoAuthenticatedTenant() {
+  void getActivityInstanceWithNoAuthenticatedTenant() {
     identityService.setAuthentication("aUserId", null);
 
     // when/then
@@ -94,7 +94,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
   }
 
   @Test
-  public void getActivityInstanceWithDisabledTenantCheck() {
+  void getActivityInstanceWithDisabledTenantCheck() {
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
@@ -104,7 +104,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
 
   // get active activity id
   @Test
-  public void getActivityIdsWithAuthenticatedTenant() {
+  void getActivityIdsWithAuthenticatedTenant() {
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
@@ -113,7 +113,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
   }
 
   @Test
-  public void getActivityIdsWithNoAuthenticatedTenant() {
+  void getActivityIdsWithNoAuthenticatedTenant() {
     identityService.setAuthentication("aUserId", null);
 
     // when/then
@@ -125,7 +125,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
   }
 
   @Test
-  public void getActivityIdsWithDisabledTenantCheck() {
+  void getActivityIdsWithDisabledTenantCheck() {
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 

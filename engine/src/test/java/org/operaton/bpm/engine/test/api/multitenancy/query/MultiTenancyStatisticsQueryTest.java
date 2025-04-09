@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyStatisticsQueryTest {
+class MultiTenancyStatisticsQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -57,7 +57,7 @@ public class MultiTenancyStatisticsQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("EmptyProcess")
     .startEvent().done();
@@ -73,7 +73,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testDeploymentStatistics() {
+  void testDeploymentStatistics() {
     List<DeploymentStatistics> deploymentStatistics = managementService
         .createDeploymentStatisticsQuery()
         .list();
@@ -85,7 +85,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testProcessDefinitionStatistics() {
+  void testProcessDefinitionStatistics() {
     List<ProcessDefinitionStatistics> processDefinitionStatistics = managementService
       .createProcessDefinitionStatisticsQuery()
       .list();
@@ -97,7 +97,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenantsForDeploymentStatistics() {
+  void testQueryNoAuthenticatedTenantsForDeploymentStatistics() {
     identityService.setAuthentication("user", null, null);
 
     DeploymentStatisticsQuery query = managementService.createDeploymentStatisticsQuery();
@@ -109,7 +109,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenantForDeploymentStatistics() {
+  void testQueryAuthenticatedTenantForDeploymentStatistics() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     DeploymentStatisticsQuery query = managementService.createDeploymentStatisticsQuery();
@@ -121,7 +121,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenantsForDeploymentStatistics() {
+  void testQueryAuthenticatedTenantsForDeploymentStatistics() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     DeploymentStatisticsQuery query = managementService.createDeploymentStatisticsQuery();
@@ -133,7 +133,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheckForDeploymentStatistics() {
+  void testQueryDisabledTenantCheckForDeploymentStatistics() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -146,7 +146,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenantsForProcessDefinitionStatistics() {
+  void testQueryNoAuthenticatedTenantsForProcessDefinitionStatistics() {
     identityService.setAuthentication("user", null, null);
 
     ProcessDefinitionStatisticsQuery query = managementService.createProcessDefinitionStatisticsQuery();
@@ -158,7 +158,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenantForProcessDefinitionStatistics() {
+  void testQueryAuthenticatedTenantForProcessDefinitionStatistics() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     ProcessDefinitionStatisticsQuery query = managementService.createProcessDefinitionStatisticsQuery();
@@ -170,7 +170,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenantsForProcessDefinitionStatistics() {
+  void testQueryAuthenticatedTenantsForProcessDefinitionStatistics() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     ProcessDefinitionStatisticsQuery query = managementService.createProcessDefinitionStatisticsQuery();
@@ -182,7 +182,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheckForProcessDefinitionStatistics() {
+  void testQueryDisabledTenantCheckForProcessDefinitionStatistics() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -195,7 +195,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testActivityStatistics() {
+  void testActivityStatistics() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("SingleTaskProcess");
 
     ActivityStatisticsQuery query = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId());
@@ -205,7 +205,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenantForActivityStatistics() {
+  void testQueryAuthenticatedTenantForActivityStatistics() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("SingleTaskProcess");
@@ -217,7 +217,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenantForActivityStatistics() {
+  void testQueryNoAuthenticatedTenantForActivityStatistics() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("SingleTaskProcess");
 
@@ -230,7 +230,7 @@ public class MultiTenancyStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheckForActivityStatistics() {
+  void testQueryDisabledTenantCheckForActivityStatistics() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("SingleTaskProcess");
 

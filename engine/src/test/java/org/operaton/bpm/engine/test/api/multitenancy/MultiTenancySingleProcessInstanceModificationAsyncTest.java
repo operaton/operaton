@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.test.util.ExecutionTree;
 
 import junit.framework.AssertionFailedError;
 
-public class MultiTenancySingleProcessInstanceModificationAsyncTest {
+class MultiTenancySingleProcessInstanceModificationAsyncTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
 
@@ -63,7 +63,7 @@ public class MultiTenancySingleProcessInstanceModificationAsyncTest {
   protected TaskService taskService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     List<Batch> batches = managementService.createBatchQuery().list();
     for (Batch batch : batches) {
       managementService.deleteBatch(batch.getId(), true);
@@ -76,7 +76,7 @@ public class MultiTenancySingleProcessInstanceModificationAsyncTest {
   }
 
   @Test
-  public void testModificationSameTenant() {
+  void testModificationSameTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, PARALLEL_GATEWAY_PROCESS);
 

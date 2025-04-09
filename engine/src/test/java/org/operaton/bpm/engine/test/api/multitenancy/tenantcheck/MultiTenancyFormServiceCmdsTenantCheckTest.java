@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -34,54 +36,25 @@ import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 public class MultiTenancyFormServiceCmdsTenantCheckTest {
  protected static final String TENANT_ONE = "tenant1";
 
   protected static final String PROCESS_DEFINITION_KEY = "formKeyProcess";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected TaskService taskService;
-
   protected FormService formService;
-
   protected RuntimeService runtimeService;
-
   protected IdentityService identityService;
-
   protected RepositoryService repositoryService;
-
   protected ProcessEngineConfiguration processEngineConfiguration;
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  @Before
-  public void init() {
-
-    taskService = engineRule.getTaskService();
-
-    formService = engineRule.getFormService();
-
-    identityService = engineRule.getIdentityService();
-
-    runtimeService = engineRule.getRuntimeService();
-
-    repositoryService = engineRule.getRepositoryService();
-
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-
-  }
 
   // GetStartForm test
   @Test

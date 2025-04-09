@@ -18,21 +18,33 @@ package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.api.delegate.AssertingTaskListener;
 import org.operaton.bpm.engine.test.api.delegate.AssertingTaskListener.DelegateTaskAsserter;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * Tests if a {@link DelegateTask} has the correct tenant-id. The
  * assertions are checked inside the task listener.
  */
-public class MultiTenancyDelegateTaskTest extends PluggableProcessEngineTest {
+public class MultiTenancyDelegateTaskTest {
 
   protected static final String BPMN = "org/operaton/bpm/engine/test/api/multitenancy/taskListener.bpmn";
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected RuntimeService runtimeService;
+  protected RepositoryService repositoryService;
 
   @Test
   public void testSingleExecutionWithUserTask() {
@@ -49,7 +61,7 @@ public class MultiTenancyDelegateTaskTest extends PluggableProcessEngineTest {
         assertThat(task.getTenantId()).isEqualTo(expectedTenantId);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     AssertingTaskListener.clear();
 

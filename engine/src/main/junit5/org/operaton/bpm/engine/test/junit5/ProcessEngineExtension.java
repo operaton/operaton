@@ -245,6 +245,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
     // we disable the authorization check when deploying before the test starts
     boolean authorizationEnabled = processEngineConfiguration.isAuthorizationEnabled();
+    boolean tenantCheckEnabled = processEngineConfiguration.isTenantCheckEnabled();
     try {
       processEngineConfiguration.setAuthorizationEnabled(false);
       deploymentId = TestHelper.annotationDeploymentSetUp(processEngine, testClass, testMethod.getName(), null, testMethod.getParameterTypes());
@@ -258,6 +259,7 @@ public class ProcessEngineExtension implements TestWatcher,
     } finally {
       // after the initialization we restore authorization to the state defined by the test
       processEngineConfiguration.setAuthorizationEnabled(authorizationEnabled);
+      processEngineConfiguration.setTenantCheckEnabled(tenantCheckEnabled);
     }
     
   }
@@ -269,8 +271,6 @@ public class ProcessEngineExtension implements TestWatcher,
     final String testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set")).getName();
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
-    // we disable the tenant check when undeploying after the test ends
-    boolean tenantCheckEnabled = processEngineConfiguration.isTenantCheckEnabled();
     try {
       processEngineConfiguration.setTenantCheckEnabled(false);
       TestHelper.annotationDeploymentTearDown(processEngine, deploymentId, testClass, testMethod);
@@ -280,8 +280,7 @@ public class ProcessEngineExtension implements TestWatcher,
       }
       additionalDeployments.clear();
     } finally {
-      // restore tenant check to the state defined by the test
-      processEngineConfiguration.setTenantCheckEnabled(tenantCheckEnabled);
+      processEngine.getProcessEngineConfiguration().setTenantCheckEnabled(true);
     }
 
    TestHelper.resetIdGenerator(processEngineConfiguration);
@@ -366,7 +365,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
     if (serviceInstance.isPresent()) {
       getAllFields(testInstance.getClass())
-              .filter(field -> field.getType().isAssignableFrom(serviceType))
+              .filter(field -> field.getType() != Object.class && field.getType().isAssignableFrom(serviceType))
               .forEach(field -> inject(testInstance, field, serviceInstance.get()));
     }
   }

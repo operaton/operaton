@@ -18,55 +18,32 @@ package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.commons.testing.WatchLogger;
 
 public class TelemetryConfigurationTest {
 
-
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule);
-
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
   protected ProcessEngineConfigurationImpl configuration;
   protected ManagementService managementService;
   protected IdentityService identityService;
 
-  protected ProcessEngineConfigurationImpl inMemoryConfiguration;
-
-  @Before
-  public void init() {
-    configuration = engineRule.getProcessEngineConfiguration();
-    managementService = configuration.getManagementService();
-    identityService = configuration.getIdentityService();
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     identityService.clearAuthentication();
-    if (inMemoryConfiguration != null) {
-      inMemoryConfiguration.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP);
-      ProcessEngineImpl processEngineImpl = inMemoryConfiguration.getProcessEngine();
-      processEngineImpl.close();
-      processEngineImpl = null;
-    }
   }
 
   @Test

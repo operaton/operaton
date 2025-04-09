@@ -19,14 +19,18 @@ package org.operaton.bpm.engine.test.api.multitenancy.cmmn;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyCaseTaskTest extends PluggableProcessEngineTest {
+public class MultiTenancyCaseTaskTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -43,6 +47,14 @@ public class MultiTenancyCaseTaskTest extends PluggableProcessEngineTest {
   protected static final String CMMN_CASE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
 
   protected static final String CASE_TASK_ID = "PI_CaseTask_1";
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected CaseService caseService;
+  protected RepositoryService repositoryService;
 
   @Test
   public void testStartCaseInstanceWithDeploymentBinding() {

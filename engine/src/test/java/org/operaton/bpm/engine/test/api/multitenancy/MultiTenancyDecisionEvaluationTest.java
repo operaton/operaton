@@ -21,16 +21,22 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
 
-public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTest {
+public class MultiTenancyDecisionEvaluationTest {
 
   protected static final String DMN_FILE = "org/operaton/bpm/engine/test/api/dmn/Example.dmn";
   protected static final String DMN_FILE_SECOND_VERSION = "org/operaton/bpm/engine/test/api/dmn/Example_v2.dmn";
@@ -42,6 +48,16 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
 
   protected static final String RESULT_OF_FIRST_VERSION = "ok";
   protected static final String RESULT_OF_SECOND_VERSION = "notok";
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected DecisionService decisionService;
+  protected RepositoryService repositoryService;
+  protected IdentityService identityService;
 
   @Test
   public void testFailToEvaluateDecisionByIdWithoutTenantId() {

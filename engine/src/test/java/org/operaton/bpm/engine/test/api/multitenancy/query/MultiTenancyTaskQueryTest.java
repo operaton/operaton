@@ -23,19 +23,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NullValueException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
+public class MultiTenancyTaskQueryTest {
 
   private static final String TENANT_ONE = "tenant1";
   private static final String TENANT_TWO = "tenant2";
@@ -43,7 +48,16 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
 
   private final List<String> taskIds = new ArrayList<>();
 
-  @Before
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected IdentityService identityService;
+  protected TaskService taskService;
+
+  @BeforeEach
   public void setUp() {
 
     createTaskWithoutTenant();
@@ -212,7 +226,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
     return taskId;
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     identityService.clearAuthentication();
     for (String taskId : taskIds) {

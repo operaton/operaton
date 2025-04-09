@@ -20,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -27,19 +30,11 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatisticsQuery;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.multitenancy.StaticTenantIdTestProvider;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
 
 /**
  * @author Askar Akhmerov
@@ -58,16 +53,16 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
 
   protected static StaticTenantIdTestProvider tenantIdProvider;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
-    configuration.setTenantIdProvider(tenantIdProvider);
-  });
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain tenantRuleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .cacheForConfigurationResource(false)
+      .configurator(configuration -> {
+        tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
+        configuration.setTenantIdProvider(tenantIdProvider);
+      })
+      .build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected DecisionService decisionService;
   protected RepositoryService repositoryService;
@@ -75,13 +70,8 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
   protected IdentityService identityService;
 
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    decisionService = engineRule.getDecisionService();
-    repositoryService = engineRule.getRepositoryService();
-    historyService = engineRule.getHistoryService();
-    identityService = engineRule.getIdentityService();
-
     testRule.deploy(DISH_DRG_DMN);
 
     decisionService.evaluateDecisionByKey(DISH_DECISION)

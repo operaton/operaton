@@ -23,14 +23,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.bpmn.diagram.ProcessDiagramLayoutFactory;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Nikola Koevski
@@ -39,19 +39,21 @@ public class ProcessDiagramParseTest {
 
   private static final String RESOURCE_PATH = "src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/testXxeParsingIsDisabled";
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   boolean xxeProcessingValue;
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     xxeProcessingValue = processEngineConfiguration.isEnableXxeProcessing();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setEnableXxeProcessing(xxeProcessingValue);
   }

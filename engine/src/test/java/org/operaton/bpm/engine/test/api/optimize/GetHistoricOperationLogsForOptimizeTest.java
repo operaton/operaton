@@ -16,12 +16,33 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_JOB;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_JOB;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.EntityTypes;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.identity.User;
@@ -32,55 +53,43 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.BatchSuspensionHelper;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetHistoricOperationLogsForOptimizeTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-  protected BatchSuspensionHelper helper = new BatchSuspensionHelper(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  BatchSuspensionHelper helper = new BatchSuspensionHelper(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  OptimizeService optimizeService;
 
-  private OptimizeService optimizeService;
+  String userId = "test";
 
-  protected String userId = "test";
+  IdentityService identityService;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  RepositoryService repositoryService;
 
-  private IdentityService identityService;
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-  private RepositoryService repositoryService;
-
-  @Before
+  @BeforeEach
   public void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
-    identityService = engineRule.getIdentityService();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-
 
     createUser(userId);
     identityService.setAuthenticatedUserId(userId);
     deploySimpleDefinition();
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());

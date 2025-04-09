@@ -20,16 +20,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 public class DecisionRequirementsDefinitionQueryTest {
 
@@ -37,23 +35,20 @@ public class DecisionRequirementsDefinitionQueryTest {
   protected static final String DRD_DISH_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
   protected static final String DRD_XYZ_RESOURCE = "org/operaton/bpm/engine/test/api/repository/drdXyz_.dmn11.xml";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RepositoryService repositoryService;
 
-  protected RepositoryService repositoryService;
+  String decisionRequirementsDefinitionId;
+  String firstDeploymentId;
+  String secondDeploymentId;
+  String thirdDeploymentId;
 
-  protected String decisionRequirementsDefinitionId;
-  protected String firstDeploymentId;
-  protected String secondDeploymentId;
-  protected String thirdDeploymentId;
-
-  @Before
+  @BeforeEach
   public void init() {
-    repositoryService = engineRule.getRepositoryService();
-
     firstDeploymentId = testRule.deploy(DRD_DISH_RESOURCE, DRD_SCORE_RESOURCE).getId();
     secondDeploymentId = testRule.deploy(DRD_DISH_RESOURCE).getId();
     thirdDeploymentId = testRule.deploy(DRD_XYZ_RESOURCE).getId();

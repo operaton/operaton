@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.resources;
 
-import static org.operaton.bpm.engine.repository.ResourceTypes.HISTORY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.repository.ResourceTypes.HISTORY;
 
 import java.io.ByteArrayInputStream;
 import java.util.Date;
@@ -28,6 +28,10 @@ import java.util.Map;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.ibatis.jdbc.RuntimeSqlException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
@@ -51,22 +55,16 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceE
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
 import org.operaton.bpm.engine.test.api.variables.JavaSerializable;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryByteArrayTest {
@@ -76,32 +74,21 @@ public class HistoryByteArrayTest {
   protected static final long LOCK_TIME = 10000L;
   protected static final String TOPIC_NAME = "externalTaskTopic";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  ProcessEngineConfigurationImpl configuration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
+  HistoryService historyService;
+  ExternalTaskService externalTaskService;
 
-  protected ProcessEngineConfigurationImpl configuration;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected ExternalTaskService externalTaskService;
+  String taskId;
 
-  protected String taskId;
-
-  @Before
-  public void initServices() {
-    configuration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
-    externalTaskService = engineRule.getExternalTaskService();
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     if (taskId != null) {
       // delete task
@@ -109,7 +96,7 @@ public class HistoryByteArrayTest {
     }
   }
 
-  @Before
+  @BeforeEach
   public void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -120,7 +107,7 @@ public class HistoryByteArrayTest {
         .init();
   }
 
-  @After
+  @AfterEach
   public void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =

@@ -24,6 +24,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.ManagementService;
@@ -42,17 +46,11 @@ import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.repository.ResumePreviousBy;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.bpmn.deployment.VersionedDeploymentHandlerFactory;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Daniel Meyer
@@ -60,32 +58,26 @@ import org.junit.rules.RuleChain;
  */
 public class ProcessApplicationDeploymentTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  ManagementService managementService;
+  ProcessEngine processEngine;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RepositoryService repositoryService;
-  protected ManagementService managementService;
-  protected ProcessEngine processEngine;
+  EmbeddedProcessApplication processApplication;
+  DeploymentHandlerFactory defaultDeploymentHandlerFactory;
+  DeploymentHandlerFactory customDeploymentHandlerFactory;
 
-  private EmbeddedProcessApplication processApplication;
-  protected DeploymentHandlerFactory defaultDeploymentHandlerFactory;
-  protected DeploymentHandlerFactory customDeploymentHandlerFactory;
-
-  protected ProcessApplicationManager processApplicationManager;
-  protected DeploymentCache deploymentCache;
+  ProcessApplicationManager processApplicationManager;
+  DeploymentCache deploymentCache;
   Set<String> registeredDeployments;
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    processEngine = engineRule.getProcessEngine();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    repositoryService = engineRule.getRepositoryService();
-    managementService = engineRule.getManagementService();
-
     defaultDeploymentHandlerFactory = processEngineConfiguration.getDeploymentHandlerFactory();
     customDeploymentHandlerFactory = new VersionedDeploymentHandlerFactory();
     processApplication = new EmbeddedProcessApplication();
@@ -95,7 +87,7 @@ public class ProcessApplicationDeploymentTest {
     registeredDeployments = processEngineConfiguration.getRegisteredDeployments();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     clearProcessApplicationDeployments();
     processApplication.undeploy();

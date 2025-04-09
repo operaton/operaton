@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.resources;
 
-import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +27,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.ibatis.jdbc.RuntimeSqlException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -41,61 +44,44 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 public class RuntimeByteArrayTest {
   protected static final String WORKER_ID = "aWorkerId";
   protected static final long LOCK_TIME = 10000L;
   protected static final String TOPIC_NAME = "externalTaskTopic";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected MigrationTestRule migrationRule = new MigrationTestRule(engineRule);
-  protected BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
 
+  ProcessEngineConfigurationImpl configuration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+  ExternalTaskService externalTaskService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(migrationRule).around(testRule);
+  String id;
 
-  protected ProcessEngineConfigurationImpl configuration;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected TaskService taskService;
-  protected RepositoryService repositoryService;
-  protected ExternalTaskService externalTaskService;
-
-  protected String id;
-
-  @Before
-  public void initServices() {
-    configuration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-    externalTaskService = engineRule.getExternalTaskService();
-  }
-
-  @After
+  @AfterEach
   public void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     if (id != null) {
       // delete task

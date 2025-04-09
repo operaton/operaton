@@ -16,11 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
@@ -37,18 +41,12 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-
-import java.util.Date;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetHistoricDecisionInstancesForOptimizeTest {
@@ -61,31 +59,27 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected String userId = "test";
-  private OptimizeService optimizeService;
-  private IdentityService identityService;
-  private RuntimeService runtimeService;
-  private AuthorizationService authorizationService;
+  OptimizeService optimizeService;
+  IdentityService identityService;
+  RuntimeService runtimeService;
+  AuthorizationService authorizationService;
 
-  @Before
+  @BeforeEach
   public void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
-    identityService = engineRule.getIdentityService();
-    runtimeService = engineRule.getRuntimeService();
-    authorizationService = engineRule.getAuthorizationService();
 
     createUser(userId);
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
@@ -99,7 +93,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
     ClockUtil.reset();
   }
 
-  @Before
+  @BeforeEach
   public void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -110,7 +104,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
         .init();
   }
 
-  @After
+  @AfterEach
   public void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =

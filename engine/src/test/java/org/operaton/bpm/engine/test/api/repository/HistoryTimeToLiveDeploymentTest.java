@@ -20,7 +20,10 @@ package org.operaton.bpm.engine.test.api.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import ch.qos.logback.classic.Level;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ParseException;
@@ -32,17 +35,12 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import ch.qos.logback.classic.Level;
 
 public class HistoryTimeToLiveDeploymentTest {
 
@@ -55,36 +53,29 @@ public class HistoryTimeToLiveDeploymentTest {
 
   protected static final String HTTL_CONFIG_VALUE = "180";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
       .watch(CONFIG_LOGGER)
       .level(Level.DEBUG);
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RepositoryService repositoryService;
-  protected ManagementService managementService;
-  protected ProcessEngine processEngine;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  ManagementService managementService;
+  ProcessEngine processEngine;
 
-  protected String historyTimeToLive;
+  String historyTimeToLive;
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    processEngine = engineRule.getProcessEngine();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    repositoryService = engineRule.getRepositoryService();
-    managementService = engineRule.getManagementService();
-
     historyTimeToLive = processEngineConfiguration.getHistoryTimeToLive();
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.setHistoryTimeToLive(historyTimeToLive);
     processEngineConfiguration.setEnforceHistoryTimeToLive(false);

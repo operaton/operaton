@@ -25,6 +25,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -39,53 +43,41 @@ import org.operaton.bpm.engine.impl.OptimizeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetCompletedHistoricTaskInstancesForOptimizeTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   private OptimizeService optimizeService;
 
   protected String userId = "test";
 
-  private IdentityService identityService;
-  private RuntimeService runtimeService;
-  private AuthorizationService authorizationService;
-  private TaskService taskService;
-  private HistoryService historyService;
+  IdentityService identityService;
+  RuntimeService runtimeService;
+  AuthorizationService authorizationService;
+  TaskService taskService;
+  HistoryService historyService;
 
 
-  @Before
+  @BeforeEach
   public void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
-    identityService = engineRule.getIdentityService();
-    runtimeService = engineRule.getRuntimeService();
-    authorizationService = engineRule.getAuthorizationService();
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
 
     createUser(userId);
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());

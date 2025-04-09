@@ -16,12 +16,25 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
+import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.delegate.ExecutionListener.EVENTNAME_START;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.identity.Group;
@@ -31,27 +44,19 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.util.*;
-
-import static junit.framework.TestCase.assertTrue;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.delegate.ExecutionListener.EVENTNAME_START;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetCompletedHistoricActivityInstancesForOptimizeTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   private OptimizeService optimizeService;
 
@@ -60,26 +65,22 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
 
-  private IdentityService identityService;
-  private RuntimeService runtimeService;
-  private AuthorizationService authorizationService;
-  private TaskService taskService;
+  IdentityService identityService;
+  RuntimeService runtimeService;
+  AuthorizationService authorizationService;
+  TaskService taskService;
 
 
-  @Before
+  @BeforeEach
   public void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
-    identityService = engineRule.getIdentityService();
-    runtimeService = engineRule.getRuntimeService();
-    authorizationService = engineRule.getAuthorizationService();
-    taskService = engineRule.getTaskService();
 
     createUser(userId);
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());

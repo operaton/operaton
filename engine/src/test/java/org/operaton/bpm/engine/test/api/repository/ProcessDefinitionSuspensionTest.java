@@ -24,8 +24,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateProcessDefinitionHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;
@@ -39,17 +48,28 @@ import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Daniel Meyer
  * @author Joram Barrez
  */
-public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest {
+public class ProcessDefinitionSuspensionTest {
 
-  @After
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  FormService formService;
+  TaskService taskService;
+  ManagementService managementService;
+  
+  @AfterEach
   public void tearDown() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(commandContext -> {

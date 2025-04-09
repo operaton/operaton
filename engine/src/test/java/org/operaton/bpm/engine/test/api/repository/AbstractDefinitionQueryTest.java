@@ -19,39 +19,34 @@ package org.operaton.bpm.engine.test.api.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.query.Query;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 public abstract class AbstractDefinitionQueryTest {
 
   protected static final String FIRST_DEPLOYMENT_NAME = "firstDeployment";
   protected static final String SECOND_DEPLOYMENT_NAME = "secondDeployment";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
 
-  protected String deploymentOneId;
-  protected String deploymentTwoId;
+  String deploymentOneId;
+  String deploymentTwoId;
 
-  @Before
+  @BeforeEach
   public void before() {
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-
     deploymentOneId = repositoryService
       .createDeployment()
       .name(FIRST_DEPLOYMENT_NAME)
@@ -72,7 +67,7 @@ public abstract class AbstractDefinitionQueryTest {
 
   protected abstract String getResourceTwoPath();
 
-  @After
+  @AfterEach
   public void after() {
     repositoryService.deleteDeployment(deploymentOneId, true);
     repositoryService.deleteDeployment(deploymentTwoId, true);

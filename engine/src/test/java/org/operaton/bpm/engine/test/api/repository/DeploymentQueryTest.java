@@ -22,28 +22,32 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Tom Baeyens
  * @author Ingo Richtsmeier
  */
-public class DeploymentQueryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class DeploymentQueryTest {
 
   private String deploymentOneId;
   private String deploymentTwoId;
 
-  @Before
+  RepositoryService repositoryService;
+  
+  @BeforeEach
   public void setUp() {
     deploymentOneId = repositoryService
       .createDeployment()
@@ -63,7 +67,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
 
     repositoryService.deleteDeployment(deploymentOneId, true);

@@ -16,7 +16,27 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import org.operaton.bpm.engine.*;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -27,31 +47,12 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.util.IncrementCounterListener;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.cache.Cache;
-import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.fail;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -59,29 +60,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  */
 public class DeleteProcessDefinitionTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  HistoryService historyService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  Deployment deployment;
 
-  protected HistoryService historyService;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected Deployment deployment;
-
-  @Before
-  public void initServices() {
-    historyService = engineRule.getHistoryService();
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration();
-  }
-
-  @After
+  @AfterEach
   public void cleanUp() {
     if (deployment != null) {
       repositoryService.deleteDeployment(deployment.getId(), true);

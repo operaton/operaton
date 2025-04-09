@@ -16,12 +16,24 @@
  */
 package org.operaton.bpm.engine.test.api.queries;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -32,26 +44,18 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
-
 public class BoundedNumberOfMaxResultsTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   HistoryService historyService;
   RuntimeService runtimeService;
@@ -72,34 +76,25 @@ public class BoundedNumberOfMaxResultsTest {
       .endEvent()
       .done();
 
-  @Before
-  public void assignServices() {
-    historyService = engineRule.getHistoryService();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    identityService = engineRule.getIdentityService();
-    filterService = engineRule.getFilterService();
-  }
-
-  @Before
+  @BeforeEach
   public void enableMaxResultsLimit() {
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(10);
   }
 
-  @Before
+  @BeforeEach
   public void authenticate() {
     engineRule.getIdentityService()
         .setAuthenticatedUserId("foo");
   }
 
-  @After
+  @AfterEach
   public void clearAuthentication() {
     engineRule.getIdentityService()
         .clearAuthentication();
   }
 
-  @After
+  @AfterEach
   public void resetQueryMaxResultsLimit() {
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(Integer.MAX_VALUE);

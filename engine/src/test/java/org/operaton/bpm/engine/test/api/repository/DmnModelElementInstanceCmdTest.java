@@ -20,20 +20,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.bpm.model.dmn.instance.Decision;
 import org.operaton.bpm.model.dmn.instance.DecisionTable;
 import org.operaton.bpm.model.dmn.instance.Input;
 import org.operaton.bpm.model.dmn.instance.Output;
 import org.operaton.bpm.model.dmn.instance.Rule;
-import org.junit.Test;
 
-public class DmnModelElementInstanceCmdTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class DmnModelElementInstanceCmdTest {
 
   private static final String DECISION_KEY = "one";
 
+  RepositoryService repositoryService;
+  
   @Deployment(resources = "org/operaton/bpm/engine/test/repository/one.dmn")
   @Test
   public void testRepositoryService() {

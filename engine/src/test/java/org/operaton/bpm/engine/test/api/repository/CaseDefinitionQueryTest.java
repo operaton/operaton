@@ -22,12 +22,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.CaseDefinitionQuery;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -51,12 +51,12 @@ public class CaseDefinitionQueryTest extends AbstractDefinitionQueryTest {
     return "org/operaton/bpm/engine/test/api/repository/three_.cmmn";
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
     deploymentThreeId = repositoryService.createDeployment().name("thirdDeployment").addClasspathResource(getResourceThreePath()).deploy().getId();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     repositoryService.deleteDeployment(deploymentThreeId, true);
   }

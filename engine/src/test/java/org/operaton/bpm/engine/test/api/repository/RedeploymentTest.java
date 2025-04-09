@@ -16,31 +16,35 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.query.Query;
-import org.operaton.bpm.engine.repository.*;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.repository.Deployment;
+import org.operaton.bpm.engine.repository.DeploymentQuery;
+import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
+import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
+import org.operaton.bpm.engine.repository.Resource;
+import org.operaton.bpm.engine.repository.ResumePreviousBy;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -59,22 +63,20 @@ public class RedeploymentTest {
   public static final String RESOURCE_2_NAME = "path/to/my/process2.bpmn";
   public static final String RESOURCE_3_NAME = "path/to/my/process3.bpmn";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RepositoryService repositoryService;
+  boolean enforceHistoryTimeToLive;
 
-  protected RepositoryService repositoryService;
-  protected boolean enforceHistoryTimeToLive;
-
-  @Before
+  @BeforeEach
   public void setUp() {
-    repositoryService = engineRule.getRepositoryService();
     enforceHistoryTimeToLive = engineRule.getProcessEngineConfiguration().isEnforceHistoryTimeToLive();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(enforceHistoryTimeToLive);
   }

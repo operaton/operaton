@@ -18,18 +18,14 @@ package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProvider;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 public class MultiTenancySharedDefinitionPropagationTest {
 
@@ -37,16 +33,16 @@ public class MultiTenancySharedDefinitionPropagationTest {
 
   protected static final String TENANT_ID = "tenant1";
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    TenantIdProvider tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ID);
-    configuration.setTenantIdProvider(tenantIdProvider);
-  });
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .cacheForConfigurationResource(false)
+      .configurator(configuration -> {
+        TenantIdProvider tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ID);
+        configuration.setTenantIdProvider(tenantIdProvider);
+      })
+      .build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
   public void propagateTenantIdToProcessInstance() {

@@ -22,19 +22,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.io.InputStream;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.CaseDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author kristin.polenz
@@ -46,12 +44,10 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
   protected static final String CMMN_MODEL = "org/operaton/bpm/engine/test/api/cmmn/emptyStageCase.cmmn";
   protected static final String CMMN_DIAGRAM = "org/operaton/bpm/engine/test/api/cmmn/emptyStageCase.png";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RepositoryService repositoryService;
   protected IdentityService identityService;
@@ -59,12 +55,8 @@ public class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
 
   protected String caseDefinitionId;
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    repositoryService = engineRule.getRepositoryService();
-    identityService = engineRule.getIdentityService();
-
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL, CMMN_DIAGRAM);
 
     caseDefinitionId = repositoryService.createCaseDefinitionQuery().singleResult().getId();

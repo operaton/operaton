@@ -23,24 +23,40 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
 import org.operaton.bpm.engine.management.DeploymentStatistics;
 import org.operaton.bpm.engine.management.DeploymentStatisticsQuery;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatistics;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatisticsQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Test;
 
-public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest {
+public class MultiTenancyStatisticsQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
-  @Before
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected RuntimeService runtimeService;
+  protected ManagementService managementService;
+  protected IdentityService identityService;
+
+  @BeforeEach
   public void setUp() {
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("EmptyProcess")

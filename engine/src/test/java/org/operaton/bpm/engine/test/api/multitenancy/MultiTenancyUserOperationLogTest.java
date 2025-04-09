@@ -18,12 +18,17 @@ package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.EntityTypes;
@@ -56,20 +61,14 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(HISTORY_FULL)
 public class MultiTenancyUserOperationLogTest {
@@ -95,12 +94,11 @@ public class MultiTenancyUserOperationLogTest {
   protected static final BpmnModelInstance MODEL_JOB = Bpmn.createExecutableProcess(PROCESS_NAME)
       .startEvent().userTask(TASK_ID).operatonAsyncBefore().done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   protected ProcessEngineConfiguration configuration;
   protected TaskService taskService;
@@ -111,20 +109,13 @@ public class MultiTenancyUserOperationLogTest {
   protected ManagementService managementService;
   protected boolean isDefaultTenantCheckEnabled;
 
-  @Before
+  @BeforeEach
   public void init() {
-    configuration = engineRule.getProcessEngineConfiguration();
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    identityService = engineRule.getIdentityService();
-    managementService = engineRule.getManagementService();
     isDefaultTenantCheckEnabled = configuration.isTenantCheckEnabled();
     configuration.setTenantCheckEnabled(false);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     configuration.setTenantCheckEnabled(isDefaultTenantCheckEnabled);
   }

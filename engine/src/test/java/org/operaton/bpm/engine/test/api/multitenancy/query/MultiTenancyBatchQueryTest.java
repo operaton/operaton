@@ -29,6 +29,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -37,13 +41,8 @@ import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
@@ -54,11 +53,10 @@ public class MultiTenancyBatchQueryTest {
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain defaultRuleChin = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(engineRule);
 
@@ -69,13 +67,7 @@ public class MultiTenancyBatchQueryTest {
   protected Batch tenant1Batch;
   protected Batch tenant2Batch;
 
-  @Before
-  public void initServices() {
-    managementService= engineRule.getManagementService();
-    identityService = engineRule.getIdentityService();
-  }
-
-  @Before
+  @BeforeEach
   public void deployProcesses() {
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -86,7 +78,7 @@ public class MultiTenancyBatchQueryTest {
     tenant2Batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
   }
 
-  @After
+  @AfterEach
   public void removeBatches() {
     batchHelper.removeAllRunningAndHistoricBatches();
   }

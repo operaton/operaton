@@ -18,17 +18,19 @@ package org.operaton.bpm.engine.test.api.multitenancy.cmmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.test.api.multitenancy.listener.AssertingCaseExecutionListener;
 import org.operaton.bpm.engine.test.api.multitenancy.listener.AssertingCaseExecutionListener.DelegateCaseExecutionAsserter;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * Tests if a {@link DelegateCaseExecution} has the correct tenant-id.
  */
-public class MultiTenancyDelegateCaseExecutionTest extends PluggableProcessEngineTest {
+public class MultiTenancyDelegateCaseExecutionTest {
 
   protected static final String HUMAN_TASK_CMMN_FILE = "org/operaton/bpm/engine/test/api/multitenancy/HumanTaskCaseExecutionListener.cmmn";
   protected static final String CASE_TASK_CMMN_FILE = "org/operaton/bpm/engine/test/api/multitenancy/CaseTaskCaseExecutionListener.cmmn";
@@ -36,7 +38,12 @@ public class MultiTenancyDelegateCaseExecutionTest extends PluggableProcessEngin
 
   protected static final String TENANT_ID = "tenant1";
 
-  @After
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  @AfterEach
   public void tearDown() {
     AssertingCaseExecutionListener.clear();
   }

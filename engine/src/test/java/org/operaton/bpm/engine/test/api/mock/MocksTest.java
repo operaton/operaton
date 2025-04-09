@@ -21,33 +21,24 @@ import static junit.framework.TestCase.assertNull;
 
 import java.util.HashMap;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.mock.Mocks;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Tassilo Weidner
  */
+@ExtendWith(ProcessEngineExtension.class)
 public class MocksTest {
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
-
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-    taskService = rule.getTaskService();
-  }
 
   @Test
   public void testMethodsOfMocksAPI() {

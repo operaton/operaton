@@ -25,6 +25,10 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -38,30 +42,23 @@ import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class MultiTenancyHistoricExternalTaskLogTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected HistoryService historyService;
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
   protected IdentityService identityService;
   protected ExternalTaskService externalTaskService;
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   protected final String TENANT_NULL = null;
   protected final String TENANT_ONE = "tenant1";
@@ -72,14 +69,8 @@ public class MultiTenancyHistoricExternalTaskLogTest {
   protected final long LOCK_DURATION = 5 * 60L * 1000L;
 
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    repositoryService = engineRule.getRepositoryService();
-    historyService = engineRule.getHistoryService();
-    runtimeService = engineRule.getRuntimeService();
-    identityService = engineRule.getIdentityService();
-    externalTaskService = engineRule.getExternalTaskService();
-
     testRule.deployForTenant(TENANT_NULL, ONE_EXTERNAL_TASK_PROCESS);
     testRule.deployForTenant(TENANT_ONE, ONE_EXTERNAL_TASK_PROCESS);
     testRule.deployForTenant(TENANT_TWO, ONE_EXTERNAL_TASK_PROCESS);
@@ -361,7 +352,6 @@ public class MultiTenancyHistoricExternalTaskLogTest {
     }
   }
 
-  @SuppressWarnings("deprecation")
   protected ExternalTask startProcessInstanceAndFailExternalTask(String tenant) {
     ProcessInstance pi = runtimeService.createProcessInstanceByKey(DEFAULT_PROCESS_KEY).processDefinitionTenantId(tenant).execute();
     ExternalTask externalTask = externalTaskService

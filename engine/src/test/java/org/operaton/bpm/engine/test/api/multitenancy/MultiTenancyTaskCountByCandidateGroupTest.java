@@ -22,34 +22,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Stefan Hentschel.
  */
 public class MultiTenancyTaskCountByCandidateGroupTest {
 
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule processEngineTestRule = new ProcessEngineTestRule(processEngineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain
-    .outerRule(processEngineTestRule)
-    .around(processEngineRule);
-
+  @RegisterExtension
+  protected static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension procesessEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
 
   protected TaskService taskService;
   protected IdentityService identityService;
@@ -63,13 +57,8 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
 
   protected List<String> taskIds = new ArrayList<>();
 
-  @Before
+  @BeforeEach
   public void setUp() {
-    taskService = processEngineRule.getTaskService();
-    identityService = processEngineRule.getIdentityService();
-    authorizationService = processEngineRule.getAuthorizationService();
-    processEngineConfiguration = processEngineRule.getProcessEngineConfiguration();
-
     createTask(groupId, tenantId);
     createTask(groupId, anotherTenantId);
     createTask(groupId, anotherTenantId);
@@ -77,7 +66,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
     processEngineConfiguration.setTenantCheckEnabled(true);
   }
 
-  @After
+  @AfterEach
   public void cleanUp() {
     processEngineConfiguration.setTenantCheckEnabled(false);
 

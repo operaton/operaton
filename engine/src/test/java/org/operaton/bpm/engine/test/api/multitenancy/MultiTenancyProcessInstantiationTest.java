@@ -22,25 +22,33 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.BatchRestartHelper;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Test;
 
 
-public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngineTest {
+public class MultiTenancyProcessInstantiationTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -51,11 +59,22 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
       .endEvent()
       .done();
 
-  public BatchRestartHelper batchHelper = new BatchRestartHelper(this);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @After
+  public BatchRestartHelper batchHelper = new BatchRestartHelper(engineRule);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected AuthorizationService authorizationService;
+  protected RuntimeService runtimeService;
+  protected RepositoryService repositoryService;
+  protected IdentityService identityService;
+  protected HistoryService historyService;
+
+  @AfterEach
   public void tearDown() {
-
     authorizationService.createAuthorizationQuery();
     batchHelper.removeAllRunningAndHistoricBatches();
   }

@@ -21,9 +21,9 @@ import static org.operaton.bpm.engine.impl.util.ParseUtil.parseProcessEngineVers
 import static org.operaton.bpm.engine.impl.util.ProcessEngineDetails.EDITION_COMMUNITY;
 import static org.operaton.bpm.engine.impl.util.ProcessEngineDetails.EDITION_ENTERPRISE;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
 import org.operaton.bpm.engine.test.util.TestconfigProperties;
-import org.junit.Test;
 
 public class ProcessEngineDetailsTest {
 

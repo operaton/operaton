@@ -22,6 +22,8 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -29,16 +31,11 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(HISTORY_FULL)
 public class MultiTenancyUserOperationLogTenantCheckTest {
@@ -55,25 +52,15 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
 
   protected static final BpmnModelInstance MODEL = Bpmn.createExecutableProcess(PROCESS_NAME).startEvent().userTask("aTaskId").done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected TaskService taskService;
   protected HistoryService historyService;
   protected RuntimeService runtimeService;
   protected IdentityService identityService;
-
-  @Before
-  public void init() {
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
-    runtimeService = engineRule.getRuntimeService();
-    identityService = engineRule.getIdentityService();
-  }
 
   @Test
   public void shouldSetAnnotationWithoutTenant() {

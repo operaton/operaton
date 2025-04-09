@@ -24,14 +24,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.exception.NullValueException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinitionQuery;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyDecisionDefinitionQueryTest extends PluggableProcessEngineTest {
+public class MultiTenancyDecisionDefinitionQueryTest {
 
   protected static final String DECISION_DEFINITION_KEY = "decision";
   protected static final String DMN = "org/operaton/bpm/engine/test/api/multitenancy/simpleDecisionTable.dmn";
@@ -39,7 +44,16 @@ public class MultiTenancyDecisionDefinitionQueryTest extends PluggableProcessEng
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
-  @Before
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected RepositoryService repositoryService;
+  protected IdentityService identityService;
+
+  @BeforeEach
   public void setUp() {
     testRule.deploy(DMN);
     testRule.deployForTenant(TENANT_ONE, DMN);

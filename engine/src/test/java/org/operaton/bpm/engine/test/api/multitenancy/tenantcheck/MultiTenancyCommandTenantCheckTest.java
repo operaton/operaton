@@ -16,33 +16,28 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.authorization.Groups;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.authorization.Groups;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 public class MultiTenancyCommandTenantCheckTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;
 
-  @Before
+  @BeforeEach
   public void init() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    identityService = engineRule.getIdentityService();
-
     identityService.setAuthentication("user", null, null);
   }
 

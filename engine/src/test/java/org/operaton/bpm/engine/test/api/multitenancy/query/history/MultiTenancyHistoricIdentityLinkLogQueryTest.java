@@ -20,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
@@ -30,16 +33,11 @@ import org.operaton.bpm.engine.history.HistoricIdentityLinkLogQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.IdentityLink;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
 *
@@ -54,17 +52,15 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
 
   private static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected HistoryService historyService;
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
   protected TaskService taskService;
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   protected static final String A_USER_ID = "aUserId";
 
@@ -73,13 +69,8 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
   protected static final String TENANT_2 = "tenant2";
   protected static final String TENANT_3 = "tenant3";
 
-  @Before
+  @BeforeEach
   public void init() {
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-    historyService = engineRule.getHistoryService();
-    runtimeService = engineRule.getRuntimeService();
-
     // create sample identity link
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
     .startEvent()
@@ -229,7 +220,6 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
     assertThat(query.tenantIdIn(TENANT_1, TENANT_2, TENANT_3).count()).isEqualTo(3);
   }
 
-  @SuppressWarnings("deprecation")
   protected void createIdentityLinks(String processDefinitionId) {
     addIdentityLinks(processDefinitionId);
     deleteIdentityLinks(processDefinitionId);

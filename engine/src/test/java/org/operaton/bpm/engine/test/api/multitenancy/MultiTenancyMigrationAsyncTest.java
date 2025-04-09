@@ -20,20 +20,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  * @author Thorben Lindhauer
@@ -44,16 +43,16 @@ public class MultiTenancyMigrationAsyncTest {
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
-  protected ProvidedProcessEngineRule defaultEngineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule defaultTestRule = new ProcessEngineTestRule(defaultEngineRule);
-  protected MigrationTestRule migrationRule = new MigrationTestRule(defaultEngineRule);
-
-  @Rule
-  public RuleChain defaultRuleChin = RuleChain.outerRule(defaultEngineRule).around(defaultTestRule).around(migrationRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension defaultEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension defaultTestRule = new ProcessEngineTestExtension(defaultEngineRule);
+  @RegisterExtension
+  protected static MigrationTestExtension migrationRule = new MigrationTestExtension(defaultEngineRule);
 
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(defaultEngineRule, migrationRule);
 
-  @After
+  @AfterEach
   public void removeBatches() {
     batchHelper.removeAllRunningAndHistoricBatches();
   }

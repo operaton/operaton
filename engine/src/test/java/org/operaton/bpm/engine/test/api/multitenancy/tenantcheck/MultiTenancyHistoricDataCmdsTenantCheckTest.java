@@ -21,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
@@ -40,19 +43,13 @@ import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.runtime.CaseInstanceBuilder;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author kristin.polenz
@@ -65,9 +62,10 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
 
   protected static final String PROCESS_DEFINITION_KEY = "failingProcess";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RepositoryService repositoryService;
   protected IdentityService identityService;
@@ -77,9 +75,6 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   protected DecisionService decisionService;
   protected HistoryService historyService;
   protected ProcessEngineConfiguration processEngineConfiguration;
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   protected static final BpmnModelInstance BPMN_PROCESS = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
       .startEvent().endEvent().done();
@@ -99,19 +94,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
 
   protected static final String DMN = "org/operaton/bpm/engine/test/api/multitenancy/simpleDecisionTable.dmn";
 
-  @Before
-  public void init() {
-    repositoryService = engineRule.getRepositoryService();
-    identityService = engineRule.getIdentityService();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    caseService = engineRule.getCaseService();
-    decisionService = engineRule.getDecisionService();
-    historyService = engineRule.getHistoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @After
+  @AfterEach
   public void tearDown() {
     identityService.clearAuthentication();
     for(HistoricTaskInstance instance : historyService.createHistoricTaskInstanceQuery().list()) {

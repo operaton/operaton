@@ -16,12 +16,19 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngines;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.diagnostics.CommandCounter;
@@ -31,19 +38,10 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
+@ExtendWith(ProcessEngineExtension.class)
 public class TelemetryDynamicDataTest {
-
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule);
 
   protected ProcessEngineConfigurationImpl configuration;
   protected RuntimeService runtimeService;
@@ -52,16 +50,12 @@ public class TelemetryDynamicDataTest {
 
   protected ProcessEngine processEngineInMem;
 
-  @Before
+  @BeforeEach
   public void init() {
-    configuration = engineRule.getProcessEngineConfiguration();
-    runtimeService = configuration.getRuntimeService();
-    taskService = configuration.getTaskService();
-    managementService = configuration.getManagementService();
     clearMetrics();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     clearMetrics();
 

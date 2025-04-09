@@ -16,22 +16,22 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
@@ -42,9 +42,10 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
   protected static final String PROCESS_DEFINITION_KEY_ONE = "oneExternalTaskProcess";
   private static final String ERROR_DETAILS = "anErrorDetail";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected static final String WORKER_ID = "aWorkerId";
 
@@ -62,18 +63,8 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
   protected IdentityService identityService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  @Before
+  @BeforeEach
   public void init() {
-
-    externalTaskService = engineRule.getExternalTaskService();
-
-    taskService = engineRule.getTaskService();
-
-    identityService = engineRule.getIdentityService();
-
     testRule.deployForTenant(TENANT_ONE,
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml");
 

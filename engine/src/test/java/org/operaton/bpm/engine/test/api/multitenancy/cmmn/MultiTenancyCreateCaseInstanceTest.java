@@ -21,14 +21,20 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTest {
+public class MultiTenancyCreateCaseInstanceTest {
 
   protected static final String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
 
@@ -36,6 +42,16 @@ public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTe
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected RepositoryService repositoryService;
+  protected CaseService caseService;
+  protected IdentityService identityService;
 
   @Test
   public void testFailToCreateCaseInstanceByIdWithoutTenantId() {

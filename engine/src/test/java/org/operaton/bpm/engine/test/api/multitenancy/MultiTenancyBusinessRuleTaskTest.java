@@ -19,14 +19,17 @@ package org.operaton.bpm.engine.test.api.multitenancy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Test;
 
-public class MultiTenancyBusinessRuleTaskTest extends PluggableProcessEngineTest {
+public class MultiTenancyBusinessRuleTaskTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -43,6 +46,13 @@ public class MultiTenancyBusinessRuleTaskTest extends PluggableProcessEngineTest
   protected static final String RESULT_OF_VERSION_TAG_ONE = "A";
   protected static final String RESULT_OF_VERSION_TAG_TWO = "C";
 
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected RuntimeService runtimeService;
+  
   @Test
   public void testEvaluateDecisionWithDeploymentBinding() {
 

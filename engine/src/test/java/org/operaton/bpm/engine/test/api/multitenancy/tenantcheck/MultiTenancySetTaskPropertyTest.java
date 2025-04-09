@@ -21,32 +21,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
 import org.operaton.bpm.engine.test.util.MethodInvocation;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.test.util.TriConsumer;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class MultiTenancySetTaskPropertyTest {
 
   protected static final String TENANT_ONE = "tenant1";
@@ -58,11 +55,10 @@ public class MultiTenancySetTaskPropertyTest {
       .endEvent()
       .done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   // populated by data in constructor
   protected final String operationName;
@@ -94,8 +90,8 @@ public class MultiTenancySetTaskPropertyTest {
    * setValue: The value to use to set property to
    * taskQueryBuilderMethodName: The corresponding taskQuery builder method name to use for assertion purposes
    */
-  @Parameters(name = "{0}")
-  public static List<Object[]> data() {
+  @Parameters
+  public static Collection<Object[]> data() {
     TriConsumer<TaskService, String, Object> setPriority = (taskService, taskId, value) -> taskService.setPriority(taskId, (Integer) value);
     TriConsumer<TaskService, String, Object> setName = (taskService, taskId, value) -> taskService.setName(taskId, (String) value);
     TriConsumer<TaskService, String, Object> setDescription = (taskService, taskId, value) -> taskService.setDescription(taskId, (String) value);
@@ -111,7 +107,7 @@ public class MultiTenancySetTaskPropertyTest {
     });
   }
 
-  @Before
+  @BeforeEach
   public void init() {
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
 
@@ -119,12 +115,9 @@ public class MultiTenancySetTaskPropertyTest {
 
     task = engineRule.getTaskService().createTaskQuery().singleResult();
     taskId = task.getId();
-
-    taskService = engineRule.getTaskService();
-    identityService = engineRule.getIdentityService();
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationForTaskWithAuthenticatedTenant() {
     // given
     identityService.setAuthentication("aUserId", null, Collections.singletonList(TENANT_ONE));
@@ -136,7 +129,7 @@ public class MultiTenancySetTaskPropertyTest {
     assertCorrespondingTaskQueryHasCount(1L);
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationForTaskWithNoAuthenticatedTenant() {
     // given
     identityService.setAuthentication("aUserId", null);
@@ -149,7 +142,7 @@ public class MultiTenancySetTaskPropertyTest {
 
   }
 
-  @Test
+  @TestTemplate
   public void shouldSetOperationForTaskWithDisabledTenantCheck() {
     // given
     identityService.setAuthentication("aUserId", null);

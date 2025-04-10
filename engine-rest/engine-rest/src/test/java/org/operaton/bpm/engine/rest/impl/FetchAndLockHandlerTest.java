@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
+import static org.operaton.bpm.engine.rest.impl.FetchAndLockHandlerImpl.BLOCKING_QUEUE_CAPACITY_PARAM_NAME;
+import static org.operaton.bpm.engine.rest.impl.FetchAndLockHandlerImpl.DEFAULT_BLOCKING_QUEUE_CAPACITY;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -44,6 +46,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
@@ -73,6 +77,12 @@ public class FetchAndLockHandlerTest {
   @Mock
   protected FetchAndLockBuilder fetchAndLockBuilder;
 
+  @Mock
+  private ServletContext servletContext;
+
+  @Mock
+  private ServletContextEvent servletContextEvent;
+
   @Spy
   protected FetchAndLockHandlerImpl handler;
 
@@ -100,6 +110,9 @@ public class FetchAndLockHandlerTest {
     doReturn(processEngine).when(handler).getProcessEngine(any(FetchAndLockRequest.class));
 
     lockedExternalTaskMock = MockProvider.createMockLockedExternalTask();
+
+    when(servletContextEvent.getServletContext()).thenReturn(servletContext);
+    handler.contextInitialized(servletContextEvent);
   }
 
   @Before
@@ -417,6 +430,56 @@ public class FetchAndLockHandlerTest {
     verify(asyncResponse).resume(argumentCaptor.capture());
     assertThat(argumentCaptor.getValue().getStatus()).isEqualTo(Status.INTERNAL_SERVER_ERROR);
     assertThat(argumentCaptor.getValue().getMessage()).isEqualTo("Request rejected due to shutdown of application server.");
+  }
+
+  @Test
+  public void shouldInitialiseQueueWithSpecifiedParam() {
+    // given
+    String queueSizeParamValue = "5";
+    when(servletContext.getInitParameter(BLOCKING_QUEUE_CAPACITY_PARAM_NAME)).then(invocation -> queueSizeParamValue);
+
+    // when
+    handler.contextInitialized(servletContextEvent);
+
+    // then
+    assertThat(handler.queue.remainingCapacity()).isEqualTo(5);
+  }
+
+  @Test
+  public void shouldInitialiseQueueWithDefaultCapacityWhenAbsentParam() {
+    // given no parameter
+
+    // when
+    handler.contextInitialized(servletContextEvent);
+
+    // then
+    assertThat(handler.queue.remainingCapacity()).isEqualTo(DEFAULT_BLOCKING_QUEUE_CAPACITY);
+  }
+
+  @Test
+  public void shouldInitialiseQueueWithDefaultCapacityIfInvalidParam() {
+    // given
+    String queueSizeParamValue = "NaN";
+    when(servletContext.getInitParameter(BLOCKING_QUEUE_CAPACITY_PARAM_NAME)).then(invocation -> queueSizeParamValue);
+
+    // when
+    handler.contextInitialized(servletContextEvent);
+
+    // then
+    assertThat(handler.queue.remainingCapacity()).isEqualTo(DEFAULT_BLOCKING_QUEUE_CAPACITY);
+  }
+
+  @Test
+  public void shouldInitialiseQueueWithDefaultCapacityIfNotGreaterThanZero() {
+    // given
+    String queueSizeParamValue = "-3";
+    when(servletContext.getInitParameter(BLOCKING_QUEUE_CAPACITY_PARAM_NAME)).then(invocation -> queueSizeParamValue);
+
+    // when
+    handler.contextInitialized(servletContextEvent);
+
+    // then
+    assertThat(handler.queue.remainingCapacity()).isEqualTo(DEFAULT_BLOCKING_QUEUE_CAPACITY);
   }
 
   protected FetchExternalTasksExtendedDto createDto(Long responseTimeout, String workerId) {

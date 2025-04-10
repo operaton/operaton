@@ -16,7 +16,27 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import org.operaton.bpm.engine.*;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -27,62 +47,33 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.util.IncrementCounterListener;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.cache.Cache;
-import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.fail;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class DeleteProcessDefinitionTest {
+class DeleteProcessDefinitionTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  HistoryService historyService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  Deployment deployment;
 
-  protected HistoryService historyService;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected Deployment deployment;
-
-  @Before
-  public void initServices() {
-    historyService = engineRule.getHistoryService();
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration();
-  }
-
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     if (deployment != null) {
       repositoryService.deleteDeployment(deployment.getId(), true);
       deployment = null;
@@ -98,7 +89,7 @@ public class DeleteProcessDefinitionTest {
     .done();
 
   @Test
-  public void testDeleteProcessDefinitionNullId() {
+  void testDeleteProcessDefinitionNullId() {
 
     // when/then
     assertThatThrownBy(() -> repositoryService.deleteProcessDefinition(null))
@@ -107,7 +98,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteNonExistingProcessDefinition() {
+  void testDeleteNonExistingProcessDefinition() {
 
     // when/then
     assertThatThrownBy(() -> repositoryService.deleteProcessDefinition("notexist"))
@@ -116,7 +107,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinition() {
+  void testDeleteProcessDefinition() {
     // given deployment with two process definitions in one xml model file
     deployment = repositoryService.createDeployment()
             .addClasspathResource("org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml")
@@ -131,7 +122,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionWithProcessInstance() {
+  void testDeleteProcessDefinitionWithProcessInstance() {
     // given process definition and a process instance
     BpmnModelInstance bpmnModel = Bpmn.createExecutableProcess("process").startEvent().userTask().endEvent().done();
     deployment = repositoryService.createDeployment()
@@ -154,7 +145,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionCascade() {
+  void testDeleteProcessDefinitionCascade() {
     // given process definition and a process instance
     BpmnModelInstance bpmnModel = Bpmn.createExecutableProcess("process").startEvent().userTask().endEvent().done();
     deployment = repositoryService.createDeployment()
@@ -175,7 +166,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionClearsCache() {
+  void testDeleteProcessDefinitionClearsCache() {
     // given process definition and a process instance
     BpmnModelInstance bpmnModel = Bpmn.createExecutableProcess("process").startEvent().userTask().endEvent().done();
     deployment = repositoryService.createDeployment()
@@ -200,7 +191,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionAndRefillDeploymentCache() {
+  void testDeleteProcessDefinitionAndRefillDeploymentCache() {
     // given a deployment with two process definitions in one xml model file
     deployment = repositoryService.createDeployment()
             .addClasspathResource("org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml")
@@ -230,7 +221,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionAndRedeploy() {
+  void testDeleteProcessDefinitionAndRedeploy() {
     // given a deployment with two process definitions in one xml model file
     deployment = repositoryService.createDeployment()
             .addClasspathResource("org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml")
@@ -257,7 +248,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void shouldRestorePreviousStartTimerDefinitions() {
+  void shouldRestorePreviousStartTimerDefinitions() {
     // given
     BpmnModelInstance processV1 = Bpmn.createExecutableProcess()
         .id("one")
@@ -286,7 +277,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByNotExistingKey() {
+  void testDeleteProcessDefinitionsByNotExistingKey() {
 
     // when/then
     var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
@@ -298,7 +289,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKeyIsNull() {
+  void testDeleteProcessDefinitionsByKeyIsNull() {
 
     // when/then
     var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
@@ -311,7 +302,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKey() {
+  void testDeleteProcessDefinitionsByKey() {
     // given
     for (int i = 0; i < 3; i++) {
       deployTwoProcessDefinitions();
@@ -328,7 +319,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKeyWithRunningProcesses() {
+  void testDeleteProcessDefinitionsByKeyWithRunningProcesses() {
     // given
     for (int i = 0; i < 3; i++) {
       deployTwoProcessDefinitions();
@@ -345,7 +336,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKeyCascading() {
+  void testDeleteProcessDefinitionsByKeyCascading() {
     // given
     for (int i = 0; i < 3; i++) {
       deployTwoProcessDefinitions();
@@ -382,7 +373,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKeyWithCustomListenersSkipped() {
+  void testDeleteProcessDefinitionsByKeyWithCustomListenersSkipped() {
     // given
     IncrementCounterListener.counter = 0;
     for (int i = 0; i < 3; i++) {
@@ -404,7 +395,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKeyWithIoMappingsSkipped() {
+  void testDeleteProcessDefinitionsByKeyWithIoMappingsSkipped() {
     // given
     testHelper.deploy(IO_MAPPING_PROCESS);
     runtimeService.startProcessInstanceByKey(IO_MAPPING_PROCESS_KEY);
@@ -427,7 +418,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByNotExistingIds() {
+  void testDeleteProcessDefinitionsByNotExistingIds() {
     // given
     var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
       .byIds("not existing", "also not existing");
@@ -439,7 +430,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByIdIsNull() {
+  void testDeleteProcessDefinitionsByIdIsNull() {
     // given
     var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
       .byIds(null);
@@ -451,7 +442,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByIds() {
+  void testDeleteProcessDefinitionsByIds() {
     // given
     for (int i = 0; i < 3; i++) {
       deployTwoProcessDefinitions();
@@ -469,7 +460,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByIdsWithRunningProcesses() {
+  void testDeleteProcessDefinitionsByIdsWithRunningProcesses() {
     // given
     for (int i = 0; i < 3; i++) {
       deployTwoProcessDefinitions();
@@ -487,7 +478,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByIdsCascading() {
+  void testDeleteProcessDefinitionsByIdsCascading() {
     // given
     for (int i = 0; i < 3; i++) {
       deployTwoProcessDefinitions();
@@ -523,7 +514,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByIdsWithCustomListenersSkipped() {
+  void testDeleteProcessDefinitionsByIdsWithCustomListenersSkipped() {
     // given
     IncrementCounterListener.counter = 0;
     for (int i = 0; i < 3; i++) {
@@ -544,7 +535,7 @@ public class DeleteProcessDefinitionTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByIdsWithIoMappingsSkipped() {
+  void testDeleteProcessDefinitionsByIdsWithIoMappingsSkipped() {
     // given
     testHelper.deploy(IO_MAPPING_PROCESS);
     runtimeService.startProcessInstanceByKey(IO_MAPPING_PROCESS_KEY);

@@ -20,26 +20,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CmmnModelElementInstanceCmdTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class CmmnModelElementInstanceCmdTest {
 
   private static final String CASE_KEY = "oneTaskCase";
 
+  RepositoryService repositoryService;
+
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
   @Test
-  public void testRepositoryService() {
+  void testRepositoryService() {
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
         .caseDefinitionKey(CASE_KEY)

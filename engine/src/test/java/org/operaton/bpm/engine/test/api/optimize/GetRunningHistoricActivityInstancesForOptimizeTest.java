@@ -16,12 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.identity.Group;
@@ -32,17 +40,11 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.util.Date;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetRunningHistoricActivityInstancesForOptimizeTest {
@@ -50,35 +52,30 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
-
-  protected String userId = "test";
-  private OptimizeService optimizeService;
-  private IdentityService identityService;
-  private RuntimeService runtimeService;
-  private AuthorizationService authorizationService;
-  private TaskService taskService;
+  String userId = "test";
+  OptimizeService optimizeService;
+  IdentityService identityService;
+  RuntimeService runtimeService;
+  AuthorizationService authorizationService;
+  TaskService taskService;
 
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
-    identityService = engineRule.getIdentityService();
-    runtimeService = engineRule.getRuntimeService();
-    authorizationService = engineRule.getAuthorizationService();
-    taskService = engineRule.getTaskService();
 
     createUser(userId);
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -92,7 +89,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
   }
 
   @Test
-  public void getRunningHistoricActivityInstances() {
+  void getRunningHistoricActivityInstances() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -116,7 +113,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
   }
 
   @Test
-  public void startedAfterParameterWorks() {
+  void startedAfterParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -142,7 +139,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
   }
 
   @Test
-  public void startedAtParameterWorks() {
+  void startedAtParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -168,7 +165,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
   }
 
   @Test
-  public void startedAfterAndStartedAtParameterWorks() {
+  void startedAfterAndStartedAtParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -192,7 +189,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
   }
 
   @Test
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -214,7 +211,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
   }
 
   @Test
-  public void resultIsSortedByStartTime() {
+  void resultIsSortedByStartTime() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -250,7 +247,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
   }
 
   @Test
-  public void fetchOnlyRunningActivities() {
+  void fetchOnlyRunningActivities() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")

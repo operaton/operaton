@@ -16,12 +16,24 @@
  */
 package org.operaton.bpm.engine.test.api.queries;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -32,26 +44,18 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.ArrayList;
-import java.util.List;
+class BoundedNumberOfMaxResultsTest {
 
-import static org.assertj.core.api.Assertions.*;
-
-public class BoundedNumberOfMaxResultsTest {
-
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   HistoryService historyService;
   RuntimeService runtimeService;
@@ -72,41 +76,32 @@ public class BoundedNumberOfMaxResultsTest {
       .endEvent()
       .done();
 
-  @Before
-  public void assignServices() {
-    historyService = engineRule.getHistoryService();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    identityService = engineRule.getIdentityService();
-    filterService = engineRule.getFilterService();
-  }
-
-  @Before
-  public void enableMaxResultsLimit() {
+  @BeforeEach
+  void enableMaxResultsLimit() {
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(10);
   }
 
-  @Before
-  public void authenticate() {
+  @BeforeEach
+  void authenticate() {
     engineRule.getIdentityService()
         .setAuthenticatedUserId("foo");
   }
 
-  @After
-  public void clearAuthentication() {
+  @AfterEach
+  void clearAuthentication() {
     engineRule.getIdentityService()
         .clearAuthentication();
   }
 
-  @After
-  public void resetQueryMaxResultsLimit() {
+  @AfterEach
+  void resetQueryMaxResultsLimit() {
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(Integer.MAX_VALUE);
   }
 
   @Test
-  public void shouldReturnUnboundedResults_UnboundMaxResults() {
+  void shouldReturnUnboundedResults_UnboundMaxResults() {
     // given
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(Integer.MAX_VALUE);
@@ -122,7 +117,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldReturnUnboundedResults_NotAuthenticated() {
+  void shouldReturnUnboundedResults_NotAuthenticated() {
     // given
     identityService.clearAuthentication();
 
@@ -137,7 +132,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldReturnUnboundedResults_InsideCmd() {
+  void shouldReturnUnboundedResults_InsideCmd() {
     // given
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(2);
@@ -166,7 +161,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldReturnUnboundedResults_InsideCmd2() {
+  void shouldReturnUnboundedResults_InsideCmd2() {
     // given
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(2);
@@ -199,7 +194,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowException_UnboundedResultsForList() {
+  void shouldThrowException_UnboundedResultsForList() {
     // given
     ProcessInstanceQuery processInstanceQuery =
         runtimeService.createProcessInstanceQuery();
@@ -212,7 +207,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowException_MaxResultsLimitExceeded() {
+  void shouldThrowException_MaxResultsLimitExceeded() {
     // given
     ProcessInstanceQuery processInstanceQuery =
         runtimeService.createProcessInstanceQuery();
@@ -224,7 +219,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldNotThrowException_unboundedResultList() {
+  void shouldNotThrowException_unboundedResultList() {
     // given
     ProcessInstanceQueryImpl processInstanceQuery =
         (ProcessInstanceQueryImpl) runtimeService.createProcessInstanceQuery();
@@ -241,7 +236,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenFilterQueryList_MaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenFilterQueryList_MaxResultsLimitExceeded() {
     // given
     Filter foo = filterService.newTaskFilter("foo");
     foo.setQuery(taskService.createTaskQuery());
@@ -266,7 +261,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenFilterQueryListPage_MaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenFilterQueryListPage_MaxResultsLimitExceeded() {
     // given
     Filter foo = filterService.newTaskFilter("foo");
     foo.setQuery(taskService.createTaskQuery());
@@ -291,7 +286,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenExtendedFilterQueryList_MaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenExtendedFilterQueryList_MaxResultsLimitExceeded() {
     // given
     Filter foo = filterService.newTaskFilter("foo");
     foo.setQuery(taskService.createTaskQuery());
@@ -321,7 +316,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenSyncSetRetriesForExternalTasks_MaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenSyncSetRetriesForExternalTasks_MaxResultsLimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -345,7 +340,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldSyncUpdateExternalTaskRetries() {
+  void shouldSyncUpdateExternalTaskRetries() {
     // given
     testHelper.deploy(externalTaskProcess);
 
@@ -364,7 +359,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldThrowExceptionWhenSyncSetRetriesForExtTasksByHistProcInstQuery_LimitExceeded() {
+  void shouldThrowExceptionWhenSyncSetRetriesForExtTasksByHistProcInstQuery_LimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -392,7 +387,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSyncUpdateExternalTaskRetriesProcInstQueryByHistProcInstQuery() {
+  void shouldSyncUpdateExternalTaskRetriesProcInstQueryByHistProcInstQuery() {
     // given
     testHelper.deploy(externalTaskProcess);
 
@@ -413,7 +408,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldSyncUpdateExternalTaskRetriesByProcInstQuery() {
+  void shouldSyncUpdateExternalTaskRetriesByProcInstQuery() {
     // given
     testHelper.deploy(externalTaskProcess);
 
@@ -432,7 +427,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldThrowExceptionWhenSyncSetRetriesForExtTasksByProcInstQuery_LimitExceeded() {
+  void shouldThrowExceptionWhenSyncSetRetriesForExtTasksByProcInstQuery_LimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -457,7 +452,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSyncUpdateExternalTaskRetriesByHistProcInstQuery() {
+  void shouldSyncUpdateExternalTaskRetriesByHistProcInstQuery() {
     // given
     testHelper.deploy(externalTaskProcess);
 
@@ -478,7 +473,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenSyncInstanceMigration_MaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenSyncInstanceMigration_MaxResultsLimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -516,7 +511,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldSyncInstanceMigration() {
+  void shouldSyncInstanceMigration() {
     // given
     String source =
         testHelper.deploy(simpleProcess)
@@ -549,7 +544,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenInstanceModification_MaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenInstanceModification_MaxResultsLimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -584,7 +579,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldSyncProcessInstanceModification() {
+  void shouldSyncProcessInstanceModification() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -615,7 +610,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldThrowExceptionWhenRestartProcessInstance_MaxResultsLimitExceeded() {
+  void shouldThrowExceptionWhenRestartProcessInstance_MaxResultsLimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -650,7 +645,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSyncRestartProcessInstance() {
+  void shouldSyncRestartProcessInstance() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent("startEvent")
@@ -680,7 +675,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenUpdateProcessInstanceSuspensionState_LimitExceeded() {
+  void shouldThrowExceptionWhenUpdateProcessInstanceSuspensionState_LimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -704,7 +699,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenUpdateProcessInstanceSuspensionStateByIds_LimitExceeded() {
+  void shouldThrowExceptionWhenUpdateProcessInstanceSuspensionStateByIds_LimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -729,7 +724,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldSyncUpdateProcessInstanceSuspensionState() {
+  void shouldSyncUpdateProcessInstanceSuspensionState() {
     // given
     testHelper.deploy(simpleProcess);
 
@@ -749,7 +744,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldThrowExceptionWhenUpdateProcInstSuspStateByHistProcInstQuery_LimitExceeded() {
+  void shouldThrowExceptionWhenUpdateProcInstSuspStateByHistProcInstQuery_LimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
 
@@ -774,7 +769,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldSyncUpdateProcessInstanceSuspensionStateByHistProcInstQuery() {
+  void shouldSyncUpdateProcessInstanceSuspensionStateByHistProcInstQuery() {
     // given
     testHelper.deploy(simpleProcess);
 
@@ -794,7 +789,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldReturnResultWhenMaxResultsLimitNotExceeded() {
+  void shouldReturnResultWhenMaxResultsLimitNotExceeded() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent("startEvent")
@@ -818,7 +813,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldReturnResultWhenMaxResultsLimitNotExceeded2() {
+  void shouldReturnResultWhenMaxResultsLimitNotExceeded2() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent("startEvent")
@@ -841,7 +836,7 @@ public class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
-  public void shouldReturnResultInsideJavaDelegate() {
+  void shouldReturnResultInsideJavaDelegate() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent("startEvent")
@@ -864,7 +859,7 @@ public class BoundedNumberOfMaxResultsTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void shouldReturnSingleResult_BoundedMaxResults() {
+  void shouldReturnSingleResult_BoundedMaxResults() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()

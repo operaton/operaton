@@ -34,21 +34,19 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.bpmn.diagram.ProcessDiagramLayoutFactory;
 import org.operaton.bpm.engine.repository.DiagramLayout;
 import org.operaton.bpm.engine.repository.DiagramNode;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 
 /**
@@ -67,7 +65,7 @@ import org.junit.runners.Parameterized.Parameters;
  * </p>
  * @author Falko Menge
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class ProcessDiagramRetrievalTest {
   
   /**
@@ -77,8 +75,8 @@ public class ProcessDiagramRetrievalTest {
    */
   private static final boolean OVERWRITE_EXPECTED_HTML_FILES = false;
   
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
   /**
    * Provides a list of parameters for
@@ -118,9 +116,8 @@ public class ProcessDiagramRetrievalTest {
     this.highlightedActivityId = highlightedActivityId;
   }
 
-  @Before
-  public void setup() {
-    repositoryService = engineRule.getRepositoryService();
+  @BeforeEach
+  void setup() {
     deploymentId = repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/diagram/" + xmlFileName)
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName)
@@ -128,16 +125,16 @@ public class ProcessDiagramRetrievalTest {
       .getId();
     processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
   }
-  
-  @After
-  public void teardown() {
+
+  @AfterEach
+  void teardown() {
     repositoryService.deleteDeployment(deploymentId, true);
   }
 
   /**
    * Tests {@link RepositoryService#getProcessModel(String)}.
    */
-  @Test
+  @TestTemplate
   public void testGetProcessModel() throws Exception {
     if (1 == processDefinitionQuery.count()) {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
@@ -153,7 +150,7 @@ public class ProcessDiagramRetrievalTest {
   /**
    * Tests {@link RepositoryService#getProcessDiagram(String)}.
    */
-  @Test
+  @TestTemplate
   public void testGetProcessDiagram() throws Exception {
     if (1 == processDefinitionQuery.count()) {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
@@ -168,7 +165,7 @@ public class ProcessDiagramRetrievalTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void testGetProcessDiagramAfterCacheWasCleaned() {
     if (1 == processDefinitionQuery.count()) {
       engineRule.getProcessEngineConfiguration().getDeploymentCache().discardProcessDefinitionCache();
@@ -191,7 +188,7 @@ public class ProcessDiagramRetrievalTest {
    * Tests {@link RepositoryService#getProcessDiagramLayout(String)} and
    * {@link ProcessDiagramLayoutFactory#getProcessDiagramLayout(InputStream, InputStream)}.
    */
-  @Test
+  @TestTemplate
   public void testGetProcessDiagramLayout() throws Exception {
     DiagramLayout processDiagramLayout;
     if (1 == processDefinitionQuery.count()) {

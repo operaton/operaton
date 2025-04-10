@@ -18,36 +18,27 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Miklas Boskamp
  *
  */
-public class ProcessInstanceQueryByLeafInstancesTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ProcessInstanceQueryByLeafInstancesTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-  }
+  RuntimeService runtimeService;
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/superProcessWithNestedSubProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml" })
-  public void testQueryByLeafInstancesThreeLayers() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/superProcessWithNestedSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+  void testQueryByLeafInstancesThreeLayers() {
     /*
      * nested structure:
      * superProcessWithNestedSubProcess
@@ -68,9 +59,9 @@ public class ProcessInstanceQueryByLeafInstancesTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml" })
-  public void testQueryByLeafInstancesTwoLayers() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+  void testQueryByLeafInstancesTwoLayers() {
     /*
      * nested structure:
      * nestedSubProcess
@@ -89,8 +80,8 @@ public class ProcessInstanceQueryByLeafInstancesTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml" })
-  public void testQueryByLeafInstancesOneLayer() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+  void testQueryByLeafInstancesOneLayer() {
     ProcessInstance process = runtimeService.startProcessInstanceByKey("simpleSubProcess");
     ProcessInstanceQuery simpleSubProcessQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("simpleSubProcess");
 

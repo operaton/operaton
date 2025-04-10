@@ -16,32 +16,37 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
-
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ProcessInstanceModificationEventTest extends PluggableProcessEngineTest {
+class ProcessInstanceModificationEventTest {
 
   protected static final String INTERMEDIATE_TIMER_CATCH_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.intermediateTimerCatch.bpmn20.xml";
   protected static final String MESSAGE_START_EVENT_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.messageStart.bpmn20.xml";
@@ -50,9 +55,19 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
   protected static final String TERMINATE_END_EVENT_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.terminateEnd.bpmn20.xml";
   protected static final String CANCEL_END_EVENT_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.cancelEnd.bpmn20.xml";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+
   @Deployment(resources = INTERMEDIATE_TIMER_CATCH_PROCESS)
   @Test
-  public void testStartBeforeIntermediateCatchEvent() {
+  void testStartBeforeIntermediateCatchEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -97,7 +112,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
   @Deployment(resources = MESSAGE_START_EVENT_PROCESS)
   @Test
-  public void testStartBeforeMessageStartEvent() {
+  void testStartBeforeMessageStartEvent() {
     runtimeService.correlateMessage("startMessage");
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
     assertThat(processInstance).isNotNull();
@@ -144,7 +159,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
   @Deployment(resources = TIMER_START_EVENT_PROCESS)
   @Test
-  public void testStartBeforeTimerStartEvent() {
+  void testStartBeforeTimerStartEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -188,7 +203,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  public void testStartBeforNoneStartEvent() {
+  void testStartBeforNoneStartEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -231,7 +246,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  public void testStartBeforeNoneEndEvent() {
+  void testStartBeforeNoneEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -264,7 +279,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
   @Deployment(resources = TERMINATE_END_EVENT_PROCESS)
   @Test
-  public void testStartBeforeTerminateEndEvent() {
+  void testStartBeforeTerminateEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -282,7 +297,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
   @Deployment(resources = CANCEL_END_EVENT_PROCESS)
   @Test
-  public void testStartBeforeCancelEndEventConcurrent() {
+  void testStartBeforeCancelEndEventConcurrent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -320,7 +335,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
   @Deployment(resources = CANCEL_END_EVENT_PROCESS)
   @Test
-  public void testStartBeforeCancelEndEvent() {
+  void testStartBeforeCancelEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 

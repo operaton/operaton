@@ -20,11 +20,24 @@ import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -36,20 +49,33 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Daniel Meyer
  * @author Joram Barrez
  */
-public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
+class ProcessInstanceSuspensionTest {
   private static final Map<String, String> emptyProperties = emptyMap();
   private static final Map<String, Object> emptyProcessVariables = emptyMap();
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+  FormService formService;
+  ExternalTaskService externalTaskService;
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessInstanceActiveByDefault() {
+  void testProcessInstanceActiveByDefault() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
@@ -59,9 +85,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendActivateProcessInstance() {
+  void testSuspendActivateProcessInstance() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
@@ -79,9 +105,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(processInstance.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendActivateProcessInstanceByProcessDefinitionId() {
+  void testSuspendActivateProcessInstanceByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
@@ -99,9 +125,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(processInstance.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendActivateProcessInstanceByProcessDefinitionKey() {
+  void testSuspendActivateProcessInstanceByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
@@ -119,9 +145,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(processInstance.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testActivateAlreadyActiveProcessInstance() {
+  void testActivateAlreadyActiveProcessInstance() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
@@ -156,9 +182,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendAlreadySuspendedProcessInstance() {
+  void testSuspendAlreadySuspendedProcessInstance() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
@@ -192,13 +218,13 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={
-          "org/operaton/bpm/engine/test/api/runtime/superProcessWithMultipleNestedSubProcess.bpmn20.xml",
-          "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
-          "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"
-          })
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/runtime/superProcessWithMultipleNestedSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"
+  })
   @Test
-  public void testQueryForActiveAndSuspendedProcessInstances() {
+  void testQueryForActiveAndSuspendedProcessInstances() {
     runtimeService.startProcessInstanceByKey("nestedSubProcessQueryTest");
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
@@ -217,13 +243,13 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/runtime/superProcessWithMultipleNestedSubProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testQueryForActiveAndSuspendedProcessInstancesByProcessDefinitionId() {
+  void testQueryForActiveAndSuspendedProcessInstancesByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("nestedSubProcessQueryTest")
@@ -247,13 +273,13 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/runtime/superProcessWithMultipleNestedSubProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"
-      })
+  })
   @Test
-  public void testQueryForActiveAndSuspendedProcessInstancesByProcessDefinitionKey() {
+  void testQueryForActiveAndSuspendedProcessInstancesByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("nestedSubProcessQueryTest")
@@ -277,9 +303,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskSuspendedAfterProcessInstanceSuspension() {
+  void testTaskSuspendedAfterProcessInstanceSuspension() {
 
     // Start Process Instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -306,9 +332,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   /**
    * See https://app.camunda.com/jira/browse/CAM-9505
    */
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testPreserveCreateTimeOnUpdatedTask() {
+  void testPreserveCreateTimeOnUpdatedTask() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
@@ -329,9 +355,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(task.getCreateTime()).isEqualTo(createTime);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskSuspendedAfterProcessInstanceSuspensionByProcessDefinitionId() {
+  void testTaskSuspendedAfterProcessInstanceSuspensionByProcessDefinitionId() {
 
     // Start Process Instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -355,9 +381,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskSuspendedAfterProcessInstanceSuspensionByProcessDefinitionKey() {
+  void testTaskSuspendedAfterProcessInstanceSuspensionByProcessDefinitionKey() {
 
     // Start Process Instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -383,7 +409,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskQueryAfterProcessInstanceSuspend() {
+  void testTaskQueryAfterProcessInstanceSuspend() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
 
@@ -413,7 +439,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskQueryAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testTaskQueryAfterProcessInstanceSuspendByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
 
@@ -443,7 +469,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskQueryAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testTaskQueryAfterProcessInstanceSuspendByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
 
@@ -473,7 +499,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testChildExecutionsSuspendedAfterProcessInstanceSuspend() {
+  void testChildExecutionsSuspendedAfterProcessInstanceSuspend() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testChildExecutionsSuspended");
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
@@ -500,7 +526,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testChildExecutionsSuspendedAfterProcessInstanceSuspend.bpmn20.xml"})
   @Test
-  public void testChildExecutionsSuspendedAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testChildExecutionsSuspendedAfterProcessInstanceSuspendByProcessDefinitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testChildExecutionsSuspended");
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
 
@@ -527,7 +553,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testChildExecutionsSuspendedAfterProcessInstanceSuspend.bpmn20.xml"})
   @Test
-  public void testChildExecutionsSuspendedAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testChildExecutionsSuspendedAfterProcessInstanceSuspendByProcessDefinitionKey() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testChildExecutionsSuspended");
     runtimeService.suspendProcessInstanceByProcessDefinitionKey("testChildExecutionsSuspended");
 
@@ -554,7 +580,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testChangeVariablesAfterProcessInstanceSuspend() {
+  void testChangeVariablesAfterProcessInstanceSuspend() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceById(processInstance.getId());
@@ -611,7 +637,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testChangeVariablesAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testChangeVariablesAfterProcessInstanceSuspendByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
@@ -668,7 +694,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testChangeVariablesAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testChangeVariablesAfterProcessInstanceSuspendByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
@@ -724,7 +750,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSubmitTaskFormFailAfterProcessInstanceSuspend() {
+  void testSubmitTaskFormFailAfterProcessInstanceSuspend() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceById(processInstance.getId());
@@ -740,7 +766,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSubmitTaskFormFailAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testSubmitTaskFormFailAfterProcessInstanceSuspendByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
@@ -756,7 +782,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSubmitTaskFormFailAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testSubmitTaskFormFailAfterProcessInstanceSuspendByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
@@ -772,7 +798,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessInstanceSignalFailAfterSuspend() {
+  void testProcessInstanceSignalFailAfterSuspend() {
 
     // Suspend process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -799,7 +825,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessInstanceSignalFailAfterSuspendByProcessDefinitionId() {
+  void testProcessInstanceSignalFailAfterSuspendByProcessDefinitionId() {
 
     // Suspend process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -826,7 +852,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessInstanceSignalFailAfterSuspendByProcessDefinitionKey() {
+  void testProcessInstanceSignalFailAfterSuspendByProcessDefinitionKey() {
 
     // Suspend process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -853,7 +879,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMessageEventReceiveFailAfterSuspend() {
+  void testMessageEventReceiveFailAfterSuspend() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceById(processInstance.getId());
@@ -879,7 +905,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testMessageEventReceiveFailAfterSuspend.bpmn20.xml"})
   @Test
-  public void testMessageEventReceiveFailAfterSuspendByProcessDefinitionId() {
+  void testMessageEventReceiveFailAfterSuspendByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
@@ -905,7 +931,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testMessageEventReceiveFailAfterSuspend.bpmn20.xml"})
   @Test
-  public void testMessageEventReceiveFailAfterSuspendByProcessDefinitionKey() {
+  void testMessageEventReceiveFailAfterSuspendByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
@@ -931,7 +957,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSignalEventReceivedAfterProcessInstanceSuspended() {
+  void testSignalEventReceivedAfterProcessInstanceSuspended() {
 
     final String signal = "Some Signal";
 
@@ -975,7 +1001,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testSignalEventReceivedAfterProcessInstanceSuspended.bpmn20.xml"})
   @Test
-  public void testSignalEventReceivedAfterProcessInstanceSuspendedByProcessDefinitionId() {
+  void testSignalEventReceivedAfterProcessInstanceSuspendedByProcessDefinitionId() {
 
     final String signal = "Some Signal";
 
@@ -1019,7 +1045,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testSignalEventReceivedAfterProcessInstanceSuspended.bpmn20.xml"})
   @Test
-  public void testSignalEventReceivedAfterProcessInstanceSuspendedByProcessDefinitionKey() {
+  void testSignalEventReceivedAfterProcessInstanceSuspendedByProcessDefinitionKey() {
 
     final String signal = "Some Signal";
 
@@ -1068,7 +1094,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskLifecycleOperationsFailAfterProcessInstanceSuspend() {
+  void testTaskLifecycleOperationsFailAfterProcessInstanceSuspend() {
 
     // Start a new process instance with one task
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1183,7 +1209,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskLifecycleOperationsFailAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testTaskLifecycleOperationsFailAfterProcessInstanceSuspendByProcessDefinitionId() {
 
     // Start a new process instance with one task
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1298,7 +1324,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskLifecycleOperationsFailAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testTaskLifecycleOperationsFailAfterProcessInstanceSuspendByProcessDefinitionKey() {
 
     // Start a new process instance with one task
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1412,7 +1438,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSubTaskCreationFailAfterProcessInstanceSuspend() {
+  void testSubTaskCreationFailAfterProcessInstanceSuspend() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -1431,7 +1457,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSubTaskCreationFailAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testSubTaskCreationFailAfterProcessInstanceSuspendByProcessDefinitionId() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -1450,7 +1476,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSubTaskCreationFailAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testSubTaskCreationFailAfterProcessInstanceSuspendByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -1469,7 +1495,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskNonLifecycleOperationsSucceedAfterProcessInstanceSuspend() {
+  void testTaskNonLifecycleOperationsSucceedAfterProcessInstanceSuspend() {
 
     // Start a new process instance with one task
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1558,7 +1584,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskNonLifecycleOperationsSucceedAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testTaskNonLifecycleOperationsSucceedAfterProcessInstanceSuspendByProcessDefinitionId() {
 
     // Start a new process instance with one task
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1647,7 +1673,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testTaskNonLifecycleOperationsSucceedAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testTaskNonLifecycleOperationsSucceedAfterProcessInstanceSuspendByProcessDefinitionKey() {
 
     // Start a new process instance with one task
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1736,7 +1762,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testJobNotExecutedAfterProcessInstanceSuspend() {
+  void testJobNotExecutedAfterProcessInstanceSuspend() {
 
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -1762,7 +1788,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testJobNotExecutedAfterProcessInstanceSuspend.bpmn20.xml"})
   @Test
-  public void testJobNotExecutedAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testJobNotExecutedAfterProcessInstanceSuspendByProcessDefinitionId() {
 
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -1788,7 +1814,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testJobNotExecutedAfterProcessInstanceSuspend.bpmn20.xml"})
   @Test
-  public void testJobNotExecutedAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testJobNotExecutedAfterProcessInstanceSuspendByProcessDefinitionKey() {
 
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -1815,7 +1841,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
   @Test
-  public void testCallActivityReturnAfterProcessInstanceSuspend() {
+  void testCallActivityReturnAfterProcessInstanceSuspend() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("callSimpleProcess");
     runtimeService.suspendProcessInstanceById(instance.getId());
 
@@ -1837,9 +1863,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
   @Test
-  public void testCallActivityReturnAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testCallActivityReturnAfterProcessInstanceSuspendByProcessDefinitionId() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("callSimpleProcess");
     runtimeService.suspendProcessInstanceByProcessDefinitionId(instance.getProcessDefinitionId());
 
@@ -1861,9 +1887,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
   @Test
-  public void testCallActivityReturnAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testCallActivityReturnAfterProcessInstanceSuspendByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("callSimpleProcess")
@@ -1890,9 +1916,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callMISimpleProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
   @Test
-  public void testMICallActivityReturnAfterProcessInstanceSuspend() {
+  void testMICallActivityReturnAfterProcessInstanceSuspend() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("callMISimpleProcess");
     runtimeService.suspendProcessInstanceById(instance.getId());
 
@@ -1925,9 +1951,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callMISimpleProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
   @Test
-  public void testMICallActivityReturnAfterProcessInstanceSuspendByProcessDefinitionId() {
+  void testMICallActivityReturnAfterProcessInstanceSuspendByProcessDefinitionId() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("callMISimpleProcess");
     runtimeService.suspendProcessInstanceByProcessDefinitionId(instance.getProcessDefinitionId());
 
@@ -1960,9 +1986,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callMISimpleProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
   @Test
-  public void testMICallActivityReturnAfterProcessInstanceSuspendByProcessDefinitionKey() {
+  void testMICallActivityReturnAfterProcessInstanceSuspendByProcessDefinitionKey() {
     ProcessDefinition processDefinition = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("callMISimpleProcess")
@@ -1998,9 +2024,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testStartBeforeActivityForSuspendProcessInstance() {
+  void testStartBeforeActivityForSuspendProcessInstance() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     //start process instance
@@ -2020,9 +2046,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testStartAfterActivityForSuspendProcessInstance() {
+  void testStartAfterActivityForSuspendProcessInstance() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     //start process instance
@@ -2043,9 +2069,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspensionByIdCascadesToExternalTasks() {
+  void testSuspensionByIdCascadesToExternalTasks() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -2077,9 +2103,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspensionByProcessDefinitionIdCascadesToExternalTasks() {
+  void testSuspensionByProcessDefinitionIdCascadesToExternalTasks() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -2113,7 +2139,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspensionByProcessDefinitionKeyCascadesToExternalTasks() {
+  void testSuspensionByProcessDefinitionKeyCascadesToExternalTasks() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -2144,9 +2170,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(task1.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendAndActivateProcessInstanceByIdUsingBuilder() {
+  void testSuspendAndActivateProcessInstanceByIdUsingBuilder() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
@@ -2172,9 +2198,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(query.suspended().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendAndActivateProcessInstanceByProcessDefinitionIdUsingBuilder() {
+  void testSuspendAndActivateProcessInstanceByProcessDefinitionIdUsingBuilder() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -2201,9 +2227,9 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertThat(query.suspended().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendAndActivateProcessInstanceByProcessDefinitionKeyUsingBuilder() {
+  void testSuspendAndActivateProcessInstanceByProcessDefinitionKeyUsingBuilder() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
@@ -2231,7 +2257,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testJobSuspensionStateUpdate() {
+  void testJobSuspensionStateUpdate() {
 
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");

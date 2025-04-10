@@ -20,6 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -29,40 +33,29 @@ import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class ProcessInstanceTerminationCascadeStateTest {
+class ProcessInstanceTerminationCascadeStateTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProcessEngine engine;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
+  ProcessEngine engine;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  HistoryService historyService;
 
-  protected boolean externallyTerminated;
+  boolean externallyTerminated;
 
-  @Before
-  public void init() {
-    engine = engineRule.getProcessEngine();
-    repositoryService = engine.getRepositoryService();
-    runtimeService = engine.getRuntimeService();
-    historyService = engine.getHistoryService();
-
+  @BeforeEach
+  void init() {
     prepareDeployment();
   }
 
@@ -73,8 +66,8 @@ public class ProcessInstanceTerminationCascadeStateTest {
     testRule.deploy(caller, callee);
   }
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     List<HistoricProcessInstance> processes = historyService.createHistoricProcessInstanceQuery().list();
     for (HistoricProcessInstance historicProcessInstance : processes) {
       historyService.deleteHistoricProcessInstance(historicProcessInstance.getId());
@@ -87,7 +80,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
   }
 
   @Test
-  public void shouldCascadeStateFromSubprocessUpDeletion() {
+  void shouldCascadeStateFromSubprocessUpDeletion() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").singleResult();
@@ -101,7 +94,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
   }
 
   @Test
-  public void shouldNotCascadeStateFromSubprocessUpDeletion() {
+  void shouldNotCascadeStateFromSubprocessUpDeletion() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").singleResult();
@@ -115,7 +108,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
   }
 
   @Test
-  public void shouldCascadeStateFromProcessDownDeletion() {
+  void shouldCascadeStateFromProcessDownDeletion() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance process = runtimeService.createProcessInstanceQuery().processDefinitionKey("process").singleResult();
@@ -129,7 +122,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
   }
 
   @Test
-  public void shouldNotCascadeStateFromProcessDownDeletion() {
+  void shouldNotCascadeStateFromProcessDownDeletion() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance process = runtimeService.createProcessInstanceQuery().processDefinitionKey("process").singleResult();
@@ -143,7 +136,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
   }
 
   @Test
-  public void shouldNotCascadeStateFromSubprocessUpCancelation() {
+  void shouldNotCascadeStateFromSubprocessUpCancelation() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").singleResult();
@@ -158,7 +151,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
   }
 
   @Test
-  public void shouldNotCascadeStateFromProcessDownCancelation() {
+  void shouldNotCascadeStateFromProcessDownCancelation() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance process = runtimeService.createProcessInstanceQuery().processDefinitionKey("process").singleResult();
@@ -173,7 +166,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
   }
 
   @Test
-  public void shouldCascadeStateFromSubprocessUpCancelation() {
+  void shouldCascadeStateFromSubprocessUpCancelation() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").singleResult();
@@ -188,7 +181,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
   }
 
   @Test
-  public void shouldCascadeStateFromProcessDownCancelation() {
+  void shouldCascadeStateFromProcessDownCancelation() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance process = runtimeService.createProcessInstanceQuery().processDefinitionKey("process").singleResult();

@@ -27,6 +27,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -46,26 +51,22 @@ import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProviderProcessInst
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.RestartProcessInstanceSyncTest.SetVariableExecutionListenerImpl;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.util.IncrementCounterListener;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  *
@@ -73,51 +74,47 @@ import org.junit.rules.RuleChain;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class RestartProcessInstanceAsyncTest {
+class RestartProcessInstanceAsyncTest {
 
   protected static final Date TEST_DATE = new Date(1457326800000L);
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .cacheForConfigurationResource(false)
+      .build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   protected BatchRestartHelper helper = new BatchRestartHelper(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  ManagementService managementService;
+  
+  TenantIdProvider defaultTenantIdProvider;
+  boolean defaultEnsureJobDueDateSet;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-  protected TenantIdProvider defaultTenantIdProvider;
-  protected boolean defaultEnsureJobDueDateSet;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void init() {
     defaultTenantIdProvider = processEngineConfiguration.getTenantIdProvider();
     defaultEnsureJobDueDateSet = processEngineConfiguration.isEnsureJobDueDateNotNull();
   }
 
-  @After
-  public void reset() {
+  @AfterEach
+  void reset() {
     helper.removeAllRunningAndHistoricBatches();
     processEngineConfiguration.setTenantIdProvider(defaultTenantIdProvider);
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
   @Test
-  public void createBatchRestart() {
+  void createBatchRestart() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -139,7 +136,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithNullProcessDefinitionId() {
+  void restartProcessInstanceWithNullProcessDefinitionId() {
     try {
       runtimeService.restartProcessInstances(null);
       fail("exception expected");
@@ -149,7 +146,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithoutInstructions() {
+  void restartProcessInstanceWithoutInstructions() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
     var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(processDefinition.getId()).processInstanceIds(processInstance.getId());
@@ -163,7 +160,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithoutProcessInstanceIds() {
+  void restartProcessInstanceWithoutProcessInstanceIds() {
     var restartProcessInstanceBuilder = runtimeService.restartProcessInstances("foo").startAfterActivity("bar");
     try {
       restartProcessInstanceBuilder.executeAsync();
@@ -174,7 +171,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithNullProcessInstanceId() {
+  void restartProcessInstanceWithNullProcessInstanceId() {
     var restartProcessInstanceBuilder = runtimeService.restartProcessInstances("foo")
       .startAfterActivity("bar")
       .processInstanceIds((String) null);
@@ -187,7 +184,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void restartNotExistingProcessInstance() {
+  void restartNotExistingProcessInstance() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     Batch batch = runtimeService.restartProcessInstances(processDefinition.getId())
         .startBeforeActivity("bar")
@@ -203,7 +200,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstance() {
+  void shouldRestartProcessInstance() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -242,7 +239,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldAssignRestartProcessInstanceIdOnlyToRestartedProcessInstances() {
+  void shouldAssignRestartProcessInstanceIdOnlyToRestartedProcessInstances() {
     // given process instances 1 and 2
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
 
@@ -282,7 +279,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithParallelGateway() {
+  void shouldRestartProcessInstanceWithParallelGateway() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -316,7 +313,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithSubProcess() {
+  void shouldRestartProcessInstanceWithSubProcess() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -349,7 +346,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithInitialVariables() {
+  void shouldRestartProcessInstanceWithInitialVariables() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
         .startEvent()
@@ -397,7 +394,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithVariables() {
+  void shouldRestartProcessInstanceWithVariables() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
         .startEvent()
@@ -448,7 +445,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldNotSetLocalVariables() {
+  void shouldNotSetLocalVariables() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -487,7 +484,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceUsingHistoricProcessInstanceQuery() {
+  void shouldRestartProcessInstanceUsingHistoricProcessInstanceQuery() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -521,7 +518,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testBatchCreationWithOverlappingProcessInstanceIdsAndQuery() {
+  void testBatchCreationWithOverlappingProcessInstanceIdsAndQuery() {
     // given
     int processInstanceCount = 2;
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
@@ -551,7 +548,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testMonitorJobPollingForCompletion() {
+  void testMonitorJobPollingForCompletion() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(false);
 
     // given
@@ -588,7 +585,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testMonitorJobPollingForCompletionDueDateSet() {
+  void testMonitorJobPollingForCompletionDueDateSet() {
     ClockUtil.setCurrentTime(TEST_DATE);
     processEngineConfiguration.setEnsureJobDueDateNotNull(true);
 
@@ -625,7 +622,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testMonitorJobRemovesBatchAfterCompletion() {
+  void testMonitorJobRemovesBatchAfterCompletion() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -654,7 +651,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testBatchDeletionWithCascade() {
+  void testBatchDeletionWithCascade() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -685,7 +682,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testBatchDeletionWithoutCascade() {
+  void testBatchDeletionWithoutCascade() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -716,7 +713,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testBatchWithFailedSeedJobDeletionWithCascade() {
+  void testBatchWithFailedSeedJobDeletionWithCascade() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -744,7 +741,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testBatchWithFailedExecutionJobDeletionWithCascade() {
+  void testBatchWithFailedExecutionJobDeletionWithCascade() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -776,7 +773,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testBatchWithFailedMonitorJobDeletionWithCascade() {
+  void testBatchWithFailedMonitorJobDeletionWithCascade() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -806,7 +803,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void testJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
+  void testJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
     // given
     ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
 
@@ -854,7 +851,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithNotMatchingProcessDefinition() {
+  void restartProcessInstanceWithNotMatchingProcessDefinition() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -878,7 +875,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithoutBusinessKey() {
+  void shouldRestartProcessInstanceWithoutBusinessKey() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process", "businessKey1", (String) null);
@@ -904,7 +901,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithBusinessKey() {
+  void shouldRestartProcessInstanceWithBusinessKey() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process", "businessKey1", (String) null);
@@ -929,7 +926,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithoutCaseInstanceId() {
+  void shouldRestartProcessInstanceWithoutCaseInstanceId() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process", null, "caseInstanceId1");
@@ -954,7 +951,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithTenant() {
+  void shouldRestartProcessInstanceWithTenant() {
     // given
     ProcessDefinition processDefinition = testRule.deployForTenantAndGetDefinition("tenantId", ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
@@ -980,7 +977,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldSkipCustomListeners() {
+  void shouldSkipCustomListeners() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(modify(ProcessModels.TWO_TASKS_PROCESS).activityBuilder("userTask1")
         .operatonExecutionListenerClass(ExecutionListener.EVENTNAME_START, IncrementCounterListener.class.getName()).done());
@@ -1004,7 +1001,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldSkipIoMappings() {
+  void shouldSkipIoMappings() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(
         modify(ProcessModels.TWO_TASKS_PROCESS).activityBuilder("userTask1").operatonInputParameter("foo", "bar").done());
@@ -1035,7 +1032,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldRetainTenantIdOfSharedProcessDefinition() {
+  void shouldRetainTenantIdOfSharedProcessDefinition() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setTenantIdProvider(new TestTenantIdProvider());
@@ -1062,7 +1059,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldSkipTenantIdProviderOnRestart() {
+  void shouldSkipTenantIdProviderOnRestart() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setTenantIdProvider(new TestTenantIdProvider());
@@ -1093,7 +1090,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldNotSetInitialVariablesIfThereIsNoUniqueStartActivity() {
+  void shouldNotSetInitialVariablesIfThereIsNoUniqueStartActivity() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance1 = runtimeService.createProcessInstanceById(processDefinition.getId())
@@ -1126,7 +1123,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldSetInvocationsPerBatchType() {
+  void shouldSetInvocationsPerBatchType() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()
@@ -1156,7 +1153,7 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   @Test
-  public void shouldSetExecutionStartTimeInBatchAndHistory() {
+  void shouldSetExecutionStartTimeInBatchAndHistory() {
     // given
     ClockUtil.setCurrentTime(TEST_DATE);
 

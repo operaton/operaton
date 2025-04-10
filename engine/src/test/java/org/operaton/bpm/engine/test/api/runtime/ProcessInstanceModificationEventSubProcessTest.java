@@ -16,30 +16,35 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ProcessInstanceModificationEventSubProcessTest extends PluggableProcessEngineTest {
+class ProcessInstanceModificationEventSubProcessTest {
 
   protected static final String INTERRUPTING_EVENT_SUBPROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.interruptingEventSubProcess.bpmn20.xml";
   protected static final String NON_INTERRUPTING_EVENT_SUBPROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.nonInterruptingEventSubProcess.bpmn20.xml";
@@ -47,9 +52,19 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
   protected static final String NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.nonInterruptingEventSubProcessInsideSubProcess.bpmn20.xml";
   protected static final String CANCEL_AND_RESTART = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationEventSubProcessTest.testCancelAndRestart.bpmn20.xml";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskInsideEventSubProcess() {
+  void testStartBeforeTaskInsideEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -86,7 +101,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskInsideEventSubProcessAndCancelTaskOutsideEventSubProcess() {
+  void testStartBeforeTaskInsideEventSubProcessAndCancelTaskOutsideEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -124,7 +139,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testStartBeforeStartEventInsideEventSubProcess() {
+  void testStartBeforeStartEventInsideEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -158,7 +173,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testStartBeforeEventSubProcess() {
+  void testStartBeforeEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -192,7 +207,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskInsideNonInterruptingEventSubProcess() {
+  void testStartBeforeTaskInsideNonInterruptingEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -229,7 +244,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskInsideNonInterruptingEventSubProcessAndCancelTaskOutsideEventSubProcess() {
+  void testStartBeforeTaskInsideNonInterruptingEventSubProcessAndCancelTaskOutsideEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -266,7 +281,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testStartBeforeStartEventInsideNonInterruptingEventSubProcess() {
+  void testStartBeforeStartEventInsideNonInterruptingEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -303,7 +318,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testStartBeforeNonInterruptingEventSubProcess() {
+  void testStartBeforeNonInterruptingEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -340,7 +355,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskInsideEventSubProcessInsideSubProcess() {
+  void testStartBeforeTaskInsideEventSubProcessInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -378,7 +393,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeStartEventInsideEventSubProcessInsideSubProcess() {
+  void testStartBeforeStartEventInsideEventSubProcessInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -416,7 +431,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeEventSubProcessInsideSubProcess() {
+  void testStartBeforeEventSubProcessInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -454,7 +469,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskInsideEventSubProcessInsideSubProcessTask2ShouldStay() {
+  void testStartBeforeTaskInsideEventSubProcessInsideSubProcessTask2ShouldStay() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -495,7 +510,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeStartEventInsideEventSubProcessInsideSubProcessTask2ShouldBeCancelled() {
+  void testStartBeforeStartEventInsideEventSubProcessInsideSubProcessTask2ShouldBeCancelled() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -533,7 +548,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeEventSubProcessInsideSubProcessTask2ShouldBeCancelled() {
+  void testStartBeforeEventSubProcessInsideSubProcessTask2ShouldBeCancelled() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -571,7 +586,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskInsideNonInterruptingEventSubProcessInsideSubProcess() {
+  void testStartBeforeTaskInsideNonInterruptingEventSubProcessInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -609,7 +624,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeStartEventInsideNonInterruptingEventSubProcessInsideSubProcess() {
+  void testStartBeforeStartEventInsideNonInterruptingEventSubProcessInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -647,7 +662,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeNonInterruptingEventSubProcessInsideSubProcess() {
+  void testStartBeforeNonInterruptingEventSubProcessInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -686,7 +701,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskInsideNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
+  void testStartBeforeTaskInsideNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -728,7 +743,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeStartEventInsideNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
+  void testStartBeforeStartEventInsideNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -769,7 +784,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
   @Test
-  public void testStartBeforeNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
+  void testStartBeforeNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -810,7 +825,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment
   @Test
-  public void testTimerJobPreservationOnCancellationAndStart() {
+  void testTimerJobPreservationOnCancellationAndStart() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerEventSubProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -838,7 +853,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
   @Deployment(resources = CANCEL_AND_RESTART)
   @Test
-  public void testProcessInstanceModificationInEventSubProcessCancellationAndRestart() {
+  void testProcessInstanceModificationInEventSubProcessCancellationAndRestart() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("ProcessWithEventSubProcess");
 

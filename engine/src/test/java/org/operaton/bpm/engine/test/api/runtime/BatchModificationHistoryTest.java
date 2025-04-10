@@ -24,6 +24,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -35,31 +39,28 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class BatchModificationHistoryTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(rule);
-  protected BatchModificationHelper helper = new BatchModificationHelper(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  BatchModificationHelper helper = new BatchModificationHelper(rule);
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected BpmnModelInstance instance;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  BpmnModelInstance instance;
 
   private int defaultBatchJobsPerSeed;
   private int defaultInvocationsPerBatchJob;
@@ -67,16 +68,13 @@ public class BatchModificationHistoryTest {
 
   protected static final Date START_DATE = new Date(1457326800000L);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
-
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public boolean ensureJobDueDateSet;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public Date currentTime;
 
-  @Parameterized.Parameters(name = "Job DueDate is set: {0}")
+  @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { false, null },
@@ -84,13 +82,13 @@ public class BatchModificationHistoryTest {
     });
   }
 
-  @Before
-  public void setClock() {
+  @BeforeEach
+  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
-  @Before
-  public void createBpmnModelInstance() {
+  @BeforeEach
+  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -100,43 +98,42 @@ public class BatchModificationHistoryTest {
         .done();
   }
 
-  @Before
-  public void initServices() {
+  @BeforeEach
+  void initServices() {
     runtimeService = rule.getRuntimeService();
   }
 
-  @Before
-  public void storeEngineSettings() {
-    processEngineConfiguration = rule.getProcessEngineConfiguration();
+  @BeforeEach
+  void storeEngineSettings() {
     defaultBatchJobsPerSeed = processEngineConfiguration.getBatchJobsPerSeed();
     defaultInvocationsPerBatchJob = processEngineConfiguration.getInvocationsPerBatchJob();
     defaultEnsureJobDueDateSet = processEngineConfiguration.isEnsureJobDueDateNotNull();
     processEngineConfiguration.setEnsureJobDueDateNotNull(ensureJobDueDateSet);
   }
 
-  @After
-  public void removeInstanceIds() {
+  @AfterEach
+  void removeInstanceIds() {
     helper.currentProcessInstances = new ArrayList<>();
   }
 
-  @After
-  public void removeBatches() {
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
-  @After
-  public void restoreEngineSettings() {
+  @AfterEach
+  void restoreEngineSettings() {
     processEngineConfiguration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     processEngineConfiguration.setInvocationsPerBatchJob(defaultInvocationsPerBatchJob);
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchCreation() {
     // when
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
@@ -157,7 +154,7 @@ public class BatchModificationHistoryTest {
     assertThat(historicBatch.getEndTime()).isNull();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchCompletion() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 1, "user1", processDefinition.getId());
@@ -175,7 +172,7 @@ public class BatchModificationHistoryTest {
     assertThat(historicBatch.getEndTime()).isEqualTo(endDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricSeedJobLog() {
     // when
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
@@ -213,7 +210,7 @@ public class BatchModificationHistoryTest {
 
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricMonitorJobLog() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 1, "user1", processDefinition.getId());
@@ -274,7 +271,7 @@ public class BatchModificationHistoryTest {
     assertThat(jobLog.getJobDueDate()).isEqualTo(monitorJobDueDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchJobLog() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 1, "user1", processDefinition.getId());
@@ -310,7 +307,7 @@ public class BatchModificationHistoryTest {
     assertThat(jobLog.getJobDueDate()).isEqualTo(currentTime);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchForBatchDeletion() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startTransitionAsync("process1", 1, "seq", processDefinition.getId());
@@ -325,7 +322,7 @@ public class BatchModificationHistoryTest {
     assertThat(historicBatch.getEndTime()).isEqualTo(deletionDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricSeedJobLogForBatchDeletion() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startBeforeAsync("process1", 1, "user1", processDefinition.getId());
@@ -341,7 +338,7 @@ public class BatchModificationHistoryTest {
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricMonitorJobLogForBatchDeletion() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 1, "user1", processDefinition.getId());
@@ -358,7 +355,7 @@ public class BatchModificationHistoryTest {
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchJobLogForBatchDeletion() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startBeforeAsync("process1", 1, "user2", processDefinition.getId());
@@ -375,7 +372,7 @@ public class BatchModificationHistoryTest {
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
-  @Test
+  @TestTemplate
   public void testDeleteHistoricBatch() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startTransitionAsync("process1", 1, "seq", processDefinition.getId());
@@ -394,7 +391,7 @@ public class BatchModificationHistoryTest {
     assertThat(helper.getHistoricBatchJobLog(batch)).isEmpty();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricSeedJobIncidentDeletion() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
@@ -413,7 +410,7 @@ public class BatchModificationHistoryTest {
     assertThat(historicIncidents).isZero();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricMonitorJobIncidentDeletion() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
@@ -433,7 +430,7 @@ public class BatchModificationHistoryTest {
     assertThat(historicIncidents).isZero();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchJobLogIncidentDeletion() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);

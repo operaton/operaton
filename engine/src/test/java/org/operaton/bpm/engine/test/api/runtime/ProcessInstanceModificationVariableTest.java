@@ -16,39 +16,30 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class ProcessInstanceModificationVariableTest {
+class ProcessInstanceModificationVariableTest {
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   RuntimeService runtimeService;
   TaskService taskService;
 
-  @Before
-  public void initialize() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-  }
-
   @Test
-  public void modifyAProcessInstanceWithLocalVariableCreation() {
+  void modifyAProcessInstanceWithLocalVariableCreation() {
 
     // given a process that sets a local variable when entering the user task
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")

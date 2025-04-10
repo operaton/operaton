@@ -16,12 +16,27 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
+import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Stream.of;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -30,26 +45,19 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.runtime.*;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.runtime.ExecutionQuery;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.BatchRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.batch.BatchExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import static java.util.stream.Collectors.toSet;
-import static java.util.stream.Stream.of;
-import static org.assertj.core.api.Assertions.*;
-
-public class CorrelateAllMessageBatchTest {
+class CorrelateAllMessageBatchTest {
 
   protected static final String PROCESS_ONE_KEY = "process";
   protected static final String PROCESS_TWO_KEY = "process-two";
@@ -58,27 +66,20 @@ public class CorrelateAllMessageBatchTest {
   protected static final String MESSAGE_TWO_REF = "message-two";
   protected static final Date TEST_DATE = new Date(1457326800000L);
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
-  protected BatchRule rule = new BatchRule(engineRule, engineTestRule);
-  protected BatchHelper helper = new BatchHelper(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  static BatchExtension rule = new BatchExtension(engineRule, engineTestRule);
+  BatchHelper helper = new BatchHelper(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule).around(rule);
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  ManagementService managementService;
 
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-
-  @Before
-  public void assignServices() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-  }
-
-  @Before
-  public void deployProcessIntermediateMessageOne() {
+  @BeforeEach
+  void deployProcessIntermediateMessageOne() {
     BpmnModelInstance process = Bpmn.createExecutableProcess(PROCESS_ONE_KEY)
       .startEvent()
       .intermediateCatchEvent("messageCatch")
@@ -89,20 +90,20 @@ public class CorrelateAllMessageBatchTest {
     engineTestRule.deploy(process);
   }
 
-  @After
-  public void clearAuthentication() {
+  @AfterEach
+  void clearAuthentication() {
     engineRule.getIdentityService().setAuthenticatedUserId(null);
   }
 
-  @After
-  public void resetConfiguration() {
+  @AfterEach
+  void resetConfiguration() {
     ClockUtil.reset();
     engineRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(ProcessEngineConfigurationImpl.DEFAULT_INVOCATIONS_PER_BATCH_JOB);
   }
 
   @Test
-  public void shouldCorrelateAllWithInstanceIds() {
+  void shouldCorrelateAllWithInstanceIds() {
     // given
     deployProcessIntermediateMessageTwo();
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
@@ -140,7 +141,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldCorrelateAllWithInstanceQuery() {
+  void shouldCorrelateAllWithInstanceQuery() {
     // given
     deployProcessIntermediateMessageTwo();
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
@@ -179,7 +180,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldCorrelateAllWithHistoricInstanceQuery() {
+  void shouldCorrelateAllWithHistoricInstanceQuery() {
     // given
     deployProcessIntermediateMessageTwo();
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
@@ -218,7 +219,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldCorrelateAllWithoutMessage() {
+  void shouldCorrelateAllWithoutMessage() {
     // given
     deployProcessIntermediateMessageTwo();
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
@@ -256,7 +257,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldNotCorrelateStartMessageEvent() {
+  void shouldNotCorrelateStartMessageEvent() {
     // given
     deployProcessStartMessageOne();
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
@@ -287,7 +288,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldSetVariablesOnCorrelation() {
+  void shouldSetVariablesOnCorrelation() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
@@ -314,7 +315,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldThrowException_NoProcessInstancesFound() {
+  void shouldThrowException_NoProcessInstancesFound() {
     // given
     var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(
       MESSAGE_ONE_REF).processInstanceIds(Collections.emptyList());
@@ -325,7 +326,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldThrowException_QueriesAndIdsNull() {
+  void shouldThrowException_QueriesAndIdsNull() {
     // given
     var messageCorrelationAsync = runtimeService.createMessageCorrelationAsync(
       MESSAGE_ONE_REF);
@@ -337,7 +338,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldThrowException_NullProcessInstanceIds() {
+  void shouldThrowException_NullProcessInstanceIds() {
     // given
     var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF);
     // when/then
@@ -347,7 +348,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldThrowException_NullProcessInstanceQuery() {
+  void shouldThrowException_NullProcessInstanceQuery() {
     // given
     var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF);
     // when/then
@@ -357,7 +358,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldThrowException_NullHistoricProcessInstanceQuery() {
+  void shouldThrowException_NullHistoricProcessInstanceQuery() {
     // given
     var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF);
     // when/then
@@ -367,7 +368,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldThrowException_NullVariableName() {
+  void shouldThrowException_NullVariableName() {
     // given
     var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF);
     // when/then
@@ -377,7 +378,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldThrowException_JavaSerializationForbidden() {
+  void shouldThrowException_JavaSerializationForbidden() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY);
     ProcessInstanceQuery runtimeQuery = runtimeService.createProcessInstanceQuery();
@@ -397,7 +398,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldCreateDeploymentAwareBatchJobs_ByIds() {
+  void shouldCreateDeploymentAwareBatchJobs_ByIds() {
     // given
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
 
@@ -429,7 +430,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldCreateDeploymentAwareBatchJobs_ByRuntimeQuery() {
+  void shouldCreateDeploymentAwareBatchJobs_ByRuntimeQuery() {
     // given
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
 
@@ -462,7 +463,7 @@ public class CorrelateAllMessageBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void shouldCreateDeploymentAwareBatchJobs_ByHistoryQuery() {
+  void shouldCreateDeploymentAwareBatchJobs_ByHistoryQuery() {
     // given
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
 
@@ -495,7 +496,7 @@ public class CorrelateAllMessageBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldLogOperation() {
+  void shouldLogOperation() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY);
 
@@ -526,7 +527,7 @@ public class CorrelateAllMessageBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldNotLogInstanceOperation() {
+  void shouldNotLogInstanceOperation() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY);
 
@@ -550,7 +551,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldCreateProcessInstanceRelatedBatchJobsForSingleInvocations() {
+  void shouldCreateProcessInstanceRelatedBatchJobsForSingleInvocations() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
@@ -575,7 +576,7 @@ public class CorrelateAllMessageBatchTest {
   }
 
   @Test
-  public void shouldNotCreateProcessInstanceRelatedBatchJobsForMultipleInvocations() {
+  void shouldNotCreateProcessInstanceRelatedBatchJobsForMultipleInvocations() {
     // given
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
 
@@ -603,7 +604,7 @@ public class CorrelateAllMessageBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldSetExecutionStartTimeInBatchAndHistory() {
+  void shouldSetExecutionStartTimeInBatchAndHistory() {
     // given
     ClockUtil.setCurrentTime(TEST_DATE);
 

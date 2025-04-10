@@ -20,7 +20,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricDetail;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -32,25 +38,35 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngineTest {
+class ProcessInstanceModificationHistoryTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
   protected static final String EXCLUSIVE_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGateway.bpmn20.xml";
   protected static final String EXCLUSIVE_GATEWAY_ASYNC_TASK_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGatewayAsyncTask.bpmn20.xml";
   protected static final String SUBPROCESS_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocess.bpmn20.xml";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+  HistoryService historyService;
+
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartBeforeWithVariablesInHistory() {
+  void testStartBeforeWithVariablesInHistory() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
 
     runtimeService
@@ -99,7 +115,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_ASYNC_TASK_PROCESS)
   @Test
-  public void testStartBeforeAsyncWithVariablesInHistory() {
+  void testStartBeforeAsyncWithVariablesInHistory() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
 
     runtimeService
@@ -156,7 +172,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
   @Deployment(resources = SUBPROCESS_PROCESS)
   @Test
-  public void testStartBeforeScopeWithVariablesInHistory() {
+  void testStartBeforeScopeWithVariablesInHistory() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess");
 
     runtimeService
@@ -202,7 +218,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartTransitionWithVariablesInHistory() {
+  void testStartTransitionWithVariablesInHistory() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
 
     runtimeService
@@ -251,7 +267,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  public void testCancelTaskShouldCancelProcessInstance() {
+  void testCancelTaskShouldCancelProcessInstance() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
@@ -271,7 +287,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testSkipCustomListenerEnsureHistoryWritten() {
+  void testSkipCustomListenerEnsureHistoryWritten() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("exclusiveGateway").getId();
 
@@ -294,7 +310,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testHistoricVariablesOnAsyncBefore() {
+  void testHistoricVariablesOnAsyncBefore() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("foo", "bar"));
@@ -314,7 +330,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testModifyWithNonInitialVariables() {
+  void testModifyWithNonInitialVariables() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 

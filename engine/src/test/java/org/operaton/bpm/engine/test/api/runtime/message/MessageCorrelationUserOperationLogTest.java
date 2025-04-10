@@ -22,6 +22,11 @@ import static org.assertj.core.api.Assertions.tuple;
 
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -32,16 +37,12 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MessageCorrelationUserOperationLogTest {
+@ExtendWith(ProcessEngineExtension.class)
+class MessageCorrelationUserOperationLogTest {
 
   private static final String USER_ID = "userId";
   private static final String SINGLE_INTERMEDIATE_MESSAGE_PROCESS = "intermediateMessage";
@@ -59,33 +60,26 @@ public class MessageCorrelationUserOperationLogTest {
   private static final Long LIMIT_3 = 3L;
   private static final Long UNLIMITED = -1L;
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  IdentityService identityService;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected IdentityService identityService;
+  Long defaultLogEntriesPerSyncOperationLimit;
 
-  protected Long defaultLogEntriesPerSyncOperationLimit;
-
-  @Before
-  public void setup() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    identityService = engineRule.getIdentityService();
+  @BeforeEach
+  void setup() {
     defaultLogEntriesPerSyncOperationLimit = processEngineConfiguration.getLogEntriesPerSyncOperationLimit();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setLogEntriesPerSyncOperationLimit(defaultLogEntriesPerSyncOperationLimit);
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn" })
-  public void shouldCreateSingleUserOperationLogForMessageCorrelationWithReturnVariables() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn"})
+  void shouldCreateSingleUserOperationLogForMessageCorrelationWithReturnVariables() {
     // given
     // limit for message correlation operation log to 1
     // one process is waiting at one intermediate message catch event
@@ -110,8 +104,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn" })
-  public void shouldCreateSingleUserOperationLogForMessageCorrelationWithVariables() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn"})
+  void shouldCreateSingleUserOperationLogForMessageCorrelationWithVariables() {
     // given
     // limit for message correlation operation log to 1
     // one process is waiting at one intermediate message catch event
@@ -137,8 +131,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn" })
-  public void shouldCreateSummarizingUserOperationLogForMessageCorrelations() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn"})
+  void shouldCreateSummarizingUserOperationLogForMessageCorrelations() {
     // given
     // limit for message correlation operation log to 1 -> only one summary op log
     // three processes are waiting at one intermediate message catch event
@@ -164,8 +158,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn" })
-  public void shouldCreateDetailedUserOperationLogForMessageCorrelationsWhenOnlyOneCorrelation() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn"})
+  void shouldCreateDetailedUserOperationLogForMessageCorrelationsWhenOnlyOneCorrelation() {
     // given
     // limit for message correlation operation log to 1
     // one process is waiting at one intermediate message catch event
@@ -190,8 +184,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn" })
-  public void shouldCreateUserOperationLogForMessageCorrelations() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn"})
+  void shouldCreateUserOperationLogForMessageCorrelations() {
     // given
     // limit for message correlation operation log to 3
     // three processes are waiting at one intermediate message catch event
@@ -233,8 +227,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn" })
-  public void shouldThrowExceptionForMessageCorrelationsExceedingLimit() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn"})
+  void shouldThrowExceptionForMessageCorrelationsExceedingLimit() {
     // given
     // limit for message correlation operation log to 3
     // four  processes are waiting at one intermediate message catch event
@@ -260,8 +254,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn" })
-  public void shouldCreateUserOperationLogForMessageCorrelationsWhenUnlimited() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn"})
+  void shouldCreateUserOperationLogForMessageCorrelationsWhenUnlimited() {
     // given
     // operation log for message correlation is not limited (-1)
     // four processes are waiting at one intermediate message catch event
@@ -311,8 +305,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn" })
-  public void shouldNotCreateUserOperationLogIfNoCorrelationResult() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.intermediateMessageEvent.bpmn"})
+  void shouldNotCreateUserOperationLogIfNoCorrelationResult() {
     // given
     // limit for message correlation operation log to 1
     // no processes are waiting at an intermediate message catch event
@@ -329,8 +323,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.messageStartEvent.bpmn" })
-  public void shouldCreateSingleUserOperationLogForMessageCorrelationStart() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.messageStartEvent.bpmn"})
+  void shouldCreateSingleUserOperationLogForMessageCorrelationStart() {
     // given
     // limit for message correlation operation log to 1
     // no processes are waiting at an intermediate message catch event
@@ -357,8 +351,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.messageStartEvent.bpmn" })
-  public void shouldCreateSingleUserOperationLogForMessageCorrelationStartWithinLimit() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.messageStartEvent.bpmn"})
+  void shouldCreateSingleUserOperationLogForMessageCorrelationStartWithinLimit() {
     // given
     // limit for message correlation operation log to 3
     // no processes are waiting at an intermediate message catch event
@@ -385,8 +379,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.messageStartEvent.bpmn" })
-  public void shouldCreateSingleUserOperationLogForMessageCorrelationStartUnlimited() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.messageStartEvent.bpmn"})
+  void shouldCreateSingleUserOperationLogForMessageCorrelationStartUnlimited() {
     // given
     // limit for message correlation operation log to -1
     // no processes are waiting at an intermediate message catch event
@@ -413,8 +407,8 @@ public class MessageCorrelationUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.messageStartEvent.bpmn" })
-  public void shouldCreateSingleUserOperationLogForMessageCorrelationStartWithVariables() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationUserOperationLogTest.messageStartEvent.bpmn"})
+  void shouldCreateSingleUserOperationLogForMessageCorrelationStartWithVariables() {
     // given
     // limit for message correlation operation log to 1
     // no processes are waiting at an intermediate message catch event

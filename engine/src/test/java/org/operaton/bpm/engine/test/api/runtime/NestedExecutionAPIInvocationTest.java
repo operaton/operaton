@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -23,21 +30,9 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import org.junit.After;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
@@ -45,14 +40,10 @@ import org.junit.Test;
  */
 public class NestedExecutionAPIInvocationTest {
 
-  @Rule
-  public ProcessEngineRule engineRule1 = new ProvidedProcessEngineRule();
-
-  @ClassRule
-  public static ProcessEngineBootstrapRule engine2BootstrapRule = new ProcessEngineBootstrapRule("operaton.cfg.prefix_extended.xml");
-
-  @Rule
-  public ProcessEngineRule engineRule2 = new ProvidedProcessEngineRule(engine2BootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule1 = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule2 = ProcessEngineExtension.builder().configurationResource("operaton.cfg.prefix_extended.xml").build();
 
   public static final String PROCESS_KEY_1 = "process";
 
@@ -82,10 +73,10 @@ public class NestedExecutionAPIInvocationTest {
   .endEvent()
   .done();
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
 
-    StartProcessOnAnotherEngineDelegate.engine = engine2BootstrapRule.getProcessEngine();
+    StartProcessOnAnotherEngineDelegate.engine = engineRule2.getProcessEngine();
     NestedProcessStartDelegate.engine = engineRule1.getProcessEngine();
 
     // given
@@ -110,14 +101,14 @@ public class NestedExecutionAPIInvocationTest {
     engineRule2.manageDeployment(deployment3);
   }
 
-  @After
-  public void clearEngineReference() {
+  @AfterEach
+  void clearEngineReference() {
     StartProcessOnAnotherEngineDelegate.engine = null;
     NestedProcessStartDelegate.engine = null;
   }
 
   @Test
-  public void testWaitStateIsReachedOnNestedInstantiation() {
+  void testWaitStateIsReachedOnNestedInstantiation() {
 
     engineRule1.getRuntimeService().startProcessInstanceByKey(PROCESS_KEY_1);
     var taskService = engineRule1.getTaskService();
@@ -131,7 +122,7 @@ public class NestedExecutionAPIInvocationTest {
   }
 
   @Test
-  public void testWaitStateIsReachedOnMultiEngine() {
+  void testWaitStateIsReachedOnMultiEngine() {
 
     engineRule1.getRuntimeService().startProcessInstanceByKey(PROCESS_KEY_2);
     var taskService = engineRule1.getTaskService();

@@ -21,21 +21,33 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
-import org.junit.Before;
-import org.junit.Test;
 
-public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngineTest {
+class ProcessInstantiationAtStartEventTest {
 
   protected static final String PROCESS_DEFINITION_KEY = "testProcess";
 
-  @Before
-  public void setUp() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+
+  @BeforeEach
+  void setUp() {
    testRule.deploy(Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
         .userTask()
@@ -44,7 +56,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartProcessInstanceById() {
+  void testStartProcessInstanceById() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     runtimeService.createProcessInstanceById(processDefinition.getId()).execute();
@@ -53,7 +65,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartProcessInstanceByKey() {
+  void testStartProcessInstanceByKey() {
 
     runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).execute();
 
@@ -61,7 +73,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartProcessInstanceAndSetBusinessKey() {
+  void testStartProcessInstanceAndSetBusinessKey() {
 
     runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).businessKey("businessKey").execute();
 
@@ -71,7 +83,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartProcessInstanceAndSetCaseInstanceId() {
+  void testStartProcessInstanceAndSetCaseInstanceId() {
 
     runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).caseInstanceId("caseInstanceId").execute();
 
@@ -81,7 +93,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartProcessInstanceAndSetVariable() {
+  void testStartProcessInstanceAndSetVariable() {
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).setVariable("var", "value").execute();
 
@@ -90,7 +102,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartProcessInstanceAndSetVariables() {
+  void testStartProcessInstanceAndSetVariables() {
     Map<String, Object> variables = Variables.createVariables().putValue("var1", "v1").putValue("var2", "v2");
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).setVariables(variables).execute();
@@ -99,7 +111,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartProcessInstanceNoSkipping() {
+  void testStartProcessInstanceNoSkipping() {
 
     runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).execute(false, false);
 
@@ -107,7 +119,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testFailToStartProcessInstanceSkipListeners() {
+  void testFailToStartProcessInstanceSkipListeners() {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY);
     try {
       processInstantiationBuilder.execute(true, false);
@@ -119,7 +131,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testFailToStartProcessInstanceSkipInputOutputMapping() {
+  void testFailToStartProcessInstanceSkipInputOutputMapping() {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY);
     try {
       processInstantiationBuilder.execute(false, true);

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITIONAL_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.USER_TASK_ID;
@@ -33,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -48,45 +49,33 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class TransientVariableTest {
+class TransientVariableTest {
 
   private static final int OUTPUT_VALUE = 2;
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected TaskService taskService;
-
-  @Before
-  public void init() {
-    this.runtimeService = engineRule.getRuntimeService();
-    this.historyService = engineRule.getHistoryService();
-    this.taskService = engineRule.getTaskService();
-  }
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  TaskService taskService;
 
   @Test
-  public void createTransientTypedVariablesUsingVariableMap() throws URISyntaxException {
+  void createTransientTypedVariablesUsingVariableMap() throws URISyntaxException {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -123,7 +112,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void createTransientVariablesUsingVariableMap() throws URISyntaxException {
+  void createTransientVariablesUsingVariableMap() throws URISyntaxException {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -159,7 +148,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void createTransientVariablesUsingFluentBuilder() {
+  void createTransientVariablesUsingFluentBuilder() {
     // given
     BpmnModelInstance simpleInstanceWithListener = Bpmn.createExecutableProcess("Process")
         .startEvent()
@@ -182,7 +171,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void createVariablesUsingVariableMap() {
+  void createVariablesUsingVariableMap() {
     // given
     BpmnModelInstance simpleInstanceWithListener = Bpmn.createExecutableProcess("Process")
         .startEvent()
@@ -207,7 +196,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void triggerConditionalEventWithTransientVariable() {
+  void triggerConditionalEventWithTransientVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess(CONDITIONAL_PROCESS_KEY)
         .startEvent()
@@ -231,7 +220,7 @@ public class TransientVariableTest {
 
 
   @Test
-  public void testParallelProcessWithSetVariableTransientAfterReachingEventBasedGW() {
+  void testParallelProcessWithSetVariableTransientAfterReachingEventBasedGW() {
     BpmnModelInstance modelInstance =
         Bpmn.createExecutableProcess(CONDITIONAL_PROCESS_KEY)
           .startEvent()
@@ -280,7 +269,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void setVariableTransientInRunningProcessInstance() {
+  void setVariableTransientInRunningProcessInstance() {
     // given
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
 
@@ -295,7 +284,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void setVariableTransientForCase() {
+  void setVariableTransientForCase() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
 
@@ -309,7 +298,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testTransientVariableOvewritesPersistedVariableInSameScope() {
+  void testTransientVariableOvewritesPersistedVariableInSameScope() {
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey("Process", Variables.createVariables().putValue("foo", "bar"));
     Execution execution = runtimeService.createExecutionQuery().singleResult();
@@ -322,7 +311,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testSameNamesDifferentScopes() {
+  void testSameNamesDifferentScopes() {
     testRule.deploy(ProcessModels.SUBPROCESS_PROCESS);
     runtimeService.startProcessInstanceByKey("Process", Variables.createVariables().putValue("foo", Variables.stringValue("bar")));
     Execution execution = runtimeService.createExecutionQuery().activityId(USER_TASK_ID).singleResult();
@@ -335,7 +324,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testFormFieldsWithCustomTransientFlags() {
+  void testFormFieldsWithCustomTransientFlags() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/form/TransientVariableTest.taskFormFieldsWithTransientFlags.bpmn20.xml");
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -354,7 +343,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testStartProcessInstanceWithFormsUsingTransientVariables() {
+  void testStartProcessInstanceWithFormsUsingTransientVariables() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/form/TransientVariableTest.startFormFieldsWithTransientFlags.bpmn20.xml");
     ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery().singleResult();
@@ -372,7 +361,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testSignalWithTransientVariables() {
+  void testSignalWithTransientVariables() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
     .startEvent()
@@ -399,7 +388,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testStartMessageCorrelationWithTransientVariable() {
+  void testStartMessageCorrelationWithTransientVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -428,7 +417,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testMessageCorrelationWithTransientVariable() {
+  void testMessageCorrelationWithTransientVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -460,7 +449,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testParallelExecutions() {
+  void testParallelExecutions() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -493,7 +482,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testExclusiveGateway() {
+  void testExclusiveGateway() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/bpmn/gateway/ExclusiveGatewayTest.testDivergingExclusiveGateway.bpmn20.xml");
 
@@ -509,7 +498,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testChangeTransientVariable() {
+  void testChangeTransientVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -538,7 +527,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testSwitchTransientToNonVariable() {
+  void testSwitchTransientToNonVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -563,7 +552,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testSwitchNonToTransientVariable() {
+  void testSwitchNonToTransientVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -586,9 +575,8 @@ public class TransientVariableTest {
   }
 
 
-
   @Test
-  public void testSwitchNonToTransientLocalVariable() {
+  void testSwitchNonToTransientLocalVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -612,7 +600,7 @@ public class TransientVariableTest {
    * CAM-9932
    */
   @Test
-  public void testKeepTransientIfUntypedValueIsAccessed() {
+  void testKeepTransientIfUntypedValueIsAccessed() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("aProcess")
       .startEvent()
@@ -632,9 +620,8 @@ public class TransientVariableTest {
   }
 
 
-
   @Test
-  public void testTransientLocalVariable() {
+  void testTransientLocalVariable() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -658,7 +645,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void shouldRemoveNonTransientAndSetNonTransient() {
+  void shouldRemoveNonTransientAndSetNonTransient() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -679,7 +666,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void shouldRemoveTransientAndSetTransient() {
+  void shouldRemoveTransientAndSetTransient() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -700,7 +687,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void shouldFailRemoveTransientAndSetNonTransient() {
+  void shouldFailRemoveTransientAndSetNonTransient() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -720,7 +707,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void shouldFailRemoveNonTransientAndSetTransient() {
+  void shouldFailRemoveNonTransientAndSetTransient() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()

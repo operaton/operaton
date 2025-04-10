@@ -36,15 +36,15 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class CmmnModelElementInstanceCmdTest {
+class CmmnModelElementInstanceCmdTest {
 
   private static final String CASE_KEY = "oneTaskCase";
 
   RepositoryService repositoryService;
-  
+
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
   @Test
-  public void testRepositoryService() {
+  void testRepositoryService() {
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
         .caseDefinitionKey(CASE_KEY)

@@ -54,7 +54,7 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class RuntimeByteArrayTest {
+class RuntimeByteArrayTest {
   protected static final String WORKER_ID = "aWorkerId";
   protected static final long LOCK_TIME = 10000L;
   protected static final String TOPIC_NAME = "externalTaskTopic";
@@ -77,12 +77,12 @@ public class RuntimeByteArrayTest {
   String id;
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (id != null) {
       // delete task
       taskService.deleteTask(id, true);
@@ -91,7 +91,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testVariableBinaryForFileValues() {
+  void testVariableBinaryForFileValues() {
     // given
     BpmnModelInstance instance = createProcess();
 
@@ -110,7 +110,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testVariableBinary() {
+  void testVariableBinary() {
     byte[] binaryContent = "some binary content".getBytes();
 
     // given
@@ -131,7 +131,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testBatchBinary() {
+  void testBatchBinary() {
     // when
     helper.migrateProcessInstancesAsync(15);
 
@@ -144,7 +144,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testExceptionStacktraceBinary() {
+  void testExceptionStacktraceBinary() {
     // given
     BpmnModelInstance instance = createFailingProcess();
     testRule.deploy(instance);
@@ -168,7 +168,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testExternalTaskStacktraceBinary() {
+  void testExternalTaskStacktraceBinary() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");

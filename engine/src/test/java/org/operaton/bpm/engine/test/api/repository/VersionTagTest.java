@@ -30,13 +30,13 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Stefan Hentschel.
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class VersionTagTest {
+class VersionTagTest {
 
   RepositoryService repositoryService;
-  
+
   @Deployment
   @Test
-  public void testParsingVersionTag() {
+  void testParsingVersionTag() {
     ProcessDefinition process = repositoryService
       .createProcessDefinitionQuery()
       .orderByProcessDefinitionId()
@@ -46,9 +46,9 @@ public class VersionTagTest {
     assertThat(process.getVersionTag()).isEqualTo("ver_tag_1");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testParsingNullVersionTag() {
+  void testParsingNullVersionTag() {
     ProcessDefinition process = repositoryService
       .createProcessDefinitionQuery()
       .orderByProcessDefinitionId()
@@ -58,9 +58,9 @@ public class VersionTagTest {
     assertThat(process.getVersionTag()).isNull();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/versionTag.dmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/versionTag.dmn"})
   @Test
-  public void testParsingVersionTagDecisionDefinition() {
+  void testParsingVersionTagDecisionDefinition() {
     DecisionDefinition decision = repositoryService
     .createDecisionDefinitionQuery()
     .orderByDecisionDefinitionVersion()
@@ -70,9 +70,9 @@ public class VersionTagTest {
     assertThat(decision.getVersionTag()).isEqualTo("1.0.0");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/noVersionTag.dmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/noVersionTag.dmn"})
   @Test
-  public void testParsingNullVersionTagDecisionDefinition() {
+  void testParsingNullVersionTagDecisionDefinition() {
     DecisionDefinition decision = repositoryService
       .createDecisionDefinitionQuery()
     .orderByDecisionDefinitionVersion()

@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class DecisionRequirementsDefinitionQueryTest {
+class DecisionRequirementsDefinitionQueryTest {
 
   protected static final String DRD_SCORE_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdScore.dmn11.xml";
   protected static final String DRD_DISH_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
@@ -48,7 +48,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   String thirdDeploymentId;
 
   @BeforeEach
-  public void init() {
+  void init() {
     firstDeploymentId = testRule.deploy(DRD_DISH_RESOURCE, DRD_SCORE_RESOURCE).getId();
     secondDeploymentId = testRule.deploy(DRD_DISH_RESOURCE).getId();
     thirdDeploymentId = testRule.deploy(DRD_XYZ_RESOURCE).getId();
@@ -61,7 +61,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDecisionRequirementsDefinitionId() {
+  void queryByDecisionRequirementsDefinitionId() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionId("notExisting").count()).isZero();
@@ -71,7 +71,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDecisionRequirementsDefinitionIds() {
+  void queryByDecisionRequirementsDefinitionIds() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionIdIn("not", "existing").count()).isZero();
@@ -81,7 +81,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDecisionRequirementsDefinitionKey() {
+  void queryByDecisionRequirementsDefinitionKey() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionKey("notExisting").count()).isZero();
@@ -91,7 +91,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDecisionRequirementsDefinitionKeyLike() {
+  void queryByDecisionRequirementsDefinitionKeyLike() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionKeyLike("%notExisting%").count()).isZero();
@@ -102,7 +102,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDecisionRequirementsDefinitionName() {
+  void queryByDecisionRequirementsDefinitionName() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionName("notExisting").count()).isZero();
@@ -112,7 +112,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDecisionRequirementsDefinitionNameLike() {
+  void queryByDecisionRequirementsDefinitionNameLike() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionNameLike("%notExisting%").count()).isZero();
@@ -122,7 +122,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDecisionRequirementsDefinitionCategory() {
+  void queryByDecisionRequirementsDefinitionCategory() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionCategory("notExisting").count()).isZero();
@@ -132,7 +132,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDecisionRequirementsDefinitionCategoryLike() {
+  void queryByDecisionRequirementsDefinitionCategoryLike() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionCategoryLike("%notExisting%").count()).isZero();
@@ -143,7 +143,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByResourceName() {
+  void queryByResourceName() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionResourceName("notExisting").count()).isZero();
@@ -153,7 +153,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByResourceNameLike() {
+  void queryByResourceNameLike() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionResourceNameLike("%notExisting%").count()).isZero();
@@ -162,14 +162,14 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByResourceNameLikeEscape() {
+  void queryByResourceNameLikeEscape() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionResourceNameLike("%z\\_.%").count()).isEqualTo(1L);
   }
 
   @Test
-  public void queryByVersion() {
+  void queryByVersion() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionVersion(1).count()).isEqualTo(3L);
@@ -178,7 +178,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByLatest() {
+  void queryByLatest() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.latestVersion().count()).isEqualTo(3L);
@@ -186,7 +186,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void queryByDeploymentId() {
+  void queryByDeploymentId() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.deploymentId("notExisting").count()).isZero();
@@ -196,7 +196,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void orderByDecisionRequirementsDefinitionId() {
+  void orderByDecisionRequirementsDefinitionId() {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionId().asc().list();
 
@@ -216,7 +216,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void orderByDecisionRequirementsDefinitionKey() {
+  void orderByDecisionRequirementsDefinitionKey() {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionKey().asc().list();
 
@@ -236,7 +236,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void orderByDecisionRequirementsDefinitionName() {
+  void orderByDecisionRequirementsDefinitionName() {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionName().asc().list();
 
@@ -256,7 +256,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void orderByDecisionRequirementsDefinitionCategory() {
+  void orderByDecisionRequirementsDefinitionCategory() {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionCategory().asc().list();
 
@@ -276,7 +276,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void orderByDecisionRequirementsDefinitionVersion() {
+  void orderByDecisionRequirementsDefinitionVersion() {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionVersion().asc().list();
 
@@ -295,7 +295,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   }
 
   @Test
-  public void orderByDeploymentId() {
+  void orderByDeploymentId() {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDeploymentId().asc().list();
 

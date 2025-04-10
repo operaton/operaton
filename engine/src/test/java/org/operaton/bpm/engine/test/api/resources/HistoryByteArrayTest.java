@@ -67,7 +67,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoryByteArrayTest {
+class HistoryByteArrayTest {
   protected static final String DECISION_PROCESS = "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.processWithBusinessRuleTask.bpmn20.xml";
   protected static final String DECISION_SINGLE_OUTPUT_DMN = "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.decisionSingleOutput.dmn11.xml";
   protected static final String WORKER_ID = "aWorkerId";
@@ -89,7 +89,7 @@ public class HistoryByteArrayTest {
   String taskId;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (taskId != null) {
       // delete task
       taskService.deleteTask(taskId, true);
@@ -97,7 +97,7 @@ public class HistoryByteArrayTest {
   }
 
   @BeforeEach
-  public void enableDmnFeelLegacyBehavior() {
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -108,7 +108,7 @@ public class HistoryByteArrayTest {
   }
 
   @AfterEach
-  public void disableDmnFeelLegacyBehavior() {
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -120,7 +120,7 @@ public class HistoryByteArrayTest {
   }
 
   @Test
-  public void testHistoricVariableBinaryForFileValues() {
+  void testHistoricVariableBinaryForFileValues() {
     // given
     BpmnModelInstance instance = createProcess();
 
@@ -139,7 +139,7 @@ public class HistoryByteArrayTest {
   }
 
   @Test
-  public void testHistoricVariableBinary() {
+  void testHistoricVariableBinary() {
     byte[] binaryContent = "some binary content".getBytes();
 
     // given
@@ -160,7 +160,7 @@ public class HistoryByteArrayTest {
   }
 
   @Test
-  public void testHistoricDetailBinaryForFileValues() {
+  void testHistoricDetailBinaryForFileValues() {
     // given
     BpmnModelInstance instance = createProcess();
 
@@ -179,7 +179,7 @@ public class HistoryByteArrayTest {
   }
 
   @Test
-  public void testHistoricDecisionInputInstanceBinary() {
+  void testHistoricDecisionInputInstanceBinary() {
     testRule.deploy(DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN);
 
     startProcessInstanceAndEvaluateDecision(new JavaSerializable("foo"));
@@ -197,7 +197,7 @@ public class HistoryByteArrayTest {
   }
 
   @Test
-  public void testHistoricDecisionOutputInstanceBinary() {
+  void testHistoricDecisionOutputInstanceBinary() {
     testRule.deploy(DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN);
 
     startProcessInstanceAndEvaluateDecision(new JavaSerializable("foo"));
@@ -216,7 +216,7 @@ public class HistoryByteArrayTest {
   }
 
   @Test
-  public void testAttachmentContentBinaries() {
+  void testAttachmentContentBinaries() {
       // create and save task
       Task task = taskService.newTask();
       taskService.saveTask(task);
@@ -231,7 +231,7 @@ public class HistoryByteArrayTest {
   }
 
   @Test
-  public void testHistoricExceptionStacktraceBinary() {
+  void testHistoricExceptionStacktraceBinary() {
     // given
     BpmnModelInstance instance = createFailingProcess();
     testRule.deploy(instance);
@@ -258,7 +258,7 @@ public class HistoryByteArrayTest {
   }
 
   @Test
-  public void testHistoricExternalTaskJobLogStacktraceBinary() {
+  void testHistoricExternalTaskJobLogStacktraceBinary() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");

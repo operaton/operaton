@@ -47,7 +47,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class GetRunningHistoricTaskInstancesForOptimizeTest {
+class GetRunningHistoricTaskInstancesForOptimizeTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -65,7 +65,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   HistoryService historyService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
@@ -74,7 +74,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -91,7 +91,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void getRunningHistoricTaskInstances() {
+  void getRunningHistoricTaskInstances() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -113,7 +113,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void startedAfterParameterWorks() {
+  void startedAfterParameterWorks() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -139,7 +139,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void startedAtParameterWorks() {
+  void startedAtParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -165,7 +165,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void startedAfterAndFinishedAtParameterWorks() {
+  void startedAfterAndFinishedAtParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -190,7 +190,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -212,7 +212,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void resultIsSortedByStartTime() {
+  void resultIsSortedByStartTime() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -244,7 +244,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void fetchOnlyRunningTasks() {
+  void fetchOnlyRunningTasks() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")

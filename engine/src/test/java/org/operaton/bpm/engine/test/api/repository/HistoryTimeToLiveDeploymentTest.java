@@ -42,7 +42,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 
 import ch.qos.logback.classic.Level;
 
-public class HistoryTimeToLiveDeploymentTest {
+class HistoryTimeToLiveDeploymentTest {
 
   protected static final String CONFIG_LOGGER = "org.operaton.bpm.engine.cfg";
 
@@ -70,20 +70,20 @@ public class HistoryTimeToLiveDeploymentTest {
   String historyTimeToLive;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     historyTimeToLive = processEngineConfiguration.getHistoryTimeToLive();
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setHistoryTimeToLive(historyTimeToLive);
     processEngineConfiguration.setEnforceHistoryTimeToLive(false);
     ClockUtil.reset();
   }
 
   @Test
-  public void processWithoutHTTLShouldFail() {
+  void processWithoutHTTLShouldFail() {
     // given
     var deploymentBuilder = repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version1.bpmn20.xml");
@@ -99,7 +99,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void processWithHTTLShouldSucceed() {
+  void processWithHTTLShouldSucceed() {
     // when
     testRule.deploy(repositoryService
         .createDeployment()
@@ -112,7 +112,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void caseWithHTTLShouldSucceed() {
+  void caseWithHTTLShouldSucceed() {
     // when
     testRule.deploy(repositoryService
         .createDeployment()
@@ -125,7 +125,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void caseWithoutHTTLShouldFail() {
+  void caseWithoutHTTLShouldFail() {
     // given
     var deploymentBuilder = repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn");
@@ -138,7 +138,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void decisionWithHTTLShouldSucceed() {
+  void decisionWithHTTLShouldSucceed() {
     // when
     testRule.deploy(repositoryService
         .createDeployment()
@@ -151,7 +151,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void decisionWithoutHTTLShouldFail() {
+  void decisionWithoutHTTLShouldFail() {
     var deploymentBuilder = repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/dmn/Another_Example.dmn");
     // when
@@ -163,7 +163,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void shouldDeploySuccessfullyDueToProcessEngineConfigFallback() {
+  void shouldDeploySuccessfullyDueToProcessEngineConfigFallback() {
     // given
     processEngineConfiguration.setHistoryTimeToLive("5");
 
@@ -178,7 +178,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void shouldNotLogMessageOnDefaultConfigOriginatingFromConfig() {
+  void shouldNotLogMessageOnDefaultConfigOriginatingFromConfig() {
     // given
     processEngineConfiguration.setHistoryTimeToLive(HTTL_CONFIG_VALUE);
 
@@ -191,7 +191,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void shouldGetDeployedProcess() {
+  void shouldGetDeployedProcess() {
     // given
     processEngineConfiguration.setEnforceHistoryTimeToLive(false);
 
@@ -206,7 +206,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void shouldGetDeployedDecision() {
+  void shouldGetDeployedDecision() {
     // given
     processEngineConfiguration.setEnforceHistoryTimeToLive(false);
 
@@ -221,7 +221,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void shouldGetDeployedCase() {
+  void shouldGetDeployedCase() {
     // given
     processEngineConfiguration.setEnforceHistoryTimeToLive(false);
 
@@ -236,7 +236,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void shouldLogMessageOnLongerTTLInProcessModel() {
+  void shouldLogMessageOnLongerTTLInProcessModel() {
     // given
     String nonDefaultValue = "179";
     processEngineConfiguration.setHistoryTimeToLive(nonDefaultValue);
@@ -249,7 +249,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void shouldLogMessageOnLongerTTLInfCaseModel() {
+  void shouldLogMessageOnLongerTTLInfCaseModel() {
     // given
     String nonDefaultValue = "179";
     processEngineConfiguration.setHistoryTimeToLive(nonDefaultValue);
@@ -263,7 +263,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @Test
-  public void shouldLogMessageOnLongerTTLInDecisionModel() {
+  void shouldLogMessageOnLongerTTLInDecisionModel() {
     // given
     String nonDefaultValue = "179";
     processEngineConfiguration.setHistoryTimeToLive(nonDefaultValue);

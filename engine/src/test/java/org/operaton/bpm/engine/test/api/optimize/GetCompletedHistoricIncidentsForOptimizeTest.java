@@ -42,7 +42,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class GetCompletedHistoricIncidentsForOptimizeTest {
+class GetCompletedHistoricIncidentsForOptimizeTest {
 
   private static final String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
   private static final BpmnModelInstance FAILING_SERVICE_TASK_MODEL =
@@ -64,19 +64,19 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
   ManagementService managementService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     ClockUtil.reset();
   }
 
   @Test
-  public void getCompletedHistoricIncidents() {
+  void getCompletedHistoricIncidents() {
      // given
     testHelper.deploy(FAILING_SERVICE_TASK_MODEL);
     final ProcessInstance processInstance = startProcessInstanceAndFailWithIncident();
@@ -93,7 +93,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
   }
 
   @Test
-  public void fishedAfterParameterWorks() {
+  void fishedAfterParameterWorks() {
      // given
     testHelper.deploy(FAILING_SERVICE_TASK_MODEL);
     Date now = new Date();
@@ -115,7 +115,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
   }
 
   @Test
-  public void fishedAtParameterWorks() {
+  void fishedAtParameterWorks() {
      // given
     testHelper.deploy(FAILING_SERVICE_TASK_MODEL);
     Date now = new Date();
@@ -137,7 +137,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
   }
 
   @Test
-  public void fishedAfterAndFinishedAtParameterWorks() {
+  void fishedAfterAndFinishedAtParameterWorks() {
      // given
     testHelper.deploy(FAILING_SERVICE_TASK_MODEL);
     Date now = new Date();
@@ -158,7 +158,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
   }
 
   @Test
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
      // given
     testHelper.deploy(FAILING_SERVICE_TASK_MODEL);
     for (int i = 0; i < 5; i++) {
@@ -175,7 +175,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
   }
 
   @Test
-  public void resultIsSortedByEndTime() {
+  void resultIsSortedByEndTime() {
      // given
     testHelper.deploy(FAILING_SERVICE_TASK_MODEL);
     Date now = new Date();

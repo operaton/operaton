@@ -50,7 +50,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class GetCompletedHistoricTaskInstancesForOptimizeTest {
+class GetCompletedHistoricTaskInstancesForOptimizeTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -69,7 +69,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
 
 
   @BeforeEach
-  public void init() {
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
@@ -78,7 +78,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -95,7 +95,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void getCompletedHistoricTaskInstances() {
+  void getCompletedHistoricTaskInstances() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -117,7 +117,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void fishedAfterParameterWorks() {
+  void fishedAfterParameterWorks() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -152,7 +152,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void fishedAtParameterWorks() {
+  void fishedAtParameterWorks() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -179,7 +179,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void fishedAfterAndFinishedAtParameterWorks() {
+  void fishedAfterAndFinishedAtParameterWorks() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -205,7 +205,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -231,7 +231,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void resultIsSortedByEndTime() {
+  void resultIsSortedByEndTime() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -266,7 +266,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void fetchOnlyCompletedTasks() {
+  void fetchOnlyCompletedTasks() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -288,7 +288,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
   }
 
   @Test
-  public void doNotReturnCompletedStandaloneTasks() {
+  void doNotReturnCompletedStandaloneTasks() {
     // given
     Task task = taskService.newTask("standaloneTaskId");
     taskService.saveTask(task);

@@ -55,7 +55,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class GetHistoricVariableUpdatesForOptimizeTest {
+class GetHistoricVariableUpdatesForOptimizeTest {
 
   private static final String USER_ID = "test";
 
@@ -81,7 +81,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   TaskService taskService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
@@ -90,7 +90,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -104,7 +104,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void getHistoricVariableUpdates() {
+  void getHistoricVariableUpdates() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -125,7 +125,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void occurredAfterParameterWorks() {
+  void occurredAfterParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -152,7 +152,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void occurredAtParameterWorks() {
+  void occurredAtParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -179,7 +179,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void occurredAfterAndOccurredAtParameterWorks() {
+  void occurredAfterAndOccurredAtParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -205,7 +205,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void mixedTypeVariablesByDefaultAllNonBinaryValuesAreFetched() {
+  void mixedTypeVariablesByDefaultAllNonBinaryValuesAreFetched() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -237,7 +237,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void mixedTypeVariablesExcludeObjectValueDiscardsObjectValue() {
+  void mixedTypeVariablesExcludeObjectValueDiscardsObjectValue() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -264,7 +264,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -289,7 +289,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void resultIsSortedByTime() {
+  void resultIsSortedByTime() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -325,7 +325,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
   }
 
   @Test
-  public void fetchOnlyVariableUpdates() {
+  void fetchOnlyVariableUpdates() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -357,7 +357,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
    */
   @Test
   @RequiredDatabase(excludes = DbSqlSessionFactory.H2)
-  public void testFetchLargeNumberOfObjectVariables() {
+  void testFetchLargeNumberOfObjectVariables() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()

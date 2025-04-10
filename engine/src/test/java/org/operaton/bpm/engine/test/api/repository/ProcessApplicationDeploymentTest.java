@@ -56,7 +56,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationDeploymentTest {
+class ProcessApplicationDeploymentTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -77,7 +77,7 @@ public class ProcessApplicationDeploymentTest {
   Set<String> registeredDeployments;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     defaultDeploymentHandlerFactory = processEngineConfiguration.getDeploymentHandlerFactory();
     customDeploymentHandlerFactory = new VersionedDeploymentHandlerFactory();
     processApplication = new EmbeddedProcessApplication();
@@ -88,7 +88,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     clearProcessApplicationDeployments();
     processApplication.undeploy();
     processEngineConfiguration.setDeploymentHandlerFactory(defaultDeploymentHandlerFactory);
@@ -96,7 +96,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testEmptyDeployment() {
+  void testEmptyDeployment() {
     var deploymentBuilder = repositoryService.createDeployment(processApplication.getReference());
     var deploymentBuilder2 = repositoryService.createDeployment();
     try {
@@ -115,7 +115,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testSimpleProcessApplicationDeployment() {
+  void testSimpleProcessApplicationDeployment() {
     // given
     ProcessApplicationDeployment deployment = testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -134,7 +134,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentNoChanges() {
+  void testProcessApplicationDeploymentNoChanges() {
     // given: create initial deployment
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -162,7 +162,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testPartialChangesDeployAll() {
+  void testPartialChangesDeployAll() {
     // given
     BpmnModelInstance model1 = createEmptyModel("process1");
     BpmnModelInstance model2 = createEmptyModel("process2");
@@ -224,7 +224,7 @@ public class ProcessApplicationDeploymentTest {
    * Test re-deployment of only those resources that have actually changed
    */
   @Test
-  public void testPartialChangesDeployChangedOnly() {
+  void testPartialChangesDeployChangedOnly() {
     BpmnModelInstance model1 = createEmptyModel("process1");
     BpmnModelInstance model2 = createEmptyModel("process2");
 
@@ -309,7 +309,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testDuplicateFilteringDefaultBehavior() {
+  void testDuplicateFilteringDefaultBehavior() {
     // given
     BpmnModelInstance oldModel = Bpmn.createExecutableProcess("versionedProcess")
       .operatonVersionTag("3").done();
@@ -333,7 +333,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testDuplicateFilteringCustomBehavior() {
+  void testDuplicateFilteringCustomBehavior() {
     // given
     processEngineConfiguration.setDeploymentHandlerFactory( customDeploymentHandlerFactory);
     BpmnModelInstance oldModel = Bpmn.createExecutableProcess("versionedProcess")
@@ -368,7 +368,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testPartialChangesResumePreviousVersion() {
+  void testPartialChangesResumePreviousVersion() {
     BpmnModelInstance model1 = createEmptyModel("process1");
     BpmnModelInstance model2 = createEmptyModel("process2");
 
@@ -391,7 +391,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersions() {
+  void testProcessApplicationDeploymentResumePreviousVersions() {
     // create initial deployment
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -424,7 +424,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersionsDifferentKeys() {
+  void testProcessApplicationDeploymentResumePreviousVersionsDifferentKeys() {
     // create initial deployment
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -457,7 +457,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersionsDefaultBehavior() {
+  void testProcessApplicationDeploymentResumePreviousVersionsDefaultBehavior() {
     // given
     BpmnModelInstance model1 = createEmptyModel("process1");
     BpmnModelInstance model2 = createEmptyModel("process2");
@@ -482,7 +482,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersionsCustomBehavior() {
+  void testProcessApplicationDeploymentResumePreviousVersionsCustomBehavior() {
     // given
     processEngineConfiguration.setDeploymentHandlerFactory(customDeploymentHandlerFactory);
     BpmnModelInstance oldModel = Bpmn.createExecutableProcess("process")
@@ -528,7 +528,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentNoResume() {
+  void testProcessApplicationDeploymentNoResume() {
     // create initial deployment
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -560,7 +560,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentNameDefaultBehavior() {
+  void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentNameDefaultBehavior() {
     // create initial deployment
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -594,7 +594,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentNameCustomBehavior() {
+  void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentNameCustomBehavior() {
     // given
     BpmnModelInstance oldProcess =
         Bpmn.createExecutableProcess("process").operatonVersionTag("1").startEvent().done();
@@ -638,7 +638,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentNameDeployDifferentProcesses(){
+  void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentNameDeployDifferentProcesses(){
     BpmnModelInstance process1 = createEmptyModel("process1");
     BpmnModelInstance process2 = createEmptyModel("process2");
     testRule.deploy(repositoryService
@@ -671,7 +671,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentNameNoResume(){
+  void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentNameNoResume(){
     BpmnModelInstance process1 = createEmptyModel("process1");
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -704,7 +704,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testPartialChangesResumePreviousVersionByDeploymentName() {
+  void testPartialChangesResumePreviousVersionByDeploymentName() {
     BpmnModelInstance model1 = createEmptyModel("process1");
     BpmnModelInstance model2 = createEmptyModel("process2");
 
@@ -728,7 +728,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumptionDoesNotCachePreviousBpmnModelInstance() {
+  void testProcessApplicationDeploymentResumptionDoesNotCachePreviousBpmnModelInstance() {
     // given an initial deployment
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -750,7 +750,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testDeploymentSourceShouldBeNull() {
+  void testDeploymentSourceShouldBeNull() {
     // given
     String key = "process";
     BpmnModelInstance model = createEmptyModel(key);
@@ -778,7 +778,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testDeploymentSourceShouldNotBeNull() {
+  void testDeploymentSourceShouldNotBeNull() {
     // given
     String key = "process";
     BpmnModelInstance model = createEmptyModel(key);
@@ -807,7 +807,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testDefaultDeploymentSource() {
+  void testDefaultDeploymentSource() {
     // given
     String key = "process";
     BpmnModelInstance model = createEmptyModel(key);
@@ -826,7 +826,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testOverwriteDeploymentSource() {
+  void testOverwriteDeploymentSource() {
     // given
     String key = "process";
     BpmnModelInstance model = createEmptyModel(key);
@@ -846,7 +846,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testNullDeploymentSourceAwareDuplicateFilter() {
+  void testNullDeploymentSourceAwareDuplicateFilter() {
     // given
     String key = "process";
     String name = "my-deployment";
@@ -887,7 +887,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testNullAndProcessApplicationDeploymentSourceAwareDuplicateFilter() {
+  void testNullAndProcessApplicationDeploymentSourceAwareDuplicateFilter() {
     // given
 
     String key = "process";
@@ -928,7 +928,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationAndNullDeploymentSourceAwareDuplicateFilter() {
+  void testProcessApplicationAndNullDeploymentSourceAwareDuplicateFilter() {
     // given
 
     String key = "process";
@@ -969,7 +969,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentSourceAwareDuplicateFilter() {
+  void testProcessApplicationDeploymentSourceAwareDuplicateFilter() {
     // given
 
     String key = "process";
@@ -1009,7 +1009,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testSameDeploymentSourceAwareDuplicateFilter() {
+  void testSameDeploymentSourceAwareDuplicateFilter() {
     // given
 
     String key = "process";
@@ -1051,7 +1051,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testDifferentDeploymentSourceShouldDeployNewVersion() {
+  void testDifferentDeploymentSourceShouldDeployNewVersion() {
     // given
 
     String key = "process";
@@ -1093,7 +1093,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testNullAndNotNullDeploymentSourceShouldDeployNewVersion() {
+  void testNullAndNotNullDeploymentSourceShouldDeployNewVersion() {
     // given
 
     String key = "process";
@@ -1135,7 +1135,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testNotNullAndNullDeploymentSourceShouldDeployNewVersion() {
+  void testNotNullAndNullDeploymentSourceShouldDeployNewVersion() {
     // given
 
     String key = "process";
@@ -1177,7 +1177,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @Test
-  public void testUnregisterProcessApplicationOnDeploymentDeletion() {
+  void testUnregisterProcessApplicationOnDeploymentDeletion() {
     // given a deployment with a process application registration
     Deployment deployment = testRule.deploy(repositoryService
         .createDeployment()
@@ -1199,7 +1199,7 @@ public class ProcessApplicationDeploymentTest {
    * is used. See https://jira.camunda.com/browse/CAM-11893 for more details.
    */
   @Test
-  public void shouldRegisterExistingDeploymentsOnLatestProcessDefinitionRemoval() {
+  void shouldRegisterExistingDeploymentsOnLatestProcessDefinitionRemoval() {
     // given
     Date timeFreeze = new Date();
     ClockUtil.setCurrentTime(timeFreeze);

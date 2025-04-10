@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class RepositoryByteArrayTest {
+class RepositoryByteArrayTest {
   protected static final String USER_ID = "johndoe";
   
   @RegisterExtension
@@ -56,12 +56,12 @@ public class RepositoryByteArrayTest {
   IdentityService identityService;
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     identityService.deleteUser(USER_ID);
   }
 
   @Test
-  public void testResourceBinary() {
+  void testResourceBinary() {
     Date fixedDate = new Date();
     ClockUtil.setCurrentTime(fixedDate);
 
@@ -75,7 +75,7 @@ public class RepositoryByteArrayTest {
   }
 
   @Test
-  public void testFormsBinaries() {
+  void testFormsBinaries() {
     Date fixedDate = new Date();
     ClockUtil.setCurrentTime(fixedDate);
 
@@ -94,7 +94,7 @@ public class RepositoryByteArrayTest {
   }
 
   @Test
-  public void testUserPictureBinary() {
+  void testUserPictureBinary() {
     // when
     Date fixedDate = new Date();
     ClockUtil.setCurrentTime(fixedDate);

@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class ProcessDefinitionCandidateTest {
+class ProcessDefinitionCandidateTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -47,7 +47,7 @@ public class ProcessDefinitionCandidateTest {
   RepositoryService repositoryService;
 
   @Test
-  public void shouldPropagateTenantIdToCandidateStarterUser() {
+  void shouldPropagateTenantIdToCandidateStarterUser() {
     // when
     DeploymentBuilder builder = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_USER)
@@ -65,7 +65,7 @@ public class ProcessDefinitionCandidateTest {
   }
 
   @Test
-  public void shouldPropagateTenantIdToCandidateStarterUsers() {
+  void shouldPropagateTenantIdToCandidateStarterUsers() {
     // when
     DeploymentBuilder builder = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_USERS)
@@ -84,7 +84,7 @@ public class ProcessDefinitionCandidateTest {
   }
 
   @Test
-  public void shouldPropagateTenantIdToCandidateStarterGroup() {
+  void shouldPropagateTenantIdToCandidateStarterGroup() {
     // when
     DeploymentBuilder builder = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_GROUP)
@@ -102,7 +102,7 @@ public class ProcessDefinitionCandidateTest {
   }
 
   @Test
-  public void shouldPropagateTenantIdToCandidateStarterGroups() {
+  void shouldPropagateTenantIdToCandidateStarterGroups() {
     // when
     DeploymentBuilder builder = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_GROUPS)

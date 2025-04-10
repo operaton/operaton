@@ -40,15 +40,15 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Ingo Richtsmeier
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class DeploymentQueryTest {
+class DeploymentQueryTest {
 
   private String deploymentOneId;
   private String deploymentTwoId;
 
   RepositoryService repositoryService;
-  
+
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     deploymentOneId = repositoryService
       .createDeployment()
       .name("org/operaton/bpm/engine/test/repository/one.bpmn20.xml")
@@ -68,14 +68,14 @@ public class DeploymentQueryTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
 
     repositoryService.deleteDeployment(deploymentOneId, true);
     repositoryService.deleteDeployment(deploymentTwoId, true);
   }
 
   @Test
-  public void testQueryNoCriteria() {
+  void testQueryNoCriteria() {
     DeploymentQuery query = repositoryService.createDeploymentQuery();
     assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
@@ -89,7 +89,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByDeploymentId() {
+  void testQueryByDeploymentId() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentId(deploymentOneId);
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
@@ -97,7 +97,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidDeploymentId() {
+  void testQueryByInvalidDeploymentId() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -113,7 +113,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByName() {
+  void testQueryByName() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
@@ -121,7 +121,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidName() {
+  void testQueryByInvalidName() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -137,7 +137,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByNameLike() {
+  void testQueryByNameLike() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentNameLike("%operaton%");
     assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
@@ -149,7 +149,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidNameLike() {
+  void testQueryByInvalidNameLike() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentNameLike("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -165,7 +165,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByDeploymentBefore() {
+  void testQueryByDeploymentBefore() {
     Date later = DateTimeUtil.now().plus(10 * 3600).toDate();
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 
@@ -185,7 +185,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryDeploymentAfter() {
+  void testQueryDeploymentAfter() {
     Date later = DateTimeUtil.now().plus(10 * 3600).toDate();
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 
@@ -205,7 +205,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryBySource() {
+  void testQueryBySource() {
     DeploymentQuery query = repositoryService
         .createDeploymentQuery()
         .deploymentSource(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
@@ -215,7 +215,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByNullSource() {
+  void testQueryByNullSource() {
     DeploymentQuery query = repositoryService
         .createDeploymentQuery()
         .deploymentSource(null);
@@ -225,7 +225,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidSource() {
+  void testQueryByInvalidSource() {
     DeploymentQuery query = repositoryService
         .createDeploymentQuery()
         .deploymentSource("invalid");
@@ -235,7 +235,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQueryDeploymentBetween() {
+  void testQueryDeploymentBetween() {
     Date later = DateTimeUtil.now().plus(10 * 3600).toDate();
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 
@@ -268,7 +268,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testVerifyDeploymentProperties() {
+  void testVerifyDeploymentProperties() {
     List<Deployment> deployments = repositoryService.createDeploymentQuery()
       .orderByDeploymentName()
       .asc()
@@ -288,7 +288,7 @@ public class DeploymentQueryTest {
   }
 
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     assertThat(repositoryService.createDeploymentQuery()
         .orderByDeploymentName()
         .asc()

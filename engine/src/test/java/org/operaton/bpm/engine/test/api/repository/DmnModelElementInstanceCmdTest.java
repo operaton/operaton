@@ -33,15 +33,15 @@ import org.operaton.bpm.model.dmn.instance.Output;
 import org.operaton.bpm.model.dmn.instance.Rule;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class DmnModelElementInstanceCmdTest {
+class DmnModelElementInstanceCmdTest {
 
   private static final String DECISION_KEY = "one";
 
   RepositoryService repositoryService;
-  
+
   @Deployment(resources = "org/operaton/bpm/engine/test/repository/one.dmn")
   @Test
-  public void testRepositoryService() {
+  void testRepositoryService() {
     String decisionDefinitionId = repositoryService
       .createDecisionDefinitionQuery()
       .decisionDefinitionKey(DECISION_KEY)

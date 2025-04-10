@@ -36,15 +36,15 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  * @author Sebastian Menski
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class BpmnModelInstanceCmdTest {
+class BpmnModelInstanceCmdTest {
 
   private static final String PROCESS_KEY = "one";
 
   RepositoryService repositoryService;
-  
+
   @Deployment(resources = "org/operaton/bpm/engine/test/repository/one.bpmn20.xml")
   @Test
-  public void testRepositoryService() {
+  void testRepositoryService() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_KEY).singleResult().getId();
 
     BpmnModelInstance modelInstance = repositoryService.getBpmnModelInstance(processDefinitionId);

@@ -117,7 +117,7 @@ public class ProcessDiagramRetrievalTest {
   }
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     deploymentId = repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/diagram/" + xmlFileName)
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName)
@@ -125,9 +125,9 @@ public class ProcessDiagramRetrievalTest {
       .getId();
     processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
   }
-  
+
   @AfterEach
-  public void teardown() {
+  void teardown() {
     repositoryService.deleteDeployment(deploymentId, true);
   }
 

@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * @author Nikola Koevski
  */
-public class ProcessDiagramParseTest {
+class ProcessDiagramParseTest {
 
   private static final String RESOURCE_PATH = "src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/testXxeParsingIsDisabled";
 
@@ -49,17 +49,17 @@ public class ProcessDiagramParseTest {
   boolean xxeProcessingValue;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     xxeProcessingValue = processEngineConfiguration.isEnableXxeProcessing();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setEnableXxeProcessing(xxeProcessingValue);
   }
 
   @Test
-  public void testXxeParsingIsDisabled() {
+  void testXxeParsingIsDisabled() {
     processEngineConfiguration.setEnableXxeProcessing(false);
     final InputStream bpmnXmlStream = getResourceInputStream(RESOURCE_PATH + ".bpmn20.xml");
     final InputStream imageStream = getResourceInputStream(RESOURCE_PATH + ".png");
@@ -80,7 +80,7 @@ public class ProcessDiagramParseTest {
   }
 
   @Test
-  public void testXxeParsingIsEnabled() {
+  void testXxeParsingIsEnabled() {
     processEngineConfiguration.setEnableXxeProcessing(true);
     final InputStream bpmnXmlStream = getResourceInputStream(RESOURCE_PATH + ".bpmn20.xml");
     final InputStream imageStream = getResourceInputStream(RESOURCE_PATH + ".png");

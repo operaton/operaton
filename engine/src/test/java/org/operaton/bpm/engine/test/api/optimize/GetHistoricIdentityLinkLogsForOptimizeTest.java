@@ -70,7 +70,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
 
 
   @BeforeEach
-  public void init() {
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
@@ -81,7 +81,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -96,7 +96,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @Test
-  public void allNecessaryInformationIsAvailable() {
+  void allNecessaryInformationIsAvailable() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -120,7 +120,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @Test
-  public void performCandidateOperations() {
+  void performCandidateOperations() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -168,7 +168,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @Test
-  public void performAssigneeOperations() {
+  void performAssigneeOperations() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent("startEvent")
@@ -201,7 +201,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @Test
-  public void occurredAfterParameterWorks() {
+  void occurredAfterParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -233,7 +233,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @Test
-  public void occurredAtParameterWorks() {
+  void occurredAtParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -264,7 +264,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @Test
-  public void occurredAfterAndOccurredAtParameterWorks() {
+  void occurredAfterAndOccurredAtParameterWorks() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -295,7 +295,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @Test
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
      // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -320,7 +320,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   @Test
-  public void resultIsSortedByTimestamp() {
+  void resultIsSortedByTimestamp() {
     // given
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()

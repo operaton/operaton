@@ -61,7 +61,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class GetHistoricOperationLogsForOptimizeTest {
+class GetHistoricOperationLogsForOptimizeTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -79,7 +79,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   RepositoryService repositoryService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
@@ -90,7 +90,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -100,7 +100,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void getHistoricUserOperationLogs_suspendProcessInstanceByProcessInstanceId() {
+  void getHistoricUserOperationLogs_suspendProcessInstanceByProcessInstanceId() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -145,7 +145,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void getHistoricUserOperationLogs_suspendProcessInstanceByProcessDefinitionId() {
+  void getHistoricUserOperationLogs_suspendProcessInstanceByProcessDefinitionId() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -190,7 +190,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void getHistoricUserOperationLogs_suspendProcessInstanceByProcessDefinitionKey() {
+  void getHistoricUserOperationLogs_suspendProcessInstanceByProcessDefinitionKey() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -235,7 +235,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void getHistoricUserOperationLogs_suspendProcessDefinitionById() {
+  void getHistoricUserOperationLogs_suspendProcessDefinitionById() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -303,7 +303,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void getHistoricUserOperationLogs_suspendProcessDefinitionByKey() {
+  void getHistoricUserOperationLogs_suspendProcessDefinitionByKey() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -371,7 +371,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void getHistoricUserOperationLogs_suspendByBatchJobAndProcessInstanceId() {
+  void getHistoricUserOperationLogs_suspendByBatchJobAndProcessInstanceId() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -425,7 +425,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void getHistoricUserOperationLogs_suspendByBatchJobAndQuery() {
+  void getHistoricUserOperationLogs_suspendByBatchJobAndQuery() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -479,7 +479,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void occurredAfterParameterWorks() {
+  void occurredAfterParameterWorks() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -507,7 +507,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void occurredAtParameterWorks() {
+  void occurredAtParameterWorks() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -528,7 +528,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void occurredAfterAndOccurredAtParameterWorks() {
+  void occurredAfterAndOccurredAtParameterWorks() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -548,7 +548,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
      // given
     final ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("process");
     runtimeService.suspendProcessInstanceById(processInstance.getProcessInstanceId());
@@ -565,7 +565,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void resultIsSortedByTimestamp() {
+  void resultIsSortedByTimestamp() {
     // given
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -592,7 +592,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
   }
 
   @Test
-  public void fetchOnlyProcessInstanceSuspensionStateBasedLogEntries() {
+  void fetchOnlyProcessInstanceSuspensionStateBasedLogEntries() {
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("process");
     createLogEntriesThatShouldNotBeReturned(processInstance.getId());

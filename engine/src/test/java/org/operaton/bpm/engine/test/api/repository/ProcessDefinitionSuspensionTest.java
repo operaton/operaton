@@ -55,7 +55,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Daniel Meyer
  * @author Joram Barrez
  */
-public class ProcessDefinitionSuspensionTest {
+class ProcessDefinitionSuspensionTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -68,9 +68,9 @@ public class ProcessDefinitionSuspensionTest {
   FormService formService;
   TaskService taskService;
   ManagementService managementService;
-  
+
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(commandContext -> {
       commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerActivateProcessDefinitionHandler.TYPE);
@@ -79,9 +79,9 @@ public class ProcessDefinitionSuspensionTest {
     });
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionActiveByDefault() {
+  void testProcessDefinitionActiveByDefault() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -89,9 +89,9 @@ public class ProcessDefinitionSuspensionTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testSuspendActivateProcessDefinitionById() {
+  void testSuspendActivateProcessDefinitionById() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition.isSuspended()).isFalse();
@@ -107,9 +107,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(processDefinition.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testSuspendActivateProcessDefinitionByKey() {
+  void testSuspendActivateProcessDefinitionByKey() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition.isSuspended()).isFalse();
@@ -125,9 +125,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(processDefinition.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testActivateAlreadyActiveProcessDefinition() {
+  void testActivateAlreadyActiveProcessDefinition() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition.isSuspended()).isFalse();
@@ -142,9 +142,9 @@ public class ProcessDefinitionSuspensionTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testSuspendAlreadySuspendedProcessDefinition() {
+  void testSuspendAlreadySuspendedProcessDefinition() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition.isSuspended()).isFalse();
@@ -161,12 +161,12 @@ public class ProcessDefinitionSuspensionTest {
 
   }
 
-  @Deployment(resources={
-          "org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml",
-          "org/operaton/bpm/engine/test/api/repository/processTwo.bpmn20.xml"
-          })
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/repository/processTwo.bpmn20.xml"
+  })
   @Test
-  public void testQueryForActiveDefinitions() {
+  void testQueryForActiveDefinitions() {
 
     // default = all definitions
     List<ProcessDefinition> processDefinitionList = repositoryService.createProcessDefinitionQuery()
@@ -182,12 +182,12 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
   }
 
-  @Deployment(resources={
-          "org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml",
-          "org/operaton/bpm/engine/test/api/repository/processTwo.bpmn20.xml"
-          })
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/repository/processTwo.bpmn20.xml"
+  })
   @Test
-  public void testQueryForSuspendedDefinitions() {
+  void testQueryForSuspendedDefinitions() {
 
     // default = all definitions
     List<ProcessDefinition> processDefinitionList = repositoryService.createProcessDefinitionQuery()
@@ -203,9 +203,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testStartProcessInstanceForSuspendedProcessDefinition() {
+  void testStartProcessInstanceForSuspendedProcessDefinition() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     var processDefinitionId = processDefinition.getId();
     var processDefinitionKey = processDefinition.getKey();
@@ -228,9 +228,9 @@ public class ProcessDefinitionSuspensionTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testContinueProcessAfterProcessDefinitionSuspend() {
+  void testContinueProcessAfterProcessDefinitionSuspend() {
 
     // Start Process Instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -249,9 +249,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendProcessInstancesDuringProcessDefinitionSuspend() {
+  void testSuspendProcessInstancesDuringProcessDefinitionSuspend() {
 
     int nrOfProcessInstances = 9;
 
@@ -299,9 +299,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSubmitStartFormAfterProcessDefinitionSuspend() {
+  void testSubmitStartFormAfterProcessDefinitionSuspend() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     var processDefinitionId = processDefinition.getId();
     repositoryService.suspendProcessDefinitionById(processDefinitionId);
@@ -325,7 +325,7 @@ public class ProcessDefinitionSuspensionTest {
 
   @Deployment
   @Test
-  public void testJobIsExecutedOnProcessDefinitionSuspend() {
+  void testJobIsExecutedOnProcessDefinitionSuspend() {
 
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
@@ -343,9 +343,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(managementService.createJobQuery().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDelayedSuspendProcessDefinition() {
+  void testDelayedSuspendProcessDefinition() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     var processDefinitionId = processDefinition.getId();
@@ -387,9 +387,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDelayedSuspendProcessDefinitionIncludingProcessInstances() {
+  void testDelayedSuspendProcessDefinitionIncludingProcessInstances() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     var processDefinitionId = processDefinition.getId();
@@ -451,9 +451,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDelayedActivateProcessDefinition() {
+  void testDelayedActivateProcessDefinition() {
 
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
@@ -491,7 +491,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testSuspendMultipleProcessDefinitionsByKey () {
+  void testSuspendMultipleProcessDefinitionsByKey() {
 
     // Deploy three processes
     int nrOfProcessDefinitions = 3;
@@ -534,7 +534,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testDelayedSuspendMultipleProcessDefinitionsByKey () {
+  void testDelayedSuspendMultipleProcessDefinitionsByKey() {
 
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
@@ -601,9 +601,9 @@ public class ProcessDefinitionSuspensionTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testSuspendById_shouldSuspendJobDefinitionAndRetainJob() {
+  void testSuspendById_shouldSuspendJobDefinitionAndRetainJob() {
     // given
 
     // a process definition with an asynchronous continuation, so that there
@@ -644,9 +644,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testSuspendByKey_shouldSuspendJobDefinitionAndRetainJob() {
+  void testSuspendByKey_shouldSuspendJobDefinitionAndRetainJob() {
     // given
 
     // a process definition with an asynchronous continuation, so that there
@@ -687,9 +687,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testSuspendByIdAndIncludeInstancesFlag_shouldSuspendAlsoJobDefinitionAndRetainJob() {
+  void testSuspendByIdAndIncludeInstancesFlag_shouldSuspendAlsoJobDefinitionAndRetainJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -728,9 +728,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testSuspendByKeyAndIncludeInstancesFlag_shouldSuspendAlsoJobDefinitionAndRetainJob() {
+  void testSuspendByKeyAndIncludeInstancesFlag_shouldSuspendAlsoJobDefinitionAndRetainJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -769,9 +769,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testSuspendByIdAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
+  void testSuspendByIdAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -810,9 +810,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testSuspendByKeyAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
+  void testSuspendByKeyAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -851,9 +851,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testDelayedSuspendByIdAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndRetainJob() {
+  void testDelayedSuspendByIdAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndRetainJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -918,9 +918,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testDelayedSuspendByKeyAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndRetainJob() {
+  void testDelayedSuspendByKeyAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndRetainJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -986,9 +986,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testDelayedSuspendByIdAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
+  void testDelayedSuspendByIdAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -1054,9 +1054,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testDelayedSuspendByKeyAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
+  void testDelayedSuspendByKeyAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -1123,7 +1123,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testMultipleSuspendByKey_shouldSuspendJobDefinitionAndRetainJob() {
+  void testMultipleSuspendByKey_shouldSuspendJobDefinitionAndRetainJob() {
     String key = "oneFailingServiceTaskProcess";
 
     // Deploy five versions of the same process, so that there exists
@@ -1163,7 +1163,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testMultipleSuspendByKeyAndIncludeInstances_shouldSuspendJobDefinitionAndRetainJob() {
+  void testMultipleSuspendByKeyAndIncludeInstances_shouldSuspendJobDefinitionAndRetainJob() {
     String key = "oneFailingServiceTaskProcess";
 
     // Deploy five versions of the same process, so that there exists
@@ -1203,7 +1203,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testMultipleSuspendByKeyAndIncludeInstances_shouldSuspendJobDefinitionAndJob() {
+  void testMultipleSuspendByKeyAndIncludeInstances_shouldSuspendJobDefinitionAndJob() {
     String key = "oneFailingServiceTaskProcess";
 
     // Deploy five versions of the same process, so that there exists
@@ -1243,7 +1243,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testDelayedMultipleSuspendByKeyAndIncludeInstances_shouldSuspendJobDefinitionAndRetainJob() {
+  void testDelayedMultipleSuspendByKeyAndIncludeInstances_shouldSuspendJobDefinitionAndRetainJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -1304,7 +1304,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testDelayedMultipleSuspendByKeyAndIncludeInstances_shouldSuspendJobDefinitionAndJob() {
+  void testDelayedMultipleSuspendByKeyAndIncludeInstances_shouldSuspendJobDefinitionAndJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -1364,9 +1364,9 @@ public class ProcessDefinitionSuspensionTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testActivationById_shouldActivateJobDefinitionAndRetainJob() {
+  void testActivationById_shouldActivateJobDefinitionAndRetainJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1414,9 +1414,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testActivationByKey_shouldActivateJobDefinitionAndRetainJob() {
+  void testActivationByKey_shouldActivateJobDefinitionAndRetainJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1464,9 +1464,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testActivationByIdAndIncludeInstancesFlag_shouldActivateAlsoJobDefinitionAndRetainJob() {
+  void testActivationByIdAndIncludeInstancesFlag_shouldActivateAlsoJobDefinitionAndRetainJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1514,9 +1514,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testActivationByKeyAndIncludeInstancesFlag_shouldActivateAlsoJobDefinitionAndRetainJob() {
+  void testActivationByKeyAndIncludeInstancesFlag_shouldActivateAlsoJobDefinitionAndRetainJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1564,9 +1564,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testActivationByIdAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
+  void testActivationByIdAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1614,9 +1614,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testActivationByKeyAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
+  void testActivationByKeyAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
     // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1664,9 +1664,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testDelayedActivationByIdAndIncludeInstancesFlag_shouldActivateJobDefinitionAndRetainJob() {
+  void testDelayedActivationByIdAndIncludeInstancesFlag_shouldActivateJobDefinitionAndRetainJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -1740,9 +1740,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testDelayedActivationByKeyAndIncludeInstancesFlag_shouldActivateJobDefinitionAndRetainJob() {
+  void testDelayedActivationByKeyAndIncludeInstancesFlag_shouldActivateJobDefinitionAndRetainJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -1817,9 +1817,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testDelayedActivationByIdAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
+  void testDelayedActivationByIdAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -1894,9 +1894,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(job.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
-  public void testDelayedActivationByKeyAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
+  void testDelayedActivationByKeyAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -1972,7 +1972,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testMultipleActivationByKey_shouldActivateJobDefinitionAndRetainJob() {
+  void testMultipleActivationByKey_shouldActivateJobDefinitionAndRetainJob() {
     String key = "oneFailingServiceTaskProcess";
 
     // Deploy five versions of the same process, so that there exists
@@ -2021,7 +2021,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testMultipleActivationByKeyAndIncludeInstances_shouldActivateJobDefinitionAndRetainJob() {
+  void testMultipleActivationByKeyAndIncludeInstances_shouldActivateJobDefinitionAndRetainJob() {
     String key = "oneFailingServiceTaskProcess";
 
     // Deploy five versions of the same process, so that there exists
@@ -2070,7 +2070,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testMultipleActivationByKeyAndIncludeInstances_shouldActivateJobDefinitionAndJob() {
+  void testMultipleActivationByKeyAndIncludeInstances_shouldActivateJobDefinitionAndJob() {
 
     String key = "oneFailingServiceTaskProcess";
 
@@ -2120,7 +2120,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testDelayedMultipleActivationByKeyAndIncludeInstances_shouldActivateJobDefinitionAndRetainJob() {
+  void testDelayedMultipleActivationByKeyAndIncludeInstances_shouldActivateJobDefinitionAndRetainJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -2190,7 +2190,7 @@ public class ProcessDefinitionSuspensionTest {
   }
 
   @Test
-  public void testDelayedMultipleActivationByKeyAndIncludeInstances_shouldActivateJobDefinitionAndJob() {
+  void testDelayedMultipleActivationByKeyAndIncludeInstances_shouldActivateJobDefinitionAndJob() {
     Date startTime = new Date();
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
@@ -2262,7 +2262,7 @@ public class ProcessDefinitionSuspensionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testSuspendStartTimerOnProcessDefinitionSuspension.bpmn20.xml"})
   @Test
-  public void testSuspendStartTimerOnProcessDefinitionSuspensionByKey() {
+  void testSuspendStartTimerOnProcessDefinitionSuspensionByKey() {
     Job startTimer = managementService.createJobQuery().timers().singleResult();
 
     assertThat(startTimer.isSuspended()).isFalse();
@@ -2279,7 +2279,7 @@ public class ProcessDefinitionSuspensionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testSuspendStartTimerOnProcessDefinitionSuspension.bpmn20.xml"})
   @Test
-  public void testSuspendStartTimerOnProcessDefinitionSuspensionById() {
+  void testSuspendStartTimerOnProcessDefinitionSuspensionById() {
     ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().singleResult();
 
     Job startTimer = managementService.createJobQuery().timers().singleResult();
@@ -2298,7 +2298,7 @@ public class ProcessDefinitionSuspensionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testSuspendStartTimerOnProcessDefinitionSuspension.bpmn20.xml"})
   @Test
-  public void testActivateStartTimerOnProcessDefinitionSuspensionByKey() {
+  void testActivateStartTimerOnProcessDefinitionSuspensionByKey() {
     repositoryService.suspendProcessDefinitionByKey("process");
 
     Job startTimer = managementService.createJobQuery().timers().singleResult();
@@ -2315,7 +2315,7 @@ public class ProcessDefinitionSuspensionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testSuspendStartTimerOnProcessDefinitionSuspension.bpmn20.xml"})
   @Test
-  public void testActivateStartTimerOnProcessDefinitionSuspensionById() {
+  void testActivateStartTimerOnProcessDefinitionSuspensionById() {
     ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().singleResult();
     repositoryService.suspendProcessDefinitionById(pd.getId());
 
@@ -2333,9 +2333,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(startTimer.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testStartBeforeActivityForSuspendProcessDefinition() {
+  void testStartBeforeActivityForSuspendProcessDefinition() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     //start process instance
@@ -2355,9 +2355,9 @@ public class ProcessDefinitionSuspensionTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testStartAfterActivityForSuspendProcessDefinition() {
+  void testStartAfterActivityForSuspendProcessDefinition() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     //start process instance
@@ -2377,9 +2377,9 @@ public class ProcessDefinitionSuspensionTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testSuspendAndActivateProcessDefinitionByIdUsingBuilder() {
+  void testSuspendAndActivateProcessDefinitionByIdUsingBuilder() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition.isSuspended()).isFalse();
@@ -2403,9 +2403,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(processDefinition.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testSuspendAndActivateProcessDefinitionByKeyUsingBuilder() {
+  void testSuspendAndActivateProcessDefinitionByKeyUsingBuilder() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition.isSuspended()).isFalse();
@@ -2429,9 +2429,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(processDefinition.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testDelayedSuspendAndActivateProcessDefinitionByKeyUsingBuilder() {
+  void testDelayedSuspendAndActivateProcessDefinitionByKeyUsingBuilder() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition.isSuspended()).isFalse();
@@ -2472,9 +2472,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(processDefinition.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDelayedSuspendProcessDefinitionUsingBuilder() {
+  void testDelayedSuspendProcessDefinitionUsingBuilder() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -2500,9 +2500,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(processDefinition.isSuspended()).isTrue();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDelayedActivateProcessDefinitionUsingBuilder() {
+  void testDelayedActivateProcessDefinitionUsingBuilder() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -2534,9 +2534,9 @@ public class ProcessDefinitionSuspensionTest {
     assertThat(processDefinition.isSuspended()).isFalse();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSuspendAndActivateProcessDefinitionIncludeInstancesUsingBuilder() {
+  void testSuspendAndActivateProcessDefinitionIncludeInstancesUsingBuilder() {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());

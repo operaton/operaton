@@ -71,7 +71,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   AuthorizationService authorizationService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
@@ -80,7 +80,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -94,7 +94,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   }
 
   @BeforeEach
-  public void enableDmnFeelLegacyBehavior() {
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -105,7 +105,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   }
 
   @AfterEach
-  public void disableDmnFeelLegacyBehavior() {
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -118,7 +118,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void getCompletedHistoricDecisionInstances() {
+  void getCompletedHistoricDecisionInstances() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -135,7 +135,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void decisionInputInstanceProperties() {
+  void decisionInputInstanceProperties() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -161,7 +161,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void decisionOutputInstanceProperties() {
+  void decisionOutputInstanceProperties() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -192,7 +192,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void fishedAfterParameterWorks() {
+  void fishedAfterParameterWorks() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -216,7 +216,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void fishedAtParameterWorks() {
+  void fishedAtParameterWorks() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -240,7 +240,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void fishedAfterAndFinishedAtParameterWorks() {
+  void fishedAfterAndFinishedAtParameterWorks() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -265,7 +265,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -283,7 +283,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void resultIsSortedByEvaluationTime() {
+  void resultIsSortedByEvaluationTime() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);

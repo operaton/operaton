@@ -16,13 +16,29 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
-import org.operaton.bpm.engine.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -34,49 +50,37 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
-import org.operaton.bpm.engine.test.util.BatchRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.batch.BatchExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.*;
-
-public class SetVariablesBatchTest {
+class SetVariablesBatchTest {
 
   protected static final String PROCESS_KEY = "process";
   protected static final Date TEST_DATE = new Date(1457326800000L);
 
   protected static final VariableMap SINGLE_VARIABLE = Variables.putValue("foo", "bar");
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
-  protected BatchRule batchRule = new BatchRule(engineRule, engineTestRule);
-  protected BatchHelper helper = new BatchHelper(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  static BatchExtension batchRule = new BatchExtension(engineRule, engineTestRule);
+  BatchHelper helper = new BatchHelper(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule).around(batchRule);
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  ManagementService managementService;
 
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-
-  @Before
-  public void assignServices() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-  }
-
-  @Before
-  public void deployProcess() {
+  @BeforeEach
+  void deployProcess() {
     BpmnModelInstance process = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
           .userTask()
@@ -85,15 +89,15 @@ public class SetVariablesBatchTest {
     engineTestRule.deploy(process);
   }
 
-  @After
-  public void clearAuthentication() {
+  @AfterEach
+  void clearAuthentication() {
     ClockUtil.reset();
     engineRule.getIdentityService()
         .setAuthenticatedUserId(null);
   }
 
   @Test
-  public void shouldSetByIds() {
+  void shouldSetByIds() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -122,7 +126,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldSetByIds_TypedValue() {
+  void shouldSetByIds_TypedValue() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -153,7 +157,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldSetByIds_MixedTypedAndUntypedValues() {
+  void shouldSetByIds_MixedTypedAndUntypedValues() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -192,7 +196,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldSetByIds_ObjectValue() {
+  void shouldSetByIds_ObjectValue() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -223,7 +227,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldSetByIds_MultipleVariables() {
+  void shouldSetByIds_MultipleVariables() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -265,7 +269,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldSetByIds_VariablesAsMap() {
+  void shouldSetByIds_VariablesAsMap() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -304,7 +308,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldSetByRuntimeQuery() {
+  void shouldSetByRuntimeQuery() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -333,7 +337,7 @@ public class SetVariablesBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void shouldSetByIdsAndQueries() {
+  void shouldSetByIdsAndQueries() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -374,7 +378,7 @@ public class SetVariablesBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void shouldSetByHistoryQuery() {
+  void shouldSetByHistoryQuery() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -403,7 +407,7 @@ public class SetVariablesBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void shouldSetByHistoryQuery_WithFinishedInstances() {
+  void shouldSetByHistoryQuery_WithFinishedInstances() {
     // given
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -432,7 +436,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldThrowException_TransientVariable() {
+  void shouldThrowException_TransientVariable() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     List<String> processInstanceIds = Collections.singletonList(processInstanceId);
@@ -446,7 +450,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldThrowException_JavaSerializationForbidden() {
+  void shouldThrowException_JavaSerializationForbidden() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     ProcessInstanceQuery runtimeQuery = runtimeService.createProcessInstanceQuery();
@@ -463,7 +467,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldThrowException_NoProcessInstancesFound() {
+  void shouldThrowException_NoProcessInstancesFound() {
     // given
     ProcessInstanceQuery runtimeQuery = runtimeService.createProcessInstanceQuery();
 
@@ -474,7 +478,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldThrowException_QueriesAndIdsNull() {
+  void shouldThrowException_QueriesAndIdsNull() {
     // when/then
     assertThatThrownBy(() -> runtimeService.setVariablesAsync(null,
         null,
@@ -486,7 +490,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldThrowException_VariablesNull() {
+  void shouldThrowException_VariablesNull() {
     // given
     ProcessInstanceQuery runtimeQuery = runtimeService.createProcessInstanceQuery();
 
@@ -498,7 +502,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldThrowException_VariablesEmpty() {
+  void shouldThrowException_VariablesEmpty() {
     // given
     ProcessInstanceQuery runtimeQuery = runtimeService.createProcessInstanceQuery();
     Map<String, Object> variables = Collections.emptyMap();
@@ -510,7 +514,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldCreateDeploymentAwareBatchJobs_ByIds() {
+  void shouldCreateDeploymentAwareBatchJobs_ByIds() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(2);
@@ -541,7 +545,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldCreateDeploymentAwareBatchJobs_ByRuntimeQuery() {
+  void shouldCreateDeploymentAwareBatchJobs_ByRuntimeQuery() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(2);
@@ -573,7 +577,7 @@ public class SetVariablesBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void shouldCreateDeploymentAwareBatchJobs_ByHistoryQuery() {
+  void shouldCreateDeploymentAwareBatchJobs_ByHistoryQuery() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(2);
@@ -605,7 +609,7 @@ public class SetVariablesBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldLogOperation() {
+  void shouldLogOperation() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
 
@@ -636,7 +640,7 @@ public class SetVariablesBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldNotLogInstanceOperation() {
+  void shouldNotLogInstanceOperation() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
 
@@ -659,7 +663,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldCreateProcessInstanceRelatedBatchJobsForSingleInvocations() {
+  void shouldCreateProcessInstanceRelatedBatchJobsForSingleInvocations() {
     // given
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(1);
 
@@ -684,7 +688,7 @@ public class SetVariablesBatchTest {
   }
 
   @Test
-  public void shouldNotCreateProcessInstanceRelatedBatchJobsForMultipleInvocations() {
+  void shouldNotCreateProcessInstanceRelatedBatchJobsForMultipleInvocations() {
     // given
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
 
@@ -710,7 +714,7 @@ public class SetVariablesBatchTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldSetExecutionStartTimeInBatchAndHistory() {
+  void shouldSetExecutionStartTimeInBatchAndHistory() {
     // given
     ClockUtil.setCurrentTime(TEST_DATE);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -732,8 +736,8 @@ public class SetVariablesBatchTest {
     managementService.deleteBatch(batch.getId(), true);
   }
 
-    @Test
-    public void setVariablesAsyncOnCompletedProcessInstance() {
+  @Test
+  void setVariablesAsyncOnCompletedProcessInstance() {
         // given set variables on completed process instance
         engineTestRule.deploy(USER_TASK_PROCESS);
         String id = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -745,8 +749,8 @@ public class SetVariablesBatchTest {
         assertThatCode(() -> batchRule.syncExec(batch)).doesNotThrowAnyException();
     }
 
-    @Test
-    public void setVariablesAsyncOnCompletedProcessInstanceWithQuery() {
+  @Test
+  void setVariablesAsyncOnCompletedProcessInstanceWithQuery() {
         // given set variables on completed process instance
         engineTestRule.deploy(USER_TASK_PROCESS);
         String id = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -758,8 +762,8 @@ public class SetVariablesBatchTest {
         assertThatCode(() -> batchRule.syncExec(batch)).doesNotThrowAnyException();
     }
 
-    @Test
-    public void setVariablesAsyncOnCompletedProcessInstanceWithHistoricQuery() {
+  @Test
+  void setVariablesAsyncOnCompletedProcessInstanceWithHistoricQuery() {
         // given set variables on completed process instance
         engineTestRule.deploy(USER_TASK_PROCESS);
         String id = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -771,8 +775,8 @@ public class SetVariablesBatchTest {
         assertThatCode(() -> batchRule.syncExec(batch)).doesNotThrowAnyException();
     }
 
-    @Test
-    public void setVariablesSyncOnCompletedProcessInstance() {
+  @Test
+  void setVariablesSyncOnCompletedProcessInstance() {
         // given completed process
         engineTestRule.deploy(USER_TASK_PROCESS);
         String id = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
@@ -785,8 +789,8 @@ public class SetVariablesBatchTest {
     }
 
 
-    @Test
-    public void setVariablesAsyncOnBatchWithOneCompletedInstance() {
+  @Test
+  void setVariablesAsyncOnBatchWithOneCompletedInstance() {
         // given set variables batch with one completed process instance
         engineTestRule.deploy(USER_TASK_PROCESS);
         String id1 = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();

@@ -20,7 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricDetail;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -31,24 +36,28 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ProcessInstantiationAtActivitiesHistoryTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
   protected static final String EXCLUSIVE_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGateway.bpmn20.xml";
   protected static final String SUBPROCESS_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocess.bpmn20.xml";
   protected static final String ASYNC_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGatewayAsyncTask.bpmn20.xml";
 
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testHistoricProcessInstanceForSingleActivityInstantiation() {
+  void testHistoricProcessInstanceForSingleActivityInstantiation() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -76,7 +85,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
   @Deployment(resources = SUBPROCESS_PROCESS)
   @Test
-  public void testHistoricActivityInstancesForSubprocess() {
+  void testHistoricActivityInstancesForSubprocess() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("subprocess")
@@ -132,7 +141,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
   @Deployment(resources = ASYNC_PROCESS)
   @Test
-  public void testHistoricProcessInstanceAsyncStartEvent() {
+  void testHistoricProcessInstanceAsyncStartEvent() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -179,7 +188,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testHistoricVariableInstanceForSingleActivityInstantiation() {
+  void testHistoricVariableInstanceForSingleActivityInstantiation() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -213,7 +222,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testHistoricVariableInstanceSetOnProcessInstance() {
+  void testHistoricVariableInstanceSetOnProcessInstance() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -248,7 +257,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testHistoricProcessInstanceForSynchronousCompletion() {
+  void testHistoricProcessInstanceForSynchronousCompletion() {
     // when the process instance ends immediately
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -267,7 +276,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testSkipCustomListenerEnsureHistoryWritten() {
+  void testSkipCustomListenerEnsureHistoryWritten() {
     // when creating the task skipping custom listeners
     runtimeService.createProcessInstanceByKey("exclusiveGateway")
       .startBeforeActivity("task2")

@@ -22,6 +22,9 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ManagementService;
@@ -35,19 +38,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 public class CreateAndResolveIncidentTest {
 
@@ -77,33 +72,25 @@ public class CreateAndResolveIncidentTest {
     HANDLERS.add(EXTERNAL_TASK_HANDLER);
   }
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule processEngineBootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setCustomIncidentHandlers(HANDLERS));
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(processEngineBootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .cacheForConfigurationResource(false)
+      .configurator(configuration -> configuration.setCustomIncidentHandlers(HANDLERS))
+      .build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  ExternalTaskService externalTaskService;
 
-  private RuntimeService runtimeService;
-  private ManagementService managementService;
-  private ExternalTaskService externalTaskService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    externalTaskService = engineRule.getExternalTaskService();
-    managementService = engineRule.getManagementService();
-  }
-
-  @After
-  public void resetHandlers() {
+  @AfterEach
+  void resetHandlers() {
     HANDLERS.forEach(h -> ((CustomIncidentHandler) h).reset());
   }
 
   @Test
-  public void createIncident() {
+  void createIncident() {
     // given
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -121,7 +108,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void createIncidentWithNullExecution() {
+  void createIncidentWithNullExecution() {
 
     try {
       runtimeService.createIncident("foo", null, "userTask1", "bar");
@@ -132,7 +119,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void createIncidentWithNullIncidentType() {
+  void createIncidentWithNullIncidentType() {
     try {
       runtimeService.createIncident(null, "processInstanceId", "foo", "bar");
       fail("Exception expected");
@@ -142,7 +129,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void createIncidentWithNonExistingExecution() {
+  void createIncidentWithNonExistingExecution() {
 
     try {
       runtimeService.createIncident("foo", "aaa", "bbb", "bar");
@@ -153,7 +140,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void resolveIncident() {
+  void resolveIncident() {
     // given
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -168,7 +155,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void resolveUnexistingIncident() {
+  void resolveUnexistingIncident() {
     try {
       runtimeService.resolveIncident("foo");
       fail("Exception expected");
@@ -178,7 +165,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void resolveNullIncident() {
+  void resolveNullIncident() {
     try {
       runtimeService.resolveIncident(null);
       fail("Exception expected");
@@ -188,7 +175,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void resolveIncidentOfTypeFailedJob() {
+  void resolveIncidentOfTypeFailedJob() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
@@ -215,7 +202,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void createIncidentWithIncidentHandler() {
+  void createIncidentWithIncidentHandler() {
     // given
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -239,7 +226,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void resolveIncidentWithIncidentHandler() {
+  void resolveIncidentWithIncidentHandler() {
     // given
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -259,7 +246,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void shouldCallDeleteForCustomHandlerOnProcessInstanceCancellation() {
+  void shouldCallDeleteForCustomHandlerOnProcessInstanceCancellation() {
     // given
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -283,7 +270,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void shouldCallDeleteForJobHandlerOnProcessInstanceCancellation() {
+  void shouldCallDeleteForJobHandlerOnProcessInstanceCancellation() {
 
     // given
     testRule.deploy(ASYNC_TASK_PROCESS);
@@ -309,7 +296,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void shouldCallDeleteForExternalTasksHandlerOnProcessInstanceCancellation() {
+  void shouldCallDeleteForExternalTasksHandlerOnProcessInstanceCancellation() {
 
     // given
     testRule.deploy(EXTERNAL_TASK_PROCESS);
@@ -337,7 +324,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void shouldCallResolveForJobHandler() {
+  void shouldCallResolveForJobHandler() {
     // given
     testRule.deploy(ASYNC_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey("process");
@@ -362,7 +349,7 @@ public class CreateAndResolveIncidentTest {
   }
 
   @Test
-  public void shouldCallResolveForExternalTaskHandler() {
+  void shouldCallResolveForExternalTaskHandler() {
     // given
     testRule.deploy(EXTERNAL_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey("process");

@@ -18,43 +18,52 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertNotSame;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertNotSame;
 
 import java.util.Collections;
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.standalone.deploy.SingleVariableListener;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ProcessInstanceModificationTest extends PluggableProcessEngineTest {
+public class ProcessInstanceModificationTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
   protected static final String EXCLUSIVE_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGateway.bpmn20.xml";
@@ -79,9 +88,20 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
       .endEvent()
       .done();
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+  HistoryService historyService;
+
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testCancellation() {
+  void testCancellation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -106,7 +126,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testCancellationThatEndsProcessInstance() {
+  void testCancellationThatEndsProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -121,7 +141,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testCancellationWithWrongProcessInstanceId() {
+  void testCancellationWithWrongProcessInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -141,7 +161,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartBefore() {
+  void testStartBefore() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -167,7 +187,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartBeforeWithAncestorInstanceId() {
+  void testStartBeforeWithAncestorInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -195,7 +215,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
-  public void testStartBeforeWithAncestorInstanceIdTwoScopesUp() {
+  void testStartBeforeWithAncestorInstanceIdTwoScopesUp() {
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
@@ -247,7 +267,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
-  public void testStartBeforeWithInvalidAncestorInstanceId() {
+  void testStartBeforeWithInvalidAncestorInstanceId() {
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
@@ -288,7 +308,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartBeforeNonExistingActivity() {
+  void testStartBeforeNonExistingActivity() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).startBeforeActivity("someNonExistingActivity");
@@ -308,7 +328,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
    */
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testEndProcessInstanceIntermediately() {
+  void testEndProcessInstanceIntermediately() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -334,7 +354,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartTransition() {
+  void testStartTransition() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -360,7 +380,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartTransitionWithAncestorInstanceId() {
+  void testStartTransitionWithAncestorInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -388,7 +408,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
-  public void testStartTransitionWithAncestorInstanceIdTwoScopesUp() {
+  void testStartTransitionWithAncestorInstanceIdTwoScopesUp() {
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
@@ -440,7 +460,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
-  public void testStartTransitionWithInvalidAncestorInstanceId() {
+  void testStartTransitionWithInvalidAncestorInstanceId() {
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
@@ -482,7 +502,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartTransitionCase2() {
+  void testStartTransitionCase2() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -508,7 +528,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartTransitionInvalidTransitionId() {
+  void testStartTransitionInvalidTransitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstanceId).startTransition("invalidFlowId");
@@ -527,7 +547,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfter() {
+  void testStartAfter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -553,7 +573,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfterWithAncestorInstanceId() {
+  void testStartAfterWithAncestorInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -581,7 +601,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
-  public void testStartAfterWithAncestorInstanceIdTwoScopesUp() {
+  void testStartAfterWithAncestorInstanceIdTwoScopesUp() {
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
@@ -633,7 +653,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
-  public void testStartAfterWithInvalidAncestorInstanceId() {
+  void testStartAfterWithInvalidAncestorInstanceId() {
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
@@ -677,7 +697,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfterActivityAmbiguousTransitions() {
+  void testStartAfterActivityAmbiguousTransitions() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstanceId).startAfterActivity("fork");
@@ -695,7 +715,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfterActivityNoOutgoingTransitions() {
+  void testStartAfterActivityNoOutgoingTransitions() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstanceId).startAfterActivity("theEnd");
@@ -713,7 +733,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfterNonExistingActivity() {
+  void testStartAfterNonExistingActivity() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).startAfterActivity("someNonExistingActivity");
@@ -731,7 +751,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testScopeTaskStartBefore() {
+  void testScopeTaskStartBefore() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -755,7 +775,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testScopeTaskStartAfter() {
+  void testScopeTaskStartAfter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -793,7 +813,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = SUBPROCESS_BOUNDARY_EVENTS_PROCESS)
   @Test
-  public void testStartBeforeEventSubscription() {
+  void testStartBeforeEventSubscription() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess");
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("innerTask").execute();
@@ -822,7 +842,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = SUBPROCESS_LISTENER_PROCESS)
   @Test
-  public void testActivityExecutionListenerInvocation() {
+  void testActivityExecutionListenerInvocation() {
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess",
@@ -869,7 +889,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = SUBPROCESS_LISTENER_PROCESS)
   @Test
-  public void testSkipListenerInvocation() {
+  void testSkipListenerInvocation() {
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess",
@@ -904,7 +924,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  public void shouldSkipCustomListenersOnProcessInstanceModification() {
+  void shouldSkipCustomListenersOnProcessInstanceModification() {
     //given
     testRule.deploy(SIMPLE_TASK_PROCESS_WITH_DELETE_LISTENER);
 
@@ -927,7 +947,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  public void shouldNotSkipCustomListenersOnProcessInstanceModification() {
+  void shouldNotSkipCustomListenersOnProcessInstanceModification() {
     //given
     testRule.deploy(SIMPLE_TASK_PROCESS_WITH_DELETE_LISTENER);
 
@@ -950,7 +970,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  public void shouldNotSkipCustomListenersWithoutFlagPassedOnProcessInstanceModification() {
+  void shouldNotSkipCustomListenersWithoutFlagPassedOnProcessInstanceModification() {
     //given
     testRule.deploy(SIMPLE_TASK_PROCESS_WITH_DELETE_LISTENER);
 
@@ -973,7 +993,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TASK_LISTENER_PROCESS)
   @Test
-  public void testSkipTaskListenerInvocation() {
+  void testSkipTaskListenerInvocation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess",
         Collections.singletonMap("listener", new RecorderTaskListener()));
 
@@ -999,7 +1019,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = IO_MAPPING_PROCESS)
   @Test
-  public void testSkipIoMappings() {
+  void testSkipIoMappings() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("ioMappingProcess");
 
     // when I start task2
@@ -1020,7 +1040,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = IO_MAPPING_ON_SUB_PROCESS)
   @Test
-  public void testSkipIoMappingsOnSubProcess() {
+  void testSkipIoMappingsOnSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("boundaryEvent").execute(false, true);
@@ -1036,7 +1056,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
    */
   @Deployment(resources = IO_MAPPING_ON_SUB_PROCESS_AND_NESTED_SUB_PROCESS)
   @Test
-  public void testSkipIoMappingsOnSubProcessNested() {
+  void testSkipIoMappingsOnSubProcessNested() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("boundaryEvent").execute(false, true);
@@ -1047,7 +1067,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = LISTENERS_ON_SUB_PROCESS_AND_NESTED_SUB_PROCESS)
   @Test
-  public void testSkipListenersOnSubProcessNested() {
+  void testSkipListenersOnSubProcessNested() {
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process",
@@ -1063,7 +1083,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSITION_LISTENER_PROCESS)
   @Test
-  public void testStartTransitionListenerInvocation() {
+  void testStartTransitionListenerInvocation() {
     RecorderExecutionListener.clear();
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("transitionListenerProcess",
@@ -1097,7 +1117,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSITION_LISTENER_PROCESS)
   @Test
-  public void testStartAfterActivityListenerInvocation() {
+  void testStartAfterActivityListenerInvocation() {
     RecorderExecutionListener.clear();
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("transitionListenerProcess",
@@ -1131,7 +1151,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartBeforeWithVariables() {
+  void testStartBeforeWithVariables() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("task2").setVariable("procInstVar", "procInstValue")
@@ -1159,7 +1179,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testCancellationAndStartBefore() {
+  void testCancellationAndStartBefore() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -1184,7 +1204,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment
   @Test
-  public void testCompensationRemovalOnCancellation() {
+  void testCompensationRemovalOnCancellation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensationProcess");
 
     Execution taskExecution = runtimeService.createExecutionQuery().activityId("innerTask").singleResult();
@@ -1205,7 +1225,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment
   @Test
-  public void testCompensationCreation() {
+  void testCompensationCreation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensationProcess");
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("innerTask").execute();
@@ -1236,7 +1256,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment
   @Test
-  public void testNoCompensationCreatedOnCancellation() {
+  void testNoCompensationCreatedOnCancellation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensationProcess");
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
@@ -1261,7 +1281,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartActivityInTransactionWithCompensation() {
+  void testStartActivityInTransactionWithCompensation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     completeTasksInOrder("userTask");
@@ -1294,7 +1314,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartActivityWithAncestorInTransactionWithCompensation() {
+  void testStartActivityWithAncestorInTransactionWithCompensation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     completeTasksInOrder("userTask");
@@ -1320,7 +1340,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartAfterActivityDuringCompensation() {
+  void testStartAfterActivityDuringCompensation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     completeTasksInOrder("userTask");
@@ -1339,7 +1359,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testCancelCompensatingTask() {
+  void testCancelCompensatingTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1352,7 +1372,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testCancelCompensatingTaskAndStartActivity() {
+  void testCancelCompensatingTaskAndStartActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1371,7 +1391,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testCancelCompensatingTaskAndStartActivityWithAncestor() {
+  void testCancelCompensatingTaskAndStartActivityWithAncestor() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1390,7 +1410,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartActivityAndCancelCompensatingTask() {
+  void testStartActivityAndCancelCompensatingTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1409,7 +1429,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartCompensatingTask() {
+  void testStartCompensatingTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("undoTask").execute();
@@ -1426,7 +1446,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartAdditionalCompensatingTaskAndCompleteOldCompensationTask() {
+  void testStartAdditionalCompensatingTaskAndCompleteOldCompensationTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1450,7 +1470,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartAdditionalCompensatingTaskAndCompleteNewCompensatingTask() {
+  void testStartAdditionalCompensatingTaskAndCompleteNewCompensatingTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1480,7 +1500,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartCompensationBoundary() {
+  void testStartCompensationBoundary() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     String processInstanceId = processInstance.getId();
 
@@ -1507,7 +1527,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartCancelEndEvent() {
+  void testStartCancelEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1523,7 +1543,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartCancelBoundaryEvent() {
+  void testStartCancelBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1539,7 +1559,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
-  public void testStartTaskAfterCancelBoundaryEvent() {
+  void testStartTaskAfterCancelBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     completeTasksInOrder("userTask");
 
@@ -1556,7 +1576,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testCancelNonExistingActivityInstance() {
+  void testCancelNonExistingActivityInstance() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).cancelActivityInstance("nonExistingActivityInstance");
@@ -1574,7 +1594,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testCancelNonExistingTransitionInstance() {
+  void testCancelNonExistingTransitionInstance() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).cancelTransitionInstance("nonExistingActivityInstance");
@@ -1607,7 +1627,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
   }
 
   @Test
-  public void testModifyNullProcessInstance() {
+  void testModifyNullProcessInstance() {
     try {
       runtimeService.createProcessInstanceModification(null);
       fail("should not succeed");
@@ -1618,7 +1638,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/concurrentExecutionVariable.bpmn20.xml")
-  public void shouldNotDeleteVariablesWhenConcurrentExecution() {
+  void shouldNotDeleteVariablesWhenConcurrentExecution() {
     // given process with user task
     String processInstanceId = runtimeService.createProcessInstanceByKey("process")
         .setVariable("featureIssueId", 178825)

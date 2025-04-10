@@ -16,33 +16,43 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngineTest {
+class ProcessInstantiationAtActivitiesTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
   protected static final String EXCLUSIVE_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGateway.bpmn20.xml";
@@ -52,9 +62,20 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
   protected static final String ASYNC_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGatewayAsyncTask.bpmn20.xml";
   protected static final String SYNC_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstantiationAtActivitiesTest.synchronous.bpmn20.xml";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  IdentityService identityService;
+  TaskService taskService;
+
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testSingleActivityInstantiation() {
+  void testSingleActivityInstantiation() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -79,7 +100,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testSingleActivityInstantiationById() {
+  void testSingleActivityInstantiationById() {
     // given
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
@@ -107,7 +128,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testSingleActivityInstantiationSetBusinessKey() {
+  void testSingleActivityInstantiationSetBusinessKey() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -122,7 +143,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testSingleActivityInstantiationSetCaseInstanceId() {
+  void testSingleActivityInstantiationSetCaseInstanceId() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -137,7 +158,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartEventInstantiation() {
+  void testStartEventInstantiation() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -162,7 +183,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartEventInstantiationWithVariables() {
+  void testStartEventInstantiationWithVariables() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -178,7 +199,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartWithInvalidInitialActivity() {
+  void testStartWithInvalidInitialActivity() {
     var processInstantiationBuilder = runtimeService
           .createProcessInstanceByKey("exclusiveGateway")
           .startBeforeActivity("someNonExistingActivity");
@@ -194,7 +215,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testMultipleActivitiesInstantiation() {
+  void testMultipleActivitiesInstantiation() {
 
     // when
     ProcessInstance instance = runtimeService
@@ -224,7 +245,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testMultipleActivitiesInstantiationWithVariables() {
+  void testMultipleActivitiesInstantiationWithVariables() {
     // when
     runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -255,7 +276,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = SUBPROCESS_PROCESS)
   @Test
-  public void testNestedActivitiesInstantiation() {
+  void testNestedActivitiesInstantiation() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("subprocess")
@@ -284,7 +305,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartNonExistingProcessDefinition() {
+  void testStartNonExistingProcessDefinition() {
     var processInstantiationBuilder1 = runtimeService.createProcessInstanceById("I don't exist").startBeforeActivity("start");
     try {
       processInstantiationBuilder1.execute();
@@ -303,7 +324,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
   }
 
   @Test
-  public void testStartNullProcessDefinition() {
+  void testStartNullProcessDefinition() {
     var processInstantiationBuilder1 = runtimeService.createProcessInstanceById(null).startBeforeActivity("start");
     try {
       processInstantiationBuilder1.execute();
@@ -323,7 +344,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = LISTENERS_PROCESS)
   @Test
-  public void testListenerInvocation() {
+  void testListenerInvocation() {
     RecorderExecutionListener.clear();
 
     // when
@@ -361,7 +382,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = LISTENERS_PROCESS)
   @Test
-  public void testSkipListenerInvocation() {
+  void testSkipListenerInvocation() {
     RecorderExecutionListener.clear();
 
     // when
@@ -386,7 +407,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = IO_PROCESS)
   @Test
-  public void testIoMappingInvocation() {
+  void testIoMappingInvocation() {
     // when
     runtimeService
       .createProcessInstanceByKey("ioProcess")
@@ -412,7 +433,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = IO_PROCESS)
   @Test
-  public void testSkipIoMappingInvocation() {
+  void testSkipIoMappingInvocation() {
     // when
     runtimeService
       .createProcessInstanceByKey("ioProcess")
@@ -425,7 +446,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = SUBPROCESS_PROCESS)
   @Test
-  public void testSetProcessInstanceVariable() {
+  void testSetProcessInstanceVariable() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("subprocess")
@@ -461,7 +482,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = ASYNC_PROCESS)
   @Test
-  public void testStartAsyncTask() {
+  void testStartAsyncTask() {
     // when
     ProcessInstance instance = runtimeService
       .createProcessInstanceByKey("exclusiveGateway")
@@ -490,7 +511,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment(resources = SYNC_PROCESS)
   @Test
-  public void testStartMultipleTasksInSyncProcess() {
+  void testStartMultipleTasksInSyncProcess() {
     RecorderExecutionListener.clear();
 
     // when
@@ -538,7 +559,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Deployment
   @Test
-  public void testInitiatorVariable() {
+  void testInitiatorVariable() {
     // given
     identityService.setAuthenticatedUserId("kermit");
 
@@ -557,7 +578,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/concurrentExecutionVariableWithSubprocess.bpmn20.xml"})
-  public void shouldFinishProcessWithIoMappingAndEventSubprocess() {
+  void shouldFinishProcessWithIoMappingAndEventSubprocess() {
     // given
     // Start process instance before the FirstTask (UserTask) with I/O mapping
     ProcessInstance processInstance = runtimeService.createProcessInstanceByKey("process")

@@ -24,6 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -32,17 +36,11 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  *
@@ -50,37 +48,34 @@ import org.junit.rules.RuleChain;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class RestartProcessInstanceUserOperationLogTest {
+class RestartProcessInstanceUserOperationLogTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(rule);
-  protected BatchRestartHelper helper = new BatchRestartHelper(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder()
+      .cacheForConfigurationResource(false)
+      .build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  BatchRestartHelper helper = new BatchRestartHelper(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
+  RuntimeService runtimeService;
+  
+  BpmnModelInstance instance;
+  static final Date START_DATE = new Date(1457326800000L);
 
-  protected RuntimeService runtimeService;
-  protected BpmnModelInstance instance;
-  protected static final Date START_DATE = new Date(1457326800000L);
-
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-  }
-
-  @Before
-  public void setClock() {
+  @BeforeEach
+  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
-  @After
-  public void resetEngineConfig() {
+  @AfterEach
+  void resetEngineConfig() {
     rule.getProcessEngineConfiguration()
         .setRestrictUserOperationLogToAuthenticatedUsers(true);
   }
 
-  @Before
-  public void createBpmnModelInstance() {
+  @BeforeEach
+  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -90,17 +85,18 @@ public class RestartProcessInstanceUserOperationLogTest {
         .done();
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @After
-  public void removeBatches() {
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
+
   @Test
-  public void testLogCreationAsync() {
+  void testLogCreationAsync() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     rule.getIdentityService().setAuthenticatedUserId("userId");
@@ -148,7 +144,7 @@ public class RestartProcessInstanceUserOperationLogTest {
   }
 
   @Test
-  public void testLogCreationSync() {
+  void testLogCreationSync() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     rule.getIdentityService().setAuthenticatedUserId("userId");
@@ -196,7 +192,7 @@ public class RestartProcessInstanceUserOperationLogTest {
   }
 
   @Test
-  public void testNoCreationOnSyncBatchJobExecution() {
+  void testNoCreationOnSyncBatchJobExecution() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
 
@@ -216,7 +212,7 @@ public class RestartProcessInstanceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogOnSyncExecutionUnauthenticated() {
+  void shouldNotLogOnSyncExecutionUnauthenticated() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
 
@@ -236,7 +232,7 @@ public class RestartProcessInstanceUserOperationLogTest {
   }
 
   @Test
-  public void testNoCreationOnJobExecutorBatchJobExecution() {
+  void testNoCreationOnJobExecutorBatchJobExecution() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
 
@@ -255,7 +251,7 @@ public class RestartProcessInstanceUserOperationLogTest {
   }
 
   @Test
-  public void shouldNotLogOnExecutionUnauthenticated() {
+  void shouldNotLogOnExecutionUnauthenticated() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
 

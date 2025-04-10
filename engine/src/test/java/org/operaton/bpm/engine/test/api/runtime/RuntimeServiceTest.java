@@ -16,7 +16,39 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.ProcessEngines;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -34,7 +66,14 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailVariableInstanceUpdateEntity;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Incident;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.TransitionInstance;
+import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -44,7 +83,10 @@ import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionList
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
 import org.operaton.bpm.engine.test.history.SerializableVariable;
-import org.operaton.bpm.engine.test.util.*;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
+import org.operaton.bpm.engine.test.util.TestExecutionListener;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -52,22 +94,6 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-
-import java.io.ByteArrayInputStream;
-import java.util.*;
-
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Frederik Heremans
@@ -77,34 +103,23 @@ public class RuntimeServiceTest {
 
   public static final String TESTING_INSTANCE_DELETION = "testing instance deletion";
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJavaSerializationFormatEnabled(true));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .cacheForConfigurationResource(false)
+      .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
+      .build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-  private ManagementService managementService;
-  private RepositoryService repositoryService;
-  private HistoryService historyService;
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    managementService = engineRule.getManagementService();
-    repositoryService = engineRule.getRepositoryService();
-    historyService = engineRule.getHistoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+  RepositoryService repositoryService;
+  HistoryService historyService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  public void testStartProcessInstanceByKeyNullKey() {
+  void testStartProcessInstanceByKeyNullKey() {
     try {
       runtimeService.startProcessInstanceByKey(null);
       fail("ProcessEngineException expected");
@@ -114,7 +129,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testStartProcessInstanceByKeyUnexistingKey() {
+  void testStartProcessInstanceByKeyUnexistingKey() {
     try {
       runtimeService.startProcessInstanceByKey("unexistingkey");
       fail("ProcessEngineException expected");
@@ -124,7 +139,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testStartProcessInstanceByIdNullId() {
+  void testStartProcessInstanceByIdNullId() {
     try {
       runtimeService.startProcessInstanceById(null);
       fail("ProcessEngineException expected");
@@ -134,7 +149,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testStartProcessInstanceByIdUnexistingId() {
+  void testStartProcessInstanceByIdUnexistingId() {
     try {
       runtimeService.startProcessInstanceById("unexistingId");
       fail("ProcessEngineException expected");
@@ -143,18 +158,18 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testStartProcessInstanceByIdNullVariables() {
+  void testStartProcessInstanceByIdNullVariables() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", (Map<String, Object>) null);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
   }
 
   @Test
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void startProcessInstanceWithBusinessKey() {
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void startProcessInstanceWithBusinessKey() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     // by key
@@ -181,10 +196,10 @@ public class RuntimeServiceTest {
     assertThat(runtimeService.getVariable(processInstance.getId(), "var")).isEqualTo("value2");
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstance() {
+  void testDeleteProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
 
@@ -204,10 +219,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstances() {
+  void testDeleteProcessInstances() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -219,7 +234,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testDeleteProcessInstanceWithListeners() {
+  void testDeleteProcessInstanceWithListeners() {
     RecorderExecutionListener.clear();
 
     // given
@@ -260,10 +275,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstanceSkipCustomListenersEnsureHistoryWritten() {
+  void testDeleteProcessInstanceSkipCustomListenersEnsureHistoryWritten() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -282,7 +297,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testDeleteProcessInstanceSkipCustomListeners() {
+  void testDeleteProcessInstanceSkipCustomListeners() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -303,7 +318,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testDeleteProcessInstanceSkipCustomListenersScope() {
+  void testDeleteProcessInstanceSkipCustomListenersScope() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -324,7 +339,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testDeleteProcessInstanceSkipCustomTaskListeners() {
+  void testDeleteProcessInstanceSkipCustomTaskListeners() {
 
     // given a process instance
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -349,11 +364,11 @@ public class RuntimeServiceTest {
     assertThat(RecorderTaskListener.getRecordedEvents()).isEmpty();
   }
 
-  @Deployment(resources={
-      "org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml" })
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testDeleteProcessInstanceSkipIoMappings() {
+  void testDeleteProcessInstanceSkipIoMappings() {
 
     // given a process instance
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("ioMappingProcess");
@@ -368,10 +383,10 @@ public class RuntimeServiceTest {
   }
 
   @Deployment(resources = {
-      "org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testDeleteProcessInstanceWithoutSkipIoMappings() {
+  void testDeleteProcessInstanceWithoutSkipIoMappings() {
 
     // given a process instance
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("ioMappingProcess");
@@ -386,11 +401,11 @@ public class RuntimeServiceTest {
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Calling.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Called.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Calling.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Called.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testCascadingDeleteSubprocessInstanceSkipIoMappings() {
+  void testCascadingDeleteSubprocessInstanceSkipIoMappings() {
 
     // given a process instance
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("callingProcess");
@@ -406,11 +421,11 @@ public class RuntimeServiceTest {
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Calling.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Called.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Calling.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Called.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testCascadingDeleteSubprocessInstanceWithoutSkipIoMappings() {
+  void testCascadingDeleteSubprocessInstanceWithoutSkipIoMappings() {
 
     // given a process instance
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("callingProcess");
@@ -427,10 +442,10 @@ public class RuntimeServiceTest {
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(1);
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstanceNullReason() {
+  void testDeleteProcessInstanceNullReason() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
 
@@ -444,7 +459,7 @@ public class RuntimeServiceTest {
    * Note: debug at CommandContextInterceptor -> context.close()
    */
   @Test
-  public void testDeleteProcessInstancesManyParallelSubprocesses() {
+  void testDeleteProcessInstancesManyParallelSubprocesses() {
     final BpmnModelInstance multiInstanceWithSubprocess =
       Bpmn.createExecutableProcess("multiInstanceWithSubprocess")
         .startEvent()
@@ -467,20 +482,20 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceWithFake() {
+  void testDeleteProcessInstanceWithFake() {
     assertThatThrownBy(() -> runtimeService.deleteProcessInstance("aFake", null))
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("No process instance found for id");
   }
 
   @Test
-  public void testDeleteProcessInstanceIfExistsWithFake() {
+  void testDeleteProcessInstanceIfExistsWithFake() {
     assertDoesNotThrow(() -> runtimeService.deleteProcessInstanceIfExists("aFake", null, false, false, false, false));
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesWithFake() {
+  void testDeleteProcessInstancesWithFake() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     var processInstanceIds = Arrays.asList(instance.getId(), "aFake");
 
@@ -491,9 +506,9 @@ public class RuntimeServiceTest {
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesIfExistsWithFake() {
+  void testDeleteProcessInstancesIfExistsWithFake() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     runtimeService.deleteProcessInstancesIfExists(Arrays.asList(instance.getId(), "aFake"), "test", false, false, false);
@@ -502,7 +517,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceNullId() {
+  void testDeleteProcessInstanceNullId() {
     try {
       runtimeService.deleteProcessInstance(null, "test null id delete");
       fail("ProcessEngineException expected");
@@ -514,7 +529,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testDeleteProcessInstanceWithActiveCompensation() {
+  void testDeleteProcessInstanceWithActiveCompensation() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("compensationProcess");
 
@@ -540,7 +555,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testDeleteProcessInstanceWithVariableOnScopeAndConcurrentExecution() {
+  void testDeleteProcessInstanceWithVariableOnScopeAndConcurrentExecution() {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -564,7 +579,7 @@ public class RuntimeServiceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfigurationImpl.HISTORY_AUDIT)
-  public void testDeleteCalledSubprocess() {
+  void testDeleteCalledSubprocess() {
 
     // given
     BpmnModelInstance callingInstance = ProcessModels.newModel("oneTaskProcess")
@@ -591,10 +606,10 @@ public class RuntimeServiceTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getDeleteReason()).isEqualTo(TESTING_INSTANCE_DELETION);
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testFindActiveActivityIds() {
+  void testFindActiveActivityIds() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<String> activities = runtimeService.getActiveActivityIds(processInstance.getId());
@@ -604,7 +619,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testFindActiveActivityIdsUnexistingExecutionId() {
+  void testFindActiveActivityIdsUnexistingExecutionId() {
     try {
       runtimeService.getActiveActivityIds("unexistingExecutionId");
       fail("ProcessEngineException expected");
@@ -614,7 +629,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testFindActiveActivityIdsNullExecutionId() {
+  void testFindActiveActivityIdsNullExecutionId() {
     try {
       runtimeService.getActiveActivityIds(null);
       fail("ProcessEngineException expected");
@@ -628,7 +643,7 @@ public class RuntimeServiceTest {
    */
   @Deployment
   @Test
-  public void testFindActiveActivityIdProcessWithErrorEventAndSubProcess() {
+  void testFindActiveActivityIdProcessWithErrorEventAndSubProcess() {
     ProcessInstance processInstance = engineRule.getProcessEngine().getRuntimeService().startProcessInstanceByKey("errorEventSubprocess");
 
     List<String> activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
@@ -705,14 +720,14 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testSignalUnexistingExecutionId() {
+  void testSignalUnexistingExecutionId() {
     assertThatThrownBy(() -> runtimeService.signal("unexistingExecutionId"))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("execution unexistingExecutionId doesn't exist");
   }
 
   @Test
-  public void testSignalNullExecutionId() {
+  void testSignalNullExecutionId() {
     assertThatThrownBy(() -> runtimeService.signal(null))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("executionId is null");
@@ -720,7 +735,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testSignalWithProcessVariables() {
+  void testSignalWithProcessVariables() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testSignalWithProcessVariables");
     Map<String, Object> processVariables = new HashMap<>();
@@ -734,10 +749,10 @@ public class RuntimeServiceTest {
 
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testSignalWithProcessVariables.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testSignalWithProcessVariables.bpmn20.xml"})
   @Test
-  public void testSignalWithSignalNameAndData() {
+  void testSignalWithSignalNameAndData() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testSignalWithProcessVariables");
     Map<String, Object> processVariables = new HashMap<>();
@@ -751,10 +766,10 @@ public class RuntimeServiceTest {
 
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testSignalWithProcessVariables.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testSignalWithProcessVariables.bpmn20.xml"})
   @Test
-  public void testSignalWithoutSignalNameAndData() {
+  void testSignalWithoutSignalNameAndData() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testSignalWithProcessVariables");
     Map<String, Object> processVariables = new HashMap<>();
@@ -770,7 +785,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testSignalInactiveExecution() {
+  void testSignalInactiveExecution() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("testSignalInactiveExecution");
     var instanceId = instance.getId();
 
@@ -788,7 +803,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testGetVariablesUnexistingExecutionId() {
+  void testGetVariablesUnexistingExecutionId() {
     try {
       runtimeService.getVariables("unexistingExecutionId");
       fail("ProcessEngineException expected");
@@ -798,7 +813,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testGetVariablesNullExecutionId() {
+  void testGetVariablesNullExecutionId() {
     try {
       runtimeService.getVariables(null);
       fail("ProcessEngineException expected");
@@ -808,7 +823,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testGetVariableUnexistingExecutionId() {
+  void testGetVariableUnexistingExecutionId() {
     try {
       runtimeService.getVariables("unexistingExecutionId");
       fail("ProcessEngineException expected");
@@ -818,7 +833,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testGetVariableNullExecutionId() {
+  void testGetVariableNullExecutionId() {
     try {
       runtimeService.getVariables(null);
       fail("ProcessEngineException expected");
@@ -827,17 +842,17 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariableUnexistingVariableName() {
+  void testGetVariableUnexistingVariableName() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Object variableValue = runtimeService.getVariable(processInstance.getId(), "unexistingVariable");
     assertThat(variableValue).isNull();
   }
 
   @Test
-  public void testSetVariableUnexistingExecutionId() {
+  void testSetVariableUnexistingExecutionId() {
     try {
       runtimeService.setVariable("unexistingExecutionId", "variableName", "value");
       fail("ProcessEngineException expected");
@@ -847,7 +862,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testSetVariableNullExecutionId() {
+  void testSetVariableNullExecutionId() {
     try {
       runtimeService.setVariable(null, "variableName", "variableValue");
       fail("ProcessEngineException expected");
@@ -856,10 +871,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetVariableNullVariableName() {
+  void testSetVariableNullVariableName() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     var processInstanceId = processInstance.getId();
     try {
@@ -870,10 +885,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetVariables() {
+  void testSetVariables() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -885,10 +900,10 @@ public class RuntimeServiceTest {
     assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isEqualTo("value2");
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariablesTyped() {
+  void testGetVariablesTyped() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -898,10 +913,10 @@ public class RuntimeServiceTest {
     assertThat(variablesTyped).isEqualTo(vars);
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariablesTypedDeserialize() {
+  void testGetVariablesTypedDeserialize() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables()
@@ -930,10 +945,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariablesLocalTyped() {
+  void testGetVariablesLocalTyped() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -943,10 +958,10 @@ public class RuntimeServiceTest {
     assertThat(variablesTyped).isEqualTo(vars);
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariablesLocalTypedDeserialize() {
+  void testGetVariablesLocalTypedDeserialize() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables()
@@ -978,7 +993,7 @@ public class RuntimeServiceTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testSetVariablesUnexistingExecutionId() {
+  void testSetVariablesUnexistingExecutionId() {
     try {
       runtimeService.setVariables("unexistingexecution", Collections.EMPTY_MAP);
       fail("ProcessEngineException expected");
@@ -989,7 +1004,7 @@ public class RuntimeServiceTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testSetVariablesNullExecutionId() {
+  void testSetVariablesNullExecutionId() {
     try {
       runtimeService.setVariables(null, Collections.EMPTY_MAP);
       fail("ProcessEngineException expected");
@@ -1000,7 +1015,7 @@ public class RuntimeServiceTest {
 
 
   @Test
-  public void setVariablesSyncOnCompletedProcessInstance() {
+  void setVariablesSyncOnCompletedProcessInstance() {
     // given completed process instance
     testRule.deploy(USER_TASK_PROCESS);
     String id = runtimeService.startProcessInstanceByKey("process").getId();
@@ -1036,10 +1051,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariable() {
+  void testRemoveVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -1056,10 +1071,10 @@ public class RuntimeServiceTest {
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariableInParentScope() {
+  void testRemoveVariableInParentScope() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -1077,7 +1092,7 @@ public class RuntimeServiceTest {
 
 
   @Test
-  public void testRemoveVariableNullExecutionId() {
+  void testRemoveVariableNullExecutionId() {
     try {
       runtimeService.removeVariable(null, "variable");
       fail("ProcessEngineException expected");
@@ -1086,10 +1101,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariableLocal() {
+  void testRemoveVariableLocal() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -1104,10 +1119,10 @@ public class RuntimeServiceTest {
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariableLocalWithParentScope() {
+  void testRemoveVariableLocalWithParentScope() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -1134,7 +1149,7 @@ public class RuntimeServiceTest {
 
 
   @Test
-  public void testRemoveLocalVariableNullExecutionId() {
+  void testRemoveLocalVariableNullExecutionId() {
     try {
       runtimeService.removeVariableLocal(null, "variable");
       fail("ProcessEngineException expected");
@@ -1143,10 +1158,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariables() {
+  void testRemoveVariables() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -1168,10 +1183,10 @@ public class RuntimeServiceTest {
     checkHistoricVariableUpdateEntity("variable2", processInstance.getId());
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariablesWithParentScope() {
+  void testRemoveVariablesWithParentScope() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -1202,7 +1217,7 @@ public class RuntimeServiceTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testRemoveVariablesNullExecutionId() {
+  void testRemoveVariablesNullExecutionId() {
     try {
       runtimeService.removeVariables(null, Collections.EMPTY_LIST);
       fail("ProcessEngineException expected");
@@ -1211,10 +1226,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariablesLocalWithParentScope() {
+  void testRemoveVariablesLocalWithParentScope() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -1260,7 +1275,7 @@ public class RuntimeServiceTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testRemoveVariablesLocalNullExecutionId() {
+  void testRemoveVariablesLocalNullExecutionId() {
     try {
       runtimeService.removeVariablesLocal(null, Collections.EMPTY_LIST);
       fail("ProcessEngineException expected");
@@ -1269,10 +1284,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUpdateVariables() {
+  void testUpdateVariables() {
     Map<String, Object> modifications = new HashMap<>();
     modifications.put("variable1", "value1");
     modifications.put("variable2", "value2");
@@ -1289,10 +1304,10 @@ public class RuntimeServiceTest {
     assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isEqualTo("value2");
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
   @Test
-  public void testUpdateVariablesLocal() {
+  void testUpdateVariablesLocal() {
     Map<String, Object> globalVars = new HashMap<>();
     globalVars.put("variable4", "value4");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("startSimpleSubProcess", globalVars);
@@ -1321,12 +1336,12 @@ public class RuntimeServiceTest {
     assertThat(runtimeService.getVariable(processInstance.getId(), "variable4")).isEqualTo("value4");
   }
 
-  @Deployment(resources={
-          "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchAlertSignal.bpmn20.xml",
-          "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchPanicSignal.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchAlertSignal.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchPanicSignal.bpmn20.xml"
   })
   @Test
-  public void testSignalEventReceived() {
+  void testSignalEventReceived() {
 
     //////  test  signalEventReceived(String)
 
@@ -1362,12 +1377,12 @@ public class RuntimeServiceTest {
 
   }
 
-  @Deployment(resources={
-          "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchAlertMessage.bpmn20.xml",
-          "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchPanicMessage.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchAlertMessage.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchPanicMessage.bpmn20.xml"
   })
   @Test
-  public void testMessageEventReceived() {
+  void testMessageEventReceived() {
 
     startMessageCatchProcesses();
     // 12, because the signal catch is a scope
@@ -1394,8 +1409,8 @@ public class RuntimeServiceTest {
 
   }
 
- @Test
-  public void testSignalEventReceivedNonExistingExecution() {
+  @Test
+  void testSignalEventReceivedNonExistingExecution() {
    try {
      runtimeService.signalEventReceived("alert", "nonexistingExecution");
      fail("exception expected");
@@ -1405,8 +1420,8 @@ public class RuntimeServiceTest {
    }
   }
 
- @Test
-  public void testMessageEventReceivedNonExistingExecution() {
+  @Test
+  void testMessageEventReceivedNonExistingExecution() {
    try {
      runtimeService.messageEventReceived("alert", "nonexistingExecution");
      fail("exception expected");
@@ -1416,11 +1431,11 @@ public class RuntimeServiceTest {
    }
   }
 
- @Deployment(resources={
-         "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchAlertSignal.bpmn20.xml"
- })
- @Test
-  public void testExecutionWaitingForDifferentSignal() {
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.catchAlertSignal.bpmn20.xml"
+  })
+  @Test
+  void testExecutionWaitingForDifferentSignal() {
    runtimeService.startProcessInstanceByKey("catchAlertSignal");
    Execution execution = runtimeService.createExecutionQuery()
      .signalEventSubscriptionName("alert")
@@ -1452,12 +1467,12 @@ public class RuntimeServiceTest {
   // getActivityInstance Tests //////////////////////////////////
 
   @Test
-  public void testActivityInstanceForNonExistingProcessInstanceId() {
+  void testActivityInstanceForNonExistingProcessInstanceId() {
     assertThat(runtimeService.getActivityInstance("some-nonexisting-id")).isNull();
   }
 
   @Test
-  public void testActivityInstanceForNullProcessInstanceId() {
+  void testActivityInstanceForNullProcessInstanceId() {
     try {
       runtimeService.getActivityInstance(null);
       fail("PEE expected!");
@@ -1466,10 +1481,10 @@ public class RuntimeServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testActivityInstancePopulated() {
+  void testActivityInstancePopulated() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", "business-key");
 
     // validate properties of root
@@ -1501,7 +1516,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForAsyncBeforeTask() {
+  void testActivityInstanceTreeForAsyncBeforeTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1516,7 +1531,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForConcurrentAsyncBeforeTask() {
+  void testActivityInstanceTreeForConcurrentAsyncBeforeTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentTasksProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1533,7 +1548,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForAsyncBeforeStartEvent() {
+  void testActivityInstanceTreeForAsyncBeforeStartEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1548,7 +1563,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForAsyncAfterTask() {
+  void testActivityInstanceTreeForAsyncAfterTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -1567,7 +1582,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForConcurrentAsyncAfterTask() {
+  void testActivityInstanceTreeForConcurrentAsyncAfterTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentTasksProcess");
 
     Task asyncTask = taskService.createTaskQuery().taskDefinitionKey("asyncTask").singleResult();
@@ -1588,7 +1603,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForAsyncAfterEndEvent() {
+  void testActivityInstanceTreeForAsyncAfterEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncEndEventProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1603,7 +1618,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForNestedAsyncBeforeTask() {
+  void testActivityInstanceTreeForNestedAsyncBeforeTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1621,7 +1636,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForNestedAsyncBeforeStartEvent() {
+  void testActivityInstanceTreeForNestedAsyncBeforeStartEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1634,7 +1649,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForNestedAsyncAfterTask() {
+  void testActivityInstanceTreeForNestedAsyncAfterTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -1656,7 +1671,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testActivityInstanceTreeForNestedAsyncAfterEndEvent() {
+  void testActivityInstanceTreeForNestedAsyncAfterEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncEndEventProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1677,7 +1692,7 @@ public class RuntimeServiceTest {
    */
   @Deployment
   @Test
-  public void testActivityInstanceForConcurrentSubprocess() {
+  void testActivityInstanceForConcurrentSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentSubProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1693,7 +1708,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testGetActivityInstancesForActivity() {
+  void testGetActivityInstancesForActivity() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSubprocess");
     ProcessDefinition definition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1721,7 +1736,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetActivityInstancesForActivity.bpmn20.xml")
   @Test
-  public void testGetInvalidActivityInstancesForActivity() {
+  void testGetInvalidActivityInstancesForActivity() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSubprocess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
@@ -1736,7 +1751,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetActivityInstancesForActivity.bpmn20.xml")
   @Test
-  public void testGetActivityInstancesForNonExistingActivity() {
+  void testGetActivityInstancesForNonExistingActivity() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSubprocess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
@@ -1747,7 +1762,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testGetTransitionInstancesForActivity() {
+  void testGetTransitionInstancesForActivity() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSubprocess");
 
@@ -1776,7 +1791,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetTransitionInstancesForActivity.bpmn20.xml")
   @Test
-  public void testGetInvalidTransitionInstancesForActivity() {
+  void testGetInvalidTransitionInstancesForActivity() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSubprocess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
@@ -1791,7 +1806,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetTransitionInstancesForActivity.bpmn20.xml")
   @Test
-  public void testGetTransitionInstancesForNonExistingActivity() {
+  void testGetTransitionInstancesForNonExistingActivity() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSubprocess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
@@ -1816,8 +1831,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testActivityInstanceNoIncidents() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testActivityInstanceNoIncidents() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -1833,8 +1848,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testActivityInstanceIncidents() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testActivityInstanceIncidents() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String executionId = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).active().singleResult().getId();
@@ -1855,8 +1870,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testActivityInstanceNoIncidentIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testActivityInstanceNoIncidentIds() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -1870,8 +1885,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testActivityInstanceIncidentIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testActivityInstanceIncidentIds() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String executionId = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).active().singleResult().getId();
@@ -1891,8 +1906,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testActivityInstanceTreeForConcurrentAsyncAfterTask.bpmn20.xml"})
-  public void testActivityInstanceIncidentConcurrentTasksProcess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testActivityInstanceTreeForConcurrentAsyncAfterTask.bpmn20.xml"})
+  void testActivityInstanceIncidentConcurrentTasksProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentTasksProcess");
     String executionId = runtimeService.createExecutionQuery().activityId("theTask").active().singleResult().getId();
@@ -1927,8 +1942,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testActivityInstanceForConcurrentSubprocess.bpmn20.xml"})
-  public void testActivityInstanceIncidentConcurrentSubProcess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testActivityInstanceForConcurrentSubprocess.bpmn20.xml"})
+  void testActivityInstanceIncidentConcurrentSubProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentSubProcess");
     String executionId = runtimeService.createExecutionQuery().activityId("outerTask").active().singleResult().getId();
@@ -1955,8 +1970,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetActivityInstancesForActivity.bpmn20.xml"})
-  public void testActivityInstanceIncidentMultiInstance() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetActivityInstancesForActivity.bpmn20.xml"})
+  void testActivityInstanceIncidentMultiInstance() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSubprocess");
     Execution execution = runtimeService.createExecutionQuery().activityId("innerTask").active().list().get(0);
@@ -1988,7 +2003,7 @@ public class RuntimeServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneAsyncTask.bpmn")
-  public void testActivityInstanceIncidentFailedJob() {
+  void testActivityInstanceIncidentFailedJob() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -2011,7 +2026,7 @@ public class RuntimeServiceTest {
 
 
   @Test
-  public void testActivityInstanceIncidentFailedJobInSubProcess() {
+  void testActivityInstanceIncidentFailedJobInSubProcess() {
     // given
     BpmnModelInstance process = ProcessModels.newModel("process")
       .startEvent()
@@ -2051,7 +2066,7 @@ public class RuntimeServiceTest {
    * then it is perfectly fine to change this test or remove it
    */
   @Test
-  public void testActivityInstanceIncidentOnNonLeafWithScopeActivity() {
+  void testActivityInstanceIncidentOnNonLeafWithScopeActivity() {
     // given
     BpmnModelInstance process = ProcessModels.newModel("process")
       .startEvent()
@@ -2084,7 +2099,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testActivityInstanceIncidentOnNonLeafWithNonScopeActivity() {
+  void testActivityInstanceIncidentOnNonLeafWithNonScopeActivity() {
     // given
     BpmnModelInstance process = ProcessModels.newModel("process")
       .startEvent()
@@ -2129,7 +2144,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testActivityInstanceOnAsyncAfterSequentialMultiInstance() {
+  void testActivityInstanceOnAsyncAfterSequentialMultiInstance() {
     // given
     String processDefinitionKey = "process";
     SubProcessBuilder subprocessBuilder = Bpmn.createExecutableProcess(processDefinitionKey)
@@ -2165,7 +2180,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testActivityInstanceOnAsyncAfterSequentialMultiInstance_NonScopeActivity() {
+  void testActivityInstanceOnAsyncAfterSequentialMultiInstance_NonScopeActivity() {
     // given
     String processDefinitionKey = "process";
     BpmnModelInstance process = Bpmn.createExecutableProcess(processDefinitionKey)
@@ -2195,7 +2210,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testActivityInstanceOnAsyncAfterParallelMultiInstance() {
+  void testActivityInstanceOnAsyncAfterParallelMultiInstance() {
     // given
     String processDefinitionKey = "process";
     SubProcessBuilder subprocessBuilder = Bpmn.createExecutableProcess(processDefinitionKey)
@@ -2233,7 +2248,7 @@ public class RuntimeServiceTest {
 
 
   @Test
-  public void testActivityInstanceOnAsyncAfterScopeActivityWithOutgoingTransition() {
+  void testActivityInstanceOnAsyncAfterScopeActivityWithOutgoingTransition() {
     // given
     String processDefinitionKey = "process";
     BpmnModelInstance process = Bpmn.createExecutableProcess(processDefinitionKey)
@@ -2265,7 +2280,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testActivityInstanceOnAsyncAfterScopeActivityWithoutOutgoingTransition() {
+  void testActivityInstanceOnAsyncAfterScopeActivityWithoutOutgoingTransition() {
     // given
     String processDefinitionKey = "process";
     BpmnModelInstance process = Bpmn.createExecutableProcess(processDefinitionKey)
@@ -2296,7 +2311,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testActivityInstanceOnAsyncBeforeScopeActivity() {
+  void testActivityInstanceOnAsyncBeforeScopeActivity() {
     // given
     String processDefinitionKey = "process";
     BpmnModelInstance process = Bpmn.createExecutableProcess(processDefinitionKey)
@@ -2329,7 +2344,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testChangeVariableType() {
+  void testChangeVariableType() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     DummySerializable dummy = new DummySerializable();
@@ -2345,7 +2360,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testStartByKeyWithCaseInstanceId() {
+  void testStartByKeyWithCaseInstanceId() {
     String caseInstanceId = "aCaseInstanceId";
 
     ProcessInstance firstInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", null, caseInstanceId);
@@ -2382,7 +2397,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testStartByIdWithCaseInstanceId() {
+  void testStartByIdWithCaseInstanceId() {
     String processDefinitionId = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("oneTaskProcess")
@@ -2424,7 +2439,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testSetAbstractNumberValueFails() {
+  void testSetAbstractNumberValueFails() {
     var variables = Variables.createVariables().putValueTyped("var", Variables.numberValue(42));
     var variableMap = Variables.numberValue(42);
     try {
@@ -2450,7 +2465,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/messageStartEvent.bpmn20.xml")
   @Test
-  public void testStartProcessInstanceByMessageWithEarlierVersionOfProcessDefinition() {
+  void testStartProcessInstanceByMessageWithEarlierVersionOfProcessDefinition() {
 	  String deploymentId = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/api/runtime/messageStartEvent_version2.bpmn20.xml").deploy().getId();
 	  ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionVersion(1).singleResult();
 
@@ -2465,7 +2480,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/messageStartEvent.bpmn20.xml")
   @Test
-  public void testStartProcessInstanceByMessageWithLastVersionOfProcessDefinition() {
+  void testStartProcessInstanceByMessageWithLastVersionOfProcessDefinition() {
 	  String deploymentId = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/api/runtime/messageStartEvent_version2.bpmn20.xml").deploy().getId();
 	  ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().latestVersion().singleResult();
 
@@ -2480,7 +2495,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/messageStartEvent.bpmn20.xml")
   @Test
-  public void testStartProcessInstanceByMessageWithNonExistingMessageStartEvent() {
+  void testStartProcessInstanceByMessageWithNonExistingMessageStartEvent() {
 	  String deploymentId = null;
 	  deploymentId = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/api/runtime/messageStartEvent_version2.bpmn20.xml").deploy().getId();
 	  ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionVersion(1).singleResult();
@@ -2503,7 +2518,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testActivityInstanceActivityNameProperty() {
+  void testActivityInstanceActivityNameProperty() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
@@ -2522,7 +2537,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testTransitionInstanceActivityNamePropertyBeforeTask() {
+  void testTransitionInstanceActivityNamePropertyBeforeTask() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -2545,7 +2560,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testTransitionInstanceActivityNamePropertyBeforeTask.bpmn20.xml")
   @Test
-  public void testTransitionInstanceActivityTypePropertyBeforeTask() {
+  void testTransitionInstanceActivityTypePropertyBeforeTask() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -2568,7 +2583,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testTransitionInstanceActivityNamePropertyAfterTask() {
+  void testTransitionInstanceActivityNamePropertyAfterTask() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -2591,7 +2606,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testTransitionInstanceActivityNamePropertyAfterTask.bpmn20.xml")
   @Test
-  public void testTransitionInstanceActivityTypePropertyAfterTask() {
+  void testTransitionInstanceActivityTypePropertyAfterTask() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -2614,7 +2629,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testTransitionInstanceActivityNamePropertyBeforeStartEvent() {
+  void testTransitionInstanceActivityNamePropertyBeforeStartEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -2631,7 +2646,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testTransitionInstanceActivityNamePropertyBeforeStartEvent.bpmn20.xml")
   @Test
-  public void testTransitionInstanceActivityTypePropertyBeforeStartEvent() {
+  void testTransitionInstanceActivityTypePropertyBeforeStartEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -2648,7 +2663,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testTransitionInstanceActivityNamePropertyAfterStartEvent() {
+  void testTransitionInstanceActivityNamePropertyAfterStartEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -2665,7 +2680,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testTransitionInstanceActivityNamePropertyAfterStartEvent.bpmn20.xml")
   @Test
-  public void testTransitionInstanceActivityTypePropertyAfterStartEvent() {
+  void testTransitionInstanceActivityTypePropertyAfterStartEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -2685,7 +2700,7 @@ public class RuntimeServiceTest {
   // removed from the process cache. This led to problems because
   // the id wasn't fetched from the DB after a redeploy.
   @Test
-  public void testStartProcessInstanceByIdAfterReboot() {
+  void testStartProcessInstanceByIdAfterReboot() {
 
     // In case this test is run in a test suite, previous engines might
     // have been initialized and cached.  First we close the
@@ -2775,7 +2790,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testVariableScope() {
+  void testVariableScope() {
 
     // After starting the process, the task in the subprocess should be active
     Map<String, Object> varMap = new HashMap<>();
@@ -2821,7 +2836,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testBasicVariableOperations() {
+  void testBasicVariableOperations() {
 
     Date now = new Date();
     List<String> serializable = new ArrayList<>();
@@ -2935,7 +2950,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testBasicVariableOperations.bpmn20.xml"})
   @Test
-  public void testOnlyChangeType() {
+  void testOnlyChangeType() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", 1234);
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("taskAssigneeProcess", variables);
@@ -2956,7 +2971,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testBasicVariableOperations.bpmn20.xml"})
   @Test
-  public void testChangeTypeFromSerializableUsingApi() {
+  void testChangeTypeFromSerializableUsingApi() {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", new SerializableVariable("foo"));
@@ -2975,7 +2990,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testChangeSerializableInsideEngine() {
+  void testChangeSerializableInsideEngine() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -2988,7 +3003,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testBasicVariableOperations.bpmn20.xml"})
   @Test
-  public void testChangeToSerializableUsingApi() {
+  void testChangeToSerializableUsingApi() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "test");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskAssigneeProcess", variables);
@@ -3006,7 +3021,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testGetVariableInstancesFromVariableScope() {
+  void testGetVariableInstancesFromVariableScope() {
 
     VariableMap variables = createVariables()
       .putValue("anIntegerVariable", 1234)
@@ -3021,7 +3036,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testSetVariableInScope.bpmn20.xml")
   @Test
-  public void testSetVariableInScopeExplicitUpdate() {
+  void testSetVariableInScopeExplicitUpdate() {
     // when a process instance is started and the task after the subprocess reached
     runtimeService.startProcessInstanceByKey("testProcess",
         Collections.singletonMap("shouldExplicitlyUpdateVariable", true));
@@ -3034,7 +3049,7 @@ public class RuntimeServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testSetVariableInScope.bpmn20.xml")
   @Test
-  public void testSetVariableInScopeImplicitUpdate() {
+  void testSetVariableInScopeImplicitUpdate() {
     // when a process instance is started and the task after the subprocess reached
     runtimeService.startProcessInstanceByKey("testProcess",
         Collections.singletonMap("shouldExplicitlyUpdateVariable", true));
@@ -3047,7 +3062,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testUpdateVariableInProcessWithoutWaitstate() {
+  void testUpdateVariableInProcessWithoutWaitstate() {
     // when a process instance is started
     runtimeService.startProcessInstanceByKey("oneScriptTaskProcess",
         Collections.singletonMap("var", new SimpleSerializableBean(10)));
@@ -3059,7 +3074,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testSetUpdateAndDeleteComplexVariable() {
+  void testSetUpdateAndDeleteComplexVariable() {
     // when a process instance is started
     runtimeService.startProcessInstanceByKey("oneUserTaskProcess",
         Collections.singletonMap("var", new SimpleSerializableBean(10)));
@@ -3071,7 +3086,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
-  public void testRollback() {
+  void testRollback() {
     try {
       runtimeService.startProcessInstanceByKey("RollbackProcess");
 
@@ -3088,7 +3103,7 @@ public class RuntimeServiceTest {
       "org/operaton/bpm/engine/test/api/runtime/trivial.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/rollbackAfterSubProcess.bpmn20.xml"})
   @Test
-  public void testRollbackAfterSubProcess() {
+  void testRollbackAfterSubProcess() {
     try {
       runtimeService.startProcessInstanceByKey("RollbackAfterSubProcess");
 
@@ -3103,7 +3118,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testGetActivityInstanceForCompletedInstanceInDelegate() {
+  void testGetActivityInstanceForCompletedInstanceInDelegate() {
     // given
     BpmnModelInstance deletingProcess = Bpmn.createExecutableProcess("process1")
         .startEvent()
@@ -3155,7 +3170,7 @@ public class RuntimeServiceTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testDeleteProcessInstanceWithSubprocessInstances() {
+  void testDeleteProcessInstanceWithSubprocessInstances() {
     // given a process instance with subprocesses
     BpmnModelInstance calling = prepareComplexProcess("A", "B", "A");
 
@@ -3181,7 +3196,7 @@ public class RuntimeServiceTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testDeleteProcessInstanceWithoutSubprocessInstances() {
+  void testDeleteProcessInstanceWithoutSubprocessInstances() {
     // given a process instance with subprocesses
     BpmnModelInstance calling = prepareComplexProcess("A", "B", "C");
 
@@ -3207,7 +3222,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstancesWithoutSubprocessInstances() {
+  void testDeleteProcessInstancesWithoutSubprocessInstances() {
     // given a process instance with subprocess
     String callingProcessKey = "calling";
     String calledProcessKey = "called";
@@ -3233,7 +3248,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstancesWithSubprocessInstances() {
+  void testDeleteProcessInstancesWithSubprocessInstances() {
     // given a process instance with subprocess
     String callingProcessKey = "calling";
     String calledProcessKey = "called";
@@ -3259,8 +3274,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testGetVariablesByEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testGetVariablesByEmptyList() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
@@ -3272,8 +3287,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testGetVariablesTypedByEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testGetVariablesTypedByEmptyList() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
@@ -3285,8 +3300,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testGetVariablesLocalByEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testGetVariablesLocalByEmptyList() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
@@ -3298,8 +3313,8 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testGetVariablesLocalTypedByEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testGetVariablesLocalTypedByEmptyList() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 

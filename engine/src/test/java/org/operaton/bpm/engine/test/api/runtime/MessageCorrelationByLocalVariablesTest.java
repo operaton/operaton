@@ -25,17 +25,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.runtime.*;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
+import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Svetlana Dorokhova
@@ -43,11 +45,14 @@ import org.junit.Test;
 public class MessageCorrelationByLocalVariablesTest {
 
   public static final String TEST_MESSAGE_NAME = "TEST_MSG";
-  @Rule public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  @Rule public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void testReceiveTaskMessageCorrelation() {
+  void testReceiveTaskMessageCorrelation() {
     //given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -88,7 +93,7 @@ public class MessageCorrelationByLocalVariablesTest {
   }
 
   @Test
-  public void testIntermediateCatchEventMessageCorrelation() {
+  void testIntermediateCatchEventMessageCorrelation() {
     //given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -125,7 +130,7 @@ public class MessageCorrelationByLocalVariablesTest {
   }
 
   @Test
-  public void testMessageBoundaryEventMessageCorrelation() {
+  void testMessageBoundaryEventMessageCorrelation() {
     //given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -169,7 +174,7 @@ public class MessageCorrelationByLocalVariablesTest {
   }
 
   @Test
-  public void testBothInstanceAndLocalVariableMessageCorrelation() {
+  void testBothInstanceAndLocalVariableMessageCorrelation() {
     //given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -225,7 +230,7 @@ public class MessageCorrelationByLocalVariablesTest {
   }
 
   @Test
-  public void testReceiveTaskMessageCorrelationFail() {
+  void testReceiveTaskMessageCorrelationFail() {
     //given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -266,7 +271,7 @@ public class MessageCorrelationByLocalVariablesTest {
   }
 
   @Test
-  public void testReceiveTaskMessageCorrelationAll() {
+  void testReceiveTaskMessageCorrelationAll() {
     //given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()

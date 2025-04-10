@@ -16,29 +16,33 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ProcessInstanceModificationBoundaryEventTest extends PluggableProcessEngineTest {
+class ProcessInstanceModificationBoundaryEventTest {
 
   protected static final String INTERRUPTING_BOUNDARY_EVENT = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.interruptingBoundaryEvent.bpmn20.xml";
   protected static final String NON_INTERRUPTING_BOUNDARY_EVENT = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.nonInterruptingBoundaryEvent.bpmn20.xml";
@@ -55,9 +59,18 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
   protected static final String INTERRUPTING_BOUNDARY_EVENT_WITH_PARALLEL_GATEWAY_INSIDE_SUB_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.interruptingBoundaryEventWithParallelGatewayInsideSubProcess.bpmn20.xml";
   protected static final String NON_INTERRUPTING_BOUNDARY_EVENT_WITH_PARALLEL_GATEWAY_INSIDE_SUB_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.nonInterruptingBoundaryEventWithParallelGatewayInsideSubProcess.bpmn20.xml";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  TaskService taskService;
+
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT)
   @Test
-  public void testTask1AndStartBeforeTaskAfterBoundaryEvent() {
+  void testTask1AndStartBeforeTaskAfterBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -93,7 +106,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT)
   @Test
-  public void testTask1AndStartBeforeBoundaryEvent() {
+  void testTask1AndStartBeforeBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -124,7 +137,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT)
   @Test
-  public void testTask2AndStartBeforeTaskAfterBoundaryEvent() {
+  void testTask2AndStartBeforeTaskAfterBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -162,7 +175,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT)
   @Test
-  public void testTask2AndStartBeforeBoundaryEvent() {
+  void testTask2AndStartBeforeBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -199,7 +212,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT)
   @Test
-  public void testTask1AndStartBeforeTaskAfterNonInterruptingBoundaryEvent() {
+  void testTask1AndStartBeforeTaskAfterNonInterruptingBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -234,7 +247,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT)
   @Test
-  public void testTask1AndStartBeforeNonInterruptingBoundaryEvent() {
+  void testTask1AndStartBeforeNonInterruptingBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -269,7 +282,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT)
   @Test
-  public void testTask2AndStartBeforeTaskAfterNonInterruptingBoundaryEvent() {
+  void testTask2AndStartBeforeTaskAfterNonInterruptingBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -306,7 +319,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT)
   @Test
-  public void testTask2AndStartBeforeNonInterruptingBoundaryEvent() {
+  void testTask2AndStartBeforeNonInterruptingBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -343,7 +356,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
   @Test
-  public void testTask1AndStartBeforeTaskAfterBoundaryEventInsideSubProcess() {
+  void testTask1AndStartBeforeTaskAfterBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -380,7 +393,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
   @Test
-  public void testTask1AndStartBeforeBoundaryEventInsideSubProcess() {
+  void testTask1AndStartBeforeBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -413,7 +426,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
   @Test
-  public void testTask1AndStartBeforeTaskAfterNonInterruptingBoundaryEventInsideSubProcess() {
+  void testTask1AndStartBeforeTaskAfterNonInterruptingBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -450,7 +463,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
   @Test
-  public void testTask1AndStartBeforeNonInterruptingBoundaryEventInsideSubProcess() {
+  void testTask1AndStartBeforeNonInterruptingBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -487,7 +500,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
   @Test
-  public void testTask2AndStartBeforeTaskAfterBoundaryEventInsideSubProcess() {
+  void testTask2AndStartBeforeTaskAfterBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -526,7 +539,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
   @Test
-  public void testTask2AndStartBeforeBoundaryEventInsideSubProcess() {
+  void testTask2AndStartBeforeBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -565,7 +578,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
   @Test
-  public void testTask2AndStartBeforeTaskAfterNonInterruptingBoundaryEventInsideSubProcess() {
+  void testTask2AndStartBeforeTaskAfterNonInterruptingBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -604,7 +617,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
   @Test
-  public void testTask2AndStartBeforeNonInterruptingBoundaryEventInsideSubProcess() {
+  void testTask2AndStartBeforeNonInterruptingBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -643,7 +656,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_ON_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskAfterBoundaryEventOnSubProcess() {
+  void testStartBeforeTaskAfterBoundaryEventOnSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -680,7 +693,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_ON_SUBPROCESS)
   @Test
-  public void testStartBeforeBoundaryEventOnSubProcess() {
+  void testStartBeforeBoundaryEventOnSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -711,7 +724,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_ON_SUBPROCESS)
   @Test
-  public void testStartBeforeTaskAfterNonInterruptingBoundaryEventOnSubProcess() {
+  void testStartBeforeTaskAfterNonInterruptingBoundaryEventOnSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -748,7 +761,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_ON_SUBPROCESS)
   @Test
-  public void testStartBeforeNonInterruptingBoundaryEventOnSubProcess() {
+  void testStartBeforeNonInterruptingBoundaryEventOnSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -785,7 +798,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_WITH_PARALLEL_GATEWAY)
   @Test
-  public void testStartBeforeInterruptingBoundaryEvent() {
+  void testStartBeforeInterruptingBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -819,7 +832,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_WITH_PARALLEL_GATEWAY)
   @Test
-  public void testStartBeforeNonInterruptingBoundaryEvent() {
+  void testStartBeforeNonInterruptingBoundaryEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -856,7 +869,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_WITH_PARALLEL_GATEWAY_INSIDE_SUB_PROCESS)
   @Test
-  public void testStartBeforeInterruptingBoundaryEventInsideSubProcess() {
+  void testStartBeforeInterruptingBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
@@ -893,7 +906,7 @@ public class ProcessInstanceModificationBoundaryEventTest extends PluggableProce
 
   @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_WITH_PARALLEL_GATEWAY_INSIDE_SUB_PROCESS)
   @Test
-  public void testStartBeforeNonInterruptingBoundaryEventInsideSubProcess() {
+  void testStartBeforeNonInterruptingBoundaryEventInsideSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 

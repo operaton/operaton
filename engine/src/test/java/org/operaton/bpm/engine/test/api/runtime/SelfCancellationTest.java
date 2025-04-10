@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -30,18 +33,13 @@ import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.EndEvent;
 import org.operaton.bpm.model.bpmn.instance.TerminateEventDefinition;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * Tests for when delegate code synchronously cancels the activity instance it belongs to.
@@ -52,11 +50,10 @@ public class SelfCancellationTest {
 
   protected static final String MESSAGE = "Message";
 
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(processEngineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(processEngineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(processEngineRule);
 
   //========================================================================================================================
   //=======================================================MODELS===========================================================
@@ -195,17 +192,10 @@ public class SelfCancellationTest {
   protected RuntimeService runtimeService;
   protected TaskService taskService;
 
-  @Before
-  public void clearRecorderListener()
+  @BeforeEach
+  void clearRecorderListener()
   {
     RecorderExecutionListener.clear();
-  }
-
-  @Before
-  public void initServices()
-  {
-    runtimeService = processEngineRule.getRuntimeService();
-    taskService = processEngineRule.getTaskService();
   }
 
   private void checkRecordedEvents(String ...activityIds) {
@@ -233,32 +223,32 @@ public class SelfCancellationTest {
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEvent() {
+  void testTriggerParallelTerminateEndEvent() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK);
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEventWithUserTask() {
+  void testTriggerParallelTerminateEndEventWithUserTask() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK_AND_USER_TASK_AFTER_SEND);
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEventWithoutEndAfterSend() {
+  void testTriggerParallelTerminateEndEventWithoutEndAfterSend() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK_WITHOUT_END_AFTER_SEND);
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEventWithSendAsScope() {
+  void testTriggerParallelTerminateEndEventWithSendAsScope() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK_WITH_SEND_AS_SCOPE);
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEventWithSendAsScopeWithoutEnd() {
+  void testTriggerParallelTerminateEndEventWithSendAsScopeWithoutEnd() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK_WITH_SEND_AS_SCOPE_WITHOUT_END);
   }
 
   @Test
-  public void testSendMessageInSubProcess() {
+  void testSendMessageInSubProcess() {
     // given
     testHelper.deploy(PROCESS_WITH_SUBPROCESS_AND_DELEGATE_MSG_SEND);
     runtimeService.startProcessInstanceByKey("process");
@@ -274,7 +264,7 @@ public class SelfCancellationTest {
   }
 
   @Test
-  public void testParallelSendTaskWithBoundaryRecieveTask() {
+  void testParallelSendTaskWithBoundaryRecieveTask() {
     // given
     testHelper.deploy(PROCESS_WITH_PARALLEL_SEND_TASK_AND_BOUNDARY_EVENT);
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("process");
@@ -291,7 +281,7 @@ public class SelfCancellationTest {
   }
 
   @Test
-  public void testSendTaskWithBoundaryEvent() {
+  void testSendTaskWithBoundaryEvent() {
     // given
     testHelper.deploy(PROCESS_WITH_SEND_TASK_AND_BOUNDARY_EVENT);
     runtimeService.startProcessInstanceByKey("process");

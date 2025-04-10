@@ -22,24 +22,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Tassilo Weidner
  */
-public class RootProcessInstanceTest {
+class RootProcessInstanceTest {
 
   protected final String CALLED_PROCESS_KEY = "calledProcess";
   protected final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
@@ -62,23 +59,16 @@ public class RootProcessInstanceTest {
         .calledElement(CALLED_AND_CALLING_PROCESS_KEY)
     .endEvent().done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RuntimeService runtimeService;
-  protected FormService formService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    formService = engineRule.getFormService();
-  }
+  RuntimeService runtimeService;
+  FormService formService;
 
   @Test
-  public void shouldPointToItself() {
+  void shouldPointToItself() {
     // given
     testRule.deploy(CALLED_PROCESS);
 
@@ -93,7 +83,7 @@ public class RootProcessInstanceTest {
   }
 
   @Test
-  public void shouldPointToItselfBySubmittingStartForm() {
+  void shouldPointToItselfBySubmittingStartForm() {
     // given
     DeploymentWithDefinitions deployment = testRule.deploy(CALLED_PROCESS);
 
@@ -111,7 +101,7 @@ public class RootProcessInstanceTest {
   }
 
   @Test
-  public void shouldPointToItselfByStartingAtActivity() {
+  void shouldPointToItselfByStartingAtActivity() {
     // given
     testRule.deploy(CALLED_PROCESS);
 
@@ -128,7 +118,7 @@ public class RootProcessInstanceTest {
   }
 
   @Test
-  public void shouldPointToRoot() {
+  void shouldPointToRoot() {
     // given
     testRule.deploy(CALLED_PROCESS);
     testRule.deploy(CALLED_AND_CALLING_PROCESS);
@@ -160,7 +150,7 @@ public class RootProcessInstanceTest {
   }
 
   @Test
-  public void shouldPointToRootWithInitialCallAfterParallelGateway() {
+  void shouldPointToRootWithInitialCallAfterParallelGateway() {
     // given
     testRule.deploy(CALLED_PROCESS);
 

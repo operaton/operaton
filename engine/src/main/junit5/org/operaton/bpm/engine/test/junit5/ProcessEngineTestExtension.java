@@ -244,7 +244,7 @@ public class ProcessEngineTestExtension
             .toList();
   }
 
-  protected boolean areJobsAvailable() {
+  public boolean areJobsAvailable() {
     return !availableJobs().isEmpty();
   }
 

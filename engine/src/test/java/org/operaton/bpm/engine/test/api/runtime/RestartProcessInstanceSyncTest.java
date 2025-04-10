@@ -24,6 +24,11 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -40,27 +45,23 @@ import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProviderProcessInst
 import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.AsyncProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.util.IncrementCounterListener;
 import org.operaton.bpm.engine.test.bpmn.async.AsyncListener;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  *
@@ -68,34 +69,30 @@ import org.junit.rules.RuleChain;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class RestartProcessInstanceSyncTest {
+class RestartProcessInstanceSyncTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  TenantIdProvider defaultTenantIdProvider;
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected TenantIdProvider defaultTenantIdProvider;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
+  @BeforeEach
+  void init() {
     defaultTenantIdProvider = engineRule.getProcessEngineConfiguration().getTenantIdProvider();
   }
 
-  @After
-  public void reset() {
+  @AfterEach
+  void reset() {
     engineRule.getProcessEngineConfiguration().setTenantIdProvider(defaultTenantIdProvider);
   }
 
   @Test
-  public void shouldRestartSimpleProcessInstance() {
+  void shouldRestartSimpleProcessInstance() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -121,7 +118,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithTwoTasks() {
+  void shouldRestartProcessInstanceWithTwoTasks() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -156,7 +153,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithParallelGateway() {
+  void shouldRestartProcessInstanceWithParallelGateway() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -183,7 +180,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithSubProcess() {
+  void shouldRestartProcessInstanceWithSubProcess() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -209,7 +206,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithVariables() {
+  void shouldRestartProcessInstanceWithVariables() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
         .startEvent()
@@ -246,7 +243,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithInitialVariables() {
+  void shouldRestartProcessInstanceWithInitialVariables() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
         .startEvent("startEvent")
@@ -284,7 +281,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldNotSetLocalVariables() {
+  void shouldNotSetLocalVariables() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -311,7 +308,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldNotSetInitialVersionOfLocalVariables() {
+  void shouldNotSetInitialVersionOfLocalVariables() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process", Variables.createVariables().putValue("var", "bar"));
@@ -337,7 +334,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldNotSetInitialVersionOfVariables() {
+  void shouldNotSetInitialVersionOfVariables() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -369,7 +366,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldSetInitialVersionOfVariables() {
+  void shouldSetInitialVersionOfVariables() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process",
@@ -404,7 +401,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldSetInitialVersionOfVariablesAsyncBeforeStartEvent() {
+  void shouldSetInitialVersionOfVariablesAsyncBeforeStartEvent() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(AsyncProcessModels.ASYNC_BEFORE_START_EVENT_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process",
@@ -444,7 +441,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldSetInitialVersionOfVariablesAsyncBeforeStartEventEndExecutionListener() {
+  void shouldSetInitialVersionOfVariablesAsyncBeforeStartEventEndExecutionListener() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -486,7 +483,7 @@ public class RestartProcessInstanceSyncTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testAsyncStartEventListeners.bpmn20.xml"})
-  public void shouldSetInitialVersionOfVariablesAsyncBeforeStartEventExecutionListener() {
+  void shouldSetInitialVersionOfVariablesAsyncBeforeStartEventExecutionListener() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncStartEvent",
         Variables.createVariables().putValue("var", "bar"));
@@ -522,7 +519,7 @@ public class RestartProcessInstanceSyncTest {
       "org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testCallActivity-super.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testCallActivity-sub.bpmn20.xml"
   })
-  public void shouldSetInitialVersionOfVariablesAsyncBeforeCallActivity() {
+  void shouldSetInitialVersionOfVariablesAsyncBeforeCallActivity() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("super",
         Variables.createVariables().putValue("var", "bar"));
@@ -546,7 +543,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceUsingHistoricProcessInstanceQuery() {
+  void shouldRestartProcessInstanceUsingHistoricProcessInstanceQuery() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -576,14 +573,14 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithNullProcessDefinitionId() {
+  void restartProcessInstanceWithNullProcessDefinitionId() {
     assertThatThrownBy(() -> runtimeService.restartProcessInstances(null))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("processDefinitionId is null");
   }
 
   @Test
-  public void restartProcessInstanceWithoutProcessInstanceIds() {
+  void restartProcessInstanceWithoutProcessInstanceIds() {
     // given
     var restartProcessInstanceBuilder = runtimeService
       .restartProcessInstances("foo")
@@ -596,7 +593,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithoutInstructions() {
+  void restartProcessInstanceWithoutInstructions() {
     // given
     var restartProcessInstanceBuilder = runtimeService
       .restartProcessInstances("foo")
@@ -609,7 +606,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithNullProcessInstanceId() {
+  void restartProcessInstanceWithNullProcessInstanceId() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var restartProcessInstanceBuilder = runtimeService
@@ -624,7 +621,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void restartNotExistingProcessInstance() {
+  void restartNotExistingProcessInstance() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var restartProcessInstanceBuilder = runtimeService
@@ -639,7 +636,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void restartProcessInstanceWithNotMatchingProcessDefinition() {
+  void restartProcessInstanceWithNotMatchingProcessDefinition() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process2").startEvent().userTask().endEvent().done();
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
@@ -656,7 +653,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithoutBusinessKey() {
+  void shouldRestartProcessInstanceWithoutBusinessKey() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process", "businessKey", (String) null);
@@ -675,7 +672,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithBusinessKey() {
+  void shouldRestartProcessInstanceWithBusinessKey() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process", "businessKey", (String) null);
@@ -694,7 +691,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithoutCaseInstanceId() {
+  void shouldRestartProcessInstanceWithoutCaseInstanceId() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process", null, "caseInstanceId");
@@ -712,7 +709,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRestartProcessInstanceWithTenant() {
+  void shouldRestartProcessInstanceWithTenant() {
     // given
     ProcessDefinition processDefinition = testRule.deployForTenantAndGetDefinition("tenantId", ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -731,7 +728,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldSkipCustomListeners() {
+  void shouldSkipCustomListeners() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(modify(ProcessModels.TWO_TASKS_PROCESS).activityBuilder("userTask1")
         .operatonExecutionListenerClass(ExecutionListener.EVENTNAME_START, IncrementCounterListener.class.getName()).done());
@@ -752,7 +749,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldSkipIoMappings() {
+  void shouldSkipIoMappings() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(
         modify(ProcessModels.TWO_TASKS_PROCESS).activityBuilder("userTask1").operatonInputParameter("foo", "bar").done());
@@ -774,7 +771,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldRetainTenantIdOfSharedProcessDefinition() {
+  void shouldRetainTenantIdOfSharedProcessDefinition() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setTenantIdProvider(new TestTenantIdProvider());
@@ -799,7 +796,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldSkipTenantIdProviderOnRestart() {
+  void shouldSkipTenantIdProviderOnRestart() {
     // given
     engineRule.getProcessEngineConfiguration()
         .setTenantIdProvider(new TestTenantIdProvider());
@@ -828,7 +825,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldNotSetInitialVariablesIfThereIsNoUniqueStartActivity() {
+  void shouldNotSetInitialVariablesIfThereIsNoUniqueStartActivity() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
 
@@ -854,7 +851,7 @@ public class RestartProcessInstanceSyncTest {
   }
 
   @Test
-  public void shouldNotRestartActiveProcessInstance() {
+  void shouldNotRestartActiveProcessInstance() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());

@@ -4,6 +4,7 @@
     <dependencies>
       <module name="org.operaton.bpm.operaton-engine" />
       <module name="org.mybatis.mybatis"/>
+      <module name="org.glassfish.jaxb" services="import"/>
     </dependencies>
   </deployment>
 </jboss-deployment-structure>

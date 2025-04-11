@@ -33,6 +33,7 @@ import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
 public class DeploymentTest {
 
@@ -41,7 +42,7 @@ public class DeploymentTest {
   final DeploymentApi api = new DeploymentApi();
 
   @Rule
-  public WireMockRule wireMockRule = new WireMockRule(8080);
+public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
 
   @Test
   public void shouldCreateDeployment() throws ApiException {

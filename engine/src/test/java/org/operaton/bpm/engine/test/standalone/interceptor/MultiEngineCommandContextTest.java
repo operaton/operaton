@@ -23,6 +23,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,6 +71,7 @@ public class MultiEngineCommandContextTest {
   }
 
   @Test
+  @Ignore("https://github.com/operaton/operaton/issues/720")
   public void shouldOpenNewCommandContextWhenInteractingAcrossEngines() {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()

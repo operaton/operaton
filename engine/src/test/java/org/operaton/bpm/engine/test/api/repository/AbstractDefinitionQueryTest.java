@@ -35,7 +35,7 @@ public abstract class AbstractDefinitionQueryTest {
   protected static final String SECOND_DEPLOYMENT_NAME = "secondDeployment";
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().cacheForConfigurationResource(false).build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

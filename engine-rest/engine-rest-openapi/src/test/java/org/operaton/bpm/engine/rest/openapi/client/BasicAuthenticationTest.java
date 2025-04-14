@@ -55,6 +55,7 @@ public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.option
 
     apiClient.setUsername(USERNAME);
     apiClient.setPassword(PASSWORD);
+    apiClient.setBasePath(apiClient.getBasePath().replace("8080", String.valueOf(wireMockRule.port())));
 
     api = new ProcessInstanceApi(apiClient);
   }

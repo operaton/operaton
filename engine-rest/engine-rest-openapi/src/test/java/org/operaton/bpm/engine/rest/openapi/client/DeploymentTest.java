@@ -26,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openapitools.client.ApiException;
@@ -42,7 +43,13 @@ public class DeploymentTest {
   final DeploymentApi api = new DeploymentApi();
 
   @Rule
-public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
+  public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
+
+  @Before
+  public void before() {
+    var apiClient = api.getApiClient();
+    apiClient.setBasePath(apiClient.getBasePath().replace("8080", String.valueOf(wireMockRule.port())));
+  }
 
   @Test
   public void shouldCreateDeployment() throws ApiException {

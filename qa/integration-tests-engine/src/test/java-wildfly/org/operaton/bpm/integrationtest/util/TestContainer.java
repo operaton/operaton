@@ -34,7 +34,6 @@ public class TestContainer {
   }
 
   public static void addContainerSpecificResourcesWithoutWeld(WebArchive webArchive) {
-    webArchive.addAsManifestResource("jboss-deployment-structure.xml");
     webArchive.addAsLibraries(DeploymentHelper.getEjbClient());
   }
 

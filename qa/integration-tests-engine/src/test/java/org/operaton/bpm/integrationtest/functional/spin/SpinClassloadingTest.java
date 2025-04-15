@@ -39,6 +39,7 @@ public class SpinClassloadingTest extends AbstractFoxPlatformIntegrationTest {
   public static final WebArchive createPaDeployment() {
 
     return initWebArchiveDeployment()
+      .addAsManifestResource("jboss-deployment-structure-spin.xml","jboss-deployment-structure.xml")
       .addAsResource("org/operaton/bpm/integrationtest/functional/spin/SpinClassloadingTest.bpmn")
       .addClass(XmlSerializable.class)
       .addClass(SpinVariableDelegate.class)

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+  <deployment>
+    <exclude-subsystems>
+      <subsystem name="jaxrs" />
+    </exclude-subsystems>
+    <dependencies>
+      <module name="org.operaton.spin.operaton-spin-dataformat-json-jackson" services="import" />
+      <module name="com.fasterxml.jackson.core.jackson-databind" slot="2.15.2" />
+      <module name="org.glassfish.jaxb" services="import"/>
+    </dependencies>
+  </deployment>
+</jboss-deployment-structure>

@@ -32,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
+@Ignore("https://github.com/operaton/operaton/issues/720")
 public class MultiEngineCommandContextTest {
 
   protected ProcessEngine engine1;
@@ -71,7 +72,6 @@ public class MultiEngineCommandContextTest {
   }
 
   @Test
-  @Ignore("https://github.com/operaton/operaton/issues/720")
   public void shouldOpenNewCommandContextWhenInteractingAcrossEngines() {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()

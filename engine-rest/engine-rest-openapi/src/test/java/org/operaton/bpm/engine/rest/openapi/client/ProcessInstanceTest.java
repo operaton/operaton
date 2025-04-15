@@ -45,67 +45,63 @@ import java.net.URL;
 
 public class ProcessInstanceTest {
 
-    private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
+  private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
 
-    final ProcessInstanceApi api = new ProcessInstanceApi();
+  final ProcessInstanceApi api = new ProcessInstanceApi();
 
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options()
-            .dynamicPort());
+  @Rule
+  public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options()
+          .dynamicPort());
 
-
-    @Before
-    public void setUp() {
-        // Dynamically set the basePath for the API to match WireMock's port
-        String currentBasePath = api.getApiClient().getBasePath();
-        try {
-            URL url = new URL(currentBasePath);
-            String newBasePath =
-                    url.getProtocol() + "://" + url.getHost() + ":" + wireMockRule.port() +
-                            url.getPath();
-            api.getApiClient().setBasePath(newBasePath);
-        } catch (MalformedURLException e) {
-            // Fallback if URL parsing fails
-            api.getApiClient().setBasePath("http://localhost:" + wireMockRule.port());
-        }
+  @Before
+  public void setUp() {
+    // Dynamically set the basePath for the API to match WireMock's port
+    String currentBasePath = api.getApiClient().getBasePath();
+    try {
+      URL url = new URL(currentBasePath);
+      String newBasePath =
+              url.getProtocol() + "://" + url.getHost() + ":" + wireMockRule.port() + url.getPath();
+      api.getApiClient().setBasePath(newBasePath);
+    } catch (MalformedURLException e) {
+      // Fallback if URL parsing fails
+      api.getApiClient().setBasePath("http://localhost:" + wireMockRule.port());
     }
+  }
 
-    @Test
-    public void shouldQueryProcessInstancesCount() throws ApiException {
-        // given
-        stubFor(post(urlEqualTo(
-                ENGINE_REST_PROCESS_INSTANCE + "/count")).willReturn(aResponse().withStatus(200)
-                .withBody("{ \"count\": 3 }")));
+  @Test
+  public void shouldQueryProcessInstancesCount() throws ApiException {
+    // given
+    stubFor(post(urlEqualTo(
+            ENGINE_REST_PROCESS_INSTANCE + "/count")).willReturn(aResponse().withStatus(200)
+            .withBody("{ \"count\": 3 }")));
 
-        // when
-        ProcessInstanceQueryDto processInstanceQueryDto = new ProcessInstanceQueryDto();
-        processInstanceQueryDto.setActive(true);
-        CountResultDto count = api.queryProcessInstancesCount(processInstanceQueryDto);
+    // when
+    ProcessInstanceQueryDto processInstanceQueryDto = new ProcessInstanceQueryDto();
+    processInstanceQueryDto.setActive(true);
+    CountResultDto count = api.queryProcessInstancesCount(processInstanceQueryDto);
 
-        // then
-        assertThat(count.getCount()).isEqualTo(3);
-        verify(postRequestedFor(urlEqualTo(
-                ENGINE_REST_PROCESS_INSTANCE + "/count")).withRequestBody(equalToJson(
-                        "{ \"active\": true }"))
-                .withHeader("Content-Type", equalTo("application/json; charset=UTF-8")));
+    // then
+    assertThat(count.getCount()).isEqualTo(3);
+    verify(postRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/count")).withRequestBody(
+                    equalToJson("{ \"active\": true }"))
+            .withHeader("Content-Type", equalTo("application/json; charset=UTF-8")));
+  }
 
-    }
+  @Test
+  public void shouldUpdateSuspensionStateById() throws ApiException {
+    // given
+    String id = "anProcessInstanceId";
+    stubFor(put(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).willReturn(
+            aResponse().withStatus(204)));
 
-    @Test
-    public void shouldUpdateSuspensionStateById() throws ApiException {
-        // given
-        String id = "anProcessInstanceId";
-        stubFor(put(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).willReturn(
-                aResponse().withStatus(204)));
+    // when
+    SuspensionStateDto dto = new SuspensionStateDto();
+    dto.setSuspended(true);
+    api.updateSuspensionStateById(id, dto);
 
-        // when
-        SuspensionStateDto dto = new SuspensionStateDto();
-        dto.setSuspended(true);
-        api.updateSuspensionStateById(id, dto);
-
-        // then no error
-        verify(putRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id +
-                "/suspended")).withRequestBody(equalToJson("{ \"suspended\": true }")));
-    }
-
+    // then no error
+    verify(putRequestedFor(urlEqualTo(
+            ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).withRequestBody(equalToJson(
+            "{ \"suspended\": true }")));
+  }
 }

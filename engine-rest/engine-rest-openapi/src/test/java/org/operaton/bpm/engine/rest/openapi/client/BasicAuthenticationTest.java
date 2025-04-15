@@ -46,8 +46,9 @@ public class BasicAuthenticationTest {
 
   ProcessInstanceApi api;
 
- @Rule
-public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
+  @Rule
+  public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options()
+          .dynamicPort());
 
   @Before
   public void clientWithValidCredentials() {
@@ -55,7 +56,8 @@ public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.option
 
     apiClient.setUsername(USERNAME);
     apiClient.setPassword(PASSWORD);
-    apiClient.setBasePath(apiClient.getBasePath().replace("8080", String.valueOf(wireMockRule.port())));
+    apiClient.setBasePath(apiClient.getBasePath()
+            .replace("8080", String.valueOf(wireMockRule.port())));
 
     api = new ProcessInstanceApi(apiClient);
   }
@@ -63,8 +65,8 @@ public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.option
   @Test
   public void shouldUseBasicAuth() throws ApiException {
     // given
-    stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1"))
-        .willReturn(aResponse().withStatus(200).withBody("{ \"id\": 1 }")));
+    stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).willReturn(aResponse().withStatus(
+            200).withBody("{ \"id\": 1 }")));
 
     // when
     ProcessInstanceDto processInstance = api.getProcessInstance("1");
@@ -72,6 +74,7 @@ public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.option
     // then
     assertThat(processInstance.getId()).isEqualTo("1");
     verify(getRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).withHeader("Authorization",
-        equalTo("Basic bWlrZTpzZWNyZXQ=")));
+            equalTo("Basic bWlrZTpzZWNyZXQ=")
+    ));
   }
 }

@@ -45,91 +45,96 @@ public class DeploymentTest {
   final DeploymentApi api = new DeploymentApi();
 
   @Rule
-  public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
+  public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options()
+          .dynamicPort());
 
   @Before
-    public void before() {
-        var apiClient = api.getApiClient();
-        apiClient.setBasePath(apiClient.getBasePath()
-                .replace("8080", String.valueOf(wireMockRule.port())));
+  public void before() {
+    var apiClient = api.getApiClient();
+    apiClient.setBasePath(apiClient.getBasePath()
+            .replace("8080", String.valueOf(wireMockRule.port())));
 
-        for (var server : apiClient.getServers()) {
-            if (server.variables.containsKey("port")) {
-                server.variables.put("port", new ServerVariable(
-                        "No description provided",
-                        String.valueOf(wireMockRule.port()),
-                        new HashSet<>()
-                ));
-            }
-        }
+    for (var server : apiClient.getServers()) {
+      if (server.variables.containsKey("port")) {
+        server.variables.put("port", new ServerVariable("No description provided",
+                String.valueOf(wireMockRule.port()),
+                new HashSet<>()
+        ));
+      }
     }
+  }
 
   @Test
   public void shouldCreateDeployment() throws ApiException {
     // given
     String deploymentSource = "test-source";
     String deploymentName = "deployment-test-name";
-    wireMockRule.stubFor(
-        post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create"))
-        .willReturn(aResponse()
-            .withStatus(200)
-            .withBody("""
+    wireMockRule.stubFor(post(urlEqualTo(
+            ENGINE_REST_DEPLOYMENT + "/create")).willReturn(aResponse().withStatus(200).withBody("""
+                {
+                "links": [
                     {
-                    "links": [
-                        {
-                            "method": "GET",
-                            "href": "http://localhost:%d/rest-test/deployment/aDeploymentId",
-                            "rel": "self"
-                        }
-                    ],
-                    "id": "aDeploymentId",
-                    "name": "%s",
-                    "source": "%s",
-                    "deploymentTime": "2013-01-23T13:59:43.000+0200",
-                    "tenantId": null,
-                    "deployedProcessDefinitions": {
-                        "aProcDefId": {
-                            "id": "aProcDefId",
-                            "key": "aKey",
-                            "category": "aCategory",
-                            "description": "aDescription",
-                            "name": "aName",
-                            "version": 42,
-                            "resource": "aResourceName",
-                            "deploymentId": "aDeploymentId",
-                            "diagram": "aResourceName.png",
-                            "suspended": true,
-                            "tenantId": null,
-                            "versionTag": null
-                        }
-                    },
-                    "deployedCaseDefinitions": null,
-                    "deployedDecisionDefinitions": null,
-                    "deployedDecisionRequirementsDefinitions": null
-                }""".formatted(wireMockRule.port(), deploymentName, deploymentSource)))
-        );
+                        "method": "GET",
+                        "href": "http://localhost:%d/rest-test/deployment/aDeploymentId",
+                        "rel": "self"
+                    }
+                ],
+                "id": "aDeploymentId",
+                "name": "%s",
+                "source": "%s",
+                "deploymentTime": "2013-01-23T13:59:43.000+0200",
+                "tenantId": null,
+                "deployedProcessDefinitions": {
+                    "aProcDefId": {
+                        "id": "aProcDefId",
+                        "key": "aKey",
+                        "category": "aCategory",
+                        "description": "aDescription",
+                        "name": "aName",
+                        "version": 42,
+                        "resource": "aResourceName",
+                        "deploymentId": "aDeploymentId",
+                        "diagram": "aResourceName.png",
+                        "suspended": true,
+                        "tenantId": null,
+                        "versionTag": null
+                    }
+                },
+                "deployedCaseDefinitions": null,
+                "deployedDecisionDefinitions": null,
+                "deployedDecisionRequirementsDefinitions": null
+            }""".formatted(wireMockRule.port(), deploymentName, deploymentSource))));
 
     // when
-    DeploymentWithDefinitionsDto deployment = api.createDeployment(null, deploymentSource, false, false, deploymentName, null, new File("src/test/resources/one.bpmn"));
+    DeploymentWithDefinitionsDto deployment = api.createDeployment(null,
+            deploymentSource,
+            false,
+            false,
+            deploymentName,
+            null,
+            new File("src/test/resources/one.bpmn")
+    );
 
     // then
     assertThat(deployment.getId()).isEqualTo("aDeploymentId");
     assertThat(deployment.getName()).isEqualTo(deploymentName);
     assertThat(deployment.getSource()).isEqualTo(deploymentSource);
     assertThat(deployment.getDeployedProcessDefinitions()).containsKey("aProcDefId");
-    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getId()).isEqualTo("aProcDefId");
-    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getKey()).isEqualTo("aKey");
-    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getName()).isEqualTo("aName");
+    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getId()).isEqualTo(
+            "aProcDefId");
+    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getKey()).isEqualTo(
+            "aKey");
+    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getName()).isEqualTo(
+            "aName");
 
-    verify(postRequestedFor(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create"))
-        .withRequestBody(containing("Content-Disposition: form-data; name=\"deployment-name\""))
-        .withRequestBody(containing("deployment-test-name"))
-        .withRequestBody(containing("Content-Disposition: form-data; name=\"deployment-source\""))
-        .withRequestBody(containing("test-source"))
-        .withRequestBody(containing("Content-Disposition: form-data; name=\"data\"; filename=\"one.bpmn\""))
-        .withRequestBody(containing("Content-Type: application/octet-stream"))
-        .withHeader("Content-Type",  containing("multipart/form-data"))
-        );
+    verify(postRequestedFor(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).withRequestBody(
+                    containing("Content-Disposition: form-data; name=\"deployment-name\""))
+            .withRequestBody(containing("deployment-test-name"))
+            .withRequestBody(containing("Content-Disposition: form-data; name=\"deployment-source\""))
+            .withRequestBody(containing("test-source"))
+            .withRequestBody(containing(
+                    "Content-Disposition: form-data; name=\"data\"; filename=\"one.bpmn\""))
+            .withRequestBody(containing("Content-Type: application/octet-stream"))
+            .withHeader("Content-Type", containing("multipart/form-data")));
   }
-
 }

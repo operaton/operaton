@@ -25,11 +25,13 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
+import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openapitools.client.ApiException;
+import org.openapitools.client.ServerVariable;
 import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
 
@@ -46,10 +48,21 @@ public class DeploymentTest {
   public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().dynamicPort());
 
   @Before
-  public void before() {
-    var apiClient = api.getApiClient();
-    apiClient.setBasePath(apiClient.getBasePath().replace("8080", String.valueOf(wireMockRule.port())));
-  }
+    public void before() {
+        var apiClient = api.getApiClient();
+        apiClient.setBasePath(apiClient.getBasePath()
+                .replace("8080", String.valueOf(wireMockRule.port())));
+
+        for (var server : apiClient.getServers()) {
+            if (server.variables.containsKey("port")) {
+                server.variables.put("port", new ServerVariable(
+                        "No description provided",
+                        String.valueOf(wireMockRule.port()),
+                        new HashSet<>()
+                ));
+            }
+        }
+    }
 
   @Test
   public void shouldCreateDeployment() throws ApiException {
@@ -60,39 +73,40 @@ public class DeploymentTest {
         post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create"))
         .willReturn(aResponse()
             .withStatus(200)
-            .withBody("{" +
-                "    \"links\": [" +
-                "        {" +
-                "            \"method\": \"GET\"," +
-                "            \"href\": \"http://localhost:8080/rest-test/deployment/aDeploymentId\"," +
-                "            \"rel\": \"self\"" +
-                "        }" +
-                "    ]," +
-                "    \"id\": \"aDeploymentId\"," +
-                "    \"name\": \"" + deploymentName + "\"," +
-                "    \"source\": \"" + deploymentSource + "\"," +
-                "    \"deploymentTime\": \"2013-01-23T13:59:43.000+0200\"," +
-                "    \"tenantId\": null," +
-                "    \"deployedProcessDefinitions\": {" +
-                "        \"aProcDefId\": {" +
-                "            \"id\": \"aProcDefId\"," +
-                "            \"key\": \"aKey\"," +
-                "            \"category\": \"aCategory\"," +
-                "            \"description\": \"aDescription\"," +
-                "            \"name\": \"aName\"," +
-                "            \"version\": 42," +
-                "            \"resource\": \"aResourceName\"," +
-                "            \"deploymentId\": \"aDeploymentId\"," +
-                "            \"diagram\": \"aResourceName.png\"," +
-                "            \"suspended\": true," +
-                "            \"tenantId\": null," +
-                "            \"versionTag\": null" +
-                "        }" +
-                "    }," +
-                "    \"deployedCaseDefinitions\": null," +
-                "    \"deployedDecisionDefinitions\": null," +
-                "    \"deployedDecisionRequirementsDefinitions\": null" +
-                "}"))
+            .withBody("""
+                    {
+                    "links": [
+                        {
+                            "method": "GET",
+                            "href": "http://localhost:%d/rest-test/deployment/aDeploymentId",
+                            "rel": "self"
+                        }
+                    ],
+                    "id": "aDeploymentId",
+                    "name": "%s",
+                    "source": "%s",
+                    "deploymentTime": "2013-01-23T13:59:43.000+0200",
+                    "tenantId": null,
+                    "deployedProcessDefinitions": {
+                        "aProcDefId": {
+                            "id": "aProcDefId",
+                            "key": "aKey",
+                            "category": "aCategory",
+                            "description": "aDescription",
+                            "name": "aName",
+                            "version": 42,
+                            "resource": "aResourceName",
+                            "deploymentId": "aDeploymentId",
+                            "diagram": "aResourceName.png",
+                            "suspended": true,
+                            "tenantId": null,
+                            "versionTag": null
+                        }
+                    },
+                    "deployedCaseDefinitions": null,
+                    "deployedDecisionDefinitions": null,
+                    "deployedDecisionRequirementsDefinitions": null
+                }""".formatted(wireMockRule.port(), deploymentName, deploymentSource)))
         );
 
     // when

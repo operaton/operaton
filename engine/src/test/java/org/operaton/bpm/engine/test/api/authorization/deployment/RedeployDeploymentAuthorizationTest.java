@@ -88,7 +88,7 @@ public class RedeployDeploymentAuthorizationTest {
   }
 
   @TestTemplate
-  public void testRedeploy() {
+  void testRedeploy() {
     // given
     RepositoryService repositoryService = engineRule.getRepositoryService();
 

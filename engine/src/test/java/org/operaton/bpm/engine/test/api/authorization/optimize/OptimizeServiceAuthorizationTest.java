@@ -182,7 +182,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void cantGetDataWithoutTenantAuthorization() {
+  void cantGetDataWithoutTenantAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -202,7 +202,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void cantGetDataWithoutProcessDefinitionAuthorization() {
+  void cantGetDataWithoutProcessDefinitionAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ_HISTORY);
@@ -222,7 +222,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void authorizationOnSingleProcessResourceNotEnough() {
+  void authorizationOnSingleProcessResourceNotEnough() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, SIMPLE_PROCESS, userId, READ_HISTORY);
@@ -243,7 +243,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void cantGetDataWithoutDecisionDefinitionAuthorization() {
+  void cantGetDataWithoutDecisionDefinitionAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -263,7 +263,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void authorizationOnSingleDecisionResourceNotEnough() {
+  void authorizationOnSingleDecisionResourceNotEnough() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -284,7 +284,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void canGetDataWithAllAuthorizations() {
+  void canGetDataWithAllAuthorizations() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     generateTestData();

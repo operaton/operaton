@@ -135,7 +135,7 @@ public class ProcessDiagramRetrievalTest {
    * Tests {@link RepositoryService#getProcessModel(String)}.
    */
   @TestTemplate
-  public void testGetProcessModel() throws Exception {
+  void testGetProcessModel() throws Exception {
     if (1 == processDefinitionQuery.count()) {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
       InputStream expectedStream = new FileInputStream("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + xmlFileName);
@@ -151,7 +151,7 @@ public class ProcessDiagramRetrievalTest {
    * Tests {@link RepositoryService#getProcessDiagram(String)}.
    */
   @TestTemplate
-  public void testGetProcessDiagram() throws Exception {
+  void testGetProcessDiagram() throws Exception {
     if (1 == processDefinitionQuery.count()) {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
       InputStream expectedStream = new FileInputStream("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName);
@@ -166,7 +166,7 @@ public class ProcessDiagramRetrievalTest {
   }
 
   @TestTemplate
-  public void testGetProcessDiagramAfterCacheWasCleaned() {
+  void testGetProcessDiagramAfterCacheWasCleaned() {
     if (1 == processDefinitionQuery.count()) {
       engineRule.getProcessEngineConfiguration().getDeploymentCache().discardProcessDefinitionCache();
       // given
@@ -189,7 +189,7 @@ public class ProcessDiagramRetrievalTest {
    * {@link ProcessDiagramLayoutFactory#getProcessDiagramLayout(InputStream, InputStream)}.
    */
   @TestTemplate
-  public void testGetProcessDiagramLayout() throws Exception {
+  void testGetProcessDiagramLayout() throws Exception {
     DiagramLayout processDiagramLayout;
     if (1 == processDefinitionQuery.count()) {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();

@@ -122,7 +122,7 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetRetriesAsync() {
+  void testSetRetriesAsync() {
 
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
@@ -159,7 +159,7 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetRetriesWithQueryAsync() {
+  void testSetRetriesWithQueryAsync() {
 
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);

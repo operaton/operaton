@@ -126,7 +126,7 @@ public class BatchModificationAuthorizationTest {
   }
 
   @TestTemplate
-  public void executeAsyncModification() {
+  void executeAsyncModification() {
     //given
     ProcessInstance processInstance1 = engineRule.getRuntimeService().startProcessInstanceByKey(ProcessModels.PROCESS_KEY);
     ProcessInstance processInstance2 = engineRule.getRuntimeService().startProcessInstanceByKey(ProcessModels.PROCESS_KEY);
@@ -162,7 +162,7 @@ public class BatchModificationAuthorizationTest {
   }
 
   @TestTemplate
-  public void executeModification() {
+  void executeModification() {
     //given
     ProcessInstance processInstance1 = engineRule.getRuntimeService().startProcessInstanceByKey(ProcessModels.PROCESS_KEY);
     ProcessInstance processInstance2 = engineRule.getRuntimeService().startProcessInstanceByKey(ProcessModels.PROCESS_KEY);

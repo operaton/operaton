@@ -56,7 +56,7 @@ public class CreateDeleteProcessInstancesBatchAuthorizationTest extends BatchCre
   }
 
   @TestTemplate
-  public void testBatchProcessInstanceDeletion() {
+  void testBatchProcessInstanceDeletion() {
     //given
     authRule
         .init(scenario)

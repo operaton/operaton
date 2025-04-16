@@ -122,7 +122,7 @@ public class HandleTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testHandleTaskBpmnError() {
+  void testHandleTaskBpmnError() {
     // given
     deploymentId = repositoryService.createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -146,7 +146,7 @@ public class HandleTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testHandleTaskEscalation() {
+  void testHandleTaskEscalation() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()

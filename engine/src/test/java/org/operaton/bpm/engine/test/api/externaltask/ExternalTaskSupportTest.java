@@ -83,7 +83,7 @@ public class ExternalTaskSupportTest {
   }
 
   @TestTemplate
-  public void testExternalTaskSupport() {
+  void testExternalTaskSupport() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -106,7 +106,7 @@ public class ExternalTaskSupportTest {
   }
 
   @TestTemplate
-  public void testExternalTaskProperties() {
+  void testExternalTaskProperties() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());

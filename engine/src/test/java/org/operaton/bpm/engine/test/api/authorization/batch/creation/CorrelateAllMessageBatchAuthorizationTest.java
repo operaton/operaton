@@ -66,7 +66,7 @@ public class CorrelateAllMessageBatchAuthorizationTest extends BatchCreationAuth
   }
 
   @TestTemplate
-  public void shouldAuthorizeSetVariablesBatch() {
+  void shouldAuthorizeSetVariablesBatch() {
     // given
     authRule
         .init(scenario)

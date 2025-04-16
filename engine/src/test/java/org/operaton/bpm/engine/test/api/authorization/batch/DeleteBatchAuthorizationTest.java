@@ -122,7 +122,7 @@ public class DeleteBatchAuthorizationTest {
   }
 
   @TestTemplate
-  public void testDeleteBatch() {
+  void testDeleteBatch() {
 
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
@@ -164,7 +164,7 @@ public class DeleteBatchAuthorizationTest {
    * Requires no additional DELETE_HISTORY authorization => consistent with deleteDeployment
    */
   @TestTemplate
-  public void testDeleteBatchCascade() {
+  void testDeleteBatchCascade() {
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
     batch = engineRule

@@ -144,7 +144,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   }
 
   @TestTemplate
-  public void testScheduleJobForBatchWindow() {
+  void testScheduleJobForBatchWindow() {
 
     ClockUtil.setCurrentTime(currentDate);
     processEngineConfiguration.initHistoryCleanup();
@@ -168,7 +168,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   }
 
   @TestTemplate
-  public void testScheduleJobForBatchWindowWithDefaultWindowConfigured() {
+  void testScheduleJobForBatchWindowWithDefaultWindowConfigured() {
     ClockUtil.setCurrentTime(currentDate);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("00:00");
@@ -202,7 +202,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   }
 
   @TestTemplate
-  public void testScheduleJobForBatchWindowWithShortcutConfiguration() {
+  void testScheduleJobForBatchWindowWithShortcutConfiguration() {
     ClockUtil.setCurrentTime(currentDate);
     processEngineConfiguration.setThursdayHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setThursdayHistoryCleanupBatchWindowEndTime("00:00");

@@ -90,7 +90,7 @@ public class ProcessEngineCharacterEncodingTest {
   }
 
   @TestTemplate
-  public void shouldPreserveArabicTaskCommentMessageWithCharset() {
+  void shouldPreserveArabicTaskCommentMessageWithCharset() {
     // given
     String message = "این نمونه است";
     Task task = newTaskWithComment(message);
@@ -104,7 +104,7 @@ public class ProcessEngineCharacterEncodingTest {
   }
 
   @TestTemplate
-  public void shouldPreserveLatinTaskCommentMessageWithCharset() {
+  void shouldPreserveLatinTaskCommentMessageWithCharset() {
     // given
     String message = "This is an example";
     Task task = newTaskWithComment(message);
@@ -118,7 +118,7 @@ public class ProcessEngineCharacterEncodingTest {
   }
 
   @TestTemplate
-  public void shouldPreserveArabicTaskUpdateCommentMessageWithCharset() {
+  void shouldPreserveArabicTaskUpdateCommentMessageWithCharset() {
     // given
     String taskId = newTask().getId();
     Comment comment = createNewComment(taskId, "OriginalMessage");
@@ -135,7 +135,7 @@ public class ProcessEngineCharacterEncodingTest {
   }
 
   @TestTemplate
-  public void shouldPreserveLatinTaskUpdateCommentMessageWithCharset() {
+  void shouldPreserveLatinTaskUpdateCommentMessageWithCharset() {
     // given
     String taskId = newTask().getId();
     Comment comment = createNewComment(taskId, "OriginalMessage");

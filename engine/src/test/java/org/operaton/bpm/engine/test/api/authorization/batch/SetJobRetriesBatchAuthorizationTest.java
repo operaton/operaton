@@ -124,7 +124,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   }
 
   @TestTemplate
-  public void testWithTwoInvocationsJobsListBased() {
+  void testWithTwoInvocationsJobsListBased() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
     setupAndExecuteJobsListBasedTest();
 
@@ -135,7 +135,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   }
 
   @TestTemplate
-  public void testWithTwoInvocationsJobsQueryBased() {
+  void testWithTwoInvocationsJobsQueryBased() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
     setupAndExecuteJobsQueryBasedTest();
 
@@ -146,21 +146,21 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   }
 
   @TestTemplate
-  public void testJobsListBased() {
+  void testJobsListBased() {
     setupAndExecuteJobsListBasedTest();
     // then
     assertScenario();
   }
 
   @TestTemplate
-  public void testJobsListQueryBased() {
+  void testJobsListQueryBased() {
     setupAndExecuteJobsQueryBasedTest();
     // then
     assertScenario();
   }
 
   @TestTemplate
-  public void testWithTwoInvocationsProcessListBased() {
+  void testWithTwoInvocationsProcessListBased() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
     setupAndExecuteProcessListBasedTest();
 
@@ -171,7 +171,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   }
 
   @TestTemplate
-  public void testWithTwoInvocationsProcessQueryBased() {
+  void testWithTwoInvocationsProcessQueryBased() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
     setupAndExecuteJobsQueryBasedTest();
 
@@ -200,7 +200,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   }
 
   @TestTemplate
-  public void testProcessList() {
+  void testProcessList() {
     setupAndExecuteProcessListBasedTest();
     // then
     assertScenario();

@@ -86,7 +86,7 @@ public class RestartAuthorizationTest {
   }
 
   @TestTemplate
-  public void execute() {
+  void execute() {
     //given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
 

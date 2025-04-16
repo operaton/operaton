@@ -124,7 +124,7 @@ public class BatchUpdateSuspensionStateAuthorizationTest {
   }
 
   @TestTemplate
-  public void executeBatch() {
+  void executeBatch() {
     //given
     testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
 

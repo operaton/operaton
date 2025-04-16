@@ -126,7 +126,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
   }
 
   @TestTemplate
-  public void testProcessInstancesList() {
+  void testProcessInstancesList() {
     //given
     List<String> processInstanceIds = Arrays.asList(historicProcessInstance.getId(), historicProcessInstance2.getId());
     authRule

@@ -109,7 +109,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
   }
 
   @TestTemplate
-  public void testWithTwoInvocationsProcessInstancesList() {
+  void testWithTwoInvocationsProcessInstancesList() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
     setupAndExecuteHistoricProcessInstancesListTest();
 
@@ -120,7 +120,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
   }
 
   @TestTemplate
-  public void testProcessInstancesList() {
+  void testProcessInstancesList() {
     setupAndExecuteHistoricProcessInstancesListTest();
     // then
     assertScenario();

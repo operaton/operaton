@@ -105,7 +105,7 @@ public class BatchSuspensionAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSuspendBatch() {
+  void testSuspendBatch() {
 
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
@@ -136,7 +136,7 @@ public class BatchSuspensionAuthorizationTest {
   }
 
   @TestTemplate
-  public void testActivateBatch() {
+  void testActivateBatch() {
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
     batch = engineRule

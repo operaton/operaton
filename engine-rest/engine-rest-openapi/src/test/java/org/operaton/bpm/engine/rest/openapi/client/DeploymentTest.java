@@ -38,7 +38,7 @@ public class DeploymentTest {
 
   @RegisterExtension
   static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
-          WireMockConfiguration.options().dynamicPort()).build();
+          WireMockConfiguration.options().dynamicPort().disableConnectionReuse(false)).build();
 
   @BeforeEach
   public void setup() {
@@ -94,6 +94,9 @@ public class DeploymentTest {
                     deploymentName,
                     deploymentSource
             ))));
+
+    System.out.println(wireMockExtension.baseUrl());
+    System.out.printf("Wiremock runs on server: %d%n", wireMockExtension.getPort());
 
     // when
     DeploymentWithDefinitionsDto deployment = api.createDeployment(null,

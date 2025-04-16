@@ -34,7 +34,6 @@ public class TestContainer {
   }
 
   public static void addContainerSpecificResourcesWithoutWeld(WebArchive webArchive) {
-    webArchive.addAsManifestResource("jboss-deployment-structure.xml");
     webArchive.addAsLibraries(DeploymentHelper.getEjbClient());
   }
 
@@ -49,6 +48,10 @@ public class TestContainer {
   public static void addContainerSpecificResourcesForNonPaWithoutWeld(WebArchive webArchive) {
     webArchive.addAsManifestResource("jboss-deployment-structure.xml");
     webArchive.addAsLibraries(DeploymentHelper.getAssertJ());
+  }
+
+  public static void addContainerSpecificResourcesForSpin(WebArchive deployment) {
+    deployment.addAsManifestResource("jboss-deployment-structure-spin.xml", "jboss-deployment-structure.xml");
   }
 
   public static void addContainerSpecificProcessEngineConfigurationClass(WebArchive deployment) {

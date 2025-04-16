@@ -42,11 +42,11 @@ import static org.assertj.core.api.Assertions.fail;
  */
 public class CaseCallActivityTest extends CmmnTest {
 
-  protected final String PROCESS_DEFINITION_KEY= "process";
-  protected final String ONE_TASK_CASE = "oneTaskCase";
-  protected final String CALL_ACTIVITY_ID = "callActivity";
-  protected final String USER_TASK_ID = "userTask";
-  protected final String HUMAN_TASK_ID = "PI_HumanTask_1";
+  static final String PROCESS_DEFINITION_KEY= "process";
+  static final String ONE_TASK_CASE = "oneTaskCase";
+  static final String CALL_ACTIVITY_ID = "callActivity";
+  static final String USER_TASK_ID = "userTask";
+  static final String HUMAN_TASK_ID = "PI_HumanTask_1";
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/callactivity/CaseCallActivityTest.testCallCaseAsConstant.bpmn20.xml",

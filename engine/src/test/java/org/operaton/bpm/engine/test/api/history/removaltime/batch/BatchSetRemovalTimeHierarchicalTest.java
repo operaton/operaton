@@ -83,7 +83,7 @@ class BatchSetRemovalTimeHierarchicalTest {
   @RegisterExtension
   protected static BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
 
-  protected final Date CURRENT_DATE = testRule.CURRENT_DATE;
+  protected final Date currentDate = testRule.CURRENT_DATE;
 
   protected RuntimeService runtimeService;
   protected HistoryService historyService;
@@ -135,9 +135,9 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // then
-    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
-    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
-    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
+    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
+    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -178,7 +178,7 @@ class BatchSetRemovalTimeHierarchicalTest {
       .list();
 
     // then
-    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -219,7 +219,7 @@ class BatchSetRemovalTimeHierarchicalTest {
       .list();
 
     // then
-    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -272,8 +272,8 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicDecisionInputInstances = historicDecisionInstance.getInputs();
 
     // then
-    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
-    assertThat(historicDecisionInputInstances.get(1).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
+    assertThat(historicDecisionInputInstances.get(1).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -320,7 +320,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicDecisionInputInstances = historicDecisionInstance.getInputs();
 
     // then
-    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -367,7 +367,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicDecisionInputInstances = historicDecisionInstance.getInputs();
 
     // then
-    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -419,7 +419,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicDecisionOutputInstances = historicDecisionInstance.getOutputs();
 
     // then
-    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -466,7 +466,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicDecisionOutputInstances = historicDecisionInstance.getOutputs();
 
     // then
-    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -513,7 +513,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicDecisionOutputInstances = historicDecisionInstance.getOutputs();
 
     // then
-    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -542,8 +542,8 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicProcessInstances = historyService.createHistoricProcessInstanceQuery().list();
 
     // then
-    assertThat(historicProcessInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
-    assertThat(historicProcessInstances.get(1).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicProcessInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
+    assertThat(historicProcessInstances.get(1).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -576,7 +576,7 @@ class BatchSetRemovalTimeHierarchicalTest {
       .singleResult();
 
     // then
-    assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -605,7 +605,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicTaskInstance = historyService.createHistoricTaskInstanceQuery().singleResult();
 
     // then
-    assertThat(historicTaskInstance.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicTaskInstance.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -644,7 +644,7 @@ class BatchSetRemovalTimeHierarchicalTest {
             .singleResult();
 
     // then
-    assertThat(authorization.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(authorization.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -731,7 +731,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     authQuery = authorizationService.createAuthorizationQuery()
         .resourceType(Resources.HISTORIC_PROCESS_INSTANCE);
 
-    Date removalTime = addDays(CURRENT_DATE, 5);
+    Date removalTime = addDays(currentDate, 5);
     assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(removalTime, processInstanceId, rootProcessInstanceId));
@@ -819,7 +819,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
     // then
-    assertThat(historicVariableInstance.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicVariableInstance.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -851,7 +851,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicDetail = historyService.createHistoricDetailQuery().singleResult();
 
     // then
-    assertThat(historicDetail.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDetail.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -880,7 +880,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     historicExternalTaskLog = historyService.createHistoricExternalTaskLogQuery().singleResult();
 
     // then
-    assertThat(historicExternalTaskLog.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicExternalTaskLog.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -913,7 +913,7 @@ class BatchSetRemovalTimeHierarchicalTest {
       .singleResult();
 
     // then
-    assertThat(job.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(job.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -955,7 +955,7 @@ class BatchSetRemovalTimeHierarchicalTest {
       .singleResult();
 
     // then
-    assertThat(historicIncident.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicIncident.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -988,7 +988,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     userOperationLog = historyService.createUserOperationLogQuery().singleResult();
 
     // then
-    assertThat(userOperationLog.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(userOperationLog.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1017,7 +1017,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     identityLinkLog = historyService.createHistoricIdentityLinkLogQuery().singleResult();
 
     // then
-    assertThat(identityLinkLog.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(identityLinkLog.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1055,7 +1055,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     comment = taskService.getTaskComments(taskId).get(0);
 
     // then
-    assertThat(comment.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(comment.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1086,7 +1086,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     comment = taskService.getProcessInstanceComments(processInstanceId).get(0);
 
     // then
-    assertThat(comment.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(comment.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1121,7 +1121,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     attachment = taskService.getTaskAttachments(taskId).get(0);
 
     // then
-    assertThat(attachment.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(attachment.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1151,7 +1151,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     attachment = taskService.getProcessInstanceAttachments(processInstanceId).get(0);
 
     // then
-    assertThat(attachment.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(attachment.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1188,7 +1188,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(attachment.getContentId());
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1222,7 +1222,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1260,7 +1260,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1272,8 +1272,9 @@ class BatchSetRemovalTimeHierarchicalTest {
 
     try {
       managementService.executeJob(jobId);
-
-    } catch (Exception ignored) { }
+    } catch (Exception ignored) {
+      // ignored
+    }
 
     HistoricJobLog historicJobLog = historyService.createHistoricJobLogQuery()
       .failureLog()
@@ -1302,7 +1303,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1346,7 +1347,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1395,7 +1396,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1439,7 +1440,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1483,7 +1484,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1532,7 +1533,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1576,7 +1577,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1620,7 +1621,7 @@ class BatchSetRemovalTimeHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
 }

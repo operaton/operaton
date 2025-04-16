@@ -40,8 +40,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 @ExtendWith(ProcessEngineTestExtension.class)
 class CaseServiceMilestoneTest {
 
-  protected final String DEFINITION_KEY = "oneMilestoneCase";
-  protected final String MILESTONE_KEY = "PI_Milestone_1";
+  static final String DEFINITION_KEY = "oneMilestoneCase";
+  static final String MILESTONE_KEY = "PI_Milestone_1";
 
   protected TaskService taskService;
   protected CaseService caseService;

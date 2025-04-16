@@ -62,7 +62,7 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
   protected HistoryService historyService;
   protected ManagementService managementService;
 
-  protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  protected static final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   public void initEngineConfiguration(ProcessEngineExtension engineRule, ProcessEngineConfigurationImpl engineConfiguration) {
     AbstractHistoryCleanupSchedulerTest.engineRule = engineRule;

@@ -43,7 +43,7 @@ import org.slf4j.Logger;
  */
 public class CompetingSuspensionTest {
 
-  protected static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  protected static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);

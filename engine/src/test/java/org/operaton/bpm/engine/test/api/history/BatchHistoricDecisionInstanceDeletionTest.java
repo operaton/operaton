@@ -307,7 +307,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);;
+    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);
 
     // when
     helper.executeSeedJob(batch);
@@ -415,7 +415,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(query, null);
 
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);;
+    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);
 
     // when
     helper.executeSeedJob(batch);
@@ -448,7 +448,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, query, null);
 
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);;
+    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);
 
     // when
     helper.executeSeedJob(batch);

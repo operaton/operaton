@@ -507,9 +507,9 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     // then deployment contains deployed process definitions
     List<ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
     assertThat(deployedProcessDefinitions).hasSize(1);
-    assertThat(deployment.getDeployedCaseDefinitions()).isNull();;
-    assertThat(deployment.getDeployedDecisionDefinitions()).isNull();;
-    assertThat(deployment.getDeployedDecisionRequirementsDefinitions()).isNull();;
+    assertThat(deployment.getDeployedCaseDefinitions()).isNull();
+    assertThat(deployment.getDeployedDecisionDefinitions()).isNull();
+    assertThat(deployment.getDeployedDecisionRequirementsDefinitions()).isNull();
 
     // and persisted process definition is equal to deployed process definition
     ProcessDefinition persistedProcDef = repositoryService.createProcessDefinitionQuery()
@@ -534,7 +534,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     // and there exist no persisted process definitions
     assertThat(repositoryService.createProcessDefinitionQuery()
                                 .processDefinitionResourceName("foo.bpmn")
-                                .singleResult()).isNull();;
+                                .singleResult()).isNull();
   }
 
 }

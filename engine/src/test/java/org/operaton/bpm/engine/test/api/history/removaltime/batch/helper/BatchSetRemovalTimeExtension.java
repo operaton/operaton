@@ -46,8 +46,8 @@ import org.operaton.bpm.model.bpmn.builder.StartEventBuilder;
  */
 public class BatchSetRemovalTimeExtension extends BatchExtension {
 
-  public final Date CURRENT_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
-  public final Date REMOVAL_TIME = new Date(1363609000000L);
+  public static final Date CURRENT_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  public static final Date REMOVAL_TIME = new Date(1363609000000L);
 
   public BatchSetRemovalTimeExtension(ProcessEngineExtension engineRule, ProcessEngineTestExtension engineTestRule) {
     super(engineRule, engineTestRule);

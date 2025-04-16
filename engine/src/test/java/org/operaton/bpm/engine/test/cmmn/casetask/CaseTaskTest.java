@@ -42,9 +42,9 @@ import static org.assertj.core.api.Assertions.fail;
  */
 public class CaseTaskTest extends CmmnTest {
 
-  protected final String CASE_TASK = "PI_CaseTask_1";
-  protected final String ONE_CASE_TASK_CASE = "oneCaseTaskCase";
-  protected final String ONE_TASK_CASE = "oneTaskCase";
+  static final String CASE_TASK = "PI_CaseTask_1";
+  static final String ONE_CASE_TASK_CASE = "oneCaseTaskCase";
+  static final String ONE_TASK_CASE = "oneTaskCase";
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",

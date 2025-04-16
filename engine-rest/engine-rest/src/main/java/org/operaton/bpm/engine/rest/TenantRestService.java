@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.rest.sub.identity.TenantResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface TenantRestService {
 
-  String PATH = "/tenant";
+  static final String PATH = "/tenant";
 
   @Path("/{id}")
   TenantResource getTenant(@PathParam("id") String id);

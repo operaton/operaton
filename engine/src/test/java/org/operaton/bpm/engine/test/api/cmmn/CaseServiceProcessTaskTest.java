@@ -48,8 +48,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 @ExtendWith(ProcessEngineTestExtension.class)
 class CaseServiceProcessTaskTest {
 
-  protected final String DEFINITION_KEY = "oneProcessTaskCase";
-  protected final String PROCESS_TASK_KEY = "PI_ProcessTask_1";
+  static final String DEFINITION_KEY = "oneProcessTaskCase";
+  static final String PROCESS_TASK_KEY = "PI_ProcessTask_1";
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;

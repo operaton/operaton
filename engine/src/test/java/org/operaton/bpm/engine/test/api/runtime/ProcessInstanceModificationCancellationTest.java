@@ -56,7 +56,7 @@ import org.operaton.bpm.engine.variable.Variables;
  *
  * @author Thorben Lindhauer
  */
-public class ProcessInstanceModificationCancellationTest {
+class ProcessInstanceModificationCancellationTest {
 
   // the four patterns as described above
   protected static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml";

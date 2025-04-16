@@ -41,17 +41,13 @@ public class DeploymentTest {
 
   @RegisterExtension
   static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
-          WireMockConfiguration.options()
-                  .dynamicPort()
-                  ).build();
+          WireMockConfiguration.options().dynamicPort()).build();
 
   @BeforeEach
   public void setup() {
     api = new DeploymentApi();
-    var apiClient = api.getApiClient();
-    apiClient.setBasePath(apiClient.getBasePath()
+    api.setCustomBaseUrl(api.getApiClient().getBasePath()
             .replace("8080", String.valueOf(wireMockExtension.getPort())));
-
     WireMock.configureFor(wireMockExtension.getPort());
   }
 

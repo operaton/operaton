@@ -37,7 +37,7 @@ public class DeploymentTest {
   private DeploymentApi api;
 
   @RegisterExtension
-  static WireMockExtension wireMockExtendsion = WireMockExtension.newInstance().options(
+  static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
           WireMockConfiguration.options().dynamicPort()).build();
 
   @BeforeEach
@@ -45,9 +45,9 @@ public class DeploymentTest {
     api = new DeploymentApi();
     var apiClient = api.getApiClient();
     apiClient.setBasePath(apiClient.getBasePath()
-            .replace("8080", String.valueOf(wireMockExtendsion.getPort())));
+            .replace("8080", String.valueOf(wireMockExtension.getPort())));
 
-    WireMock.configureFor(wireMockExtendsion.getPort());
+    WireMock.configureFor(wireMockExtension.getPort());
   }
 
   @org.junit.jupiter.api.Test
@@ -55,7 +55,7 @@ public class DeploymentTest {
     // given
     String deploymentSource = "test-source";
     String deploymentName = "deployment-test-name";
-    wireMockExtendsion.stubFor(post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).willReturn(
+    wireMockExtension.stubFor(post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).willReturn(
             aResponse().withStatus(200).withBody("""
                         {
                         "links": [
@@ -90,7 +90,7 @@ public class DeploymentTest {
                         "deployedDecisionDefinitions": null,
                         "deployedDecisionRequirementsDefinitions": null
                     }""".formatted(
-                    wireMockExtendsion.getPort(),
+                    wireMockExtension.getPort(),
                     deploymentName,
                     deploymentSource
             ))));

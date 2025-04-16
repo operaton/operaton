@@ -401,6 +401,7 @@ public class JobQueryTest {
   }
 
   @TestTemplate
+  @SuppressWarnings("deprecation")
   void testQueryByDuedateLowerThen() {
     JobQuery query = managementService.createJobQuery().duedateLowerThen(testStartTime);
     verifyQueryResults(query, 0);
@@ -421,6 +422,7 @@ public class JobQueryTest {
   }
 
   @TestTemplate
+  @SuppressWarnings("deprecation")
   void testQueryByDuedateLowerThenOrEqual() {
     JobQuery query = managementService.createJobQuery().duedateLowerThenOrEquals(testStartTime);
     verifyQueryResults(query, 0);
@@ -441,6 +443,7 @@ public class JobQueryTest {
   }
 
   @TestTemplate
+  @SuppressWarnings("deprecation")
   void testQueryByDuedateHigherThen() {
     int startTimeExpectedCount = ensureJobDueDateSet? 4 : 3;
     int timerOneExpectedCount = ensureJobDueDateSet? 3 : 2;
@@ -466,6 +469,7 @@ public class JobQueryTest {
   }
 
   @TestTemplate
+  @SuppressWarnings("deprecation")
   void testQueryByDuedateHigherThenOrEqual() {
     int startTimeExpectedCount = ensureJobDueDateSet? 4 : 3;
     int timerOneExpectedCount = ensureJobDueDateSet? 3 : 2;

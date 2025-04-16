@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 
 import ch.qos.logback.classic.Level;
 
-public class BatchInvocationsPerJobByBatchTypeConfigTest {
+class BatchInvocationsPerJobByBatchTypeConfigTest {
 
   protected static final String PROCESS_ENGINE_CONFIG =
       "operaton.cfg.invocationsPerJobByBatchType.xml";

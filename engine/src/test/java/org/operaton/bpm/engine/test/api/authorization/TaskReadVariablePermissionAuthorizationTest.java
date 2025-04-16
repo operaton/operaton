@@ -123,7 +123,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   // TaskService#saveTask() ///////////////////////////////////
 
   @TestTemplate
-  public void testSaveStandaloneTaskAndCheckAssigneePermissions() {
+  void testSaveStandaloneTaskAndCheckAssigneePermissions() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -167,7 +167,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   // TaskService#setOwner() ///////////////////////////////////
 
   @TestTemplate
-  public void testStandaloneTaskSetOwnerAndCheckOwnerPermissions() {
+  void testStandaloneTaskSetOwnerAndCheckOwnerPermissions() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -208,7 +208,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   // TaskService#addUserIdentityLink() ///////////////////////////////////
 
   @TestTemplate
-  public void testStandaloneTaskAddUserIdentityLinkAndUserOwnerPermissions() {
+  void testStandaloneTaskAddUserIdentityLinkAndUserOwnerPermissions() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -269,7 +269,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   // TaskService#addGroupIdentityLink() ///////////////////////////////////
 
   @TestTemplate
-  public void testStandaloneTaskAddGroupIdentityLink() {
+  void testStandaloneTaskAddGroupIdentityLink() {
     // given
     String taskId = "myTask";
     createTask(taskId);

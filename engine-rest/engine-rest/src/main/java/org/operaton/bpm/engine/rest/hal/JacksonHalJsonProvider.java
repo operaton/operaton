@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.rest.hal;
 
 
-//import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;

@@ -62,7 +62,7 @@ public class ModificationBatchAuthorizationTest extends BatchCreationAuthorizati
   }
 
   @TestTemplate
-  public void createBatchModification() {
+  void createBatchModification() {
     //given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("process1").startEvent().userTask("user1").userTask("user2").endEvent().done();
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(instance);

@@ -292,7 +292,7 @@
         <plugin>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
-          <version>11.0.24</version>
+          <version>${version.jetty}</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.transformer</groupId>

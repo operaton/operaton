@@ -67,7 +67,7 @@ public class SetVariablesBatchAuthorizationTest extends BatchCreationAuthorizati
   }
 
   @TestTemplate
-  public void shouldAuthorizeSetVariablesBatch() {
+  void shouldAuthorizeSetVariablesBatch() {
     // given
     authRule
         .init(scenario)

@@ -151,7 +151,7 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
   }
 
   @TestTemplate
-  public void executeBatch() {
+  void executeBatch() {
     // given
     authRule.init(scenario)
       .withUser("userId")

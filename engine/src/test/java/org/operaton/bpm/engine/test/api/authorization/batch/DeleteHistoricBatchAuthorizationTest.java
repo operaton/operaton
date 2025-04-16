@@ -111,7 +111,7 @@ public class DeleteHistoricBatchAuthorizationTest {
   }
 
   @TestTemplate
-  public void testDeleteBatch() {
+  void testDeleteBatch() {
 
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());

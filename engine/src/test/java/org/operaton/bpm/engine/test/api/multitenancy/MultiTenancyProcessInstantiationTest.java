@@ -48,7 +48,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 
-public class MultiTenancyProcessInstantiationTest {
+class MultiTenancyProcessInstantiationTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";

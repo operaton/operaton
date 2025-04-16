@@ -102,7 +102,7 @@ public class BulkHistoryDeleteProcessInstancesAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testCleanupHistory() {
+  void testCleanupHistory() {
     //given
     final List<String> ids = prepareHistoricProcesses();
     runtimeService.deleteProcessInstances(ids, null, true, true);

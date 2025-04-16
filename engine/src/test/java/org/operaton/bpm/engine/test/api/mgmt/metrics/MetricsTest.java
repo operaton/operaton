@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -46,9 +45,9 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 class MetricsTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension ENGINE_RULE = ProcessEngineExtension.builder().build();
+  protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension TEST_RULE = new ProcessEngineTestExtension(ENGINE_RULE);
+  protected static ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
 
   protected RuntimeService runtimeService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -67,7 +66,7 @@ class MetricsTest {
   void initMetrics() {
     //clean up before start
     clearMetrics();
-    TEST_RULE.deploy(Bpmn.createExecutableProcess("testProcess")
+    testExtension.deploy(Bpmn.createExecutableProcess("testProcess")
         .operatonHistoryTimeToLive(180)
         .startEvent()
         .manualTask()
@@ -102,7 +101,7 @@ class MetricsTest {
   @Test
   void testEndMetricWithWaitState() {
     //given
-    TEST_RULE.deploy(Bpmn.createExecutableProcess("userProcess")
+    testExtension.deploy(Bpmn.createExecutableProcess("userProcess")
         .operatonHistoryTimeToLive(180)
         .startEvent()
         .userTask("Task")
@@ -126,8 +125,8 @@ class MetricsTest {
     assertEquals(1, end);
 
     //when completing the task
-    String id = ENGINE_RULE.getTaskService().createTaskQuery().processDefinitionKey("userProcess").singleResult().getId();
-    ENGINE_RULE.getTaskService().complete(id);
+    String id = engineExtension.getTaskService().createTaskQuery().processDefinitionKey("userProcess").singleResult().getId();
+    engineExtension.getTaskService().complete(id);
 
     //then start and end is equal
     start = managementService.createMetricsQuery()

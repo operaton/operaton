@@ -80,7 +80,7 @@ public class CreateAndResolveIncidentAuthorizationTest {
   }
 
   @TestTemplate
-  public void createIncident() {
+  void createIncident() {
     //given
     testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
 
@@ -102,7 +102,7 @@ public class CreateAndResolveIncidentAuthorizationTest {
   }
 
   @TestTemplate
-  public void resolveIncident() {
+  void resolveIncident() {
     testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
 
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process");

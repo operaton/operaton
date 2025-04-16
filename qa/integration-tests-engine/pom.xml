@@ -450,7 +450,7 @@
                 <exclude>**/CallActivityContextSwitchTest.java</exclude>
                 <exclude>**/CdiBeanCallActivityResolutionTest.java</exclude>
 
-                <!-- TODO and weld-servlet-shaded is resolved with integration-tests-engine-jakarta -->
+                <!-- TODO and weld-servlet-shaded is resolved with integration-tests-engine -->
 
               </excludes>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>

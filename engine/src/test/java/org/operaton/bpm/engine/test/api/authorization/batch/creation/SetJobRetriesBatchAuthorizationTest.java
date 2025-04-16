@@ -61,7 +61,7 @@ public class SetJobRetriesBatchAuthorizationTest extends BatchCreationAuthorizat
   }
 
   @TestTemplate
-  public void testBatchSetJobRetriesByJobs() {
+  void testBatchSetJobRetriesByJobs() {
     //given
     List<String> jobIds = setupFailedJobs();
     authRule
@@ -79,7 +79,7 @@ public class SetJobRetriesBatchAuthorizationTest extends BatchCreationAuthorizat
   }
 
   @TestTemplate
-  public void testBatchSetJobRetriesByProcesses() {
+  void testBatchSetJobRetriesByProcesses() {
     //given
     setupFailedJobs();
     List<String> processInstanceIds = Collections.singletonList(processInstance.getId());

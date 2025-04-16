@@ -85,7 +85,7 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
   }
 
   @TestTemplate
-  public void testWithTwoInvocationsProcessInstancesList() {
+  void testWithTwoInvocationsProcessInstancesList() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
     setupAndExecuteProcessInstancesListTest();
 
@@ -94,14 +94,14 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
   }
 
   @TestTemplate
-  public void testProcessInstancesList() {
+  void testProcessInstancesList() {
     setupAndExecuteProcessInstancesListTest();
     // then
     assertScenario();
   }
 
   @TestTemplate
-  public void testWithQuery() {
+  void testWithQuery() {
     //given
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery()
         .processInstanceIds(new HashSet<>(Arrays.asList(processInstance.getId(), processInstance2.getId())));

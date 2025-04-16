@@ -102,7 +102,7 @@ public class HistoricDecisionInstanceStatisticsAuthorizationTest {
   }
 
   @TestTemplate
-  public void testCreateStatistics() {
+  void testCreateStatistics() {
     //given
     authRule
         .init(scenario)

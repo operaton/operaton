@@ -59,7 +59,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
   protected HistoryService historyService;
   protected ManagementService managementService;
 
-  protected final Date CURRENT_DATE = new GregorianCalendar(2023, Calendar.MARCH, 18, 12, 0, 0).getTime();
+  private static final Date CURRENT_DATE = new GregorianCalendar(2023, Calendar.MARCH, 18, 12, 0, 0).getTime();
 
   protected static ThreadControl cleanupThread = null;
 

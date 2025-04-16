@@ -138,7 +138,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariable() {
+  void testSetVariable() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -159,7 +159,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariableLocal() {
+  void testSetVariableLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -180,7 +180,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariables() {
+  void testSetVariables() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -201,7 +201,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariablesLocal() {
+  void testSetVariablesLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();

@@ -95,7 +95,7 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = { DMN_FILE })
-  public void getDecisionRequirementsDefinition() {
+  void getDecisionRequirementsDefinition() {
 
     String decisionRequirementsDefinitionId = repositoryService
       .createDecisionRequirementsDefinitionQuery()
@@ -114,7 +114,7 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = { DMN_FILE })
-  public void getDecisionRequirementsModel() {
+  void getDecisionRequirementsModel() {
 
     // given
     String decisionRequirementsDefinitionId = repositoryService
@@ -134,7 +134,7 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = { DMN_FILE, DRD_FILE })
-  public void getDecisionRequirementsDiagram() {
+  void getDecisionRequirementsDiagram() {
 
     // given
     String decisionRequirementsDefinitionId = repositoryService

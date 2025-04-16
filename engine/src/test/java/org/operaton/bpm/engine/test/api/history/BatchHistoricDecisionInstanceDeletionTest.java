@@ -135,7 +135,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createBatchDeletionByIds() {
+  void createBatchDeletionByIds() {
     // when
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
@@ -144,14 +144,14 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createBatchDeletionByInvalidIds() {
+  void createBatchDeletionByInvalidIds() {
     // when/then
     assertThatThrownBy(() -> historyService.deleteHistoricDecisionInstancesAsync((List<String>) null, null))
       .isInstanceOf(BadUserRequestException.class);
   }
 
   @TestTemplate
-  public void createBatchDeletionByQuery() {
+  void createBatchDeletionByQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
 
@@ -163,14 +163,14 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createBatchDeletionByInvalidQuery() {
+  void createBatchDeletionByInvalidQuery() {
     // when/then
     assertThatThrownBy(() -> historyService.deleteHistoricDecisionInstancesAsync((HistoricDecisionInstanceQuery) null, null))
       .isInstanceOf(BadUserRequestException.class);
   }
 
   @TestTemplate
-  public void createBatchDeletionByInvalidQueryByKey() {
+  void createBatchDeletionByInvalidQueryByKey() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey("foo");
 
@@ -180,7 +180,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createBatchDeletionByIdsAndQuery() {
+  void createBatchDeletionByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
 
@@ -192,7 +192,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createSeedJobByIds() {
+  void createSeedJobByIds() {
     // when
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
@@ -226,7 +226,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createSeedJobByQuery() {
+  void createSeedJobByQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
 
@@ -263,7 +263,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createSeedJobByIdsAndQuery() {
+  void createSeedJobByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
 
@@ -300,14 +300,14 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createDeletionJobsByIds() {
+  void createDeletionJobsByIds() {
     // given
     rule.getProcessEngineConfiguration().setBatchJobsPerSeed(5);
 
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);;
+    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);
 
     // when
     helper.executeSeedJob(batch);
@@ -331,7 +331,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createDeletionJobsByIdsInDifferentDeployments() {
+  void createDeletionJobsByIdsInDifferentDeployments() {
     // given a second deployment and instances
     executeDecisionInstances();
 
@@ -365,7 +365,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createDeletionJobsByIdsWithDeletedDeployment() {
+  void createDeletionJobsByIdsWithDeletedDeployment() {
     // given a second deployment and instances
     executeDecisionInstances();
 
@@ -406,7 +406,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createDeletionJobsByQuery() {
+  void createDeletionJobsByQuery() {
     // given
     rule.getProcessEngineConfiguration().setBatchJobsPerSeed(5);
 
@@ -415,7 +415,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(query, null);
 
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);;
+    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);
 
     // when
     helper.executeSeedJob(batch);
@@ -439,7 +439,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createDeletionJobsByIdsAndQuery() {
+  void createDeletionJobsByIdsAndQuery() {
     // given
     rule.getProcessEngineConfiguration().setBatchJobsPerSeed(5);
 
@@ -448,7 +448,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, query, null);
 
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);;
+    JobDefinition deletionJobDefinition = helper.getExecutionJobDefinition(batch);
 
     // when
     helper.executeSeedJob(batch);
@@ -472,7 +472,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createMonitorJobByIds() {
+  void createMonitorJobByIds() {
     // given
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
@@ -495,7 +495,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createMonitorJobByQuery() {
+  void createMonitorJobByQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(query, null);
@@ -519,7 +519,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void createMonitorJobByIdsAndQuery() {
+  void createMonitorJobByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, query, null);
@@ -543,7 +543,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void deleteInstancesByIds() {
+  void deleteInstancesByIds() {
     // given
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);
 
@@ -561,7 +561,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void deleteInstancesByQuery() {
+  void deleteInstancesByQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(query, null);
@@ -579,7 +579,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void deleteInstancesByIdsAndQuery() {
+  void deleteInstancesByIdsAndQuery() {
     // given
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION);
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, query, null);
@@ -597,7 +597,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void shouldSetInvocationsPerBatchType() {
+  void shouldSetInvocationsPerBatchType() {
     // given
     configuration.getInvocationsPerBatchJobByBatchType()
         .put(Batch.TYPE_HISTORIC_DECISION_INSTANCE_DELETION, 42);
@@ -616,7 +616,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   }
 
   @TestTemplate
-  public void shouldSetExecutionStartTimeInBatchAndHistory() {
+  void shouldSetExecutionStartTimeInBatchAndHistory() {
     // given
     ClockUtil.setCurrentTime(TEST_DATE);
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null);

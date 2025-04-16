@@ -136,7 +136,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
   }
 
   @TestTemplate
-  public void testScheduleJobForBatchWindow() {
+  void testScheduleJobForBatchWindow() {
     ClockUtil.setCurrentTime(currentDate);
 
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(startTime);

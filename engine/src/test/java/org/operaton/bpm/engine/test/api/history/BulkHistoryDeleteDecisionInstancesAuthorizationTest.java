@@ -106,7 +106,7 @@ public class BulkHistoryDeleteDecisionInstancesAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/dmn/Example.dmn"})
-  public void testCleanupHistory() {
+  void testCleanupHistory() {
     //given
     final List<String> ids = prepareHistoricDecisions();
 

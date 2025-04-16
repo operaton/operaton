@@ -91,7 +91,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationStandaloneWithoutAuthorization() {
+  void shouldSetOperationStandaloneWithoutAuthorization() {
     // given
     createTask(taskId);
 
@@ -109,7 +109,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationStandalone() {
+  void shouldSetOperationStandalone() {
     // given
     createTask(taskId);
     createGrantAuthorization(TASK, taskId, userId, UPDATE);
@@ -127,7 +127,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationStandaloneWithTaskAssignPermission() {
+  void shouldSetOperationStandaloneWithTaskAssignPermission() {
     // given
     createTask(taskId);
     createGrantAuthorization(TASK, taskId, userId, TASK_ASSIGN);
@@ -145,7 +145,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationOnProcessWithTaskAssignPermissionOnTask() {
+  void shouldSetOperationOnProcessWithTaskAssignPermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -163,7 +163,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationOnProcessWithoutAuthorization() {
+  void shouldSetOperationOnProcessWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -185,7 +185,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationOnProcessWithUpdatePermissionOnAnyTask() {
+  void shouldSetOperationOnProcessWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -203,7 +203,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationOnProcessWithTaskAssignPermissionOnAnyTask() {
+  void shouldSetOperationOnProcessWithTaskAssignPermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -221,7 +221,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationOnProcessWithUpdateTasksPermissionOnProcessDefinition() {
+  void shouldSetOperationOnProcessWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -239,7 +239,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationOnProcessWithTaskAssignPermissionOnProcessDefinition() {
+  void shouldSetOperationOnProcessWithTaskAssignPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -257,7 +257,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationOnProcessTask() {
+  void shouldSetOperationOnProcessTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -276,7 +276,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationOnProcessWithTaskAssignPermission() {
+  void shouldSetOperationOnProcessWithTaskAssignPermission() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();

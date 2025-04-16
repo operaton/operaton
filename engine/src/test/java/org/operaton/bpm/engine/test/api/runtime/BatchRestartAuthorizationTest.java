@@ -133,7 +133,7 @@ public class BatchRestartAuthorizationTest {
   }
 
   @TestTemplate
-  public void executeBatch() {
+  void executeBatch() {
     //given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
 

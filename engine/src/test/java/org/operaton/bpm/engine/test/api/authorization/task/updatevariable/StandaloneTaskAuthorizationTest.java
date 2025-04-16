@@ -127,7 +127,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariable() {
+  void testSetVariable() {
     // given
     createTask(taskId);
 
@@ -147,7 +147,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariableLocal() {
+  void testSetVariableLocal() {
     // given
     createTask(taskId);
 
@@ -167,7 +167,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariables() {
+  void testSetVariables() {
     // given
     createTask(taskId);
 
@@ -187,7 +187,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariablesLocal() {
+  void testSetVariablesLocal() {
     // given
     createTask(taskId);
 

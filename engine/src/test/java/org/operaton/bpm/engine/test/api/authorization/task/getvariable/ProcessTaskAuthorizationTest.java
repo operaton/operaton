@@ -83,7 +83,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariable() {
+  void testGetVariable() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -104,7 +104,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariableLocal() {
+  void testGetVariableLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -127,7 +127,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariableTyped() {
+  void testGetVariableTyped() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -149,7 +149,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariableLocalTyped() {
+  void testGetVariableLocalTyped() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -173,7 +173,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariables() {
+  void testGetVariables() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -194,7 +194,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesLocal() {
+  void testGetVariablesLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -217,7 +217,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesTyped() {
+  void testGetVariablesTyped() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -238,7 +238,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesLocalTyped() {
+  void testGetVariablesLocalTyped() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -261,7 +261,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesByName() {
+  void testGetVariablesByName() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -282,7 +282,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesLocalByName() {
+  void testGetVariablesLocalByName() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -305,7 +305,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesTypedByName() {
+  void testGetVariablesTypedByName() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -326,7 +326,7 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesLocalTypedByName() {
+  void testGetVariablesLocalTypedByName() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();

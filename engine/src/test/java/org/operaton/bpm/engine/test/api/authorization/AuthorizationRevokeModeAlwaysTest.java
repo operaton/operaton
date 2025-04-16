@@ -33,7 +33,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 
-public class AuthorizationRevokeModeAlwaysTest extends AuthorizationTest {
+class AuthorizationRevokeModeAlwaysTest extends AuthorizationTest {
 
   protected static final String LOGGING_CONTEXT = "org.operaton.bpm.engine.impl.persistence.entity.TaskEntity";
 

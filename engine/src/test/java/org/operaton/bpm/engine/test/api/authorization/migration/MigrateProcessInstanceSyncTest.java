@@ -147,7 +147,7 @@ public class MigrateProcessInstanceSyncTest {
   }
 
   @TestTemplate
-  public void testMigrateWithQuery() {
+  void testMigrateWithQuery() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.ONE_TASK_PROCESS)

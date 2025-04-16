@@ -106,7 +106,7 @@ public class DecisionRequirementsDefinitionQueryAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = { DMN_FILE, ANOTHER_DMN })
-  public void queryDecisionRequirementsDefinitions() {
+  void queryDecisionRequirementsDefinitions() {
 
     // when
     authRule.init(scenario).withUser("userId").bindResource("decisionRequirementsDefinitionKey", DEFINITION_KEY).start();

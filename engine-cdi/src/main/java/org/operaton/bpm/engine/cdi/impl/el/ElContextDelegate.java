@@ -32,7 +32,7 @@ public class ElContextDelegate extends ELContext {
 
   protected final ELResolver elResolver;
 
-  public ElContextDelegate(jakarta.el.ELContext delegateContext, ELResolver elResolver) {
+  public ElContextDelegate(ELContext delegateContext, ELResolver elResolver) {
     this.delegateContext = delegateContext;
     this.elResolver = elResolver;
   }

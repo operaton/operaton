@@ -26,6 +26,9 @@ import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -96,6 +99,8 @@ public class DeploymentTest {
                     deploymentSource
             ))));
 
+    waitUntilWireMockIsReady(wireMockExtension.getPort(), 10_000);
+
     // when
     DeploymentWithDefinitionsDto deployment = api.createDeployment(null,
             deploymentSource,
@@ -127,5 +132,31 @@ public class DeploymentTest {
                     "Content-Disposition: form-data; name=\"data\"; filename=\"one.bpmn\""))
             .withRequestBody(containing("Content-Type: application/octet-stream"))
             .withHeader("Content-Type", containing("multipart/form-data")));
+  }
+
+  public void waitUntilWireMockIsReady(int port, int timeoutMillis) {
+    long end = System.currentTimeMillis() + timeoutMillis;
+    while (System.currentTimeMillis() < end) {
+      try {
+        URL url = new URL("http://127.0.0.1:" + port + "/__admin");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setConnectTimeout(100);
+        conn.setReadTimeout(100);
+        conn.setRequestMethod("GET");
+
+        int responseCode = conn.getResponseCode();
+        if (responseCode == 200) {
+          return; // ✅ WireMock is ready
+        }
+      } catch (IOException e) {
+        // WireMock not ready yet
+      }
+      try {
+        Thread.sleep(50);
+      } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    throw new RuntimeException("WireMock server did not become ready in time on port " + port);
   }
 }

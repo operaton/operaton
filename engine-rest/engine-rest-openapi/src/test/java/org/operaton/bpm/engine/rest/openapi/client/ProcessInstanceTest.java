@@ -16,32 +16,22 @@
  */
 package org.operaton.bpm.engine.rest.openapi.client;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.put;
-import static com.github.tomakehurst.wiremock.client.WireMock.putRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.api.ProcessInstanceApi;
 import org.openapitools.client.model.CountResultDto;
 import org.openapitools.client.model.ProcessInstanceQueryDto;
 import org.openapitools.client.model.SuspensionStateDto;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProcessInstanceTest {
 
@@ -49,26 +39,28 @@ public class ProcessInstanceTest {
 
   final ProcessInstanceApi api = new ProcessInstanceApi();
 
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options()
-          .dynamicPort());
+  @RegisterExtension
+  static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
+          WireMockConfiguration.options().dynamicPort()).build();
 
-  @Before
+  @BeforeEach
   public void setUp() {
     // Dynamically set the basePath for the API to match WireMock's port
     String currentBasePath = api.getApiClient().getBasePath();
     try {
       URL url = new URL(currentBasePath);
       String newBasePath =
-              url.getProtocol() + "://" + url.getHost() + ":" + wireMockRule.port() + url.getPath();
+              url.getProtocol() + "://" + url.getHost() + ":" + wireMockExtension.getPort() +
+                      url.getPath();
       api.getApiClient().setBasePath(newBasePath);
     } catch (MalformedURLException e) {
       // Fallback if URL parsing fails
-      api.getApiClient().setBasePath("http://localhost:" + wireMockRule.port());
+      api.getApiClient().setBasePath("http://localhost:" + wireMockExtension.getPort());
     }
+    WireMock.configureFor(wireMockExtension.getPort());
   }
 
-  @Test
+  @org.junit.jupiter.api.Test
   public void shouldQueryProcessInstancesCount() throws ApiException {
     // given
     stubFor(post(urlEqualTo(
@@ -87,7 +79,7 @@ public class ProcessInstanceTest {
             .withHeader("Content-Type", equalTo("application/json; charset=UTF-8")));
   }
 
-  @Test
+  @org.junit.jupiter.api.Test
   public void shouldUpdateSuspensionStateById() throws ApiException {
     // given
     String id = "anProcessInstanceId";

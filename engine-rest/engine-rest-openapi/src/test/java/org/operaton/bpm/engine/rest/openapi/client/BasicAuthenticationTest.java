@@ -16,26 +16,18 @@
  */
 package org.operaton.bpm.engine.rest.openapi.client;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.api.ProcessInstanceApi;
 import org.openapitools.client.model.ProcessInstanceDto;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BasicAuthenticationTest {
 
@@ -46,23 +38,24 @@ public class BasicAuthenticationTest {
 
   ProcessInstanceApi api;
 
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options()
-          .dynamicPort());
+  @RegisterExtension
+  static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
+          WireMockConfiguration.options().dynamicPort()).build();
 
-  @Before
+  @BeforeEach
   public void clientWithValidCredentials() {
     ApiClient apiClient = new ApiClient();
 
     apiClient.setUsername(USERNAME);
     apiClient.setPassword(PASSWORD);
     apiClient.setBasePath(apiClient.getBasePath()
-            .replace("8080", String.valueOf(wireMockRule.port())));
+            .replace("8080", String.valueOf(wireMockExtension.getPort())));
 
     api = new ProcessInstanceApi(apiClient);
+    WireMock.configureFor(wireMockExtension.getPort());
   }
 
-  @Test
+  @org.junit.jupiter.api.Test
   public void shouldUseBasicAuth() throws ApiException {
     // given
     stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).willReturn(aResponse().withStatus(

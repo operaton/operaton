@@ -16,94 +16,84 @@
  */
 package org.operaton.bpm.engine.rest.openapi.client;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.containing;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.File;
-import java.util.HashSet;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.ApiException;
-import org.openapitools.client.ServerVariable;
 import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import java.io.File;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DeploymentTest {
 
   private static final String ENGINE_REST_DEPLOYMENT = "/engine-rest/deployment";
 
-  final DeploymentApi api = new DeploymentApi();
+  private DeploymentApi api;
 
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options()
-          .dynamicPort());
+  @RegisterExtension
+  static WireMockExtension wireMockExtendsion = WireMockExtension.newInstance().options(
+          WireMockConfiguration.options().dynamicPort()).build();
 
-  @Before
-  public void before() {
+  @BeforeEach
+  public void setup() {
+    api = new DeploymentApi();
     var apiClient = api.getApiClient();
     apiClient.setBasePath(apiClient.getBasePath()
-            .replace("8080", String.valueOf(wireMockRule.port())));
+            .replace("8080", String.valueOf(wireMockExtendsion.getPort())));
 
-    for (var server : apiClient.getServers()) {
-      if (server.variables.containsKey("port")) {
-        server.variables.put("port", new ServerVariable("No description provided",
-                String.valueOf(wireMockRule.port()),
-                new HashSet<>()
-        ));
-      }
-    }
+    WireMock.configureFor(wireMockExtendsion.getPort());
   }
 
-  @Test
+  @org.junit.jupiter.api.Test
   public void shouldCreateDeployment() throws ApiException {
     // given
     String deploymentSource = "test-source";
     String deploymentName = "deployment-test-name";
-    wireMockRule.stubFor(post(urlEqualTo(
-            ENGINE_REST_DEPLOYMENT + "/create")).willReturn(aResponse().withStatus(200).withBody("""
-                {
-                "links": [
-                    {
-                        "method": "GET",
-                        "href": "http://localhost:%d/rest-test/deployment/aDeploymentId",
-                        "rel": "self"
-                    }
-                ],
-                "id": "aDeploymentId",
-                "name": "%s",
-                "source": "%s",
-                "deploymentTime": "2013-01-23T13:59:43.000+0200",
-                "tenantId": null,
-                "deployedProcessDefinitions": {
-                    "aProcDefId": {
-                        "id": "aProcDefId",
-                        "key": "aKey",
-                        "category": "aCategory",
-                        "description": "aDescription",
-                        "name": "aName",
-                        "version": 42,
-                        "resource": "aResourceName",
-                        "deploymentId": "aDeploymentId",
-                        "diagram": "aResourceName.png",
-                        "suspended": true,
+    wireMockExtendsion.stubFor(post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).willReturn(
+            aResponse().withStatus(200).withBody("""
+                        {
+                        "links": [
+                            {
+                                "method": "GET",
+                                "href": "http://localhost:%d/rest-test/deployment/aDeploymentId",
+                                "rel": "self"
+                            }
+                        ],
+                        "id": "aDeploymentId",
+                        "name": "%s",
+                        "source": "%s",
+                        "deploymentTime": "2013-01-23T13:59:43.000+0200",
                         "tenantId": null,
-                        "versionTag": null
-                    }
-                },
-                "deployedCaseDefinitions": null,
-                "deployedDecisionDefinitions": null,
-                "deployedDecisionRequirementsDefinitions": null
-            }""".formatted(wireMockRule.port(), deploymentName, deploymentSource))));
+                        "deployedProcessDefinitions": {
+                            "aProcDefId": {
+                                "id": "aProcDefId",
+                                "key": "aKey",
+                                "category": "aCategory",
+                                "description": "aDescription",
+                                "name": "aName",
+                                "version": 42,
+                                "resource": "aResourceName",
+                                "deploymentId": "aDeploymentId",
+                                "diagram": "aResourceName.png",
+                                "suspended": true,
+                                "tenantId": null,
+                                "versionTag": null
+                            }
+                        },
+                        "deployedCaseDefinitions": null,
+                        "deployedDecisionDefinitions": null,
+                        "deployedDecisionRequirementsDefinitions": null
+                    }""".formatted(
+                    wireMockExtendsion.getPort(),
+                    deploymentName,
+                    deploymentSource
+            ))));
 
     // when
     DeploymentWithDefinitionsDto deployment = api.createDeployment(null,

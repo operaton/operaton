@@ -19,8 +19,11 @@ package org.operaton.bpm.engine.rest.openapi.client;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+import okhttp3.Call;
+import okhttp3.Request;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
@@ -32,6 +35,7 @@ import java.net.URL;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
 
 public class DeploymentTest {
 
@@ -46,7 +50,8 @@ public class DeploymentTest {
   @BeforeEach
   public void setup() {
     api = new DeploymentApi();
-    api.setCustomBaseUrl(api.getApiClient().getBasePath()
+    api.setCustomBaseUrl(api.getApiClient()
+            .getBasePath()
             .replace("8080", String.valueOf(wireMockExtension.getPort())));
     WireMock.configureFor(wireMockExtension.getPort());
   }
@@ -95,19 +100,29 @@ public class DeploymentTest {
                     deploymentSource
             ))));
 
-    waitUntilWireMockIsReady(wireMockExtension.getPort(), 10_000);
+    DeploymentWithDefinitionsDto deployment;
 
     // when
-    DeploymentWithDefinitionsDto deployment = api.createDeployment(null,
-            deploymentSource,
-            false,
-            false,
-            deploymentName,
-            null,
-            new File("src/test/resources/one.bpmn")
-    );
-
-    // then
+    try {
+      deployment = api.createDeployment(null,
+              deploymentSource,
+              false,
+              false,
+              deploymentName,
+              null,
+              new File("src/test/resources/one.bpmn")
+      );// then
+    } catch (ApiException e) {
+      var client = api.getApiClient().getHttpClient();
+      Call call = client.newCall(new Request.Builder().url(
+              "http://localhost:%d/__admin/mappings".formatted(wireMockExtension.getPort())).get().build());
+      try {
+        var response = call.execute();
+        throw new RuntimeException("No connection on port %s%n%n%s".formatted(wireMockExtension.getPort(), response.body().string()), e);
+      } catch (IOException ex) {
+        throw new RuntimeException(ex);
+      }
+    }
     assertThat(deployment.getId()).isEqualTo("aDeploymentId");
     assertThat(deployment.getName()).isEqualTo(deploymentName);
     assertThat(deployment.getSource()).isEqualTo(deploymentSource);
@@ -128,31 +143,6 @@ public class DeploymentTest {
                     "Content-Disposition: form-data; name=\"data\"; filename=\"one.bpmn\""))
             .withRequestBody(containing("Content-Type: application/octet-stream"))
             .withHeader("Content-Type", containing("multipart/form-data")));
-  }
 
-  public void waitUntilWireMockIsReady(int port, int timeoutMillis) {
-    long end = System.currentTimeMillis() + timeoutMillis;
-    while (System.currentTimeMillis() < end) {
-      try {
-        URL url = new URL("http://127.0.0.1:" + port + "/__admin");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setConnectTimeout(100);
-        conn.setReadTimeout(100);
-        conn.setRequestMethod("GET");
-
-        int responseCode = conn.getResponseCode();
-        if (responseCode == 200) {
-          return; // ✅ WireMock is ready
-        }
-      } catch (IOException e) {
-        // WireMock not ready yet
-      }
-      try {
-        Thread.sleep(50);
-      } catch (InterruptedException e) {
-        throw new RuntimeException(e);
-      }
-    }
-    throw new RuntimeException("WireMock server did not become ready in time on port " + port);
   }
 }

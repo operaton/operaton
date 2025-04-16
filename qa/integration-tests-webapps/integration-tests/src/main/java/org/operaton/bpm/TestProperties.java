@@ -18,6 +18,7 @@ package org.operaton.bpm;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Stream;
 
@@ -56,18 +57,23 @@ public class TestProperties {
   public int getHttpPort() {
 
     try {
-      return Integer.parseInt(properties.getProperty("http.port"));
+      return Integer.parseInt(properties.getProperty(HTTP_PORT));
     } catch (RuntimeException e) {
       return defaultPort;
     }
   }
   
   public String getStringProperty(String propName, String defaultValue) {
-    return properties.getProperty(propName, defaultValue);    
+    String propertyValue = properties.getProperty(propName, defaultValue);
+    if (propertyValue.startsWith("${") && propertyValue.endsWith("}")) {
+      Objects.requireNonNull(defaultValue, () -> "Property " + propName + " is not set.");
+      return defaultValue;
+    }
+    return propertyValue;
   }
 
   public String getHttpHost() {
-    return properties.getProperty("http.host", "localhost");
+    return getStringProperty("http.host", "localhost");
   }
 
   public static Properties getTestProperties() throws IOException {

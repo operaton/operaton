@@ -293,7 +293,7 @@ public class JobQueryTest {
 
   @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobQueryTest.testTimeCycleQueryByProcessDefinitionId.bpmn20.xml"})
-  public void testTimeCycleQueryByProcessDefinitionId() {
+  void testTimeCycleQueryByProcessDefinitionId() {
     String processDefinitionId = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("process")
@@ -565,7 +565,7 @@ public class JobQueryTest {
 
   @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
-  public void testQueryByException() {
+  void testQueryByException() {
     JobQuery query = managementService.createJobQuery().withException();
     verifyQueryResults(query, 0);
 
@@ -577,7 +577,7 @@ public class JobQueryTest {
 
   @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
-  public void testQueryByExceptionMessage() {
+  void testQueryByExceptionMessage() {
     JobQuery query = managementService.createJobQuery().exceptionMessage(EXCEPTION_MESSAGE);
     verifyQueryResults(query, 0);
 
@@ -591,7 +591,7 @@ public class JobQueryTest {
 
   @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
-  public void testQueryByExceptionMessageEmpty() {
+  void testQueryByExceptionMessageEmpty() {
     JobQuery query = managementService.createJobQuery().exceptionMessage("");
     verifyQueryResults(query, 0);
 
@@ -614,7 +614,7 @@ public class JobQueryTest {
 
   @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
-  public void testQueryByFailedActivityId(){
+  void testQueryByFailedActivityId(){
     JobQuery query = managementService.createJobQuery().failedActivityId("theScriptTask");
     verifyQueryResults(query, 0);
 

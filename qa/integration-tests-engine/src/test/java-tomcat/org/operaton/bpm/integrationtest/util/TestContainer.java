@@ -76,6 +76,10 @@ public class TestContainer {
     // nothing to do
   }
 
+  public static void addContainerSpecificResourcesForSpin(WebArchive deployment) {
+    // nothing to do
+  }
+
   public static void addSpinJacksonJsonDataFormat(WebArchive webArchive) {
     webArchive.addAsLibraries(DeploymentHelper.getSpinJacksonJsonDataFormatForServer("tomcat"));
   }

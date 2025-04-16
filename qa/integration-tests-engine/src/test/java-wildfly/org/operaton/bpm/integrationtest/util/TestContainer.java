@@ -50,6 +50,10 @@ public class TestContainer {
     webArchive.addAsLibraries(DeploymentHelper.getAssertJ());
   }
 
+  public static void addContainerSpecificResourcesForSpin(WebArchive deployment) {
+    deployment.addAsManifestResource("jboss-deployment-structure-spin.xml", "jboss-deployment-structure.xml");
+  }
+
   public static void addContainerSpecificProcessEngineConfigurationClass(WebArchive deployment) {
     // nothing to do
   }

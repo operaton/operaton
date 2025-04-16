@@ -58,10 +58,12 @@ public class ProcessInstanceTest {
       api.getApiClient().setBasePath("http://localhost:" + wireMockExtension.getPort());
     }
     WireMock.configureFor(wireMockExtension.getPort());
+    System.out.printf("%s: Port before: %d%n", getClass(), wireMockExtension.getPort());
   }
 
   @org.junit.jupiter.api.Test
   public void shouldQueryProcessInstancesCount() throws ApiException {
+    System.out.printf("%s: Port test: %d%n", getClass(), wireMockExtension.getPort());
     // given
     stubFor(post(urlEqualTo(
             ENGINE_REST_PROCESS_INSTANCE + "/count")).willReturn(aResponse().withStatus(200)
@@ -81,6 +83,7 @@ public class ProcessInstanceTest {
 
   @org.junit.jupiter.api.Test
   public void shouldUpdateSuspensionStateById() throws ApiException {
+    System.out.printf("%s: Port test: %d%n", getClass(), wireMockExtension.getPort());
     // given
     String id = "anProcessInstanceId";
     stubFor(put(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).willReturn(

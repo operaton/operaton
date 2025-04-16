@@ -54,10 +54,12 @@ public class DeploymentTest {
             .getBasePath()
             .replace("8080", String.valueOf(wireMockExtension.getPort())));
     WireMock.configureFor(wireMockExtension.getPort());
+    System.out.printf("%s: Port before: %d%n", getClass(), wireMockExtension.getPort());
   }
 
   @org.junit.jupiter.api.Test
   public void shouldCreateDeployment() throws ApiException {
+    System.out.printf("%s: Port test: %d%n", getClass(), wireMockExtension.getPort());
     // given
     String deploymentSource = "test-source";
     String deploymentName = "deployment-test-name";

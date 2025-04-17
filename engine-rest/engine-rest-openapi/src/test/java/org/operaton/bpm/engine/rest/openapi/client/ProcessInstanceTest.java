@@ -50,18 +50,15 @@ class ProcessInstanceTest {
 
   @BeforeEach
   void setUp() {
+    api.setCustomBaseUrl(api.getApiClient()
+            .getBasePath()
+            .replace("8080", String.valueOf(wireMock.getPort())));
     // Dynamically set the basePath for the API to match WireMock's port
-    String currentBasePath = api.getApiClient().getBasePath();
-    try {
-      URL url = new URL(currentBasePath);
-      String newBasePath =
-              url.getProtocol() + "://" + url.getHost() + ":" + wireMock.getPort() +
-                      url.getPath();
-      api.getApiClient().setBasePath(newBasePath);
-    } catch (MalformedURLException e) {
-      // Fallback if URL parsing fails
-      api.getApiClient().setBasePath("http://localhost:" + wireMock.getPort());
-    }
+    var basePath = URI.create(api.getApiClient().getBasePath());
+    String newBasePath = String.format("%s://%s:%d%s",
+            basePath.getScheme(), basePath.getHost(), wireMock.getPort(), basePath.getPath());
+    api.getApiClient().setBasePath(newBasePath);
+
     WireMock.configureFor(wireMock.getPort());
   }
 

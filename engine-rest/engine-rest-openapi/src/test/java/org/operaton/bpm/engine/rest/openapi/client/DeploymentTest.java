@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest.openapi.client;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
@@ -30,7 +31,7 @@ import java.io.File;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DeploymentTest {
+class DeploymentTest {
 
   private static final String ENGINE_REST_DEPLOYMENT = "/engine-rest/deployment";
 
@@ -38,18 +39,19 @@ public class DeploymentTest {
   private final DeploymentApi api = new DeploymentApi(new ApiClient());
 
   @RegisterExtension
-  static WireMockExtension wireMock = WireMockExtension.newInstance().options(
-          WireMockConfiguration.options().dynamicPort()).build();
+  static WireMockExtension wireMock = WireMockExtension.newInstance()
+          .options(WireMockConfiguration.options().dynamicPort())
+          .build();
 
   @BeforeEach
-  public void setup() {
+  public void setUp() {
     api.setCustomBaseUrl(api.getApiClient()
             .getBasePath()
             .replace("8080", String.valueOf(wireMock.getPort())));
   }
 
-  @org.junit.jupiter.api.Test
-  public void shouldCreateDeployment() throws ApiException {
+  @Test
+  void shouldCreateDeployment() throws ApiException {
     // given
     String deploymentSource = "test-source";
     String deploymentName = "deployment-test-name";
@@ -103,8 +105,9 @@ public class DeploymentTest {
             deploymentName,
             null,
             new File("src/test/resources/one.bpmn")
-    );// then
+    );
 
+    // then
     assertThat(deployment.getId()).isEqualTo("aDeploymentId");
     assertThat(deployment.getName()).isEqualTo(deploymentName);
     assertThat(deployment.getSource()).isEqualTo(deploymentSource);

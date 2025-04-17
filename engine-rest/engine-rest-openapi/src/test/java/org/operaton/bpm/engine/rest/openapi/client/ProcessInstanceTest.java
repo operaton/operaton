@@ -16,46 +16,58 @@
  */
 package org.operaton.bpm.engine.rest.openapi.client;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.put;
-import static com.github.tomakehurst.wiremock.client.WireMock.putRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Rule;
-import org.junit.Test;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+import java.net.URI;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.api.ProcessInstanceApi;
 import org.openapitools.client.model.CountResultDto;
 import org.openapitools.client.model.ProcessInstanceQueryDto;
 import org.openapitools.client.model.SuspensionStateDto;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-public class ProcessInstanceTest {
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ProcessInstanceTest {
 
   private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
 
-  final ProcessInstanceApi api = new ProcessInstanceApi();
+  // Create new ApiClient for ProcessInstanceApi to avoid the default client.
+  final ProcessInstanceApi api = new ProcessInstanceApi(new ApiClient());
 
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(8080);
+  @RegisterExtension
+  static WireMockExtension wireMock = WireMockExtension.newInstance()
+          .options(WireMockConfiguration.options().dynamicPort())
+          .build();
+
+  @BeforeEach
+  void setUp() {
+    api.setCustomBaseUrl(api.getApiClient()
+            .getBasePath()
+            .replace("8080", String.valueOf(wireMock.getPort())));
+    // Dynamically set the basePath for the API to match WireMock's port
+    var basePath = URI.create(api.getApiClient().getBasePath());
+    String newBasePath = String.format("%s://%s:%d%s",
+            basePath.getScheme(), basePath.getHost(), wireMock.getPort(), basePath.getPath());
+    api.getApiClient().setBasePath(newBasePath);
+
+    WireMock.configureFor(wireMock.getPort());
+  }
 
   @Test
-  public void shouldQueryProcessInstancesCount() throws ApiException {
+  void shouldQueryProcessInstancesCount() throws ApiException {
     // given
-    stubFor(
-        post(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/count"))
-        .willReturn(aResponse()
-            .withStatus(200)
-            .withBody("{ \"count\": 3 }"))
-        );
+    stubFor(post(urlEqualTo(
+            ENGINE_REST_PROCESS_INSTANCE + "/count")).willReturn(aResponse().withStatus(200)
+            .withBody("{ \"count\": 3 }")));
 
     // when
     ProcessInstanceQueryDto processInstanceQueryDto = new ProcessInstanceQueryDto();
@@ -64,21 +76,17 @@ public class ProcessInstanceTest {
 
     // then
     assertThat(count.getCount()).isEqualTo(3);
-    verify(postRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/count"))
-        .withRequestBody(equalToJson("{ \"active\": true }"))
-        .withHeader("Content-Type",  equalTo("application/json; charset=UTF-8"))
-        );
-
+    verify(postRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/count")).withRequestBody(
+                    equalToJson("{ \"active\": true }"))
+            .withHeader("Content-Type", equalTo("application/json; charset=UTF-8")));
   }
 
   @Test
-  public void shouldUpdateSuspensionStateById() throws ApiException {
+  void shouldUpdateSuspensionStateById() throws ApiException {
     // given
     String id = "anProcessInstanceId";
-    stubFor(
-        put(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended"))
-        .willReturn(aResponse().withStatus(204))
-        );
+    stubFor(put(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).willReturn(
+            aResponse().withStatus(204)));
 
     // when
     SuspensionStateDto dto = new SuspensionStateDto();
@@ -86,9 +94,8 @@ public class ProcessInstanceTest {
     api.updateSuspensionStateById(id, dto);
 
     // then no error
-    verify(putRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended"))
-        .withRequestBody(equalToJson("{ \"suspended\": true }"))
-        );
+    verify(putRequestedFor(urlEqualTo(
+            ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).withRequestBody(equalToJson(
+            "{ \"suspended\": true }")));
   }
-
 }

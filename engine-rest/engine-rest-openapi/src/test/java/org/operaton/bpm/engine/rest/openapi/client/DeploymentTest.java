@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.openapi.client;
 
-import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
@@ -34,22 +34,18 @@ public class DeploymentTest {
 
   private static final String ENGINE_REST_DEPLOYMENT = "/engine-rest/deployment";
 
-  private DeploymentApi api;
-
-  int port;
+  //DeploymentApi with new ApiClient. The new ApiClient is required or all Api share the same default
+  private final DeploymentApi api = new DeploymentApi(new ApiClient());
 
   @RegisterExtension
-  static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
+  static WireMockExtension wireMock = WireMockExtension.newInstance().options(
           WireMockConfiguration.options().dynamicPort()).build();
 
   @BeforeEach
   public void setup() {
-    api = new DeploymentApi();
     api.setCustomBaseUrl(api.getApiClient()
             .getBasePath()
-            .replace("8080", String.valueOf(wireMockExtension.getPort())));
-    WireMock.configureFor(wireMockExtension.getPort());
-    port = wireMockExtension.getPort();
+            .replace("8080", String.valueOf(wireMock.getPort())));
   }
 
   @org.junit.jupiter.api.Test
@@ -57,7 +53,7 @@ public class DeploymentTest {
     // given
     String deploymentSource = "test-source";
     String deploymentName = "deployment-test-name";
-    wireMockExtension.stubFor(post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).willReturn(
+    wireMock.stubFor(post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).willReturn(
             aResponse().withStatus(200).withBody("""
                         {
                         "links": [
@@ -91,7 +87,8 @@ public class DeploymentTest {
                         "deployedCaseDefinitions": null,
                         "deployedDecisionDefinitions": null,
                         "deployedDecisionRequirementsDefinitions": null
-                    }""".formatted(wireMockExtension.getPort(),
+                    }""".formatted(
+                    wireMock.getPort(),
                     deploymentName,
                     deploymentSource
             ))));
@@ -99,24 +96,15 @@ public class DeploymentTest {
     DeploymentWithDefinitionsDto deployment;
 
     // when
-    try {
-      deployment = api.createDeployment(null,
-              deploymentSource,
-              false,
-              false,
-              deploymentName,
-              null,
-              new File("src/test/resources/one.bpmn")
-      );// then
-    } catch (ApiException e) {
-        String message = """
-                Port before: %d
-                Port now: %d
-                
-                Ports in other tests: [%d,%d]
-                """.formatted(port, wireMockExtension.getPort(), BasicAuthenticationTest.port, ProcessInstanceTest.port);
-        throw new RuntimeException(message, e);
-    }
+    deployment = api.createDeployment(null,
+            deploymentSource,
+            false,
+            false,
+            deploymentName,
+            null,
+            new File("src/test/resources/one.bpmn")
+    );// then
+
     assertThat(deployment.getId()).isEqualTo("aDeploymentId");
     assertThat(deployment.getName()).isEqualTo(deploymentName);
     assertThat(deployment.getSource()).isEqualTo(deploymentSource);
@@ -128,7 +116,7 @@ public class DeploymentTest {
     assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getName()).isEqualTo(
             "aName");
 
-    verify(postRequestedFor(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).withRequestBody(
+    wireMock.verify(postRequestedFor(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).withRequestBody(
                     containing("Content-Disposition: form-data; name=\"deployment-name\""))
             .withRequestBody(containing("deployment-test-name"))
             .withRequestBody(containing("Content-Disposition: form-data; name=\"deployment-source\""))

@@ -21,6 +21,7 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.api.ProcessInstanceApi;
 import org.openapitools.client.model.CountResultDto;
@@ -37,12 +38,11 @@ public class ProcessInstanceTest {
 
   private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
 
-  final ProcessInstanceApi api = new ProcessInstanceApi();
-
-  static int port;
+  //Create new ApiClient for ProcessInstanceApi to avoid the default client.
+  final ProcessInstanceApi api = new ProcessInstanceApi(new ApiClient());
 
   @RegisterExtension
-  static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
+  static WireMockExtension wireMock = WireMockExtension.newInstance().options(
           WireMockConfiguration.options().dynamicPort()).build();
 
   @BeforeEach
@@ -52,15 +52,14 @@ public class ProcessInstanceTest {
     try {
       URL url = new URL(currentBasePath);
       String newBasePath =
-              url.getProtocol() + "://" + url.getHost() + ":" + wireMockExtension.getPort() +
+              url.getProtocol() + "://" + url.getHost() + ":" + wireMock.getPort() +
                       url.getPath();
       api.getApiClient().setBasePath(newBasePath);
     } catch (MalformedURLException e) {
       // Fallback if URL parsing fails
-      api.getApiClient().setBasePath("http://localhost:" + wireMockExtension.getPort());
+      api.getApiClient().setBasePath("http://localhost:" + wireMock.getPort());
     }
-    WireMock.configureFor(wireMockExtension.getPort());
-    port = wireMockExtension.getPort();
+    WireMock.configureFor(wireMock.getPort());
   }
 
   @org.junit.jupiter.api.Test

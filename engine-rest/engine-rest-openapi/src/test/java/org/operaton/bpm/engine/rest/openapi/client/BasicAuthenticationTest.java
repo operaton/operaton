@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.openapi.client;
 
-import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,10 +37,8 @@ public class BasicAuthenticationTest {
 
   ProcessInstanceApi api;
 
-  static int port;
-
   @RegisterExtension
-  static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
+  static WireMockExtension wireMock = WireMockExtension.newInstance().options(
           WireMockConfiguration.options().dynamicPort()).build();
 
   @BeforeEach
@@ -51,17 +48,15 @@ public class BasicAuthenticationTest {
     apiClient.setUsername(USERNAME);
     apiClient.setPassword(PASSWORD);
     apiClient.setBasePath(apiClient.getBasePath()
-            .replace("8080", String.valueOf(wireMockExtension.getPort())));
+            .replace("8080", String.valueOf(wireMock.getPort())));
 
     api = new ProcessInstanceApi(apiClient);
-    WireMock.configureFor(wireMockExtension.getPort());
-    port = wireMockExtension.getPort();
   }
 
   @org.junit.jupiter.api.Test
   public void shouldUseBasicAuth() throws ApiException {
     // given
-    stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).willReturn(aResponse().withStatus(
+    wireMock.stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).willReturn(aResponse().withStatus(
             200).withBody("{ \"id\": 1 }")));
 
     // when
@@ -69,7 +64,7 @@ public class BasicAuthenticationTest {
 
     // then
     assertThat(processInstance.getId()).isEqualTo("1");
-    verify(getRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).withHeader("Authorization",
+    wireMock.verify(getRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).withHeader("Authorization",
             equalTo("Basic bWlrZTpzZWNyZXQ=")
     ));
   }

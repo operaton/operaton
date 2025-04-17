@@ -60,7 +60,6 @@ public class BasicAuthenticationTest {
 
   @org.junit.jupiter.api.Test
   public void shouldUseBasicAuth() throws ApiException {
-    System.out.printf("%s: Port test: %d%n", getClass(), wireMockExtension.getPort());
     // given
     stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).willReturn(aResponse().withStatus(
             200).withBody("{ \"id\": 1 }")));

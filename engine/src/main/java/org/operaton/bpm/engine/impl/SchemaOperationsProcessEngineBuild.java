@@ -46,6 +46,8 @@ public class SchemaOperationsProcessEngineBuild implements SchemaOperationsComma
       || ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_DROP_CREATE.equals(databaseSchemaUpdate)
       || ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_CREATE.equals(databaseSchemaUpdate)
       ) {
+      System.out.println("*** SchemaOperationsProcessEngineBuild: dbSchemaCreate ");
+      System.out.println("*** Table Names present in the database: " + persistenceSession.getTableNamesPresent());
       persistenceSession.dbSchemaCreate();
     } else if (ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE.equals(databaseSchemaUpdate)) {
       persistenceSession.dbSchemaCheckVersion();

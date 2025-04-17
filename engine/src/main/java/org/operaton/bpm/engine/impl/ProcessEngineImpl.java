@@ -142,6 +142,7 @@ public class ProcessEngineImpl implements ProcessEngine {
   }
 
   protected void executeSchemaOperations() {
+    System.out.println("*** ProcessEngineImpl: executeSchemaOperations " + this.getProcessEngineConfiguration().getJdbcUrl());
     commandExecutorSchemaOperations.execute(processEngineConfiguration.getSchemaOperationsCommand());
     commandExecutorSchemaOperations.execute(processEngineConfiguration.getHistoryLevelCommand());
 

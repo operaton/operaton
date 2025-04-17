@@ -35,25 +35,32 @@ public class MultiEngineCommandContextTest {
 
   protected ProcessEngine engine1;
   protected ProcessEngine engine2;
+  
+  private static final String ENGINE1_NAME = "MultiEngineCommandContextTest-engine1";
+    private static final String ENGINE2_NAME = "MultiEngineCommandContextTest-engine2";
 
   @Before
   public void startEngines() {
-    engine1 = createProcessEngine("engine1");
-    engine2 = createProcessEngine("engine2");
-    StartProcessInstanceOnEngineDelegate.ENGINES.put("engine1", engine1);
-    StartProcessInstanceOnEngineDelegate.ENGINES.put("engine2", engine2);
+    engine1 = createProcessEngine(ENGINE1_NAME);
+    engine2 = createProcessEngine(ENGINE2_NAME);
+    StartProcessInstanceOnEngineDelegate.ENGINES.put(ENGINE1_NAME, engine1);
+    StartProcessInstanceOnEngineDelegate.ENGINES.put(ENGINE2_NAME, engine2);
   }
 
   @After
-  public void tearDown() {
+  public void closeEngines() {
+    StartProcessInstanceOnEngineDelegate.ENGINES.clear();
     try {
       engine1.close();
-      engine2.close();
     }
     finally {
       engine1 = null;
+    }
+    try {
+      engine2.close();
+    }
+    finally {
       engine2 = null;
-      StartProcessInstanceOnEngineDelegate.ENGINES.clear();
     }
   }
 
@@ -62,7 +69,7 @@ public class MultiEngineCommandContextTest {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine2")
+          .operatonInputParameter("engineName", ENGINE2_NAME)
           .operatonInputParameter("processKey", "process2")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .endEvent()
@@ -93,7 +100,7 @@ public class MultiEngineCommandContextTest {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine2")
+          .operatonInputParameter("engineName", ENGINE2_NAME)
           .operatonInputParameter("processKey", "process2")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .endEvent()
@@ -102,7 +109,7 @@ public class MultiEngineCommandContextTest {
     BpmnModelInstance process2 = Bpmn.createExecutableProcess("process2")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine1")
+          .operatonInputParameter("engineName", ENGINE1_NAME)
           .operatonInputParameter("processKey", "process3")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .done();

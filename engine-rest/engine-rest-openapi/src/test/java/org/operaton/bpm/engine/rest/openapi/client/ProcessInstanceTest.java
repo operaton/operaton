@@ -39,6 +39,8 @@ public class ProcessInstanceTest {
 
   final ProcessInstanceApi api = new ProcessInstanceApi();
 
+  static int port;
+
   @RegisterExtension
   static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
           WireMockConfiguration.options().dynamicPort()).build();
@@ -58,7 +60,7 @@ public class ProcessInstanceTest {
       api.getApiClient().setBasePath("http://localhost:" + wireMockExtension.getPort());
     }
     WireMock.configureFor(wireMockExtension.getPort());
-    System.out.printf("%s: Port before: %d%n", getClass(), wireMockExtension.getPort());
+    port = wireMockExtension.getPort();
   }
 
   @org.junit.jupiter.api.Test

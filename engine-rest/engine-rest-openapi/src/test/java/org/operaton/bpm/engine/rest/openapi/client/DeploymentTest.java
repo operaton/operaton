@@ -19,29 +19,24 @@ package org.operaton.bpm.engine.rest.openapi.client;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
-import okhttp3.Call;
-import okhttp3.Request;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.api.DeploymentApi;
 import org.openapitools.client.model.DeploymentWithDefinitionsDto;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.offset;
 
 public class DeploymentTest {
 
   private static final String ENGINE_REST_DEPLOYMENT = "/engine-rest/deployment";
 
   private DeploymentApi api;
+
+  int port;
 
   @RegisterExtension
   static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
@@ -54,12 +49,11 @@ public class DeploymentTest {
             .getBasePath()
             .replace("8080", String.valueOf(wireMockExtension.getPort())));
     WireMock.configureFor(wireMockExtension.getPort());
-    System.out.printf("%s: Port before: %d%n", getClass(), wireMockExtension.getPort());
+    port = wireMockExtension.getPort();
   }
 
   @org.junit.jupiter.api.Test
   public void shouldCreateDeployment() throws ApiException {
-    System.out.printf("%s: Port test: %d%n", getClass(), wireMockExtension.getPort());
     // given
     String deploymentSource = "test-source";
     String deploymentName = "deployment-test-name";
@@ -115,15 +109,13 @@ public class DeploymentTest {
               new File("src/test/resources/one.bpmn")
       );// then
     } catch (ApiException e) {
-      var client = api.getApiClient().getHttpClient();
-      Call call = client.newCall(new Request.Builder().url(
-              "http://localhost:%d/__admin/mappings".formatted(wireMockExtension.getPort())).get().build());
-      try {
-        var response = call.execute();
-        throw new RuntimeException("No connection on port %s%n%n%s".formatted(wireMockExtension.getPort(), response.body().string()), e);
-      } catch (IOException ex) {
-        throw new RuntimeException(ex);
-      }
+        String message = """
+                Port before: %d
+                Port now: %d
+                
+                Ports in other tests: [%d,%d]
+                """.formatted(port, wireMockExtension.getPort(), BasicAuthenticationTest.port, ProcessInstanceTest.port);
+        throw new RuntimeException(message, e);
     }
     assertThat(deployment.getId()).isEqualTo("aDeploymentId");
     assertThat(deployment.getName()).isEqualTo(deploymentName);

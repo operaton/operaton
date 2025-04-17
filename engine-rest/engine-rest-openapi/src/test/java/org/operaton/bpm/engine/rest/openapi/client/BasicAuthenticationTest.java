@@ -38,6 +38,8 @@ public class BasicAuthenticationTest {
 
   ProcessInstanceApi api;
 
+  static int port;
+
   @RegisterExtension
   static WireMockExtension wireMockExtension = WireMockExtension.newInstance().options(
           WireMockConfiguration.options().dynamicPort()).build();
@@ -53,7 +55,7 @@ public class BasicAuthenticationTest {
 
     api = new ProcessInstanceApi(apiClient);
     WireMock.configureFor(wireMockExtension.getPort());
-    System.out.printf("%s: Port before: %d%n", getClass(), wireMockExtension.getPort());
+    port = wireMockExtension.getPort();
   }
 
   @org.junit.jupiter.api.Test

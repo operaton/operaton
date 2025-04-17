@@ -23,7 +23,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +31,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-@Ignore("https://github.com/operaton/operaton/issues/720")
 public class MultiEngineCommandContextTest {
 
   protected ProcessEngine engine1;
@@ -47,28 +45,16 @@ public class MultiEngineCommandContextTest {
   }
 
   @After
-  public void closeEngine1() {
+  public void tearDown() {
     try {
       engine1.close();
-    }
-    finally {
-      engine1 = null;
-    }
-  }
-
-  @After
-  public void closeEngine2() {
-    try {
       engine2.close();
     }
     finally {
+      engine1 = null;
       engine2 = null;
+      StartProcessInstanceOnEngineDelegate.ENGINES.clear();
     }
-  }
-
-  @After
-  public void removeEngines() {
-    StartProcessInstanceOnEngineDelegate.ENGINES.clear();
   }
 
   @Test

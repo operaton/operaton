@@ -243,13 +243,13 @@ public class BpmnParse extends Parse {
   /**
    * @deprecated use {@link BpmnProperties#TYPE}
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public static final String PROPERTYNAME_TYPE = BpmnProperties.TYPE.getName();
 
   /**
    * @deprecated use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS}
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.getName();
 
   /* process start authorization specific finals */
@@ -1719,7 +1719,7 @@ public class BpmnParse extends Parse {
 
     if (activityRef != null && scopeElement.findActivityAtLevelOfSubprocess(activityRef) == null) {
       Boolean isTriggeredByEvent = scopeElement.getProperties().get(BpmnProperties.TRIGGERED_BY_EVENT);
-      String type = (String) scopeElement.getProperty(PROPERTYNAME_TYPE);
+      String type = (String) scopeElement.getProperty(BpmnProperties.TYPE.getName());
       if (Boolean.TRUE == isTriggeredByEvent && SUB_PROCESS_TAG.equals(type)) {
         scopeElement = scopeElement.getFlowScope();
       }
@@ -1820,7 +1820,7 @@ public class BpmnParse extends Parse {
     id = getIdForMiBody(id);
     ActivityImpl miBodyScope = scope.createActivity(id);
     setActivityAsyncDelegates(miBodyScope);
-    miBodyScope.setProperty(PROPERTYNAME_TYPE, ActivityTypes.MULTI_INSTANCE_BODY);
+    miBodyScope.setProperty(BpmnProperties.TYPE.getName(), ActivityTypes.MULTI_INSTANCE_BODY);
     miBodyScope.setScope(true);
 
     boolean isSequential = parseBooleanAttribute(miLoopCharacteristics.attribute("isSequential"), false);

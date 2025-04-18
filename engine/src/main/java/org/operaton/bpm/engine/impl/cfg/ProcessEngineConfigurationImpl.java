@@ -3514,7 +3514,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated use {@link #getCustomPreBPMNParseListeners} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public List<BpmnParseListener> getPreParseListeners() {
     return preParseListeners;
   }
@@ -3522,7 +3522,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated use {@link #setCustomPreBPMNParseListeners} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public void setPreParseListeners(List<BpmnParseListener> preParseListeners) {
     this.preParseListeners = preParseListeners;
   }
@@ -3530,7 +3530,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated use {@link #getCustomPostBPMNParseListeners} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public List<BpmnParseListener> getPostParseListeners() {
     return postParseListeners;
   }
@@ -3538,7 +3538,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated use {@link #setCustomPostBPMNParseListeners} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public void setPostParseListeners(List<BpmnParseListener> postParseListeners) {
     this.postParseListeners = postParseListeners;
   }
@@ -4453,7 +4453,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated use {@link #getHostnameProvider()} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public MetricsReporterIdProvider getMetricsReporterIdProvider() {
     return metricsReporterIdProvider;
   }
@@ -4461,7 +4461,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated use {@link #setHostnameProvider(HostnameProvider)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public ProcessEngineConfigurationImpl setMetricsReporterIdProvider(MetricsReporterIdProvider metricsReporterIdProvider) {
     this.metricsReporterIdProvider = metricsReporterIdProvider;
     return this;

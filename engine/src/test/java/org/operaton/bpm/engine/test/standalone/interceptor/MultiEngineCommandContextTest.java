@@ -23,7 +23,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,32 +31,31 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-@Ignore("https://github.com/operaton/operaton/issues/720")
 public class MultiEngineCommandContextTest {
 
   protected ProcessEngine engine1;
   protected ProcessEngine engine2;
+  
+  private static final String ENGINE1_NAME = "MultiEngineCommandContextTest-engine1";
+    private static final String ENGINE2_NAME = "MultiEngineCommandContextTest-engine2";
 
   @Before
   public void startEngines() {
-    engine1 = createProcessEngine("engine1");
-    engine2 = createProcessEngine("engine2");
-    StartProcessInstanceOnEngineDelegate.ENGINES.put("engine1", engine1);
-    StartProcessInstanceOnEngineDelegate.ENGINES.put("engine2", engine2);
+    engine1 = createProcessEngine(ENGINE1_NAME);
+    engine2 = createProcessEngine(ENGINE2_NAME);
+    StartProcessInstanceOnEngineDelegate.ENGINES.put(ENGINE1_NAME, engine1);
+    StartProcessInstanceOnEngineDelegate.ENGINES.put(ENGINE2_NAME, engine2);
   }
 
   @After
-  public void closeEngine1() {
+  public void closeEngines() {
+    StartProcessInstanceOnEngineDelegate.ENGINES.clear();
     try {
       engine1.close();
     }
     finally {
       engine1 = null;
     }
-  }
-
-  @After
-  public void closeEngine2() {
     try {
       engine2.close();
     }
@@ -66,17 +64,12 @@ public class MultiEngineCommandContextTest {
     }
   }
 
-  @After
-  public void removeEngines() {
-    StartProcessInstanceOnEngineDelegate.ENGINES.clear();
-  }
-
   @Test
   public void shouldOpenNewCommandContextWhenInteractingAcrossEngines() {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine2")
+          .operatonInputParameter("engineName", ENGINE2_NAME)
           .operatonInputParameter("processKey", "process2")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .endEvent()
@@ -107,7 +100,7 @@ public class MultiEngineCommandContextTest {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine2")
+          .operatonInputParameter("engineName", ENGINE2_NAME)
           .operatonInputParameter("processKey", "process2")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .endEvent()
@@ -116,7 +109,7 @@ public class MultiEngineCommandContextTest {
     BpmnModelInstance process2 = Bpmn.createExecutableProcess("process2")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine1")
+          .operatonInputParameter("engineName", ENGINE1_NAME)
           .operatonInputParameter("processKey", "process3")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .done();

@@ -46,24 +46,23 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
   protected ProcessEngine engine1;
   protected ProcessEngine engine2;
 
+  private static final String ENGINE1_NAME = "ProcessDataLoggingContextMultipleEnginesTest-engine1";
+  private static final String ENGINE2_NAME = "ProcessDataLoggingContextMultipleEnginesTest-engine2";
+
   @Before
   public void startEngines() {
-    engine1 = createProcessEngine("engine1");
-    engine2 = createProcessEngine("engine2");
+    engine1 = createProcessEngine(ENGINE1_NAME);
+    engine2 = createProcessEngine(ENGINE2_NAME);
   }
 
   @After
-  public void closeEngine1() {
+  public void closeEngines() {
     try {
       engine1.close();
     }
     finally {
       engine1 = null;
     }
-  }
-
-  @After
-  public void closeEngine2() {
     try {
       engine2.close();
     }
@@ -85,7 +84,7 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
     List<ILoggingEvent> filteredLog = loggingRule.getLog();
     List<String> engineNames = filteredLog.stream().map(log -> log.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNames).hasSize(filteredLog.size());
-    assertThat(engineNames.stream().distinct().toList()).containsExactly("engine1");
+    assertThat(engineNames.stream().distinct().toList()).containsExactly(ENGINE1_NAME);
   }
 
   @Test
@@ -103,17 +102,17 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
     List<String> engineNames = log.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     // make sure all log entries have access to the engineName MDC property
     assertThat(engineNames).hasSize(log.size());
-    assertThat(engineNames.stream().distinct().toList()).containsExactlyInAnyOrder("engine1", "engine2");
+    assertThat(engineNames.stream().distinct().toList()).containsExactlyInAnyOrder(ENGINE1_NAME, ENGINE2_NAME);
 
-    List<ILoggingEvent> filteredLogEngine1 = loggingRule.getFilteredLog("engine1");
+    List<ILoggingEvent> filteredLogEngine1 = loggingRule.getFilteredLog(ENGINE1_NAME);
     List<String> engineNamesEngine1 = filteredLogEngine1.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNamesEngine1).hasSameSizeAs(filteredLogEngine1);
-    assertThat(engineNamesEngine1.stream().distinct().toList()).containsExactly("engine1");
+    assertThat(engineNamesEngine1.stream().distinct().toList()).containsExactly(ENGINE1_NAME);
 
-    List<ILoggingEvent> filteredLogEngine2 = loggingRule.getFilteredLog("engine2");
+    List<ILoggingEvent> filteredLogEngine2 = loggingRule.getFilteredLog(ENGINE2_NAME);
     List<String> engineNamesEngine2 = filteredLogEngine2.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNamesEngine2).hasSameSizeAs(filteredLogEngine2);
-    assertThat(engineNamesEngine2.stream().distinct().toList()).containsExactly("engine2");
+    assertThat(engineNamesEngine2.stream().distinct().toList()).containsExactly(ENGINE2_NAME);
   }
 
   private ProcessEngine createProcessEngine(String name) {

@@ -20,13 +20,14 @@ import java.lang.ref.WeakReference;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
+
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
 
 /**
  * <p>
- * A {@link AbstractProcessApplication} Implementation to be used in a Servlet
+ * An {@link AbstractProcessApplication} implementation to be used in a Servlet
  * container environment.
  * </p>
  *
@@ -37,12 +38,14 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  *
  * <h2>Usage</h2>
  * <p>
- * In a <strong>Servlet 3.0</strong> container it is sufficient adding a custom
+ * It is sufficient adding a custom
  * subclass of {@link ServletProcessApplication} annotated with
- * <code>{@literal @}ProcessApplication</code> to your application:
+ * <code>{@literal @}ProcessApplication</code> and <code>{@literal @}WebListener</code>
+ * to your application:
  *
  * <pre>
  * {@literal @}ProcessApplication("Loan Approval App")
+ * {@literal @}WebListener
  * public class LoanApprovalApplication extends ServletProcessApplication {
  * // empty implementation
  * }
@@ -51,23 +54,6 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  * This, in combination with a <code>META-INF/processes.xml</code> file is
  * sufficient for making sure that the process application class is picked up at
  * runtime.
- * </p>
- * <p>
- * In a <strong>Servlet 2.5</strong> container, the process application can be
- * added as a web listener to your project's <code>web.xml</code>
- * </p>
- *
- * <pre>
- * {@literal <}?xml version="1.0" encoding="UTF-8"?{@literal >}
- * {@literal <}web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
- *       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- *       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"{@literal >}
- *
- * {@literal <}listener{@literal >}
- *   {@literal <}listener-class{@literal >}org.my.project.MyProcessApplication{@literal <}/listener-class{@literal >}
- * {@literal <}/listener{@literal >}
- *{@literal <}/web-app{@literal >}
- * </pre>
  * </p>
  *
  * <h2>Invocation Semantics</h2>

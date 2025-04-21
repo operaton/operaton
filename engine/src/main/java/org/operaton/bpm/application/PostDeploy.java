@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * <ul>
  *  <li>If the process application defines one or more {@link ProcessEngine ProcessEngines}, all process 
  *  engines have been successfully started and can be looked up.</li>
- *  <li>If the process application defines one or more ProcessArchvies (deployments), all deployments have
+ *  <li>If the process application defines one or more Process Archives (deployments), all deployments have
  *  completed successfully.</li>
  * </ul>
  * </p>

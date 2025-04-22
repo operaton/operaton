@@ -382,10 +382,8 @@ public class RestIT extends AbstractWebIntegrationTest {
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode tasks = objectMapper.readTree(responseBody);
 
-    // Get the first task from the array (assuming it's an array)
-    JsonNode firstTask = tasks.get(0);  // Get the first element in the array (JsonNode)
-
-    return firstTask;
+    // Return the first task from the array (assuming it's an array)
+    return tasks.get(0);  // Get the first element in the array (JsonNode)
   }
 
   protected JsonNode getFirstHistoricVariableUpdates() throws JsonProcessingException {

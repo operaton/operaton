@@ -16,18 +16,13 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-import jakarta.enterprise.util.AnnotationLiteral;
-
-
-public class DeleteTaskLiteral extends AnnotationLiteral<DeleteTask> implements DeleteTask {
-
-  protected final String taskDefinitionKey;
-
+public class DeleteTaskLiteral extends AbstractTaskLiteral<DeleteTask> implements DeleteTask {
   public DeleteTaskLiteral(String taskDefinitionKey) {
-    this.taskDefinitionKey = taskDefinitionKey;
+    super(taskDefinitionKey);
   }
   @Override
   public String value() {
     return taskDefinitionKey != null ? taskDefinitionKey : "";
   }
+
 }

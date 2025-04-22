@@ -56,7 +56,7 @@ public class NamedProcessEngineServicesProducer {
 
     ProcessEngineName annotation = ip.getAnnotated().getAnnotation(ProcessEngineName.class);
     String processEngineName = annotation.value();
-    if(processEngineName == null || processEngineName.length() == 0) {
+    if(processEngineName == null || processEngineName.isEmpty()) {
      throw new ProcessEngineException("Cannot determine which process engine to inject: @ProcessEngineName must specify the name of a process engine.");
     }
     try {

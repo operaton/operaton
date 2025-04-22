@@ -32,7 +32,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ProcessVariablesTest extends CdiProcessEngineTestCase {
 
-  @Ignore
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   public void testResolveString() {

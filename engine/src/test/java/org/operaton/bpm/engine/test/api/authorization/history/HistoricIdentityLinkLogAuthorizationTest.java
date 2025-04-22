@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest {
+class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest {
 
   protected static final String ONE_PROCESS_KEY = "demoAssigneeProcess";
   protected static final String CASE_KEY = "oneTaskCase";

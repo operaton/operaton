@@ -907,7 +907,7 @@ public class ModificationExecutionAsyncTest {
 
   @TestTemplate
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.syncAfterOneTaskProcess.bpmn20.xml" })
-  public void testBatchExecutionWithHistoricQueryUnfinished() {
+  void testBatchExecutionWithHistoricQueryUnfinished() {
     // given
     List<String> startedInstances = helper.startInstances("oneTaskProcess", 3);
 
@@ -1002,7 +1002,7 @@ public class ModificationExecutionAsyncTest {
 
   @TestTemplate
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.syncAfterOneTaskProcess.bpmn20.xml" })
-  public void testBatchExecutionFailureWithFinishedInstanceId() {
+  void testBatchExecutionFailureWithFinishedInstanceId() {
     // given
     List<String> startedInstances = helper.startInstances("oneTaskProcess", 3);
 
@@ -1058,7 +1058,7 @@ public class ModificationExecutionAsyncTest {
 
   @TestTemplate
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.syncAfterOneTaskProcess.bpmn20.xml" })
-  public void testBatchExecutionFailureWithHistoricQueryThatMatchesFinishedInstance() {
+  void testBatchExecutionFailureWithHistoricQueryThatMatchesFinishedInstance() {
     // given
     List<String> startedInstances = helper.startInstances("oneTaskProcess", 3);
 
@@ -1447,7 +1447,7 @@ public class ModificationExecutionAsyncTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldSetExecutionStartTimeInBatchAndHistory() {
+  void shouldSetExecutionStartTimeInBatchAndHistory() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 20, "user1", processDefinition.getId());

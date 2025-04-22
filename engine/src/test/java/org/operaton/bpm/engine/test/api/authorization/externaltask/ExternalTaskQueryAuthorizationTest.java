@@ -38,7 +38,7 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
  * @author Thorben Lindhauer
  *
  */
-public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
+class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final String EXTERNAL_TASK_TOPIC = "externalTaskTopic";

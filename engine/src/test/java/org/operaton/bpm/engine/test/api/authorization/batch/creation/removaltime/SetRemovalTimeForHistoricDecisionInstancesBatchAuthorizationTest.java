@@ -73,7 +73,7 @@ public class SetRemovalTimeForHistoricDecisionInstancesBatchAuthorizationTest ex
     "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldAuthorizeSetRemovalTimeForHistoricDecisionInstancesBatch() {
+  void shouldAuthorizeSetRemovalTimeForHistoricDecisionInstancesBatch() {
     // given
     setupHistory();
 

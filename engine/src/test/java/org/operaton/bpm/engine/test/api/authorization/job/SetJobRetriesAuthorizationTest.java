@@ -130,7 +130,7 @@ public class SetJobRetriesAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldSetJobRetriesByJobDefinitionId() {
+  void shouldSetJobRetriesByJobDefinitionId() {
     // given
     String processInstanceId = engineRule.getRuntimeService()
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -162,7 +162,7 @@ public class SetJobRetriesAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldSetJobRetries() {
+  void shouldSetJobRetries() {
     // given
     String processInstanceId = engineRule.getRuntimeService()
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)

@@ -40,7 +40,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * Tests the signalling of external task conditions
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class ExternalTaskConditionsTest {
+class ExternalTaskConditionsTest {
 
   @Mock
   public SingleConsumerCondition condition;

@@ -104,7 +104,7 @@ public class SetJobDefinitionPriorityCascadeAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml")
-  public void testSetJobDefinitionPriority() {
+  void testSetJobDefinitionPriority() {
 
     // given
     JobDefinition jobDefinition = engineRule.getManagementService().createJobDefinitionQuery().singleResult();

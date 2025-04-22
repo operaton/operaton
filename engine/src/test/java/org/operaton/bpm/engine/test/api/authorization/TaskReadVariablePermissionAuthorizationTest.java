@@ -146,7 +146,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testSaveProcessTaskAndCheckAssigneePermissions() {
+  void testSaveProcessTaskAndCheckAssigneePermissions() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();
@@ -188,7 +188,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskSetOwnerAndCheckOwnerPermissions() {
+  void testProcessTaskSetOwnerAndCheckOwnerPermissions() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -239,7 +239,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnTask() {
+  void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -301,7 +301,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnTask() {
+  void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();

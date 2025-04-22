@@ -63,7 +63,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Thorben Lindhauer
  *
  */
-public class ProcessInstanceModificationTest {
+class ProcessInstanceModificationTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
   protected static final String EXCLUSIVE_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGateway.bpmn20.xml";

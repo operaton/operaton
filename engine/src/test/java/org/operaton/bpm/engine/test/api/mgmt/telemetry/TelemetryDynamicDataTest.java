@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class TelemetryDynamicDataTest {
+class TelemetryDynamicDataTest {
 
   protected ProcessEngineConfigurationImpl configuration;
   protected RuntimeService runtimeService;

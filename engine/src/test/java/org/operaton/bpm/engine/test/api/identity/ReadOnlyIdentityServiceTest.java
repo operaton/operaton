@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Daniel Meyer
  *
  */
-public class ReadOnlyIdentityServiceTest {
+class ReadOnlyIdentityServiceTest {
 
   protected static final String CONFIGURATION_RESOURCE = "org/operaton/bpm/engine/test/api/identity/read.only.identity.service.operaton.cfg.xml";
 

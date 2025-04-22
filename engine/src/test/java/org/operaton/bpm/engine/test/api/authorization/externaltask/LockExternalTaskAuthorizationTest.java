@@ -26,11 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.TestTemplate;
 
 @Parameterized
-public class LockExternalTaskAuthorizationTest extends HandleExternalTaskAuthorizationTest {
+class LockExternalTaskAuthorizationTest extends HandleExternalTaskAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
-  public void shouldLockExternalTaskWithAuthorizations() {
+  void shouldLockExternalTaskWithAuthorizations() {
 
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService()

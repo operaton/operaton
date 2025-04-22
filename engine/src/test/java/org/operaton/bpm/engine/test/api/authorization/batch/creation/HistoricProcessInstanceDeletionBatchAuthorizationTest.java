@@ -59,7 +59,7 @@ public class HistoricProcessInstanceDeletionBatchAuthorizationTest extends Batch
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testBatchHistoricProcessInstanceDeletion() {
+  void testBatchHistoricProcessInstanceDeletion() {
     List<String> historicProcessInstances = setupHistory();
 
     //given

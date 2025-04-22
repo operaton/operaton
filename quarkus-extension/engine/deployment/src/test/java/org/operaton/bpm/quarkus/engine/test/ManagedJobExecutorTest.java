@@ -63,7 +63,7 @@ class ManagedJobExecutorTest {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @BeforeEach
-  protected void setUp() {
+  void setUp() {
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine
         .getProcessEngineConfiguration();
   }

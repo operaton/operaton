@@ -145,15 +145,19 @@ public abstract class HistoryCleanupHelper {
     }
   }
 
-  public static int[][] listMinuteChunks(int numberOfChunks) {
-    final int[][] minuteChunks = new int[numberOfChunks][2];
-    int chunkLength = 60 / numberOfChunks;
-    for (int i = 0; i < numberOfChunks; i++) {
-      minuteChunks[i][0] = chunkLength * i;
-      minuteChunks[i][1] = chunkLength * (i + 1) - 1;
+  public static int[][] listMinuteChunks(int numberOfChunks) throws IllegalArgumentException {
+    if (numberOfChunks > 0) {
+      final int[][] minuteChunks = new int[numberOfChunks][2];
+      int chunkLength = 60 / numberOfChunks;
+      for (int i = 0; i < numberOfChunks; i++) {
+        minuteChunks[i][0] = chunkLength * i;
+        minuteChunks[i][1] = chunkLength * (i + 1) - 1;
+      }
+      minuteChunks[numberOfChunks - 1][1] = 59;
+      return minuteChunks;
+    } else {
+      throw new IllegalArgumentException("Number of chunks must be greater than 0, but is " + numberOfChunks);
     }
-    minuteChunks[numberOfChunks - 1][1] = 59;
-    return minuteChunks;
   }
 
   public static boolean isBatchWindowConfigured(CommandContext commandContext) {

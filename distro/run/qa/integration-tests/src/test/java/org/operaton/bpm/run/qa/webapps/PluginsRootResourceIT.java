@@ -108,11 +108,9 @@ class PluginsRootResourceIT extends AbstractWebIT {
     String fullPath = APP_BASE_PATH + path;
 
     // Perform the GET request to fetch the asset
-    Response response = client.target(fullPath)  // Use target() to define the endpoint
+    return client.target(fullPath)  // Use target() to define the endpoint
             .request()  // Prepare to send the request
             .get();  // Execute the GET request
-
-    return response;
   }
 
   protected void assertResponse(String asset, Response response) {

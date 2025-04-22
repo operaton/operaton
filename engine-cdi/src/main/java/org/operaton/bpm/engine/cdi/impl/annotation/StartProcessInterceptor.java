@@ -92,7 +92,7 @@ public class StartProcessInterceptor implements Serializable {
         fieldName = processStartVariableTyped.value();
       }
 
-      if (fieldName == null || fieldName.length() == 0) {
+      if (fieldName == null || fieldName.isEmpty()) {
         fieldName = field.getName();
       }
       Object value = field.get(ctx.getTarget());

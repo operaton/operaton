@@ -66,7 +66,7 @@ public class SetRemovalTimeForHistoricBatchesBatchAuthorizationTest extends Batc
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldAuthorizeSetRemovalTimeForHistoricBatchesBatch() {
+  void shouldAuthorizeSetRemovalTimeForHistoricBatchesBatch() {
     // given
     String batchId = engineRule.getHistoryService()
       .deleteHistoricProcessInstancesAsync(Collections.singletonList(processInstance.getId()), "aDeleteReason").getId();

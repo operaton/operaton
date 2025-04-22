@@ -83,7 +83,7 @@ public class SetJobDefinitionPriorityAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml")
-  public void testSetJobDefinitionPriority() {
+  void testSetJobDefinitionPriority() {
 
     // given
     JobDefinition jobDefinition = engineRule.getManagementService().createJobDefinitionQuery().singleResult();
@@ -107,7 +107,7 @@ public class SetJobDefinitionPriorityAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml")
-  public void testResetJobDefinitionPriority() {
+  void testResetJobDefinitionPriority() {
     // given
     JobDefinition jobDefinition = engineRule.getManagementService().createJobDefinitionQuery().singleResult();
     engineRule.getManagementService().setOverridingJobPriorityForJobDefinition(jobDefinition.getId(), 42);

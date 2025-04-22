@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 
 import ch.qos.logback.classic.Level;
 
-public class PropertiesUtilTest {
+class PropertiesUtilTest {
 
   @RegisterExtension
   public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()

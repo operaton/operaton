@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
+class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 

@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyHistoricDecisionInstanceQueryTest {
+class MultiTenancyHistoricDecisionInstanceQueryTest {
 
   protected static final String DMN = "org/operaton/bpm/engine/test/api/multitenancy/simpleDecisionTable.dmn";
 

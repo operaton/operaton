@@ -58,7 +58,7 @@ import static org.assertj.core.api.Assertions.fail;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class UserOperationLogAuthorizationTest extends AuthorizationTest {
+class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
   protected static final String ONE_TASK_PROCESS_KEY = "oneTaskProcess";
   protected static final String ONE_TASK_CASE_KEY = "oneTaskCase";

@@ -47,7 +47,7 @@ import ch.qos.logback.classic.Level;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class EmbeddedProcessApplicationTest {
+class EmbeddedProcessApplicationTest {
 
   protected static final String CONFIG_LOGGER = "org.operaton.bpm.application";
   

@@ -93,7 +93,7 @@ public class SetJobPriorityAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml")
-  public void testSetJobPriority() {
+  void testSetJobPriority() {
 
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("process");

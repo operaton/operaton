@@ -103,7 +103,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldExecuteJob() {
+  void shouldExecuteJob() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -132,7 +132,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldSuspendJobById() {
+  void shouldSuspendJobById() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -159,7 +159,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldActivateJobById() {
+  void shouldActivateJobById() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -186,7 +186,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldSuspendJobByProcessInstanceId() {
+  void shouldSuspendJobByProcessInstanceId() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -213,7 +213,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldActivateJobByProcessInstanceId() {
+  void shouldActivateJobByProcessInstanceId() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -240,7 +240,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldSuspendJobByJobDefinitionId() {
+  void shouldSuspendJobByJobDefinitionId() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -268,7 +268,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldActivateJobByJobDefinitionId() {
+  void shouldActivateJobByJobDefinitionId() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -296,7 +296,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldSuspendJobByProcessDefinitionId() {
+  void shouldSuspendJobByProcessDefinitionId() {
     // given
     ProcessInstance processInstance = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -322,7 +322,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldActivateJobByProcessDefinitionId() {
+  void shouldActivateJobByProcessDefinitionId() {
     // given
     ProcessInstance processInstance = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY);
@@ -347,7 +347,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldSuspendJobByProcessDefinitionKey() {
+  void shouldSuspendJobByProcessDefinitionKey() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -373,7 +373,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldActivateJobByProcessDefinitionKey() {
+  void shouldActivateJobByProcessDefinitionKey() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -399,7 +399,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldSetJobDueDate() {
+  void shouldSetJobDueDate() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)
@@ -426,7 +426,7 @@ public class UpdateJobAuthorizationTest {
   @TestTemplate
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml" })
-  public void shouldDeleteJob() {
+  void shouldDeleteJob() {
     // given
     String processInstanceId = runtimeService
         .startProcessInstanceByKey(TIMER_BOUNDARY_PROCESS_KEY)

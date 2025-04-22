@@ -88,7 +88,7 @@ public class EvaluateDecisionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = DMN_FILE)
-  public void evaluateDecisionById() {
+  void evaluateDecisionById() {
 
     // given
     DecisionDefinition decisionDefinition = engineRule.getRepositoryService().createDecisionDefinitionQuery().singleResult();
@@ -106,7 +106,7 @@ public class EvaluateDecisionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = DMN_FILE)
-  public void evaluateDecisionByKey() {
+  void evaluateDecisionByKey() {
 
     // given
     DecisionDefinition decisionDefinition = engineRule.getRepositoryService().createDecisionDefinitionQuery().singleResult();
@@ -124,7 +124,7 @@ public class EvaluateDecisionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = DMN_FILE)
-  public void evaluateDecisionByKeyAndVersion() {
+  void evaluateDecisionByKeyAndVersion() {
 
     // given
     DecisionDefinition decisionDefinition = engineRule.getRepositoryService().createDecisionDefinitionQuery().singleResult();

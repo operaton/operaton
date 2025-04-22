@@ -24,7 +24,7 @@ import org.operaton.bpm.model.bpmn.util.ParseBpmnModelRule;
  * @author Daniel Meyer
  *
  */
-public class BpmnModelTest {
+class BpmnModelTest {
 
   @RegisterExtension
   public final ParseBpmnModelRule parseBpmnModelRule = new ParseBpmnModelRule();

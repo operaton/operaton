@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
  * @author Roman Smirnov
  *
  */
-public class VariableInstanceAuthorizationTest extends AuthorizationTest {
+class VariableInstanceAuthorizationTest extends AuthorizationTest {
 
   protected static final String PROCESS_KEY = "oneTaskProcess";
   protected static final String CASE_KEY = "oneTaskCase";

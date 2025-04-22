@@ -71,7 +71,7 @@ public class SetRemovalTimeForHistoricProcessInstancesBatchAuthorizationTest ext
     "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void shouldAuthorizeSetRemovalTimeForHistoricProcessInstancesBatch() {
+  void shouldAuthorizeSetRemovalTimeForHistoricProcessInstancesBatch() {
     // given
     setupHistory();
 

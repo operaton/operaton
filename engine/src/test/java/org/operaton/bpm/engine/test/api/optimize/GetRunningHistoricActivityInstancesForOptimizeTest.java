@@ -47,7 +47,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class GetRunningHistoricActivityInstancesForOptimizeTest {
+class GetRunningHistoricActivityInstancesForOptimizeTest {
 
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";

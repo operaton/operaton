@@ -29,11 +29,11 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameteri
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @Parameterized
-public class SetExternalTaskPriorityAuthorizationTest extends HandleExternalTaskAuthorizationTest {
+class SetExternalTaskPriorityAuthorizationTest extends HandleExternalTaskAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
-  public void testSetPriority() {
+  void testSetPriority() {
 
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("oneExternalTaskProcess");

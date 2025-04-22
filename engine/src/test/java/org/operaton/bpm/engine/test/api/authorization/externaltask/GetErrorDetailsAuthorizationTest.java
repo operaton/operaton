@@ -103,7 +103,7 @@ public class GetErrorDetailsAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
-  public void testCompleteExternalTask() {
+  void testCompleteExternalTask() {
 
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("oneExternalTaskProcess");

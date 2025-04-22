@@ -51,7 +51,8 @@ import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Ignore;
+import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.Test;
 
 
@@ -418,7 +419,6 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   }
 
   @Deployment
-  @Ignore
   @Test
   public void testParallelUserTasksBasedOnCollectionExpression() {
     DelegateEvent.clearEvents();
@@ -428,6 +428,37 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
     assertThat(recordedEvents).hasSize(2);
+
+    assertThat(recordedEvents.get(0).getCurrentActivityId()).isEqualTo("miTasks#multiInstanceBody");
+    assertThat(recordedEvents.get(1).getCurrentActivityId()).isEqualTo("miTasks#multiInstanceBody"); // or miTasks
+
+    DelegateEvent.clearEvents();
+  }
+
+  @Test
+  public void testSequentialUserTasksBasedOnCollectionExpression() {
+    DelegateEvent.clearEvents();
+
+    BpmnModelInstance model = Bpmn.createExecutableProcess("process")
+        .startEvent()
+        .userTask("miTasks")
+            .multiInstance()
+            .sequential()
+            .operatonCollection("${myBean.resolveCollection(execution)}")
+            .operatonElementVariable("elementVar")
+            .multiInstanceDone()
+        .endEvent()
+        .done();
+
+    testRule.deploy(model);
+
+    runtimeService.startProcessInstanceByKey("process",
+        Variables.createVariables().putValue("myBean", new DelegateBean()));
+
+    Task singleResult = taskService.createTaskQuery().singleResult();
+    taskService.complete(singleResult.getId());
+    List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
+    assertThat(recordedEvents.size()).isEqualTo(2);
 
     assertThat(recordedEvents.get(0).getCurrentActivityId()).isEqualTo("miTasks#multiInstanceBody");
     assertThat(recordedEvents.get(1).getCurrentActivityId()).isEqualTo("miTasks#multiInstanceBody"); // or miTasks

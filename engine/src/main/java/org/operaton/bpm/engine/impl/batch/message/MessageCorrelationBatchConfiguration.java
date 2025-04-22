@@ -51,7 +51,7 @@ public class MessageCorrelationBatchConfiguration extends BatchConfiguration {
   }
 
   public void setMessageName(String messageName) {
-    this.messageName = messageName;;
+    this.messageName = messageName;
   }
 
 }

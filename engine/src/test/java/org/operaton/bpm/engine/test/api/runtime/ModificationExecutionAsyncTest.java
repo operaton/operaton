@@ -310,7 +310,7 @@ public class ModificationExecutionAsyncTest {
     rule.getProcessEngineConfiguration().setBatchJobsPerSeed(10);
     Batch batch = helper.startAfterAsync("process1", 20, "user1", processDefinition.getId());
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    JobDefinition modificationJobDefinition = helper.getExecutionJobDefinition(batch);;
+    JobDefinition modificationJobDefinition = helper.getExecutionJobDefinition(batch);
 
     helper.executeSeedJob(batch);
 

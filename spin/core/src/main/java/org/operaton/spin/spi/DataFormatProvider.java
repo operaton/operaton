@@ -40,6 +40,6 @@ public interface DataFormatProvider {
    */
   default DataFormat<?> createInstance(Map<String, Object> configurationProperties) {
     return createInstance();
-  };
+  }
 
 }

@@ -67,7 +67,7 @@ public class DefaultJaxBContextProvider implements JaxBContextProvider {
       sb.append("java.net.URLClassLoader: ").append(urls);
     } else {
       sb.append(cl.getClass().getName());
-    };
+    }
     if (cl.getParent() != null) {
       sb.append("\n -> ");
       logClassLoader(cl.getParent(), sb);

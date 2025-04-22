@@ -402,7 +402,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
       .statusCode(Status.OK.getStatusCode())
     .when().get(PROCESS_DEFINITION_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(processDefinitionStatisticsQueryMock);;
+    InOrder inOrder = Mockito.inOrder(processDefinitionStatisticsQueryMock);
     inOrder.verify(processDefinitionStatisticsQueryMock).includeRootIncidents();
     inOrder.verify(processDefinitionStatisticsQueryMock).unlimitedList();
   }

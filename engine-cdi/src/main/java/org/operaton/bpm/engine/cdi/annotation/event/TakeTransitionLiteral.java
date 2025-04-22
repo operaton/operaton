@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.cdi.annotation.event;
 
 
 import jakarta.enterprise.util.AnnotationLiteral;
+import java.util.Objects;
 
 public class TakeTransitionLiteral extends AnnotationLiteral<TakeTransition> implements TakeTransition {
 
@@ -29,5 +30,22 @@ public class TakeTransitionLiteral extends AnnotationLiteral<TakeTransition> imp
   @Override
   public String value() {
     return transitionName != null ? transitionName : "";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    if (!super.equals(o))
+      return false;
+    TakeTransitionLiteral that = (TakeTransitionLiteral) o;
+    return Objects.equals(transitionName, that.transitionName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), transitionName);
   }
 }

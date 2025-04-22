@@ -19,12 +19,9 @@ package org.operaton.bpm.engine.cdi.annotation.event;
 
 import jakarta.enterprise.util.AnnotationLiteral;
 
-public class EndActivityLiteral extends AnnotationLiteral<EndActivity> implements EndActivity {
-
-  protected final String activityId;
-
+public class EndActivityLiteral extends AbstractActivityLiteral<EndActivity> implements EndActivity {
   public EndActivityLiteral(String activityId) {
-    this.activityId = activityId;
+    super(activityId);
   }
   @Override
   public String value() {

@@ -16,15 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-
-import jakarta.enterprise.util.AnnotationLiteral;
-
-public class CompleteTaskLiteral extends AnnotationLiteral<CompleteTask> implements CompleteTask {
-
-  protected final String taskDefinitionKey;
-
+public class CompleteTaskLiteral extends AbstractTaskLiteral<CompleteTask> implements CompleteTask {
   public CompleteTaskLiteral(String taskDefinitionKey) {
-    this.taskDefinitionKey = taskDefinitionKey;
+    super(taskDefinitionKey);
   }
   @Override
   public String value() {

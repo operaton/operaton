@@ -37,8 +37,6 @@ public class LoggerCmmnTransformListener extends AbstractCmmnTransformListener {
     public void notify(DelegateCaseExecution var1) {
       System.out.printf("Execution Event: %s %s\n", var1.getEventName(), var1.getActivityId());
     }
-
-    ;
   };
 
   protected void addListeners(CmmnActivity activity) {

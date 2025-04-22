@@ -50,7 +50,7 @@ public class SupportedActivityValidator implements MigrationActivityValidator {
     SUPPORTED_ACTIVITY_BEHAVIORS.add(EventSubProcessStartEventActivityBehavior.class);
     SUPPORTED_ACTIVITY_BEHAVIORS.add(ExternalTaskActivityBehavior.class);
     SUPPORTED_ACTIVITY_BEHAVIORS.add(ParallelGatewayActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(InclusiveGatewayActivityBehavior.class);;
+    SUPPORTED_ACTIVITY_BEHAVIORS.add(InclusiveGatewayActivityBehavior.class);
     SUPPORTED_ACTIVITY_BEHAVIORS.add(IntermediateConditionalEventBehavior.class);
     SUPPORTED_ACTIVITY_BEHAVIORS.add(BoundaryConditionalEventActivityBehavior.class);
     SUPPORTED_ACTIVITY_BEHAVIORS.add(EventSubProcessStartConditionalEventActivityBehavior.class);

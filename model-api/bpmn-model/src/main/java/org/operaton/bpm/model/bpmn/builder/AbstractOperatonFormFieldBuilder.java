@@ -53,7 +53,7 @@ public class AbstractOperatonFormFieldBuilder<P, B extends AbstractOperatonFormF
    * @return  the builder object
    */
   public B operatonLabel(String label) {
-    element.setOperatonLabel(label);;
+    element.setOperatonLabel(label);
     return myself;
   }
 

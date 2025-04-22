@@ -124,7 +124,7 @@ public abstract class AuthorizationTest extends AbstractCockpitPluginTest {
 
   protected Group createGroup(String groupId) {
     Group group = identityService.newGroup(groupId);
-    identityService.saveGroup(group);;
+    identityService.saveGroup(group);
     return group;
   }
 

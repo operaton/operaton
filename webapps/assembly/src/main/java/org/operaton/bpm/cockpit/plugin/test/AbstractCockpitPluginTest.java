@@ -103,7 +103,7 @@ public abstract class AbstractCockpitPluginTest {
     for (Job job : jobs) {
       try {
         managementService.executeJob(job.getId());
-      } catch (Exception e) {};
+      } catch (Exception e) {}
     }
 
     executeAvailableJobs();

@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.sub.identity.TenantResource;
 import org.operaton.bpm.engine.rest.sub.identity.impl.TenantResourceImpl;
 import org.operaton.bpm.engine.rest.util.PathUtil;
-import org.operaton.bpm.engine.rest.util.QueryUtil;;
+import org.operaton.bpm.engine.rest.util.QueryUtil;
 
 public class TenantRestServiceImpl extends AbstractAuthorizedRestResource implements TenantRestService {
 

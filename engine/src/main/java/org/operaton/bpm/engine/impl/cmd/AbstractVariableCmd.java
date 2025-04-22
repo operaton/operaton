@@ -62,7 +62,7 @@ public abstract class AbstractVariableCmd implements Command<Void>, Serializable
     }
 
     return null;
-  };
+  }
 
   protected abstract AbstractVariableScope getEntity();
 

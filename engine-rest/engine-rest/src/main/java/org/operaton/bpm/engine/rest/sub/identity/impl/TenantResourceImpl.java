@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.rest.sub.identity.TenantGroupMembersResource;
 import org.operaton.bpm.engine.rest.sub.identity.TenantResource;
 import org.operaton.bpm.engine.rest.sub.identity.TenantUserMembersResource;
 
-import com.fasterxml.jackson.databind.ObjectMapper;;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TenantResourceImpl extends AbstractIdentityResource implements TenantResource {
 

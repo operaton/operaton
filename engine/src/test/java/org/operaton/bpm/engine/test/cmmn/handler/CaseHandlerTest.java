@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class CaseHandlerTest extends CmmnElementHandlerTest {
+class CaseHandlerTest extends CmmnElementHandlerTest {
 
   protected CaseHandler handler = new CaseHandler();
   protected CmmnHandlerContext context;

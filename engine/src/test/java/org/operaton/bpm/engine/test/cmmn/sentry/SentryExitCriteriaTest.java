@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  * @author Roman Smirnov
  *
  */
-public class SentryExitCriteriaTest extends CmmnTest {
+class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitTask.cmmn"})
   @Test

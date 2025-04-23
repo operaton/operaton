@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Roman Smirnov
  *
  */
-public class DmnDecisionTaskResultListenerTest extends CmmnTest {
+class DmnDecisionTaskResultListenerTest extends CmmnTest {
 
   protected static final String TEST_CASE = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskResultListenerTest.cmmn";
   protected static final String TEST_DECISION = "org/operaton/bpm/engine/test/dmn/result/DmnDecisionResultTest.dmn11.xml";

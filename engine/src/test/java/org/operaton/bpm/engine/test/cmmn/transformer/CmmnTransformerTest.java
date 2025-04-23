@@ -47,7 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Roman Smirnov
  *
  */
-public class CmmnTransformerTest {
+class CmmnTransformerTest {
 
   protected CmmnTransform transformer;
   protected CmmnModelInstance modelInstance;

@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -63,11 +63,11 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Sebastian Menski
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricCaseActivityInstanceTest extends CmmnTest {
+class HistoricCaseActivityInstanceTest extends CmmnTest {
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/emptyStageWithManualActivationCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/emptyStageWithManualActivationCase.cmmn"})
   @Test
-  public void testHistoricCaseActivityInstanceProperties() {
+  void testHistoricCaseActivityInstanceProperties() {
     String activityId = "PI_Stage_1";
 
     createCaseInstance();
@@ -90,7 +90,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testHistoricCaseActivityTaskStates() {
+  void testHistoricCaseActivityTaskStates() {
     String humanTaskId1 = "PI_HumanTask_1";
     String humanTaskId2 = "PI_HumanTask_2";
     String humanTaskId3 = "PI_HumanTask_3";
@@ -184,7 +184,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testHistoricCaseActivityMilestoneStates() {
+  void testHistoricCaseActivityMilestoneStates() {
     String milestoneId1 = "PI_Milestone_1";
     String milestoneId2 = "PI_Milestone_2";
     String humanTaskId1 = "PI_HumanTask_1";
@@ -245,7 +245,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testHistoricCaseActivityInstanceDates() {
+  void testHistoricCaseActivityInstanceDates() {
     String taskId1 = "PI_HumanTask_1";
     String taskId2 = "PI_HumanTask_2";
     String taskId3 = "PI_HumanTask_3";
@@ -342,7 +342,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testHistoricCaseActivityTaskId() {
+  void testHistoricCaseActivityTaskId() {
     String taskId = "PI_HumanTask_1";
 
     createCaseInstance();
@@ -373,12 +373,12 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     assertThat(historicInstance.getTaskId()).isEqualTo(task.getId());
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn",
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn",
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
   })
   @Test
-  public void testHistoricCaseActivityCalledProcessInstanceId() {
+  void testHistoricCaseActivityCalledProcessInstanceId() {
     String taskId = "PI_ProcessTask_1";
 
     createCaseInstanceByKey("oneProcessTaskCase").getId();
@@ -412,11 +412,11 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCaseWithManualActivation.cmmn",
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"
+      "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCaseWithManualActivation.cmmn",
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"
   })
   @Test
-  public void testHistoricCaseActivityCalledCaseInstanceId() {
+  void testHistoricCaseActivityCalledCaseInstanceId() {
     String taskId = "PI_CaseTask_1";
 
     String calledCaseId = "oneTaskCase";
@@ -455,7 +455,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskAndOneStageWithManualActivationCase.cmmn"})
   @Test
-  public void testHistoricCaseActivityQuery() {
+  void testHistoricCaseActivityQuery() {
     String stageId = "PI_Stage_1";
     String stageName = "A HumanTask";
     String taskId = "PI_HumanTask_1";
@@ -487,7 +487,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryPaging() {
+  void testQueryPaging() {
     createCaseInstance();
     createCaseInstance();
     createCaseInstance();
@@ -499,11 +499,11 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
-    "org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
+      "org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"
   })
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     String taskId1 = "PI_HumanTask_1";
     String taskId2 = "PI_HumanTask_2";
 
@@ -567,7 +567,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testQuerySortingCaseActivityType() {
+  void testQuerySortingCaseActivityType() {
     createCaseInstance().getId();
 
     // sort by case activity type
@@ -576,7 +576,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   }
 
   @Test
-  public void testInvalidSorting() {
+  void testInvalidSorting() {
     var historicCaseActivityInstanceQuery = historicQuery();
     try {
       historicCaseActivityInstanceQuery.asc();
@@ -606,7 +606,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testNativeQuery() {
+  void testNativeQuery() {
     createCaseInstance();
     createCaseInstance();
     createCaseInstance();
@@ -637,7 +637,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testNativeQueryPaging() {
+  void testNativeQueryPaging() {
     createCaseInstance();
     createCaseInstance();
     createCaseInstance();
@@ -650,7 +650,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testDeleteHistoricCaseActivityInstance() {
+  void testDeleteHistoricCaseActivityInstance() {
     CaseInstance caseInstance = createCaseInstance();
 
     HistoricCaseActivityInstance historicInstance = historicQuery().singleResult();
@@ -668,14 +668,14 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testNonBlockingHumanTask() {
+  void testNonBlockingHumanTask() {
     CaseInstance caseInstance = createCaseInstance();
     assertThat(caseInstance).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testRequiredRuleEvaluatesToTrue() {
+  void testRequiredRuleEvaluatesToTrue() {
     caseService.createCaseInstanceByKey("case", Collections.singletonMap("required", true));
 
     HistoricCaseActivityInstance task = historyService
@@ -689,7 +689,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testRequiredRuleEvaluatesToFalse() {
+  void testRequiredRuleEvaluatesToFalse() {
     caseService.createCaseInstanceByKey("case", Collections.
       singletonMap("required", false));
 
@@ -704,7 +704,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testQueryByRequired() {
+  void testQueryByRequired() {
     caseService.createCaseInstanceByKey("case", Collections.singletonMap("required", true));
 
     HistoricCaseActivityInstanceQuery query = historyService
@@ -721,7 +721,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/stage/AutoCompleteTest.testCasePlanModel.cmmn"})
   @Test
-  public void testAutoCompleteEnabled() {
+  void testAutoCompleteEnabled() {
     String caseInstanceId = createCaseInstanceByKey("case").getId();
 
     HistoricCaseInstance caseInstance = historyService
@@ -749,7 +749,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatTask.cmmn"})
   @Test
-  public void testRepeatTask() {
+  void testRepeatTask() {
     // given
     createCaseInstance();
     String firstHumanTaskId = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
@@ -764,7 +764,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatStage.cmmn"})
   @Test
-  public void testRepeatStage() {
+  void testRepeatStage() {
     // given
     createCaseInstance();
 
@@ -780,7 +780,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatMilestone.cmmn"})
   @Test
-  public void testRepeatMilestone() {
+  void testRepeatMilestone() {
     // given
     createCaseInstance();
     String firstHumanTaskId = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
@@ -795,7 +795,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testAutoCompleteStage.cmmn"})
   @Test
-  public void testAutoCompleteStage() {
+  void testAutoCompleteStage() {
     // given
     createCaseInstance();
     String humanTask1 = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
@@ -816,7 +816,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testAutoCompleteStageWithoutEntryCriteria.cmmn"})
   @Test
-  public void testAutoCompleteStageWithRepeatableTaskWithoutEntryCriteria() {
+  void testAutoCompleteStageWithRepeatableTaskWithoutEntryCriteria() {
     // given
     createCaseInstanceByKey("case", Variables.createVariables().putValue("manualActivation", false));
     queryCaseExecutionByActivityId("PI_Stage_1");
@@ -836,7 +836,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testDecisionTask() {
+  void testDecisionTask() {
     createCaseInstance();
 
     HistoricCaseActivityInstance decisionTask = historyService
@@ -850,7 +850,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByCaseInstanceId() {
+  void testQueryByCaseInstanceId() {
     // given
     createCaseInstance();
 
@@ -865,7 +865,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByCaseInstanceIds() {
+  void testQueryByCaseInstanceIds() {
     // given
     CaseInstance instance1 = createCaseInstance();
     CaseInstance instance2 = createCaseInstance();
@@ -893,7 +893,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseInstanceId() {
+  void testQueryByInvalidCaseInstanceId() {
 
     // when
     HistoricCaseActivityInstanceQuery query = historicQuery().caseActivityInstanceIdIn("invalid");
@@ -922,7 +922,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
       "org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"
   })
   @Test
-  public void testQueryByCaseActivityIds() {
+  void testQueryByCaseActivityIds() {
     // given
     createCaseInstanceByKey("oneTaskCase");
     createCaseInstanceByKey("twoTaskCase");
@@ -936,7 +936,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseActivityId() {
+  void testQueryByInvalidCaseActivityId() {
 
     // when
     HistoricCaseActivityInstanceQuery query = historicQuery().caseActivityIdIn("invalid");
@@ -1101,7 +1101,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricCaseActivityInstanceTest.oneStageAndOneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testHistoricActivityInstanceWithinStageIsMarkedTerminatedOnComplete() {
+  void testHistoricActivityInstanceWithinStageIsMarkedTerminatedOnComplete() {
 
     // given
     createCaseInstance();
@@ -1128,7 +1128,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricCaseActivityInstanceTest.oneStageAndOneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testHistoricActivityInstancesAreMarkedTerminatedOnComplete() {
+  void testHistoricActivityInstancesAreMarkedTerminatedOnComplete() {
 
     // given
     createCaseInstance();
@@ -1154,7 +1154,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricCaseActivityInstanceTest.oneStageAndOneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testDisabledHistoricActivityInstancesStayDisabledOnComplete() {
+  void testDisabledHistoricActivityInstancesStayDisabledOnComplete() {
 
     // given
     createCaseInstance();
@@ -1182,7 +1182,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testMilestoneHistoricActivityInstanceIsTerminatedOnComplete() {
+  void testMilestoneHistoricActivityInstanceIsTerminatedOnComplete() {
 
     // given
     createCaseInstance();
@@ -1203,7 +1203,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricCaseActivityInstanceTest.oneStageWithSentryAsEntryPointCase.cmmn"})
   @Test
-  public void testHistoricTaskWithSentryIsMarkedTerminatedOnComplete() {
+  void testHistoricTaskWithSentryIsMarkedTerminatedOnComplete() {
 
     // given
     createCaseInstance();
@@ -1225,7 +1225,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricCaseActivityInstanceTest.oneStageWithSentryAsEntryPointCase.cmmn"})
   @Test
-  public void testHistoricTaskWithSentryDoesNotReachStateActiveOnComplete() {
+  void testHistoricTaskWithSentryDoesNotReachStateActiveOnComplete() {
 
     // given
     createCaseInstance();
@@ -1242,12 +1242,12 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     assertThat(query.count()).isZero();
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn",
-    "org/operaton/bpm/engine/test/history/HistoricCaseActivityInstanceTest.oneTaskProcess.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn",
+      "org/operaton/bpm/engine/test/history/HistoricCaseActivityInstanceTest.oneTaskProcess.bpmn20.xml"
   })
   @Test
-  public void testHistoricCalledProcessInstanceId() {
+  void testHistoricCalledProcessInstanceId() {
     String taskId = "PI_ProcessTask_1";
 
     createCaseInstanceByKey("oneProcessTaskCase").getId();

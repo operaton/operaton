@@ -26,7 +26,6 @@ import java.util.Map;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.joda.time.Period;
 import org.junit.jupiter.api.Test;
 

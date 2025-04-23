@@ -22,7 +22,6 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.jupiter.api.Test;
 
 /**

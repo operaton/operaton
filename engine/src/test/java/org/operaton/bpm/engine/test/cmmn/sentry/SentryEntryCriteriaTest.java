@@ -33,13 +33,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class SentryEntryCriteriaTest extends CmmnTest {
+class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceEnableTask.cmmn"})
   @Test
@@ -542,26 +542,21 @@ public class SentryEntryCriteriaTest extends CmmnTest {
     String thirdHumanTaskId = thirdHumanTask.getId();
     assertThat(thirdHumanTask.isAvailable()).isTrue();
 
-    try {
-      // (1) when
+
+    assertThatThrownBy(() -> {
       manualStart(firstHumanTaskId);
-      fail("It should not be possible to start the first human task manually.");
-    } catch (NotAllowedException e) {
-    }
+    }).withFailMessage("First human task should be available.")
+      .isInstanceOf(NotAllowedException.class);
 
-    try {
-      // (2) when
+    assertThatThrownBy(() -> {
       manualStart(secondHumanTaskId);
-      fail("It should not be possible to start the second human task manually.");
-    } catch (NotAllowedException e) {
-    }
+    }).withFailMessage("It should not be possible to start the second human task manually.")
+      .isInstanceOf(NotAllowedException.class);
 
-    try {
-      // (3) when
+    assertThatThrownBy(() -> {
       manualStart(thirdHumanTaskId);
-      fail("It should not be possible to third the second human task manually.");
-    } catch (NotAllowedException e) {
-    }
+    }).withFailMessage("It should not be possible to third the second human task manually.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testEnableByInstanceCreation.cmmn"})

@@ -29,13 +29,13 @@ import org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CaseDefinitionBuilder;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
 import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseInstanceTest {
+class CaseInstanceTest {
 
   /**
    *
@@ -51,7 +51,7 @@ public class CaseInstanceTest {
    *
    */
   @Test
-  public void testCaseInstanceWithOneTask() {
+  void testCaseInstanceWithOneTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -131,7 +131,7 @@ public class CaseInstanceTest {
   *
   */
   @Test
-  public void testCaseInstanceWithOneState() {
+  void testCaseInstanceWithOneState() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -252,7 +252,7 @@ public class CaseInstanceTest {
   }
 
   @Test
-  public void testCaseInstanceWithOneStateWithoutManualStartOfChildren() {
+  void testCaseInstanceWithOneStateWithoutManualStartOfChildren() {
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
     CmmnCaseDefinition caseDefinition = new CaseDefinitionBuilder("Case1")
@@ -376,7 +376,7 @@ public class CaseInstanceTest {
   *
   */
   @Test
-  public void testStartComplexCaseInstance() {
+  void testStartComplexCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 

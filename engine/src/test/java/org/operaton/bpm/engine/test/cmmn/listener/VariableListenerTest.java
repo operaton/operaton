@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.cmmn.listener;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
@@ -28,14 +30,12 @@ import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -44,21 +44,19 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Thorben Lindhauer
  *
  */
-public class VariableListenerTest extends PluggableProcessEngineTest {
+class VariableListenerTest extends CmmnTest {
 
   protected Map<Object, Object> beans = null;
 
-  @Before
-  public void setUp() {
-
-
+  @BeforeEach
+  void setUp() {
     LogVariableListener.reset();
     beans = processEngineConfiguration.getBeans();
   }
 
   @Deployment
   @Test
-  public void testAnyEventListenerByClass() {
+  void testAnyEventListenerByClass() {
     CaseInstance caseInstance = caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -120,7 +118,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCreateEventListenerByClass() {
+  void testCreateEventListenerByClass() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -159,7 +157,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUpdateEventListenerByClass() {
+  void testUpdateEventListenerByClass() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -201,7 +199,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testVariableListenerInvokedFromSourceScope() {
+  void testVariableListenerInvokedFromSourceScope() {
     CaseInstance caseInstance = caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -236,7 +234,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDeleteEventListenerByClass() {
+  void testDeleteEventListenerByClass() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -276,7 +274,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testVariableListenerByDelegateExpression() {
+  void testVariableListenerByDelegateExpression() {
     beans.put("listener", new LogVariableListener());
 
     caseService
@@ -305,7 +303,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testVariableListenerByExpression() {
+  void testVariableListenerByExpression() {
     SimpleBean simpleBean = new SimpleBean();
     beans.put("bean", simpleBean);
 
@@ -326,7 +324,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testVariableListenerByScript() {
+  void testVariableListenerByScript() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -346,7 +344,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/listener/VariableListenerTest.testListenerOnParentScope.cmmn")
   @Test
-  public void testListenerSourceExecution() {
+  void testListenerSourceExecution() {
     CaseInstance caseInstance = caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -375,7 +373,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testListenerOnParentScope() {
+  void testListenerOnParentScope() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -402,7 +400,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testChildListenersNotInvoked() {
+  void testChildListenersNotInvoked() {
     CaseInstance caseInstance = caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -418,7 +416,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testListenerOnAncestorScope() {
+  void testListenerOnAncestorScope() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -449,7 +447,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInvalidListenerClassName() {
+  void testInvalidListenerClassName() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -472,7 +470,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testListenerDoesNotImplementInterface() {
+  void testListenerDoesNotImplementInterface() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -495,7 +493,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDelegateInstanceIsProcessEngineAware() {
+  void testDelegateInstanceIsProcessEngineAware() {
     CaseInstance caseInstance = caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -515,7 +513,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testListenerDoesNotInterfereWithHistory() {
+  void testListenerDoesNotInterfereWithHistory() {
     CaseInstance caseInstance = caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -548,7 +546,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testListenerInvocationFinishesBeforeSubsequentInvocations() {
+  void testListenerInvocationFinishesBeforeSubsequentInvocations() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -597,7 +595,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTwoListenersOnSameScope() {
+  void testTwoListenersOnSameScope() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -635,7 +633,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testVariableListenerByClassWithFieldExpressions() {
+  void testVariableListenerByClassWithFieldExpressions() {
     caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -659,7 +657,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testVariableListenerByDelegateExpressionWithFieldExpressions() {
+  void testVariableListenerByDelegateExpressionWithFieldExpressions() {
     beans.put("listener", new LogInjectedValuesListener());
 
     caseService
@@ -685,7 +683,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testVariableListenerExecutionContext() {
+  void testVariableListenerExecutionContext() {
     CaseInstance caseInstance = caseService
       .withCaseDefinitionByKey("case")
       .create();
@@ -712,7 +710,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInvokeBuiltinListenersOnly() {
+  void testInvokeBuiltinListenersOnly() {
     // disable custom variable listener invocation
     processEngineConfiguration.setInvokeCustomVariableListeners(false);
 
@@ -749,16 +747,16 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDefaultCustomListenerInvocationSetting() {
+  void testDefaultCustomListenerInvocationSetting() {
     assertThat(processEngineConfiguration.isInvokeCustomVariableListeners()).isTrue();
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/listener/VariableListenerTest.testVariableListenerWithProcessTask.cmmn",
       "org/operaton/bpm/engine/test/cmmn/listener/VariableListenerTest.testVariableListenerWithProcessTask.bpmn20.xml"
-      })
+  })
   @Test
-  public void testVariableListenerWithProcessTask() {
+  void testVariableListenerWithProcessTask() {
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("case");
 
     CaseExecution processTask = caseService
@@ -786,11 +784,9 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     LogVariableListener.reset();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     beans.clear();
-
-
   }
 
 }

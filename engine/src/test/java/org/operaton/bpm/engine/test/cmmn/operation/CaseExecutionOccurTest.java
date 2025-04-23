@@ -27,16 +27,16 @@ import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnOnPartDeclaration;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseExecutionOccurTest {
+class CaseExecutionOccurTest {
 
   @Test
-  public void testOccurMilestone() {
+  void testOccurMilestone() {
 
     // given
     // a case definition

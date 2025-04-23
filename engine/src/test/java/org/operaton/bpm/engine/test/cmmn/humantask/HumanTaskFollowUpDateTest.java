@@ -25,19 +25,20 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.joda.time.Period;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
+class HumanTaskFollowUpDateTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
   @Test
-  public void testHumanTaskFollowUpDateExtension() throws Exception {
+  void testHumanTaskFollowUpDateExtension() throws Exception {
 
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("01-01-2015 12:10:00");
     Map<String, Object> variables = new HashMap<>();
@@ -53,7 +54,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
   @Test
-  public void testHumanTaskFollowUpDateStringExtension() throws Exception {
+  void testHumanTaskFollowUpDateStringExtension() throws Exception {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "2015-01-01T12:10:00");
@@ -69,7 +70,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
   @Test
-  public void testHumanTaskRelativeFollowUpDate() {
+  void testHumanTaskRelativeFollowUpDate() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "P2DT2H30M");
 

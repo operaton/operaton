@@ -45,21 +45,21 @@ import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
 import org.operaton.bpm.model.cmmn.instance.RequiredRule;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.Task;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
+class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   protected Task task;
   protected PlanItem planItem;
   protected TaskItemHandler handler = new TaskItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     task = createElement(casePlanModel, "aTask", Task.class);
 
     planItem = createElement(casePlanModel, "PI_aTask", PlanItem.class);
@@ -67,7 +67,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskActivityName() {
+  void testTaskActivityName() {
     // given:
     // the task has a name "A Task"
     String name = "A Task";
@@ -81,7 +81,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testPlanItemActivityName() {
+  void testPlanItemActivityName() {
     // given:
     // the task has a name "A Task"
     String taskName = "A Task";
@@ -100,7 +100,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskActivityType() {
+  void testTaskActivityType() {
     // given
 
     // when
@@ -113,7 +113,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testTaskDescription() {
+  void testTaskDescription() {
     // given
     String description = "This is a task";
     task.setDescription(description);
@@ -127,7 +127,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testPlanItemDescription() {
+  void testPlanItemDescription() {
     // given
     String description = "This is a planItem";
     planItem.setDescription(description);
@@ -140,7 +140,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a planItem
 
     // when
@@ -152,7 +152,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsTrueProperty() {
+  void testIsBlockingEqualsTrueProperty() {
     // given: a task with isBlocking = true (defaultValue)
 
     // when
@@ -164,7 +164,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsFalseProperty() {
+  void testIsBlockingEqualsFalseProperty() {
     // given:
     // a task with isBlocking = false
     task.setIsBlocking(false);
@@ -178,7 +178,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a planItem
 
     // when
@@ -189,7 +189,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -204,7 +204,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExitCriteria() {
+  void testExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -238,7 +238,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleExitCriteria() {
+  void testMultipleExitCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -284,7 +284,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteria() {
+  void testEntryCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -318,7 +318,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleEntryCriteria() {
+  void testMultipleEntryCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -364,7 +364,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteriaAndExitCriteria() {
+  void testEntryCriteriaAndExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -401,7 +401,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRule() {
+  void testManualActivationRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     ManualActivationRule manualActivationRule = createElement(itemControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -419,7 +419,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRuleByDefaultPlanItemControl() {
+  void testManualActivationRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(task, "ItemControl_1", DefaultControl.class);
     ManualActivationRule manualActivationRule = createElement(defaultControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -437,7 +437,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -455,7 +455,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(task, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);

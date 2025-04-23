@@ -21,18 +21,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * 
  * @author Deivarayan Azhagappan
  *
  */
-public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
+class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTaskWithVariableOnPart.cmmn"})
   @Test
-  public void testExitTaskWithVariableOnPartSatisfied() {
+  void testExitTaskWithVariableOnPartSatisfied() {
     // given
     createCaseInstance();
 
@@ -60,7 +60,7 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTaskWithVariableOnPart.cmmn"})
   @Test
-  public void testExitTaskWithVariableOnPartNotSatisfied() {
+  void testExitTaskWithVariableOnPartNotSatisfied() {
     // given
     createCaseInstance();
 
@@ -89,7 +89,7 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTaskWithMultipleOnPart.cmmn"})
   @Test
-  public void testExitTaskWithMultipleOnPartSatisfied() {
+  void testExitTaskWithMultipleOnPartSatisfied() {
     // given
     createCaseInstance();
 
@@ -120,7 +120,7 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTasksOfDifferentScopes.cmmn"})
   @Test
-  public void testExitMultipleTasksOfDifferentScopes() {
+  void testExitMultipleTasksOfDifferentScopes() {
     // given
     createCaseInstance();
 

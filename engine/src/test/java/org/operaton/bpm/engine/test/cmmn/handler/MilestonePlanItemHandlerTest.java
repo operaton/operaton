@@ -44,21 +44,21 @@ import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
 import org.operaton.bpm.model.cmmn.instance.RepetitionRule;
 import org.operaton.bpm.model.cmmn.instance.RequiredRule;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
+class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
 
   protected Milestone milestone;
   protected PlanItem planItem;
   protected MilestoneItemHandler handler = new MilestoneItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     milestone = createElement(casePlanModel, "aMilestone", Milestone.class);
 
     planItem = createElement(casePlanModel, "PI_aMilestone", PlanItem.class);
@@ -67,7 +67,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMilestoneActivityName() {
+  void testMilestoneActivityName() {
     // given:
     // the Milestone has a name "A Milestone"
     String name = "A Milestone";
@@ -81,7 +81,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testPlanItemActivityName() {
+  void testPlanItemActivityName() {
     // given:
     // the Milestone has a name "A Milestone"
     String milestoneName = "A Milestone";
@@ -100,7 +100,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMilestoneActivityType() {
+  void testMilestoneActivityType() {
     // given
 
     // when
@@ -113,7 +113,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testMilestoneDescription() {
+  void testMilestoneDescription() {
     // given
     String description = "This is a milestone";
     milestone.setDescription(description);
@@ -127,7 +127,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testPlanItemDescription() {
+  void testPlanItemDescription() {
     // given
     String description = "This is a planItem";
     planItem.setDescription(description);
@@ -140,7 +140,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a planItem
 
     // when
@@ -152,7 +152,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a planItem
 
     // when
@@ -163,7 +163,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -178,7 +178,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteria() {
+  void testEntryCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -212,7 +212,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleEntryCriteria() {
+  void testMultipleEntryCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -258,7 +258,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteriaAndExitCriteria() {
+  void testEntryCriteriaAndExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -293,7 +293,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -311,7 +311,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(milestone, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);
@@ -329,7 +329,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRule() {
+  void testRepetitionRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -347,7 +347,7 @@ public class MilestonePlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleByDefaultPlanItemControl() {
+  void testRepetitionRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(milestone, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);

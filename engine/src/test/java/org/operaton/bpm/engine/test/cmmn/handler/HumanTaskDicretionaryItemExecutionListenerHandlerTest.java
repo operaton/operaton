@@ -16,23 +16,22 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.cmmn.handler.HumanTaskItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.AbstractExecutionListenerSpec;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.model.cmmn.instance.DiscretionaryItem;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
 import org.operaton.bpm.model.cmmn.instance.PlanningTable;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class HumanTaskDicretionaryItemExecutionListenerHandlerTest extends CmmnElementHandlerTest {
 
   @Parameters(name = "testListener: {0}")
@@ -51,8 +50,8 @@ public class HumanTaskDicretionaryItemExecutionListenerHandlerTest extends CmmnE
     this.testSpecification = testSpecification;
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     humanTask = createElement(casePlanModel, "aHumanTask", HumanTask.class);
 
     planningTable = createElement(casePlanModel, "aPlanningTable", PlanningTable.class);
@@ -62,8 +61,8 @@ public class HumanTaskDicretionaryItemExecutionListenerHandlerTest extends CmmnE
 
   }
 
-  @Test
-  public void testCaseExecutionListener() {
+  @TestTemplate
+  void testCaseExecutionListener() {
     // given:
     testSpecification.addListenerToElement(modelInstance, humanTask);
 

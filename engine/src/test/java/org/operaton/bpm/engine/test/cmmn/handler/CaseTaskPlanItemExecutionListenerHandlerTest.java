@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.cmmn.handler.CaseTaskItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.AbstractExecutionListenerSpec;
 import org.operaton.bpm.model.cmmn.instance.CaseTask;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.BeforeEach;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class CaseTaskPlanItemExecutionListenerHandlerTest extends CmmnElementHandlerTest {
 
   @Parameters(name = "testListener: {0}")
@@ -49,16 +48,16 @@ public class CaseTaskPlanItemExecutionListenerHandlerTest extends CmmnElementHan
     this.testSpecification = testSpecification;
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     caseTask = createElement(casePlanModel, "aCaseTask", CaseTask.class);
 
     planItem = createElement(casePlanModel, "PI_aCaseTask", PlanItem.class);
     planItem.setDefinition(caseTask);
   }
 
-  @Test
-  public void testCaseExecutionListener() {
+  @TestTemplate
+  void testCaseExecutionListener() {
     // given:
     testSpecification.addListenerToElement(modelInstance, caseTask);
 

@@ -34,21 +34,21 @@ import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonField;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableListener;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
+class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
 
   protected CaseTask caseTask;
   protected PlanItem planItem;
   protected CaseTaskItemHandler handler = new CaseTaskItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     caseTask = createElement(casePlanModel, "aCaseTask", CaseTask.class);
 
     planItem = createElement(casePlanModel, "PI_aCaseTask", PlanItem.class);
@@ -56,7 +56,7 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testClassDelegateHandling() {
+  void testClassDelegateHandling() {
     ExtensionElements extensionElements = SpecUtil.createElement(modelInstance, caseTask, null, ExtensionElements.class);
     OperatonVariableListener variableListener = SpecUtil.createElement(modelInstance, extensionElements, null, OperatonVariableListener.class);
     OperatonField field = SpecUtil.createElement(modelInstance, variableListener, null, OperatonField.class);
@@ -85,7 +85,7 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testDelegateExpressionDelegateHandling() {
+  void testDelegateExpressionDelegateHandling() {
     ExtensionElements extensionElements = SpecUtil.createElement(modelInstance, caseTask, null, ExtensionElements.class);
     OperatonVariableListener variableListener = SpecUtil.createElement(modelInstance, extensionElements, null, OperatonVariableListener.class);
     variableListener.setOperatonDelegateExpression("${expression}");
@@ -105,7 +105,7 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExpressionDelegateHandling() {
+  void testExpressionDelegateHandling() {
     ExtensionElements extensionElements = SpecUtil.createElement(modelInstance, caseTask, null, ExtensionElements.class);
     OperatonVariableListener variableListener = SpecUtil.createElement(modelInstance, extensionElements, null, OperatonVariableListener.class);
     variableListener.setOperatonExpression("${expression}");

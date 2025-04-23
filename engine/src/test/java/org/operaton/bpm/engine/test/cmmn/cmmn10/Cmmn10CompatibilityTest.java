@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -34,11 +34,11 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class Cmmn10CompatibilityTest extends CmmnTest {
+class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRequiredRule.cmmn")
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     CaseInstance caseInstance =
         createCaseInstanceByKey("case", Variables.createVariables().putValue("required", true));
     var caseInstanceId = caseInstance.getId();
@@ -58,7 +58,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testManualActivationRule.cmmn")
   @Test
-  public void testManualActivationRule() {
+  void testManualActivationRule() {
     createCaseInstanceByKey("case", Variables.createVariables().putValue("manual", false));
 
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
@@ -69,7 +69,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testManualActivationRuleWithoutCondition.cmmn")
   @Test
-  public void testManualActivationRuleWithoutCondition() {
+  void testManualActivationRuleWithoutCondition() {
     createCaseInstanceByKey("case", Variables.createVariables().putValue("manual", false));
 
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
@@ -80,7 +80,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRepetitionRule.cmmn")
   @Test
-  public void testRepetitionRule() {
+  void testRepetitionRule() {
     // given
     createCaseInstanceByKey("case", Variables.createVariables().putValue("repetition", true));
 
@@ -99,7 +99,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRepetitionRuleWithoutEntryCriteria.cmmn")
   @Test
-  public void testRepetitionRuleWithoutEntryCriteria() {
+  void testRepetitionRuleWithoutEntryCriteria() {
     // given
     createCaseInstanceByKey("case", Variables.createVariables().putValue("repetition", true));
 
@@ -118,7 +118,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRepetitionRuleCustomStandardEvent.cmmn")
   @Test
-  public void testRepetitionRuleWithoutEntryCriteriaAndCustomStandardEvent() {
+  void testRepetitionRuleWithoutEntryCriteriaAndCustomStandardEvent() {
     // given
     createCaseInstanceByKey("case", Variables.createVariables().putValue("repetition", true));
 
@@ -138,7 +138,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testPlanItemEntryCriterion.cmmn")
   @Test
-  public void testPlanItemEntryCriterion() {
+  void testPlanItemEntryCriterion() {
     // given
     createCaseInstanceByKey("case");
     String humanTask = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
@@ -152,7 +152,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testPlanItemExitCriterion.cmmn")
   @Test
-  public void testPlanItemExitCriterion() {
+  void testPlanItemExitCriterion() {
     // given
     createCaseInstanceByKey("case");
 
@@ -167,7 +167,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testCasePlanModelExitCriterion.cmmn")
   @Test
-  public void testCasePlanModelExitCriterion() {
+  void testCasePlanModelExitCriterion() {
     // given
     String caseInstanceId = createCaseInstanceByKey("case").getId();
 
@@ -182,7 +182,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testSentryIfPartCondition.cmmn")
   @Test
-  public void testSentryIfPartCondition() {
+  void testSentryIfPartCondition() {
     // given
     createCaseInstanceByKey("case", Variables.createVariables().putValue("value", 99));
 
@@ -203,7 +203,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testDescription.cmmn")
   @Test
-  public void testDescription() {
+  void testDescription() {
     // given
     createCaseInstanceByKey("case");
 

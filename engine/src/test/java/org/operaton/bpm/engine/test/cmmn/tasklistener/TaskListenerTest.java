@@ -23,23 +23,23 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.FieldInjectionTaskListener;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.MySpecialTaskListener;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.MyTaskListener;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.NotTaskListener;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.TaskDeleteListener;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class TaskListenerTest extends PluggableProcessEngineTest {
+class TaskListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testCreateListenerByClass.cmmn"})
   @Test
-  public void testCreateListenerByClass() {
+  void testCreateListenerByClass() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -67,7 +67,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testCreateListenerByExpression.cmmn"})
   @Test
-  public void testCreateListenerByExpression() {
+  void testCreateListenerByExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -90,7 +90,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testCreateListenerByDelegateExpression.cmmn"})
   @Test
-  public void testCreateListenerByDelegateExpression() {
+  void testCreateListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -121,7 +121,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testCreateListenerByScript.cmmn"})
   @Test
-  public void testCreateListenerByScript() {
+  void testCreateListenerByScript() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -142,7 +142,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testCompleteListenerByClass.cmmn"})
   @Test
-  public void testCompleteListenerByClass() {
+  void testCompleteListenerByClass() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -175,7 +175,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testCompleteListenerByExpression.cmmn"})
   @Test
-  public void testCompleteListenerByExpression() {
+  void testCompleteListenerByExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -209,7 +209,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testCompleteListenerByDelegateExpression.cmmn"})
   @Test
-  public void testCompleteListenerByDelegateExpression() {
+  void testCompleteListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -243,7 +243,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testCompleteListenerByScript.cmmn"})
   @Test
-  public void testCompleteListenerByScript() {
+  void testCompleteListenerByScript() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -275,7 +275,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDeleteListenerByClass.cmmn"})
   @Test
-  public void testDeleteListenerByClass() {
+  void testDeleteListenerByClass() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -306,7 +306,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDeleteListenerByExpression.cmmn"})
   @Test
-  public void testDeleteListenerByExpression() {
+  void testDeleteListenerByExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -338,7 +338,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDeleteListenerByDelegateExpression.cmmn"})
   @Test
-  public void testDeleteListenerByDelegateExpression() {
+  void testDeleteListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -370,7 +370,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDeleteListenerByScript.cmmn"})
   @Test
-  public void testDeleteListenerByScript() {
+  void testDeleteListenerByScript() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -400,7 +400,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDeleteListenerByCaseInstanceDeletion.cmmn"})
   @Test
-  public void testDeleteListenerByCaseInstanceDeletion() {
+  void testDeleteListenerByCaseInstanceDeletion() {
     TaskDeleteListener.clear();
 
     // given
@@ -432,7 +432,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAssignmentListenerByClass.cmmn"})
   @Test
-  public void testAssignmentListenerByClass() {
+  void testAssignmentListenerByClass() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -469,7 +469,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAssignmentListenerByExpression.cmmn"})
   @Test
-  public void testAssignmentListenerByExpression() {
+  void testAssignmentListenerByExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -507,7 +507,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAssignmentListenerByDelegateExpression.cmmn"})
   @Test
-  public void testAssignmentListenerByDelegateExpression() {
+  void testAssignmentListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -545,7 +545,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAssignmentListenerByScript.cmmn"})
   @Test
-  public void testAssignmentListenerByScript() {
+  void testAssignmentListenerByScript() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -581,7 +581,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAssignmentListenerByInitialInstantiation.cmmn"})
   @Test
-  public void testAssignmentListenerByInitialInstantiation() {
+  void testAssignmentListenerByInitialInstantiation() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -609,7 +609,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testUpdateListenerByClass.cmmn"})
   @Test
-  public void testUpdateListenerByClass() {
+  void testUpdateListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -646,7 +646,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testUpdateListenerByExpression.cmmn"})
   @Test
-  public void testUpdateListenerByExpression() {
+  void testUpdateListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -684,7 +684,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testUpdateListenerByDelegateExpression.cmmn"})
   @Test
-  public void testUpdateListenerByDelegateExpression() {
+  void testUpdateListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -719,9 +719,10 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
     assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testUpdateListenerByScript.cmmn"})
   @Test
-  public void testUpdateListenerByScript() {
+  void testUpdateListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -757,7 +758,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testUpdateListenerByInitialInstantiation.cmmn"})
   @Test
-  public void testUpdateListenerNotInvokedByInitialInstantiation() {
+  void testUpdateListenerNotInvokedByInitialInstantiation() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -780,7 +781,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByClass.cmmn"})
   @Test
-  public void testAllListenerByClassExcludingDeletion() {
+  void testAllListenerByClassExcludingDeletion() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -831,7 +832,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByClass.cmmn"})
   @Test
-  public void testAllListenerByClassExcludingCompletion() {
+  void testAllListenerByClassExcludingCompletion() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -881,7 +882,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByExpression.cmmn"})
   @Test
-  public void testAllListenerByExpressionExcludingDeletion() {
+  void testAllListenerByExpressionExcludingDeletion() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -934,7 +935,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByExpression.cmmn"})
   @Test
-  public void testAllListenerByExpressionExcludingCompletion() {
+  void testAllListenerByExpressionExcludingCompletion() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -985,7 +986,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByDelegateExpression.cmmn"})
   @Test
-  public void testAllListenerByDelegateExpressionExcludingDeletion() {
+  void testAllListenerByDelegateExpressionExcludingDeletion() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -1038,7 +1039,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByDelegateExpression.cmmn"})
   @Test
-  public void testAllListenerByDelegateExpressionExcludingCompletion() {
+  void testAllListenerByDelegateExpressionExcludingCompletion() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -1088,7 +1089,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByScript.cmmn"})
   @Test
-  public void testAllListenerByScriptExcludingDeletion() {
+  void testAllListenerByScriptExcludingDeletion() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -1139,7 +1140,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByScript.cmmn"})
   @Test
-  public void testAllListenerByScriptExcludingCompletion() {
+  void testAllListenerByScriptExcludingCompletion() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -1188,7 +1189,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testFieldInjectionByClass.cmmn"})
   @Test
-  public void testFieldInjectionByClass() {
+  void testFieldInjectionByClass() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -1217,7 +1218,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testFieldInjectionByDelegateExpression.cmmn"})
   @Test
-  public void testFieldInjectionByDelegateExpression() {
+  void testFieldInjectionByDelegateExpression() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -1248,9 +1249,9 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testListenerByScriptResource.cmmn",
       "org/operaton/bpm/engine/test/cmmn/tasklistener/taskListener.groovy"
-      })
+  })
   @Test
-  public void testListenerByScriptResource() {
+  void testListenerByScriptResource() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -1297,7 +1298,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDoesNotImplementTaskListenerInterfaceByClass.cmmn"})
   @Test
-  public void testDoesNotImplementTaskListenerInterfaceByClass() {
+  void testDoesNotImplementTaskListenerInterfaceByClass() {
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey("case");
     try {
       caseInstanceBuilder.create();
@@ -1313,7 +1314,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDoesNotImplementTaskListenerInterfaceByDelegateExpression.cmmn"})
   @Test
-  public void testDoesNotImplementTaskListenerInterfaceByDelegateExpression() {
+  void testDoesNotImplementTaskListenerInterfaceByDelegateExpression() {
     var caseInstanceBuilder = caseService
           .withCaseDefinitionByKey("case")
           .setVariable("myTaskListener", new NotTaskListener());
@@ -1331,7 +1332,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testTaskListenerDoesNotExist.cmmn"})
   @Test
-  public void testTaskListenerDoesNotExist() {
+  void testTaskListenerDoesNotExist() {
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey("case");
 
     try {
@@ -1346,6 +1347,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
 
   }
 
+  @Override
   protected void terminate(final String caseExecutionId) {
     processEngineConfiguration
       .getCommandExecutorTxRequired()

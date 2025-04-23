@@ -30,8 +30,8 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableTransitionE
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -40,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Roman Smirnov
  *
  */
-public class SentryHandlerTest extends CmmnElementHandlerTest {
+class SentryHandlerTest extends CmmnElementHandlerTest {
 
   protected Sentry sentry;
   protected PlanItemOnPart onPart;
@@ -49,8 +49,8 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   protected TaskItemHandler taskItemHandler = new TaskItemHandler();
   protected SentryHandler sentryHandler = new SentryHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     task = createElement(casePlanModel, "aTask", Task.class);
 
     planItem = createElement(casePlanModel, "PI_aTask", PlanItem.class);
@@ -66,7 +66,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testSentry() {
+  void testSentry() {
     // given
 
     // when
@@ -82,7 +82,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testSentryWithIfPart() {
+  void testSentryWithIfPart() {
     // given
     IfPart ifPart = createElement(sentry, "abc", IfPart.class);
     ConditionExpression conditionExpression = createElement(ifPart, "def", ConditionExpression.class);
@@ -108,7 +108,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testSentryWithIfPartWithMultipleCondition() {
+  void testSentryWithIfPartWithMultipleCondition() {
     // given
     IfPart ifPart = createElement(sentry, "abc", IfPart.class);
 
@@ -142,7 +142,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testSentryWithOnPart() {
+  void testSentryWithOnPart() {
     // given
     CmmnActivity casePlanModelActivity = new CasePlanModelHandler().handleElement(casePlanModel, context);
     context.setParent(casePlanModelActivity);
@@ -183,7 +183,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testSentryWithOnPartReferencesSentry() {
+  void testSentryWithOnPartReferencesSentry() {
     // given
     Sentry exitSentry = createElement(casePlanModel, "anotherSentry", Sentry.class);
     IfPart ifPart = createElement(exitSentry, "IfPart_1", IfPart.class);
@@ -235,7 +235,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
 
   // variableOnParts
   @Test
-  public void sentryTransformWithVariableOnPart() {
+  void sentryTransformWithVariableOnPart() {
     // given
     ExtensionElements extensionElements = createElement(sentry, "extensionElements", ExtensionElements.class);
     OperatonVariableOnPart variableOnPart = createElement(extensionElements, null, OperatonVariableOnPart.class);
@@ -260,7 +260,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void sentryTransformWithMultipleVariableOnPart() {
+  void sentryTransformWithMultipleVariableOnPart() {
     // given
     ExtensionElements extensionElements = createElement(sentry, "extensionElements", ExtensionElements.class);
     OperatonVariableOnPart variableOnPart = createElement(extensionElements, null, OperatonVariableOnPart.class);
@@ -286,7 +286,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void sentryTransformWithSameVariableOnPartTwice() {
+  void sentryTransformWithSameVariableOnPartTwice() {
     // given
     ExtensionElements extensionElements = createElement(sentry, "extensionElements", ExtensionElements.class);
     OperatonVariableOnPart variableOnPart = createElement(extensionElements, null, OperatonVariableOnPart.class);
@@ -312,7 +312,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void sentryTransformShouldFailWithMissingVariableEvent() {
+  void sentryTransformShouldFailWithMissingVariableEvent() {
     // given
     ExtensionElements extensionElements = createElement(sentry, "extensionElements", ExtensionElements.class);
     OperatonVariableOnPart variableOnPart = createElement(extensionElements, null, OperatonVariableOnPart.class);
@@ -325,7 +325,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void sentryTransformShouldFailWithInvalidVariableEvent() {
+  void sentryTransformShouldFailWithInvalidVariableEvent() {
     // given
     ExtensionElements extensionElements = createElement(sentry, "extensionElements", ExtensionElements.class);
     OperatonVariableOnPart variableOnPart = createElement(extensionElements, null, OperatonVariableOnPart.class);
@@ -340,7 +340,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void sentryTransformWithMultipleVariableEvent() {
+  void sentryTransformWithMultipleVariableEvent() {
     // given
     ExtensionElements extensionElements = createElement(sentry, "extensionElements", ExtensionElements.class);
     OperatonVariableOnPart variableOnPart = createElement(extensionElements, null, OperatonVariableOnPart.class);
@@ -367,7 +367,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void sentryTransformShouldFailWithMissingVariableName() {
+  void sentryTransformShouldFailWithMissingVariableName() {
     // given
     ExtensionElements extensionElements = createElement(sentry, "extensionElements", ExtensionElements.class);
     OperatonVariableOnPart variableOnPart = createElement(extensionElements, null, OperatonVariableOnPart.class);

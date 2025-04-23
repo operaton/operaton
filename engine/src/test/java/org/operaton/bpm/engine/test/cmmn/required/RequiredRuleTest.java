@@ -20,11 +20,11 @@ import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 
 import java.util.Collections;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -33,11 +33,11 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class RequiredRuleTest extends PluggableProcessEngineTest {
+class RequiredRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testRequiredRuleEvaluatesToTrue() {
+  void testRequiredRuleEvaluatesToTrue() {
     CaseInstance caseInstance =
         caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
     var caseInstanceId = caseInstance.getId();
@@ -59,7 +59,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testRequiredRuleEvaluatesToFalse() {
+  void testRequiredRuleEvaluatesToFalse() {
     CaseInstance caseInstance =
         caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", false));
 
@@ -77,7 +77,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testDefaultVariableBasedRule.cmmn")
   @Test
-  public void testDefaultRequiredRuleEvaluatesToTrue() {
+  void testDefaultRequiredRuleEvaluatesToTrue() {
     CaseInstance caseInstance =
         caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
     var caseInstanceId = caseInstance.getId();
@@ -100,7 +100,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testDefaultVariableBasedRule.cmmn")
   @Test
-  public void testDefaultRequiredRuleEvaluatesToFalse() {
+  void testDefaultRequiredRuleEvaluatesToFalse() {
     CaseInstance caseInstance =
         caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", false));
 
@@ -118,7 +118,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDefaultRequiredRuleWithoutConditionEvaluatesToTrue() {
+  void testDefaultRequiredRuleWithoutConditionEvaluatesToTrue() {
     caseService.createCaseInstanceByKey("case");
 
     CaseExecution taskExecution = caseService
@@ -132,7 +132,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDefaultRequiredRuleWithEmptyConditionEvaluatesToTrue() {
+  void testDefaultRequiredRuleWithEmptyConditionEvaluatesToTrue() {
     caseService.createCaseInstanceByKey("case");
 
     CaseExecution taskExecution = caseService

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.sql.test;
 
+import java.io.FileNotFoundException;
+import liquibase.resource.DirectoryResourceAccessor;
 import org.operaton.commons.utils.IoUtil;
 
 import java.io.IOException;
@@ -222,19 +224,21 @@ class SqlScriptTest {
         null, null, new ClassLoaderResourceAccessor());
   }
 
-  Liquibase getLiquibase() throws URISyntaxException {
+  Liquibase getLiquibase() throws URISyntaxException, FileNotFoundException {
     return getLiquibase("", database);
   }
 
-  static Liquibase getLiquibase(String baseDirectory, Database database) throws URISyntaxException {
+  static Liquibase getLiquibase(String baseDirectory, Database database)
+    throws URISyntaxException, FileNotFoundException {
     return new Liquibase("operaton-changelog.xml", getAccessorForChangelogDirectory(baseDirectory), database);
   }
 
-  static FileSystemResourceAccessor getAccessorForChangelogDirectory(String baseDirectory) throws URISyntaxException {
+  static DirectoryResourceAccessor getAccessorForChangelogDirectory(String baseDirectory)
+    throws URISyntaxException, FileNotFoundException {
     URL resource = SqlScriptTest.class.getClassLoader().getResource(baseDirectory + "sql/liquibase");
     Objects.requireNonNull(resource, "Changelog directory not found");
     URI changelogUri = resource.toURI();
-    return new FileSystemResourceAccessor(Paths.get(changelogUri).toAbsolutePath().toFile());
+    return new DirectoryResourceAccessor(Paths.get(changelogUri));
   }
 
   DatabaseSnapshot createCurrentDatabaseSnapshot() throws Exception {

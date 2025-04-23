@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.test.TestHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class CaseExecutionCompletionTest {
+class CaseExecutionCompletionTest {
 
   /**
    *
@@ -54,7 +54,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteActiveTask() {
+  void testCompleteActiveTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -116,7 +116,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteActiveTask() {
+  void testManualCompleteActiveTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -178,7 +178,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteEnabledTask() {
+  void testCompleteEnabledTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -231,7 +231,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteEnabledTask() {
+  void testManualCompleteEnabledTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -284,7 +284,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteAlreadyCompletedTask() {
+  void testCompleteAlreadyCompletedTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -338,7 +338,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteAlreadyCompletedTask() {
+  void testManualCompleteAlreadyCompletedTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -392,7 +392,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteTerminatedTask() {
+  void testCompleteTerminatedTask() {
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
     // given
@@ -444,7 +444,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteTerminatedTask() {
+  void testManualCompleteTerminatedTask() {
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
     // given
@@ -495,7 +495,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testDisableTaskShouldCompleteCaseInstance() {
+  void testDisableTaskShouldCompleteCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -562,7 +562,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testTerminateTaskShouldCompleteCaseInstance() {
+  void testTerminateTaskShouldCompleteCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -628,7 +628,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteActiveCaseInstanceWithEnabledTask() {
+  void testCompleteActiveCaseInstanceWithEnabledTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -680,7 +680,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteActiveCaseInstanceWithEnabledTask() {
+  void testManualCompleteActiveCaseInstanceWithEnabledTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -742,7 +742,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteActiveCaseInstanceWithActiveTask() {
+  void testCompleteActiveCaseInstanceWithActiveTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -793,7 +793,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteActiveCaseInstanceWithActiveTask() {
+  void testManualCompleteActiveCaseInstanceWithActiveTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -842,7 +842,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteAlreadyCompletedCaseInstance() {
+  void testCompleteAlreadyCompletedCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -897,7 +897,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteAlreadyCompletedCaseInstance() {
+  void testManualCompleteAlreadyCompletedCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -955,7 +955,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteOnlyTaskA() {
+  void testCompleteOnlyTaskA() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -1057,7 +1057,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteOnlyTaskA() {
+  void testManualCompleteOnlyTaskA() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -1159,7 +1159,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testDisableOnlyTaskA() {
+  void testDisableOnlyTaskA() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -1252,7 +1252,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testTerminateOnlyTaskA() {
+  void testTerminateOnlyTaskA() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -1344,7 +1344,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testCompleteTaskAAndTaskB() {
+  void testCompleteTaskAAndTaskB() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -1449,7 +1449,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testManualCompleteTaskAAndTaskB() {
+  void testManualCompleteTaskAAndTaskB() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -1554,7 +1554,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testDisableTaskAAndTaskB() {
+  void testDisableTaskAAndTaskB() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -1657,7 +1657,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testTerminateTaskAAndTaskB() {
+  void testTerminateTaskAAndTaskB() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -1754,7 +1754,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testAutoCompletionCaseInstanceWithoutChildren() {
+  void testAutoCompletionCaseInstanceWithoutChildren() {
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
     // given
@@ -1799,7 +1799,7 @@ public class CaseExecutionCompletionTest {
    *
    */
   @Test
-  public void testAutoCompletionStageWithoutChildren() {
+  void testAutoCompletionStageWithoutChildren() {
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
     // given

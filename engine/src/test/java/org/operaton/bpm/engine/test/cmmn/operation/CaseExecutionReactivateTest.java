@@ -25,16 +25,16 @@ import org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CaseDefinitionBuilder;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
 import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseExecutionReactivateTest {
+class CaseExecutionReactivateTest {
 
   @Test
-  public void testReactivateCaseInstance() {
+  void testReactivateCaseInstance() {
 
     // given ///////////////////////////////////////////////////////////////
 

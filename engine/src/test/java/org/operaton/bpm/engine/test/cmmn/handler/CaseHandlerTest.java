@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
@@ -26,9 +27,8 @@ import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -37,13 +37,13 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class CaseHandlerTest extends CmmnElementHandlerTest {
+class CaseHandlerTest extends CmmnElementHandlerTest {
 
   protected CaseHandler handler = new CaseHandler();
   protected CmmnHandlerContext context;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     context = new CmmnHandlerContext();
 
     DeploymentEntity deployment = new DeploymentEntity();
@@ -55,13 +55,13 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     Context.setProcessEngineConfiguration(new StandaloneInMemProcessEngineConfiguration().setEnforceHistoryTimeToLive(false));
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     Context.removeProcessEngineConfiguration();
   }
 
   @Test
-  public void testCaseActivityName() {
+  void testCaseActivityName() {
     // given:
     // the case has a name "A Case"
     String name = "A Case";
@@ -75,7 +75,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a case
 
     // when
@@ -87,7 +87,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCaseHasNoParent() {
+  void testCaseHasNoParent() {
     // given: a caseDefinition
 
     // when
@@ -98,7 +98,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCaseDefinitionKey() {
+  void testCaseDefinitionKey() {
     // given: a caseDefinition
 
     // when
@@ -109,7 +109,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testDeploymentId() {
+  void testDeploymentId() {
     // given: a caseDefinition
 
     // when
@@ -121,7 +121,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testHistoryTimeToLiveNull() {
+  void testHistoryTimeToLiveNull() {
     // given: a caseDefinition
 
     // when
@@ -132,7 +132,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testHistoryTimeToLive() {
+  void testHistoryTimeToLive() {
     // given: a caseDefinition
     Integer historyTimeToLive = 6;
     caseDefinition.setOperatonHistoryTimeToLive(historyTimeToLive);
@@ -145,7 +145,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testHistoryTimeToLiveNegative() {
+  void testHistoryTimeToLiveNegative() {
     // given: a caseDefinition
     Integer historyTimeToLive = -6;
     caseDefinition.setOperatonHistoryTimeToLive(historyTimeToLive);

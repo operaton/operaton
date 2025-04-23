@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.cmmn.handler.ProcessTaskItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.AbstractExecutionListenerSpec;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.ProcessTask;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class ProcessTaskPlanItemExecutionListenerHandlerTest extends CmmnElementHandlerTest {
 
   @Parameters(name = "testListener: {0}")
@@ -49,8 +48,8 @@ public class ProcessTaskPlanItemExecutionListenerHandlerTest extends CmmnElement
     this.testSpecification = testSpecification;
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     processTask = createElement(casePlanModel, "aProcessTask", ProcessTask.class);
 
     planItem = createElement(casePlanModel, "PI_aProcessTask", PlanItem.class);
@@ -58,8 +57,8 @@ public class ProcessTaskPlanItemExecutionListenerHandlerTest extends CmmnElement
 
   }
 
-  @Test
-  public void testCaseExecutionListener() {
+  @TestTemplate
+  void testCaseExecutionListener() {
     // given:
     testSpecification.addListenerToElement(modelInstance, processTask);
 

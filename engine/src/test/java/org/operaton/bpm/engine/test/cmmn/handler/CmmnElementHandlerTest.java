@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.handler.CmmnHandlerContext;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
@@ -26,8 +27,6 @@ import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.*;
 
 import java.util.HashMap;
-
-import org.junit.Before;
 
 /**
  * @author Roman Smirnov
@@ -41,7 +40,7 @@ public abstract class CmmnElementHandlerTest {
   protected CasePlanModel casePlanModel;
   protected CmmnHandlerContext context;
 
-  @Before
+  @BeforeEach
   public void setup() {
     modelInstance = Cmmn.createEmptyModel();
     definitions = modelInstance.newInstance(Definitions.class);

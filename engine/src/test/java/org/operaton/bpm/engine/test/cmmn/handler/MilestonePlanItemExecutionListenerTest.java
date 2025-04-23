@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.cmmn.handler.MilestoneItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.AbstractExecutionListenerSpec;
 import org.operaton.bpm.model.cmmn.instance.Milestone;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.BeforeEach;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
 /**
  * @author Roman Smirnov
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class MilestonePlanItemExecutionListenerTest extends CmmnElementHandlerTest {
 
   @Parameters(name = "testListener: {0}")
@@ -49,8 +48,8 @@ public class MilestonePlanItemExecutionListenerTest extends CmmnElementHandlerTe
     this.testSpecification = testSpecification;
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     milestone = createElement(casePlanModel, "aMilestone", Milestone.class);
 
     planItem = createElement(casePlanModel, "PI_aMilestone", PlanItem.class);
@@ -58,8 +57,8 @@ public class MilestonePlanItemExecutionListenerTest extends CmmnElementHandlerTe
 
   }
 
-  @Test
-  public void testCaseExecutionListener() {
+  @TestTemplate
+  void testCaseExecutionListener() {
     // given:
     testSpecification.addListenerToElement(modelInstance, milestone);
 

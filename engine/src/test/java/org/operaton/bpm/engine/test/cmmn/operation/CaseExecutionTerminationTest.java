@@ -25,16 +25,16 @@ import org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CaseDefinitionBuilder;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
 import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseExecutionTerminationTest {
+class CaseExecutionTerminationTest {
 
   @Test
-  public void testTerminateCaseInstance() {
+  void testTerminateCaseInstance() {
 
     // given ///////////////////////////////////////////////////////////////
 
@@ -76,7 +76,7 @@ public class CaseExecutionTerminationTest {
   }
 
   @Test
-  public void testTerminateStage() {
+  void testTerminateStage() {
 
     // given ///////////////////////////////////////////////////////////////
 
@@ -118,7 +118,7 @@ public class CaseExecutionTerminationTest {
   }
 
   @Test
-  public void testTerminateTask() {
+  void testTerminateTask() {
 
     // given ///////////////////////////////////////////////////////////////
 

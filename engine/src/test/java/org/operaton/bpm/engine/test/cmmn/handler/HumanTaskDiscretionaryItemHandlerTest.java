@@ -40,22 +40,22 @@ import org.operaton.bpm.model.cmmn.instance.ManualActivationRule;
 import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
 import org.operaton.bpm.model.cmmn.instance.PlanningTable;
 import org.operaton.bpm.model.cmmn.instance.RequiredRule;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
+class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
   protected HumanTask humanTask;
   protected PlanningTable planningTable;
   protected DiscretionaryItem discretionaryItem;
   protected HumanTaskItemHandler handler = new HumanTaskItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     humanTask = createElement(casePlanModel, "aHumanTask", HumanTask.class);
 
     planningTable = createElement(casePlanModel, "aPlanningTable", PlanningTable.class);
@@ -66,7 +66,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testHumanTaskActivityName() {
+  void testHumanTaskActivityName() {
     // given:
     // the humanTask has a name "A HumanTask"
     String name = "A HumanTask";
@@ -80,7 +80,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testHumanTaskActivityType() {
+  void testHumanTaskActivityType() {
     // given
 
     // when
@@ -93,7 +93,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testHumanTaskDescription() {
+  void testHumanTaskDescription() {
     // given
     String description = "This is a humanTask";
     humanTask.setDescription(description);
@@ -107,7 +107,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testDiscretionaryItemDescription() {
+  void testDiscretionaryItemDescription() {
     // given
     String description = "This is a discretionaryItem";
     discretionaryItem.setDescription(description);
@@ -120,7 +120,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a discretionaryItem
 
     // when
@@ -132,7 +132,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testIsBlockingEqualsTrueProperty() {
+  void testIsBlockingEqualsTrueProperty() {
     // given: a humanTask with isBlocking = true (defaultValue)
 
     // when
@@ -144,7 +144,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testIsBlockingEqualsFalseProperty() {
+  void testIsBlockingEqualsFalseProperty() {
     // given:
     // a humanTask with isBlocking = false
     humanTask.setIsBlocking(false);
@@ -163,7 +163,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testIsDiscretionaryProperty() {
+  void testIsDiscretionaryProperty() {
     // given:
     // a discretionary item to handle
 
@@ -176,7 +176,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a discretionaryItem
 
     // when
@@ -187,7 +187,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -202,7 +202,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testManualActivationRule() {
+  void testManualActivationRule() {
     // given
     ItemControl itemControl = createElement(discretionaryItem, "ItemControl_1", ItemControl.class);
     ManualActivationRule manualActivationRule = createElement(itemControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -220,7 +220,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testManualActivationRuleByDefaultPlanItemControl() {
+  void testManualActivationRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(humanTask, "ItemControl_1", DefaultControl.class);
     ManualActivationRule manualActivationRule = createElement(defaultControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -238,7 +238,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(discretionaryItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -256,7 +256,7 @@ public class HumanTaskDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(humanTask, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);

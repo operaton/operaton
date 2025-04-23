@@ -61,21 +61,21 @@ import org.operaton.bpm.model.cmmn.instance.RequiredRule;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonIn;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonOut;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
+class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   protected ProcessTask processTask;
   protected PlanItem planItem;
   protected ProcessTaskItemHandler handler = new ProcessTaskItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     processTask = createElement(casePlanModel, "aProcessTask", ProcessTask.class);
 
     planItem = createElement(casePlanModel, "PI_aProcessTask", PlanItem.class);
@@ -84,7 +84,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testProcessTaskActivityName() {
+  void testProcessTaskActivityName() {
     // given:
     // the processTask has a name "A ProcessTask"
     String name = "A ProcessTask";
@@ -98,7 +98,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testPlanItemActivityName() {
+  void testPlanItemActivityName() {
     // given:
     // the processTask has a name "A CaseTask"
     String processTaskName = "A ProcessTask";
@@ -117,7 +117,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testProcessTaskActivityType() {
+  void testProcessTaskActivityType() {
     // given
 
     // when
@@ -130,7 +130,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testProcessTaskDescription() {
+  void testProcessTaskDescription() {
     // given
     String description = "This is a processTask";
     processTask.setDescription(description);
@@ -144,7 +144,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testPlanItemDescription() {
+  void testPlanItemDescription() {
     // given
     String description = "This is a planItem";
     planItem.setDescription(description);
@@ -157,7 +157,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a planItem
 
     // when
@@ -169,7 +169,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsTrueProperty() {
+  void testIsBlockingEqualsTrueProperty() {
     // given: a processTask with isBlocking = true (defaultValue)
 
     // when
@@ -181,7 +181,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsFalseProperty() {
+  void testIsBlockingEqualsFalseProperty() {
     // given:
     // a processTask with isBlocking = false
     processTask.setIsBlocking(false);
@@ -195,7 +195,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a planItem
 
     // when
@@ -206,7 +206,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -221,7 +221,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCallableElement() {
+  void testCallableElement() {
     // given: a plan item
 
     // when
@@ -235,7 +235,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testProcessRefConstant() {
+  void testProcessRefConstant() {
     // given:
     String processRef = "aProcessToCall";
     processTask.setProcess(processRef);
@@ -254,7 +254,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testProcessRefExpression() {
+  void testProcessRefExpression() {
     // given:
     String processRef = "${aProcessToCall}";
     processTask.setProcess(processRef);
@@ -273,7 +273,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testBinding() {
+  void testBinding() {
     // given:
     CallableElementBinding processBinding = CallableElementBinding.LATEST;
     processTask.setOperatonProcessBinding(processBinding.getValue());
@@ -290,7 +290,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testVersionConstant() {
+  void testVersionConstant() {
     // given:
     String processVersion = "2";
     processTask.setOperatonProcessVersion(processVersion);
@@ -308,7 +308,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testVersionExpression() {
+  void testVersionExpression() {
     // given:
     String processVersion = "${aVersion}";
     processTask.setOperatonProcessVersion(processVersion);
@@ -327,7 +327,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testBusinessKeyConstant() {
+  void testBusinessKeyConstant() {
     // given:
     String businessKey = "myBusinessKey";
     ExtensionElements extensionElements = addExtensionElements(processTask);
@@ -347,7 +347,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testBusinessKeyExpression() {
+  void testBusinessKeyExpression() {
     // given:
     String businessKey = "${myBusinessKey}";
     ExtensionElements extensionElements = addExtensionElements(processTask);
@@ -368,7 +368,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputs() {
+  void testInputs() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(processTask);
     OperatonIn variablesElement = createElement(extensionElements, null, OperatonIn.class);
@@ -394,7 +394,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputVariables() {
+  void testInputVariables() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(processTask);
     OperatonIn variablesElement = createElement(extensionElements, null, OperatonIn.class);
@@ -414,7 +414,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputSource() {
+  void testInputSource() {
     // given:
     String source = "a";
     ExtensionElements extensionElements = addExtensionElements(processTask);
@@ -438,7 +438,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputSourceExpression() {
+  void testInputSourceExpression() {
     // given:
     String source = "${a}";
     ExtensionElements extensionElements = addExtensionElements(processTask);
@@ -463,7 +463,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputTarget() {
+  void testInputTarget() {
     // given:
     String target = "b";
     ExtensionElements extensionElements = addExtensionElements(processTask);
@@ -485,7 +485,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputs() {
+  void testOutputs() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(processTask);
     OperatonOut variablesElement = createElement(extensionElements, null, OperatonOut.class);
@@ -511,7 +511,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputVariables() {
+  void testOutputVariables() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(processTask);
     OperatonOut variablesElement = createElement(extensionElements, null, OperatonOut.class);
@@ -531,7 +531,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputSource() {
+  void testOutputSource() {
     // given:
     String source = "a";
     ExtensionElements extensionElements = addExtensionElements(processTask);
@@ -555,7 +555,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputSourceExpression() {
+  void testOutputSourceExpression() {
     // given:
     String source = "${a}";
     ExtensionElements extensionElements = addExtensionElements(processTask);
@@ -580,7 +580,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputTarget() {
+  void testOutputTarget() {
     // given:
     String target = "b";
     ExtensionElements extensionElements = addExtensionElements(processTask);
@@ -602,7 +602,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExitCriteria() {
+  void testExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -637,7 +637,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleExitCriteria() {
+  void testMultipleExitCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -683,7 +683,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteria() {
+  void testEntryCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -717,7 +717,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleEntryCriteria() {
+  void testMultipleEntryCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -763,7 +763,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteriaAndExitCriteria() {
+  void testEntryCriteriaAndExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -800,7 +800,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRule() {
+  void testManualActivationRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     ManualActivationRule manualActivationRule = createElement(itemControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -818,7 +818,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRuleByDefaultPlanItemControl() {
+  void testManualActivationRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(processTask, "ItemControl_1", DefaultControl.class);
     ManualActivationRule manualActivationRule = createElement(defaultControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -836,7 +836,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -854,7 +854,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(processTask, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);
@@ -872,7 +872,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRule() {
+  void testRepetitionRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -890,7 +890,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleByDefaultPlanItemControl() {
+  void testRepetitionRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(processTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
@@ -908,7 +908,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleStandardEvents() {
+  void testRepetitionRuleStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -930,7 +930,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
+  void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(processTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
@@ -952,7 +952,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleCustomStandardEvents() {
+  void testRepetitionRuleCustomStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -975,7 +975,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
+  void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(processTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);

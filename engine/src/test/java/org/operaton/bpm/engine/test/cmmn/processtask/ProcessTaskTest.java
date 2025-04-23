@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class ProcessTaskTest extends CmmnTest {
+class ProcessTaskTest extends CmmnTest {
 
   protected static final String PROCESS_TASK = "PI_ProcessTask_1";
   protected static final String ONE_PROCESS_TASK_CASE = "oneProcessTaskCase";
@@ -46,9 +46,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCallProcessAsConstant() {
+  void testCallProcessAsConstant() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -84,9 +84,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testCallProcessAsExpressionStartsWithDollar.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCallProcessAsExpressionStartsWithDollar() {
+  void testCallProcessAsExpressionStartsWithDollar() {
     // given
     // a deployed case definition
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE, Variables.createVariables().putValue("process", "oneTaskProcess")).getId();
@@ -122,9 +122,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testCallProcessAsExpressionStartsWithHash.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCallProcessAsExpressionStartsWithHash() {
+  void testCallProcessAsExpressionStartsWithHash() {
     // given
     // a deployed case definition
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE, Variables.createVariables().putValue("process", "oneTaskProcess")).getId();
@@ -160,9 +160,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testCallLatestProcess.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCallLatestProcess() {
+  void testCallLatestProcess() {
     // given
     String bpmnResourceName = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
 
@@ -216,9 +216,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testCallProcessByDeployment.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCallProcessByDeployment() {
+  void testCallProcessByDeployment() {
     // given
 
     String firstDeploymentId = repositoryService
@@ -278,9 +278,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testCallProcessByVersion.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCallProcessByVersion() {
+  void testCallProcessByVersion() {
     // given
 
     String bpmnResourceName = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
@@ -341,9 +341,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testCallProcessByVersionAsExpressionStartsWithDollar.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCallProcessByVersionAsExpressionStartsWithDollar() {
+  void testCallProcessByVersionAsExpressionStartsWithDollar() {
     // given
 
     String bpmnResourceName = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
@@ -406,9 +406,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testCallProcessByVersionAsExpressionStartsWithHash.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCallProcessByVersionAsExpressionStartsWithHash() {
+  void testCallProcessByVersionAsExpressionStartsWithHash() {
     // given
 
     String bpmnResourceName = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
@@ -471,9 +471,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputBusinessKey.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputBusinessKey() {
+  void testInputBusinessKey() {
     // given
     String businessKey = "myBusinessKey";
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE, businessKey).getId();
@@ -512,9 +512,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputDifferentBusinessKey.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputDifferentBusinessKey() {
+  void testInputDifferentBusinessKey() {
     // given
     String businessKey = "myBusinessKey";
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE, businessKey).getId();
@@ -560,9 +560,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputSource.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputSource() {
+  void testInputSource() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables()
@@ -613,9 +613,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputSourceDifferentTarget.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputSourceDifferentTarget() {
+  void testInputSourceDifferentTarget() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -668,9 +668,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputSource.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputSourceNullValue() {
+  void testInputSourceNullValue() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
@@ -713,9 +713,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputSourceExpression.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputSourceExpression() {
+  void testInputSourceExpression() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables().putValue("aVariable", "abc")
@@ -763,9 +763,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputAll.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputAll() {
+  void testInputAll() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables().putValue("aVariable", "abc").putValue("anotherVariable", 999)).getId();
@@ -812,9 +812,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputAllLocal.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputAllLocal() {
+  void testInputAllLocal() {
     // given
     createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -842,9 +842,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputOverlapping.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputOverlapping() {
+  void testInputOverlapping() {
     // specifics should override "all"
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
@@ -896,9 +896,9 @@ public class ProcessTaskTest extends CmmnTest {
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"
-    })
+  })
   @Test
-  public void testProcessNotFound() {
+  void testProcessNotFound() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -923,9 +923,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCompleteSimpleProcess() {
+  void testCompleteSimpleProcess() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -955,9 +955,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputSource.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testOutputSource() {
+  void testOutputSource() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1007,9 +1007,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputSourceDifferentTarget.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testOutputSourceDifferentTarget() {
+  void testOutputSourceDifferentTarget() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1058,9 +1058,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputSource.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testOutputSourceNullValue() {
+  void testOutputSourceNullValue() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1102,9 +1102,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputSourceExpression.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testOutputSourceExpression() {
+  void testOutputSourceExpression() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1153,9 +1153,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputAll.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testOutputAll() {
+  void testOutputAll() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
@@ -1206,9 +1206,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputOverlapping.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testOutputOverlapping() {
+  void testOutputOverlapping() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
@@ -1259,9 +1259,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputAllWithManualActivation.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testOutputVariablesShouldNotExistAnymore() {
+  void testOutputVariablesShouldNotExistAnymore() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -1306,9 +1306,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testVariablesRoundtrip.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testVariablesRoundtrip() {
+  void testVariablesRoundtrip() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -1364,9 +1364,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testInputOutputAll.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputOutputAllTypedVariables() {
+  void testInputOutputAllTypedVariables() {
     String variableName = "aVariable";
     String variableName2 = "anotherVariable";
     String variableName3 = "theThirdVariable";
@@ -1411,9 +1411,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testVariablesRoundtrip.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testInputOutputLimitedTypedVariables() {
+  void testInputOutputLimitedTypedVariables() {
     String variableName = "aVariable";
     String variableName2 = "anotherVariable";
     TypedValue caseVariableValue = Variables.stringValue("abc");
@@ -1454,9 +1454,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCompleteProcessTask() {
+  void testCompleteProcessTask() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -1488,9 +1488,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCompleteProcessTaskAfterTerminateSubProcessInstance() {
+  void testCompleteProcessTaskAfterTerminateSubProcessInstance() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -1523,9 +1523,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testTerminateProcessTask() {
+  void testTerminateProcessTask() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -1555,9 +1555,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testTerminateSubProcessInstance() {
+  void testTerminateSubProcessInstance() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1589,9 +1589,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testSuspendProcessTask() {
+  void testSuspendProcessTask() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -1623,9 +1623,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testSuspendSubProcessInstance() {
+  void testSuspendSubProcessInstance() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
@@ -1662,9 +1662,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testResumeProcessTask() {
+  void testResumeProcessTask() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -1701,9 +1701,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testNonBlockingProcessTask.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
+  })
   @Test
-  public void testNonBlockingProcessTask() {
+  void testNonBlockingProcessTask() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1737,9 +1737,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testProcessInstanceCompletesInOneGo.cmmn",
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testProcessInstanceCompletesInOneGo.bpmn20.xml"
-    })
+  })
   @Test
-  public void testProcessInstanceCompletesInOneGo() {
+  void testProcessInstanceCompletesInOneGo() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1765,9 +1765,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testNonBlockingProcessTaskAndProcessInstanceCompletesInOneGo.cmmn",
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testProcessInstanceCompletesInOneGo.bpmn20.xml"
-    })
+  })
   @Test
-  public void testNonBlockingProcessTaskAndProcessInstanceCompletesInOneGo() {
+  void testNonBlockingProcessTaskAndProcessInstanceCompletesInOneGo() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1793,9 +1793,9 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testStartProcessInstanceAsync.cmmn",
       "org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testStartProcessInstanceAsync.bpmn20.xml"
-    })
+  })
   @Test
-  public void testStartProcessInstanceAsync() {
+  void testStartProcessInstanceAsync() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
@@ -1817,7 +1817,7 @@ public class ProcessTaskTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testActivityType() {
+  void testActivityType() {
     // given
     createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
 
@@ -1831,7 +1831,7 @@ public class ProcessTaskTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputAll.cmmn",
       "org/operaton/bpm/engine/test/cmmn/processtask/subProcessWithError.bpmn"})
   @Test
-  public void testOutputWhenErrorOccurs() {
+  void testOutputWhenErrorOccurs() {
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     Task task = queryTask();
     assertThat(task.getName()).isEqualTo("SubTask");
@@ -1845,9 +1845,9 @@ public class ProcessTaskTest extends CmmnTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputAll.cmmn",
-  "org/operaton/bpm/engine/test/cmmn/processtask/subProcessWithThrownError.bpmn"})
+      "org/operaton/bpm/engine/test/cmmn/processtask/subProcessWithThrownError.bpmn"})
   @Test
-  public void testOutputWhenThrownBpmnErrorOccurs() {
+  void testOutputWhenThrownBpmnErrorOccurs() {
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     Task task = queryTask();
     assertThat(task.getName()).isEqualTo("SubTask");

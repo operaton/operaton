@@ -25,19 +25,19 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class RepetitionRuleTest extends CmmnTest {
+class RepetitionRuleTest extends CmmnTest {
 
   private static final String CASE_ID = "case";
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testVariableBasedRepetitionRuleEvaluatesToTrue() {
+  void testVariableBasedRepetitionRuleEvaluatesToTrue() {
     // given
     VariableMap variables = Variables.createVariables().putValue("repeat", true);
     createCaseInstanceByKey("case", variables);
@@ -59,7 +59,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testVariableBasedRepetitionRuleEvaluatesToFalse() {
+  void testVariableBasedRepetitionRuleEvaluatesToFalse() {
     // given
     VariableMap variables = Variables.createVariables().putValue("repeat", false);
     createCaseInstanceByKey("case", variables);
@@ -79,7 +79,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testDefaultVariableBasedRule.cmmn")
   @Test
-  public void testDefaultVariableBasedRepetitionRuleEvaluatesToTrue() {
+  void testDefaultVariableBasedRepetitionRuleEvaluatesToTrue() {
     // given
     VariableMap variables = Variables.createVariables().putValue("repeat", true);
     createCaseInstanceByKey("case", variables);
@@ -101,7 +101,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testDefaultVariableBasedRule.cmmn")
   @Test
-  public void testDefaultVariableBasedRepetitionRuleEvaluatesToFalse() {
+  void testDefaultVariableBasedRepetitionRuleEvaluatesToFalse() {
     // given
     VariableMap variables = Variables.createVariables().putValue("repeat", false);
     createCaseInstanceByKey("case", variables);
@@ -121,7 +121,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatTask() {
+  void testRepeatTask() {
     // given
     createCaseInstance();
 
@@ -146,7 +146,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatStage() {
+  void testRepeatStage() {
     // given
     createCaseInstance();
 
@@ -171,7 +171,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatMilestone() {
+  void testRepeatMilestone() {
     // given
     createCaseInstance();
 
@@ -193,7 +193,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatTaskMultipleTimes() {
+  void testRepeatTaskMultipleTimes() {
     // given
     createCaseInstance();
 
@@ -235,7 +235,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatStageMultipleTimes() {
+  void testRepeatStageMultipleTimes() {
     // given
     createCaseInstance();
 
@@ -277,7 +277,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatMilestoneMultipleTimes() {
+  void testRepeatMilestoneMultipleTimes() {
     // given
     createCaseInstance();
 
@@ -312,7 +312,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatTaskWithoutEntryCriteria.cmmn")
   @Test
-  public void testRepeatTaskWithoutEntryCriteriaWhenCompleting() {
+  void testRepeatTaskWithoutEntryCriteriaWhenCompleting() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_ID,Variables.createVariables().putValue("repeating", true)).getId();
 
@@ -348,7 +348,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatStageWithoutEntryCriteria.cmmn")
   @Test
-  public void testRepeatStageWithoutEntryCriteriaWhenCompleting() {
+  void testRepeatStageWithoutEntryCriteriaWhenCompleting() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_ID,Variables.createVariables().putValue("repeating",true)).getId();
 
@@ -386,7 +386,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatTaskWithoutEntryCriteria.cmmn")
   @Test
-  public void testRepeatTaskWithoutEntryCriteriaWhenTerminating() {
+  void testRepeatTaskWithoutEntryCriteriaWhenTerminating() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_ID,Variables.createVariables().putValue("repeating",true)).getId();
 
@@ -418,7 +418,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatStageWithoutEntryCriteria.cmmn")
   @Test
-  public void testRepeatStageWithoutEntryCriteriaWhenTerminating() {
+  void testRepeatStageWithoutEntryCriteriaWhenTerminating() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_ID,Variables.createVariables().putValue("repeating",true)).getId();
 
@@ -456,7 +456,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatTaskWithoutEntryCriteriaOnCustomStandardEvent() {
+  void testRepeatTaskWithoutEntryCriteriaOnCustomStandardEvent() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -497,7 +497,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatStageWithoutEntryCriteriaOnCustomStandardEvent() {
+  void testRepeatStageWithoutEntryCriteriaOnCustomStandardEvent() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -540,7 +540,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testNonRepeatableTaskDependsOnRepeatableTask() {
+  void testNonRepeatableTaskDependsOnRepeatableTask() {
     // given
     createCaseInstance();
 
@@ -583,7 +583,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRepeatableTaskDependsOnAnotherRepeatableTask() {
+  void testRepeatableTaskDependsOnAnotherRepeatableTask() {
     // given
     createCaseInstance();
 
@@ -640,7 +640,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testLimitedRepetitions() {
+  void testLimitedRepetitions() {
     // given
     VariableMap variables = Variables.createVariables().putValue("repetition", 0);
     createCaseInstanceByKey("case", variables);
@@ -714,7 +714,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testLimitedSequentialRepetitions() {
+  void testLimitedSequentialRepetitions() {
     // given
     VariableMap variables = Variables.createVariables().putValue("repetition", 0);
     createCaseInstanceByKey("case", variables);
@@ -759,7 +759,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testLimitedParallelRepetitions() {
+  void testLimitedParallelRepetitions() {
     // given
     VariableMap variables = Variables.createVariables().putValue("repetition", 0);
     createCaseInstanceByKey("case", variables);
@@ -783,7 +783,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testAutoCompleteStage() {
+  void testAutoCompleteStage() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -802,7 +802,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testAutoCompleteStageWithoutEntryCriteria() {
+  void testAutoCompleteStageWithoutEntryCriteria() {
     // given
     VariableMap variables = Variables.createVariables().putValue("manualActivation", false);
     String caseInstanceId = createCaseInstanceByKey("case", variables).getId();
@@ -831,7 +831,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testAutoCompleteStageAutoActivationRepeatableTask() {
+  void testAutoCompleteStageAutoActivationRepeatableTask() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -868,7 +868,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testAutoCompleteStageRequiredRepeatableTask() {
+  void testAutoCompleteStageRequiredRepeatableTask() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -901,7 +901,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatTask.cmmn")
   @Test
-  public void testShouldNotRepeatTaskAfterCompletion() {
+  void testShouldNotRepeatTaskAfterCompletion() {
     // given
     createCaseInstance();
     String humanTask1 = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
@@ -931,7 +931,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testIgnoreRepeatOnStandardEvent() {
+  void testIgnoreRepeatOnStandardEvent() {
     // given
     createCaseInstance();
 
@@ -956,7 +956,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testDefaultValueWithoutCondition() {
+  void testDefaultValueWithoutCondition() {
     createCaseInstanceByKey("case");
     String humanTask1 = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
 
@@ -974,7 +974,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testDefaultValueWithEmptyCondition() {
+  void testDefaultValueWithEmptyCondition() {
     createCaseInstanceByKey("case");
     String humanTask1 = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
 

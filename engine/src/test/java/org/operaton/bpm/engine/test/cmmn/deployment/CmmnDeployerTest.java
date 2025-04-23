@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.repository.CaseDefinitionQuery;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
@@ -33,7 +34,7 @@ import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
 import java.io.InputStream;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -42,10 +43,10 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class CmmnDeployerTest extends PluggableProcessEngineTest {
+class CmmnDeployerTest extends CmmnTest {
 
   @Test
-  public void testCmmnDeployment() {
+  void testCmmnDeployment() {
     String deploymentId = processEngine
         .getRepositoryService()
         .createDeployment()
@@ -70,7 +71,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployTwoCasesWithDuplicateIdAtTheSameTime() {
+  void testDeployTwoCasesWithDuplicateIdAtTheSameTime() {
     String cmmnResourceName1 = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testSimpleDeployment.cmmn";
     String cmmnResourceName2 = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testSimpleDeployment2.cmmn";
     var deploymentBuilder = repositoryService.createDeployment()
@@ -86,10 +87,10 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.cmmn",
-      "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.png" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.cmmn",
+      "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.png"})
   @Test
-  public void testCaseDiagramResource() {
+  void testCaseDiagramResource() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     final CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
 
@@ -105,12 +106,12 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     assertThat(diagramBytes).hasSize(2540);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.cmmn",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.cmmn",
       "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.a.png",
       "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.b.png",
-      "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.c.png" })
+      "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.c.png"})
   @Test
-  public void testMultipleDiagramResourcesProvided() {
+  void testMultipleDiagramResourcesProvided() {
     final CaseDefinition caseA = repositoryService.createCaseDefinitionQuery().caseDefinitionKey("a").singleResult();
     final CaseDefinition caseB = repositoryService.createCaseDefinitionQuery().caseDefinitionKey("b").singleResult();
     final CaseDefinition caseC = repositoryService.createCaseDefinitionQuery().caseDefinitionKey("c").singleResult();
@@ -121,13 +122,13 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployCmmn10XmlFile() {
+  void testDeployCmmn10XmlFile() {
     verifyCmmnResourceDeployed("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCmmn10XmlFile.cmmn10.xml");
 
   }
 
   @Test
-  public void testDeployCmmn11XmlFile() {
+  void testDeployCmmn11XmlFile() {
     verifyCmmnResourceDeployed("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCmmn11XmlFile.cmmn11.xml");
   }
 
@@ -157,7 +158,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployCmmnModelInstance() {
+  void testDeployCmmnModelInstance() {
     // given
     CmmnModelInstance modelInstance = createCmmnModelInstance();
 
@@ -187,7 +188,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployAndGetCaseDefinition() {
+  void testDeployAndGetCaseDefinition() {
     // given case model
     final CmmnModelInstance modelInstance = createCmmnModelInstance();
 
@@ -208,7 +209,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployEmptyCaseDefinition() {
+  void testDeployEmptyCaseDefinition() {
 
     // given empty case model
     final CmmnModelInstance modelInstance = Cmmn.createEmptyModel();
@@ -229,7 +230,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithIntegerHistoryTimeToLive.cmmn")
   @Test
-  public void testDeployCaseDefinitionWithIntegerHistoryTimeToLive() {
+  void testDeployCaseDefinitionWithIntegerHistoryTimeToLive() {
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     Integer historyTimeToLive = caseDefinition.getHistoryTimeToLive();
     assertThat(historyTimeToLive).isNotNull();
@@ -238,7 +239,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithStringHistoryTimeToLive.cmmn")
   @Test
-  public void testDeployCaseDefinitionWithStringHistoryTimeToLive() {
+  void testDeployCaseDefinitionWithStringHistoryTimeToLive() {
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     Integer historyTimeToLive = caseDefinition.getHistoryTimeToLive();
     assertThat(historyTimeToLive).isNotNull();
@@ -246,7 +247,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployCaseDefinitionWithMalformedHistoryTimeToLive() {
+  void testDeployCaseDefinitionWithMalformedHistoryTimeToLive() {
     try {
      testRule.deploy("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithMalformedHistoryTimeToLive.cmmn");
       fail("Exception expected");

@@ -47,8 +47,8 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQ
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -58,14 +58,14 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
+class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   protected HumanTask humanTask;
   protected PlanItem planItem;
   protected HumanTaskItemHandler handler = new HumanTaskItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     humanTask = createElement(casePlanModel, "aHumanTask", HumanTask.class);
 
     planItem = createElement(casePlanModel, "PI_aHumanTask", PlanItem.class);
@@ -74,7 +74,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testHumanTaskActivityName() {
+  void testHumanTaskActivityName() {
     // given:
     // the humanTask has a name "A HumanTask"
     String name = "A HumanTask";
@@ -88,7 +88,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testPlanItemActivityName() {
+  void testPlanItemActivityName() {
     // given:
     // the humanTask has a name "A HumanTask"
     String humanTaskName = "A HumanTask";
@@ -107,7 +107,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testHumanTaskActivityType() {
+  void testHumanTaskActivityType() {
     // given
 
     // when
@@ -120,7 +120,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testHumanTaskDescriptionProperty() {
+  void testHumanTaskDescriptionProperty() {
     // given
     String description = "This is a humanTask";
     humanTask.setDescription(description);
@@ -134,7 +134,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testPlanItemDescriptionProperty() {
+  void testPlanItemDescriptionProperty() {
     // given
     String description = "This is a planItem";
     planItem.setDescription(description);
@@ -147,7 +147,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a planItem
 
     // when
@@ -159,7 +159,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsTrueProperty() {
+  void testIsBlockingEqualsTrueProperty() {
     // given: a humanTask with isBlocking = true (defaultValue)
 
     // when
@@ -171,7 +171,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsFalseProperty() {
+  void testIsBlockingEqualsFalseProperty() {
     // given:
     // a humanTask with isBlocking = false
     humanTask.setIsBlocking(false);
@@ -190,7 +190,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a planItem
 
     // when
@@ -201,7 +201,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -216,7 +216,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDecorator() {
+  void testTaskDecorator() {
     // given: a plan item
 
     // when
@@ -230,7 +230,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinition() {
+  void testTaskDefinition() {
     // given: a plan item
 
     // when
@@ -244,7 +244,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExpressionManager() {
+  void testExpressionManager() {
     // given: a plan item
 
     // when
@@ -260,7 +260,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionHumanTaskNameExpression() {
+  void testTaskDefinitionHumanTaskNameExpression() {
     // given
     String name = "A HumanTask";
     humanTask.setName(name);
@@ -277,7 +277,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionPlanItemNameExpression() {
+  void testTaskDefinitionPlanItemNameExpression() {
     // given
     String name = "A HumanTask";
     humanTask.setName(name);
@@ -298,7 +298,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionDueDateExpression() {
+  void testTaskDefinitionDueDateExpression() {
     // given
     String aDueDate = "aDueDate";
     humanTask.setOperatonDueDate(aDueDate);
@@ -316,7 +316,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionFollowUpDateExpression() {
+  void testTaskDefinitionFollowUpDateExpression() {
     // given
     String aFollowUpDate = "aFollowDate";
     humanTask.setOperatonFollowUpDate(aFollowUpDate);
@@ -334,7 +334,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionPriorityExpression() {
+  void testTaskDefinitionPriorityExpression() {
     // given
     String aPriority = "aPriority";
     humanTask.setOperatonPriority(aPriority);
@@ -352,7 +352,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionPerformerExpression() {
+  void testTaskDefinitionPerformerExpression() {
     // given
     CaseRole role = createElement(caseDefinition, "aRole", CaseRole.class);
     role.setName("aPerformerRole");
@@ -372,7 +372,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionAssigneeExpression() {
+  void testTaskDefinitionAssigneeExpression() {
     // given
     String aPriority = "aPriority";
     humanTask.setOperatonPriority(aPriority);
@@ -390,7 +390,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionCandidateUsers() {
+  void testTaskDefinitionCandidateUsers() {
     // given
     String aCandidateUsers = "mary,john,peter";
     humanTask.setOperatonCandidateUsers(aCandidateUsers);
@@ -420,7 +420,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionCandidateGroups() {
+  void testTaskDefinitionCandidateGroups() {
     // given
     String aCandidateGroups = "accounting,management,backoffice";
     humanTask.setOperatonCandidateGroups(aCandidateGroups);
@@ -450,7 +450,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testTaskDefinitionFormKey() {
+  void testTaskDefinitionFormKey() {
     // given
     String aFormKey = "aFormKey";
     humanTask.setOperatonFormKey(aFormKey);
@@ -469,7 +469,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testHumanTaskDescription() {
+  void testHumanTaskDescription() {
     // given
     String description = "A description";
     humanTask.setDescription(description);
@@ -488,7 +488,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testPlanItemDescription() {
+  void testPlanItemDescription() {
     // given
     String description = "A description";
     humanTask.setDescription(description);
@@ -510,7 +510,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCreateTaskListenerByClass() {
+  void testCreateTaskListenerByClass() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -546,7 +546,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCreateTaskListenerByDelegateExpression() {
+  void testCreateTaskListenerByDelegateExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -582,7 +582,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCreateTaskListenerByExpression() {
+  void testCreateTaskListenerByExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -617,7 +617,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCompleteTaskListenerByClass() {
+  void testCompleteTaskListenerByClass() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -653,7 +653,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCompleteTaskListenerByDelegateExpression() {
+  void testCompleteTaskListenerByDelegateExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -689,7 +689,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCompleteTaskListenerByExpression() {
+  void testCompleteTaskListenerByExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -724,7 +724,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testAssignmentTaskListenerByClass() {
+  void testAssignmentTaskListenerByClass() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -760,7 +760,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testAssignmentTaskListenerByDelegateExpression() {
+  void testAssignmentTaskListenerByDelegateExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -796,7 +796,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testAssignmentTaskListenerByExpression() {
+  void testAssignmentTaskListenerByExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -831,7 +831,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerByClass() {
+  void testUpdateTaskListenerByClass() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -867,7 +867,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerByDelegateExpression() {
+  void testUpdateTaskListenerByDelegateExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -903,7 +903,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerByExpression() {
+  void testUpdateTaskListenerByExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -938,7 +938,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testDeleteTaskListenerByClass() {
+  void testDeleteTaskListenerByClass() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -974,7 +974,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testDeleteTaskListenerByDelegateExpression() {
+  void testDeleteTaskListenerByDelegateExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -1010,7 +1010,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testDeleteTaskListenerByExpression() {
+  void testDeleteTaskListenerByExpression() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(humanTask);
     OperatonTaskListener taskListener = createElement(extensionElements, null, OperatonTaskListener.class);
@@ -1045,7 +1045,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExitCriteria() {
+  void testExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -1080,7 +1080,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleExitCriteria() {
+  void testMultipleExitCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -1128,7 +1128,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteria() {
+  void testEntryCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -1163,7 +1163,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleEntryCriteria() {
+  void testMultipleEntryCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -1211,7 +1211,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteriaAndExitCriteria() {
+  void testEntryCriteriaAndExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -1251,7 +1251,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRule() {
+  void testManualActivationRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     ManualActivationRule manualActivationRule = createElement(itemControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -1269,7 +1269,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRuleByDefaultPlanItemControl() {
+  void testManualActivationRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(humanTask, "ItemControl_1", DefaultControl.class);
     ManualActivationRule manualActivationRule = createElement(defaultControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -1287,7 +1287,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -1305,7 +1305,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(humanTask, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);
@@ -1323,7 +1323,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRule() {
+  void testRepetitionRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -1341,7 +1341,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleByDefaultPlanItemControl() {
+  void testRepetitionRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(humanTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
@@ -1359,7 +1359,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleStandardEvents() {
+  void testRepetitionRuleStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -1381,7 +1381,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
+  void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(humanTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
@@ -1403,7 +1403,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleCustomStandardEvents() {
+  void testRepetitionRuleCustomStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -1426,7 +1426,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
+  void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(humanTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);

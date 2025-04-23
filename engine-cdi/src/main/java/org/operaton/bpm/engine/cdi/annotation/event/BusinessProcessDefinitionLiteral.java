@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.cdi.annotation.event;
 
 import jakarta.enterprise.util.AnnotationLiteral;
+import java.util.Objects;
 
 public class BusinessProcessDefinitionLiteral extends AnnotationLiteral<BusinessProcessDefinition> implements BusinessProcessDefinition {
 
@@ -29,5 +30,22 @@ public class BusinessProcessDefinitionLiteral extends AnnotationLiteral<Business
   @Override
   public String value() {
     return key;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    if (!super.equals(o))
+      return false;
+    BusinessProcessDefinitionLiteral that = (BusinessProcessDefinitionLiteral) o;
+    return Objects.equals(key, that.key);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), key);
   }
 }

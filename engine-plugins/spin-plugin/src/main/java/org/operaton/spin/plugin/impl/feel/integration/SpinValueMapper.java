@@ -65,7 +65,7 @@ public class SpinValueMapper extends JavaCustomValueMapper {
 
   protected Val spinJsonToVal(SpinJsonNode node, Function<Object, Val> innerValueMapper) {
     if (node.isObject()) {
-      Map pairs = node.fieldNames()
+      Map<String, Val> pairs = node.fieldNames()
           .stream()
           .collect(toMap(field -> field,
                          field -> spinJsonToVal(node.prop(field), innerValueMapper)));
@@ -137,7 +137,7 @@ public class SpinValueMapper extends JavaCustomValueMapper {
     return "@" + nodeName(attribute);
   }
 
-  protected String nodeName(SpinXmlNode n) {
+  protected String nodeName(SpinXmlNode<?> n) {
     String prefix = n.prefix();
     String name = n.name();
     return (prefix != null && !prefix.isEmpty())? prefix + "$" + name : name;

@@ -34,7 +34,7 @@ public abstract class AbstractTaskLiteral<T extends Annotation> extends Annotati
       return false;
     if (!super.equals(o))
       return false;
-    DeleteTaskLiteral that = (DeleteTaskLiteral) o;
+    AbstractTaskLiteral<T> that = (AbstractTaskLiteral<T>) o;
     return Objects.equals(taskDefinitionKey, that.taskDefinitionKey);
   }
 

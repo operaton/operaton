@@ -92,7 +92,7 @@ class ExternalTaskClientBuilderImplTest {
   }
 
   @Test
-  public void testBuilderWithUnsetBaseUrl() {
+  void testBuilderWithUnsetBaseUrl() {
     // given unbuilt builder
     ExternalTaskClientBuilderImpl builder = new ExternalTaskClientBuilderImpl();
 

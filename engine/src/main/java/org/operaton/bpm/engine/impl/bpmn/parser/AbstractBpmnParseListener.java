@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
  *
  * @author ruecker
  */
+@SuppressWarnings("java:S1186")
 public class AbstractBpmnParseListener implements BpmnParseListener {
 
   @Override

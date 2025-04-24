@@ -114,6 +114,7 @@ public abstract class TomcatServerBootstrap extends AbstractServerBootstrap {
         try {
           Thread.sleep(1500L);
         } catch (Exception ex) {
+          // ignore
         }
         startServer(--startUpRetries);
       }

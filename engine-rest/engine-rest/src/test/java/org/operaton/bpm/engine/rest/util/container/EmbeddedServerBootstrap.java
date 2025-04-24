@@ -41,6 +41,7 @@ public abstract class EmbeddedServerBootstrap extends AbstractServerBootstrap {
         try {
           Thread.sleep(500L);
         } catch (Exception ex) {
+          // ignore
         }
         setupServer(application);
         startServer(--startUpRetries);

@@ -4226,7 +4226,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   /**
    * If set to true, the process engine will acquire an exclusive lock when creating a deployment.
-   * This ensures that {@link DeploymentBuilder#enableDuplicateFiltering()} works correctly in a clustered environment.
+   * This ensures that {@link DeploymentBuilder#enableDuplicateFiltering(boolean)} works correctly in a clustered environment.
    */
   public void setDeploymentLockUsed(boolean isDeploymentLockUsed) {
     this.isDeploymentLockUsed = isDeploymentLockUsed;

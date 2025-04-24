@@ -86,7 +86,10 @@ public interface ProcessApplicationDeploymentBuilder extends DeploymentBuilder {
   @Override
   ProcessApplicationDeploymentBuilder source(String source);
 
-  @Deprecated
+  /**
+   * @deprecated use {@link #enableDuplicateFiltering(boolean)} instead
+   */
+  @Deprecated(forRemoval = true)
   @Override
   ProcessApplicationDeploymentBuilder enableDuplicateFiltering();
 

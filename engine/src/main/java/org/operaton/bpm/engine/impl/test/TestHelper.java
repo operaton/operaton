@@ -83,9 +83,9 @@ public abstract class TestHelper {
   }
 
   /**
-   * use {@link ProcessEngineAssert} instead.
+   * @deprecated use {@link ProcessEngineAssert} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public static void assertProcessEnded(ProcessEngine processEngine, String processInstanceId) {
     ProcessEngineAssert.assertProcessEnded(processEngine, processInstanceId);
   }

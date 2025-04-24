@@ -136,10 +136,10 @@ public abstract class JobExecutor {
   public abstract void executeJobs(List<String> jobIds, ProcessEngineImpl processEngine);
 
   /**
-   * Deprecated: use {@link #executeJobs(List, ProcessEngineImpl)} instead
+   * @deprecated  use {@link #executeJobs(List, ProcessEngineImpl)} instead
    * @param jobIds
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public void executeJobs(List<String> jobIds) {
     if(!processEngines.isEmpty()) {
       executeJobs(jobIds, processEngines.get(0));
@@ -232,9 +232,9 @@ public abstract class JobExecutor {
   }
 
   /**
-   * Deprecated: use {@link #getProcessEngines()} instead
+   * @deprecated use {@link #getProcessEngines()} instead
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public CommandExecutor getCommandExecutor() {
     if(processEngines.isEmpty()) {
       return null;
@@ -244,10 +244,10 @@ public abstract class JobExecutor {
   }
 
   /**
-   * Deprecated: use {@link #registerProcessEngine(ProcessEngineImpl)} instead
+   * @deprecated use {@link #registerProcessEngine(ProcessEngineImpl)} instead
    * @param commandExecutorTxRequired
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public void setCommandExecutor(CommandExecutor commandExecutorTxRequired) {
 
   }

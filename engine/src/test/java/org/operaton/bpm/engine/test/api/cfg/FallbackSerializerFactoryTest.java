@@ -90,7 +90,7 @@ class FallbackSerializerFactoryTest {
        .setJdbcUrl("jdbc:h2:mem:operaton-forceclose")
        .setProcessEngineName("engine-forceclose");
 
-     engineConfiguration.setCustomPreVariableSerializers(Arrays.<TypedValueSerializer>asList(new ExampleConstantSerializer()));
+     engineConfiguration.setCustomPreVariableSerializers(Arrays.<TypedValueSerializer<?>>asList(new ExampleConstantSerializer()));
      engineConfiguration.setFallbackSerializerFactory(new ExampleSerializerFactory());
 
      processEngine = engineConfiguration.buildProcessEngine();

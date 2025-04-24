@@ -393,7 +393,7 @@ import org.operaton.bpm.engine.variable.Variables;
  */
 public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
-  protected static ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
+  protected static final ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
   public static final String DB_SCHEMA_UPDATE_CREATE = "create";
   public static final String DB_SCHEMA_UPDATE_DROP_CREATE = "drop-create";
@@ -494,8 +494,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   // JOB EXECUTOR /////////////////////////////////////////////////////////////
 
-  protected List<JobHandler> customJobHandlers;
-  protected Map<String, JobHandler> jobHandlers;
+  protected List<JobHandler<?>> customJobHandlers;
+  protected Map<String, JobHandler<?>> jobHandlers;
   protected JobExecutor jobExecutor;
 
   protected PriorityProvider<JobDeclaration<?, ?>> jobPriorityProvider;
@@ -583,8 +583,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /** don't throw parsing exceptions for Operaton Forms if set to true*/
   protected boolean disableStrictOperatonFormParsing = false;
 
-  protected List<TypedValueSerializer> customPreVariableSerializers;
-  protected List<TypedValueSerializer> customPostVariableSerializers;
+  protected List<TypedValueSerializer<?>> customPreVariableSerializers;
+  protected List<TypedValueSerializer<?>> customPostVariableSerializers;
   protected VariableSerializers variableSerializers;
   protected VariableSerializerFactory fallbackSerializerFactory;
   protected boolean implicitVariableUpdateDetectionEnabled = true;
@@ -1375,12 +1375,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
 
     parsedBatchOperationsForHistoryCleanup = new HashMap<>();
-    if (batchOperationsForHistoryCleanup != null) {
-      for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
-        String operation = batchOperationEntry.getKey();
-        Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationEntry.getValue());
-        parsedBatchOperationsForHistoryCleanup.put(operation, historyTTL);
-      }
+    for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
+      String operation = batchOperationEntry.getKey();
+      Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationEntry.getValue());
+      parsedBatchOperationsForHistoryCleanup.put(operation, historyTTL);
     }
   }
 
@@ -1654,7 +1652,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         }
 
       } else if (jdbcUrl != null) {
-        if ((jdbcDriver == null) || (jdbcUrl == null) || (jdbcUsername == null)) {
+        if ((jdbcDriver == null) || (jdbcUsername == null)) {
           throw new ProcessEngineException("DataSource or JDBC properties have to be specified in a process engine configuration");
         }
 
@@ -1797,6 +1795,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         return MARIA_DB_PRODUCT_NAME;
       }
     } catch (SQLException ignore) {
+      // ignored
     }
 
     try {
@@ -1805,6 +1804,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         return MARIA_DB_PRODUCT_NAME;
       }
     } catch (SQLException ignore) {
+      // ignored
     }
 
     String metaDataClassName = databaseMetaData.getClass().getName();
@@ -2364,13 +2364,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     HistoryCleanupJobHandler historyCleanupJobHandler = new HistoryCleanupJobHandler();
     jobHandlers.put(historyCleanupJobHandler.getType(), historyCleanupJobHandler);
 
-    for (JobHandler batchHandler : batchHandlers.values()) {
+    for (var batchHandler : batchHandlers.values()) {
       jobHandlers.put(batchHandler.getType(), batchHandler);
     }
 
     // if we have custom job handlers, register them
     if (getCustomJobHandlers() != null) {
-      for (JobHandler customJobHandler : getCustomJobHandlers()) {
+      for (var customJobHandler : getCustomJobHandlers()) {
         jobHandlers.put(customJobHandler.getType(), customJobHandler);
       }
     }
@@ -3397,12 +3397,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return enableHistoricInstancePermissions;
   }
 
-  public Map<String, JobHandler> getJobHandlers() {
+  public Map<String, JobHandler<?>> getJobHandlers() {
     return jobHandlers;
   }
 
 
-  public ProcessEngineConfigurationImpl setJobHandlers(Map<String, JobHandler> jobHandlers) {
+  public ProcessEngineConfigurationImpl setJobHandlers(Map<String, JobHandler<?>> jobHandlers) {
     this.jobHandlers = jobHandlers;
     return this;
   }
@@ -3446,11 +3446,11 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public List<JobHandler> getCustomJobHandlers() {
+  public List<JobHandler<?>> getCustomJobHandlers() {
     return customJobHandlers;
   }
 
-  public ProcessEngineConfigurationImpl setCustomJobHandlers(List<JobHandler> customJobHandlers) {
+  public ProcessEngineConfigurationImpl setCustomJobHandlers(List<JobHandler<?>> customJobHandlers) {
     this.customJobHandlers = customJobHandlers;
     return this;
   }
@@ -3474,23 +3474,23 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public List<TypedValueSerializer> getCustomPreVariableSerializers() {
+  public List<TypedValueSerializer<?>> getCustomPreVariableSerializers() {
     return customPreVariableSerializers;
   }
 
 
-  public ProcessEngineConfigurationImpl setCustomPreVariableSerializers(List<TypedValueSerializer> customPreVariableTypes) {
+  public ProcessEngineConfigurationImpl setCustomPreVariableSerializers(List<TypedValueSerializer<?>> customPreVariableTypes) {
     this.customPreVariableSerializers = customPreVariableTypes;
     return this;
   }
 
 
-  public List<TypedValueSerializer> getCustomPostVariableSerializers() {
+  public List<TypedValueSerializer<?>> getCustomPostVariableSerializers() {
     return customPostVariableSerializers;
   }
 
 
-  public ProcessEngineConfigurationImpl setCustomPostVariableSerializers(List<TypedValueSerializer> customPostVariableTypes) {
+  public ProcessEngineConfigurationImpl setCustomPostVariableSerializers(List<TypedValueSerializer<?>> customPostVariableTypes) {
     this.customPostVariableSerializers = customPostVariableTypes;
     return this;
   }

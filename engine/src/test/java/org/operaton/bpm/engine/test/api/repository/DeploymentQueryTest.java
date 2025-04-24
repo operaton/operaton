@@ -300,11 +300,6 @@ class DeploymentQueryTest {
         .list()).hasSize(2);
 
     assertThat(repositoryService.createDeploymentQuery()
-        .orderByDeploymenTime()
-        .asc()
-        .list()).hasSize(2);
-
-    assertThat(repositoryService.createDeploymentQuery()
         .orderByDeploymentTime()
         .asc()
         .list()).hasSize(2);

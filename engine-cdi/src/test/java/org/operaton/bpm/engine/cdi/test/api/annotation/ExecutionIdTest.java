@@ -45,8 +45,6 @@ public class ExecutionIdTest extends CdiProcessEngineTestCase {
     String processInstanceId = (String) getBeanInstance("processInstanceId");
     assertThat(processInstanceId).isNotNull();
     String executionId = (String) getBeanInstance("executionId");
-    assertThat(executionId).isNotNull();
-
     assertThat(executionId).isEqualTo(processInstanceId);
   }
 

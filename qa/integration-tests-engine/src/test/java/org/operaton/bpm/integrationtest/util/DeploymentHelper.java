@@ -29,6 +29,8 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
   protected static final String OPERATON_ENGINE = "org.operaton.bpm:operaton-engine";
   protected static JavaArchive cachedAssertJ;
 
+  protected static JavaArchive chachedTestcontainers;
+
   public static JavaArchive getEjbClient() {
     return getEjbClient(OPERATON_EJB_CLIENT);
   }
@@ -80,6 +82,27 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
       } else {
         cachedWeldAssets = archives;
         return cachedWeldAssets;
+      }
+    }
+  }
+
+  public static JavaArchive getTestcontainers() {
+    if (chachedTestcontainers != null) {
+      return chachedTestcontainers;
+    } else {
+      JavaArchive[] archives = Maven.configureResolver()
+              .workOffline()
+              .loadPomFromFile("pom.xml")
+              .addDependencies(MavenDependencies.createDependency("org.testcontainers:testcontainers", ScopeType.COMPILE, false))
+              .resolve()
+              .withTransitivity()
+              .as(JavaArchive.class);
+
+      if(archives.length == 0) {
+        throw new RuntimeException("Could not resolve Testcontainers");
+      } else {
+        chachedTestcontainers = archives[0];
+        return chachedTestcontainers;
       }
     }
   }

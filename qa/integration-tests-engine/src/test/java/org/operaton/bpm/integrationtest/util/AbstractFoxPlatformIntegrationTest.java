@@ -36,8 +36,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.utility.DockerImageName;
 
 import java.util.List;
 import java.util.Timer;
@@ -64,10 +62,12 @@ public abstract class AbstractFoxPlatformIntegrationTest {
   protected CaseService caseService;
   protected DecisionService decisionService;
 
-  protected static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer(DockerImageName.parse("postgres:13.2"));
+  protected static FixedPortPostgresqlContainer postgreSQLContainer = new FixedPortPostgresqlContainer("postgres:13.2");
 
   static {
+    postgreSQLContainer.withFixedExposedPort(54322, 5432);
     postgreSQLContainer.start();
+    System.out.println(postgreSQLContainer.getJdbcUrl());
   }
 
   public static WebArchive initWebArchiveDeployment(String name, String processesXmlPath) {

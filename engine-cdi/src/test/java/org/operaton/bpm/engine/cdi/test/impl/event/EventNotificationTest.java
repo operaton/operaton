@@ -41,14 +41,14 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     listenerBean.reset();
 
     // assert that the bean has received 0 events
-    assertThat(listenerBean.getEventsReceived().size()).isEqualTo(0);
+    assertThat(listenerBean.getEventsReceived()).isEmpty();
     runtimeService.startProcessInstanceByKey("process1");
 
     // complete user task
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
 
-    assertThat(listenerBean.getEventsReceived().size()).isEqualTo(16);
+    assertThat(listenerBean.getEventsReceived()).hasSize(16);
   }
 
   @Test
@@ -59,13 +59,13 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
-    assertThat(listenerBean.getEventsReceivedByKey().size()).isEqualTo(0);
+    assertThat(listenerBean.getEventsReceivedByKey()).isEmpty();
     //start the 2 processes
     runtimeService.startProcessInstanceByKey("process1");
     runtimeService.startProcessInstanceByKey("process2");
 
     // assert that now the bean has received 11 events
-    assertThat(listenerBean.getEventsReceivedByKey().size()).isEqualTo(11);
+    assertThat(listenerBean.getEventsReceivedByKey()).hasSize(11);
   }
 
   @Test
@@ -74,9 +74,9 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
-    assertThat(listenerBean.getEndActivityService1()).isEqualTo(0);
-    assertThat(listenerBean.getStartActivityService1()).isEqualTo(0);
-    assertThat(listenerBean.getTakeTransition1()).isEqualTo(0);
+    assertThat(listenerBean.getEndActivityService1()).isZero();
+    assertThat(listenerBean.getStartActivityService1()).isZero();
+    assertThat(listenerBean.getTakeTransition1()).isZero();
 
     // start the process
     runtimeService.startProcessInstanceByKey("process1");
@@ -93,13 +93,13 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
-    assertThat(listenerBean.getCreateTaskUser1()).isEqualTo(0);
-    assertThat(listenerBean.getAssignTaskUser1()).isEqualTo(0);
-    assertThat(listenerBean.getCompleteTaskUser1()).isEqualTo(0);
-    assertThat(listenerBean.getDeleteTaskUser1()).isEqualTo(0);
+    assertThat(listenerBean.getCreateTaskUser1()).isZero();
+    assertThat(listenerBean.getAssignTaskUser1()).isZero();
+    assertThat(listenerBean.getCompleteTaskUser1()).isZero();
+    assertThat(listenerBean.getDeleteTaskUser1()).isZero();
 
     // assert that the bean has received 0 events
-    assertThat(listenerBean.getEventsReceived().size()).isEqualTo(0);
+    assertThat(listenerBean.getEventsReceived()).isEmpty();
     runtimeService.startProcessInstanceByKey("process1");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -110,13 +110,13 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     assertThat(listenerBean.getCreateTaskUser1()).isEqualTo(1);
     assertThat(listenerBean.getAssignTaskUser1()).isEqualTo(1);
     assertThat(listenerBean.getCompleteTaskUser1()).isEqualTo(1);
-    assertThat(listenerBean.getDeleteTaskUser1()).isEqualTo(0);
+    assertThat(listenerBean.getDeleteTaskUser1()).isZero();
 
     listenerBean.reset();
-    assertThat(listenerBean.getDeleteTaskUser1()).isEqualTo(0);
+    assertThat(listenerBean.getDeleteTaskUser1()).isZero();
 
     // assert that the bean has received 0 events
-    assertThat(listenerBean.getEventsReceived().size()).isEqualTo(0);
+    assertThat(listenerBean.getEventsReceived()).isEmpty();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process1");
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
@@ -130,7 +130,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
-    assertThat(listenerBean.getEventsReceived().size()).isEqualTo(0);
+    assertThat(listenerBean.getEventsReceived()).isEmpty();
     runtimeService.startProcessInstanceByKey("process1");
     waitForJobExecutorToProcessAllJobs(TimeUnit.SECONDS.toMillis(5L), 500L);
 
@@ -147,7 +147,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     // 1: transition to the user task
     // 2: user task (start + task create event)
     // = 19
-    assertThat(listenerBean.getEventsReceived().size()).isEqualTo(19);
+    assertThat(listenerBean.getEventsReceived()).hasSize(19);
   }
 
   @Test
@@ -160,7 +160,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     listenerBean.reset();
 
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
 
     for (Task task : tasks) {
       taskService.complete(task.getId());
@@ -172,7 +172,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
     // 2: one end event instance (start + end)
     // = 5
     Set<BusinessProcessEvent> eventsReceived = listenerBean.getEventsReceived();
-    assertThat(eventsReceived.size()).isEqualTo(10);
+    assertThat(eventsReceived).hasSize(10);
   }
 
 }

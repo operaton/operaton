@@ -44,7 +44,7 @@ public class BeanPropertyElTest extends CdiProcessEngineTestCase {
     runtimeService.startProcessInstanceByKey("getBeanProperty");
 
     messageBean = getBeanInstance(MessageBean.class);
-    assertThat(messageBean.getMessage()).isEqualTo("");
+    assertThat(messageBean.getMessage()).isEmpty();
   }
 
 }

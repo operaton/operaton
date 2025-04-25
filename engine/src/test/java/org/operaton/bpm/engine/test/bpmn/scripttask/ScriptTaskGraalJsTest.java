@@ -284,7 +284,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
     @Override
     protected ScriptEngine getScriptEngine(String language) {
       if (GRAALJS.equalsIgnoreCase(language)) {
-        GraalJSScriptEngine scriptEngine = new GraalJSEngineFactory().getScriptEngine();
+        GraalJSScriptEngine scriptEngine = (GraalJSScriptEngine) new GraalJSEngineFactory().getScriptEngine();
         configureScriptEngines(language, scriptEngine);
         return scriptEngine;
       }

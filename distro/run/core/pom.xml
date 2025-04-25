@@ -81,12 +81,13 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
     </dependency>
-    
+
     <!-- Graal.js -->
-    
+
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>

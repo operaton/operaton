@@ -3,17 +3,16 @@ package org.operaton.bpm.integrationtest.deployment.cfg;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.operaton.bpm.integrationtest.util.FixedPortPostgresqlContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
 public class LifecycleExecutor {
 
-    protected static FixedPortPostgresqlContainer postgreSQLContainer = new FixedPortPostgresqlContainer("postgres:13.2");
+    protected static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:13.2");
 
     public void onContainerRegistryEvent(@Observes ContainerRegistry registry, ServiceLoader serviceLoader) {
         System.out.println("Starting database container...");
         //TODO: decide what database to start before container. Environment configuration?
-        postgreSQLContainer.withFixedExposedPort(54322, 5432);
         postgreSQLContainer.start();
         postgreSQLContainer.waitingFor(Wait.forLogMessage(".*Ready to accept connections.*\\n", 1));
         System.out.println("Attaching datasource...pass url as jvm argument for standalone configuration");

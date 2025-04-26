@@ -2585,7 +2585,103 @@ public class HistoricProcessInstanceTest {
         .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
   }
 
-  protected void deployment(String... resources) {
+    @Test
+    @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+    public void shouldExcludeByProcessInstanceIdNotIn() {
+        // GIVEN
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // WHEN
+        List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery().list();
+        List<HistoricProcessInstance> excludedFirst = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(processInstanceIdOne).list();
+        List<HistoricProcessInstance> excludedAll = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(processInstanceIdOne, processInstanceIdTwo).list();
+
+        // THEN
+        assertThat(processInstances)
+                .extracting("processInstanceId")
+                .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
+        assertThat(excludedFirst)
+                .extracting("processInstanceId")
+                .containsExactly(processInstanceIdTwo);
+        assertThat(excludedAll)
+                .extracting("processInstanceId")
+                .isEmpty();
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    public void testWithNonExistentProcessInstanceIdNotIn() {
+        // GIVEN
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        String nonExistentProcessInstanceId = "ThisIsAFake";
+
+        // WHEN
+        List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery().list();
+        List<HistoricProcessInstance> excludedNonExistent = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(nonExistentProcessInstanceId).list();
+
+        // THEN
+        assertThat(processInstances)
+                .extracting("processInstanceId")
+                .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
+        assertThat(excludedNonExistent)
+                .extracting("processInstanceId")
+                .containsExactly(processInstanceIdOne, processInstanceIdTwo);
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    public void testQueryByOneInvalidProcessInstanceIdNotIn() {
+        try {
+            // when
+            historyService.createHistoricProcessInstanceQuery()
+                    .processInstanceIdNotIn((String) null);
+            fail();
+        } catch(ProcessEngineException expected) {
+            // then Exception is expected
+        }
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    public void testExcludingProcessInstanceAndProcessInstanceIdNotIn() {
+        // GIVEN
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // WHEN
+        long count = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceId(processInstanceIdOne)
+                .processInstanceIdNotIn(processInstanceIdOne).count();
+
+        // THEN making a query that has contradicting conditions should succeed
+        assertThat(count).isEqualTo(0L);
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    public void testExcludingProcessInstanceIdsAndProcessInstanceIdNotIn() {
+        // GIVEN
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // WHEN
+        long count = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIds(new HashSet<>(Arrays.asList(processInstanceIdOne, processInstanceIdTwo)))
+                .processInstanceIdNotIn(processInstanceIdOne, processInstanceIdTwo).count();
+
+        // THEN making a query that has contradicting conditions should succeed
+        assertThat(count).isEqualTo(0L);
+    }
+
+
+    protected void deployment(String... resources) {
     testHelper.deploy(resources);
   }
 

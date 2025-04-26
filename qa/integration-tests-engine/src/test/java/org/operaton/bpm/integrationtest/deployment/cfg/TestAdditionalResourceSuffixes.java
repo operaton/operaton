@@ -48,8 +48,6 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getAssertJ())
-        .addAsLibraries(DeploymentHelper.getTestcontainers())
-        .addClass(FixedPortPostgresqlContainer.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(DummyProcessApplication.class)
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes-additional-resource-suffixes.xml", "META-INF/processes.xml")

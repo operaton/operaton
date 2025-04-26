@@ -86,27 +86,6 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
     }
   }
 
-  public static JavaArchive getTestcontainers() {
-    if (chachedTestcontainers != null) {
-      return chachedTestcontainers;
-    } else {
-      JavaArchive[] archives = Maven.configureResolver()
-              .workOffline()
-              .loadPomFromFile("pom.xml")
-              .addDependencies(MavenDependencies.createDependency("org.testcontainers:testcontainers", ScopeType.COMPILE, false))
-              .resolve()
-              .withTransitivity()
-              .as(JavaArchive.class);
-
-      if(archives.length == 0) {
-        throw new RuntimeException("Could not resolve Testcontainers");
-      } else {
-        chachedTestcontainers = archives[0];
-        return chachedTestcontainers;
-      }
-    }
-  }
-
   protected static JavaArchive[] resolveDependenciesFromPomXml(String engineCdiArtifactName, String dependencyName) {
       return Maven.configureResolver()
               .workOffline()

@@ -44,7 +44,6 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
 
   @Deployment
   public static WebArchive processArchive() throws IOException {
-
       return ShrinkWrap.create(WebArchive.class)
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())

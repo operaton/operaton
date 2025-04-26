@@ -62,14 +62,6 @@ public abstract class AbstractFoxPlatformIntegrationTest {
   protected CaseService caseService;
   protected DecisionService decisionService;
 
-  protected static FixedPortPostgresqlContainer postgreSQLContainer = new FixedPortPostgresqlContainer("postgres:13.2");
-
-  static {
-    postgreSQLContainer.withFixedExposedPort(54322, 5432);
-    postgreSQLContainer.start();
-    System.out.println(postgreSQLContainer.getJdbcUrl());
-  }
-
   public static WebArchive initWebArchiveDeployment(String name, String processesXmlPath) {
     WebArchive archive = ShrinkWrap.create(WebArchive.class, name)
               .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")

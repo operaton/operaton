@@ -473,6 +473,9 @@
     </profile>
 
     <profile>
+      <properties>
+        <operaton.integration.test.db.name>postgres</operaton.integration.test.db.name>
+      </properties>
       <id>wildfly</id>
       <dependencies>
         <dependency>

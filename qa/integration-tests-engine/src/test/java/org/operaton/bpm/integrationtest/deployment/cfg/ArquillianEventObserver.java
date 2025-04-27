@@ -42,7 +42,7 @@ public class ArquillianEventObserver {
      * Listens for the Arquillian ContainerRegistry event to start the appropriate jdbc database container
      * via testcontainers before the actual Arquillian container is started. Which database container is
      * started depends on two environment variables:
-     * <code>operaton.integration.test.db.name</code>
+     * <code>database.type</code>
      * These should be passed as VM arguments for local testing and are preconfigured in the appropriate
      * Maven profiles
      *
@@ -50,7 +50,7 @@ public class ArquillianEventObserver {
      * @param serviceLoader arquillian server loader
      */
     public void onContainerRegistryEvent(@Observes ContainerRegistry registry, ServiceLoader serviceLoader) {
-        var containerName = System.getProperty("operaton.integration.test.db.name");
+        var containerName = System.getProperty("database.type");
 
         if(containerName != null && AVAILABLE_DB_CONTAINERS.containsKey(containerName)) {
             dbContainer = AVAILABLE_DB_CONTAINERS.get(containerName);

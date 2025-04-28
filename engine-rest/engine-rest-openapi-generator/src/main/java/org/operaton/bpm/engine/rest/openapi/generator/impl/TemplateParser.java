@@ -33,7 +33,7 @@ import java.util.TreeMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -141,7 +141,7 @@ public class TemplateParser {
         templateData.put("docsVersion", version.substring(0, version.lastIndexOf(".")));
       }
     } else {
-      // only for debug cases 
+      // only for debug cases
       templateData.put("cambpmVersion", "develop");
       templateData.put("docsVersion", "develop");
     }
@@ -156,10 +156,10 @@ public class TemplateParser {
   protected static Map<String, String> resolveModels(String sourceDirectory) {
     File modelsDir = new File(sourceDirectory + "/models");
     Collection<File> modelFiles = FileUtils.listFiles(
-        modelsDir, 
-        new RegexFileFilter("^(.*?)"), 
-        DirectoryFileFilter.DIRECTORY
-        );
+            modelsDir,
+            new SuffixFileFilter(".ftl"),
+            DirectoryFileFilter.DIRECTORY
+    );
 
     Map<String, String> models = new TreeMap<>();
     for (File file : modelFiles) {
@@ -185,10 +185,10 @@ public class TemplateParser {
     File endpointsDir = new File(sourceDirectory + "/paths");
     int endpointStartAt = endpointsDir.getAbsolutePath().length();
     Collection<File> endpointsFiles = FileUtils.listFiles(
-        endpointsDir, 
-        new RegexFileFilter("^(.*?)"), 
-        DirectoryFileFilter.DIRECTORY
-        );
+            endpointsDir,
+            new SuffixFileFilter(".ftl"),
+            DirectoryFileFilter.DIRECTORY
+    );
 
     Map<String, List<String>> endpoints = new TreeMap<>();
     for (File file : endpointsFiles) {

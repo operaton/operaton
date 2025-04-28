@@ -8,7 +8,8 @@
     </security>
   </datasource>
   <datasource jta="true" jndi-name="java:jboss/datasources/ProcessEngine" pool-name="ProcessEngine" enabled="true" use-java-context="true" use-ccm="true">
-    <connection-url>jdbc:postgresql://127.0.0.1:54322/test</connection-url> <!-- Won't work on the pipeline, as the host won't be localhost -->
+    <!--injected dynamically as jvm argument-->
+    <connection-url>${engine-connection-url}</connection-url>
     <driver>postgresql</driver>
     <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
     <pool>

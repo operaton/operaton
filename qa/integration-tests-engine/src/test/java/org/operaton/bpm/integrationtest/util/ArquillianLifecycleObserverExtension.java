@@ -1,4 +1,4 @@
-package org.operaton.bpm.integrationtest.deployment.cfg;
+package org.operaton.bpm.integrationtest.util;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 

@@ -134,18 +134,6 @@
         <subsystem xmlns="urn:jboss:domain:core-management:1.0"/>
         <subsystem xmlns="urn:jboss:domain:datasources:7.1">
             <datasources>
-                <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
-                    <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
-                    <driver>h2</driver>
-                    <security user-name="sa" password="sa"/>
-                </datasource>
-                <datasource jta="true" jndi-name="java:jboss/datasources/ProcessEngine" pool-name="ProcessEngine" enabled="true" use-java-context="true" use-ccm="true">
-                    <!--injected dynamically as jvm argument-->
-                    <connection-url>${engine-connection-url}</connection-url>
-                    <driver>postgresql</driver>
-                    <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
-                    <security user-name="test" password="test"/>
-                </datasource>
                 <drivers>
                     <!-- all drivers needed in QA are listed here -->
                     <!-- datasource definitions are deployed as *-ds.xml files -->

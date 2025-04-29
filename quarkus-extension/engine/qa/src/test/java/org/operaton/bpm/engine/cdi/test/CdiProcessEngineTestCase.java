@@ -150,10 +150,6 @@ public class CdiProcessEngineTestCase {
     }
   }
 
-  public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait, long intervalMillis) {
-    TestHelper.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait, intervalMillis);
-  }
-
   @ApplicationScoped
   static class EngineConfigurer {
 

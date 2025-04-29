@@ -74,8 +74,7 @@ public class ClassloadingByJobPriorityTest extends AbstractFoxPlatformIntegratio
     configuration.getRuntimeService().startProcessInstanceByKey("asyncTaskProcess");
 
     // when
-    JobExecutor jobExecutor = configuration.getJobExecutor();
-    waitForJobExecutorToProcessAllJobs(jobExecutor, 12000);
+    waitForJobExecutorToProcessAllJobs(12000);
 
     // then
     List<Job> availableJobs = configuration.getManagementService().createJobQuery().noRetriesLeft().list();

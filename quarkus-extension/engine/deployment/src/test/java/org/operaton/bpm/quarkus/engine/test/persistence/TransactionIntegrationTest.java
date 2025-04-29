@@ -33,6 +33,7 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.util.JobExecutorHelper;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -166,7 +167,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // when
-    TestHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1000);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1000);
 
     // then
     Incident incident = runtimeService.createIncidentQuery().activityId("servicetask").singleResult();
@@ -180,7 +181,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
     // when
-    TestHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();
@@ -199,7 +200,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 
     // when
-    TestHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();
@@ -218,7 +219,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 
     // when
-    TestHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();

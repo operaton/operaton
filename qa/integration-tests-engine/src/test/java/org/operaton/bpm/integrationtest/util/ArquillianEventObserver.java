@@ -50,7 +50,7 @@ public class ArquillianEventObserver {
      * @param serviceLoader arquillian server loader
      */
     public void onContainerRegistryEvent(@Observes ContainerRegistry registry, ServiceLoader serviceLoader) {
-        var containerName = System.getProperty("database.type");
+        var containerName = System.getProperty("databaseType");
 
         if(containerName != null && AVAILABLE_DB_CONTAINERS.containsKey(containerName)) {
             dbContainer = AVAILABLE_DB_CONTAINERS.get(containerName);

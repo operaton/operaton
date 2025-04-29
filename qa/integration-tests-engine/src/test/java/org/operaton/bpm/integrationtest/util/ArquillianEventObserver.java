@@ -60,8 +60,11 @@ public class ArquillianEventObserver {
             registry.getContainers()
                     .stream()
                     .findFirst()
-                    .ifPresent(container -> container.getContainerConfiguration()
-                            .overrideProperty("javaVmArguments", "-Dengine-connection-url=" + dbContainer.getJdbcUrl()));
+                    .ifPresent(container -> {
+                                var jvmArguments = container.getContainerConfiguration().getContainerProperty("javaVmArguments");
+                                jvmArguments += " -Dengine-connection-url=" + dbContainer.getJdbcUrl();
+                                container.getContainerConfiguration().overrideProperty("javaVmArguments", jvmArguments);
+                            });
         }
     }
 }

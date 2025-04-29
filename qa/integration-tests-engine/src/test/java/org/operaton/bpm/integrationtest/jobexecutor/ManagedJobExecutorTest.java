@@ -18,15 +18,12 @@ package org.operaton.bpm.integrationtest.jobexecutor;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.engine.test.util.JobExecutorHelper;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.ManagedJobExecutorBean;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
@@ -85,7 +82,7 @@ public class ManagedJobExecutorTest {
 
       assertEquals(1L, managementService.createJobQuery().processInstanceId(pid).count());
 
-      waitForJobExecutorToProcessAllJobs(pid, 5000l, 25l);
+      executeJobs(pid);
 
       assertEquals(0L, managementService.createJobQuery().processInstanceId(pid).count());
 
@@ -96,55 +93,9 @@ public class ManagedJobExecutorTest {
 
   }
 
-  protected void waitForJobExecutorToProcessAllJobs(String processInstanceId, long maxMillisToWait, long intervalMillis) {
-    JobExecutor jobExecutor = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getJobExecutor();
-    jobExecutor.start();
-
-    try {
-      Timer timer = new Timer();
-      InteruptTask task = new InteruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean areJobsAvailable = true;
-      try {
-        while (areJobsAvailable && !task.isTimeLimitExceeded()) {
-          Thread.sleep(intervalMillis);
-          areJobsAvailable = areJobsAvailable(processInstanceId);
-        }
-      } catch (InterruptedException e) {
-      } finally {
-        timer.cancel();
-      }
-      if (areJobsAvailable) {
-        throw new ProcessEngineException("time limit of " + maxMillisToWait + " was exceeded");
-      }
-
-    } finally {
-      jobExecutor.shutdown();
-    }
+  private void executeJobs(String pid) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(pid, 5000L, 25L, processEngineConfiguration.getJobExecutor(), processEngineConfiguration.getManagementService(), true);
   }
 
-  private static class InteruptTask extends TimerTask {
-    protected boolean timeLimitExceeded = false;
-    protected Thread thread;
-    public InteruptTask(Thread thread) {
-      this.thread = thread;
-    }
-    public boolean isTimeLimitExceeded() {
-      return timeLimitExceeded;
-    }
-    @Override
-    public void run() {
-      timeLimitExceeded = true;
-      thread.interrupt();
-    }
-  }
-
-  protected boolean areJobsAvailable(String processInstanceId) {
-    return !managementService
-      .createJobQuery()
-      .processInstanceId(processInstanceId)
-      .executable()
-      .list()
-      .isEmpty();
-  }
 }

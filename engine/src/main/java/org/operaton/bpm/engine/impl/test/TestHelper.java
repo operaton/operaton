@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.test;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -38,7 +37,6 @@ import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 import org.operaton.bpm.engine.impl.el.FixedValue;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.management.DatabasePurgeReport;
 import org.operaton.bpm.engine.impl.management.PurgeReport;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CachePurgeReport;
@@ -160,7 +158,7 @@ public abstract class TestHelper {
   }
 
   public static String annotationDeploymentSetUp(ProcessEngine processEngine, Class<?> testClass, String methodName, Class<?>... parameterTypes) {
-    return annotationDeploymentSetUp(processEngine, testClass, methodName, (Deployment) null, parameterTypes);
+    return annotationDeploymentSetUp(processEngine, testClass, methodName, null, parameterTypes);
   }
 
   public static void annotationDeploymentTearDown(ProcessEngine processEngine, String deploymentId, Class<?> testClass, String methodName) {
@@ -450,63 +448,11 @@ public abstract class TestHelper {
 
   }
 
-  public static void waitForJobExecutorToProcessAllJobs(ProcessEngineConfigurationImpl processEngineConfiguration, long maxMillisToWait, long intervalMillis) {
-    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    jobExecutor.start();
-
-    try {
-      Timer timer = new Timer();
-      InteruptTask task = new InteruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean areJobsAvailable = true;
-      try {
-        while (areJobsAvailable && !task.isTimeLimitExceeded()) {
-          Thread.sleep(intervalMillis);
-          areJobsAvailable = areJobsAvailable(processEngineConfiguration);
-        }
-      } catch (InterruptedException e) {
-      } finally {
-        timer.cancel();
-      }
-      if (areJobsAvailable) {
-        throw new ProcessEngineException("time limit of " + maxMillisToWait + " was exceeded");
-      }
-
-    } finally {
-      jobExecutor.shutdown();
-    }
-  }
-
-  public static boolean areJobsAvailable(ProcessEngineConfigurationImpl processEngineConfiguration) {
-    return !processEngineConfiguration
-      .getManagementService()
-      .createJobQuery()
-      .executable()
-      .list()
-      .isEmpty();
-  }
-
   public static void resetIdGenerator(ProcessEngineConfigurationImpl processEngineConfiguration) {
     IdGenerator idGenerator = processEngineConfiguration.getIdGenerator();
 
     if (idGenerator instanceof DbIdGenerator dbIdGenerator) {
       dbIdGenerator.reset();
-    }
-  }
-
-  private static class InteruptTask extends TimerTask {
-    protected boolean timeLimitExceeded = false;
-    protected Thread thread;
-    public InteruptTask(Thread thread) {
-      this.thread = thread;
-    }
-    public boolean isTimeLimitExceeded() {
-      return timeLimitExceeded;
-    }
-    @Override
-    public void run() {
-      timeLimitExceeded = true;
-      thread.interrupt();
     }
   }
 

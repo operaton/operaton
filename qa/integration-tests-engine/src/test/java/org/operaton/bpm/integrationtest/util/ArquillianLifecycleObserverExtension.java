@@ -23,8 +23,8 @@ import org.jboss.arquillian.core.spi.LoadableExtension;
  * so that platform subsystems can access them at startup time.
  */
 public class ArquillianLifecycleObserverExtension implements LoadableExtension {
-    @Override
-    public void register(ExtensionBuilder extensionBuilder) {
-        extensionBuilder.observer(ArquillianEventObserver.class);
-    }
+  @Override
+  public void register(ExtensionBuilder extensionBuilder) {
+    extensionBuilder.observer(ArquillianEventObserver.class);
+  }
 }

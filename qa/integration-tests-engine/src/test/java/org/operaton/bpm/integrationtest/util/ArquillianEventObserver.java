@@ -15,61 +15,56 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * {@link org.jboss.arquillian.core.api.annotation.Observer} for Arquillian lifecycle events.
  * Observes {@link ContainerRegistry} event and facilitates ability to start jdbc database
  * container before and provide connection information to Arquillian container.
- *
  */
 @SuppressWarnings("rawtypes")
 public class ArquillianEventObserver {
 
-    private static final String POSTGRES = "postgres";
-    private static final String POSTGRES_VERSION = "13.2";
+  private static final String POSTGRES = "postgres";
+  private static final String POSTGRES_VERSION = "13.2";
 
-    private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = new HashMap<>();
+  private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = new HashMap<>();
 
-    static {
-        AVAILABLE_DB_CONTAINERS.put(POSTGRES, new PostgreSQLContainer(POSTGRES + ":" + POSTGRES_VERSION));
+  static {
+    AVAILABLE_DB_CONTAINERS.put(POSTGRES, new PostgreSQLContainer(POSTGRES + ":" + POSTGRES_VERSION));
+  }
+
+  private static JdbcDatabaseContainer dbContainer;
+
+  /**
+   * Listens for the Arquillian ContainerRegistry event to start the appropriate jdbc database container
+   * via testcontainers before the actual Arquillian container is started. Which database container is
+   * started depends on two environment variables:
+   * <code>database.type</code>
+   * These should be passed as VM arguments for local testing and are preconfigured in the appropriate
+   * Maven profiles
+   *
+   * @param registry      arquillian container registry
+   * @param serviceLoader arquillian server loader
+   */
+  public void onContainerRegistryEvent(@Observes ContainerRegistry registry, ServiceLoader serviceLoader) {
+    var containerName = System.getProperty("databaseType");
+
+    if (containerName != null && AVAILABLE_DB_CONTAINERS.containsKey(containerName)) {
+      dbContainer = AVAILABLE_DB_CONTAINERS.get(containerName);
+      dbContainer.start();
+      //Assume that there is only one container in the registry
+      registry.getContainers().stream().findFirst().ifPresent(container -> {
+        var jvmArguments = container.getContainerConfiguration().getContainerProperty("javaVmArguments");
+        jvmArguments += " -Dengine-connection-url=" + dbContainer.getJdbcUrl();
+        container.getContainerConfiguration().overrideProperty("javaVmArguments", jvmArguments);
+      });
     }
-
-    private static JdbcDatabaseContainer dbContainer;
-
-    /**
-     * Listens for the Arquillian ContainerRegistry event to start the appropriate jdbc database container
-     * via testcontainers before the actual Arquillian container is started. Which database container is
-     * started depends on two environment variables:
-     * <code>database.type</code>
-     * These should be passed as VM arguments for local testing and are preconfigured in the appropriate
-     * Maven profiles
-     *
-     * @param registry arquillian container registry
-     * @param serviceLoader arquillian server loader
-     */
-    public void onContainerRegistryEvent(@Observes ContainerRegistry registry, ServiceLoader serviceLoader) {
-        var containerName = System.getProperty("databaseType");
-
-        if(containerName != null && AVAILABLE_DB_CONTAINERS.containsKey(containerName)) {
-            dbContainer = AVAILABLE_DB_CONTAINERS.get(containerName);
-            dbContainer.start();
-            //Assume that there is only one container in the registry
-            registry.getContainers()
-                    .stream()
-                    .findFirst()
-                    .ifPresent(container -> {
-                                var jvmArguments = container.getContainerConfiguration().getContainerProperty("javaVmArguments");
-                                jvmArguments += " -Dengine-connection-url=" + dbContainer.getJdbcUrl();
-                                container.getContainerConfiguration().overrideProperty("javaVmArguments", jvmArguments);
-                            });
-        }
-    }
+  }
 }

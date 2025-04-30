@@ -23,7 +23,7 @@ public class EndActivityLiteral extends AnnotationLiteral<EndActivity> implement
   protected final String activityId;
 
   public EndActivityLiteral(String activityId) {
-    this.activityId = activityId;;
+    this.activityId = activityId;
   }
   @Override
   public String value() {

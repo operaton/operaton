@@ -47,8 +47,7 @@ public class ProcessVariableLocalTypedTest extends CdiProcessEngineTestCase {
     businessProcess.startProcessByKey("keyOfTheProcess", variables);
 
     TypedValue value = getBeanInstance(DeclarativeProcessController.class).getInjectedLocalValue();
-    assertThat(value).isNotNull();
-    assertThat(value instanceof StringValue).isTrue();
+    assertThat(value).isInstanceOf(StringValue.class);
     assertThat(value.getType()).isEqualTo(ValueType.STRING);
     assertThat(value.getValue()).isEqualTo("operaton");
   }

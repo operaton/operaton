@@ -54,16 +54,14 @@ public class StartProcessTest extends CdiProcessEngineTestCase {
     assertThat(variable).isEqualTo("operaton");
 
     TypedValue nameTypedValue = businessProcess.getVariableTyped("name");
-    assertThat(nameTypedValue).isNotNull();
-    assertThat(nameTypedValue instanceof StringValue).isTrue();
+    assertThat(nameTypedValue).isInstanceOf(StringValue.class);
     assertThat(nameTypedValue.getType()).isEqualTo(ValueType.STRING);
     assertThat(nameTypedValue.getValue()).isEqualTo("operaton");
 
     assertThat((String)businessProcess.getVariable("untypedName")).isEqualTo("untypedName");
 
     TypedValue untypedNameTypedValue = businessProcess.getVariableTyped("untypedName");
-    assertThat(untypedNameTypedValue).isNotNull();
-    assertThat(untypedNameTypedValue instanceof StringValue).isTrue();
+    assertThat(untypedNameTypedValue).isInstanceOf(StringValue.class);
     assertThat(untypedNameTypedValue.getType()).isEqualTo(ValueType.STRING);
     assertThat(untypedNameTypedValue.getValue()).isEqualTo("untypedName");
 
@@ -71,8 +69,7 @@ public class StartProcessTest extends CdiProcessEngineTestCase {
     assertThat((String)businessProcess.getVariable("typedName")).isEqualTo("typedName");
 
     TypedValue typedNameTypedValue = businessProcess.getVariableTyped("typedName");
-    assertThat(typedNameTypedValue).isNotNull();
-    assertThat(typedNameTypedValue instanceof StringValue).isTrue();
+    assertThat(typedNameTypedValue).isInstanceOf(StringValue.class);
     assertThat(typedNameTypedValue.getType()).isEqualTo(ValueType.STRING);
     assertThat(typedNameTypedValue.getValue()).isEqualTo("typedName");
 

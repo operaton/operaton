@@ -33,7 +33,7 @@ import java.util.TreeMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -127,11 +127,11 @@ public class TemplateParser {
    */
   protected static void resolveVersions(Map<String, Object> templateData) {
     String version = TemplateParser.class.getPackage().getImplementationVersion();
-  
+
     if (version != null) {
       // cambpmVersion = 7.X.Y
       templateData.put("cambpmVersion", version);
-  
+
       if (version.contains("SNAPSHOT")) {
         templateData.put("docsVersion", "develop");
       } else if (version.contains("alpha")) {
@@ -148,7 +148,7 @@ public class TemplateParser {
   }
 
   /**
-   * 
+   *
    * @param sourceDirectory the template directory that stores the models
    * @return a map of model name and file path to it,
    * the map is ordered lexicographically by the model names
@@ -156,9 +156,9 @@ public class TemplateParser {
   protected static Map<String, String> resolveModels(String sourceDirectory) {
     File modelsDir = new File(sourceDirectory + "/models");
     Collection<File> modelFiles = FileUtils.listFiles(
-            modelsDir,
-            new SuffixFileFilter(".ftl"),
-            DirectoryFileFilter.DIRECTORY
+        modelsDir,
+        new RegexFileFilter("^(.*?)"),
+        DirectoryFileFilter.DIRECTORY
     );
 
     Map<String, String> models = new TreeMap<>();
@@ -167,15 +167,15 @@ public class TemplateParser {
       String filePath = file.getAbsolutePath();
       String modelPackage = filePath
           .substring(filePath.lastIndexOf("org"), filePath.lastIndexOf(File.separator));
-      
+
       models.put(modelName, modelPackage);
     }
-    
+
     return models;
   }
 
   /**
-   * 
+   *
    * @param sourceDirectory the template directory that stores the endpoints
    * @return a map of endpoint path and HTTP methods pairs,
    * the map is ordered lexicographically by the endpoint paths
@@ -185,9 +185,9 @@ public class TemplateParser {
     File endpointsDir = new File(sourceDirectory + "/paths");
     int endpointStartAt = endpointsDir.getAbsolutePath().length();
     Collection<File> endpointsFiles = FileUtils.listFiles(
-            endpointsDir,
-            new SuffixFileFilter(".ftl"),
-            DirectoryFileFilter.DIRECTORY
+        endpointsDir,
+        new RegexFileFilter("^(.*?)"),
+        DirectoryFileFilter.DIRECTORY
     );
 
     Map<String, List<String>> endpoints = new TreeMap<>();

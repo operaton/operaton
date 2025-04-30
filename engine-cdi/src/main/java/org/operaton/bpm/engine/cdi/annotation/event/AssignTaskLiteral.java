@@ -16,9 +16,14 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-public class AssignTaskLiteral extends AbstractTaskLiteral<AssignTask> implements AssignTask {
+import jakarta.enterprise.util.AnnotationLiteral;
+
+public class AssignTaskLiteral extends AnnotationLiteral<AssignTask> implements AssignTask {
+
+  protected final String taskDefinitionKey;
+
   public AssignTaskLiteral(String taskDefinitionKey) {
-    super(taskDefinitionKey);
+    this.taskDefinitionKey = taskDefinitionKey;
   }
   @Override
   public String value() {

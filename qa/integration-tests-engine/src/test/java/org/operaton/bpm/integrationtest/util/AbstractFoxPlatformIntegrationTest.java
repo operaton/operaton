@@ -83,8 +83,6 @@ public abstract class AbstractFoxPlatformIntegrationTest {
     return initWebArchiveDeployment("test.war");
   }
 
-
-
   @Before
   public void setupBeforeTest() {
     processEngineService = BpmPlatform.getProcessEngineService();

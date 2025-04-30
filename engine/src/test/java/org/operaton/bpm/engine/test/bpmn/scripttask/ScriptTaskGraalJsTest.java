@@ -39,7 +39,6 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.oracle.truffle.js.scriptengine.GraalJSEngineFactory;
-import com.oracle.truffle.js.scriptengine.GraalJSScriptEngine;
 
 @RunWith(Parameterized.class)
 public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
@@ -284,7 +283,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
     @Override
     protected ScriptEngine getScriptEngine(String language) {
       if (GRAALJS.equalsIgnoreCase(language)) {
-        GraalJSScriptEngine scriptEngine = (GraalJSScriptEngine) new GraalJSEngineFactory().getScriptEngine();
+        var scriptEngine = new GraalJSEngineFactory().getScriptEngine();
         configureScriptEngines(language, scriptEngine);
         return scriptEngine;
       }

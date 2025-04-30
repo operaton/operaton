@@ -39,11 +39,9 @@ public class ArquillianEventObserver {
     private static final String POSTGRES_VERSION = "13.2";
 
     private final static Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = new HashMap<>();
-    private final static Map<String, WaitStrategy> CONTAINER_WAIT_STRATEGIES = new HashMap<>();
 
     static {
         AVAILABLE_DB_CONTAINERS.put(POSTGRES, new PostgreSQLContainer(POSTGRES + ":" + POSTGRES_VERSION));
-        CONTAINER_WAIT_STRATEGIES.put(POSTGRES, Wait.forLogMessage(".*Ready to accept connections.*\\n", 1));
     }
 
     private static JdbcDatabaseContainer dbContainer;

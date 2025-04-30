@@ -1,4 +1,3 @@
-package org.operaton.bpm.integrationtest.util;
 /*
  * Copyright 2025 the Operaton contributors.
  *
@@ -14,6 +13,8 @@ package org.operaton.bpm.integrationtest.util;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.operaton.bpm.integrationtest.util;
+
 import org.jboss.arquillian.core.spi.LoadableExtension;
 
 /**

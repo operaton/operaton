@@ -18,8 +18,8 @@
       <flush-strategy>FailingConnectionOnly</flush-strategy>
     </pool>
     <security>
-      <user-name>test</user-name>
-      <password>test</password>
+      <user-name>${database.username}</user-name>
+      <password>${database.password}</password>
     </security>
     <validation>
       <validate-on-match>false</validate-on-match>

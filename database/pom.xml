@@ -95,7 +95,7 @@
           <artifactId>liquibase-maven-plugin</artifactId>
           <configuration>
             <driver>${database.driver}</driver>
-            <url>${database.url}</url> 
+            <url>${database.url}</url>
             <username>${database.username}</username>
             <password>${database.password}</password>
             <hubMode>off</hubMode>
@@ -343,6 +343,8 @@
       <id>postgresql</id>
       <properties>
         <database.type>postgres</database.type>
+        <database.username>test</database.username>
+        <database.password>test</database.password>
         <database.driver>org.postgresql.Driver</database.driver>
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>

@@ -29,8 +29,6 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
   protected static final String OPERATON_ENGINE = "org.operaton.bpm:operaton-engine";
   protected static JavaArchive cachedAssertJ;
 
-  protected static JavaArchive chachedTestcontainers;
-
   public static JavaArchive getEjbClient() {
     return getEjbClient(OPERATON_EJB_CLIENT);
   }

@@ -58,10 +58,7 @@ public class IdGeneratorDataSourceTest {
         runtimeService.startProcessInstanceByKey("idGeneratorDataSource");
       }));
     }
-    tasks.forEach(future -> {
-      assertThatNoException().isThrownBy(future::get);
-    });
-
+    tasks.forEach(future -> assertThatNoException().isThrownBy(future::get));
     threadPool.shutdown();
   }
 }

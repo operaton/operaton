@@ -177,10 +177,6 @@ jobs:
         id: maven-integration-tests
         shell: bash
         run: |
-          if [[ "${{ matrix.distro }}" == "wildfly" && "${{ matrix.database }}" == "postgresql" && "${{ github.event_name }}" == "schedule" ]]; then
-            echo "Warning: Skipping build for distro 'wildfly' with database 'postgresql' due."
-            exit 0
-          fi
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
         if: always()

@@ -28,15 +28,15 @@ public interface ParallelGateway extends Gateway {
   /** operaton extensions */
 
   /**
-   * @deprecated use isOperatonAsyncBefore() instead.
+   * @deprecated Use isOperatonAsyncBefore() instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   boolean isOperatonAsync();
 
   /**
-   * @deprecated use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
+   * @deprecated Use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   void setOperatonAsync(boolean isOperatonAsync);
 
   @Override

@@ -64,9 +64,9 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
   }
 
   /**
-   * Deprecated: use {@link #getAppPluginRegistry()}
+   * @deprecated Use {@link #getAppPluginRegistry()} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   @Override
   public PluginRegistry getPluginRegistry() {
     return new DefaultPluginRegistry(pluginRegistry);

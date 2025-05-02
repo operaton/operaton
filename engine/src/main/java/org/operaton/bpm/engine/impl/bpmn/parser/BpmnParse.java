@@ -242,15 +242,15 @@ public class BpmnParse extends Parse {
   );
 
   /**
-   * @deprecated use {@link BpmnProperties#TYPE}
+   * @deprecated Use {@link bpmnproperties#type} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public static final String PROPERTYNAME_TYPE = BpmnProperties.TYPE.getName();
 
   /**
    * @deprecated use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS}
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.getName();
 
   /* process start authorization specific finals */

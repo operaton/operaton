@@ -35,7 +35,7 @@ public interface TelemetryRestService {
    * @deprecated The sending telemetry feature is removed.
    * Please remove the endpoint usages as they are no longer needed.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   @POST
   @Path("/configuration")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -45,7 +45,7 @@ public interface TelemetryRestService {
    * @deprecated The sending telemetry feature is removed.
    * Please remove the endpoint usages as they are no longer needed.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   @GET
   @Path("/configuration")
   @Produces(MediaType.APPLICATION_JSON)

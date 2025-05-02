@@ -97,7 +97,7 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
     return getOrderBy();
   }
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public String getOrderBy() {
     if (sortBy != null) {
       if (sortOrder == null || sortOrder.isEmpty()) {

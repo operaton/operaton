@@ -29,7 +29,7 @@ public interface HumanTask extends Task {
 
   void setPerformer(Role performerRef);
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   Collection<PlanningTable> getPlanningTables();
 
   PlanningTable getPlanningTable();

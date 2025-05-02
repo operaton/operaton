@@ -58,7 +58,9 @@ public interface HistoricDetailQuery extends Query<HistoricDetailQuery, Historic
   HistoricDetailQuery caseExecutionId(String caseExecutionId);
 
   /** Only select historic variable updates associated to the given {@link HistoricActivityInstance activity instance}.
-   * @deprecated since 5.2, use {@link #activityInstanceId(String)} instead */
+   * @deprecated Use {@link #activityInstanceId(String)} instead.
+   */
+  @Deprecated(forRemoval = true, since = "camunda 5.2")
   HistoricDetailQuery activityId(String activityId);
 
   /** Only select historic variable updates associated to the given {@link HistoricActivityInstance activity instance}. */
@@ -80,7 +82,7 @@ public interface HistoricDetailQuery extends Query<HistoricDetailQuery, Historic
   HistoricDetailQuery variableNameLike(String variableNameLike);
 
   /** Only select {@link HistoricFormProperty}s. */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   HistoricDetailQuery formProperties();
 
   /** Only select {@link HistoricFormField}s. */

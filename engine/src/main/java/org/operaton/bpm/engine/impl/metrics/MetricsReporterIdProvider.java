@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.history.event.HostnameProvider;
  *
  * @author Thorben Lindhauer
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
 public interface MetricsReporterIdProvider {
 
   /**

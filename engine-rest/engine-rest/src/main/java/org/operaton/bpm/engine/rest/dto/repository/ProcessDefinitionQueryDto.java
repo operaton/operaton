@@ -167,7 +167,7 @@ public class ProcessDefinitionQueryDto extends AbstractQueryDto<ProcessDefinitio
   /**
    * @deprecated use {@link #setVersion(Integer)}
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   @OperatonQueryParam(value = "ver", converter = IntegerConverter.class)
   public void setVer(Integer ver) {
     setVersion(ver);
@@ -181,7 +181,7 @@ public class ProcessDefinitionQueryDto extends AbstractQueryDto<ProcessDefinitio
   /**
    * @deprecated use {@link #setLatestVersion(Boolean)}
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   @OperatonQueryParam(value = "latest", converter = BooleanConverter.class)
   public void setLatest(Boolean latest) {
     setLatestVersion(latest);

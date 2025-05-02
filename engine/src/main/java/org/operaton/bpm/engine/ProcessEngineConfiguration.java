@@ -120,9 +120,9 @@ public abstract class ProcessEngineConfiguration {
   /**
    * Value for {@link #setHistory(String)} to ensure that only historic process instances,
    * historic activity instances and last process variable values are being recorded.
-   * <p><strong>NOTE:</strong> This history level has been deprecated. Use level {@link #HISTORY_ACTIVITY} instead.</p>
+   * @deprecated Use level {@link #HISTORY_ACTIVITY} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public static final String HISTORY_VARIABLE = "variable";
   /**
    * Value for {@link #setHistory(String)} to ensure that only historic process instances,
@@ -418,7 +418,8 @@ public abstract class ProcessEngineConfiguration {
    */
   protected boolean skipOutputMappingOnCanceledActivities = false;
 
-  /** use one of the static createXxxx methods instead */
+  /** @deprecated Use one of the static createXxxx methods instead */
+  @Deprecated(forRemoval = true, since = "1.0.0-beta1")
   protected ProcessEngineConfiguration() {
   }
 

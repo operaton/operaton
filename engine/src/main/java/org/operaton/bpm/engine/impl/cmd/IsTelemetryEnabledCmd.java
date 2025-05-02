@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * The sending telemetry data feature is removed.
  * Please remove any usages of the command.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
 public class IsTelemetryEnabledCmd implements Command<Boolean> {
 
 

@@ -28,7 +28,7 @@ public interface Case extends CmmnElement {
 
   void setName(String name);
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   Collection<CaseRole> getCaseRoles();
 
   CaseRoles getRoles();
@@ -47,10 +47,10 @@ public interface Case extends CmmnElement {
 
   void setCaseFileModel(CaseFileModel caseFileModel);
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   Integer getOperatonHistoryTimeToLive();
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
 
   String getOperatonHistoryTimeToLiveString();

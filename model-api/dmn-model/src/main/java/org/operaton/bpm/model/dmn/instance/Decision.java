@@ -56,10 +56,10 @@ public interface Decision extends DrgElement {
 
   // operaton extensions
   
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   Integer getOperatonHistoryTimeToLive();
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
 
   String getOperatonHistoryTimeToLiveString();

@@ -63,14 +63,14 @@ import org.operaton.bpm.engine.EntityTypes;
  */
 public interface UserOperationLogEntry {
 
-  /** @deprecated Please use {@link EntityTypes#TASK} instead. */
-  @Deprecated
+  /** @deprecated Use {@link EntityTypes#TASK} instead. */
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   String ENTITY_TYPE_TASK = EntityTypes.TASK;
-  /** @deprecated Please use {@link EntityTypes#IDENTITY_LINK} instead. */
-  @Deprecated
+  /** @deprecated Use {@link EntityTypes#IDENTITY_LINK} instead. */
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   String ENTITY_TYPE_IDENTITY_LINK = EntityTypes.IDENTITY_LINK;
-  /** @deprecated Please use {@link EntityTypes#ATTACHMENT} instead. */
-  @Deprecated
+  /** @deprecated Use {@link EntityTypes#ATTACHMENT} instead. */
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   String ENTITY_TYPE_ATTACHMENT = EntityTypes.ATTACHMENT;
 
   String OPERATION_TYPE_ASSIGN = "Assign";

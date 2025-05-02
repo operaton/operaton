@@ -62,19 +62,18 @@ public interface HistoricVariableInstance {
   /**
    * Returns the name of this variable instance.
    *
-   * <p>Deprecated since 7.2: use {@link #getName()} instead.</p>
+   * @deprecated Use {@link #getName()} instead.
    *
    */
-   @Deprecated
+  @Deprecated(forRemoval = true, since = "camunda 7.2")
   String getVariableName();
 
   /**
-   * <p>Returns the name of the type of this variable instance</p>
+   * Returns the name of the type of this variable instance.
    *
-   * <p>Deprecated since 7.2: use {@link #getTypeName()} instead.</p>
-   *
+   * @deprecated Use {@link #getTypeName()} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "camunda 7.2")
   String getVariableTypeName();
 
   /**
@@ -105,7 +104,7 @@ public interface HistoricVariableInstance {
   /**
    * Returns the corresponding activity instance id.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   String getActivtyInstanceId();
 
   /**

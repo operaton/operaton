@@ -170,7 +170,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
   /**
    * @see #taskUnassigned()
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   TaskQuery taskUnnassigned();
 
   /**

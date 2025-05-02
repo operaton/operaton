@@ -28,7 +28,7 @@ public interface IfPart extends CmmnElement {
 
   void setContext(CaseFileItem caseFileItem);
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public Collection<ConditionExpression> getConditions();
 
   ConditionExpression getCondition();

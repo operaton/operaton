@@ -57,9 +57,9 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
   protected static ChildElement<ItemControl> itemControlChild;
 
   // cmmn 1.0
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   protected static AttributeReferenceCollection<Sentry> entryCriteriaRefCollection;
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   protected static AttributeReferenceCollection<Sentry> exitCriteriaRefCollection;
 
   // cmmn 1.1

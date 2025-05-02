@@ -43,11 +43,11 @@ public class AuthorizationException extends ProcessEngineException {
   // these properties have been replaced by the list of missingAuthorizations
   // and are only left because this is a public API package and users might
   // have subclasses relying on these fields
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   protected String resourceType;
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   protected String permissionName;
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   protected String resourceId;
 
   public AuthorizationException(String message) {
@@ -80,13 +80,12 @@ public class AuthorizationException extends ProcessEngineException {
   }
 
   /**
-   * @return the type of the resource if there
-   * is only one {@link MissingAuthorization}, {@code null} otherwise
+   * @return the type of the resource if there is only one {@link MissingAuthorization}, {@code null} otherwise
    *
-   * @deprecated Use {@link #getMissingAuthorizations()} to get the type of the resource
-   * of the {@link MissingAuthorization}(s). This method may be removed in future versions.
+   * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
+   * of the {@link MissingAuthorization}(s).
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public String getResourceType() {
     String result = null;
     if (missingAuthorizations.size() == 1) {
@@ -99,10 +98,10 @@ public class AuthorizationException extends ProcessEngineException {
    * @return the type of the violated permission name if there
    * is only one {@link MissingAuthorization}, {@code null} otherwise
    *
-   * @deprecated Use {@link #getMissingAuthorizations()} to get the violated permission name
-   * of the {@link MissingAuthorization}(s). This method may be removed in future versions.
+   * @deprecated Use {@link #getMissingAuthorizations()} instead to get the violated permission name
+   * of the {@link MissingAuthorization}(s).
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public String getViolatedPermissionName() {
     if (missingAuthorizations.size() == 1) {
       return missingAuthorizations.get(0).getViolatedPermissionName();
@@ -119,13 +118,12 @@ public class AuthorizationException extends ProcessEngineException {
   }
 
   /**
-   * @return the id of the resource if there
-   * is only one {@link MissingAuthorization}, {@code null} otherwise
+   * @return the id of the resource if there is only one {@link MissingAuthorization}, {@code null} otherwise
    *
-   * @deprecated Use {@link #getMissingAuthorizations()} to get the id of the resource
+   * @deprecated Use {@link #getMissingAuthorizations()} instead to get the id of the resource
    * of the {@link MissingAuthorization}(s). This method may be removed in future versions.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public String getResourceId() {
     if (missingAuthorizations.size() == 1) {
       return missingAuthorizations.get(0).getResourceId();

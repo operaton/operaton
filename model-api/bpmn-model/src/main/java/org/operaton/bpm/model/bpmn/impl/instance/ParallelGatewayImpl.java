@@ -63,18 +63,18 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
   /** operaton extensions */
 
   /**
-   * @deprecated use isOperatonAsyncBefore() instead.
+   * @deprecated Use isOperatonAsyncBefore() instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
   }
 
   /**
-   * @deprecated use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
+   * @deprecated Use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);

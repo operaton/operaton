@@ -23,11 +23,11 @@ import org.operaton.bpm.cockpit.plugin.spi.CockpitPlugin;
 /**
  * The holder of registered cockpit plugins.
  *
- * This class is deprecated, use {@link AppPluginRegistry}
+ * @deprecated use {@link AppPluginRegistry}
  * 
  * @author nico.rehwaldt
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
 public interface PluginRegistry {
 
   /**

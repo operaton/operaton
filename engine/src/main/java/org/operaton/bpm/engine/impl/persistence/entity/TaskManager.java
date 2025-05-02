@@ -124,7 +124,7 @@ public class TaskManager extends AbstractManager {
   }
 
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public List<Task> findTasksByQueryCriteria(TaskQueryImpl taskQuery, Page page) {
     taskQuery.setFirstResult(page.getFirstResult());
     taskQuery.setMaxResults(page.getMaxResults());

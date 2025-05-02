@@ -28,10 +28,10 @@ public interface Task extends PlanItemDefinition {
 
   void setIsBlocking(boolean isBlocking);
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   Collection<InputsCaseParameter> getInputs();
 
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   Collection<OutputsCaseParameter> getOutputs();
 
   Collection<InputCaseParameter> getInputParameters();

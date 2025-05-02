@@ -51,7 +51,10 @@ public class TransitionInstanceDto {
     return processDefinitionId;
   }
 
-  @Deprecated
+  /**
+   * @deprecated
+   */
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public String getTargetActivityId() {
     return activityId;
   }

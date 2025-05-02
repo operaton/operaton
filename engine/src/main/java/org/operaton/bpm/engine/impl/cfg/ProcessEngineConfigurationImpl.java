@@ -3512,33 +3512,33 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   /**
-   * @deprecated use {@link #getCustomPreBPMNParseListeners} instead.
+   * @deprecated Use {@link #getCustomPreBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public List<BpmnParseListener> getPreParseListeners() {
     return preParseListeners;
   }
 
   /**
-   * @deprecated use {@link #setCustomPreBPMNParseListeners} instead.
+   * @deprecated Use {@link #setCustomPreBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public void setPreParseListeners(List<BpmnParseListener> preParseListeners) {
     this.preParseListeners = preParseListeners;
   }
 
   /**
-   * @deprecated use {@link #getCustomPostBPMNParseListeners} instead.
+   * @deprecated Use {@link #getCustomPostBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public List<BpmnParseListener> getPostParseListeners() {
     return postParseListeners;
   }
 
   /**
-   * @deprecated use {@link #setCustomPostBPMNParseListeners} instead.
+   * @deprecated Use {@link #setCustomPostBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public void setPostParseListeners(List<BpmnParseListener> postParseListeners) {
     this.postParseListeners = postParseListeners;
   }
@@ -4451,17 +4451,17 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   /**
-   * @deprecated use {@link #getHostnameProvider()} instead.
+   * @deprecated Use {@link #getHostnameProvider()} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public MetricsReporterIdProvider getMetricsReporterIdProvider() {
     return metricsReporterIdProvider;
   }
 
   /**
-   * @deprecated use {@link #setHostnameProvider(HostnameProvider)} instead.
+   * @deprecated Use {@link #setHostnameProvider(HostnameProvider)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   public ProcessEngineConfigurationImpl setMetricsReporterIdProvider(MetricsReporterIdProvider metricsReporterIdProvider) {
     this.metricsReporterIdProvider = metricsReporterIdProvider;
     return this;

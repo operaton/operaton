@@ -15,19 +15,16 @@ on:
           - '["21"]'
           - '["17", "21"]'
       skip_build:
-        description: 'Build: Set to false to skip the normal build, e.g. when running integration tests only'
+        description: 'Build: By default skipped. Deactivate to perform the regular project build'
         type: boolean
-        required: true
         default: true
       skip_tests:
         description: 'Build: Skip test execution for faster build'
         type: boolean
-        required: true
         default: true
       integration_tests:
         description: 'Integration Tests: Enable/Disable'
         type: boolean
-        required: true
         default: true
       testsuite:
         description: 'Integration Tests: Test suite to run'

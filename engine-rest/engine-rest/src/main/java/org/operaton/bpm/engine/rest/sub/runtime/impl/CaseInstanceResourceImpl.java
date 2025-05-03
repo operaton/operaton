@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.sub.runtime.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -34,7 +35,6 @@ import org.operaton.bpm.engine.rest.sub.runtime.CaseInstanceResource;
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 
-import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +45,9 @@ import java.util.Map;
  */
 public class CaseInstanceResourceImpl implements CaseInstanceResource {
 
+  private static final String TRANSITION_COMPLETE = "complete";
+  private static final String TRANSITION_CLOSE = "close";
+  private static final String TRANSITION_TERMINATE = "terminate";
   protected ProcessEngine engine;
   protected String caseInstanceId;
   protected ObjectMapper objectMapper;
@@ -77,17 +80,17 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
       CaseService caseService = engine.getCaseService();
       CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseInstanceId);
 
-      initializeCommand(commandBuilder, triggerDto, "complete");
+      initializeCommand(commandBuilder, triggerDto, TRANSITION_COMPLETE);
 
       commandBuilder.complete();
     } catch (NotFoundException e) {
-      throw createInvalidRequestException("complete", Status.NOT_FOUND, e);
+      throw createInvalidRequestException(TRANSITION_COMPLETE, Status.NOT_FOUND, e);
     } catch (NotValidException e) {
-      throw createInvalidRequestException("complete", Status.BAD_REQUEST, e);
+      throw createInvalidRequestException(TRANSITION_COMPLETE, Status.BAD_REQUEST, e);
     } catch (NotAllowedException e) {
-      throw createInvalidRequestException("complete", Status.FORBIDDEN, e);
+      throw createInvalidRequestException(TRANSITION_COMPLETE, Status.FORBIDDEN, e);
     } catch (ProcessEngineException e) {
-      throw createRestException("complete", Status.INTERNAL_SERVER_ERROR, e);
+      throw createRestException(TRANSITION_COMPLETE, Status.INTERNAL_SERVER_ERROR, e);
     }
   }
 
@@ -97,17 +100,17 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
       CaseService caseService = engine.getCaseService();
       CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseInstanceId);
 
-      initializeCommand(commandBuilder, triggerDto, "close");
+      initializeCommand(commandBuilder, triggerDto, TRANSITION_CLOSE);
 
       commandBuilder.close();
     } catch (NotFoundException e) {
-      throw createInvalidRequestException("close", Status.NOT_FOUND, e);
+      throw createInvalidRequestException(TRANSITION_CLOSE, Status.NOT_FOUND, e);
     } catch (NotValidException e) {
-      throw createInvalidRequestException("close", Status.BAD_REQUEST, e);
+      throw createInvalidRequestException(TRANSITION_CLOSE, Status.BAD_REQUEST, e);
     } catch (NotAllowedException e) {
-      throw createInvalidRequestException("close", Status.FORBIDDEN, e);
+      throw createInvalidRequestException(TRANSITION_CLOSE, Status.FORBIDDEN, e);
     } catch (ProcessEngineException e) {
-      throw createRestException("close", Status.INTERNAL_SERVER_ERROR, e);
+      throw createRestException(TRANSITION_CLOSE, Status.INTERNAL_SERVER_ERROR, e);
     }
   }
 
@@ -117,17 +120,17 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
       CaseService caseService = engine.getCaseService();
       CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseInstanceId);
 
-      initializeCommand(commandBuilder, triggerDto, "terminate");
+      initializeCommand(commandBuilder, triggerDto, TRANSITION_TERMINATE);
 
       commandBuilder.terminate();
     } catch (NotFoundException e) {
-      throw createInvalidRequestException("terminate", Status.NOT_FOUND, e);
+      throw createInvalidRequestException(TRANSITION_TERMINATE, Status.NOT_FOUND, e);
     } catch (NotValidException e) {
-      throw createInvalidRequestException("terminate", Status.BAD_REQUEST, e);
+      throw createInvalidRequestException(TRANSITION_TERMINATE, Status.BAD_REQUEST, e);
     } catch (NotAllowedException e) {
-      throw createInvalidRequestException("terminate", Status.FORBIDDEN, e);
+      throw createInvalidRequestException(TRANSITION_TERMINATE, Status.FORBIDDEN, e);
     } catch (ProcessEngineException e) {
-      throw createRestException("terminate", Status.INTERNAL_SERVER_ERROR, e);
+      throw createRestException(TRANSITION_TERMINATE, Status.INTERNAL_SERVER_ERROR, e);
     }
   }
 

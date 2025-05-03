@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.sub.runtime.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -35,7 +36,6 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +46,11 @@ import java.util.Map;
  */
 public class CaseExecutionResourceImpl implements CaseExecutionResource {
 
+  private static final String TRANSITION_MANUAL_START = "manualStart";
+  private static final String TRANSITION_REENABLE = "reenable";
+  private static final String TRANSITION_COMPLETE = "complete";
+  private static final String TRANSITION_TERMINATE = "terminate";
+  private static final String TRANSITION_DISABLE = "disable";
   protected ProcessEngine engine;
   protected String caseExecutionId;
   protected ObjectMapper objectMapper;
@@ -83,16 +88,16 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
       commandBuilder.manualStart();
 
     } catch (NotFoundException e) {
-      throw createInvalidRequestException("manualStart", Status.NOT_FOUND, e);
+      throw createInvalidRequestException(TRANSITION_MANUAL_START, Status.NOT_FOUND, e);
 
     } catch (NotValidException e) {
-      throw createInvalidRequestException("manualStart", Status.BAD_REQUEST, e);
+      throw createInvalidRequestException(TRANSITION_MANUAL_START, Status.BAD_REQUEST, e);
 
     } catch (NotAllowedException e) {
-      throw createInvalidRequestException("manualStart", Status.FORBIDDEN, e);
+      throw createInvalidRequestException(TRANSITION_MANUAL_START, Status.FORBIDDEN, e);
 
     } catch (ProcessEngineException e) {
-      throw createRestException("manualStart", Status.INTERNAL_SERVER_ERROR, e);
+      throw createRestException(TRANSITION_MANUAL_START, Status.INTERNAL_SERVER_ERROR, e);
 
     }
 
@@ -104,21 +109,21 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
       CaseService caseService = engine.getCaseService();
       CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseExecutionId);
 
-      initializeCommand(commandBuilder, triggerDto, "disable");
+      initializeCommand(commandBuilder, triggerDto, TRANSITION_DISABLE);
 
       commandBuilder.disable();
 
     } catch (NotFoundException e) {
-      throw createInvalidRequestException("disable", Status.NOT_FOUND, e);
+      throw createInvalidRequestException(TRANSITION_DISABLE, Status.NOT_FOUND, e);
 
     } catch (NotValidException e) {
-      throw createInvalidRequestException("disable", Status.BAD_REQUEST, e);
+      throw createInvalidRequestException(TRANSITION_DISABLE, Status.BAD_REQUEST, e);
 
     } catch (NotAllowedException e) {
-      throw createInvalidRequestException("disable", Status.FORBIDDEN, e);
+      throw createInvalidRequestException(TRANSITION_DISABLE, Status.FORBIDDEN, e);
 
     } catch (ProcessEngineException e) {
-      throw createRestException("disable", Status.INTERNAL_SERVER_ERROR, e);
+      throw createRestException(TRANSITION_DISABLE, Status.INTERNAL_SERVER_ERROR, e);
 
     }
 
@@ -130,21 +135,21 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
       CaseService caseService = engine.getCaseService();
       CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseExecutionId);
 
-      initializeCommand(commandBuilder, triggerDto, "reenable");
+      initializeCommand(commandBuilder, triggerDto, TRANSITION_REENABLE);
 
       commandBuilder.reenable();
 
     } catch (NotFoundException e) {
-      throw createInvalidRequestException("reenable", Status.NOT_FOUND, e);
+      throw createInvalidRequestException(TRANSITION_REENABLE, Status.NOT_FOUND, e);
 
     } catch (NotValidException e) {
-      throw createInvalidRequestException("reenable", Status.BAD_REQUEST, e);
+      throw createInvalidRequestException(TRANSITION_REENABLE, Status.BAD_REQUEST, e);
 
     } catch (NotAllowedException e) {
-      throw createInvalidRequestException("reenable", Status.FORBIDDEN, e);
+      throw createInvalidRequestException(TRANSITION_REENABLE, Status.FORBIDDEN, e);
 
     } catch (ProcessEngineException e) {
-      throw createRestException("reenable", Status.INTERNAL_SERVER_ERROR, e);
+      throw createRestException(TRANSITION_REENABLE, Status.INTERNAL_SERVER_ERROR, e);
 
     }
   }
@@ -155,21 +160,21 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
       CaseService caseService = engine.getCaseService();
       CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseExecutionId);
 
-      initializeCommand(commandBuilder, triggerDto, "complete");
+      initializeCommand(commandBuilder, triggerDto, TRANSITION_COMPLETE);
 
       commandBuilder.complete();
 
     } catch (NotFoundException e) {
-      throw createInvalidRequestException("complete", Status.NOT_FOUND, e);
+      throw createInvalidRequestException(TRANSITION_COMPLETE, Status.NOT_FOUND, e);
 
     } catch (NotValidException e) {
-      throw createInvalidRequestException("complete", Status.BAD_REQUEST, e);
+      throw createInvalidRequestException(TRANSITION_COMPLETE, Status.BAD_REQUEST, e);
 
     } catch (NotAllowedException e) {
-      throw createInvalidRequestException("complete", Status.FORBIDDEN, e);
+      throw createInvalidRequestException(TRANSITION_COMPLETE, Status.FORBIDDEN, e);
 
     } catch (ProcessEngineException e) {
-      throw createRestException("complete", Status.INTERNAL_SERVER_ERROR, e);
+      throw createRestException(TRANSITION_COMPLETE, Status.INTERNAL_SERVER_ERROR, e);
 
     }
   }
@@ -180,21 +185,21 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
       CaseService caseService = engine.getCaseService();
       CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseExecutionId);
 
-      initializeCommand(commandBuilder, triggerDto, "terminate");
+      initializeCommand(commandBuilder, triggerDto, TRANSITION_TERMINATE);
 
       commandBuilder.terminate();
 
     } catch (NotFoundException e) {
-      throw createInvalidRequestException("terminate", Status.NOT_FOUND, e);
+      throw createInvalidRequestException(TRANSITION_TERMINATE, Status.NOT_FOUND, e);
 
     } catch (NotValidException e) {
-      throw createInvalidRequestException("terminate", Status.BAD_REQUEST, e);
+      throw createInvalidRequestException(TRANSITION_TERMINATE, Status.BAD_REQUEST, e);
 
     } catch (NotAllowedException e) {
-      throw createInvalidRequestException("terminate", Status.FORBIDDEN, e);
+      throw createInvalidRequestException(TRANSITION_TERMINATE, Status.FORBIDDEN, e);
 
     } catch (ProcessEngineException e) {
-      throw createRestException("terminate", Status.INTERNAL_SERVER_ERROR, e);
+      throw createRestException(TRANSITION_TERMINATE, Status.INTERNAL_SERVER_ERROR, e);
 
     }
   }

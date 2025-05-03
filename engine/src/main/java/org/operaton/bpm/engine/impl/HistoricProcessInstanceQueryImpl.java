@@ -53,6 +53,7 @@ import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<HistoricProcessInstanceQuery, HistoricProcessInstance> implements HistoricProcessInstanceQuery {
 
   private static final long serialVersionUID = 1L;
+  private static final String MSG_ALREADY_QUERYING = "Already querying for historic process instance with another state";
   protected String processInstanceId;
   protected String processDefinitionId;
   protected String processDefinitionName;
@@ -845,35 +846,35 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
 
   @Override
   public HistoricProcessInstanceQuery active() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_ACTIVE;
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery suspended() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_SUSPENDED;
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery completed() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_COMPLETED;
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery externallyTerminated() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED;
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery internallyTerminated() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_INTERNALLY_TERMINATED;
     return this;
   }

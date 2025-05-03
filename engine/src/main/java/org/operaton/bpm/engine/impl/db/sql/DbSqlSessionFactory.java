@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.db.sql;
 
-import java.sql.Connection;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -29,10 +23,18 @@ import org.operaton.bpm.engine.impl.interceptor.Session;
 import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
 import org.operaton.bpm.engine.impl.util.ClassNameUtil;
 
+import java.sql.Connection;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 /**
  * @author Tom Baeyens
  */
+@SuppressWarnings("java:S1192")
 public class DbSqlSessionFactory implements SessionFactory {
 
   public static final String MSSQL = "mssql";
@@ -115,6 +117,26 @@ public class DbSqlSessionFactory implements SessionFactory {
    */
   public static final int MAXIMUM_NUMBER_PARAMS = 2000;
 
+  private static final String CONSTANT_EVENT = "constant.event";
+
+  private static final String CONSTANT_OP_MESSAGE = "constant.op_message";
+
+  private static final String CONSTANT_FOR_UPDATE = "constant_for_update";
+
+  private static final String CONSTANT_DATEPART_QUARTER = "constant.datepart.quarter";
+
+  private static final String CONSTANT_DATEPART_MONTH = "constant.datepart.month";
+
+  private static final String CONSTANT_DATEPART_MINUTE = "constant.datepart.minute";
+
+  private static final String CONSTANT_NULL_START_TIME = "constant.null.startTime";
+
+  private static final String CONSTANT_VARCHAR_CAST = "constant.varchar.cast";
+
+  private static final String CONSTANT_INTEGER_CAST = "constant.integer.cast";
+
+  private static final String CONSTANT_NULL_REPORTER = "constant.null.reporter";
+
   static {
 
     String defaultOrderBy = "order by ${internalOrderBy}";
@@ -182,16 +204,16 @@ public class DbSqlSessionFactory implements SessionFactory {
     databaseSpecificExtractTimeUnitFromDate.put(H2, defaultExtractTimeUnitFromDate);
 
     HashMap<String, String> constants = new HashMap<>();
-    constants.put("constant.event", "'event'");
-    constants.put("constant.op_message", "NEW_VALUE_ || '_|_' || PROPERTY_");
-    constants.put("constant_for_update", "for update");
-    constants.put("constant.datepart.quarter", "QUARTER");
-    constants.put("constant.datepart.month", "MONTH");
-    constants.put("constant.datepart.minute", "MINUTE");
-    constants.put("constant.null.startTime", "null START_TIME_");
-    constants.put("constant.varchar.cast", "'${key}'");
-    constants.put("constant.integer.cast", "NULL");
-    constants.put("constant.null.reporter", "NULL AS REPORTER_");
+    constants.put(CONSTANT_EVENT, "'event'");
+    constants.put(CONSTANT_OP_MESSAGE, "NEW_VALUE_ || '_|_' || PROPERTY_");
+    constants.put(CONSTANT_FOR_UPDATE, "for update");
+    constants.put(CONSTANT_DATEPART_QUARTER, "QUARTER");
+    constants.put(CONSTANT_DATEPART_MONTH, "MONTH");
+    constants.put(CONSTANT_DATEPART_MINUTE, "MINUTE");
+    constants.put(CONSTANT_NULL_START_TIME, "null START_TIME_");
+    constants.put(CONSTANT_VARCHAR_CAST, "'${key}'");
+    constants.put(CONSTANT_INTEGER_CAST, "NULL");
+    constants.put(CONSTANT_NULL_REPORTER, "NULL AS REPORTER_");
     dbSpecificConstants.put(H2, constants);
 
     // mysql specific
@@ -330,16 +352,16 @@ public class DbSqlSessionFactory implements SessionFactory {
 
 
       constants = new HashMap<>();
-      constants.put("constant.event", "'event'");
-      constants.put("constant.op_message", "CONCAT(NEW_VALUE_, '_|_', PROPERTY_)");
-      constants.put("constant_for_update", "for update");
-      constants.put("constant.datepart.quarter", "QUARTER");
-      constants.put("constant.datepart.month", "MONTH");
-      constants.put("constant.datepart.minute", "MINUTE");
-      constants.put("constant.null.startTime", "null START_TIME_");
-      constants.put("constant.varchar.cast", "'${key}'");
-      constants.put("constant.integer.cast", "NULL");
-      constants.put("constant.null.reporter", "NULL AS REPORTER_");
+      constants.put(CONSTANT_EVENT, "'event'");
+      constants.put(CONSTANT_OP_MESSAGE, "CONCAT(NEW_VALUE_, '_|_', PROPERTY_)");
+      constants.put(CONSTANT_FOR_UPDATE, "for update");
+      constants.put(CONSTANT_DATEPART_QUARTER, "QUARTER");
+      constants.put(CONSTANT_DATEPART_MONTH, "MONTH");
+      constants.put(CONSTANT_DATEPART_MINUTE, "MINUTE");
+      constants.put(CONSTANT_NULL_START_TIME, "null START_TIME_");
+      constants.put(CONSTANT_VARCHAR_CAST, "'${key}'");
+      constants.put(CONSTANT_INTEGER_CAST, "NULL");
+      constants.put(CONSTANT_NULL_REPORTER, "NULL AS REPORTER_");
       dbSpecificConstants.put(mysqlLikeDatabase, constants);
     }
 
@@ -480,16 +502,16 @@ public class DbSqlSessionFactory implements SessionFactory {
 
 
       constants = new HashMap<>();
-      constants.put("constant.event", "'event'");
-      constants.put("constant.op_message", "NEW_VALUE_ || '_|_' || PROPERTY_");
-      constants.put("constant_for_update", "for update");
-      constants.put("constant.datepart.quarter", "QUARTER");
-      constants.put("constant.datepart.month", "MONTH");
-      constants.put("constant.datepart.minute", "MINUTE");
-      constants.put("constant.null.startTime", "null START_TIME_");
-      constants.put("constant.varchar.cast", "cast('${key}' as varchar(64))");
-      constants.put("constant.integer.cast", "cast(NULL as integer)");
-      constants.put("constant.null.reporter", "CAST(NULL AS VARCHAR) AS REPORTER_");
+      constants.put(CONSTANT_EVENT, "'event'");
+      constants.put(CONSTANT_OP_MESSAGE, "NEW_VALUE_ || '_|_' || PROPERTY_");
+      constants.put(CONSTANT_FOR_UPDATE, "for update");
+      constants.put(CONSTANT_DATEPART_QUARTER, "QUARTER");
+      constants.put(CONSTANT_DATEPART_MONTH, "MONTH");
+      constants.put(CONSTANT_DATEPART_MINUTE, "MINUTE");
+      constants.put(CONSTANT_NULL_START_TIME, "null START_TIME_");
+      constants.put(CONSTANT_VARCHAR_CAST, "cast('${key}' as varchar(64))");
+      constants.put(CONSTANT_INTEGER_CAST, "cast(NULL as integer)");
+      constants.put(CONSTANT_NULL_REPORTER, "CAST(NULL AS VARCHAR) AS REPORTER_");
       dbSpecificConstants.put(postgresLikeDatabase, constants);
     }
     databaseSpecificDaysComparator.put(POSTGRES, "EXTRACT (DAY FROM #{currentTimestamp} - ${date}) >= ${days}");
@@ -576,16 +598,16 @@ public class DbSqlSessionFactory implements SessionFactory {
     addDatabaseSpecificStatement(ORACLE, "deleteTaskMetricsByRemovalTime", "deleteTaskMetricsByRemovalTime_oracle");
 
     constants = new HashMap<>();
-    constants.put("constant.event", "cast('event' as nvarchar2(255))");
-    constants.put("constant.op_message", "NEW_VALUE_ || '_|_' || PROPERTY_");
-    constants.put("constant_for_update", "for update");
-    constants.put("constant.datepart.quarter", "'Q'");
-    constants.put("constant.datepart.month", "'MM'");
-    constants.put("constant.datepart.minute", "'MI'");
-    constants.put("constant.null.startTime", "null START_TIME_");
-    constants.put("constant.varchar.cast", "'${key}'");
-    constants.put("constant.integer.cast", "NULL");
-    constants.put("constant.null.reporter", "NULL AS REPORTER_");
+    constants.put(CONSTANT_EVENT, "cast('event' as nvarchar2(255))");
+    constants.put(CONSTANT_OP_MESSAGE, "NEW_VALUE_ || '_|_' || PROPERTY_");
+    constants.put(CONSTANT_FOR_UPDATE, "for update");
+    constants.put(CONSTANT_DATEPART_QUARTER, "'Q'");
+    constants.put(CONSTANT_DATEPART_MONTH, "'MM'");
+    constants.put(CONSTANT_DATEPART_MINUTE, "'MI'");
+    constants.put(CONSTANT_NULL_START_TIME, "null START_TIME_");
+    constants.put(CONSTANT_VARCHAR_CAST, "'${key}'");
+    constants.put(CONSTANT_INTEGER_CAST, "NULL");
+    constants.put(CONSTANT_NULL_REPORTER, "NULL AS REPORTER_");
     dbSpecificConstants.put(ORACLE, constants);
 
     // db2
@@ -675,16 +697,16 @@ public class DbSqlSessionFactory implements SessionFactory {
     addDatabaseSpecificStatement(DB2, "updateByteArraysByBatchId", "updateByteArraysByBatchId_db2");
 
     constants = new HashMap<>();
-    constants.put("constant.event", "'event'");
-    constants.put("constant.op_message", "CAST(CONCAT(CONCAT(COALESCE(NEW_VALUE_,''), '_|_'), COALESCE(PROPERTY_,'')) as varchar(255))");
-    constants.put("constant_for_update", "for read only with rs use and keep update locks");
-    constants.put("constant.datepart.quarter", "QUARTER");
-    constants.put("constant.datepart.month", "MONTH");
-    constants.put("constant.datepart.minute", "MINUTE");
-    constants.put("constant.null.startTime", "CAST(NULL as timestamp) as START_TIME_");
-    constants.put("constant.varchar.cast", "cast('${key}' as varchar(64))");
-    constants.put("constant.integer.cast", "cast(NULL as integer)");
-    constants.put("constant.null.reporter", "CAST(NULL AS VARCHAR(255)) AS REPORTER_");
+    constants.put(CONSTANT_EVENT, "'event'");
+    constants.put(CONSTANT_OP_MESSAGE, "CAST(CONCAT(CONCAT(COALESCE(NEW_VALUE_,''), '_|_'), COALESCE(PROPERTY_,'')) as varchar(255))");
+    constants.put(CONSTANT_FOR_UPDATE, "for read only with rs use and keep update locks");
+    constants.put(CONSTANT_DATEPART_QUARTER, "QUARTER");
+    constants.put(CONSTANT_DATEPART_MONTH, "MONTH");
+    constants.put(CONSTANT_DATEPART_MINUTE, "MINUTE");
+    constants.put(CONSTANT_NULL_START_TIME, "CAST(NULL as timestamp) as START_TIME_");
+    constants.put(CONSTANT_VARCHAR_CAST, "cast('${key}' as varchar(64))");
+    constants.put(CONSTANT_INTEGER_CAST, "cast(NULL as integer)");
+    constants.put(CONSTANT_NULL_REPORTER, "CAST(NULL AS VARCHAR(255)) AS REPORTER_");
     dbSpecificConstants.put(DB2, constants);
 
     // mssql
@@ -816,15 +838,15 @@ public class DbSqlSessionFactory implements SessionFactory {
     addDatabaseSpecificStatement(MSSQL, "updateByteArraysByBatchId", "updateByteArraysByBatchId_mssql");
 
     constants = new HashMap<>();
-    constants.put("constant.event", "'event'");
-    constants.put("constant.op_message", "NEW_VALUE_ + '_|_' + PROPERTY_");
-    constants.put("constant.datepart.quarter", "QUARTER");
-    constants.put("constant.datepart.month", "MONTH");
-    constants.put("constant.datepart.minute", "MINUTE");
-    constants.put("constant.null.startTime", "CAST(NULL AS datetime2) AS START_TIME_");
-    constants.put("constant.varchar.cast", "'${key}'");
-    constants.put("constant.integer.cast", "NULL");
-    constants.put("constant.null.reporter", "NULL AS REPORTER_");
+    constants.put(CONSTANT_EVENT, "'event'");
+    constants.put(CONSTANT_OP_MESSAGE, "NEW_VALUE_ + '_|_' + PROPERTY_");
+    constants.put(CONSTANT_DATEPART_QUARTER, "QUARTER");
+    constants.put(CONSTANT_DATEPART_MONTH, "MONTH");
+    constants.put(CONSTANT_DATEPART_MINUTE, "MINUTE");
+    constants.put(CONSTANT_NULL_START_TIME, "CAST(NULL AS datetime2) AS START_TIME_");
+    constants.put(CONSTANT_VARCHAR_CAST, "'${key}'");
+    constants.put(CONSTANT_INTEGER_CAST, "NULL");
+    constants.put(CONSTANT_NULL_REPORTER, "NULL AS REPORTER_");
     dbSpecificConstants.put(MSSQL, constants);
   }
 

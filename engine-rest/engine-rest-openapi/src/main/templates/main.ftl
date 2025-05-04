@@ -6,7 +6,7 @@
   "info": {
     "title": "Operaton REST API",
     "description": "OpenApi Spec for Operaton REST API.",
-    "version": "${cambpmVersion}",
+    "version": "${operatonbpmVersion}",
     "license": {
       "name": "Apache License 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"

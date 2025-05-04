@@ -129,8 +129,8 @@ public class TemplateParser {
     String version = TemplateParser.class.getPackage().getImplementationVersion();
 
     if (version != null) {
-      // cambpmVersion = 7.X.Y
-      templateData.put("cambpmVersion", version);
+      // operatonbpmVersion = 7.X.Y
+      templateData.put("operatonbpmVersion", version);
 
       if (version.contains("SNAPSHOT")) {
         templateData.put("docsVersion", "develop");
@@ -142,7 +142,7 @@ public class TemplateParser {
       }
     } else {
       // only for debug cases
-      templateData.put("cambpmVersion", "develop");
+      templateData.put("operatonbpmVersion", "develop");
       templateData.put("docsVersion", "develop");
     }
   }

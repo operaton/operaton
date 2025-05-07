@@ -15,14 +15,14 @@ on:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
         required: true
-        default: true
+        default: false
 jobs:
   precheck:
     name: Precheck
     runs-on: ubuntu-24.04
     outputs:
       version: ${{steps.version.outputs.version}}
-      database_version: ${{steps.maven-build.outputs.database_version}}
+      database_version: ${{steps.version.outputs.database_version}}
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
     steps:
       - name: Checkout

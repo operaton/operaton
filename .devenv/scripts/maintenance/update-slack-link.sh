@@ -27,7 +27,7 @@ AFFECTED_FILES=(README.md CONTRIBUTING.md)
 
 for AFFECTED_FILE in "${AFFECTED_FILES[@]}"; do
   echo "🔄 Updating Slack Invitation URL in $AFFECTED_FILE"
-  sed_inplace "s|${EXPECTED_PREFIX}[a-zA-Z0-9\-]+|${SLACK_INVITATION_URL}|" $AFFECTED_FILE
+  sed_inplace "s|${EXPECTED_PREFIX}[^\)]+|${SLACK_INVITATION_URL}|" $AFFECTED_FILE
 done
 
 echo "✅  Done!"

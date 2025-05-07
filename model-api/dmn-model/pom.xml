@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
-    <version>1.0.0-beta-4</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-dmn-model</artifactId>

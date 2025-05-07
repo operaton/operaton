@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
-    <version>1.0.0-beta-4</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <name>Operaton - Engine - CDI</name>

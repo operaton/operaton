@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-bom-root</artifactId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <version>1.0.0-beta-4</version>
   </parent>
 
   <artifactId>operaton-bom</artifactId>

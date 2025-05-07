@@ -191,7 +191,7 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
         with:
-          message: "[releng] Bump version to ${{steps.set-next-version.outputs.version}}"
+          message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"
 
       - name: Notify Docker Repository
         run: |

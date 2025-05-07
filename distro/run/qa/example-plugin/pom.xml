@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-qa</artifactId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-4</version>
   </parent>
 
   <artifactId>operaton-bpm-run-example-plugin</artifactId>

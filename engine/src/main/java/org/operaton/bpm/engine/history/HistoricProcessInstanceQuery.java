@@ -389,34 +389,34 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * Only select historic process instances that were started as of the provided
    * date. (Date will be adjusted to reflect midnight)
    *
-   * @deprecated use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead
+   * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   HistoricProcessInstanceQuery startDateBy(Date date);
 
   /**
    * Only select historic process instances that were started on the provided date.
    *
-   * @deprecated use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead
+   * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   HistoricProcessInstanceQuery startDateOn(Date date);
 
   /**
    * Only select historic process instances that were finished as of the
    * provided date. (Date will be adjusted to reflect one second before midnight)
    *
-   * @deprecated use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead
+   * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   HistoricProcessInstanceQuery finishDateBy(Date date);
 
   /**
    * Only select historic process instances that were finished on provided date.
    *
-   * @deprecated use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead
+   * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   HistoricProcessInstanceQuery finishDateOn(Date date);
 
   /**

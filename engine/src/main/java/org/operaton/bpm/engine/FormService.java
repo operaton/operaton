@@ -65,9 +65,9 @@ public interface FormService {
   Object getRenderedStartForm(String processDefinitionId, String formEngineName);
 
   /**
-   * @deprecated use {@link #submitStartForm(String, Map)}
+   * @deprecated Use {@link #submitStartForm(String, Map)} instead.
    * */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   ProcessInstance submitStartFormData(String processDefinitionId, Map<String, String> properties);
 
   /**
@@ -80,9 +80,9 @@ public interface FormService {
   ProcessInstance submitStartForm(String processDefinitionId, Map<String, Object> properties);
 
   /**
-   * @deprecated use {@link #submitStartForm(String, String, Map)}
+   * @deprecated Use {@link #submitStartForm(String, String, Map)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   ProcessInstance submitStartFormData(String processDefinitionId, String businessKey, Map<String, String> properties);
 
   /**
@@ -163,8 +163,9 @@ public interface FormService {
   Object getRenderedTaskForm(String taskId, String formEngineName);
 
   /**
-   * @deprecated use {@link #submitTaskForm(String, Map)} */
-  @Deprecated
+   * @deprecated Use {@link #submitTaskForm(String, Map)} instead.
+   */
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   void submitTaskFormData(String taskId, Map<String, String> properties);
 
   /**

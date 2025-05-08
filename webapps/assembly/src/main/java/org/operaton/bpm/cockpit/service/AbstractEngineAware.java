@@ -25,14 +25,13 @@ import org.operaton.bpm.engine.ProcessEngine;
  * Base class for engine aware service and resource
  * implementations.
  *
- * <p>
- *
  * Subclasses must implement a constructor that accepts the name of
  * the engine for which cockpit services should be provided.
  *
  * @author nico.rehwaldt
+ * @deprecated
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
 public class AbstractEngineAware {
 
   private final String engineName;

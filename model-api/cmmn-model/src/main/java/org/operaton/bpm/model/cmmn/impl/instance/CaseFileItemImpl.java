@@ -55,7 +55,7 @@ public class CaseFileItemImpl extends CmmnElementImpl implements CaseFileItem {
   protected static ChildElement<Children> childrenChild;
 
   // cmmn 1.0
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
   protected static AttributeReference<CaseFileItem> sourceRefAttribute;
 
 //  cmmn 1.1

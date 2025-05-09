@@ -290,10 +290,20 @@
       <artifactId>jruby-complete</artifactId>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+      <groupId>org.graalvm.sdk</groupId>
+      <artifactId>graal-sdk</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.shadowed</groupId>
+      <artifactId>icu4j</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
+      <type>pom</type>
       <scope>test</scope>
     </dependency>
 

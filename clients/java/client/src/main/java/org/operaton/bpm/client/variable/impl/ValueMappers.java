@@ -20,10 +20,10 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 public interface ValueMappers<T extends TypedValue> {
 
-  ValueMapper findMapperForTypedValue(T value);
+  ValueMapper<T> findMapperForTypedValue(T value);
 
   ValueMapper<T> findMapperForTypedValueField(TypedValueField value);
 
-  ValueMappers addMapper(ValueMapper<T> serializer);
+  ValueMappers<T> addMapper(ValueMapper<T> serializer);
 
 }

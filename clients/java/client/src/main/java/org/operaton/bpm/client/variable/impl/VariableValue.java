@@ -25,12 +25,12 @@ public class VariableValue<T extends TypedValue> {
   protected String executionId;
   protected String variableName;
   protected TypedValueField typedValueField;
-  protected ValueMappers mappers;
+  protected ValueMappers<T> mappers;
 
   protected ValueMapper<T> serializer;
   protected T cachedValue;
 
-  public VariableValue(String executionId, String variableName, TypedValueField typedValueField, ValueMappers mappers) {
+  public VariableValue(String executionId, String variableName, TypedValueField typedValueField, ValueMappers<T> mappers) {
     this.executionId = executionId;
     this.variableName = variableName;
     this.typedValueField = typedValueField;
@@ -67,7 +67,6 @@ public class VariableValue<T extends TypedValue> {
     return cachedValue;
   }
 
-  @SuppressWarnings("unchecked")
   public ValueMapper<T> getSerializer() {
     if (serializer == null) {
       serializer = mappers.findMapperForTypedValueField(typedValueField);

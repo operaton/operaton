@@ -23,7 +23,7 @@ import java.util.Collections;
  */
 public class EmptyHalCollection extends HalCollectionResource<EmptyHalCollection> {
 
-  public static final HalResource INSTANCE = new EmptyHalCollection();
+  public static final HalResource<?> INSTANCE = new EmptyHalCollection();
 
   public EmptyHalCollection() {
     this(0);
@@ -36,7 +36,7 @@ public class EmptyHalCollection extends HalCollectionResource<EmptyHalCollection
   }
 
   @SuppressWarnings("unchecked")
-  public static <T extends HalCollectionResource> T emptyHalCollection() {
+  public static <T extends HalCollectionResource<?>> T emptyHalCollection() {
     return (T) INSTANCE;
   }
 

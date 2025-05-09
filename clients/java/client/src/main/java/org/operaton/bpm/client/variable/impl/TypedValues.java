@@ -27,13 +27,13 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TypedValues {
+public class TypedValues<T extends TypedValue> {
 
   protected static final ExternalTaskClientLogger LOG = ExternalTaskClientLogger.CLIENT_LOGGER;
 
-  protected ValueMappers serializers;
+  protected ValueMappers<T> serializers;
 
-  public TypedValues(ValueMappers serializers) {
+  public TypedValues(ValueMappers<T> serializers) {
     this.serializers = serializers;
   }
 
@@ -52,7 +52,8 @@ public class TypedValues {
         }
 
         try {
-          TypedValue typedValue = createTypedValue(variableValue);
+          @SuppressWarnings("unchecked")
+          T typedValue = (T) createTypedValue(variableValue);
           TypedValueField typedValueField = toTypedValueField(typedValue);
           result.put(variableName, typedValueField);
         }
@@ -67,11 +68,10 @@ public class TypedValues {
     return result;
   }
 
-  @SuppressWarnings("rawtypes")
-  public Map<String, VariableValue> wrapVariables(ExternalTask externalTask, Map<String, TypedValueField> variables) {
+  public Map<String, VariableValue<T>> wrapVariables(ExternalTask externalTask, Map<String, TypedValueField> variables) {
     String executionId = externalTask.getExecutionId();
 
-    Map<String, VariableValue> result = new HashMap<>();
+    Map<String, VariableValue<T>> result = new HashMap<>();
 
     if (variables != null) {
       variables.forEach((variableName, variableValue) -> {
@@ -80,7 +80,7 @@ public class TypedValues {
         typeName = Character.toLowerCase(typeName.charAt(0)) + typeName.substring(1);
         variableValue.setType(typeName);
 
-        VariableValue value = new VariableValue(executionId, variableName, variableValue, serializers);
+        VariableValue<T> value = new VariableValue<>(executionId, variableName, variableValue, serializers);
         result.put(variableName, value);
       });
     }
@@ -88,7 +88,7 @@ public class TypedValues {
     return result;
   }
 
-  protected <T extends TypedValue> TypedValueField toTypedValueField(T typedValue) {
+  protected  TypedValueField toTypedValueField(T typedValue) {
     ValueMapper<T> serializer = findSerializer(typedValue);
 
     if(typedValue instanceof UntypedValueImpl untypedValue) {
@@ -109,8 +109,7 @@ public class TypedValues {
     return typedValueField;
   }
 
-  @SuppressWarnings("unchecked")
-  protected <T extends TypedValue> ValueMapper<T> findSerializer(T typedValue) {
+  protected ValueMapper<T> findSerializer(T typedValue) {
     return serializers.findMapperForTypedValue(typedValue);
   }
 

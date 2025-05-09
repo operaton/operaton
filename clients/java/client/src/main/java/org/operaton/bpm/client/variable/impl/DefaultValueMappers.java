@@ -87,7 +87,7 @@ public class DefaultValueMappers<T extends TypedValue> implements Serializable, 
   }
 
   @Override
-  public ValueMappers addMapper(ValueMapper<T> serializer) {
+  public ValueMappers<T> addMapper(ValueMapper<T> serializer) {
     serializerList.add(serializer);
     return this;
   }

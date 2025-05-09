@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 
 import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
@@ -67,8 +68,8 @@ public class JobExecutorCleanupTest {
     // when/then
     // then: job cannot be acquired & executed
     assertThatThrownBy(() -> testRule.waitForJobExecutorToProcessAllJobs())
-      .isInstanceOf(AssertionError.class)
-      .hasMessageContaining("time limit of 10000 was exceeded");
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Time limit of 10000 was exceeded (still 1 jobs available)");
   }
 
   @After

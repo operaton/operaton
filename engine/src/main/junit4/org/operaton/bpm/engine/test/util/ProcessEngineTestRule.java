@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.util;
 
 import junit.framework.AssertionFailedError;
-import org.awaitility.core.ConditionTimeoutException;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -33,10 +32,8 @@ import org.operaton.bpm.engine.impl.cmmn.behavior.CaseControlRuleImpl;
 import org.operaton.bpm.engine.impl.el.FixedValue;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
@@ -52,10 +49,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
@@ -190,39 +185,11 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    waitForJobExecutorToProcessAllJobs(0);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), 10L, 1L);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    jobExecutor.start();
-    long intervalMillis = 1000;
-
-    int jobExecutorWaitTime = jobExecutor.getWaitTimeInMillis() * 2;
-    if(maxMillisToWait < jobExecutorWaitTime) {
-      maxMillisToWait = jobExecutorWaitTime;
-    }
-
-    try {
-      await().pollDelay(intervalMillis, MILLISECONDS)
-              .atMost(maxMillisToWait, MILLISECONDS)
-              .until(() -> !areJobsAvailable());
-    } catch (ConditionTimeoutException e) {
-        throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + availableJobs());
-    } finally {
-      jobExecutor.shutdown();
-    }
-  }
-
-  protected List<Job> availableJobs() {
-    return processEngine.getManagementService().createJobQuery().list().stream()
-            .filter(job -> !job.isSuspended() && job.getRetries() > 0 && (job.getDuedate() == null || ClockUtil.getCurrentTime().after(job.getDuedate())))
-            .toList();
-  }
-
-  protected boolean areJobsAvailable() {
-    return !availableJobs().isEmpty();
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), maxMillisToWait);
   }
 
   /**

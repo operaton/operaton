@@ -17,7 +17,7 @@
 package org.operaton.bpm.quarkus.engine.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.impl.test.TestHelper.waitForJobExecutorToProcessAllJobs;
+import static org.operaton.bpm.engine.test.util.JobExecutorHelper.waitForJobExecutorToProcessAllJobs;
 
 import io.quarkus.test.QuarkusUnitTest;
 import jakarta.enterprise.context.ApplicationScoped;

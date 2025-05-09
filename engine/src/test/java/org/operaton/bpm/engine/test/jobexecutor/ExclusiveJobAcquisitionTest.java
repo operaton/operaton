@@ -18,7 +18,7 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
+import static org.operaton.bpm.engine.test.util.JobExecutorHelper.waitForJobExecutorToProcessAllJobs;
 
 import java.util.ArrayList;
 import java.util.HashSet;

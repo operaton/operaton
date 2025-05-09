@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.util;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -160,5 +161,12 @@ public class CompareUtil {
    */
   public static <T extends Comparable<T>> T max(T obj1, T obj2) {
     return obj1.compareTo(obj2) >= 0 ? obj1 : obj2;
+  }
+
+  public static <T> boolean elementsAreContainedInArray(Collection<T>  subset, T[]  superset) {
+    if (subset != null && !subset.isEmpty() && superset != null && superset.length > 0 && superset.length >= subset.size()) {
+      return new HashSet<>(Arrays.asList(superset)).containsAll(subset);
+    }
+    return false;
   }
 }

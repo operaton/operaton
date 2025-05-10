@@ -42,6 +42,7 @@ import org.operaton.bpm.engine.impl.util.CompareUtil;
 public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<HistoricCaseActivityInstanceQuery, HistoricCaseActivityInstance> implements HistoricCaseActivityInstanceQuery {
 
   private static final long serialVersionUID = 1L;
+  private static final String CASE_ACTIVITY_STATE = "caseActivityState";
 
   protected String[] caseActivityInstanceIds;
   protected String[] caseActivityIds;
@@ -191,48 +192,55 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
 
   @Override
   public HistoricCaseActivityInstanceQuery available() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
+            CASE_ACTIVITY_STATE, caseActivityInstanceState);
     this.caseActivityInstanceState = AVAILABLE.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery enabled() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
+            CASE_ACTIVITY_STATE, caseActivityInstanceState);
     this.caseActivityInstanceState = ENABLED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery disabled() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
+            CASE_ACTIVITY_STATE, caseActivityInstanceState);
     this.caseActivityInstanceState = DISABLED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery active() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
+            CASE_ACTIVITY_STATE, caseActivityInstanceState);
     this.caseActivityInstanceState = ACTIVE.getStateCode();
     return this;
   }
 
   public HistoricCaseActivityInstanceQuery suspended() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
+            CASE_ACTIVITY_STATE, caseActivityInstanceState);
     this.caseActivityInstanceState = SUSPENDED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery completed() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
+            CASE_ACTIVITY_STATE, caseActivityInstanceState);
     this.caseActivityInstanceState = COMPLETED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery terminated() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
+            CASE_ACTIVITY_STATE, caseActivityInstanceState);
     this.caseActivityInstanceState = TERMINATED.getStateCode();
     return this;
   }

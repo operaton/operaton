@@ -31,12 +31,20 @@ import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static java.lang.Boolean.TRUE;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Joram Barrez
@@ -83,6 +91,16 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
    */
 
   private static final long serialVersionUID = 1L;
+  private static final String KEY_TASK_CANDIDATE_GROUP = "taskCandidateGroup";
+  private static final String KEY_TASK_CANDIDATE_USER = "taskCandidateUser";
+  private static final String KEY_TASK_CANDIDATE_GROUP_IN = "taskCandidateGroupIn";
+  private static final String KEY_DUE_DATE = "dueDate";
+  private static final String KEY_DUE_BEFORE = "dueBefore";
+  private static final String KEY_DUE_AFTER = "dueAfter";
+  private static final String KEY_FOLLOW_UP_DATE = "followUpDate";
+  private static final String KEY_FOLLOW_UP_BEFORE = "followUpBefore";
+  private static final String KEY_FOLLOW_UP_BEFORE_OR_NOT_EXISTENT = "followUpBeforeOrNotExistent";
+  private static final String KEY_FOLLOW_UP_AFTER = "followUpAfter";
   protected String taskId;
   protected String[] taskIdIn;
   protected String name;
@@ -344,16 +362,16 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQueryImpl taskCandidateUser(String candidateUser) {
     ensureNotNull("Candidate user", candidateUser);
     if (!isOrQueryActive) {
-      if (candidateGroup != null || expressions.containsKey("taskCandidateGroup")) {
+      if (candidateGroup != null || expressions.containsKey(KEY_TASK_CANDIDATE_GROUP)) {
         throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroup");
       }
-      if (candidateGroups != null || expressions.containsKey("taskCandidateGroupIn")) {
+      if (candidateGroups != null || expressions.containsKey(KEY_TASK_CANDIDATE_GROUP_IN)) {
         throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroupIn");
       }
     }
 
     this.candidateUser = candidateUser;
-    expressions.remove("taskCandidateUser");
+    expressions.remove(KEY_TASK_CANDIDATE_USER);
     return this;
   }
 
@@ -361,14 +379,14 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskCandidateUserExpression(String candidateUserExpression) {
     ensureNotNull("Candidate user expression", candidateUserExpression);
 
-    if (candidateGroup != null || expressions.containsKey("taskCandidateGroup")) {
+    if (candidateGroup != null || expressions.containsKey(KEY_TASK_CANDIDATE_GROUP)) {
       throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroup");
     }
-    if (candidateGroups != null || expressions.containsKey("taskCandidateGroupIn")) {
+    if (candidateGroups != null || expressions.containsKey(KEY_TASK_CANDIDATE_GROUP_IN)) {
       throw new ProcessEngineException("Invalid query usage: cannot set both candidateUser and candidateGroupIn");
     }
 
-    expressions.put("taskCandidateUser", candidateUserExpression);
+    expressions.put(KEY_TASK_CANDIDATE_USER, candidateUserExpression);
     return this;
   }
 
@@ -419,12 +437,12 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQueryImpl taskCandidateGroup(String candidateGroup) {
     ensureNotNull("Candidate group", candidateGroup);
 
-    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey(KEY_TASK_CANDIDATE_USER))) {
       throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
     }
 
     this.candidateGroup = candidateGroup;
-    expressions.remove("taskCandidateGroup");
+    expressions.remove(KEY_TASK_CANDIDATE_GROUP);
     return this;
   }
 
@@ -432,11 +450,11 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskCandidateGroupExpression(String candidateGroupExpression) {
     ensureNotNull("Candidate group expression", candidateGroupExpression);
 
-    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey(KEY_TASK_CANDIDATE_USER))) {
       throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
     }
 
-    expressions.put("taskCandidateGroup", candidateGroupExpression);
+    expressions.put(KEY_TASK_CANDIDATE_GROUP, candidateGroupExpression);
     return this;
   }
 
@@ -444,7 +462,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskCandidateGroupLike(String candidateGroupLike) {
     ensureNotNull("Candidate group like", candidateGroupLike);
 
-    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey(KEY_TASK_CANDIDATE_USER))) {
       throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupLike and candidateUser");
     }
 
@@ -456,12 +474,12 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskCandidateGroupIn(List<String> candidateGroups) {
     ensureNotEmpty("Candidate group list", candidateGroups);
 
-    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey(KEY_TASK_CANDIDATE_USER))) {
       throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
     }
 
     this.candidateGroups = candidateGroups;
-    expressions.remove("taskCandidateGroupIn");
+    expressions.remove(KEY_TASK_CANDIDATE_GROUP_IN);
     return this;
   }
 
@@ -469,11 +487,11 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskCandidateGroupInExpression(String candidateGroupsExpression) {
     ensureNotEmpty("Candidate group list expression", candidateGroupsExpression);
 
-    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey(KEY_TASK_CANDIDATE_USER))) {
       throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
     }
 
-    expressions.put("taskCandidateGroupIn", candidateGroupsExpression);
+    expressions.put(KEY_TASK_CANDIDATE_GROUP_IN, candidateGroupsExpression);
     return this;
   }
 
@@ -481,8 +499,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery includeAssignedTasks() {
     if (candidateUser == null && candidateGroup == null && candidateGroupLike == null && candidateGroups == null
         && !isWithCandidateGroups() && !isWithoutCandidateGroups() && !isWithCandidateUsers() && !isWithoutCandidateUsers()
-        && !expressions.containsKey("taskCandidateUser") && !expressions.containsKey("taskCandidateGroup")
-        && !expressions.containsKey("taskCandidateGroupIn")) {
+        && !expressions.containsKey(KEY_TASK_CANDIDATE_USER) && !expressions.containsKey(KEY_TASK_CANDIDATE_GROUP)
+        && !expressions.containsKey(KEY_TASK_CANDIDATE_GROUP_IN)) {
       throw new ProcessEngineException("Invalid query usage: candidateUser, candidateGroup, candidateGroupLike, candidateGroupIn, withCandidateGroups, withoutCandidateGroups, withCandidateUsers, withoutCandidateUsers has to be called before 'includeAssignedTasks'.");
     }
 
@@ -889,7 +907,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     }
 
     this.dueDate = dueDate;
-    expressions.remove("dueDate");
+    expressions.remove(KEY_DUE_DATE);
     return this;
   }
 
@@ -901,7 +919,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
         throw new ProcessEngineException("Invalid query usage: cannot set both dueDateExpression and withoutDueDate filters.");
     }
 
-    expressions.put("dueDate", dueDateExpression);
+    expressions.put(KEY_DUE_DATE, dueDateExpression);
     return this;
   }
 
@@ -914,7 +932,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     }
 
     this.dueBefore = dueBefore;
-    expressions.remove("dueBefore");
+    expressions.remove(KEY_DUE_BEFORE);
     return this;
   }
 
@@ -926,7 +944,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       throw new ProcessEngineException("Invalid query usage: cannot set both dueBeforeExpression and withoutDueDate filters.");
     }
 
-    expressions.put("dueBefore", dueDate);
+    expressions.put(KEY_DUE_BEFORE, dueDate);
     return this;
   }
 
@@ -939,7 +957,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     }
 
     this.dueAfter = dueAfter;
-    expressions.remove("dueAfter");
+    expressions.remove(KEY_DUE_AFTER);
     return this;
   }
 
@@ -951,7 +969,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       throw new ProcessEngineException("Invalid query usage: cannot set both dueAfterExpression and withoutDueDate filters.");
     }
 
-    expressions.put("dueAfter", dueDateExpression);
+    expressions.put(KEY_DUE_AFTER, dueDateExpression);
     return this;
   }
 
@@ -960,8 +978,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     // The due date filters can't be used in an AND query with
     // the withoutDueDate filter. They can be combined in an OR query
     if (!isOrQueryActive &&
-            (dueAfter != null || dueBefore != null || dueDate != null || expressions.containsKey("dueDate")
-            || expressions.containsKey("dueBefore") || expressions.containsKey("dueAfter"))) {
+            (dueAfter != null || dueBefore != null || dueDate != null || expressions.containsKey(KEY_DUE_DATE)
+            || expressions.containsKey(KEY_DUE_BEFORE) || expressions.containsKey(KEY_DUE_AFTER))) {
       throw new ProcessEngineException("Invalid query usage: cannot set both due date (equal to, before, or after) and withoutDueDate filters.");
     }
 
@@ -972,13 +990,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   @Override
   public TaskQuery followUpDate(Date followUpDate) {
     this.followUpDate = followUpDate;
-    expressions.remove("followUpDate");
+    expressions.remove(KEY_FOLLOW_UP_DATE);
     return this;
   }
 
   @Override
   public TaskQuery followUpDateExpression(String followUpDateExpression) {
-    expressions.put("followUpDate", followUpDateExpression);
+    expressions.put(KEY_FOLLOW_UP_DATE, followUpDateExpression);
     return this;
   }
 
@@ -986,14 +1004,14 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery followUpBefore(Date followUpBefore) {
     this.followUpBefore = followUpBefore;
     this.followUpNullAccepted = false;
-    expressions.remove("followUpBefore");
+    expressions.remove(KEY_FOLLOW_UP_BEFORE);
     return this;
   }
 
   @Override
   public TaskQuery followUpBeforeExpression(String followUpBeforeExpression) {
     this.followUpNullAccepted = false;
-    expressions.put("followUpBefore", followUpBeforeExpression);
+    expressions.put(KEY_FOLLOW_UP_BEFORE, followUpBeforeExpression);
     return this;
   }
 
@@ -1001,13 +1019,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery followUpBeforeOrNotExistent(Date followUpDate) {
     this.followUpBefore = followUpDate;
     this.followUpNullAccepted = true;
-    expressions.remove("followUpBeforeOrNotExistent");
+    expressions.remove(KEY_FOLLOW_UP_BEFORE_OR_NOT_EXISTENT);
     return this;
   }
 
   @Override
   public TaskQuery followUpBeforeOrNotExistentExpression(String followUpDateExpression) {
-    expressions.put("followUpBeforeOrNotExistent", followUpDateExpression);
+    expressions.put(KEY_FOLLOW_UP_BEFORE_OR_NOT_EXISTENT, followUpDateExpression);
     this.followUpNullAccepted = true;
     return this;
   }
@@ -1019,13 +1037,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   @Override
   public TaskQuery followUpAfter(Date followUpAfter) {
     this.followUpAfter = followUpAfter;
-    expressions.remove("followUpAfter");
+    expressions.remove(KEY_FOLLOW_UP_AFTER);
     return this;
   }
 
   @Override
   public TaskQuery followUpAfterExpression(String followUpAfterExpression) {
-    expressions.put("followUpAfter", followUpAfterExpression);
+    expressions.put(KEY_FOLLOW_UP_AFTER, followUpAfterExpression);
     return this;
   }
 

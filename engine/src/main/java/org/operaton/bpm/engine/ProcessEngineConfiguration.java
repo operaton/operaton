@@ -200,6 +200,7 @@ public abstract class ProcessEngineConfiguration {
    * effectively unusable on most databases.
    */
   public static final String AUTHORIZATION_CHECK_REVOKE_AUTO = "auto";
+  private static final String BEAN_PROCESS_ENGINE_CONFIGURATION = "processEngineConfiguration";
 
   protected String processEngineName = ProcessEngines.NAME_DEFAULT;
   protected int idBlockSize = 100;
@@ -426,15 +427,17 @@ public abstract class ProcessEngineConfiguration {
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResourceDefault() {
     ProcessEngineConfiguration processEngineConfiguration = null;
     try {
-      processEngineConfiguration = createProcessEngineConfigurationFromResource("operaton.cfg.xml", "processEngineConfiguration");
+      processEngineConfiguration = createProcessEngineConfigurationFromResource("operaton.cfg.xml",
+              BEAN_PROCESS_ENGINE_CONFIGURATION);
     } catch (RuntimeException ex) {
-      processEngineConfiguration = createProcessEngineConfigurationFromResource("activiti.cfg.xml", "processEngineConfiguration");
+      processEngineConfiguration = createProcessEngineConfigurationFromResource("activiti.cfg.xml",
+              BEAN_PROCESS_ENGINE_CONFIGURATION);
     }
     return processEngineConfiguration;
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResource(String resource) {
-    return createProcessEngineConfigurationFromResource(resource, "processEngineConfiguration");
+    return createProcessEngineConfigurationFromResource(resource, BEAN_PROCESS_ENGINE_CONFIGURATION);
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResource(String resource, String beanName) {
@@ -442,7 +445,7 @@ public abstract class ProcessEngineConfiguration {
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromInputStream(InputStream inputStream) {
-    return createProcessEngineConfigurationFromInputStream(inputStream, "processEngineConfiguration");
+    return createProcessEngineConfigurationFromInputStream(inputStream, BEAN_PROCESS_ENGINE_CONFIGURATION);
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromInputStream(InputStream inputStream, String beanName) {

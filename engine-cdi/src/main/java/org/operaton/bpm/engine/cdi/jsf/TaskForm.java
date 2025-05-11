@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.cdi.jsf;
 
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.cdi.BusinessProcess;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.cdi.BusinessProcess;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
@@ -36,6 +36,10 @@ import java.util.logging.Logger;
 @Named("operatonTaskForm")
 public class TaskForm implements Serializable {
 
+  private static final String REQUEST_PARAM_TASK_ID = "taskId";
+  private static final String REQUEST_PARAM_CALLBACK_URL = "callbackUrl";
+  private static final String REQUEST_PARAM_PROCESS_DEFINITION_ID = "processDefinitionId";
+  private static final String REQUEST_PARAM_PROCESS_DEFINITION_KEY = "processDefinitionKey";
   private static Logger log = Logger.getLogger(TaskForm.class.getName());
 
   private static final long serialVersionUID = 1L;
@@ -85,8 +89,8 @@ public class TaskForm implements Serializable {
    */
   public void startTaskForm() {
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    String taskId = requestParameterMap.get("taskId");
-    String callbackUrl = requestParameterMap.get("callbackUrl");
+    String taskId = requestParameterMap.get(REQUEST_PARAM_TASK_ID);
+    String callbackUrl = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
 
     if (taskId==null || callbackUrl == null) {
       if (FacesContext.getCurrentInstance().isPostback()) {
@@ -144,8 +148,8 @@ public class TaskForm implements Serializable {
     }
 
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    this.url = requestParameterMap.get("callbackUrl");
-    this.processDefinitionId = requestParameterMap.get("processDefinitionId");
+    this.url = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
+    this.processDefinitionId = requestParameterMap.get(REQUEST_PARAM_PROCESS_DEFINITION_ID);
     beginConversation();
   }
 
@@ -176,8 +180,8 @@ public class TaskForm implements Serializable {
     }
 
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    String processDefinitionKey = requestParameterMap.get("processDefinitionKey");
-    String callbackUrl = requestParameterMap.get("callbackUrl");
+    String processDefinitionKey = requestParameterMap.get(REQUEST_PARAM_PROCESS_DEFINITION_KEY);
+    String callbackUrl = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
     this.url = callbackUrl;
     this.processDefinitionKey = processDefinitionKey;
     beginConversation();

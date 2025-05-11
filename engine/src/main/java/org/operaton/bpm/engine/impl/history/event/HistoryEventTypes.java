@@ -23,6 +23,7 @@ package org.operaton.bpm.engine.impl.history.event;
  * @author Ingo Richtsmeier
  * @since 7.2
  */
+@SuppressWarnings("java:S1192")
 public enum HistoryEventTypes implements HistoryEventType {
 
   /** fired when a process instance is started. */

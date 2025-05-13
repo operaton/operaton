@@ -3514,7 +3514,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated Use {@link #getCustomPreBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public List<BpmnParseListener> getPreParseListeners() {
     return preParseListeners;
   }
@@ -3522,7 +3522,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated Use {@link #setCustomPreBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public void setPreParseListeners(List<BpmnParseListener> preParseListeners) {
     this.preParseListeners = preParseListeners;
   }
@@ -3530,7 +3530,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated Use {@link #getCustomPostBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public List<BpmnParseListener> getPostParseListeners() {
     return postParseListeners;
   }
@@ -3538,7 +3538,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated Use {@link #setCustomPostBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public void setPostParseListeners(List<BpmnParseListener> postParseListeners) {
     this.postParseListeners = postParseListeners;
   }
@@ -4453,7 +4453,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated Use {@link #getHostnameProvider()} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public MetricsReporterIdProvider getMetricsReporterIdProvider() {
     return metricsReporterIdProvider;
   }
@@ -4461,7 +4461,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * @deprecated Use {@link #setHostnameProvider(HostnameProvider)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public ProcessEngineConfigurationImpl setMetricsReporterIdProvider(MetricsReporterIdProvider metricsReporterIdProvider) {
     this.metricsReporterIdProvider = metricsReporterIdProvider;
     return this;

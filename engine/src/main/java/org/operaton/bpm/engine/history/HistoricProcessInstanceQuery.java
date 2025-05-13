@@ -391,7 +391,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    *
    * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricProcessInstanceQuery startDateBy(Date date);
 
   /**
@@ -399,7 +399,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    *
    * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricProcessInstanceQuery startDateOn(Date date);
 
   /**
@@ -408,7 +408,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    *
    * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricProcessInstanceQuery finishDateBy(Date date);
 
   /**
@@ -416,7 +416,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    *
    * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricProcessInstanceQuery finishDateOn(Date date);
 
   /**

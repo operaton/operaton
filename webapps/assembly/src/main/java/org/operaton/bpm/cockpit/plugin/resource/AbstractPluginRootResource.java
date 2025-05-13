@@ -21,7 +21,7 @@ package org.operaton.bpm.cockpit.plugin.resource;
  * @see AbstractCockpitPluginRootResource
  * @author nico.rehwaldt
  */
-@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+@Deprecated(forRemoval = true, since = "1.0")
 public class AbstractPluginRootResource extends AbstractCockpitPluginRootResource {
 
   public AbstractPluginRootResource(String pluginName) {

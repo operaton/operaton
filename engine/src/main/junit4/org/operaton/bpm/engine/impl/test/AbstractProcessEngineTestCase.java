@@ -236,7 +236,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
    * @param maxMillisToWait
    * @param intervalMillis
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait, long intervalMillis) {
     waitForJobExecutorToProcessAllJobs(maxMillisToWait);
   }
@@ -279,7 +279,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     }
   }
 
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorOnCondition(long maxMillisToWait, long intervalMillis, Callable<Boolean> condition) {
     waitForJobExecutorOnCondition(maxMillisToWait, condition);
   }
@@ -392,7 +392,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     }
   }
 
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   protected List<ActivityInstance> getInstancesForActivitiyId(ActivityInstance activityInstance, String activityId) {
     return getInstancesForActivityId(activityInstance, activityId);
   }

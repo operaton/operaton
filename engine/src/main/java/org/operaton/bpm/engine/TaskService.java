@@ -1101,7 +1101,7 @@ public interface TaskService {
    *
    * @deprecated Use {@link #createComment(String, String, String)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void addComment(String taskId, String processInstanceId, String message);
 
   /** Creates a comment to a task and/or process instance and returns the comment. */
@@ -1200,7 +1200,7 @@ public interface TaskService {
    *
    * @see HistoryService#createUserOperationLogQuery()
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   List<Event> getTaskEvents(String taskId);
 
   /** The comments related to the given process instance. */

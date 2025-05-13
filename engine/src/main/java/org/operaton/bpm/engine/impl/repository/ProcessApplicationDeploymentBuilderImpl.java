@@ -118,7 +118,7 @@ public class ProcessApplicationDeploymentBuilderImpl extends DeploymentBuilderIm
    * @deprecated Use {@link #enableDuplicateFiltering(boolean)} instead.
    */
   @Override
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public ProcessApplicationDeploymentBuilderImpl enableDuplicateFiltering() {
     return (ProcessApplicationDeploymentBuilderImpl) super.enableDuplicateFiltering(false);
   }

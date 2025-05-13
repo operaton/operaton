@@ -34,14 +34,14 @@ public abstract class AbstractFormFieldType implements FormType {
    * @deprecated
    * @param propertyValue
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public abstract Object convertFormValueToModelValue(Object propertyValue);
 
   /**
    * @deprecated
    * @param modelValue
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public abstract String convertModelValueToFormValue(Object modelValue);
 
   @Override

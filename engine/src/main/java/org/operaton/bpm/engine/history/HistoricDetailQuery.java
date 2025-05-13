@@ -82,7 +82,7 @@ public interface HistoricDetailQuery extends Query<HistoricDetailQuery, Historic
   HistoricDetailQuery variableNameLike(String variableNameLike);
 
   /** Only select {@link HistoricFormProperty}s. */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricDetailQuery formProperties();
 
   /** Only select {@link HistoricFormField}s. */

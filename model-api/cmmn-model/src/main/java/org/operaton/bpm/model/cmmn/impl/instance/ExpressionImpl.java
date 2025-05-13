@@ -39,7 +39,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
   protected static Attribute<String> languageAttribute;
 
   // cmmn 1.0
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   protected static ChildElement<Body> bodyChild;
 
   public ExpressionImpl(ModelTypeInstanceContext instanceContext) {

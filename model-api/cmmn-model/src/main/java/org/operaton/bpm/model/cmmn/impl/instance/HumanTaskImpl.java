@@ -54,7 +54,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
   protected static AttributeReference<Role> performerRefAttribute;
 
   // cmmn 1.0
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   protected static ChildElementCollection<PlanningTable> planningTableCollection;
 
   // cmmn 1.1

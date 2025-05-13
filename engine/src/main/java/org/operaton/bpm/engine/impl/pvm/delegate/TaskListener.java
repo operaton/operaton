@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.delegate.DelegateTask;
  * 
  * @author Tom Baeyens
  */
-@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+@Deprecated(forRemoval = true, since = "1.0")
 public interface TaskListener {
 
   String EVENTNAME_CREATE = "create";

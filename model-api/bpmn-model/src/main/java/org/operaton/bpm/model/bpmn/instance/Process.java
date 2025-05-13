@@ -96,10 +96,10 @@ public interface Process extends CallableElement {
 
   void setOperatonTaskPriority(String taskPriority);
 
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   Integer getOperatonHistoryTimeToLive();
 
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
 
   String getOperatonHistoryTimeToLiveString();

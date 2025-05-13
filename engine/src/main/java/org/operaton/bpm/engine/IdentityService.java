@@ -467,19 +467,19 @@ public interface IdentityService {
   void deleteUserInfo(String userId, String key);
 
   /** Store account information for a remote system */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void setUserAccount(String userId, String userPassword, String accountName, String accountUsername, String accountPassword, Map<String, String> accountDetails);
 
   /** Get account names associated with the given user */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   List<String> getUserAccountNames(String userId);
 
   /** Get account information associated with a user */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   Account getUserAccount(String userId, String userPassword, String accountName);
 
   /** Delete an entry of the generic extensibility key-value pairs associated with a user */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteUserAccount(String userId, String accountName);
 
 }

@@ -122,7 +122,7 @@ public class JsonTaskQueryConverter extends JsonObjectConverter<TaskQuery> {
   /**
    * Exists for backwards compatibility with 7.2; deprecated since 7.3
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String ORDER_BY = "orderBy";
 
   protected static JsonTaskQueryVariableValueConverter variableValueConverter = new JsonTaskQueryVariableValueConverter();

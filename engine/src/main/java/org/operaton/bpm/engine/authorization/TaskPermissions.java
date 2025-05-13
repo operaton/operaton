@@ -58,7 +58,7 @@ public enum TaskPermissions implements Permission {
    *
    * @deprecated since the permission is not used by any built-in functionality of Operaton.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   READ_HISTORY("READ_HISTORY", 4096),
 
   /** Indicates that TASK_WORK interactions are permitted */

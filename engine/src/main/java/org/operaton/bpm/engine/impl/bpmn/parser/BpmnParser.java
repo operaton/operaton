@@ -55,7 +55,7 @@ public class BpmnParser extends Parser {
    * The namespace of the Camunda custom BPMN extensions.
    * @deprecated use {@link #OPERATON_BPMN_EXTENSIONS_NS}
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String CAMUNDA_BPMN_EXTENSIONS_NS = "http://camunda.org/schema/1.0/bpmn";
 
   /**

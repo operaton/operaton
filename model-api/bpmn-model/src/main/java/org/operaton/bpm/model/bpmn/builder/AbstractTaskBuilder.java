@@ -36,7 +36,7 @@ public abstract class AbstractTaskBuilder<B extends AbstractTaskBuilder<B, E>, E
    * @deprecated Use {@link #operatonAsyncBefore(boolean)} instead.
    * @return the builder object
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public B operatonAsync() {
     element.setOperatonAsyncBefore(true);
     return myself;
@@ -49,7 +49,7 @@ public abstract class AbstractTaskBuilder<B extends AbstractTaskBuilder<B, E>, E
    * @param isOperatonAsync the async state of the task
    * @return the builder object
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public B operatonAsync(boolean isOperatonAsync) {
     element.setOperatonAsyncBefore(isOperatonAsync);
     return myself;

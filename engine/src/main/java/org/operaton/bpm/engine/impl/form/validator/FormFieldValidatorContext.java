@@ -34,7 +34,7 @@ public interface FormFieldValidatorContext {
 
   /** @return the execution
    * Deprecated, use {@link #getVariableScope()} */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public DelegateExecution getExecution();
 
   /**

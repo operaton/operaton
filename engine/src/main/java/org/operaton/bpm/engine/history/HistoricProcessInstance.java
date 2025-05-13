@@ -69,7 +69,7 @@ public interface HistoricProcessInstance {
    *  which activity id will be referenced here. Use a {@link HistoricActivityInstanceQuery} instead to query
    *  for end events of the process instance (use the activityTYpe attribute)
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   String getEndActivityId();
 
   /** The authenticated user that started this process instance.

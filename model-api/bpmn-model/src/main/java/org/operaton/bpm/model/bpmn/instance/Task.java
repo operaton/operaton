@@ -30,13 +30,13 @@ public interface Task extends Activity {
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   boolean isOperatonAsync();
 
   /**
    * @deprecated Use setOperatonAsyncBefore(isOperatonAsyncBefore) instead;
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void setOperatonAsync(boolean isOperatonAsync);
 
   @Override

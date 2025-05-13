@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * @author nico.rehwaldt
  * @deprecated
  */
-@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+@Deprecated(forRemoval = true, since = "1.0")
 public class AbstractEngineAware {
 
   private final String engineName;

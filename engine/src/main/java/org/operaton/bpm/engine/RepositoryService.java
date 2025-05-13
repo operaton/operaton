@@ -98,7 +98,7 @@ public interface RepositoryService {
    *
    * @deprecated Use {@link #deleteDeployment(String, boolean)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteDeploymentCascade(String deploymentId);
 
   /**
@@ -634,7 +634,7 @@ public interface RepositoryService {
    *
    * @deprecated Use authorization mechanism instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void addCandidateStarterUser(String processDefinitionId, String userId);
 
   /**
@@ -648,7 +648,7 @@ public interface RepositoryService {
    *
    * @deprecated Use authorization mechanism instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void addCandidateStarterGroup(String processDefinitionId, String groupId);
 
   /**
@@ -662,7 +662,7 @@ public interface RepositoryService {
    *
    * @deprecated Use authorization mechanism instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteCandidateStarterUser(String processDefinitionId, String userId);
 
   /**
@@ -676,7 +676,7 @@ public interface RepositoryService {
    *
    * @deprecated Use authorization mechanism instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteCandidateStarterGroup(String processDefinitionId, String groupId);
 
   /**
@@ -686,7 +686,7 @@ public interface RepositoryService {
    *
    * @deprecated Use authorization mechanism instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   List<IdentityLink> getIdentityLinksForProcessDefinition(String processDefinitionId);
 
   /**

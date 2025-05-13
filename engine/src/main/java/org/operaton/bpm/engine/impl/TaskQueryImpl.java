@@ -331,7 +331,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   /** @see {@link #taskUnassigned} */
   @Override
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public TaskQuery taskUnnassigned() {
     return taskUnassigned();
   }

@@ -39,7 +39,7 @@ public interface TransitionInstance extends ProcessElementInstance {
    * @deprecated a transition instances represents a transition <b>to</b> or <b>from</b>
    *  an activity; use {@link #getActivityId()} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   String getTargetActivityId();
 
   /**

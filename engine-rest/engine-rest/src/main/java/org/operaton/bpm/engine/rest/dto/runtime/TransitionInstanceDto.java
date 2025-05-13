@@ -54,7 +54,7 @@ public class TransitionInstanceDto {
   /**
    * @deprecated
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public String getTargetActivityId() {
     return activityId;
   }

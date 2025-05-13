@@ -41,7 +41,7 @@ public abstract class AbstractStartEventBuilder<B extends AbstractStartEventBuil
    * @deprecated Use {@link #operatonAsyncBefore()} instead.
    * @return the builder object
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public B operatonAsync() {
     element.setOperatonAsyncBefore(true);
     return myself;
@@ -54,7 +54,7 @@ public abstract class AbstractStartEventBuilder<B extends AbstractStartEventBuil
    * @param isOperatonAsync the async state of the task
    * @return the builder object
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public B operatonAsync(boolean isOperatonAsync) {
     element.setOperatonAsyncBefore(isOperatonAsync);
     return myself;

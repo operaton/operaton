@@ -149,7 +149,7 @@ public class CaseDefinitionQueryDto extends AbstractQueryDto<CaseDefinitionQuery
   /**
    * @deprecated Use {@link #setLatestVersion(Boolean)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   @OperatonQueryParam(value = "latest", converter = BooleanConverter.class)
   public void setLatest(Boolean latest) {
     setLatestVersion(latest);

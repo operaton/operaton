@@ -441,7 +441,7 @@ public interface HistoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#DECISION_DEFINITION}.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteHistoricDecisionInstance(String decisionDefinitionId);
 
   /**

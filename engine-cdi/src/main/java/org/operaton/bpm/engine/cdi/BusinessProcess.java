@@ -483,7 +483,7 @@ public class BusinessProcess implements Serializable {
    * @return the map of cached variables
    * @deprecated Use {@link #getAndClearCachedVariableMap()} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> getAndClearVariableCache() {
     return getAndClearCachedVariableMap();
   }
@@ -505,7 +505,7 @@ public class BusinessProcess implements Serializable {
    * @return a copy of the map of cached variables.
    * @deprecated Use {@link #getCachedVariableMap()} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> getVariableCache() {
     return getCachedVariableMap();
   }
@@ -582,7 +582,7 @@ public class BusinessProcess implements Serializable {
    * @return the map of cached variables
    * @deprecated Use {@link #getAndClearCachedLocalVariableMap()} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> getAndClearVariableLocalCache() {
     return getAndClearCachedLocalVariableMap();
   }
@@ -604,7 +604,7 @@ public class BusinessProcess implements Serializable {
    * @return a copy of the map of local cached variables.
    * @deprecated Use {@link #getCachedLocalVariableMap()} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> getVariableLocalCache() {
     return getCachedLocalVariableMap();
   }

@@ -64,7 +64,7 @@ public class TaskForm implements Serializable {
    * @param taskId
    * @param callbackUrl
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public void startTask(String taskId, String callbackUrl) {
     if (taskId==null || callbackUrl == null) {
       if (FacesContext.getCurrentInstance().isPostback()) {
@@ -127,7 +127,7 @@ public class TaskForm implements Serializable {
    * @param processDefinitionId
    * @param callbackUrl
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public void startProcessInstanceByIdForm(String processDefinitionId, String callbackUrl) {
     this.url = callbackUrl;
     this.processDefinitionId = processDefinitionId;
@@ -159,7 +159,7 @@ public class TaskForm implements Serializable {
    * @param processDefinitionKey
    * @param callbackUrl
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public void startProcessInstanceByKeyForm(String processDefinitionKey, String callbackUrl) {
     this.url = callbackUrl;
     this.processDefinitionKey = processDefinitionKey;

@@ -22,7 +22,7 @@ package org.operaton.bpm.engine.authorization;
  *
  * @deprecated These permissions have no effect.
  */
-@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+@Deprecated(forRemoval = true, since = "1.0")
 public enum OptimizePermissions implements Permission {
 
   /**

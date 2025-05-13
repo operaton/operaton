@@ -49,7 +49,7 @@ public abstract class AbstractOperatonConfiguration extends SpringBootProcessEng
   /**
    * @deprecated Use {@link SpringBootProcessEngineLogger} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   protected final Logger logger = getLogger(this.getClass());
 
   @Autowired

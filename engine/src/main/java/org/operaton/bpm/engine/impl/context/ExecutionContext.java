@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  * @author Roman Smirnov
  * @author Daniel Meyer
  */
-@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+@Deprecated(forRemoval = true, since = "1.0")
 public class ExecutionContext extends CoreExecutionContext<ExecutionEntity> {
 
   public ExecutionContext(ExecutionEntity execution) {

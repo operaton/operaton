@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.history.UserOperationLogQuery;
  * @see {@link TaskService#getTaskEvents(String)
  * @author Tom Baeyens
  */
-@Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+@Deprecated(forRemoval = true, since = "1.0")
 public interface Event {
 
   /** A user identity link was added with following message parts:

@@ -339,7 +339,7 @@ public class HistoricVariableInstanceEntity implements ValueFields, HistoricVari
   /**
    * @deprecated Use {@link #getActivityInstanceId()} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   @Override
   public String getActivtyInstanceId() {
     return activityInstanceId;

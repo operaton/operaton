@@ -115,7 +115,7 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
@@ -124,7 +124,7 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
   /**
    * @deprecated Use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);

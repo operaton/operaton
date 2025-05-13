@@ -81,7 +81,7 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
    * Only select process definitions with the given keys.
    * <p><b>Deprecated</b>: use {@link #processDefinitionKeyIn(String...)}</p>
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   ProcessDefinitionQueryImpl processDefinitionKeysIn(String... processDefinitionKeys);
 
   /**
@@ -188,7 +188,7 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
   /**
    * @see #messageEventSubscriptionName(String)
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   ProcessDefinitionQuery messageEventSubscription(String messageName);
 
   /**

@@ -244,13 +244,13 @@ public class BpmnParse extends Parse {
   /**
    * @deprecated Use {@link bpmnproperties#type} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String PROPERTYNAME_TYPE = BpmnProperties.TYPE.getName();
 
   /**
    * @deprecated use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS}
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.getName();
 
   /* process start authorization specific finals */

@@ -160,7 +160,7 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
   /**
    * @see #signalEventSubscriptionName(String)
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta-1")
+  @Deprecated(forRemoval = true, since = "1.0")
   ExecutionQuery signalEventSubscription(String signalName);
 
   /**

@@ -95,7 +95,7 @@ public class ManagedJobExecutorTest {
 
   private void executeJobs(String pid) {
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(pid, 5000L, 25L, processEngineConfiguration.getJobExecutor(), processEngineConfiguration.getManagementService(), true);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(pid, 5000L, 25L, processEngineConfiguration.getJobExecutor(), processEngineConfiguration.getManagementService());
   }
 
 }

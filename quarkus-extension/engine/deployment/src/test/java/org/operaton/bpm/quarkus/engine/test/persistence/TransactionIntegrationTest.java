@@ -28,12 +28,10 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.JobExecutorHelper;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -56,6 +54,7 @@ import java.sql.Statement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.JobExecutorHelper.waitForJobExecutorToProcessAllJobs;
 
 class TransactionIntegrationTest {
 
@@ -167,7 +166,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // when
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1000);
+    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1000);
 
     // then
     Incident incident = runtimeService.createIncidentQuery().activityId("servicetask").singleResult();
@@ -181,7 +180,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
     // when
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();
@@ -200,7 +199,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 
     // when
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();
@@ -219,7 +218,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 
     // when
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();

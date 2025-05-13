@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.delegate.Expression;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CaseControlRuleImpl;
 import org.operaton.bpm.engine.impl.el.FixedValue;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
@@ -52,7 +51,6 @@ import java.util.List;
 import java.util.TimerTask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
 
 public class ProcessEngineTestRule extends TestWatcher {
 
@@ -185,11 +183,11 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), 10L, 1L);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), 10L, 1L);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), maxMillisToWait);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), maxMillisToWait);
   }
 
   /**
@@ -220,7 +218,7 @@ public class ProcessEngineTestRule extends TestWatcher {
     executeAvailableJobs(0, expectedExecutions, recursive);
   }
 
-  private void executeAvailableJobs(int jobsExecuted, int expectedExecutions, Boolean recursive) {
+  private void executeAvailableJobs(int jobsExecuted, int expectedExecutions, boolean recursive) {
     List<Job> jobs = processEngine.getManagementService().createJobQuery().withRetriesLeft().list();
 
     if (jobs.isEmpty()) {
@@ -234,7 +232,9 @@ public class ProcessEngineTestRule extends TestWatcher {
       try {
         processEngine.getManagementService().executeJob(job.getId());
         jobsExecuted += 1;
-      } catch (Exception e) {}
+      } catch (Exception ignore) {
+        // ignore exception
+      }
     }
 
     assertThat(jobsExecuted).describedAs("executed more jobs than expected.").isLessThanOrEqualTo(expectedExecutions);

@@ -102,7 +102,7 @@ public interface ModificationBuilder extends InstantiationBuilder<ModificationBu
    *   <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
    * @deprecated Use the batch operation {@link #executeAsync()} instead.
    */
-  @Deprecated
+  @Deprecated (forRemoval = true, since = "1.0")
   void execute();
 
   /**

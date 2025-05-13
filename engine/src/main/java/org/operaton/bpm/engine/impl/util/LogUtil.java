@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 /**
  * @author Tom Baeyens
  *
- * @deprecated since 7.4, use slf4j
+ * @deprecated use slf4j instead
  */
 @Deprecated(forRemoval = true, since = "1.0")
 public class LogUtil {

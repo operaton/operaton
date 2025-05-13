@@ -28,7 +28,7 @@ public interface Stage extends PlanFragment {
 
   void setAutoComplete(boolean autoComplete);
 
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   Collection<Sentry> getExitCriterias();
 
   Collection<Sentry> getExitCriteria();

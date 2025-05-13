@@ -242,13 +242,13 @@ public class BpmnParse extends Parse {
   );
 
   /**
-   * @deprecated Use {@link bpmnproperties#type} instead.
+   * @deprecated Use {@link BpmnProperties#TYPE} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public static final String PROPERTYNAME_TYPE = BpmnProperties.TYPE.getName();
 
   /**
-   * @deprecated use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS}
+   * @deprecated Use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS} instead
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.getName();
@@ -3754,7 +3754,7 @@ public class BpmnParse extends Parse {
     }
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings( {"unchecked", "deprecation" })
   protected void addVariableDeclaration(ScopeImpl scope, VariableDeclaration variableDeclaration) {
     List<VariableDeclaration> variableDeclarations = (List<VariableDeclaration>) scope.getProperty(PROPERTYNAME_VARIABLE_DECLARATIONS);
     if (variableDeclarations == null) {

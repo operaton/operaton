@@ -26,10 +26,10 @@ public interface Expression extends CmmnElement {
 
   void setText(String text);
 
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   String getBody();
 
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   void setBody(String body);
 
   String getLanguage();

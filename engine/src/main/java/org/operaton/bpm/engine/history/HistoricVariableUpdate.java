@@ -43,7 +43,7 @@ public interface HistoricVariableUpdate extends HistoricDetail {
    * @return the name of the variable type.
    * @deprecated Use {@link #getTypeName()} instead.
    */
-  @Deprecated(forRemoval = true, since = "camunda 7.2")
+  @Deprecated(forRemoval = true, since = "1.0")
   String getVariableTypeName();
 
   Object getValue();

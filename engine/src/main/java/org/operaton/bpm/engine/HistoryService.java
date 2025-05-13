@@ -352,7 +352,7 @@ public interface HistoryService {
    * @deprecated There can be more than one history cleanup job at once. Use {@link #findHistoryCleanupJobs} instead.
    * @return history cleanup job entity
    */
-  @Deprecated(forRemoval = true, since = "camunda 7.9.0")
+  @Deprecated(forRemoval = true, since = "1.0")
   Job findHistoryCleanupJob();
 
   /**

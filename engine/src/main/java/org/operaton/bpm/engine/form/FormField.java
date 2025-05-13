@@ -54,7 +54,7 @@ public interface FormField {
   /**
    * @return the default value for this form field.
    */
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   public Object getDefaultValue();
 
   /**

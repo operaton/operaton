@@ -168,7 +168,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
   TaskQuery taskUnassigned();
 
   /**
-   * @see #taskUnassigned()
+   * @deprecated Use #taskUnassigned() instead
    */
   @Deprecated(forRemoval = true, since = "1.0")
   TaskQuery taskUnnassigned();

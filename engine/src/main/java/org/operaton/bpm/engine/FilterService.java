@@ -109,7 +109,7 @@ public interface FilterService {
    *  {@link Integer#MAX_VALUE}).
    *  @deprecated Use {@link #listPage(String, int, int)} instead.
    */
-  @Deprecated(forRemoval = true, since="1.0.0-beta1")
+  @Deprecated(forRemoval = true, since = "1.0")
   <T> List<T> list(String filterId);
 
   /**
@@ -130,7 +130,7 @@ public interface FilterService {
    *  {@link Integer#MAX_VALUE}).
    *  @deprecated Use {@link #listPage(String, Query, int, int)} instead.
    */
-  @Deprecated(forRemoval = true, since="1.0.0-beta1")
+  @Deprecated(forRemoval = true, since = "1.0")
   <T, Q extends Query<?, T>> List<T> list(String filterId, Q extendingQuery);
 
   /**

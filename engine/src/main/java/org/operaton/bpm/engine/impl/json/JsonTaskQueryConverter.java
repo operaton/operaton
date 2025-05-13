@@ -120,7 +120,7 @@ public class JsonTaskQueryConverter extends JsonObjectConverter<TaskQuery> {
   public static final String OR_QUERIES = "orQueries";
 
   /**
-   * Exists for backwards compatibility with 7.2; deprecated since 7.3
+   * Exists for backwards compatibility with Camunda 7.2; deprecated since Camunda 7.3
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public static final String ORDER_BY = "orderBy";

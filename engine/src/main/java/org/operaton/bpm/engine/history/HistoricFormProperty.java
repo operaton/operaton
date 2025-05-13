@@ -23,7 +23,7 @@ package org.operaton.bpm.engine.history;
  *
  * @author Tom Baeyens
  */
-@Deprecated(forRemoval = true, since = "1.0")
+@Deprecated(since = "1.0")
 public interface HistoricFormProperty extends HistoricDetail {
 
   /** the id or key of the property */

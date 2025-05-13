@@ -61,7 +61,7 @@ public interface Query<T extends Query< ? , ? >, U extends Object> {
    *   {@link Integer#MAX_VALUE}).
    *  @deprecated Use {@link #listPage(int, int)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta1")
+  @Deprecated(forRemoval = true, since = "1.0")
   List<U> list();
 
   /**

@@ -116,7 +116,7 @@ public class Context {
   /**
    * @deprecated Use {@link #getBpmnExecutionContext()} instead.
    */
-  @Deprecated(forRemoval = true, since = "camunda 7.2")
+  @Deprecated(forRemoval = true, since = "1.0")
   public static ExecutionContext getExecutionContext() {
     return getBpmnExecutionContext();
   }

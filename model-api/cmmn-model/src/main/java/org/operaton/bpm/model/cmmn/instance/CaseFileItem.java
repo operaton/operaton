@@ -42,10 +42,10 @@ public interface CaseFileItem extends CmmnElement {
 
   void setDefinitionRef(CaseFileItemDefinition caseFileItemDefinition);
 
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   CaseFileItem getSourceRef();
 
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   void setSourceRef(CaseFileItem sourceRef);
 
   Collection<CaseFileItem> getSourceRefs();

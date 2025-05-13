@@ -419,7 +419,7 @@ public abstract class ProcessEngineConfiguration {
   protected boolean skipOutputMappingOnCanceledActivities = false;
 
   /** @deprecated Use one of the static createXxxx methods instead */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta1")
+  @Deprecated(forRemoval = true, since = "1.0")
   protected ProcessEngineConfiguration() {
   }
 

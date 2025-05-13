@@ -42,7 +42,7 @@ public class DefaultFailedJobParseListener extends AbstractBpmnParseListener {
   /**
    * @deprecated Use operaton ns instead.
    */
-  @Deprecated(forRemoval = true, since = "camunda 7.4")
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final Namespace FOX_ENGINE_NS = new Namespace("http://www.operaton.com/fox");
 
   public static final PropertyKey<FailedJobRetryConfiguration> FAILED_JOB_CONFIGURATION = new PropertyKey<>("FAILED_JOB_CONFIGURATION");

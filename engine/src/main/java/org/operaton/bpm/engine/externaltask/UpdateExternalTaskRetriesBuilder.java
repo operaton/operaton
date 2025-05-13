@@ -49,7 +49,7 @@ public interface UpdateExternalTaskRetriesBuilder extends UpdateExternalTaskRetr
    *   <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
    * @deprecated Use the batch operation {@link #setAsync} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0.0-beta1")
+  @Deprecated(forRemoval = true, since = "1.0")
   void set(int retries);
 
   /**

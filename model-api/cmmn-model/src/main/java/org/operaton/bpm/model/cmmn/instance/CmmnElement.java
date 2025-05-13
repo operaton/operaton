@@ -28,10 +28,10 @@ public interface CmmnElement extends CmmnModelElementInstance {
 
   void setId(String id);
 
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   String getDescription();
 
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   void setDescription(String description);
 
   Collection<Documentation> getDocumentations();

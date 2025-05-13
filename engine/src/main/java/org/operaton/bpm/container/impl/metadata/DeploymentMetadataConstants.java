@@ -47,7 +47,7 @@ public class DeploymentMetadataConstants {
   /**
    * @deprecated Use RESOURCE instead.
    */
-  @Deprecated(forRemoval = true, since="camunda 7.2.0")
+  @Deprecated(forRemoval = true, since="1.0")
   public static final String PROCESS = "process";
   public static final String RESOURCE = "resource";
 

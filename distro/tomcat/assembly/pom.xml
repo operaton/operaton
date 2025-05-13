@@ -14,12 +14,24 @@
     <artifactId>operaton-tomcat</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-  
+
   <properties>
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
 
   <name>Operaton - Tomcat - Assembly</name>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -76,6 +88,7 @@
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>

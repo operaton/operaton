@@ -231,16 +231,26 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     }
   }
 
-  @Deprecated
+  /**
+   * @deprecated Use {@link JobExecutorHelper#waitForJobExecutorToProcessAllJobs(ProcessEngineConfiguration, long, long)} instead
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait, long intervalMillis) {
     JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait, intervalMillis);
   }
 
+  /**
+   * @deprecated Use {@link JobExecutorHelper#waitForJobExecutorToProcessAllJobs(ProcessEngineConfiguration, long)} instead
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait);
   }
 
-  @Deprecated
+  /**
+   * @deprecated Use {@link JobExecutorHelper#waitForCondition(Callable, long, long)} instead
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorOnCondition(long maxMillisToWait, long intervalMillis, Callable<Boolean> condition) {
     JobExecutorHelper.waitForCondition(condition, maxMillisToWait, intervalMillis);
   }

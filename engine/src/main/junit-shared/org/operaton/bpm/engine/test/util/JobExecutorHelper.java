@@ -150,7 +150,7 @@ public class JobExecutorHelper {
                                                         long checkInterval,
                                                         JobExecutor jobExecutor,
                                                         ManagementService managementService) {
-    waitForJobExecutorToProcessAllJobs(maxMillisToWait, checkInterval, jobExecutor, managementService, () -> !areJobsAvailable(managementService));
+    waitForJobExecutorToProcessAllJobs(maxMillisToWait, checkInterval, jobExecutor, managementService, () -> !hasPendingJobs(managementService));
   }
 
   /**
@@ -170,7 +170,7 @@ public class JobExecutorHelper {
                                                         long checkInterval,
                                                         JobExecutor jobExecutor,
                                                         ManagementService managementService) {
-    waitForJobExecutorToProcessAllJobs(maxMillisToWait, checkInterval, jobExecutor, managementService, () -> !areJobsAvailableByPiId(processInstanceId, managementService));
+    waitForJobExecutorToProcessAllJobs(maxMillisToWait, checkInterval, jobExecutor, managementService, () -> !hasPendingJobsByPiId(processInstanceId, managementService));
   }
 
   /**
@@ -270,7 +270,7 @@ public class JobExecutorHelper {
    * @param managementService the ManagementService used to query and manage jobs
    * @return true if jobs are available for the specified process instance, false otherwise
    */
-  private static boolean areJobsAvailableByPiId(String processInstanceId, ManagementService managementService) {
+  private static boolean hasPendingJobsByPiId(String processInstanceId, ManagementService managementService) {
     return managementService.createJobQuery()
         .withRetriesLeft()
         .executable()
@@ -286,7 +286,7 @@ public class JobExecutorHelper {
    * @param managementService the ManagementService used to query the available jobs
    * @return {@code true} if jobs are available for processing, {@code false} otherwise
    */
-  private static boolean areJobsAvailable(ManagementService managementService) {
+  private static boolean hasPendingJobs(ManagementService managementService) {
     return numberOfJobsAvailable(managementService) > 0;      // Check if there are any matching jobs
   }
 

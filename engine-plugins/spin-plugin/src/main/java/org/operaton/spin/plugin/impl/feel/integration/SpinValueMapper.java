@@ -16,10 +16,13 @@
  */
 package org.operaton.spin.plugin.impl.feel.integration;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import org.camunda.feel.syntaxtree.Val;
+import org.camunda.feel.syntaxtree.ValString;
+import org.camunda.feel.valuemapper.JavaCustomValueMapper;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.xml.SpinXmlAttribute;
+import org.operaton.spin.xml.SpinXmlElement;
+import org.operaton.spin.xml.SpinXmlNode;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,13 +31,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.camunda.feel.syntaxtree.Val;
-import org.camunda.feel.syntaxtree.ValString;
-import org.camunda.feel.valuemapper.JavaCustomValueMapper;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.xml.SpinXmlAttribute;
-import org.operaton.spin.xml.SpinXmlElement;
-import org.operaton.spin.xml.SpinXmlNode;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 
 public class SpinValueMapper extends JavaCustomValueMapper {

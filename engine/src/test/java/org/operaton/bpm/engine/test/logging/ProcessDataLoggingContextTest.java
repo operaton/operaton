@@ -76,8 +76,11 @@ public class ProcessDataLoggingContextTest {
   private boolean defaultEngineRegistered;
 
   @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setLoggingContextBusinessKey("businessKey"));
+  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
+    configuration -> {
+      configuration.setProcessEngineName("reusableEngine");
+      configuration.setLoggingContextBusinessKey("businessKey");
+    });
 
   @Rule
   public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
@@ -136,7 +139,7 @@ public class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then
-    assertActivityLogs(instance, "ENGINE-200", Arrays.asList("start", "waitState", "end"), true, false, true, true, "default");
+    assertActivityLogs(instance, "ENGINE-200", Arrays.asList("start", "waitState", "end"), true, false, true, true, engineRule.getProcessEngine().getName());
   }
 
   @Test
@@ -198,9 +201,9 @@ public class ProcessDataLoggingContextTest {
     // then the activity log events should use the process instance specific values (not their external property counterparts)
     assertThat(loggingRule.getFilteredLog("ENGINE-200")).hasSize(13);
 
-    assertActivityLogsAtRange(0, 3, "start", "process:(.*):(.*)", "(\\d)+", "start", "testTenant", "businessKey1", "default");
-    assertActivityLogsAtRange(4, 7, "waitState", "process:(.*):(.*)", "(\\d)+", "waitState", "testTenant", "businessKey1", "default");
-    assertActivityLogsAtRange(8, 12, "end", "process:(.*):(.*)", "(\\d)+", "end", "testTenant", "businessKey1", "default");
+    assertActivityLogsAtRange(0, 3, "start", "process:(.*):(.*)", "(\\d)+", "start", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
+    assertActivityLogsAtRange(4, 7, "waitState", "process:(.*):(.*)", "(\\d)+", "waitState", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
+    assertActivityLogsAtRange(8, 12, "end", "process:(.*):(.*)", "(\\d)+", "end", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
 
     // And the MDC External Properties are in the same state as prior to the commands execution
     testMDCFacade.assertAllInsertedPropertiesAreInMdc();
@@ -283,9 +286,9 @@ public class ProcessDataLoggingContextTest {
     // then the activity log events should use the process instance specific values (not their external property counterparts)
     assertThat(loggingRule.getFilteredLog("ENGINE-200")).hasSize(13);
 
-    assertActivityLogsAtRange(0, 3, "start", "process:(.*):(.*)", "(\\d)+", "start", "testTenant", "businessKey1", "default");
-    assertActivityLogsAtRange(4, 7, "waitState", "process:(.*):(.*)", "(\\d)+", "waitState", "testTenant", "businessKey1", "default");
-    assertActivityLogsAtRange(8, 12, "end", "process:(.*):(.*)", "(\\d)+", "end", "testTenant", "businessKey1", "default");
+    assertActivityLogsAtRange(0, 3, "start", "process:(.*):(.*)", "(\\d)+", "start", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
+    assertActivityLogsAtRange(4, 7, "waitState", "process:(.*):(.*)", "(\\d)+", "waitState", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
+    assertActivityLogsAtRange(8, 12, "end", "process:(.*):(.*)", "(\\d)+", "end", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
 
     // and the MDC should contain both the logging context properties & the third party property prior to any command execution
     Map<String, Object> mdcMap = MDC.getMap();
@@ -839,11 +842,11 @@ public class ProcessDataLoggingContextTest {
   }
 
   protected void assertActivityLogsPresent(ProcessInstance instance, List<String> expectedActivities) {
-    assertActivityLogs(instance, "ENGINE-200", expectedActivities, true, true, true, true, "default");
+    assertActivityLogs(instance, "ENGINE-200", expectedActivities, true, true, true, true, engineRule.getProcessEngine().getName());
   }
 
   protected void assertActivityLogsPresentWithoutMdc(String filter) {
-    assertActivityLogs(null, filter, null, false, false, false, false, "default");
+    assertActivityLogs(null, filter, null, false, false, false, false, engineRule.getProcessEngine().getName());
   }
 
   protected void assertActivityLogs(ProcessInstance instance, String filter, List<String> expectedActivities, boolean isMdcPresent,
@@ -855,7 +858,7 @@ public class ProcessDataLoggingContextTest {
 
   protected void assertActivityLogsPresent(ProcessInstance instance, List<String> expectedActivities, String activityIdProperty,
       String appNameProperty, String businessKeyProperty, String definitionIdProperty, String instanceIdProperty, String tenantIdProperty, String engineNameProperty) {
-    assertLogs(instance, "ENGINE-200", expectedActivities, null, instance.getBusinessKey(), instance.getProcessDefinitionId(), "default", true, null,
+    assertLogs(instance, "ENGINE-200", expectedActivities, null, instance.getBusinessKey(), instance.getProcessDefinitionId(), engineRule.getProcessEngine().getName(), true, null,
         activityIdProperty, appNameProperty, businessKeyProperty, definitionIdProperty, instanceIdProperty, tenantIdProperty, engineNameProperty);
   }
 
@@ -873,7 +876,7 @@ public class ProcessDataLoggingContextTest {
 
   protected void assertFailureLogPresent(ProcessInstance instance, String filter, String activityId, String appName,
       String businessKey, int numberOfFailureLogs) {
-    assertActivityLogs(instance, filter, Arrays.asList(activityId), appName, businessKey, instance.getProcessDefinitionId(), "default", true,
+    assertActivityLogs(instance, filter, Arrays.asList(activityId), appName, businessKey, instance.getProcessDefinitionId(), engineRule.getProcessEngine().getName(), true,
         numberOfFailureLogs);
   }
 

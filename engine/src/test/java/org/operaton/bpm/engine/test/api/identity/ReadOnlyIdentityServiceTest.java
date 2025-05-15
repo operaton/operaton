@@ -34,8 +34,7 @@ class ReadOnlyIdentityServiceTest {
   protected static final String CONFIGURATION_RESOURCE = "org/operaton/bpm/engine/test/api/identity/read.only.identity.service.operaton.cfg.xml";
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule =
-          ProcessEngineExtension.builder().configurationResource(CONFIGURATION_RESOURCE).build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().configurationResource(CONFIGURATION_RESOURCE).build();
   
   protected IdentityService identityService;
 

@@ -156,7 +156,6 @@ public class ProcessEngineImpl implements ProcessEngine {
 
   @Override
   public void close() {
-
     ProcessEngines.unregister(this);
 
     if(processEngineConfiguration.isMetricsEnabled()) {

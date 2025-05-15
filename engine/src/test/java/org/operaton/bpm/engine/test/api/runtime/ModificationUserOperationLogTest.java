@@ -49,9 +49,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class ModificationUserOperationLogTest {
 
   @RegisterExtension
-  static ProcessEngineExtension rule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .build();
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
   BatchModificationHelper helper = new BatchModificationHelper(rule);

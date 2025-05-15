@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.util;
 import java.util.concurrent.Callable;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 public class ProvidedProcessEngineRule extends ProcessEngineRule {
@@ -38,7 +38,7 @@ public class ProvidedProcessEngineRule extends ProcessEngineRule {
   protected Callable<ProcessEngine> processEngineProvider;
 
   public ProvidedProcessEngineRule() {
-    super(getOrInitializeCachedProcessEngine(), true);
+    super(getOrInitializeDefaultProcessEngine(), true);
   }
 
   public ProvidedProcessEngineRule(final ProcessEngineBootstrapRule bootstrapRule) {
@@ -65,13 +65,11 @@ public class ProvidedProcessEngineRule extends ProcessEngineRule {
     }
   }
   
-  protected static ProcessEngine getOrInitializeCachedProcessEngine() {
+  protected static ProcessEngine getOrInitializeDefaultProcessEngine() {
     if (cachedProcessEngine == null) {
-      cachedProcessEngine = ProcessEngineConfiguration
-          .createProcessEngineConfigurationFromResource("operaton.cfg.xml")
-          .buildProcessEngine();
+      cachedProcessEngine = ProcessEngines.getDefaultProcessEngine(true);
     }
     return cachedProcessEngine;
   }
-
+  
 }

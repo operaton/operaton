@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.groovy.util.Maps;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,8 +100,8 @@ class FormServiceTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
       .configurator(configuration -> {
+          configuration.setProcessEngineName("someEngine");
           configuration.setJavaSerializationFormatEnabled(true);
       }).build();
   @RegisterExtension
@@ -115,6 +116,11 @@ class FormServiceTest {
   private CaseService caseService;
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
+  }
+  
   @BeforeEach
   void init() {
     identityService.saveUser(identityService.newUser("fozzie"));

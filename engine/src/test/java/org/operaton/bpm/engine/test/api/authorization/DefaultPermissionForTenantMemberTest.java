@@ -44,7 +44,7 @@ public class DefaultPermissionForTenantMemberTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected AuthorizationService authorizationService;
   protected IdentityService identityService;

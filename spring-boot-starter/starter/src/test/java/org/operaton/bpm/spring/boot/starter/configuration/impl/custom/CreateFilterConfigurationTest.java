@@ -63,7 +63,7 @@ class CreateFilterConfigurationTest {
 
   @Test
   void createAdminUser() {
-    assertThat(processEngineExtension.getFilterService().createFilterQuery().filterName("All").singleResult()).isNotNull();
+      assertThat(processEngineExtension.getFilterService().createFilterQuery().filterName("All").singleResult()).isNotNull();
   }
 
   @Test

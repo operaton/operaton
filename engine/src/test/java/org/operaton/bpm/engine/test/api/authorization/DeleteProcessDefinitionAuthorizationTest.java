@@ -59,9 +59,9 @@ public class DeleteProcessDefinitionAuthorizationTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  public ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
   protected RepositoryService repositoryService;
   protected RuntimeService runtimeService;
   protected HistoryService historyService;

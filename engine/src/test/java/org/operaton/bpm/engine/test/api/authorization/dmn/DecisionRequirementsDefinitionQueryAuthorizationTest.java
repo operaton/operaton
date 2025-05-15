@@ -56,7 +56,7 @@ public class DecisionRequirementsDefinitionQueryAuthorizationTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   protected RepositoryService repositoryService;
 

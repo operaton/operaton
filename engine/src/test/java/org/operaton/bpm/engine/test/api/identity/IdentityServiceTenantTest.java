@@ -51,6 +51,7 @@ class IdentityServiceTenantTest {
   protected static final String TENANT_TWO = "tenant2";
 
   private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
+  private static final String PROCESS_ENGINE_NAME = "someProcessEngine";
 
   protected IdentityService identityService;
   protected ProcessEngine processEngine;
@@ -66,7 +67,7 @@ class IdentityServiceTenantTest {
     identityService.deleteUser(USER_ONE);
     identityService.deleteUser(USER_TWO);
 
-    if (processEngine != null) {
+    if (processEngine != null && ProcessEngines.getDefaultProcessEngine() != processEngine) {
       for (Tenant deleteTenant : processEngine.getIdentityService().createTenantQuery().list()) {
         processEngine.getIdentityService().deleteTenant(deleteTenant.getId());
       }
@@ -159,6 +160,7 @@ class IdentityServiceTenantTest {
   void testCustomCreateTenantWhitelistPattern() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
     processEngine.getProcessEngineConfiguration().setTenantResourceWhitelistPattern("[a-zA-Z]+");
 
@@ -177,6 +179,7 @@ class IdentityServiceTenantTest {
   void testCustomTenantWhitelistPattern() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
     processEngine.getProcessEngineConfiguration().setTenantResourceWhitelistPattern("[a-zA-Z]+");
 
@@ -234,6 +237,7 @@ class IdentityServiceTenantTest {
   void createTenantWithGenericResourceId() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
 
     Tenant tenant = processEngine.getIdentityService().newTenant("*");

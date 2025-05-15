@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 class ProcessApplicationEventListenerTest {
 
   @RegisterExtension
-  ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
        .configurationResource("org/operaton/bpm/application/impl/event/pa.event.listener.operaton.cfg.xml")
        .build();
 

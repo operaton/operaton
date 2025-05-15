@@ -57,7 +57,7 @@ public class MigrateProcessInstanceSyncTest {
   @RegisterExtension
   public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  public ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;

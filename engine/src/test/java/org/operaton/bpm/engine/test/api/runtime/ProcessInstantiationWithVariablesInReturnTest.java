@@ -30,6 +30,7 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
@@ -66,8 +67,10 @@ class ProcessInstantiationWithVariablesInReturnTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
+      .configurator(configuration -> {
+        configuration.setProcessEngineName("someEngine");
+        configuration.setJavaSerializationFormatEnabled(true);
+      })
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
@@ -135,6 +138,11 @@ class ProcessInstantiationWithVariablesInReturnTest {
     }
   }
 
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
+  }
+  
   @Test
   @Deployment(resources = SIMPLE_PROCESS)
   void testReturnVariablesFromStartWithoutDeserialization() throws Exception {

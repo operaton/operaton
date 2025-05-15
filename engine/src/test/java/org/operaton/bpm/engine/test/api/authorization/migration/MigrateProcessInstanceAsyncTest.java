@@ -59,7 +59,7 @@ public class MigrateProcessInstanceAsyncTest {
   @RegisterExtension
   public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  public ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected Batch batch;
 

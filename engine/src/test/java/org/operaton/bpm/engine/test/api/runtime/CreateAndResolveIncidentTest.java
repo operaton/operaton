@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -74,8 +75,10 @@ public class CreateAndResolveIncidentTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> configuration.setCustomIncidentHandlers(HANDLERS))
+      .configurator(configuration -> {
+        configuration.setProcessEngineName("someEngine");
+        configuration.setCustomIncidentHandlers(HANDLERS);
+      })
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
@@ -89,6 +92,11 @@ public class CreateAndResolveIncidentTest {
     HANDLERS.forEach(h -> ((CustomIncidentHandler) h).reset());
   }
 
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
+  }
+  
   @Test
   void createIncident() {
     // given

@@ -38,9 +38,6 @@ class CreateAdminUserConfigurationTest {
   static final ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
     .watch(SpringBootProcessEngineLogger.PACKAGE, Level.DEBUG);
 
-  @RegisterExtension
-  static final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration().extension();
-
   static CreateAdminUserConfiguration createAdminUserConfiguration() {
     OperatonBpmProperties properties = new OperatonBpmProperties();
     properties.getAdminUser().setId("admin");
@@ -55,6 +52,7 @@ class CreateAdminUserConfigurationTest {
 
   @Test
   void createAdminUser() {
+    ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration()).extension();
     User user = processEngineExtension.getIdentityService().createUserQuery().userId("admin").singleResult();
     assertThat(user).isNotNull();
     assertThat(user.getEmail()).isEqualTo("admin@localhost");

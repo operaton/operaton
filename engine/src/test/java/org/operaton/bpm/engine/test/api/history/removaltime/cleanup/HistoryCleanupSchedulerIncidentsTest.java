@@ -43,7 +43,6 @@ class HistoryCleanupSchedulerIncidentsTest  extends AbstractHistoryCleanupSchedu
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(configuration ->
       configure(configuration, HistoryEventTypes.INCIDENT_CREATE)
     ).build();

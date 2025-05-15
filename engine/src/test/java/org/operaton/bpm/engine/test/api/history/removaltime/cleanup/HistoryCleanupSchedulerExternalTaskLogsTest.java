@@ -44,7 +44,6 @@ class HistoryCleanupSchedulerExternalTaskLogsTest extends AbstractHistoryCleanup
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(configuration ->
       configure(configuration, HistoryEventTypes.EXTERNAL_TASK_SUCCESS)
     ).build();

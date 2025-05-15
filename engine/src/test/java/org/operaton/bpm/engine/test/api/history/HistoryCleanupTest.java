@@ -35,6 +35,7 @@ import java.util.Random;
 import java.util.TimeZone;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -108,9 +109,9 @@ class HistoryCleanupTest {
   protected int defaultBatchSize;
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurator(configuration -> {
+      configuration.setProcessEngineName("someEngine");
       configuration.setHistoryCleanupBatchSize(20);
       configuration.setHistoryCleanupBatchThreshold(10);
       configuration.setDefaultNumberOfRetries(5);
@@ -164,6 +165,11 @@ class HistoryCleanupTest {
     removable.removeAll();
     clearMetrics();
     identityService.clearAuthentication();
+  }
+
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
   }
 
   protected void clearMetrics() {

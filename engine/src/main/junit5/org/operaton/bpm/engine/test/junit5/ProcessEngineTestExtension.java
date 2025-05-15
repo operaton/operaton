@@ -71,25 +71,25 @@ public class ProcessEngineTestExtension
 
   public static final String DEFAULT_BPMN_RESOURCE_NAME = "process.bpmn20.xml";
 
-  private ProcessEngineExtension processEngineRule;
+  private ProcessEngineExtension processEngineExtension;
+
   private ProcessEngine processEngine;
 
   public ProcessEngineTestExtension() {
   }
   
   public ProcessEngineTestExtension(ProcessEngineExtension processEngineExtension) {
-    this.processEngineRule = processEngineExtension;
-    this.processEngine = processEngineRule.getProcessEngine();
+    this.processEngineExtension = processEngineExtension;
   }
 
   public ProcessEngine getProcessEngine() {
-    return processEngineRule.getProcessEngine();
+    return processEngine;
   }
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
-    if (processEngineRule != null)
-      this.processEngine = processEngineRule.getProcessEngine();
+    if (processEngineExtension != null)
+      this.processEngine = processEngineExtension.getProcessEngine();
     else
       this.processEngine = (ProcessEngine) context.getStore(ExtensionContext.Namespace.create("Operaton")).get(ProcessEngine.class);
   }
@@ -143,7 +143,7 @@ public class ProcessEngineTestExtension
   public <T extends DeploymentWithDefinitions> T deploy(DeploymentBuilder deploymentBuilder) {
     T deployment = (T) deploymentBuilder.deployWithResult();
 
-    processEngineRule.manageDeployment(deployment);
+    processEngineExtension.manageDeployment(deployment);
 
     return deployment;
   }

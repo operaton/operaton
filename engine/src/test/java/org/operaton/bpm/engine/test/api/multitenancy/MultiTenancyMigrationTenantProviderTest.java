@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -47,8 +48,8 @@ class MultiTenancyMigrationTenantProviderTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
       .configurator(configuration -> {
+        configuration.setProcessEngineName("someEngine");
         TenantIdProvider tenantIdProvider = new VariableBasedTenantIdProvider();
         configuration.setTenantIdProvider(tenantIdProvider);
       })
@@ -56,6 +57,11 @@ class MultiTenancyMigrationTenantProviderTest {
   @RegisterExtension
   static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
+  @AfterAll
+  static void closeEngien() {
+    engineRule.getProcessEngine().close();
+  }
+  
   @Test
   void cannotMigrateInstanceBetweenDifferentTenants() {
     // given

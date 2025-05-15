@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
@@ -60,8 +61,8 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .ensureCleanAfterTest(true)
-    .cacheForConfigurationResource(false)
     .configurator(configuration -> {
+      configuration.setProcessEngineName("someEngine");
       configuration.setHistoryCleanupBatchSize(20);
       configuration.setHistoryCleanupBatchThreshold(10);
       configuration.setDefaultNumberOfRetries(5);
@@ -141,6 +142,11 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
 
       return null;
     });
+  }
+
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
   }
 
   @TestTemplate

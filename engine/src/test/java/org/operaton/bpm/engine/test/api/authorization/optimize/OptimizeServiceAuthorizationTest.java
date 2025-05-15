@@ -90,7 +90,7 @@ public class OptimizeServiceAuthorizationTest {
   @RegisterExtension
   AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Parameters
   public static Collection<Object[]> data() {

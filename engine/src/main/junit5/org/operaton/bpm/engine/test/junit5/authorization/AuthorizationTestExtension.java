@@ -66,7 +66,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class AuthorizationTestExtension implements BeforeEachCallback, AfterEachCallback {
 
-  private final ProcessEngine processEngine;
+  private ProcessEngineExtension processEngineExtension;
+  
   private final AuthorizationExceptionInterceptor interceptor;
   private AuthorizationScenarioInstance scenarioInstance;
 
@@ -80,14 +81,14 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    * @param processEngineExtension extension from which to get process engine instance to use
    */
   public AuthorizationTestExtension(ProcessEngineExtension processEngineExtension) {
-    this.processEngine = processEngineExtension.getProcessEngine();
+    this.processEngineExtension = processEngineExtension;
     this.interceptor = new AuthorizationExceptionInterceptor();
   }
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
     ProcessEngineConfigurationImpl engineConfiguration =
-        (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
+        (ProcessEngineConfigurationImpl) processEngineExtension.getProcessEngine().getProcessEngineConfiguration();
     interceptor.reset();
     engineConfiguration.getCommandInterceptorsTxRequired().get(0).setNext(interceptor);
     interceptor.setNext(engineConfiguration.getCommandInterceptorsTxRequired().get(1));
@@ -95,10 +96,10 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
 
   @Override
   public void afterEach(ExtensionContext context) throws Exception {
-    processEngine.getIdentityService().clearAuthentication();
+    processEngineExtension.getProcessEngine().getIdentityService().clearAuthentication();
     deleteManagedAuthorizations();
     ProcessEngineConfigurationImpl engineConfiguration =
-        (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
+        (ProcessEngineConfigurationImpl) processEngineExtension.getProcessEngine().getProcessEngineConfiguration();
     engineConfiguration.getCommandInterceptorsTxRequired().get(0).setNext(interceptor.getNext());
     interceptor.setNext(null);
     assertThat(managedUsers).as("Users have been created but not deleted").isEmpty();
@@ -111,9 +112,9 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    * @param userId the user ID to authenticate (can be null)
    */
   public void enableAuthorization(String userId) {
-    processEngine.getProcessEngineConfiguration().setAuthorizationEnabled(true);
+    processEngineExtension.getProcessEngine().getProcessEngineConfiguration().setAuthorizationEnabled(true);
     if (userId != null) {
-      processEngine.getIdentityService().setAuthenticatedUserId(userId);
+      processEngineExtension.getProcessEngine().getIdentityService().setAuthenticatedUserId(userId);
     }
   }
 
@@ -121,8 +122,8 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    * Disables authorization and clears authentication.
    */
   public void disableAuthorization() {
-    processEngine.getProcessEngineConfiguration().setAuthorizationEnabled(false);
-    processEngine.getIdentityService().clearAuthentication();
+    processEngineExtension.getProcessEngine().getProcessEngineConfiguration().setAuthorizationEnabled(false);
+    processEngineExtension.getProcessEngine().getIdentityService().clearAuthentication();
   }
 
   /**
@@ -145,7 +146,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
     assertThat(interceptor.getLastException()).isNull();
     scenarioInstance = new AuthorizationScenarioInstance(
         scenario,
-        processEngine.getAuthorizationService(),
+        processEngineExtension.getProcessEngine().getAuthorizationService(),
         resourceBindings);
     enableAuthorization(userId);
     interceptor.activate();
@@ -160,7 +161,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
   public boolean assertScenario(AuthorizationScenario scenario) {
     interceptor.deactivate();
     disableAuthorization();
-    scenarioInstance.tearDown(processEngine.getAuthorizationService());
+    scenarioInstance.tearDown(processEngineExtension.getProcessEngine().getAuthorizationService());
     scenarioInstance.assertAuthorizationException(interceptor.getLastException());
     scenarioInstance = null;
     return scenarioSucceeded();
@@ -194,7 +195,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
     for (Permission permission : permissions) {
       authorization.addPermission(permission);
     }
-    processEngine.getAuthorizationService().saveAuthorization(authorization);
+    processEngineExtension.getProcessEngine().getAuthorizationService().saveAuthorization(authorization);
     manageAuthorization(authorization);
   }
 
@@ -212,7 +213,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
     for (Permission permission : permissions) {
       authorization.removePermission(permission);
     }
-    processEngine.getAuthorizationService().saveAuthorization(authorization);
+    processEngineExtension.getProcessEngine().getAuthorizationService().saveAuthorization(authorization);
     manageAuthorization(authorization);
   }
 
@@ -225,7 +226,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    * @return the new authorization.
    */
   protected Authorization createAuthorization(int type, Resource resource, String resourceId) {
-    Authorization authorization = processEngine.getAuthorizationService().createNewAuthorization(type);
+    Authorization authorization = processEngineExtension.getProcessEngine().getAuthorizationService().createNewAuthorization(type);
     authorization.setResource(resource);
     if (resourceId != null) {
       authorization.setResourceId(resourceId);
@@ -249,7 +250,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    * @param groupId the group id.
    */
   public void createUserAndGroup(String userId, String groupId) {
-    IdentityService identityService = processEngine.getIdentityService();
+    IdentityService identityService = processEngineExtension.getProcessEngine().getIdentityService();
     User user = identityService.newUser(userId);
     identityService.saveUser(user);
     managedUsers.add(user);
@@ -264,7 +265,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    */
   public void deleteManagedAuthorizations() {
     for (Authorization authorization : managedAuthorizations) {
-      processEngine.getAuthorizationService().deleteAuthorization(authorization.getId());
+      processEngineExtension.getProcessEngine().getAuthorizationService().deleteAuthorization(authorization.getId());
     }
     managedAuthorizations.clear();
   }
@@ -272,12 +273,12 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
 
   public void deleteUsersAndGroups() {
     for (User user : managedUsers) {
-      processEngine.getIdentityService().deleteUser(user.getId());
+      processEngineExtension.getProcessEngine().getIdentityService().deleteUser(user.getId());
     }
     managedUsers.clear();
 
     for (Group group : managedGroups) {
-      processEngine.getIdentityService().deleteGroup(group.getId());
+      processEngineExtension.getProcessEngine().getIdentityService().deleteGroup(group.getId());
     }
     managedGroups.clear();
   }

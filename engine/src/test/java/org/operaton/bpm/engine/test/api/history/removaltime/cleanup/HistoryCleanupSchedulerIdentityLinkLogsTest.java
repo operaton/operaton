@@ -43,7 +43,6 @@ class HistoryCleanupSchedulerIdentityLinkLogsTest extends AbstractHistoryCleanup
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(configuration ->
       configure(configuration, HistoryEventTypes.TASK_INSTANCE_CREATE, HistoryEventTypes.IDENTITY_LINK_ADD)
     ).build();

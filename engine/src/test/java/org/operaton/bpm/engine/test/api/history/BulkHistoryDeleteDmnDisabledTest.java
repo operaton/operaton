@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
@@ -41,14 +42,21 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class BulkHistoryDeleteDmnDisabledTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
-    .configurator(configuration -> configuration.setDmnEnabled(false)).build();
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .configurator(configuration -> {
+      configuration.setProcessEngineName("someEngine");
+      configuration.setDmnEnabled(false);
+    }).build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private RuntimeService runtimeService;
   private HistoryService historyService;
+
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
+  }
 
   @Test
   void bulkHistoryDeleteWithDisabledDmn() {

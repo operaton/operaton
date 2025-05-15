@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -47,8 +48,8 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
       .configurator((configuration -> {
+        configuration.setProcessEngineName("someEngine");
         configuration.setFailedJobRetryTimeCycle("PT5M,PT20M, PT3M");
         configuration.setEnableExceptionsAfterUnhandledBpmnError(true);
       })).build();
@@ -61,6 +62,11 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     engineRule.getProcessEngineConfiguration().setFailedJobRetryTimeCycle("PT5M,PT20M, PT3M");
   }
 
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
+  }
+  
   @Test
   void testRetryGlobalConfiguration() throws ParseException {
     // given global retry conf. ("PT5M,PT20M, PT3M")

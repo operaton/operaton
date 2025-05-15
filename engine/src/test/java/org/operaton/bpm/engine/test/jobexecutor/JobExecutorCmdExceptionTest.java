@@ -47,10 +47,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 class JobExecutorCmdExceptionTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
-    .cacheForConfigurationResource(false)
-    .build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

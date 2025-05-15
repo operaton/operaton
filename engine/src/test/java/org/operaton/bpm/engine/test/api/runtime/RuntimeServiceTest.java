@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -105,8 +106,10 @@ public class RuntimeServiceTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
+      .configurator(configuration -> {
+        configuration.setProcessEngineName("someEngine");
+        configuration.setJavaSerializationFormatEnabled(true);
+      })
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
@@ -118,6 +121,11 @@ public class RuntimeServiceTest {
   HistoryService historyService;
   ProcessEngineConfigurationImpl processEngineConfiguration;
 
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
+  }
+  
   @Test
   void testStartProcessInstanceByKeyNullKey() {
     try {

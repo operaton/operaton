@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,8 +59,8 @@ class HistoryCleanupTaskMetricsTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(configuration -> {
+      configuration.setProcessEngineName("someEngine");
       configuration.setHistoryCleanupDegreeOfParallelism(3);
       configuration.setTaskMetricsEnabled(true);
     }).build();
@@ -88,6 +89,11 @@ class HistoryCleanupTaskMetricsTest {
   void resetConfiguration() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
     processEngineConfiguration.setTaskMetricsTimeToLive(null);
+  }
+
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
   }
 
   @Test

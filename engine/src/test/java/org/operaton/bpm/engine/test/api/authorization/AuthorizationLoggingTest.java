@@ -40,7 +40,7 @@ class AuthorizationLoggingTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @RegisterExtension
   public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()

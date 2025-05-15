@@ -43,12 +43,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 @ExtendWith(ProcessEngineExtension.class)
 class TelemetryDynamicDataTest {
 
+  private static final String PROCESS_ENGINE_NAME = "processEngine";
   protected ProcessEngineConfigurationImpl configuration;
   protected RuntimeService runtimeService;
   protected TaskService taskService;
   protected ManagementService managementService;
-
-  protected ProcessEngine processEngineInMem;
 
   @BeforeEach
   void init() {
@@ -58,11 +57,6 @@ class TelemetryDynamicDataTest {
   @AfterEach
   void tearDown() {
     clearMetrics();
-
-    if (processEngineInMem != null) {
-      ProcessEngines.unregister(processEngineInMem);
-      processEngineInMem.close();
-    }
   }
 
   public void clearMetrics() {
@@ -81,8 +75,9 @@ class TelemetryDynamicDataTest {
   @Test
   void shouldCountCommandsFromEngineStartAfterTelemetryActivation() {
     // when
-    processEngineInMem =  new StandaloneInMemProcessEngineConfiguration()
+    ProcessEngine processEngineInMem = new StandaloneInMemProcessEngineConfiguration()
         .setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName())
+        .setProcessEngineName(PROCESS_ENGINE_NAME)
         .buildProcessEngine();
 
     // then
@@ -100,6 +95,9 @@ class TelemetryDynamicDataTest {
     for (String commandName : entries.keySet()) {
       assertThat(entries.get(commandName).get()).isEqualTo(1);
     }
+
+    ProcessEngines.unregister(processEngineInMem);
+    processEngineInMem.close();
   }
 
   @Test

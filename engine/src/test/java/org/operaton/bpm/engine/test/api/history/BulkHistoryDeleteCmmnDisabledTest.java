@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -47,9 +48,11 @@ import org.operaton.bpm.engine.variable.Variables;
 class BulkHistoryDeleteCmmnDisabledTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
-    .configurator(configuration -> configuration.setCmmnEnabled(false)).build();
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .configurator(configuration -> {
+      configuration.setProcessEngineName("someEngine");
+      configuration.setCmmnEnabled(false);
+    }).build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
@@ -83,6 +86,11 @@ class BulkHistoryDeleteCmmnDisabledTest {
       historyService.deleteHistoricDecisionInstanceByInstanceId(historicDecisionInstance.getId());
     }
 
+  }
+
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
   }
 
   @Test

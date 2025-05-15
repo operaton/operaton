@@ -49,9 +49,9 @@ class MigrateProcessInstanceSyncQueryTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected List<Authorization> authorizations;
 

@@ -42,10 +42,11 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class HistoryCleanupSchedulerActivityInstancesTest extends AbstractHistoryCleanupSchedulerTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurator(
-      configuration -> configure(configuration, HistoryEventTypes.ACTIVITY_INSTANCE_START)
+      configuration -> {
+        configure(configuration, HistoryEventTypes.ACTIVITY_INSTANCE_START);
+      }
     ).build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

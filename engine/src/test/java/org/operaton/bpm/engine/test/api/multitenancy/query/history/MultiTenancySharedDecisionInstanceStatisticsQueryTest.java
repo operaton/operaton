@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -55,8 +56,8 @@ class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
       .configurator(configuration -> {
+        configuration.setProcessEngineName("someEngine");
         tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
         configuration.setTenantIdProvider(tenantIdProvider);
       })
@@ -77,6 +78,11 @@ class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
     decisionService.evaluateDecisionByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
         .evaluate();
+  }
+
+  @AfterAll
+  static void closeEngien() {
+    engineRule.getProcessEngine().close();
   }
 
   @Test

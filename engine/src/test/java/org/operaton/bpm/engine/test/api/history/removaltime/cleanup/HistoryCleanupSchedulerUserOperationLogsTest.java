@@ -44,7 +44,6 @@ class HistoryCleanupSchedulerUserOperationLogsTest extends AbstractHistoryCleanu
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(configuration ->
       configure(configuration, HistoryEventTypes.USER_OPERATION_LOG)
     ).build();

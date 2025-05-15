@@ -55,8 +55,11 @@ public class MetricsManagerForCleanupTest {
       .done();
 
   @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setTaskMetricsEnabled(true));
+  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
+      configuration.setProcessEngineName("metricsEngine");
+      configuration.setTaskMetricsEnabled(true);
+    }
+  );
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
   protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);

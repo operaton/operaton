@@ -48,14 +48,14 @@ import static org.awaitility.Awaitility.await;
  * for instantiation.
  * </p>
  */
-public class JobExecutorHelper {
+public class JobExecutorWaitUtils {
 
   public static final long CHECK_INTERVAL_MS = 500L;
   public static final long JOBS_WAIT_TIMEOUT_MS = 20_000L;
   private static final int JOB_EXECUTOR_WAIT_MULTIPLIER = 2;
   private static final int THREAD_POOL_ACTIVE_COUNT_ZERO = 0;
 
-  private JobExecutorHelper() {
+  private JobExecutorWaitUtils() {
     // Private constructor to prevent instantiation
   }
 

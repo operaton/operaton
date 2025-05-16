@@ -36,9 +36,9 @@ public class SpringTransactionInterceptor extends CommandInterceptor {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   /**
-   * @deprecated use the {@link #SpringTransactionInterceptor(PlatformTransactionManager, int, ProcessEngineConfigurationImpl)}
-   *    constructor to ensure that concurrency conflicts that occur on
-   *    transaction commit are detected and handled in all cases
+   * @deprecated Use the {@link #SpringTransactionInterceptor(PlatformTransactionManager, int, ProcessEngineConfigurationImpl)}
+   *    constructor to ensure that concurrency conflicts that occur on a
+   *    transaction commit are detected and handled in all cases.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public SpringTransactionInterceptor(PlatformTransactionManager transactionManager, int transactionPropagation) {

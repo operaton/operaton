@@ -17,10 +17,6 @@
 
 package org.operaton.bpm.engine.test.api.externaltask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Date;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,13 +37,17 @@ import org.operaton.bpm.engine.test.util.ClockTestUtil;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import java.util.Date;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class ExternalTaskQueryByCreateTimeTest {
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngine engine;
 

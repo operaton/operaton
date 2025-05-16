@@ -35,7 +35,7 @@ public class OptimizeAuthorizationTest {
   protected static final String USER_ID = "user";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 

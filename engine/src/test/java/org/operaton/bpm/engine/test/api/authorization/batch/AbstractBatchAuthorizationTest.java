@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -34,6 +32,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+
 /**
  * @author Askar Akhmerov
  */
@@ -45,7 +45,7 @@ public abstract class AbstractBatchAuthorizationTest {
   @RegisterExtension
   protected static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessDefinition sourceDefinition;
   protected ProcessDefinition sourceDefinition2;

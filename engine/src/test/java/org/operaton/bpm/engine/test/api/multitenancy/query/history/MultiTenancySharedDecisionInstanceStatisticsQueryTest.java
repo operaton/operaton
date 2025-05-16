@@ -62,7 +62,7 @@ class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
       })
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected DecisionService decisionService;
   protected RepositoryService repositoryService;

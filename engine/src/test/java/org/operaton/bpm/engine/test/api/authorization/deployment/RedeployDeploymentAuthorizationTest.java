@@ -50,7 +50,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 public class RedeployDeploymentAuthorizationTest {
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 

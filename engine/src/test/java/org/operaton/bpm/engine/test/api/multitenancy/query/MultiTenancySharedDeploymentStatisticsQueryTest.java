@@ -60,7 +60,7 @@ class MultiTenancySharedDeploymentStatisticsQueryTest {
       })
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected ManagementService managementService;

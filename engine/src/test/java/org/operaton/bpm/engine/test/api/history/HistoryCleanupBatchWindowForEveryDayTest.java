@@ -65,7 +65,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
       configuration.setDefaultNumberOfRetries(5);
     }).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private HistoryService historyService;
   private ManagementService managementService;

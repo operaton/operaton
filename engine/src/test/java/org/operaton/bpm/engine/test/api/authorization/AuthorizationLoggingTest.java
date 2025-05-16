@@ -38,7 +38,7 @@ public class AuthorizationLoggingTest {
   protected static final String CONTEXT_LOGGER = "org.operaton.bpm.engine.context";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 

@@ -61,7 +61,7 @@ class CaseServiceTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineExtension);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineExtension);
   
   protected CaseService caseService;
   protected RepositoryService repositoryService;

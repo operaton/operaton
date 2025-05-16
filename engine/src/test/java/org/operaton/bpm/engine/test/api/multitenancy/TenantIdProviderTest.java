@@ -87,7 +87,7 @@ class TenantIdProviderTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().configurationResource(CONFIGURATION_RESOURCE).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @AfterEach
   void tearDown() {

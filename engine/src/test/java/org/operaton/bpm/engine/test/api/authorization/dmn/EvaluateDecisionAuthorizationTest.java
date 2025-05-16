@@ -51,7 +51,7 @@ public class EvaluateDecisionAuthorizationTest {
   protected static final String DECISION_DEFINITION_KEY = "decision";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 

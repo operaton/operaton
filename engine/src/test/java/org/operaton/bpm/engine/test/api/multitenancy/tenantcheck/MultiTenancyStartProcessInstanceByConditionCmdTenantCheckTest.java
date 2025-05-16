@@ -57,7 +57,7 @@ class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   public IdentityService identityService;
   public RepositoryService repositoryService;

@@ -46,7 +46,7 @@ public class MultiTenancyHistoricProcessInstanceStateTest {
   @RegisterExtension
   protected static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension processEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
+  static ProcessEngineTestExtension processEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;

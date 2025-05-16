@@ -40,7 +40,7 @@ class JobExecutorExceptionLoggingHandlerTest {
     .cacheForConfigurationResource(false)
     .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ExecuteJobHelper.ExceptionLoggingHandler originalHandler;

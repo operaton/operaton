@@ -42,7 +42,7 @@ public class DefaultPermissionForTenantMemberTest {
   protected static final String GROUP_ID = "group";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   public ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

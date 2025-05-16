@@ -40,9 +40,9 @@ public class AuthorizationException extends ProcessEngineException {
   protected final String userId;
   protected final List<MissingAuthorization> missingAuthorizations;
 
-  // these properties have been replaced by the list of missingAuthorizations
+  // These properties have been replaced by the list of missingAuthorizations
   // and are only left because this is a public API package and users might
-  // have subclasses relying on these fields
+  // have subclasses relying on these fields.
   @Deprecated(since = "1.0")
   protected String resourceType;
   @Deprecated(since = "1.0")
@@ -80,7 +80,7 @@ public class AuthorizationException extends ProcessEngineException {
   }
 
   /**
-   * @return the type of the resource if there is only one {@link MissingAuthorization}, {@code null} otherwise
+   * @return the type of the resource if there is only one {@link MissingAuthorization}, {@code null} otherwise.
    *
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
@@ -96,7 +96,7 @@ public class AuthorizationException extends ProcessEngineException {
 
   /**
    * @return the type of the violated permission name if there
-   * is only one {@link MissingAuthorization}, {@code null} otherwise
+   * is only one {@link MissingAuthorization}, {@code null} otherwise.
    *
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the violated permission name
    * of the {@link MissingAuthorization}(s).
@@ -111,17 +111,17 @@ public class AuthorizationException extends ProcessEngineException {
 
   /**
    * @return id of the user in which context the request was made and who misses authorizations
-   *  to perform it successfully
+   *  to perform it successfully.
    */
   public String getUserId() {
     return userId;
   }
 
   /**
-   * @return the id of the resource if there is only one {@link MissingAuthorization}, {@code null} otherwise
+   * @return the id of the resource if there is only one {@link MissingAuthorization}, {@code null} otherwise.
    *
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the id of the resource
-   * of the {@link MissingAuthorization}(s). This method may be removed in future versions.
+   * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public String getResourceId() {

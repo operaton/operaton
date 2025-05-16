@@ -51,7 +51,7 @@ public class TransitionInstanceDto {
     return processDefinitionId;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   public String getTargetActivityId() {
     return activityId;
   }

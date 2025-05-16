@@ -21,6 +21,6 @@ package org.operaton.bpm.engine.cdi.impl.event;
  *
  * @author Sebastian Menski
  */
-@Deprecated
+@Deprecated(since = "1.0")
 public class CdiExecutionListener extends CdiEventListener {
 }

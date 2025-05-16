@@ -20,9 +20,9 @@ package org.operaton.bpm.engine.authorization;
  * The set of built-in {@link Permission Permissions} for
  * {@link Resources#OPTIMIZE Optimize resource} in Operaton.
  *
- * @deprecated These permissions have no effect
+ * @deprecated These permissions have no effect.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0")
 public enum OptimizePermissions implements Permission {
 
   /**

@@ -52,7 +52,7 @@ public interface CockpitRuntimeDelegate extends AppRuntimeDelegate<CockpitPlugin
    *
    * @return
    */
-  @Deprecated
+  @Deprecated(since = "1.0")
   public PluginRegistry getPluginRegistry();
 
 }

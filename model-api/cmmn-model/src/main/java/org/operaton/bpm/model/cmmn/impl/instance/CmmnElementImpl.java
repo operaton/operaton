@@ -46,7 +46,7 @@ public abstract class CmmnElementImpl extends CmmnModelElementInstanceImpl imple
   protected static ChildElement<ExtensionElements> extensionElementsChild;
 
   // cmmn 1.0
-  @Deprecated
+  @Deprecated(since = "1.0")
   protected static Attribute<String> descriptionAttribute;
 
   // cmmn 1.1

@@ -24,10 +24,10 @@ import org.operaton.bpm.model.cmmn.PlanItemTransition;
  */
 public interface PlanItemOnPart extends OnPart {
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   Sentry getSentry();
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   void setSentry(Sentry sentry);
 
   ExitCriterion getExitCriterion();

@@ -720,14 +720,14 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected Date finishDateOnBegin;
   protected Date finishDateOnEnd;
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery startDateBy(Date date) {
     this.startDateBy = this.calculateMidnight(date);
     return this;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery startDateOn(Date date) {
     this.startDateOn = date;
@@ -736,14 +736,14 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery finishDateBy(Date date) {
     this.finishDateBy = this.calculateBeforeMidnight(date);
     return this;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery finishDateOn(Date date) {
     this.finishDateOn = date;
@@ -752,7 +752,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   private Date calculateBeforeMidnight(Date date){
     Calendar cal = Calendar.getInstance();
     cal.setTime(date);
@@ -761,7 +761,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return cal.getTime();
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   private Date calculateMidnight(Date date){
     Calendar cal = Calendar.getInstance();
     cal.setTime(date);

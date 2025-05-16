@@ -36,9 +36,9 @@ public class ParseException extends ProcessEngineException {
   }
 
   /**
-   * @deprecated use {@link #getResourceReports()} instead
+   * @deprecated Use {@link #getResourceReports()} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public List<ResourceReport> getResorceReports() {
     return resourceReports;
   }

@@ -20,7 +20,7 @@ package org.operaton.bpm.engine.rest.dto;
  * @deprecated The sending telemetry data feature is removed.
  * Please remove any usages.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0")
 public class TelemetryConfigurationDto {
 
   protected Boolean enableTelemetry;

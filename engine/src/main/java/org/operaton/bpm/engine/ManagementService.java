@@ -1396,16 +1396,15 @@ public interface ManagementService {
    * @deprecated The sending telemetry feature is removed.
    * Please remove the method references as they are no longer needed.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void toggleTelemetry(boolean enabled);
 
   /**
    * @deprecated The sending telemetry feature is removed.
    * Please remove the method references as they are no longer needed.
    * @return always <code>false</code>
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   Boolean isTelemetryEnabled();
 
   /**

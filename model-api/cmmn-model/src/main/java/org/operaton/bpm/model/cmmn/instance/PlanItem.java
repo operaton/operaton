@@ -32,10 +32,10 @@ public interface PlanItem extends CmmnElement {
 
   void setDefinition(PlanItemDefinition definition);
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   Collection<Sentry> getEntryCriterias();
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   Collection<Sentry> getExitCriterias();
 
   /**

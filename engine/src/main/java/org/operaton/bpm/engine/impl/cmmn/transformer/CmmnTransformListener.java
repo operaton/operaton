@@ -51,9 +51,9 @@ public interface CmmnTransformListener {
   void transformCase(Case element, CmmnCaseDefinition caseDefinition);
 
   /**
-   * @deprecated use {@link #transformCasePlanModel(org.operaton.bpm.model.cmmn.instance.CasePlanModel, CmmnActivity)}
+   * @deprecated Use {@link #transformCasePlanModel(org.operaton.bpm.model.cmmn.instance.CasePlanModel, CmmnActivity)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void transformCasePlanModel(org.operaton.bpm.model.cmmn.impl.instance.CasePlanModel casePlanModel, CmmnActivity caseActivity);
 
   void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity caseActivity);

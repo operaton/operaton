@@ -36,10 +36,10 @@ public interface TransitionInstance extends ProcessElementInstance {
   /**
    * returns the id of the target activity
    *
-   * @deprecated a transition instances represents a transition <b>to</b> or <b>from</b>
+   * @deprecated A TransitionInstance represents a transition <b>to</b> or <b>from</b>
    *  an activity; use {@link #getActivityId()} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   String getTargetActivityId();
 
   /**

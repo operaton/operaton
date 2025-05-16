@@ -41,9 +41,9 @@ public interface HistoricVariableUpdate extends HistoricDetail {
 
   /**
    * @return the name of the variable type.
-   * @deprecated since 7.2. Use {@link #getTypeName()}
+   * @deprecated Use {@link #getTypeName()} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   String getVariableTypeName();
 
   Object getValue();

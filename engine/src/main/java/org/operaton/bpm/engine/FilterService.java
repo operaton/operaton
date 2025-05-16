@@ -107,8 +107,9 @@ public interface FilterService {
    *  <li>When a maximum results limit is specified. A maximum results limit can be specified with
    *  the process engine configuration property <code>queryMaxResultsLimit</code> (default
    *  {@link Integer#MAX_VALUE}).
-   *  Please use {@link #listPage(String, int, int)} instead.
+   *  @deprecated Use {@link #listPage(String, int, int)} instead.
    */
+  @Deprecated(forRemoval = true, since = "1.0")
   <T> List<T> list(String filterId);
 
   /**
@@ -127,8 +128,9 @@ public interface FilterService {
    *  <li>When a maximum results limit is specified. A maximum results limit can be specified with
    *  the process engine configuration property <code>queryMaxResultsLimit</code> (default
    *  {@link Integer#MAX_VALUE}).
-   *  Please use {@link #listPage(String, Query, int, int)} instead.
+   *  @deprecated Use {@link #listPage(String, Query, int, int)} instead.
    */
+  @Deprecated(forRemoval = true, since = "1.0")
   <T, Q extends Query<?, T>> List<T> list(String filterId, Q extendingQuery);
 
   /**

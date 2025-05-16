@@ -161,9 +161,9 @@ public interface DeploymentBuilder {
    * is different to the existing resources, <i>all</i> resources are re-deployed.
    * </p>
    *
-   * @deprecated use {@link #enableDuplicateFiltering(boolean)}</p>
+   * @deprecated Use {@link #enableDuplicateFiltering(boolean)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   DeploymentBuilder enableDuplicateFiltering();
 
   /**

@@ -158,9 +158,9 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
   // event subscriptions //////////////////////////////////////////////////
 
   /**
-   * @see #signalEventSubscriptionName(String)
+   * @deprecated Use #signalEventSubscriptionName(String) instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   ExecutionQuery signalEventSubscription(String signalName);
 
   /**

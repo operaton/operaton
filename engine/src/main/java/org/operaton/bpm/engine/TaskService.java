@@ -1099,9 +1099,9 @@ public interface TaskService {
   /**
    * Add a comment to a task and/or process instance.
    *
-   * @deprecated Use {@link #createComment(String, String, String)} instead
+   * @deprecated Use {@link #createComment(String, String, String)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void addComment(String taskId, String processInstanceId, String message);
 
   /** Creates a comment to a task and/or process instance and returns the comment. */
@@ -1195,12 +1195,12 @@ public interface TaskService {
    * property <code>legacyUserOperationLog</code> (default false). To restore the engine's
    * previous behavior, set the flag to <code>true</code>.</p>
    *
-   * @deprecated This method has been deprecated as of Operaton.1. It has been replaced with
-   * the operation log. See {@link UserOperationLogEntry} and {@link UserOperationLogQuery}.
+   * @deprecated It has been replaced with the operation log. See {@link UserOperationLogEntry}
+   * and {@link UserOperationLogQuery}.
    *
    * @see HistoryService#createUserOperationLogQuery()
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   List<Event> getTaskEvents(String taskId);
 
   /** The comments related to the given process instance. */

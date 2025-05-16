@@ -20,12 +20,11 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.history.event.HostnameProvider;
 
 /**
- * @deprecated Please use {@link HostnameProvider}
- * for providing the Metrics Reporter id.
+ * @deprecated Use {@link HostnameProvider} instead.
  *
  * @author Thorben Lindhauer
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0")
 public interface MetricsReporterIdProvider {
 
   /**

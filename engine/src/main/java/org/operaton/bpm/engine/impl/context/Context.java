@@ -114,9 +114,9 @@ public class Context {
   }
 
   /**
-   * @deprecated since 7.2, use {@link #getBpmnExecutionContext()}
+   * @deprecated Use {@link #getBpmnExecutionContext()} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static ExecutionContext getExecutionContext() {
     return getBpmnExecutionContext();
   }

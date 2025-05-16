@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.FormService;
  *
  * @author Tom Baeyens
  */
-@Deprecated
+@Deprecated(since = "1.0")
 public interface FormProperty {
 
   /** The key used to submit the property in {@link FormService#submitStartFormData(String, java.util.Map)}

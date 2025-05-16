@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 /**
  * @author Tom Baeyens
  */
-@Deprecated
+@Deprecated(since = "1.0")
 public class VariableDeclaration implements Serializable {
 
   private static final long serialVersionUID = 1L;

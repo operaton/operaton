@@ -82,8 +82,9 @@ public interface DeploymentQuery extends Query<DeploymentQuery, Deployment>{
   DeploymentQuery orderByDeploymentName();
 
   /** Order by deployment time (needs to be followed by {@link #asc()} or {@link #desc()}).
-   * @deprecated Use {@link #orderByDeploymentTime()} instead</p>*/
-  @Deprecated(forRemoval = true)
+   * @deprecated Use {@link #orderByDeploymentTime()} instead.
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   DeploymentQuery orderByDeploymenTime();
 
   /** Order by deployment time (needs to be followed by {@link #asc()} or {@link #desc()}). */

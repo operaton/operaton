@@ -421,9 +421,9 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   /**
-   * @deprecated Use {@link #inject(Object, Field, Object)} instead
+   * @deprecated Use {@link #inject(Object, Field, Object)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   protected void inject(Object instance, Field field) {
     inject(instance, field, processEngine);
   }

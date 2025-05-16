@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-@Deprecated
+@Deprecated(since = "1.0")
 public interface AtomicOperation extends CoreAtomicOperation<PvmExecutionImpl> {
 
   AtomicOperation PROCESS_START = PvmAtomicOperation.PROCESS_START;

@@ -96,9 +96,9 @@ public interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#DEPLOYMENT}.
    *
-   * @deprecated use {@link #deleteDeployment(String, boolean)}. This methods may be deleted from 5.3.
+   * @deprecated Use {@link #deleteDeployment(String, boolean)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteDeploymentCascade(String deploymentId);
 
   /**
@@ -633,9 +633,8 @@ public interface RepositoryService {
    *          When the process definition or user doesn't exist.
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void addCandidateStarterUser(String processDefinitionId, String userId);
 
   /**
@@ -648,9 +647,8 @@ public interface RepositoryService {
    *          When the process definition or group doesn't exist.
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void addCandidateStarterGroup(String processDefinitionId, String groupId);
 
   /**
@@ -663,9 +661,8 @@ public interface RepositoryService {
    *          When the process definition or user doesn't exist.
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteCandidateStarterUser(String processDefinitionId, String userId);
 
   /**
@@ -678,9 +675,8 @@ public interface RepositoryService {
    *          When the process definition or group doesn't exist.
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteCandidateStarterGroup(String processDefinitionId, String groupId);
 
   /**
@@ -689,9 +685,8 @@ public interface RepositoryService {
    * is authorized for a certain process definition
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   List<IdentityLink> getIdentityLinksForProcessDefinition(String processDefinitionId);
 
   /**

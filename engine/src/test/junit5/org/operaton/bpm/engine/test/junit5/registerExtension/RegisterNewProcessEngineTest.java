@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.junit5.registerExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -24,13 +26,12 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RegisterNewProcessEngineTest {
 
-  private static final ProcessEngine testEngine = ((ProcessEngineConfigurationImpl) ProcessEngineConfiguration
+  private static ProcessEngine testEngine = ((ProcessEngineConfigurationImpl) ProcessEngineConfiguration
     .createStandaloneInMemProcessEngineConfiguration())
     .setEnforceHistoryTimeToLive(false)
     .setProcessEngineName("testEngine")
@@ -40,7 +41,7 @@ class RegisterNewProcessEngineTest {
     .buildProcessEngine();
 
   @RegisterExtension
-  ProcessEngineExtension extension = ProcessEngineExtension.builder()
+  static ProcessEngineExtension extension = ProcessEngineExtension.builder()
       .useProcessEngine(testEngine)
       .build();
 

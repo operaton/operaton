@@ -43,6 +43,8 @@ class DmnEngineConfigurationTest {
 
   protected static final String CONFIGURATION_XML = "org/operaton/bpm/engine/test/api/cfg/custom-dmn-operaton.cfg.xml";
 
+  private static final String PROCESS_ENGINE_NAME = "someProcessEngineName";
+
   protected ProcessEngine engine;
 
   @AfterEach
@@ -61,6 +63,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -80,6 +83,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -97,6 +101,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -114,6 +119,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -131,6 +137,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -143,6 +150,7 @@ class DmnEngineConfigurationTest {
   void setProcessEngineElProviderByDefault() {
     // given a default DMN engine configuration without el provider
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -157,6 +165,7 @@ class DmnEngineConfigurationTest {
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     ElProvider elProvider = mock(ElProvider.class);
     processEngineConfiguration.setDmnElProvider(elProvider);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -169,6 +178,7 @@ class DmnEngineConfigurationTest {
   void setProcessEngineScriptEnginesByDefault() {
     // given a default DMN engine configuration without script engine resolver
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -188,6 +198,7 @@ class DmnEngineConfigurationTest {
     DefaultDmnEngineConfiguration dmnEngineConfiguration = processEngineConfiguration.getDmnEngineConfiguration();
     assertThat(dmnEngineConfiguration).isNotNull();
     assertThat(dmnEngineConfiguration.getDefaultInputExpressionExpressionLanguage()).isEqualTo("groovy");
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();

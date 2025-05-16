@@ -53,8 +53,8 @@ class HistoryCleanupByteArrayRemovalTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(config -> {
+      config.setProcessEngineName("someProcessEngine");
       config.setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
       .initHistoryRemovalTime();
@@ -76,7 +76,7 @@ class HistoryCleanupByteArrayRemovalTest {
       config.initHistoryCleanup();
     }).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private ManagementService managementService;
   private HistoryService historyService;

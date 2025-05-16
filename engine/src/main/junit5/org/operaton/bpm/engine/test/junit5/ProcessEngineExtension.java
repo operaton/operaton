@@ -33,6 +33,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
@@ -165,7 +166,7 @@ import org.slf4j.Logger;
  * </p>
  */
 public class ProcessEngineExtension implements TestWatcher,
-    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, 
+    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, BeforeAllCallback, 
     AfterAllCallback, ParameterResolver, ProcessEngineServices, ProcessEngineProvider {
 
   protected static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
@@ -192,12 +193,10 @@ public class ProcessEngineExtension implements TestWatcher,
 
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 
-  private boolean cacheForConfigurationResource = true;
-
   // SETUP
 
   protected void initializeProcessEngine() {
-    processEngine = TestHelper.getProcessEngine(configurationResource, processEngineConfigurator, cacheForConfigurationResource);
+    processEngine = TestHelper.getProcessEngine(configurationResource, processEngineConfigurator);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 
@@ -298,6 +297,14 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   @Override
+  public void beforeAll(ExtensionContext context) {
+    if (processEngine == null) {
+      initializeProcessEngine();
+      initializeServices();
+    }
+  }
+  
+  @Override
   public void afterAll(ExtensionContext context) {
     deleteHistoryCleanupJob();
   }
@@ -324,9 +331,9 @@ public class ProcessEngineExtension implements TestWatcher,
   public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
     if (processEngine == null) {
       initializeProcessEngine();
-      // allow other extensions to access the engine instance created by this extension
-      context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     }
+    // allow other extensions to access the engine instance created by this extension
+    context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     initializeServices();
     getAllFields(testInstance.getClass())
             .filter(field -> field.getType() == ProcessEngine.class)
@@ -401,16 +408,7 @@ public class ProcessEngineExtension implements TestWatcher,
     return this;
   }
 
-  public ProcessEngineExtension cacheForConfigurationResource(boolean cacheForConfigurationResource) {
-    this.cacheForConfigurationResource = cacheForConfigurationResource;
-    return this;
-  }
-
   public ProcessEngineExtension build() {
-    if (processEngine == null) {
-      initializeProcessEngine();
-    }
-    initializeServices();
     return this;
   }
 

@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -77,8 +78,10 @@ class MessageCorrelationTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
+      .configurator(configuration -> {
+        configuration.setProcessEngineName("someEngine");
+        configuration.setJavaSerializationFormatEnabled(true);
+      })
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
@@ -87,6 +90,11 @@ class MessageCorrelationTest {
   TaskService taskService;
   RepositoryService repositoryService;
 
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
+  }
+  
   @Deployment
   @Test
   void testCatchingMessageEventCorrelation() {

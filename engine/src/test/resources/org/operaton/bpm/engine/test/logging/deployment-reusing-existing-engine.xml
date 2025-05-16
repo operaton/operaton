@@ -6,7 +6,7 @@
 
   <process-archive name="pa1">
 
-    <process-engine>default</process-engine>
+    <process-engine>reusableEngine</process-engine>
   
     <properties>
         <property name="isScanForProcessDefinitions">false</property>

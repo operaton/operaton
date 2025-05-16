@@ -21,6 +21,7 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDAT
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -34,15 +35,15 @@ public class HistoryCleanupDisabledOnBootstrapTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(configuration -> {
+      configuration.setProcessEngineName("someEngine");
       configuration.setJdbcUrl("jdbc:h2:mem:" + HistoryCleanupDisabledOnBootstrapTest.class.getSimpleName());
       configuration.setHistoryCleanupEnabled(false);
       configuration.setHistoryCleanupBatchWindowStartTime("12:00");
       configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
     }).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   public HistoryService historyService;
 
@@ -51,6 +52,11 @@ public class HistoryCleanupDisabledOnBootstrapTest {
   @AfterEach
   void resetConfig() {
     engineConfiguration.setHistoryCleanupEnabled(true);
+  }
+
+  @AfterAll
+  static void closeEngine() {
+    engineRule.getProcessEngine().close();
   }
 
   @Test

@@ -16,7 +16,15 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import junit.framework.AssertionFailedError;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.TimerTask;
+
 import org.awaitility.core.ConditionTimeoutException;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -49,15 +57,7 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
+import junit.framework.AssertionFailedError;
 
 public class ProcessEngineTestRule extends TestWatcher {
 

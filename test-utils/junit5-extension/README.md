@@ -33,7 +33,7 @@ Or register the extension from the builder:
 
 ```java
     @RegisterExtension
-    ProcessEngineExtension extension = ProcessEngineExtension.builder()
+    static ProcessEngineExtension extension = ProcessEngineExtension.builder()
       .configurationResource("audithistory.operaton.cfg.xml")
       .build();
 ```

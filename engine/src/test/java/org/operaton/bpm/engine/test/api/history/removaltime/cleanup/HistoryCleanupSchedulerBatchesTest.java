@@ -47,12 +47,11 @@ class HistoryCleanupSchedulerBatchesTest extends AbstractHistoryCleanupScheduler
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(configuration ->
       configure(configuration, HistoryEventTypes.BATCH_START, HistoryEventTypes.BATCH_END)
       ).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
   void init() {

@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.impl.el.DateTimeFunctions;
  */
 class CustomExpressionManagerTest {
 
+  private static final String PROCESS_ENGINE_NAME = "processEngineName";
   protected ProcessEngine engine;
 
   @Test
@@ -45,6 +46,7 @@ class CustomExpressionManagerTest {
     CustomExpressionManager customExpressionManager = new CustomExpressionManager();
     assertThat(customExpressionManager.getFunctions()).isEmpty();
     config.setExpressionManager(customExpressionManager);
+    config.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = config.buildProcessEngine();

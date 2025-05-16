@@ -6,6 +6,8 @@
 
   <bean id="processEngineConfiguration" class="org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
   
+    <property name="processEngineName" value="operatonDefault" />
+
     <property name="jdbcUrl" value="jdbc:h2:mem:operaton;DB_CLOSE_DELAY=-1" />
     <property name="jdbcDriver" value="org.h2.Driver" />
     <property name="jdbcUsername" value="sa" />

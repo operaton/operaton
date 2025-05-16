@@ -61,7 +61,7 @@ public class AuthorizationExceptionDto extends ExceptionDto {
    * is only one {@link MissingAuthorizationDto}, {@code null} otherwise
    *
    * @deprecated Use {@link #getMissingAuthorizations()} to get the name of the resource
-   * of the {@link MissingAuthorizationDto}(s). This method will be removed in future version.
+   * of the {@link MissingAuthorizationDto}(s) instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public String getResourceName() {
@@ -70,7 +70,7 @@ public class AuthorizationExceptionDto extends ExceptionDto {
 
   /**
    * @deprecated Use {@link #setMissingAuthorizations(List)}} to set
-   * the {@link MissingAuthorizationDto}(s). This method will be removed in future version.
+   * the {@link MissingAuthorizationDto}(s) instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public void setResourceName(String resourceName) {
@@ -82,7 +82,7 @@ public class AuthorizationExceptionDto extends ExceptionDto {
    * is only one {@link MissingAuthorizationDto}, {@code null} otherwise
    *
    * @deprecated Use {@link #getMissingAuthorizations()} to get the id of the resource
-   * of the {@link MissingAuthorizationDto}(s). This method will be removed in future version.
+   * of the {@link MissingAuthorizationDto}(s) instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public String getResourceId() {
@@ -91,7 +91,7 @@ public class AuthorizationExceptionDto extends ExceptionDto {
 
   /**
    * @deprecated Use {@link #setMissingAuthorizations(List)}} to set
-   * the {@link MissingAuthorizationDto}(s). This method will be removed in future version.
+   * the {@link MissingAuthorizationDto}(s) instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public void setResourceId(String resourceId) {
@@ -103,7 +103,7 @@ public class AuthorizationExceptionDto extends ExceptionDto {
    * is only one {@link MissingAuthorizationDto}, {@code null} otherwise
    *
    * @deprecated Use {@link #getMissingAuthorizations()} to get the name of the violated permission
-   * of the {@link MissingAuthorizationDto}(s). This method will be removed in future version.
+   * of the {@link MissingAuthorizationDto}(s) instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public String getPermissionName() {
@@ -112,7 +112,7 @@ public class AuthorizationExceptionDto extends ExceptionDto {
 
   /**
    * @deprecated Use {@link #setMissingAuthorizations(List)}} to set
-   * the {@link MissingAuthorizationDto}(s). This method will be removed in future version.
+   * the {@link MissingAuthorizationDto}(s) instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public void setPermissionName(String permissionName) {

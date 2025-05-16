@@ -201,7 +201,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   // event listeners //////////////////////////////////////////////////////////
 
   /**
-   * @deprecated Use {@link #getListeners(String)} instead
+   * @deprecated Use {@link #getListeners(String)} instead.
    */
   @SuppressWarnings("unchecked")
   @Deprecated(forRemoval = true, since = "1.0")
@@ -210,7 +210,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   /**
-   * @deprecated Use {@link #addListener(String, org.operaton.bpm.engine.delegate.DelegateListener)} instead
+   * @deprecated Use {@link #addListener(String, org.operaton.bpm.engine.delegate.DelegateListener)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public void addExecutionListener(String eventName, ExecutionListener executionListener) {
@@ -218,7 +218,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   /**
-   * @deprecated Use {@link #addListener(String, org.operaton.bpm.engine.delegate.DelegateListener, int)} instead
+   * @deprecated Use {@link #addListener(String, org.operaton.bpm.engine.delegate.DelegateListener, int)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public void addExecutionListener(String eventName, ExecutionListener executionListener, int index) {
@@ -226,7 +226,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   /**
-   * @deprecated Use {@link #getListeners()} instead
+   * @deprecated Use {@link #getListeners()} instead.
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Deprecated(forRemoval = true, since = "1.0")

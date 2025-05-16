@@ -248,7 +248,7 @@ public class BpmnParse extends Parse {
   public static final String PROPERTYNAME_TYPE = BpmnProperties.TYPE.getName();
 
   /**
-   * @deprecated Use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS} instead
+   * @deprecated Use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.getName();

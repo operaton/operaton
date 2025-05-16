@@ -49,7 +49,7 @@ class HistoryCleanupSchedulerUserOperationLogsTest extends AbstractHistoryCleanu
       configure(configuration, HistoryEventTypes.USER_OPERATION_LOG)
     ).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;

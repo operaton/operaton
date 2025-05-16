@@ -57,7 +57,7 @@ import static org.assertj.core.api.Assumptions.assumeThat;
  */
 public class BpmnParseTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   @Rule

@@ -48,7 +48,7 @@ import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.POS
  */
 public class DeadlockTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   @Rule

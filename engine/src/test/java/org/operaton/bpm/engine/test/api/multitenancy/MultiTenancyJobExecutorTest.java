@@ -43,7 +43,7 @@ class MultiTenancyJobExecutorTest {
       .cacheForConfigurationResource(false)
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
   void setAuthenticatedTenantForTimerStartEvent() {

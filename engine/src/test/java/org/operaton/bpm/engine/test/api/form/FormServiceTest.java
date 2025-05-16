@@ -104,7 +104,7 @@ class FormServiceTest {
           configuration.setJavaSerializationFormatEnabled(true);
       }).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private RuntimeService runtimeService;
   private TaskService taskService;

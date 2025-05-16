@@ -50,9 +50,9 @@ public class UpdateJobAuthorizationTest {
   static final String TIMER_BOUNDARY_PROCESS_KEY = "timerBoundaryProcess";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   ManagementService managementService;
   RuntimeService runtimeService;

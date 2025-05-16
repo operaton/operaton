@@ -78,7 +78,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
   });
 
   public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public AuthorizationTestBaseRule authRule = new AuthorizationTestBaseRule(engineRule);
+  AuthorizationTestBaseRule authRule = new AuthorizationTestBaseRule(engineRule);
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   @Rule

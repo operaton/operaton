@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.util.JobExecutorHelper;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import java.util.*;
@@ -232,27 +232,27 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
   }
 
   /**
-   * @deprecated Use {@link JobExecutorHelper#waitForJobExecutorToProcessAllJobs(ProcessEngineConfiguration, long, long)} instead
+   * @deprecated Use {@link JobExecutorWaitUtils#waitForJobExecutorToProcessAllJobs(ProcessEngineConfiguration, long, long)} instead
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait, long intervalMillis) {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait, intervalMillis);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait, intervalMillis);
   }
 
   /**
-   * @deprecated Use {@link JobExecutorHelper#waitForJobExecutorToProcessAllJobs(ProcessEngineConfiguration, long)} instead
+   * @deprecated Use {@link JobExecutorWaitUtils#waitForJobExecutorToProcessAllJobs(ProcessEngineConfiguration, long)} instead
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-   JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait);
+   JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait);
   }
 
   /**
-   * @deprecated Use {@link JobExecutorHelper#waitForCondition(Callable, long, long)} instead
+   * @deprecated Use {@link JobExecutorWaitUtils#waitForCondition(Callable, long, long)} instead
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorOnCondition(long maxMillisToWait, long intervalMillis, Callable<Boolean> condition) {
-    JobExecutorHelper.waitForCondition(condition, maxMillisToWait, intervalMillis);
+    JobExecutorWaitUtils.waitForCondition(condition, maxMillisToWait, intervalMillis);
   }
 
   /**

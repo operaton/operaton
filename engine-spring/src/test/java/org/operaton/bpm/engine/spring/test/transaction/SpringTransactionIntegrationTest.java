@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
-import static org.operaton.bpm.engine.test.util.JobExecutorHelper.waitForJobExecutorToProcessAllJobs;
+import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 
 import javax.sql.DataSource;
 
@@ -47,7 +47,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
   protected DataSource dataSource;
 
   private static final long WAIT_TIME_MILLIS = 20000L;
-  public static final long INTERVAL_MILLIS = 1000L;
+  public static final long INTERVAL_MILLIS = 250L;
 
   @Deployment
   @Test

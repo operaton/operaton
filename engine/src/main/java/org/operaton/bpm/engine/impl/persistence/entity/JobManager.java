@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.JOB_HANDLER_CONFIG_PROPERTY_DELIMITER;
-import static org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.JOB_HANDLER_CONFIG_PROPERTY_FOLLOW_UP_JOB_CREATED;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.JobQueryImpl;
 import org.operaton.bpm.engine.impl.JobQueryProperty;
@@ -52,6 +41,18 @@ import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.runtime.Job;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.JOB_HANDLER_CONFIG_PROPERTY_DELIMITER;
+import static org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.JOB_HANDLER_CONFIG_PROPERTY_FOLLOW_UP_JOB_CREATED;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 
 /**
  * @author Tom Baeyens
@@ -62,6 +63,19 @@ public class JobManager extends AbstractManager {
   public static final QueryOrderingProperty JOB_PRIORITY_ORDERING_PROPERTY = new QueryOrderingProperty(null, JobQueryProperty.PRIORITY);
   public static final QueryOrderingProperty JOB_TYPE_ORDERING_PROPERTY = new QueryOrderingProperty(null, JobQueryProperty.TYPE);
   public static final QueryOrderingProperty JOB_DUEDATE_ORDERING_PROPERTY = new QueryOrderingProperty(null, JobQueryProperty.DUEDATE);
+  private static final String JOB_ID = "jobId";
+  private static final String HANDLER_TYPE = "handlerType";
+  private static final String RETRIES = "retries";
+  private static final String DUE_DATE = "dueDate";
+  private static final String IS_DUE_DATE_SET = "isDueDateSet";
+  private static final String PRIORITY = "priority";
+  private static final String DEPLOYMENT_IDS = "deploymentIds";
+  private static final String NOW = "now";
+  private static final String ALWAYS_SET_DUE_DATE = "alwaysSetDueDate";
+  private static final String DEPLOYMENT_AWARE = "deploymentAware";
+  private static final String JOB_PRIORITY_MIN = "jobPriorityMin";
+  private static final String JOB_PRIORITY_MAX = "jobPriorityMax";
+  private static final String HISTORY_CLEANUP_ENABLED = "historyCleanupEnabled";
 
   static {
     JOB_PRIORITY_ORDERING_PROPERTY.setDirection(Direction.DESCENDING);
@@ -205,14 +219,14 @@ public class JobManager extends AbstractManager {
     Map<String,Object> params = new HashMap<>();
     Date now = ClockUtil.getCurrentTime();
 
-    params.put("now", now);
-    params.put("alwaysSetDueDate", isEnsureJobDueDateNotNull());
-    params.put("deploymentAware", engineConfiguration.isJobExecutorDeploymentAware());
+    params.put(NOW, now);
+    params.put(ALWAYS_SET_DUE_DATE, isEnsureJobDueDateNotNull());
+    params.put(DEPLOYMENT_AWARE, engineConfiguration.isJobExecutorDeploymentAware());
 
     if (engineConfiguration.isJobExecutorDeploymentAware()) {
       Set<String> registeredDeployments = engineConfiguration.getRegisteredDeployments();
       if (!registeredDeployments.isEmpty()) {
-        params.put("deploymentIds", registeredDeployments);
+        params.put(DEPLOYMENT_IDS, registeredDeployments);
       }
     }
 
@@ -220,10 +234,10 @@ public class JobManager extends AbstractManager {
     long jobExecutorPriorityRangeMin = engineConfiguration.getJobExecutorPriorityRangeMin();
     long jobExecutorPriorityRangeMax = engineConfiguration.getJobExecutorPriorityRangeMax();
 
-    params.put("jobPriorityMin", jobExecutorAcquireByPriority && jobExecutorPriorityRangeMin != Long.MIN_VALUE ? jobExecutorPriorityRangeMin : null);
-    params.put("jobPriorityMax", jobExecutorAcquireByPriority && jobExecutorPriorityRangeMax != Long.MAX_VALUE ? jobExecutorPriorityRangeMax : null);
+    params.put(JOB_PRIORITY_MIN, jobExecutorAcquireByPriority && jobExecutorPriorityRangeMin != Long.MIN_VALUE ? jobExecutorPriorityRangeMin : null);
+    params.put(JOB_PRIORITY_MAX, jobExecutorAcquireByPriority && jobExecutorPriorityRangeMax != Long.MAX_VALUE ? jobExecutorPriorityRangeMax : null);
 
-    params.put("historyCleanupEnabled", engineConfiguration.isHistoryCleanupEnabled());
+    params.put(HISTORY_CLEANUP_ENABLED, engineConfiguration.isHistoryCleanupEnabled());
 
     List<QueryOrderingProperty> orderingProperties = new ArrayList<>();
 
@@ -303,7 +317,7 @@ public class JobManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<JobEntity> findJobsByConfiguration(String jobHandlerType, String jobHandlerConfiguration, String tenantId) {
     Map<String, String> params = new HashMap<>();
-    params.put("handlerType", jobHandlerType);
+    params.put(HANDLER_TYPE, jobHandlerType);
     params.put("handlerConfiguration", jobHandlerConfiguration);
     params.put("tenantId", tenantId);
 
@@ -326,89 +340,89 @@ public class JobManager extends AbstractManager {
 
   public void updateJobSuspensionStateById(String jobId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("jobId", jobId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(JOB_ID, jobId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateJobSuspensionStateByJobDefinitionId(String jobDefinitionId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("jobDefinitionId", jobDefinitionId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(JOB_DEFINITION_ID, jobDefinitionId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateJobSuspensionStateByProcessInstanceId(String processInstanceId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateJobSuspensionStateByProcessDefinitionId(String processDefinitionId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionId", processDefinitionId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_ID, processDefinitionId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateStartTimerJobSuspensionStateByProcessDefinitionId(String processDefinitionId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionId", processDefinitionId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
-    parameters.put("handlerType", TimerStartEventJobHandler.TYPE);
+    parameters.put(PROCESS_DEFINITION_ID, processDefinitionId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
+    parameters.put(HANDLER_TYPE, TimerStartEventJobHandler.TYPE);
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateJobSuspensionStateByProcessDefinitionKey(String processDefinitionKey, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isProcessDefinitionTenantIdSet", false);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_PROCESS_DEFINITION_TENANT_ID_SET, false);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateJobSuspensionStateByProcessDefinitionKeyAndTenantId(String processDefinitionKey, String processDefinitionTenantId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isProcessDefinitionTenantIdSet", true);
-    parameters.put("processDefinitionTenantId", processDefinitionTenantId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_PROCESS_DEFINITION_TENANT_ID_SET, true);
+    parameters.put(PROCESS_DEFINITION_TENANT_ID, processDefinitionTenantId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateStartTimerJobSuspensionStateByProcessDefinitionKey(String processDefinitionKey, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isProcessDefinitionTenantIdSet", false);
-    parameters.put("suspensionState", suspensionState.getStateCode());
-    parameters.put("handlerType", TimerStartEventJobHandler.TYPE);
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_PROCESS_DEFINITION_TENANT_ID_SET, false);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
+    parameters.put(HANDLER_TYPE, TimerStartEventJobHandler.TYPE);
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateStartTimerJobSuspensionStateByProcessDefinitionKeyAndTenantId(String processDefinitionKey, String processDefinitionTenantId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isProcessDefinitionTenantIdSet", true);
-    parameters.put("processDefinitionTenantId", processDefinitionTenantId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
-    parameters.put("handlerType", TimerStartEventJobHandler.TYPE);
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_PROCESS_DEFINITION_TENANT_ID_SET, true);
+    parameters.put(PROCESS_DEFINITION_TENANT_ID, processDefinitionTenantId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
+    parameters.put(HANDLER_TYPE, TimerStartEventJobHandler.TYPE);
     getDbEntityManager().update(JobEntity.class, "updateJobSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateFailedJobRetriesByJobDefinitionId(String jobDefinitionId, int retries, Date dueDate, boolean isDueDateSet) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("jobDefinitionId", jobDefinitionId);
-    parameters.put("retries", retries);
-    parameters.put("dueDate", dueDate);
-    parameters.put("isDueDateSet", isDueDateSet);
+    parameters.put(JOB_DEFINITION_ID, jobDefinitionId);
+    parameters.put(RETRIES, retries);
+    parameters.put(DUE_DATE, dueDate);
+    parameters.put(IS_DUE_DATE_SET, isDueDateSet);
     getDbEntityManager().update(JobEntity.class, "updateFailedJobRetriesByParameters", parameters);
   }
 
   public void updateJobPriorityByDefinitionId(String jobDefinitionId, long priority) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("jobDefinitionId", jobDefinitionId);
-    parameters.put("priority", priority);
+    parameters.put(JOB_DEFINITION_ID, jobDefinitionId);
+    parameters.put(PRIORITY, priority);
     getDbEntityManager().update(JobEntity.class, "updateJobPriorityByDefinitionId", parameters);
   }
 

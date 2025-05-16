@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -46,6 +40,13 @@ import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Tom Baeyens
@@ -130,10 +131,10 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
   @SuppressWarnings("unchecked")
   public List<String> findHistoricProcessInstanceIdsForCleanup(Integer batchSize, int minuteFrom, int minuteTo) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("currentTimestamp", ClockUtil.getCurrentTime());
+    parameters.put(CURRENT_TIMESTAMP, ClockUtil.getCurrentTime());
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
     ListQueryParameterObject parameterObject = new ListQueryParameterObject(parameters, 0, batchSize);
     return getDbEntityManager().selectList("selectHistoricProcessInstanceIdsForCleanup", parameterObject);
@@ -262,9 +263,9 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
     if (batchSize == null || isPerformUpdateOnly(entities, HistoricProcessInstanceEventEntity.class)) {
       // update process instance last if updated in batches to avoid orphans
       Map<String, Object> parameters = new HashMap<>();
-      parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-      parameters.put("removalTime", removalTime);
-      parameters.put("maxResults", batchSize);
+      parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+      parameters.put(REMOVAL_TIME, removalTime);
+      parameters.put(MAX_RESULTS, batchSize);
 
       addOperation(getDbEntityManager().updatePreserveOrder(HistoricProcessInstanceEventEntity.class,
           "updateHistoricProcessInstanceEventsByRootProcessInstanceId", parameters), updateOperations);
@@ -362,9 +363,9 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
     if (batchSize == null || isPerformUpdateOnly(entities, HistoricProcessInstanceEventEntity.class)) {
       // update process instance last if updated in batches to avoid orphans
       Map<String, Object> parameters = new HashMap<>();
-      parameters.put("processInstanceId", processInstanceId);
-      parameters.put("removalTime", removalTime);
-      parameters.put("maxResults", batchSize);
+      parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+      parameters.put(REMOVAL_TIME, removalTime);
+      parameters.put(MAX_RESULTS, batchSize);
 
       addOperation(getDbEntityManager().updatePreserveOrder(HistoricProcessInstanceEventEntity.class,
           "updateHistoricProcessInstanceByProcessInstanceId", parameters), updateOperations);
@@ -444,12 +445,12 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
     deleteOperations.put(deleteAuthorizations.getEntityType(), deleteAuthorizations);
 
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     DbOperation deleteProcessInstances = getDbEntityManager()
       .deletePreserveOrder(HistoricProcessInstanceEntity.class, "deleteHistoricProcessInstancesByRemovalTime",

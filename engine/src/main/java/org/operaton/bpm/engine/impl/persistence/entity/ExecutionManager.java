@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
@@ -35,6 +30,10 @@ import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tom Baeyens
@@ -42,6 +41,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 public class ExecutionManager extends AbstractManager {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+  private static final String PARENT_EXECUTION_ID = "parentExecutionId";
 
   public void insertExecution(ExecutionEntity execution) {
     getDbEntityManager().insert(execution);
@@ -154,8 +154,8 @@ public class ExecutionManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<ExecutionEntity> findEventScopeExecutionsByActivityId(String activityRef, String parentExecutionId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("activityId", activityRef);
-    parameters.put("parentExecutionId", parentExecutionId);
+    parameters.put(ACTIVITY_ID, activityRef);
+    parameters.put(PARENT_EXECUTION_ID, parentExecutionId);
     return getDbEntityManager().selectList("selectExecutionsByParentExecutionId", parameters);
   }
 
@@ -175,32 +175,32 @@ public class ExecutionManager extends AbstractManager {
 
   public void updateExecutionSuspensionStateByProcessDefinitionId(String processDefinitionId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionId", processDefinitionId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_ID, processDefinitionId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ExecutionEntity.class, "updateExecutionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateExecutionSuspensionStateByProcessInstanceId(String processInstanceId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ExecutionEntity.class, "updateExecutionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateExecutionSuspensionStateByProcessDefinitionKey(String processDefinitionKey, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isTenantIdSet", false);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_TENANT_ID_SET, false);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ExecutionEntity.class, "updateExecutionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateExecutionSuspensionStateByProcessDefinitionKeyAndTenantId(String processDefinitionKey, String tenantId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isTenantIdSet", true);
-    parameters.put("tenantId", tenantId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_TENANT_ID_SET, true);
+    parameters.put(TENANT_ID, tenantId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ExecutionEntity.class, "updateExecutionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 

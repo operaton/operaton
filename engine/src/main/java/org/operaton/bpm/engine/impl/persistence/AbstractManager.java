@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.impl.AbstractQuery;
@@ -53,7 +51,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricIdentityLinkLogMa
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentManager;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceManager;
-import org.operaton.bpm.engine.impl.persistence.entity.ReportManager;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceManager;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceManager;
 import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoManager;
@@ -61,6 +58,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.IdentityLinkManager;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
+import org.operaton.bpm.engine.impl.persistence.entity.ReportManager;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceManager;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskReportManager;
@@ -68,12 +66,38 @@ import org.operaton.bpm.engine.impl.persistence.entity.TenantManager;
 import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceManager;
 
+import java.util.concurrent.Callable;
+
 
 
 /**
  * @author Tom Baeyens
  */
 public abstract class AbstractManager implements Session {
+  protected static final String ACTIVITY_ID = "activityId";
+  protected static final String BATCH_ID = "batchId";
+  protected static final String BATCH_SIZE = "batchSize";
+  protected static final String CASE_INSTANCE_IDS = "caseInstanceIds";
+  protected static final String CURRENT_TIMESTAMP = "currentTimestamp";
+  protected static final String ID = "id";
+  protected static final String IS_PROCESS_DEFINITION_TENANT_ID_SET = "isProcessDefinitionTenantIdSet";
+  protected static final String IS_TENANT_ID_SET = "isTenantIdSet";
+  protected static final String JOB_DEFINITION_ID = "jobDefinitionId";
+  protected static final String MAX_RESULTS = "maxResults";
+  protected static final String MINUTE_FROM = "minuteFrom";
+  protected static final String MINUTE_TO = "minuteTo";
+  protected static final String REMOVAL_TIME = "removalTime";
+  protected static final String PROCESS_DEFINITION_ID = "processDefinitionId";
+  protected static final String PROCESS_DEFINITION_KEY = "processDefinitionKey";
+  protected static final String PROCESS_DEFINITION_TENANT_ID = "processDefinitionTenantId";
+  protected static final String PROCESS_INSTANCE_ID = "processInstanceId";
+  protected static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
+  protected static final String ROOT_PROCESS_INSTANCE_ID = "rootProcessInstanceId";
+  protected static final String SUSPENSION_STATE = "suspensionState";
+  protected static final String TASK_CASE_INSTANCE_IDS = "taskCaseInstanceIds";
+  protected static final String TASK_ID = "taskId";
+  protected static final String TASK_PROCESS_INSTANCE_IDS = "taskProcessInstanceIds";
+  protected static final String TENANT_ID = "tenantId";
 
   public void insert(DbEntity dbEntity) {
     getDbEntityManager().insert(dbEntity);

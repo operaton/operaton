@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.QueryPropertyImpl;
@@ -30,11 +26,16 @@ import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Event;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tom Baeyens
  */
 public class CommentManager extends AbstractHistoricManager {
+
 
   @Override
   public void delete(DbEntity dbEntity) {
@@ -72,19 +73,19 @@ public class CommentManager extends AbstractHistoricManager {
 
   public void deleteCommentsByProcessInstanceIds(List<String> processInstanceIds) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceIds", processInstanceIds);
+    parameters.put(PROCESS_INSTANCE_IDS, processInstanceIds);
     deleteComments(parameters);
   }
 
   public void deleteCommentsByTaskProcessInstanceIds(List<String> processInstanceIds) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("taskProcessInstanceIds", processInstanceIds);
+    parameters.put(TASK_PROCESS_INSTANCE_IDS, processInstanceIds);
     deleteComments(parameters);
   }
 
   public void deleteCommentsByTaskCaseInstanceIds(List<String> caseInstanceIds) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("taskCaseInstanceIds", caseInstanceIds);
+    parameters.put(TASK_CASE_INSTANCE_IDS, caseInstanceIds);
     deleteComments(parameters);
   }
 
@@ -102,8 +103,8 @@ public class CommentManager extends AbstractHistoricManager {
     checkHistoryEnabled();
 
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("taskId", taskId);
-    parameters.put("id", commentId);
+    parameters.put(TASK_ID, taskId);
+    parameters.put(ID, commentId);
 
     return (CommentEntity) getDbEntityManager().selectOne("selectCommentByTaskIdAndCommentId", parameters);
   }
@@ -112,17 +113,17 @@ public class CommentManager extends AbstractHistoricManager {
     checkHistoryEnabled();
 
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("id", commentId);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(ID, commentId);
 
     return (CommentEntity) getDbEntityManager().selectOne("selectCommentByProcessInstanceIdAndCommentId", parameters);
   }
 
   public DbOperation addRemovalTimeToCommentsByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(CommentEntity.class, "updateCommentsByRootProcessInstanceId", parameters);
@@ -130,9 +131,9 @@ public class CommentManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToCommentsByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(CommentEntity.class, "updateCommentsByProcessInstanceId", parameters);
@@ -140,12 +141,12 @@ public class CommentManager extends AbstractHistoricManager {
 
   public DbOperation deleteCommentsByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(CommentEntity.class, "deleteCommentsByRemovalTime",

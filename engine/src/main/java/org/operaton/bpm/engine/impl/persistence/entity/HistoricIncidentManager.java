@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.HistoricIncidentQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -30,6 +26,11 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoricIncidentEventEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Roman Smirnov
@@ -54,9 +55,9 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToIncidentsByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(HistoricIncidentEventEntity.class, "updateHistoricIncidentsByRootProcessInstanceId", parameters);
@@ -64,9 +65,9 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToIncidentsByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(HistoricIncidentEventEntity.class, "updateHistoricIncidentsByProcessInstanceId", parameters);
@@ -109,12 +110,12 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
 
   public DbOperation deleteHistoricIncidentsByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(HistoricIncidentEntity.class, "deleteHistoricIncidentsByRemovalTime",
@@ -123,8 +124,8 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
 
   public void addRemovalTimeToHistoricIncidentsByBatchId(String batchId, Date removalTime) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("batchId", batchId);
-    parameters.put("removalTime", removalTime);
+    parameters.put(BATCH_ID, batchId);
+    parameters.put(REMOVAL_TIME, removalTime);
 
     getDbEntityManager()
       .updatePreserveOrder(HistoricIncidentEntity.class, "updateHistoricIncidentsByBatchId", parameters);

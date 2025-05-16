@@ -165,7 +165,7 @@ public class ProcessDefinitionQueryDto extends AbstractQueryDto<ProcessDefinitio
   }
 
   /**
-   * @deprecated use {@link #setVersion(Integer)}
+   * @deprecated Use {@link #setVersion(Integer)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   @OperatonQueryParam(value = "ver", converter = IntegerConverter.class)
@@ -179,7 +179,7 @@ public class ProcessDefinitionQueryDto extends AbstractQueryDto<ProcessDefinitio
   }
 
   /**
-   * @deprecated use {@link #setLatestVersion(Boolean)}
+   * @deprecated Use {@link #setLatestVersion(Boolean)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   @OperatonQueryParam(value = "latest", converter = BooleanConverter.class)

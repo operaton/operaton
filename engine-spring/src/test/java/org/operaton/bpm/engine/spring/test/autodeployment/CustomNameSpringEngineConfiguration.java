@@ -14,30 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.rest.hal;
+package org.operaton.bpm.engine.spring.test.autodeployment;
 
-import java.util.Collections;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.springframework.core.io.Resource;
 
 /**
- * @author Sebastian Menski
+ * @author Tobias Metzke
+ *
  */
-public class EmptyHalCollection extends HalCollectionResource<EmptyHalCollection> {
-
-  public static final HalResource<?> INSTANCE = new EmptyHalCollection();
-
-  public EmptyHalCollection() {
-    this(0);
+public class CustomNameSpringEngineConfiguration extends SpringProcessEngineConfiguration {
+  @Override
+  protected String getFileResourceName(Resource resource) {
+    return resource.getFilename();
   }
-
-  public EmptyHalCollection(long count) {
-    _links = Collections.emptyMap();
-    _embedded = Collections.emptyMap();
-    this.count = count;
-  }
-
-  @SuppressWarnings("unchecked")
-  public static <T extends HalCollectionResource<?>> T emptyHalCollection() {
-    return (T) INSTANCE;
-  }
-
 }

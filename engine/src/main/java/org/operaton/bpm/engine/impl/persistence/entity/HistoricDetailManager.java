@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.history.HistoricDetail;
 import org.operaton.bpm.engine.impl.HistoricDetailQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -28,38 +24,45 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.history.event.HistoricDetailEventEntity;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Tom Baeyens
  */
 public class HistoricDetailManager extends AbstractHistoricManager {
 
+  private static final String VARIABLE_INSTANCE_ID = "variableInstanceId";
+
   public void deleteHistoricDetailsByProcessInstanceIds(List<String> historicProcessInstanceIds) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceIds", historicProcessInstanceIds);
+    parameters.put(PROCESS_INSTANCE_IDS, historicProcessInstanceIds);
     deleteHistoricDetails(parameters);
   }
 
   public void deleteHistoricDetailsByTaskProcessInstanceIds(List<String> historicProcessInstanceIds) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("taskProcessInstanceIds", historicProcessInstanceIds);
+    parameters.put(TASK_PROCESS_INSTANCE_IDS, historicProcessInstanceIds);
     deleteHistoricDetails(parameters);
   }
 
   public void deleteHistoricDetailsByCaseInstanceIds(List<String> historicCaseInstanceIds) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("caseInstanceIds", historicCaseInstanceIds);
+    parameters.put(CASE_INSTANCE_IDS, historicCaseInstanceIds);
     deleteHistoricDetails(parameters);
   }
 
   public void deleteHistoricDetailsByTaskCaseInstanceIds(List<String> historicCaseInstanceIds) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("taskCaseInstanceIds", historicCaseInstanceIds);
+    parameters.put(TASK_CASE_INSTANCE_IDS, historicCaseInstanceIds);
     deleteHistoricDetails(parameters);
   }
 
   public void deleteHistoricDetailsByVariableInstanceId(String historicVariableInstanceId) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("variableInstanceId", historicVariableInstanceId);
+    parameters.put(VARIABLE_INSTANCE_ID, historicVariableInstanceId);
     deleteHistoricDetails(parameters);
   }
 
@@ -112,9 +115,9 @@ public class HistoricDetailManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToDetailsByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(HistoricDetailEventEntity.class, "updateHistoricDetailsByRootProcessInstanceId", parameters);
@@ -122,9 +125,9 @@ public class HistoricDetailManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToDetailsByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(HistoricDetailEventEntity.class, "updateHistoricDetailsByProcessInstanceId", parameters);
@@ -132,12 +135,12 @@ public class HistoricDetailManager extends AbstractHistoricManager {
 
   public DbOperation deleteHistoricDetailsByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(HistoricDetailEventEntity.class, "deleteHistoricDetailsByRemovalTime",

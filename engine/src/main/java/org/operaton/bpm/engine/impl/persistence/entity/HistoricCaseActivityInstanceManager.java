@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
 import org.operaton.bpm.engine.impl.HistoricCaseActivityInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sebastian Menski
  */
 public class HistoricCaseActivityInstanceManager extends AbstractHistoricManager {
+  private static final String CASE_ACTIVITY_ID = "caseActivityId";
+  private static final String CASE_INSTANCE_ID = "caseInstanceId";
 
   public void deleteHistoricCaseActivityInstancesByCaseInstanceIds(List<String> historicCaseInstanceIds) {
     if (isHistoryEnabled()) {
@@ -43,8 +44,8 @@ public class HistoricCaseActivityInstanceManager extends AbstractHistoricManager
 
   public HistoricCaseActivityInstanceEntity findHistoricCaseActivityInstance(String caseActivityId, String caseInstanceId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("caseActivityId", caseActivityId);
-    parameters.put("caseInstanceId", caseInstanceId);
+    parameters.put(CASE_ACTIVITY_ID, caseActivityId);
+    parameters.put(CASE_INSTANCE_ID, caseInstanceId);
 
     return (HistoricCaseActivityInstanceEntity) getDbEntityManager().selectOne("selectHistoricCaseActivityInstance", parameters);
   }

@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 /**
  * An {@link ExecutionEntity} execution context. Provides access to the process instance and the deployment.
  *
- * @deprecated Use {@link BpmnExecutionContext} instead
+ * @deprecated Use {@link BpmnExecutionContext} instead.
  *
  * @author Tom Baeyens
  * @author Roman Smirnov

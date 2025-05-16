@@ -126,16 +126,16 @@ public class ExclusiveJobAcquisitionTest {
 
     // the scheduler starts to acquire & execute the produced jobs
     jobExecutor.start();
-    waitForJobExecutorToProcessAllJobs(MAX_SECONDS_TO_WAIT_ON_JOBS * 1000, 100, jobExecutor, managementService, true);
+    waitForJobExecutorToProcessAllJobs(engineConfig, MAX_SECONDS_TO_WAIT_ON_JOBS * 1000, 100);
 
-    var batch1_pi1_job1 = pi1Jobs.subList(0, 1);
-    var batch2_pi1_job2 = pi1Jobs.subList(1, 2);
+    var batch1Pi1Job1 = pi1Jobs.subList(0, 1);
+    var batch2Pi1Job2 = pi1Jobs.subList(1, 2);
 
-    var batch3_pi2_job1 = pi2Jobs.subList(0, 1);
-    var batch4_pi2_job2 = pi2Jobs.subList(1, 2);
+    var batch3Pi2Job1 = pi2Jobs.subList(0, 1);
+    var batch4Pi2Job2 = pi2Jobs.subList(1, 2);
 
     // then assert that all jobs are executed in parallel into separate batches (no exclusiveness)
-    jobExecutor.assertJobGroup(batch1_pi1_job1, batch2_pi1_job2, batch3_pi2_job1, batch4_pi2_job2);
+    jobExecutor.assertJobGroup(batch1Pi1Job1, batch2Pi1Job2, batch3Pi2Job1, batch4Pi2Job2);
   }
 
   @Test
@@ -183,7 +183,7 @@ public class ExclusiveJobAcquisitionTest {
 
     // the scheduler starts to acquire & execute the produced jobs
     jobExecutor.start();
-    waitForJobExecutorToProcessAllJobs(MAX_SECONDS_TO_WAIT_ON_JOBS * 1000, 100, jobExecutor, managementService, true);
+    waitForJobExecutorToProcessAllJobs(engineConfig, MAX_SECONDS_TO_WAIT_ON_JOBS * 1000, 100);
 
     // then
     // the two process instance batches should have been executed separately to apply exclusiveness
@@ -246,7 +246,7 @@ public class ExclusiveJobAcquisitionTest {
 
     // the scheduler starts to acquire & execute the produced jobs
     jobExecutor.start();
-    waitForJobExecutorToProcessAllJobs(MAX_SECONDS_TO_WAIT_ON_JOBS * 1000, 100, jobExecutor, managementService, true);
+    waitForJobExecutorToProcessAllJobs(engineConfig, MAX_SECONDS_TO_WAIT_ON_JOBS * 1000, 100);
 
     // then
     // the two process instance batches should have been executed separately to apply exclusiveness

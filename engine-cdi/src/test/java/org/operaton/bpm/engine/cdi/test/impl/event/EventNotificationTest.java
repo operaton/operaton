@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.engine.test.util.JobExecutorHelper;
 
 import java.util.List;
 import java.util.Set;
@@ -132,7 +133,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
 
     assertThat(listenerBean.getEventsReceived()).isEmpty();
     runtimeService.startProcessInstanceByKey("process1");
-    waitForJobExecutorToProcessAllJobs(TimeUnit.SECONDS.toMillis(5L), 500L);
+    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, TimeUnit.SECONDS.toMillis(5L), 500L);
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("User Task");

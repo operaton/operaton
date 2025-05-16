@@ -97,7 +97,7 @@ public class SequentialJobAcquisitionTest {
     calendar.add(Field.DAY_OF_YEAR.getCalendarField(), 6);
     ClockUtil.setCurrentTime(calendar.getTime());
     jobExecutor.start();
-    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine.getManagementService(), true);
+    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine.getManagementService());
 
     assertThat(engine.getManagementService().createJobQuery().count()).isZero();
   }
@@ -151,11 +151,11 @@ public class SequentialJobAcquisitionTest {
 
     jobExecutor.start();
     // assert task completed for the first engine
-    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine1.getManagementService(), true);
+    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine1.getManagementService());
 
     jobExecutor.start();
     // assert task completed for the second engine
-    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine2.getManagementService(), true);
+    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine2.getManagementService());
 
     assertThat(engine1.getManagementService().createJobQuery().count()).isZero();
     assertThat(engine2.getManagementService().createJobQuery().count()).isZero();
@@ -208,12 +208,12 @@ public class SequentialJobAcquisitionTest {
 
     // assert task completed for the first engine
     jobExecutor.start();
-    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine1.getManagementService(), false);
+    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine1.getManagementService());
 
     // assert task completed for the second engine
     jobExecutor.start();
 
-    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine2.getManagementService(), false);
+    waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine2.getManagementService());
     waitForJobExecutionRunnablesToFinish(10000, 100, jobExecutor);
 
     Thread.sleep(2000);

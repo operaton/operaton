@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import static org.operaton.bpm.engine.impl.test.TestHelper.waitForJobExecutorToProcessAllJobs;
+import static org.operaton.bpm.engine.test.util.JobExecutorHelper.waitForJobExecutorToProcessAllJobs;
 
 import java.util.List;
 

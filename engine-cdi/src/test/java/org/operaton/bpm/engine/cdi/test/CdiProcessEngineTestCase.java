@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.cdi.test;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 import jakarta.enterprise.inject.spi.BeanManager;
@@ -35,14 +32,12 @@ import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.util.LogUtil;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -54,8 +49,6 @@ import org.junit.Rule;
 
 /**
  * @author Daniel Meyer
- */
-/**
  * When creating a new test class, extend it with this class and add a
  * @RunWith(Arquillian.class) annotation to the child class.
  */
@@ -153,85 +146,4 @@ public abstract class CdiProcessEngineTestCase {
     return ProgrammaticBeanLookup.lookup(name);
   }
 
-  //////////////////////// copied from AbstractActivitiTestcase
-
-  public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait, long intervalMillis) {
-    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    jobExecutor.start();
-
-    try {
-      Timer timer = new Timer();
-      InteruptTask task = new InteruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean areJobsAvailable = true;
-      try {
-        while (areJobsAvailable && !task.isTimeLimitExceeded()) {
-          Thread.sleep(intervalMillis);
-          areJobsAvailable = areJobsAvailable();
-        }
-      } catch (InterruptedException e) {
-      } finally {
-        timer.cancel();
-      }
-      if (areJobsAvailable) {
-        throw new ProcessEngineException("time limit of " + maxMillisToWait + " was exceeded");
-      }
-
-    } finally {
-      jobExecutor.shutdown();
-    }
-  }
-
-  public void waitForJobExecutorOnCondition(long maxMillisToWait, long intervalMillis, Callable<Boolean> condition) {
-    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    jobExecutor.start();
-
-    try {
-      Timer timer = new Timer();
-      InteruptTask task = new InteruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean conditionIsViolated = true;
-      try {
-        while (conditionIsViolated) {
-          Thread.sleep(intervalMillis);
-          conditionIsViolated = !condition.call();
-        }
-      } catch (InterruptedException e) {
-      } catch (Exception e) {
-        throw new ProcessEngineException("Exception while waiting on condition: "+e.getMessage(), e);
-      } finally {
-        timer.cancel();
-      }
-      if (conditionIsViolated) {
-        throw new ProcessEngineException("time limit of " + maxMillisToWait + " was exceeded");
-      }
-
-    } finally {
-      jobExecutor.shutdown();
-    }
-  }
-
-  public boolean areJobsAvailable() {
-    return !managementService
-      .createJobQuery()
-      .executable()
-      .list()
-      .isEmpty();
-  }
-
-  private static class InteruptTask extends TimerTask {
-    protected boolean timeLimitExceeded = false;
-    protected Thread thread;
-    public InteruptTask(Thread thread) {
-      this.thread = thread;
-    }
-    public boolean isTimeLimitExceeded() {
-      return timeLimitExceeded;
-    }
-    @Override
-    public void run() {
-      timeLimitExceeded = true;
-      thread.interrupt();
-    }
-  }
 }

@@ -123,6 +123,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  @Override
   public HistoricProcessInstanceQuery processInstanceIdNotIn(String... processInstanceIdNotIn){
     ensureNotNull("processInstanceIdNotIn", (Object[]) processInstanceIdNotIn);
     this.processInstanceIdNotIn = processInstanceIdNotIn;

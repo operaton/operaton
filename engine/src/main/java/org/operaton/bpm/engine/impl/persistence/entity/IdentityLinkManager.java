@@ -16,18 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.operaton.bpm.engine.impl.persistence.AbstractManager;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.operaton.bpm.engine.impl.persistence.AbstractManager;
-
 
 /**
  * @author Tom Baeyens
  * @author Saeid Mirzaei
  */
 public class IdentityLinkManager extends AbstractManager {
+  private static final String GROUP_ID = "groupId";
+  private static final String USER_ID = "userId";
+  private static final String TYPE = "type";
+
 
   @SuppressWarnings("unchecked")
   public List<IdentityLinkEntity> findIdentityLinksByTaskId(String taskId) {
@@ -42,19 +45,19 @@ public class IdentityLinkManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<IdentityLinkEntity> findIdentityLinkByTaskUserGroupAndType(String taskId, String userId, String groupId, String type) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("taskId", taskId);
-    parameters.put("userId", userId);
-    parameters.put("groupId", groupId);
-    parameters.put("type", type);
+    parameters.put(TASK_ID, taskId);
+    parameters.put(USER_ID, userId);
+    parameters.put(GROUP_ID, groupId);
+    parameters.put(TYPE, type);
     return getDbEntityManager().selectList("selectIdentityLinkByTaskUserGroupAndType", parameters);
   }
 
   @SuppressWarnings("unchecked")
   public List<IdentityLinkEntity> findIdentityLinkByProcessDefinitionUserAndGroup(String processDefinitionId, String userId, String groupId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("processDefinitionId", processDefinitionId);
-    parameters.put("userId", userId);
-    parameters.put("groupId", groupId);
+    parameters.put(PROCESS_DEFINITION_ID, processDefinitionId);
+    parameters.put(USER_ID, userId);
+    parameters.put(GROUP_ID, groupId);
     return getDbEntityManager().selectList("selectIdentityLinkByProcessDefinitionUserAndGroup", parameters);
   }
 

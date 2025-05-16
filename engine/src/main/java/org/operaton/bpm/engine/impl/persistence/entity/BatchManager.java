@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.batch.BatchQueryImpl;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BatchManager extends AbstractManager {
 
@@ -51,8 +51,8 @@ public class BatchManager extends AbstractManager {
 
   public void updateBatchSuspensionStateById(String batchId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("batchId", batchId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(BATCH_ID, batchId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
 
     ListQueryParameterObject queryParameter = new ListQueryParameterObject();
     queryParameter.setParameter(parameters);

@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -48,6 +41,14 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.util.PermissionConverter;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Manager for {@link UserOperationLogEntryEventEntity} that also provides a generic and some specific log methods.
  *
@@ -55,6 +56,9 @@ import org.operaton.bpm.engine.impl.util.StringUtil;
  * @author Tobias Metzke
  */
 public class UserOperationLogManager extends AbstractHistoricManager {
+
+  private static final String OPERATION_ID = "operationId";
+  private static final String ANNOTATION = "annotation";
 
   public UserOperationLogEntry findOperationLogById(String entryId) {
     return getDbEntityManager().selectById(UserOperationLogEntryEventEntity.class, entryId);
@@ -81,9 +85,9 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToUserOperationLogByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(UserOperationLogEntryEventEntity.class, "updateUserOperationLogByRootProcessInstanceId", parameters);
@@ -91,9 +95,9 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToUserOperationLogByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(UserOperationLogEntryEventEntity.class, "updateUserOperationLogByProcessInstanceId", parameters);
@@ -101,8 +105,8 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public void updateOperationLogAnnotationByOperationId(String operationId, String annotation) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("operationId", operationId);
-    parameters.put("annotation", annotation);
+    parameters.put(OPERATION_ID, operationId);
+    parameters.put(ANNOTATION, annotation);
 
     getDbEntityManager()
         .updatePreserveOrder(UserOperationLogEntryEventEntity.class, "updateOperationLogAnnotationByOperationId", parameters);
@@ -116,12 +120,12 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public DbOperation deleteOperationLogByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(UserOperationLogEntryEventEntity.class, "deleteUserOperationLogByRemovalTime",
@@ -712,11 +716,11 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   public void logSetAnnotationOperation(String operationId, String tenantId) {
-    logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, "operationId", UserOperationLogEntry.OPERATION_TYPE_SET_ANNOTATION, tenantId);
+    logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, OPERATION_ID, UserOperationLogEntry.OPERATION_TYPE_SET_ANNOTATION, tenantId);
   }
 
   public void logClearAnnotationOperation(String operationId, String tenantId) {
-    logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, "operationId", UserOperationLogEntry.OPERATION_TYPE_CLEAR_ANNOTATION, tenantId);
+    logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, OPERATION_ID, UserOperationLogEntry.OPERATION_TYPE_CLEAR_ANNOTATION, tenantId);
   }
 
   public void logSetIncidentAnnotationOperation(String incidentId, String tenantId) {

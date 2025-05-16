@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReportResult;
 import org.operaton.bpm.engine.impl.CleanableHistoricBatchReportImpl;
@@ -44,7 +39,13 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class HistoricBatchManager extends AbstractManager {
+  private static final String MAP = "map";
 
   public long findBatchCountByQueryCriteria(HistoricBatchQueryImpl historicBatchQuery) {
     configureQuery(historicBatchQuery);
@@ -68,11 +69,11 @@ public class HistoricBatchManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<String> findHistoricBatchIdsForCleanup(Integer batchSize, Map<String, Integer> batchOperationsForHistoryCleanup, int minuteFrom, int minuteTo) {
     Map<String, Object> queryParameters = new HashMap<>();
-    queryParameters.put("currentTimestamp", ClockUtil.getCurrentTime());
-    queryParameters.put("map", batchOperationsForHistoryCleanup);
+    queryParameters.put(CURRENT_TIMESTAMP, ClockUtil.getCurrentTime());
+    queryParameters.put(MAP, batchOperationsForHistoryCleanup);
     if (minuteTo - minuteFrom + 1 < 60) {
-      queryParameters.put("minuteFrom", minuteFrom);
-      queryParameters.put("minuteTo", minuteTo);
+      queryParameters.put(MINUTE_FROM, minuteFrom);
+      queryParameters.put(MINUTE_TO, minuteTo);
     }
     ListQueryParameterObject parameterObject = new ListQueryParameterObject(queryParameters, 0, batchSize);
     parameterObject.getOrderingProperties().add(new QueryOrderingProperty(new QueryPropertyImpl("END_TIME_"), Direction.ASCENDING));
@@ -168,12 +169,12 @@ public class HistoricBatchManager extends AbstractManager {
 
   public DbOperation deleteHistoricBatchesByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(HistoricBatchEntity.class, "deleteHistoricBatchesByRemovalTime",
@@ -190,8 +191,8 @@ public class HistoricBatchManager extends AbstractManager {
       .addRemovalTimeToJobLogByBatchId(id, removalTime);
 
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("id", id);
-    parameters.put("removalTime", removalTime);
+    parameters.put(ID, id);
+    parameters.put(REMOVAL_TIME, removalTime);
 
     getDbEntityManager()
       .updatePreserveOrder(HistoricBatchEntity.class, "updateHistoricBatchRemovalTimeById", parameters);

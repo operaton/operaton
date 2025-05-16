@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.impl.EventSubscriptionQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -34,11 +27,18 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.commons.utils.EnsureUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Daniel Meyer
  */
 public class EventSubscriptionManager extends AbstractManager {
+  private static final String MESSAGE_NAME = "messageName";
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -285,8 +285,8 @@ public class EventSubscriptionManager extends AbstractManager {
    */
   public EventSubscriptionEntity findMessageStartEventSubscriptionByNameAndTenantId(String messageName, String tenantId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("messageName", messageName);
-    parameters.put("tenantId", tenantId);
+    parameters.put(MESSAGE_NAME, messageName);
+    parameters.put(TENANT_ID, tenantId);
 
     return (EventSubscriptionEntity) getDbEntityManager().selectOne("selectMessageStartEventSubscriptionByNameAndTenantId", parameters);
   }
@@ -299,7 +299,7 @@ public class EventSubscriptionManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<EventSubscriptionEntity> findConditionalStartEventSubscriptionByTenantId(String tenantId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("tenantId", tenantId);
+    parameters.put(TENANT_ID, tenantId);
 
     configureParameterizedQuery(parameters);
     return getDbEntityManager().selectList("selectConditionalStartEventSubscriptionByTenantId", parameters);

@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.impl.HistoricActivityInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -28,6 +24,10 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.history.event.HistoricActivityInstanceEventEntity;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tom Baeyens
@@ -44,8 +44,8 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
 
   public HistoricActivityInstanceEntity findHistoricActivityInstance(String activityId, String processInstanceId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("activityId", activityId);
-    parameters.put("processInstanceId", processInstanceId);
+    parameters.put(ACTIVITY_ID, activityId);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
 
     return (HistoricActivityInstanceEntity) getDbEntityManager().selectOne("selectHistoricActivityInstance", parameters);
   }
@@ -77,9 +77,9 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToActivityInstancesByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(HistoricActivityInstanceEventEntity.class, "updateHistoricActivityInstancesByRootProcessInstanceId", parameters);
@@ -87,9 +87,9 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToActivityInstancesByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(HistoricActivityInstanceEventEntity.class, "updateHistoricActivityInstancesByProcessInstanceId", parameters);
@@ -97,12 +97,12 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
 
   public DbOperation deleteHistoricActivityInstancesByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(HistoricActivityInstanceEntity.class, "deleteHistoricActivityInstancesByRemovalTime",

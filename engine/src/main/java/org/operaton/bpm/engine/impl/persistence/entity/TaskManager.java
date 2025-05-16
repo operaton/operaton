@@ -103,7 +103,6 @@ public class TaskManager extends AbstractManager {
     }
   }
 
-
   public TaskEntity findTaskById(String id) {
     ensureNotNull("Invalid task id", "id", id);
     return getDbEntityManager().selectById(TaskEntity.class, id);
@@ -122,7 +121,6 @@ public class TaskManager extends AbstractManager {
   public List<TaskEntity> findTasksByProcessInstanceId(String processInstanceId) {
     return getDbEntityManager().selectList("selectTasksByProcessInstanceId", processInstanceId);
   }
-
 
   @Deprecated(since = "1.0")
   public List<Task> findTasksByQueryCriteria(TaskQueryImpl taskQuery, Page page) {

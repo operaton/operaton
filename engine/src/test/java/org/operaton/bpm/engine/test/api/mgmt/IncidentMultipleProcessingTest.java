@@ -49,7 +49,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
         configuration.setCustomIncidentHandlers(Collections.singletonList(JOB_HANDLER));
       }).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private RuntimeService runtimeService;
   private ManagementService managementService;

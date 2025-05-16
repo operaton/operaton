@@ -46,7 +46,7 @@ class MultiTenancyMigrationAsyncTest {
   @RegisterExtension
   protected static ProcessEngineExtension defaultEngineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension defaultTestRule = new ProcessEngineTestExtension(defaultEngineRule);
+  static ProcessEngineTestExtension defaultTestRule = new ProcessEngineTestExtension(defaultEngineRule);
   @RegisterExtension
   protected static MigrationTestExtension migrationRule = new MigrationTestExtension(defaultEngineRule);
 

@@ -50,7 +50,7 @@ class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
       })
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
   void setUp() {

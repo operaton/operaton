@@ -51,7 +51,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   private static final String FORTH_CASE_DEFINITION_KEY = "case";
   private static final String THIRD_CASE_DEFINITION_KEY = "oneTaskCase";
   private static final String SECOND_CASE_DEFINITION_KEY = "oneCaseTaskCase";
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   @Rule

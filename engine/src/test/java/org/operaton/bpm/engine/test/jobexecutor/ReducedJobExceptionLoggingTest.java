@@ -43,7 +43,7 @@ class ReducedJobExceptionLoggingTest {
     .cacheForConfigurationResource(false)
     .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
   protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch("org.operaton.bpm.engine.jobexecutor", Level.DEBUG);
 

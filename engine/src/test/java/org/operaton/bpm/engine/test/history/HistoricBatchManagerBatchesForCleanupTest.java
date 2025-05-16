@@ -45,7 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricBatchManagerBatchesForCleanupTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   public MigrationTestRule migrationRule = new MigrationTestRule(engineRule);
   public BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
 

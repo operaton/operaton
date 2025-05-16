@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.util.JobExecutorHelper;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.ManagedJobExecutorBean;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
@@ -95,7 +95,7 @@ public class ManagedJobExecutorTest {
 
   private void executeJobs(String pid) {
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(pid, 5000L, 25L, processEngineConfiguration.getJobExecutor(), processEngineConfiguration.getManagementService());
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(pid, 5000L, 25L, processEngineConfiguration.getJobExecutor(), processEngineConfiguration.getManagementService());
   }
 
 }

@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
-import org.operaton.bpm.engine.test.util.JobExecutorHelper;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 
 import java.util.logging.Logger;
 
@@ -96,11 +96,11 @@ public abstract class AbstractFoxPlatformIntegrationTest {
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, JobExecutorHelper.JOBS_WAIT_TIMEOUT_MS);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait);
   }
 
 }

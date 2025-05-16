@@ -183,11 +183,11 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), 10L, 1L);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), 10L, 1L);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), maxMillisToWait);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), maxMillisToWait);
   }
 
   /**

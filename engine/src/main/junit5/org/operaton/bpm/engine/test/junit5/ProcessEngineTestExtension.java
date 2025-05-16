@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.JobExecutorHelper;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
@@ -210,11 +210,11 @@ public class ProcessEngineTestExtension
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), JobExecutorHelper.JOBS_WAIT_TIMEOUT_MS, 0L);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS, 0L);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    JobExecutorHelper.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), maxMillisToWait, JobExecutorHelper.CHECK_INTERVAL_MS);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), maxMillisToWait, JobExecutorWaitUtils.CHECK_INTERVAL_MS);
   }
 
   protected List<Job> availableJobs() {

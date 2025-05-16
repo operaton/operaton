@@ -21,28 +21,23 @@ import java.util.List;
 import org.operaton.bpm.cockpit.plugin.spi.CockpitPlugin;
 
 /**
- * The holder of registered cockpit plugins.
+ * The registry for cockpit plugins.
  *
- * @deprecated use {@link AppPluginRegistry}
- * 
+ * @deprecated Use {@link AppPluginRegistry} instead.
  * @author nico.rehwaldt
  */
 @Deprecated(forRemoval = true, since = "1.0")
 public interface PluginRegistry {
 
   /**
-   * Returns all registered plugins
-   *
-   * @return
+   * @return all registered plugins
    */
   public List<CockpitPlugin> getPlugins();
 
   /**
-   * Returns the registered plugin with the given name or
-   * <code>null</code> if the plugin does not exist.
-   *
    * @param id
-   * @return
+   * @return the registered plugin with the given name or
+   * <code>null</code> if the plugin does not exist.
    */
   public CockpitPlugin getPlugin(String id);
 }

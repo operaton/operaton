@@ -31,7 +31,7 @@ import org.junit.Test;
 public class CreateProcessInstanceWithVariableTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   @ScenarioUnderTest("initProcessInstance.1")
   @Test

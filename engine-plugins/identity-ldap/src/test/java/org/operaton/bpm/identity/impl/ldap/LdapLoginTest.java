@@ -35,7 +35,7 @@ public class LdapLoginTest {
   @ClassRule
   public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule();
+  ProcessEngineRule engineRule = new ProcessEngineRule();
 
   IdentityService identityService;
 

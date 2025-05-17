@@ -54,7 +54,7 @@ class MultiTenancyMigrationTenantProviderTest {
       })
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
   void cannotMigrateInstanceBetweenDifferentTenants() {

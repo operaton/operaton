@@ -57,7 +57,7 @@ public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
   protected static final String ONE_TASK_PROCESS = "oneTaskProcess";
   protected static final String TWO_TASKS_PROCESS = "twoTasksProcess";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   @Rule

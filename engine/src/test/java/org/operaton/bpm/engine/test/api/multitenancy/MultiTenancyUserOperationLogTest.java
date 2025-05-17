@@ -97,7 +97,7 @@ class MultiTenancyUserOperationLogTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(engineRule);
 
   protected ProcessEngineConfiguration configuration;

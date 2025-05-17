@@ -43,7 +43,7 @@ public class CreateStandaloneTaskDeleteAuthorizationTest {
   private static final String USER_ID = "jane" + "CreateStandaloneTaskDelete";
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   protected HistoryService historyService;
   protected AuthorizationService authorizationService;

@@ -48,7 +48,7 @@ public class ProcessEngineRuleParameterizedJunit4Test {
   }
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   public ProcessEngineRuleParameterizedJunit4Test(int parameter) {
 

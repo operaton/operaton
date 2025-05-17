@@ -35,7 +35,7 @@ import org.junit.Test;
 public class SetJobRetriesBatchTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   @ScenarioUnderTest("initSetJobRetriesBatch.1")
   @Test

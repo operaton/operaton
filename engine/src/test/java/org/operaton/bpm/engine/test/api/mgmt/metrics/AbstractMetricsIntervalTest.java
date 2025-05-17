@@ -45,7 +45,7 @@ public abstract class AbstractMetricsIntervalTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
+  static ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
 
   protected static final String REPORTER_ID = "REPORTER_ID";
   protected static final int DEFAULT_INTERVAL = 15;

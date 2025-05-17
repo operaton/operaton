@@ -38,7 +38,7 @@ import org.junit.Rule;
 public abstract class AbstractCompositeHistoryEventHandlerTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;

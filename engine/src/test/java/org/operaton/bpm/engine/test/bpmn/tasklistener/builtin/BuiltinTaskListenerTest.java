@@ -41,7 +41,7 @@ public class BuiltinTaskListenerTest {
       "org/operaton/bpm/engine/test/bpmn/tasklistener/builtin/task.listener.operaton.cfg.xml");
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
 
   @Rule
   public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();

@@ -51,7 +51,7 @@ public class LdapUserQueryTest {
   @ClassRule
   public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule();
+  ProcessEngineRule engineRule = new ProcessEngineRule();
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;

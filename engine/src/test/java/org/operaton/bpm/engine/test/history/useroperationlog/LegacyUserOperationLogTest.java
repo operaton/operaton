@@ -51,7 +51,7 @@ public class LegacyUserOperationLogTest {
   public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
       "org/operaton/bpm/engine/test/history/useroperationlog/enable.legacy.user.operation.log.operaton.cfg.xml");
   public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(processEngineRule);
+  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(processEngineRule);
 
   @Rule
   public RuleChain chain = RuleChain.outerRule(processEngineRule).around(testHelper);

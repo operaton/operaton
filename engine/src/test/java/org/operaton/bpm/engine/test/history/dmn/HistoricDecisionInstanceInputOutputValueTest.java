@@ -75,7 +75,7 @@ public class HistoricDecisionInstanceInputOutputValueTest {
   public Object inputValue;
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   @After
   public void tearDown() {

@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SpinJRubyScriptTaskTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule();
+  ProcessEngineRule engineRule = new ProcessEngineRule();
 
   private RuntimeService runtimeService;
   private RepositoryService repositoryService;

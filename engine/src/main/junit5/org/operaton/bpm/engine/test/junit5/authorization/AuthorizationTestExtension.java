@@ -15,14 +15,6 @@
  */
 package org.operaton.bpm.engine.test.junit5.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -38,6 +30,14 @@ import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationExceptio
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenarioInstance;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * JUnit 5 extension that replaces the legacy JUnit 4 AuthorizationTestRule.
@@ -77,7 +77,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
   /**
    * Constructs the extension with the given ProcessEngine.
    *
-   * @param processEngine the process engine instance to use
+   * @param processEngineExtension extension from which to get process engine instance to use
    */
   public AuthorizationTestExtension(ProcessEngineExtension processEngineExtension) {
     this.processEngine = processEngineExtension.getProcessEngine();

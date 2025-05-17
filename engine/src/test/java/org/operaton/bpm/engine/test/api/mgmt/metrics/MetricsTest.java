@@ -47,7 +47,7 @@ class MetricsTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
+  static ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
 
   protected RuntimeService runtimeService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;

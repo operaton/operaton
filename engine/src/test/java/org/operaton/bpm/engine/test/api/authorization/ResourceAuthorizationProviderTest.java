@@ -48,10 +48,10 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Roman Smirnov
  *
  */
-public class ResourceAuthorizationProviderTest {
+class ResourceAuthorizationProviderTest {
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .configurationResource("org/operaton/bpm/engine/test/api/authorization/resource.authorization.provider.operaton.cfg.xml").build();
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;

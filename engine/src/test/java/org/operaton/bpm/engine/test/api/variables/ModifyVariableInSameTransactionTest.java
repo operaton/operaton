@@ -40,9 +40,9 @@ import org.junit.Test;
 
 public class ModifyVariableInSameTransactionTest {
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   @Rule
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)

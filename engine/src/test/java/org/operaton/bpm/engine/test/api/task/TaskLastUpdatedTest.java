@@ -44,7 +44,7 @@ import org.junit.Test;
 public class TaskLastUpdatedTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   TaskService taskService;
   RuntimeService runtimeService;

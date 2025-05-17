@@ -37,7 +37,7 @@ public class LdapUserLargeQueryTest {
   @ClassRule
   public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule().additionalNumberOfUsers(80).additionnalNumberOfGroups(5).additionalNumberOfRoles(5); // Attention, stay under 80, there is a limitation in the query on 100
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.pages.cfg.xml"); // pageSize = 3 in this configuration
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.pages.cfg.xml"); // pageSize = 3 in this configuration
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;

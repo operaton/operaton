@@ -53,7 +53,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
         configuration.setEnableExceptionsAfterUnhandledBpmnError(true);
       })).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
   void setUp() {

@@ -63,8 +63,8 @@ public class HistoricIncidentQueryTest {
     .endEvent("end")
     .done();
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
 
   @Rule
   public RuleChain chain = RuleChain.outerRule(engineRule).around(testHelper);

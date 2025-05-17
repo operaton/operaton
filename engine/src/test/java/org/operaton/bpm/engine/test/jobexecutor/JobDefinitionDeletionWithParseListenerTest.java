@@ -64,7 +64,7 @@ public class JobDefinitionDeletionWithParseListenerTest {
   });
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
 
   @Test
   public void testDeleteNonExistingJobDefinitionWithParseListener() {

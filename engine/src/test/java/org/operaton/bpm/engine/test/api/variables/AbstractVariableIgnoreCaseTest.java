@@ -47,7 +47,7 @@ public abstract class AbstractVariableIgnoreCaseTest<T extends AbstractVariableQ
   }
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   public U instance;
 

@@ -65,7 +65,7 @@ public class JobDefinitionCreationBothAsyncWithParseListenerTest {
   });
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
 
   @Test
   public void testCreateBothAsyncJobDefinitionWithParseListener() {

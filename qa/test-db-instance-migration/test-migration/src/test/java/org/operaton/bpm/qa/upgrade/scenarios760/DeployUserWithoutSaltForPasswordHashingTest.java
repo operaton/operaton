@@ -31,7 +31,7 @@ import static org.hamcrest.core.IsNull.nullValue;
 public class DeployUserWithoutSaltForPasswordHashingTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   @Test
   public void testDeployUserWithoutSaltForPasswordHashing() {

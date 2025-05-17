@@ -37,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TaskFilterPropertiesTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   @ScenarioUnderTest("initTaskFilterProperties.1")
   @Test

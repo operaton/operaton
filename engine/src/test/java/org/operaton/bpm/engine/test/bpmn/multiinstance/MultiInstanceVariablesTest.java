@@ -44,7 +44,7 @@ public class MultiInstanceVariablesTest {
   public static final String CALL_ACTIVITY = "callActivity";
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   @Test
   public void testMultiInstanceWithAllInOutMapping() {

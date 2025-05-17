@@ -45,7 +45,7 @@ import static org.junit.Assert.assertTrue;
 public class TaskFilterTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   @ScenarioUnderTest("initTaskFilter.1")
   @Test

@@ -46,7 +46,7 @@ class HistoryCleanupSchedulerTaskMetricsTest extends AbstractHistoryCleanupSched
       configure(configuration.setTaskMetricsEnabled(true))
     ).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
   void init() {

@@ -33,14 +33,14 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
-public class AuthorizationLoggingTest {
+class AuthorizationLoggingTest {
 
   protected static final String CONTEXT_LOGGER = "org.operaton.bpm.engine.context";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @RegisterExtension
   public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()

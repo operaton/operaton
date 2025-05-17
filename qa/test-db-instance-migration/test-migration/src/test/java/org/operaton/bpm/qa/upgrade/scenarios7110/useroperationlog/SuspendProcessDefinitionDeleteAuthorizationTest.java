@@ -50,7 +50,7 @@ public class SuspendProcessDefinitionDeleteAuthorizationTest {
   private static final String USER_ID = "jane" + "SuspendProcessDefinitionDelete";
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   protected HistoryService historyService;
   protected AuthorizationService authorizationService;

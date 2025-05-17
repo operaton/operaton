@@ -47,7 +47,7 @@ public class LdapDisableAuthorizationCheckTest {
   @ClassRule
   public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.disable.authorization.check.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.disable.authorization.check.cfg.xml");
 
   ProcessEngineConfiguration processEngineConfiguration;
   IdentityService identityService;

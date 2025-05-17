@@ -45,7 +45,7 @@ class BulkHistoryDeleteDmnDisabledTest {
     .cacheForConfigurationResource(false)
     .configurator(configuration -> configuration.setDmnEnabled(false)).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private RuntimeService runtimeService;
   private HistoryService historyService;

@@ -52,9 +52,9 @@ import static org.assertj.core.api.Assertions.assertThatCode;
  */
 public class TargetVariableScopeTest {
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   @Rule
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
 
   RuntimeService runtimeService;
 

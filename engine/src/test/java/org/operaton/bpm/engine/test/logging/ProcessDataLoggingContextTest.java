@@ -80,7 +80,7 @@ public class ProcessDataLoggingContextTest {
       configuration.setLoggingContextBusinessKey("businessKey"));
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
 
   @Rule
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);

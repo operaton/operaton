@@ -42,7 +42,7 @@ public class PasswordPolicyUserDataTest {
   public static final String CANDIDATE_PASSWORD = "mypassword";
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule(true);
+  ProcessEngineRule engineRule = new ProcessEngineRule(true);
 
   protected IdentityService identityService;
 

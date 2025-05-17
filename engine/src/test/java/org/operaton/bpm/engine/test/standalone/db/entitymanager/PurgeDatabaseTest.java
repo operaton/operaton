@@ -61,7 +61,7 @@ public class PurgeDatabaseTest {
   protected static final String PROCESS_DEF_KEY = "test";
   protected static final String PROCESS_MODEL_NAME = "test.bpmn20.xml";
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   private ProcessEngineConfigurationImpl processEngineConfiguration;
   private String databaseTablePrefix;
 

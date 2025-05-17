@@ -40,7 +40,7 @@ public class DmnExpressionLanguageTest {
       "org/operaton/bpm/engine/test/dmn/el/DmnExpressionLanguageTest.dmn";
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   private DecisionService decisionService;
 

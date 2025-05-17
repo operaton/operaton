@@ -32,7 +32,7 @@ import static org.hamcrest.core.Is.is;
 public class TaskFilterVariablesTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   @ScenarioUnderTest("initTaskFilterVariables.1")
   @Test

@@ -42,7 +42,7 @@ class MultiTenancySharedDefinitionPropagationTest {
       })
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
   void propagateTenantIdToProcessInstance() {

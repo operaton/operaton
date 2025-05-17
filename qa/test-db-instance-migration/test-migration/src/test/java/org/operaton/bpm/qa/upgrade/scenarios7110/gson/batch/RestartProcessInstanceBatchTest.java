@@ -36,7 +36,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class RestartProcessInstanceBatchTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   @ScenarioUnderTest("initRestartProcessInstanceBatch.1")
   @Test

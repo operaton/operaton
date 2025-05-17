@@ -52,7 +52,7 @@ public class UpdateJobAuthorizationTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   ManagementService managementService;
   RuntimeService runtimeService;

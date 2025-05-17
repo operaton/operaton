@@ -41,7 +41,7 @@ import org.junit.rules.RuleChain;
 
 public class UserTaskOperatonFormDefinitionParseTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   @Rule

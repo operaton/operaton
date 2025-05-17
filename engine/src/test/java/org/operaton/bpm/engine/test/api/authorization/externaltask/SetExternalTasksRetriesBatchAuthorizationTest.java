@@ -54,9 +54,9 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  public ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;

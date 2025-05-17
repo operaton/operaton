@@ -69,8 +69,8 @@ public class HistoricDetailQueryTest {
 
   protected static final String PROCESS_KEY = "oneTaskProcess";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
 
   @Rule
   public RuleChain chain = RuleChain.outerRule(engineRule).around(testHelper);

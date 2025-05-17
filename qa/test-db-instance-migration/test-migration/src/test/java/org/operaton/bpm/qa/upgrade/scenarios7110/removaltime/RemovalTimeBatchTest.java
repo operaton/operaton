@@ -39,7 +39,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class RemovalTimeBatchTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   protected HistoryService historyService;
 

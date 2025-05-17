@@ -42,7 +42,7 @@ import org.junit.Test;
 public class ScriptEngineNameJavaScriptTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 

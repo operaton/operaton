@@ -46,7 +46,7 @@ import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class CleanableHistoricDecisionInstanceReportTest {
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   @Rule

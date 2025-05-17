@@ -42,7 +42,7 @@ public abstract class AbstractTimestampMigrationTest {
   protected static final Date TIMESTAMP = new Date(TIME);
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;

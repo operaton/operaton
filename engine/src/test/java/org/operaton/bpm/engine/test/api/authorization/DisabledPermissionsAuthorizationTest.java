@@ -73,9 +73,9 @@ class DisabledPermissionsAuthorizationTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  public ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   ProcessEngineConfigurationImpl processEngineConfiguration;
   RepositoryService repositoryService;

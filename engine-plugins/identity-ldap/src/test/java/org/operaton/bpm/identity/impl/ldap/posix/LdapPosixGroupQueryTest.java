@@ -37,7 +37,7 @@ public class LdapPosixGroupQueryTest {
   @ClassRule
   public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule().posix(true);
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("posix.operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("posix.operaton.cfg.xml");
 
   IdentityService identityService;
   LdapTestEnvironment ldapTestEnvironment;

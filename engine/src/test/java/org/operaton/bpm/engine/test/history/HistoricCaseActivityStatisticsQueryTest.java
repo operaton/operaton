@@ -46,7 +46,7 @@ import org.junit.Test;
 public class HistoricCaseActivityStatisticsQueryTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected HistoryService historyService;
   protected CaseService caseService;

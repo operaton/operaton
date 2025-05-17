@@ -32,7 +32,7 @@ import org.junit.Test;
 public class DeployProcessWithoutIsExecutableAttributeTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
 
   @Test

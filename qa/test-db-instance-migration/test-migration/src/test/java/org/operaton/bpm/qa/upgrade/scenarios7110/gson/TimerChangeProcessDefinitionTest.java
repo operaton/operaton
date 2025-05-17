@@ -42,7 +42,7 @@ public class TimerChangeProcessDefinitionTest {
   protected static final Date FIXED_DATE_THREE = new Date(1363608600000L);
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   @After
   public void activateDefinitions() {

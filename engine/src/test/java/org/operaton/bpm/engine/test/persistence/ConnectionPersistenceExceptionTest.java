@@ -41,7 +41,7 @@ import org.junit.Test;
 public class ConnectionPersistenceExceptionTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected IdentityService identityService;
 

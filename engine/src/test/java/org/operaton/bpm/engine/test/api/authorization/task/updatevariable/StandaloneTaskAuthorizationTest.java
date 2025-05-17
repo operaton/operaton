@@ -60,7 +60,7 @@ public class StandaloneTaskAuthorizationTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;

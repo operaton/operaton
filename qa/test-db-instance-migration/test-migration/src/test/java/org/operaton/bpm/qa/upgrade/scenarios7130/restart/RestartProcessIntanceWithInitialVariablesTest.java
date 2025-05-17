@@ -40,7 +40,7 @@ import org.junit.Test;
 public class RestartProcessIntanceWithInitialVariablesTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   RuntimeService runtimeService;
   HistoryService historyService;

@@ -37,7 +37,7 @@ import static org.junit.Assert.assertTrue;
 public class CreateProcessInstanceWithJsonVariablesTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.json.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.json.cfg.xml");
 
   @ScenarioUnderTest("initProcessInstance.1")
   @Test

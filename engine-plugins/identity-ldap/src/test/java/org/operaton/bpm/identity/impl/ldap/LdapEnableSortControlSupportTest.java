@@ -43,7 +43,7 @@ public class LdapEnableSortControlSupportTest {
   public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.enable.sort.control.support.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.enable.sort.control.support.cfg.xml");
 
   IdentityService identityService;
   LdapTestEnvironment ldapTestEnvironment;

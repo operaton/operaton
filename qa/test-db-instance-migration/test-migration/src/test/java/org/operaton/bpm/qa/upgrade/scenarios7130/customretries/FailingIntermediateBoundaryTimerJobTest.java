@@ -38,7 +38,7 @@ import org.junit.Test;
 public class FailingIntermediateBoundaryTimerJobTest {
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.cfg.xml");
 
   ManagementService managementService;
 

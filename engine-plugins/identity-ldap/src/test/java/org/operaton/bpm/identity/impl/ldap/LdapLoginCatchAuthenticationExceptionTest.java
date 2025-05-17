@@ -32,7 +32,7 @@ public class LdapLoginCatchAuthenticationExceptionTest {
   public static LdapTestEnvironmentRule ldapRule = new LdapTestEnvironmentRule();
 
   @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.disable.catch.authentication.exception.cfg.xml");
+  ProcessEngineRule engineRule = new ProcessEngineRule("operaton.ldap.disable.catch.authentication.exception.cfg.xml");
 
   IdentityService identityService;
 

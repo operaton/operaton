@@ -79,7 +79,7 @@ public class HistoricDecisionInstanceDecisionServiceEvaluationTest {
   public String activityId;
 
   @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   @Rule
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);

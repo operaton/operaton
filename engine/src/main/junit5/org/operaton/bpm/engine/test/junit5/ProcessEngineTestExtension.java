@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.TimerTask;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -210,11 +209,11 @@ public class ProcessEngineTestExtension
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS, 0L);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS, 0L);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration(), maxMillisToWait, JobExecutorWaitUtils.CHECK_INTERVAL_MS);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), maxMillisToWait, JobExecutorWaitUtils.CHECK_INTERVAL_MS);
   }
 
   protected List<Job> availableJobs() {
@@ -429,22 +428,6 @@ public class ProcessEngineTestExtension
     processInstanceAuthorization.setPermissions(permissions);
     processInstanceAuthorization.setUserId(userId);
     authorizationService.saveAuthorization(processInstanceAuthorization);
-  }
-
-  protected static class InterruptTask extends TimerTask {
-    protected boolean timeLimitExceeded = false;
-    protected Thread thread;
-    public InterruptTask(Thread thread) {
-      this.thread = thread;
-    }
-    public boolean isTimeLimitExceeded() {
-      return timeLimitExceeded;
-    }
-    @Override
-    public void run() {
-      timeLimitExceeded = true;
-      thread.interrupt();
-    }
   }
 
 }

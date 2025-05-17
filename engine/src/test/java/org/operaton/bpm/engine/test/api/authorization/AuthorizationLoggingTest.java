@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
-public class AuthorizationLoggingTest {
+class AuthorizationLoggingTest {
 
   protected static final String CONTEXT_LOGGER = "org.operaton.bpm.engine.context";
 

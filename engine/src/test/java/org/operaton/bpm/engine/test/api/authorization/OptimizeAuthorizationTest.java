@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
-public class OptimizeAuthorizationTest {
+class OptimizeAuthorizationTest {
 
   protected static final String USER_ID = "user";
 

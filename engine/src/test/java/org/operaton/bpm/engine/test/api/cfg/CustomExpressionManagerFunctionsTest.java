@@ -28,7 +28,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CustomExpressionManagerFunctionsTest {
+class CustomExpressionManagerFunctionsTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

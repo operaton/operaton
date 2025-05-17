@@ -42,7 +42,7 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 /**
  * @author Stefan Hentschel.
  */
-public class TaskCountByCandidateGroupAuthorizationTest {
+class TaskCountByCandidateGroupAuthorizationTest {
 
   @RegisterExtension
   static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();

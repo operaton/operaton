@@ -42,7 +42,7 @@ import java.util.Date;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class ExternalTaskQueryByCreateTimeTest {
+  class ExternalTaskQueryByCreateTimeTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

@@ -50,7 +50,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class UserOperationIdTest {
+class UserOperationIdTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

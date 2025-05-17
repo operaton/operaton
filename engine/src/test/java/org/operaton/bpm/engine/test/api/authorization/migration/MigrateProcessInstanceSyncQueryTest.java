@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
  * @author Thorben Lindhauer
  *
  */
-public class MigrateProcessInstanceSyncQueryTest {
+class MigrateProcessInstanceSyncQueryTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

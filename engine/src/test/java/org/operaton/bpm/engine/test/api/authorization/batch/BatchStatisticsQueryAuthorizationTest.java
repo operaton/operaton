@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
  * @author Thorben Lindhauer
  *
  */
-public class BatchStatisticsQueryAuthorizationTest {
+class BatchStatisticsQueryAuthorizationTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

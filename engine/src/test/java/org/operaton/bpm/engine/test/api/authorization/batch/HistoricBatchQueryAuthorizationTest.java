@@ -55,7 +55,7 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricBatchQueryAuthorizationTest {
+class HistoricBatchQueryAuthorizationTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

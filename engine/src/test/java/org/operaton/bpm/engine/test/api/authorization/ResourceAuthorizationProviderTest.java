@@ -48,7 +48,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Roman Smirnov
  *
  */
-public class ResourceAuthorizationProviderTest {
+class ResourceAuthorizationProviderTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()

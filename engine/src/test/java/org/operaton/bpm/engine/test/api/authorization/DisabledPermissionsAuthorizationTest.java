@@ -66,7 +66,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
-public class DisabledPermissionsAuthorizationTest {
+class DisabledPermissionsAuthorizationTest {
 
   protected static final String USER_ID = "user";
 

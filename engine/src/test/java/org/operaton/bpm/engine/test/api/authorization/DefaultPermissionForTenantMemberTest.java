@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class DefaultPermissionForTenantMemberTest {
+class DefaultPermissionForTenantMemberTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";

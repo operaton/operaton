@@ -494,6 +494,45 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/history/testInstancesWithJobsRetrying.bpmn20.xml"})
+  public void testHistoricProcessInstanceQueryWithJobsRetrying() {
+    // given query for instances with jobs that have an exception and retries left
+    HistoricProcessInstanceQuery queryWithJobsRetrying = historyService.createHistoricProcessInstanceQuery()
+        .withJobsRetrying();
+
+    // when we have 2 instances, both instances have jobs with retries left but no exception
+    ProcessInstance instanceWithRetryingJob = runtimeService.startProcessInstanceByKey("processWithJobsRetrying");
+    runtimeService.startProcessInstanceByKey("processWithJobsRetrying");
+
+    // then
+    assertThat(queryWithJobsRetrying.count()).isZero();
+    assertThat(queryWithJobsRetrying.list()).isEmpty();
+
+    // when we have 1 instance with a job that has an exception and retries left
+    Job suceedingJob = managementService.createJobQuery()
+        .processInstanceId(instanceWithRetryingJob.getId())
+        .singleResult();
+    managementService.executeJob(suceedingJob.getId());
+    Job failingJob = managementService.createJobQuery()
+        .processInstanceId(instanceWithRetryingJob.getId())
+        .singleResult();
+    executeFailingJob(failingJob);
+
+    // then
+    assertThat(queryWithJobsRetrying.count()).isEqualTo(1L);
+    assertThat(queryWithJobsRetrying.list()).hasSize(1);
+    assertThat(instanceWithRetryingJob.getId()).isEqualTo(queryWithJobsRetrying.singleResult().getId());
+
+    // when all retries are exhausted, so now the instance has a job with exception but no retries left
+    executeFailingJob(failingJob);
+    executeFailingJob(failingJob);
+
+    // then
+    assertThat(queryWithJobsRetrying.count()).isZero();
+    assertThat(queryWithJobsRetrying.list()).isEmpty();
+  }
+
+  @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
   public void testHistoricProcessInstanceQuery() {
     Calendar startTime = Calendar.getInstance();
@@ -2611,4 +2650,11 @@ public class HistoricProcessInstanceTest {
     managementService.executeJob(job.getId());
   }
 
+  private void executeFailingJob(Job job) {
+    try {
+      managementService.executeJob(job.getId());
+    } catch (RuntimeException re) {
+      // Exception expected. Do nothing
+    }
+  }
 }

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * @author: Johannes Heinemann

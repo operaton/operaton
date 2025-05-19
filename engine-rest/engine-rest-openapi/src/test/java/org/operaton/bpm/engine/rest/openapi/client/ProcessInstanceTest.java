@@ -30,9 +30,6 @@ import org.openapitools.client.model.CountResultDto;
 import org.openapitools.client.model.ProcessInstanceQueryDto;
 import org.openapitools.client.model.SuspensionStateDto;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

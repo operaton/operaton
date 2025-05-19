@@ -29,7 +29,6 @@ import java.util.Base64.Encoder;
 
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.spi.DataFormat;
-import org.operaton.commons.utils.IoUtil;
 
 public class SerializableDataFormat implements DataFormat {
 

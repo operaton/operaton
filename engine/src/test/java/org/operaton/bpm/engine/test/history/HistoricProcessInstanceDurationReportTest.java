@@ -48,7 +48,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Roman Smirnov

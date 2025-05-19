@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm;
 
-import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import org.junit.Assert;
 import org.junit.Before;

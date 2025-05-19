@@ -46,7 +46,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.spi.DataFormat;
-import org.operaton.commons.utils.IoUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

@@ -95,7 +95,7 @@ class MultiTenancyUserOperationLogTest {
       .startEvent().userTask(TASK_ID).operatonAsyncBefore().done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(engineRule);

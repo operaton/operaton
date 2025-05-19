@@ -46,7 +46,7 @@ class MultiTenancyMigrationTenantProviderTest {
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .cacheForConfigurationResource(false)
       .configurator(configuration -> {
         TenantIdProvider tenantIdProvider = new VariableBasedTenantIdProvider();

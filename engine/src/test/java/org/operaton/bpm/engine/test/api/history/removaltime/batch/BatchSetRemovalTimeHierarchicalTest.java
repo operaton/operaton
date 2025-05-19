@@ -77,7 +77,7 @@ import org.operaton.bpm.engine.variable.Variables;
 class BatchSetRemovalTimeHierarchicalTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension

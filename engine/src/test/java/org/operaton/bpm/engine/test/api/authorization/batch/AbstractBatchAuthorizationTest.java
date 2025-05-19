@@ -41,7 +41,7 @@ public abstract class AbstractBatchAuthorizationTest {
   protected static final String TEST_REASON = "test reason";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension

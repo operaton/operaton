@@ -56,7 +56,7 @@ class DecisionServiceUserOperationLogTest {
   protected static final String USER_ID = "userId";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

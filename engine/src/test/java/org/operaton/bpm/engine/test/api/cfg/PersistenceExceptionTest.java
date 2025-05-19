@@ -39,7 +39,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class PersistenceExceptionTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

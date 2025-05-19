@@ -87,7 +87,7 @@ import org.operaton.bpm.engine.variable.Variables;
 class BatchSetRemovalTimeInChunksTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension

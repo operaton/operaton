@@ -88,7 +88,7 @@ public class BulkHistoryDeleteTest {
   public static final int PROCESS_INSTANCE_COUNT = 5;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

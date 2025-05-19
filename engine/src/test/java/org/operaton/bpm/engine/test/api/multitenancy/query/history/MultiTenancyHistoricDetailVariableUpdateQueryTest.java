@@ -59,7 +59,7 @@ class MultiTenancyHistoricDetailVariableUpdateQueryTest {
   protected static final String TENANT_TWO_VAR = "tenant2Var";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

@@ -42,7 +42,7 @@ class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
     .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .cacheForConfigurationResource(false)
       .configurator(configuration -> {
         TenantIdProvider tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);

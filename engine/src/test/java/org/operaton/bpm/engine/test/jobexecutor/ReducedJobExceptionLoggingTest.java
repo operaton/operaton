@@ -38,7 +38,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 class ReducedJobExceptionLoggingTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
     .cacheForConfigurationResource(false)
     .build();

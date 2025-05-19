@@ -46,7 +46,7 @@ class ManagementServiceGetTelemetryDataTest {
   protected static final String IS_TELEMETRY_ENABLED_CMD_NAME = "IsTelemetryEnabledCmd";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
   protected ProcessEngineConfigurationImpl configuration;
   protected ManagementServiceImpl managementService;

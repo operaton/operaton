@@ -51,7 +51,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   protected static StaticTenantIdTestProvider tenantIdProvider;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .cacheForConfigurationResource(false)
       .configurator(configuration -> {
         tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);

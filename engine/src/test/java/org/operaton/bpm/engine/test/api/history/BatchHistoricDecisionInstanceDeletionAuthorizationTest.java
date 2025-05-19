@@ -60,7 +60,7 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
   protected static final String DECISION = "decision";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension

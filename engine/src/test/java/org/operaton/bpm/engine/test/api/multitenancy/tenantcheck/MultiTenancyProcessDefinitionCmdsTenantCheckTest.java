@@ -53,7 +53,7 @@ class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   protected static final String BPMN_PROCESS_DIAGRAM = "org/operaton/bpm/engine/test/api/multitenancy/testProcess.png";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

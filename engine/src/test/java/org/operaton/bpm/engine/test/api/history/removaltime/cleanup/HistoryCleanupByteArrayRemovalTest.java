@@ -52,7 +52,7 @@ import org.operaton.bpm.engine.test.util.RemoveAfter;
 class HistoryCleanupByteArrayRemovalTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .cacheForConfigurationResource(false)
     .configurator(config -> {
       config.setHistoryRemovalTimeStrategy(HISTORY_REMOVAL_TIME_STRATEGY_END)

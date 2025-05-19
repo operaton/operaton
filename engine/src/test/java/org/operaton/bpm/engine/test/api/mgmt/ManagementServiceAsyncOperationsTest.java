@@ -51,7 +51,7 @@ class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperationsTest {
   protected static final java.lang.String TEST_PROCESS = "exceptionInJobExecution";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

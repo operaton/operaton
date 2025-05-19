@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
   private static final StubIncidentHandler JOB_HANDLER = new StubIncidentHandler(Incident.FAILED_JOB_HANDLER_TYPE);
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .cacheForConfigurationResource(false)
     .configurator(configuration -> {
         configuration.setCompositeIncidentHandlersEnabled(true);

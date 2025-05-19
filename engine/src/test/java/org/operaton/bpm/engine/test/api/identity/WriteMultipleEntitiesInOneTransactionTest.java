@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 class WriteMultipleEntitiesInOneTransactionTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().configurationResource("org/operaton/bpm/engine/test/api/identity/WriteMultipleEntitiesInOneTransactionTest.operaton.cfg.xml").build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().configurationResource("org/operaton/bpm/engine/test/api/identity/WriteMultipleEntitiesInOneTransactionTest.operaton.cfg.xml").build();
 
   protected IdentityService identityService;
 

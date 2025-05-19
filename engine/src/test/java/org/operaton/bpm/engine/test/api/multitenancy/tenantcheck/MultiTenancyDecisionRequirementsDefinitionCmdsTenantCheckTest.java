@@ -46,7 +46,7 @@ class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
   protected static final String DRD_DMN = "org/operaton/bpm/engine/test/api/multitenancy/DecisionRequirementsGraph.png";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

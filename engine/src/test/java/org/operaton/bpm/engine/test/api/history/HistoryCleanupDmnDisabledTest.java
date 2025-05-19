@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 class HistoryCleanupDmnDisabledTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurator(configuration -> {
       configuration.setDmnEnabled(false);
     }).build();

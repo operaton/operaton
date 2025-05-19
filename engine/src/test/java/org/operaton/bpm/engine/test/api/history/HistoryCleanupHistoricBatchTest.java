@@ -67,7 +67,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class HistoryCleanupHistoricBatchTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurator(configuration -> {
       configuration.setHistoryCleanupDegreeOfParallelism(3);
     }).build();

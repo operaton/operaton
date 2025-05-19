@@ -36,7 +36,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class ProcessEngineContextTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 

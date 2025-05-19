@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.test.util.ClockTestUtil;
 class HistoricBatchQueryTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
   protected static BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);

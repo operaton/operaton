@@ -57,7 +57,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
   protected int defaultBatchSize;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .cacheForConfigurationResource(false)
     .configurator(configuration -> {
       configuration.setHistoryCleanupBatchSize(20);

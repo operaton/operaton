@@ -56,7 +56,7 @@ public class BulkHistoryDeleteProcessInstancesAuthorizationTest {
   protected static final String ONE_TASK_PROCESS = "oneTaskProcess";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension

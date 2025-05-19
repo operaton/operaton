@@ -40,7 +40,9 @@ public class SuspensionStateDto {
     return dto;
   }
 
-  public void updateSuspensionState(ProcessEngine engine) {}
+  public void updateSuspensionState(ProcessEngine engine) {
+    updateSuspensionState(engine, null);
+  }
 
   public void updateSuspensionState(ProcessEngine engine, String processInstanceId) {
     UpdateProcessInstanceSuspensionStateBuilder updateSuspensionStateBuilder = null;

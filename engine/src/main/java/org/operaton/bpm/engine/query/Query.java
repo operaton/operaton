@@ -59,9 +59,8 @@ public interface Query<T extends Query< ? , ? >, U extends Object> {
    *   When a maximum results limit is specified. A maximum results limit can be specified with
    *   the process engine configuration property <code>queryMaxResultsLimit</code> (default
    *   {@link Integer#MAX_VALUE}).
-   *  @deprecated Use {@link #listPage(int, int)} instead.
+   *   Please use {@link #listPage(int, int)} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0")
   List<U> list();
 
   /**

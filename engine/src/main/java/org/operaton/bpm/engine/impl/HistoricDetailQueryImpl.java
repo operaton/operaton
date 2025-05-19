@@ -43,7 +43,6 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
   protected String caseInstanceId;
   protected String executionId;
   protected String caseExecutionId;
-  protected String activityId;
   protected String activityInstanceId;
   protected String type;
   protected String variableInstanceId;
@@ -127,12 +126,6 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
   public HistoricDetailQuery caseExecutionId(String caseExecutionId) {
     ensureNotNull("Case execution id", caseExecutionId);
     this.caseExecutionId = caseExecutionId;
-    return this;
-  }
-
-  @Override
-  public HistoricDetailQuery activityId(String activityId) {
-    this.activityId = activityId;
     return this;
   }
 
@@ -345,7 +338,7 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
   }
 
   public String getActivityId() {
-    return activityId;
+    return activityInstanceId;
   }
 
   public String getType() {

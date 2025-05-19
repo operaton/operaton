@@ -24,9 +24,6 @@ public class DeploymentResourceDto {
   protected String name;
   protected String deploymentId;
 
-  public DeploymentResourceDto() {
-  }
-
   public String getId() {
     return id;
   }

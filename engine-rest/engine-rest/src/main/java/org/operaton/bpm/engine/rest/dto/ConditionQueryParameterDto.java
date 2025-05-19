@@ -28,10 +28,6 @@ import java.util.Map;
  */
 public class ConditionQueryParameterDto {
 
-  public ConditionQueryParameterDto() {
-
-  }
-
   public static final String EQUALS_OPERATOR_NAME = "eq";
   public static final String NOT_EQUALS_OPERATOR_NAME = "neq";
   public static final String GREATER_THAN_OPERATOR_NAME = "gt";

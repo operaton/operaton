@@ -79,9 +79,6 @@ public class LdapTestEnvironment {
 
   private final int numberOfUsersCreatedInBerkeleyOffice = 0;
 
-  public LdapTestEnvironment() {
-  }
-
   /**
    * initialize the schema manager and add the schema partition to directory
    * service

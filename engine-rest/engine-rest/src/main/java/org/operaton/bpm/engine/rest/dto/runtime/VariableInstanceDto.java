@@ -37,8 +37,6 @@ public class VariableInstanceDto extends VariableValueDto {
   protected String errorMessage;
   protected String tenantId;
 
-  public VariableInstanceDto() { }
-
   public String getId() {
     return id;
   }

@@ -28,9 +28,6 @@ public class FunctionProvider implements FeelCustomFunctionProvider {
 
   protected Map<String, CustomFunction> functions = new HashMap<>();
 
-  public FunctionProvider() {
-  }
-
   @Override
   public Optional<CustomFunction> resolveFunction(String functionName) {
     return Optional.ofNullable(functions.get(functionName));

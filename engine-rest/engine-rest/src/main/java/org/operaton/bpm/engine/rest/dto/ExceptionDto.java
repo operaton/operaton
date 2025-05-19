@@ -27,10 +27,6 @@ public class ExceptionDto {
   protected String message;
   protected Integer code;
 
-  public ExceptionDto() {
-
-  }
-
   public String getType() {
     return type;
   }

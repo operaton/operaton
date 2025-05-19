@@ -29,9 +29,6 @@ public class DeploymentDto extends LinkableDto {
   protected Date deploymentTime;
   protected String tenantId;
 
-  public DeploymentDto() {
-  }
-
   public String getId() {
     return id;
   }

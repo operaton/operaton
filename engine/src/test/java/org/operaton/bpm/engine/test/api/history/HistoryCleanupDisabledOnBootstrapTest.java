@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 public class HistoryCleanupDisabledOnBootstrapTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .cacheForConfigurationResource(false)
     .configurator(configuration -> {
       configuration.setJdbcUrl("jdbc:h2:mem:" + HistoryCleanupDisabledOnBootstrapTest.class.getSimpleName());

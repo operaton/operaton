@@ -98,7 +98,7 @@ import org.operaton.commons.utils.IoUtil;
 class FormServiceTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .cacheForConfigurationResource(false)
       .configurator(configuration -> {
           configuration.setJavaSerializationFormatEnabled(true);

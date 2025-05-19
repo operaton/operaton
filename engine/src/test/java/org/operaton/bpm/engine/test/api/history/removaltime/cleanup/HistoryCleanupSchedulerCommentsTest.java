@@ -41,7 +41,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class HistoryCleanupSchedulerCommentsTest extends AbstractHistoryCleanupSchedulerTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .cacheForConfigurationResource(false)
       .configurator(AbstractHistoryCleanupSchedulerTest::configure).build();
   @RegisterExtension

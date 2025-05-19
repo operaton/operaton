@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 class InstallationCfgTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 

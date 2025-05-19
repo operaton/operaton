@@ -39,7 +39,7 @@ class MultiTenancyJobExecutorTest {
   protected static final String TENANT_ID = "tenant1";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .cacheForConfigurationResource(false)
       .build();
   @RegisterExtension

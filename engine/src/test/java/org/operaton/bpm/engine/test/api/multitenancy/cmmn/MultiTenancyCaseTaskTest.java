@@ -49,7 +49,7 @@ class MultiTenancyCaseTaskTest {
   protected static final String CASE_TASK_ID = "PI_CaseTask_1";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

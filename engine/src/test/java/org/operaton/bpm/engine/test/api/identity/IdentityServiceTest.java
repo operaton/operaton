@@ -68,7 +68,7 @@ class IdentityServiceTest {
   private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 

@@ -77,7 +77,7 @@ public class HistoryServiceTest {
   protected static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
   
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

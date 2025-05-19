@@ -46,7 +46,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   private static final String FAILING_CLASS = "this.class.does.not.Exist";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .cacheForConfigurationResource(false)
       .configurator((configuration -> {
         configuration.setFailedJobRetryTimeCycle("PT5M,PT20M, PT3M");

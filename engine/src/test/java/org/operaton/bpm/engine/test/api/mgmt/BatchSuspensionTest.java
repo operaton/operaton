@@ -48,7 +48,7 @@ public class BatchSuspensionTest {
   public static final String USER_ID = "userId";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
   protected BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);

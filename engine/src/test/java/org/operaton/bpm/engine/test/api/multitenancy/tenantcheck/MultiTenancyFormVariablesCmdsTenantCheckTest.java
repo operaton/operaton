@@ -50,7 +50,7 @@ class MultiTenancyFormVariablesCmdsTenantCheckTest {
   protected static final String VARIABLE_VALUE_2 = "test2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

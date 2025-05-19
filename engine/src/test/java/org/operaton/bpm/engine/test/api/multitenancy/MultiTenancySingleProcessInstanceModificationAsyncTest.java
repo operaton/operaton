@@ -52,7 +52,7 @@ class MultiTenancySingleProcessInstanceModificationAsyncTest {
   protected static final String TENANT_ONE = "tenant1";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

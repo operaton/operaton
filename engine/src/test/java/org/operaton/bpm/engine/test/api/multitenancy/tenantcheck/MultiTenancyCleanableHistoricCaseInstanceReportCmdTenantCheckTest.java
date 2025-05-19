@@ -49,7 +49,7 @@ class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
   protected static final String CMMN_MODEL = "org/operaton/bpm/engine/test/repository/one.cmmn";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

@@ -39,7 +39,7 @@ class MultiTenancyDelegateTaskTest {
   protected static final String BPMN = "org/operaton/bpm/engine/test/api/multitenancy/taskListener.bpmn";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

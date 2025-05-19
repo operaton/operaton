@@ -33,7 +33,7 @@ import org.operaton.commons.testing.WatchLogger;
 class TelemetryConfigurationTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 

@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 class MultiTenancyCommandTenantCheckTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;

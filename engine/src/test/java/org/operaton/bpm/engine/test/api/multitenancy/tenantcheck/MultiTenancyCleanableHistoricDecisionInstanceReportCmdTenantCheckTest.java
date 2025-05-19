@@ -50,7 +50,7 @@ class MultiTenancyCleanableHistoricDecisionInstanceReportCmdTenantCheckTest {
   protected static final String DMN_MODEL = "org/operaton/bpm/engine/test/api/multitenancy/simpleDecisionTable.dmn";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

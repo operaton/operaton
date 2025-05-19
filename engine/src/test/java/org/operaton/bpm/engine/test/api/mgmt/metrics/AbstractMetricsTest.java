@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 public abstract class AbstractMetricsTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .cacheForConfigurationResource(false)
       .build();
   @RegisterExtension

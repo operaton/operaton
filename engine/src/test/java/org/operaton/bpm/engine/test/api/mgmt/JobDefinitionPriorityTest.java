@@ -45,7 +45,7 @@ class JobDefinitionPriorityTest {
   protected static final long EXPECTED_DEFAULT_PRIORITY = 0;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

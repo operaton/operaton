@@ -41,7 +41,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class BulkHistoryDeleteDmnDisabledTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .cacheForConfigurationResource(false)
     .configurator(configuration -> configuration.setDmnEnabled(false)).build();
   @RegisterExtension

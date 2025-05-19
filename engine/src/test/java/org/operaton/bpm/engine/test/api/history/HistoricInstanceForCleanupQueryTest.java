@@ -49,7 +49,7 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 class HistoricInstanceForCleanupQueryTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension

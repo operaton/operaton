@@ -50,7 +50,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   protected static final int RETRIES = 5;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 

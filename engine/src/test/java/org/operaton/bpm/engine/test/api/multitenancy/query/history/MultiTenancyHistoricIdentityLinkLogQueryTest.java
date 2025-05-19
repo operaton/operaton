@@ -53,7 +53,7 @@ class MultiTenancyHistoricIdentityLinkLogQueryTest {
   private static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

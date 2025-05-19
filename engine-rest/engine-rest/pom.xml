@@ -189,6 +189,12 @@
       </exclusions>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <scope>test</scope>
+    </dependency>
+
     <!-- Tomcat for resteasy and wink -->
     <dependency>
       <groupId>ch.qos.logback</groupId>

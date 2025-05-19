@@ -19,7 +19,6 @@ package org.operaton.bpm.cockpit.plugin.base;
 import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.CalledProcessInstanceDto;

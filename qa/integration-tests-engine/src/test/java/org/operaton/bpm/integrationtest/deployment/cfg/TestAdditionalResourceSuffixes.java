@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.deployment.cfg;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.operaton.bpm.engine.RepositoryService;

@@ -68,7 +68,9 @@ public interface FormService {
    * @deprecated Use {@link #submitStartForm(String, Map)} instead.
    * */
   @Deprecated(forRemoval = true, since = "1.0")
-  ProcessInstance submitStartFormData(String processDefinitionId, Map<String, String> properties);
+  default ProcessInstance submitStartFormData(String processDefinitionId, Map<String, String> properties) {
+    return submitStartForm(processDefinitionId, (Map) properties);
+  }
 
   /**
    * Start a new process instance with the user data that was entered as properties in a start form.
@@ -83,7 +85,10 @@ public interface FormService {
    * @deprecated Use {@link #submitStartForm(String, String, Map)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  ProcessInstance submitStartFormData(String processDefinitionId, String businessKey, Map<String, String> properties);
+  default ProcessInstance submitStartFormData(String processDefinitionId, String businessKey,
+                                         Map<String, String> properties) {
+    return submitStartForm(processDefinitionId, businessKey, (Map) properties);
+  }
 
   /**
    * Start a new process instance with the user data that was entered as properties in a start form.
@@ -166,7 +171,9 @@ public interface FormService {
    * @deprecated Use {@link #submitTaskForm(String, Map)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  void submitTaskFormData(String taskId, Map<String, String> properties);
+  default void submitTaskFormData(String taskId, Map<String, String> properties) {
+    submitTaskForm(taskId, (Map) properties);
+  }
 
   /**
    * Completes a task with the user data that was entered as properties in a task form.

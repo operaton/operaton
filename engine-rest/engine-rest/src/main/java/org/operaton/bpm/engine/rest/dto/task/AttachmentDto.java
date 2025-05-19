@@ -33,9 +33,6 @@ public class AttachmentDto extends LinkableDto {
   private Date removalTime;
   private String rootProcessInstanceId;
 
-  public AttachmentDto() {
-  }
-
   public String getId() {
     return id;
   }

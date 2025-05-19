@@ -34,8 +34,6 @@ public class JobDefinitionDto {
   protected String tenantId;
   protected String deploymentId;
 
-  public JobDefinitionDto() { }
-
   public String getId() {
     return id;
   }

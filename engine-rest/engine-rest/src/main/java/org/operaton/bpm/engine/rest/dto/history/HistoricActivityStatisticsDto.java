@@ -34,8 +34,6 @@ public class HistoricActivityStatisticsDto {
   protected long resolvedIncidents;
   protected long deletedIncidents;
 
-  public HistoricActivityStatisticsDto () {}
-
   public String getId() {
     return id;
   }

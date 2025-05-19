@@ -28,9 +28,6 @@ public class EqualsVariableMap extends BaseMatcher<Map<String, Object>> {
 
   protected Map<String, Matcher<?>> matchers;
 
-  public EqualsVariableMap() {
-  }
-
   @Override
   public boolean matches(Object argument) {
     return matchesMatchers(argument);

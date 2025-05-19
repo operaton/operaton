@@ -34,9 +34,6 @@ public class CleanableHistoricProcessInstanceReportResultDto {
   protected long cleanableProcessInstanceCount;
   protected String tenantId;
 
-  public CleanableHistoricProcessInstanceReportResultDto() {
-  }
-
   public void setProcessDefinitionId(String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }

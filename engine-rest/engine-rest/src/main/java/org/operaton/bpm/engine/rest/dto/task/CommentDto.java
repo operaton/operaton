@@ -32,9 +32,6 @@ public class CommentDto extends LinkableDto {
   protected String rootProcessInstanceId;
   protected String processInstanceId;
 
-  public CommentDto() {
-  }
-
   public String getId() {
     return id;
   }

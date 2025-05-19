@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertNotSame;
@@ -88,7 +89,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
-
+    assertThat(pi.get(0).getProcessDefinitionKey()).isEqualTo("startTimerEventExample");
     assertThat(jobQuery.count()).isZero();
 
   }

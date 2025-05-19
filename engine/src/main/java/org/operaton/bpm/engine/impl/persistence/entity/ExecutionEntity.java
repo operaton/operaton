@@ -228,6 +228,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   protected String restartedProcessInstanceId;
 
   /**
+   * The name of the process definition key
+   */
+  protected String processDefinitionKey;
+
+  /**
    * Contains observers which are observe the execution.
    * @since 7.6
    */
@@ -256,6 +261,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
     // initialize the new execution
     createdExecution.setProcessDefinition(getProcessDefinition());
+    createdExecution.setProcessDefinitionKey(getProcessDefinitionKey());
     createdExecution.setProcessInstance(getProcessInstance());
     createdExecution.setActivity(getActivity());
     createdExecution.setSuspensionState(getSuspensionState());
@@ -541,6 +547,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     removeIncidents();
   }
 
+  @Override
   public void removeVariablesLocalInternal() {
     for (VariableInstanceEntity variableInstance : variableStore.getVariables()) {
       invokeVariableLifecycleListenersDelete(
@@ -763,9 +770,13 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     this.processDefinition = processDefinition;
     if (processDefinition != null) {
       this.processDefinitionId = processDefinition.getId();
+      if (processDefinition instanceof ProcessDefinitionEntity) {
+        this.processDefinitionKey = ((ProcessDefinitionEntity) processDefinition).getKey();
+      }
     }
     else {
       this.processDefinitionId = null;
+      this.processDefinitionKey = null;
     }
 
   }
@@ -1439,6 +1450,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     persistentState.put("suspensionState", this.suspensionState);
     persistentState.put("cachedEntityState", getCachedEntityState());
     persistentState.put("sequenceCounter", getSequenceCounter());
+    persistentState.put("processDefinitionKey", this.processDefinitionKey);
     return persistentState;
   }
 
@@ -1945,5 +1957,14 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   public String getProcessDefinitionTenantId() {
     return getProcessDefinition().getTenantId();
+  }
+
+  public void setProcessDefinitionKey(String processDefinitionKey) {
+    this.processDefinitionKey = processDefinitionKey;
+  }
+
+  @Override
+  public String getProcessDefinitionKey() {
+    return processDefinitionKey;
   }
 }

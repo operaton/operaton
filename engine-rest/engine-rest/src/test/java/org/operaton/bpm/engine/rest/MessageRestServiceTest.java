@@ -259,6 +259,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     //process instance should be filled and execution should be null
     assertThat(from(content).<String>get("[" + idx + "].processInstance.id")).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     assertThat(from(content).<String>get("[" + idx + "].processInstance.definitionId")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(from(content).<String>get("[" + idx + "].processInstance.definitionKey")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
     assertThat(from(content).<String>get("[" + idx + "].execution")).isNull();
   }
 

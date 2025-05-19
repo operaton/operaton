@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.EventSubscription;
+import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -484,6 +485,7 @@ public class ConditionalStartEventTest {
     assertThat(processInstances).hasSize(1);
 
     assertThat(conditionInstances.get(0).getId()).isEqualTo(processInstances.get(0).getId());
+    assertThat(processInstances.get(0).getProcessDefinitionKey()).isEqualTo(TRUE_CONDITION_PROCESS);
   }
 
   @Test

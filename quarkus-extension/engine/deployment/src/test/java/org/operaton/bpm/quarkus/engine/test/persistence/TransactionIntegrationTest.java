@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -55,6 +54,7 @@ import java.sql.Statement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 
 class TransactionIntegrationTest {
 
@@ -166,7 +166,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // when
-    TestHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1000);
+    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1000);
 
     // then
     Incident incident = runtimeService.createIncidentQuery().activityId("servicetask").singleResult();
@@ -180,7 +180,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
     // when
-    TestHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();
@@ -199,7 +199,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 
     // when
-    TestHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();
@@ -218,7 +218,7 @@ class TransactionIntegrationTest {
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 
     // when
-    TestHelper.waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
+    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
 
     // then
     Job job = managementService.createJobQuery().singleResult();

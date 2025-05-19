@@ -145,7 +145,7 @@ public class JobDefinitionFunctionalTest {
     // if I start a process instance
     runtimeService.startProcessInstanceByKey("testProcess");
 
-    testRule.waitForJobExecutorToProcessAllJobs(10000);
+    testRule.waitForJobExecutorToProcessAllJobs(10000L);
 
     // then the second task is not executed
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);

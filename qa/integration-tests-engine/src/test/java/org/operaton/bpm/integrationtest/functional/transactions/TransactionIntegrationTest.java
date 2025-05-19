@@ -162,7 +162,4 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       throw e;
     }
   }
-  
-  
-  
 }

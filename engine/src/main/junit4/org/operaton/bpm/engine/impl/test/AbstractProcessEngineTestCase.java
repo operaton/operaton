@@ -20,7 +20,6 @@ import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
@@ -28,6 +27,7 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import java.util.*;
@@ -231,86 +231,28 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     }
   }
 
-  @Deprecated
+  /**
+   * @deprecated Use {@link JobExecutorWaitUtils#waitForJobExecutorToProcessAllJobs(ProcessEngineConfiguration, long, long)} instead
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait, long intervalMillis) {
-    waitForJobExecutorToProcessAllJobs(maxMillisToWait);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait, intervalMillis);
   }
 
+  /**
+   * @deprecated Use {@link JobExecutorWaitUtils#waitForJobExecutorToProcessAllJobs(ProcessEngineConfiguration, long)} instead
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    jobExecutor.start();
-    long intervalMillis = 1000;
-
-    int jobExecutorWaitTime = jobExecutor.getWaitTimeInMillis() * 2;
-    if(maxMillisToWait < jobExecutorWaitTime) {
-      maxMillisToWait = jobExecutorWaitTime;
-    }
-
-    try {
-      Timer timer = new Timer();
-      InterruptTask task = new InterruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean areJobsAvailable = true;
-      try {
-        while (areJobsAvailable && !task.isTimeLimitExceeded()) {
-          Thread.sleep(intervalMillis);
-          try {
-            areJobsAvailable = areJobsAvailable();
-          } catch(Throwable t) {
-            // Ignore, possible that exception occurs due to locking/updating of table on MSSQL when
-            // isolation level doesn't allow READ of the table
-          }
-        }
-      } catch (InterruptedException e) {
-      } finally {
-        timer.cancel();
-      }
-      if (areJobsAvailable) {
-        throw new ProcessEngineException("time limit of " + maxMillisToWait + " was exceeded");
-      }
-
-    } finally {
-      jobExecutor.shutdown();
-    }
+   JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait);
   }
 
-  @Deprecated
+  /**
+   * @deprecated Use {@link JobExecutorWaitUtils#waitForCondition(Callable, long, long)} instead
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public void waitForJobExecutorOnCondition(long maxMillisToWait, long intervalMillis, Callable<Boolean> condition) {
-    waitForJobExecutorOnCondition(maxMillisToWait, condition);
-  }
-
-  public void waitForJobExecutorOnCondition(long maxMillisToWait, Callable<Boolean> condition) {
-    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    jobExecutor.start();
-    long intervalMillis = 500;
-
-    if(maxMillisToWait < (jobExecutor.getWaitTimeInMillis()*2)) {
-      maxMillisToWait = (jobExecutor.getWaitTimeInMillis()*2);
-    }
-
-    try {
-      Timer timer = new Timer();
-      InterruptTask task = new InterruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean conditionIsViolated = true;
-      try {
-        while (conditionIsViolated && !task.isTimeLimitExceeded()) {
-          Thread.sleep(intervalMillis);
-          conditionIsViolated = !condition.call();
-        }
-      } catch (InterruptedException e) {
-      } catch (Exception e) {
-        throw new ProcessEngineException("Exception while waiting on condition: "+e.getMessage(), e);
-      } finally {
-        timer.cancel();
-      }
-      if (conditionIsViolated) {
-        throw new ProcessEngineException("time limit of " + maxMillisToWait + " was exceeded");
-      }
-
-    } finally {
-      jobExecutor.shutdown();
-    }
+    JobExecutorWaitUtils.waitForCondition(condition, maxMillisToWait, intervalMillis);
   }
 
   /**
@@ -361,36 +303,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     }
   }
 
-  public boolean areJobsAvailable() {
-    List<Job> list = managementService.createJobQuery().list();
-    for (Job job : list) {
-      if (!job.isSuspended() && job.getRetries() > 0 && (job.getDuedate() == null || ClockUtil.getCurrentTime().after(job.getDuedate()))) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private static class InterruptTask extends TimerTask {
-    protected boolean timeLimitExceeded = false;
-    protected Thread thread;
-    public InterruptTask(Thread thread) {
-      this.thread = thread;
-    }
-    public boolean isTimeLimitExceeded() {
-      return timeLimitExceeded;
-    }
-    @Override
-    public void run() {
-      timeLimitExceeded = true;
-      thread.interrupt();
-    }
-  }
-
-  /**
-   * @deprecated Use {@link #getInstancesForActivityId(ActivityInstance, String)} instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated
   protected List<ActivityInstance> getInstancesForActivitiyId(ActivityInstance activityInstance, String activityId) {
     return getInstancesForActivityId(activityInstance, activityId);
   }

@@ -61,7 +61,9 @@ public interface HistoricDetailQuery extends Query<HistoricDetailQuery, Historic
    * @deprecated Use {@link #activityInstanceId(String)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  HistoricDetailQuery activityId(String activityId);
+  default HistoricDetailQuery activityId(String activityId) {
+    return activityInstanceId(activityId);
+  }
 
   /** Only select historic variable updates associated to the given {@link HistoricActivityInstance activity instance}. */
   HistoricDetailQuery activityInstanceId(String activityInstanceId);

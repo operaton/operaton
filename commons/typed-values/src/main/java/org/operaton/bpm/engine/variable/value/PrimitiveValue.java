@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.variable.type.PrimitiveValueType;
 /**
  *
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface PrimitiveValue<T> extends TypedValue {
 

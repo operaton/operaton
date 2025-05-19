@@ -20,7 +20,6 @@ package org.operaton.bpm.engine.variable.value;
  * <p>A {@link PrimitiveValue} corresponding to a Java byte array (byte[]).</p>
  *
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface BytesValue extends PrimitiveValue<byte[]> {
 

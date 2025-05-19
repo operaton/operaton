@@ -36,10 +36,12 @@ public class FailDeploymentsPlugin implements ProcessEnginePlugin {
 
   @Override
   public void postInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
+    // no-op
   }
 
   @Override
   public void postProcessEngineBuild(ProcessEngine processEngine) {
+    // no-op
   }
 
 }

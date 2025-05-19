@@ -351,6 +351,7 @@ public class AuthorizationCommandChecker implements CommandChecker {
 
   @Override
   public void checkMigrateProcessInstance(ExecutionEntity processInstance, ProcessDefinition targetProcessDefinition) {
+    // nothing to do
   }
 
   @Override
@@ -598,10 +599,12 @@ public class AuthorizationCommandChecker implements CommandChecker {
 
   @Override
   public void checkReadCaseDefinition(CaseDefinition caseDefinition) {
+    // nothing to do
   }
 
   @Override
   public void checkUpdateCaseDefinition(CaseDefinition caseDefinition) {
+    // nothing to do
   }
 
   // delete permission ////////////////////////////////////////
@@ -624,6 +627,7 @@ public class AuthorizationCommandChecker implements CommandChecker {
 
   @Override
   public void checkDeleteHistoricCaseInstance(HistoricCaseInstance instance) {
+    // nothing to do
   }
 
   @Override
@@ -657,10 +661,12 @@ public class AuthorizationCommandChecker implements CommandChecker {
 
   @Override
   public void checkUpdateCaseInstance(CaseExecution caseExecution) {
+    // nothing to do
   }
 
   @Override
   public void checkReadCaseInstance(CaseExecution caseExecution) {
+    // nothing to do
   }
 
   @Override

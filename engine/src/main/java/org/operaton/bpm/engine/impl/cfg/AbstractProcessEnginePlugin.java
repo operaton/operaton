@@ -28,17 +28,17 @@ public class AbstractProcessEnginePlugin implements ProcessEnginePlugin {
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
-
+    // no-op
   }
 
   @Override
   public void postInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
-
+    // no-op
   }
 
   @Override
   public void postProcessEngineBuild(ProcessEngine processEngine) {
-
+    // no-op
   }
 
   @Override

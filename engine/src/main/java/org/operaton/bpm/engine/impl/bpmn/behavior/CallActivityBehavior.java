@@ -65,6 +65,7 @@ public class CallActivityBehavior extends CallableElementActivityBehavior implem
 
   @Override
   public void migrateScope(ActivityExecution scopeExecution) {
+    // nothing to do
   }
 
   @Override

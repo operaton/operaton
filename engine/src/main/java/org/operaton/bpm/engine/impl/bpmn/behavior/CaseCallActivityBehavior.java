@@ -52,6 +52,7 @@ public class CaseCallActivityBehavior extends CallableElementActivityBehavior im
 
   @Override
   public void migrateScope(ActivityExecution scopeExecution) {
+    // nothing to do
   }
 
   @Override

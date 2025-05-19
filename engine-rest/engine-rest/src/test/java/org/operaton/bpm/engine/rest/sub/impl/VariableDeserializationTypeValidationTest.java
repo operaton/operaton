@@ -265,14 +265,17 @@ public class VariableDeserializationTypeValidationTest {
 
       @Override
       protected void updateVariableEntities(VariableMap variables, List<String> deletions) {
+        // no-op
       }
 
       @Override
       protected void setVariableEntity(String variableKey, TypedValue variableValue) {
+        // no-op
       }
 
       @Override
       protected void removeVariableEntity(String variableKey) {
+        // no-op
       }
 
       @Override

@@ -67,6 +67,7 @@ public class ExternalTaskActivityBehavior extends AbstractBpmnActivityBehavior i
 
   @Override
   public void migrateScope(ActivityExecution scopeExecution) {
+    // nothing to do
   }
 
   @Override

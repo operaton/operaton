@@ -16,27 +16,23 @@
  */
 package org.operaton.bpm.application.impl.event;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
-import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
+import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.impl.util.xml.Element;
-import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 
 /**
  *
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationEventParseListener implements BpmnParseListener {
+public class ProcessApplicationEventParseListener extends AbstractBpmnParseListener {
 
   public static final ExecutionListener EXECUTION_LISTENER = new ProcessApplicationEventListenerDelegate();
   public static final TaskListener TASK_LISTENER = new ProcessApplicationEventListenerDelegate();
@@ -177,10 +173,6 @@ public class ProcessApplicationEventParseListener implements BpmnParseListener {
   }
 
   @Override
-  public void parseProperty(Element propertyElement, VariableDeclaration variableDeclaration, ActivityImpl activity) {
-  }
-
-  @Override
   public void parseSequenceFlow(Element sequenceFlowElement, ScopeImpl scopeElement, TransitionImpl transition) {
     addTakeEventListener(transition);
   }
@@ -195,10 +187,6 @@ public class ProcessApplicationEventParseListener implements BpmnParseListener {
   public void parseMultiInstanceLoopCharacteristics(Element activityElement, Element multiInstanceLoopCharacteristicsElement, ActivityImpl activity) {
     addStartEventListener(activity);
     addEndEventListener(activity);
-  }
-
-  @Override
-  public void parseRootElement(Element rootElement, List<ProcessDefinitionEntity> processDefinitions) {
   }
 
   @Override
@@ -235,11 +223,6 @@ public class ProcessApplicationEventParseListener implements BpmnParseListener {
   }
 
   @Override
-  public void parseCompensateEventDefinition(Element compensateEventDefinition, ActivityImpl compensationActivity) {
-
-  }
-
-  @Override
   public void parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
     addStartEventListener(activity);
     addEndEventListener(activity);
@@ -257,31 +240,4 @@ public class ProcessApplicationEventParseListener implements BpmnParseListener {
     addEndEventListener(activity);
   }
 
-  @Override
-  public void parseIntermediateMessageCatchEventDefinition(Element messageEventDefinition, ActivityImpl nestedActivity) {
-  }
-
-  @Override
-  public void parseBoundaryMessageEventDefinition(Element element, boolean interrupting, ActivityImpl messageActivity) {
-  }
-
-  @Override
-  public void parseBoundaryEscalationEventDefinition(Element escalationEventDefinition, boolean interrupting, ActivityImpl boundaryEventActivity) {
-  }
-
-  @Override
-  public void parseBoundaryConditionalEventDefinition(Element element, boolean interrupting, ActivityImpl conditionalActivity) {
-  }
-
-  @Override
-  public void parseIntermediateConditionalEventDefinition(Element conditionalEventDefinition, ActivityImpl conditionalActivity) {
-  }
-
-  @Override
-  public void parseConditionalStartEventForEventSubprocess(Element element, ActivityImpl conditionalActivity, boolean interrupting) {
-  }
-
-  @Override
-  public void parseIoMapping(Element extensionElements, ActivityImpl activity, IoMapping inputOutput) {
-  }
 }

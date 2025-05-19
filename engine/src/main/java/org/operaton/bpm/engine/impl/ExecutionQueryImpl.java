@@ -103,11 +103,6 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
   }
 
   @Override
-  public ExecutionQuery signalEventSubscription(String signalName) {
-    return eventSubscription(EventType.SIGNAL, signalName);
-  }
-
-  @Override
   public ExecutionQuery signalEventSubscriptionName(String signalName) {
     return eventSubscription(EventType.SIGNAL, signalName);
   }

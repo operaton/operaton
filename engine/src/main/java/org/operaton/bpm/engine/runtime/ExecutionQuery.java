@@ -161,7 +161,9 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * @deprecated Use #signalEventSubscriptionName(String) instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  ExecutionQuery signalEventSubscription(String signalName);
+  default ExecutionQuery signalEventSubscription(String signalName) {
+    return signalEventSubscriptionName(signalName);
+  }
 
   /**
    * Only select executions which have a signal event subscription

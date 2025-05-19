@@ -74,16 +74,6 @@ public class FormServiceImpl extends ServiceImpl implements FormService {
   }
 
   @Override
-  public ProcessInstance submitStartFormData(String processDefinitionId, Map<String, String> properties) {
-    return commandExecutor.execute(new SubmitStartFormCmd(processDefinitionId, null, (Map) properties));
-  }
-
-  @Override
-  public ProcessInstance submitStartFormData(String processDefinitionId, String businessKey, Map<String, String> properties) {
-	  return commandExecutor.execute(new SubmitStartFormCmd(processDefinitionId, businessKey, (Map) properties));
-  }
-
-  @Override
   public ProcessInstance submitStartForm(String processDefinitionId, Map<String, Object> properties) {
     return commandExecutor.execute(new SubmitStartFormCmd(processDefinitionId, null, properties));
   }
@@ -91,11 +81,6 @@ public class FormServiceImpl extends ServiceImpl implements FormService {
   @Override
   public ProcessInstance submitStartForm(String processDefinitionId, String businessKey, Map<String, Object> properties) {
     return commandExecutor.execute(new SubmitStartFormCmd(processDefinitionId, businessKey, properties));
-  }
-
-  @Override
-  public void submitTaskFormData(String taskId, Map<String, String> properties) {
-    submitTaskForm(taskId, (Map) properties);
   }
 
   @Override

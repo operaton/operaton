@@ -112,11 +112,6 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   @Override
-  public void deleteDeploymentCascade(String deploymentId) {
-    commandExecutor.execute(new DeleteDeploymentCmd(deploymentId, true, false, false));
-  }
-
-  @Override
   public void deleteDeployment(String deploymentId, boolean cascade) {
     commandExecutor.execute(new DeleteDeploymentCmd(deploymentId, cascade, false, false));
   }

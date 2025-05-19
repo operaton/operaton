@@ -99,7 +99,9 @@ public interface RepositoryService {
    * @deprecated Use {@link #deleteDeployment(String, boolean)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  void deleteDeploymentCascade(String deploymentId);
+  default void deleteDeploymentCascade(String deploymentId) {
+    deleteDeployment(deploymentId, true);
+  }
 
   /**
    * Deletes the given deployment and cascade deletion to process instances,

@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.variable.type.ValueType;
  * TypedValues are used for representing variable values.</p>
  *
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface TypedValue extends Serializable {
 

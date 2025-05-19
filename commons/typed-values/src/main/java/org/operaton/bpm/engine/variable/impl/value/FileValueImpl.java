@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 
 /**
  * @author Ronny Bräunlich
- * @since 7.4
  *
  */
 public class FileValueImpl implements FileValue {

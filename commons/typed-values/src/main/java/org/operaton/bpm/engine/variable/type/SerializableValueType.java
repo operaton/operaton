@@ -22,7 +22,6 @@ import org.operaton.bpm.engine.variable.value.SerializableValue;
 
 /**
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface SerializableValueType extends ValueType {
 

@@ -21,7 +21,6 @@ import java.nio.charset.Charset;
 
 /**
  * @author Ronny Bräunlich
- * @since 7.4
  *
  */
 public interface FileValue extends TypedValue {

@@ -38,7 +38,6 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Thorben Lindhauer
  * @author Daniel Meyer
  *
- * @since 7.2
  */
 public interface ValueType extends Serializable {
 

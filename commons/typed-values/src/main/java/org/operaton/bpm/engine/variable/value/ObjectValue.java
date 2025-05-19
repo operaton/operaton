@@ -20,7 +20,6 @@ package org.operaton.bpm.engine.variable.value;
  * <p>A typed value representing a Java Object.</p>
  *
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface ObjectValue extends SerializableValue {
 

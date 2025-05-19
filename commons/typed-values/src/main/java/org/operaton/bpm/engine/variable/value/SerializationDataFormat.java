@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
  * @author Daniel Meyer
  * @see SerializationDataFormats
  *
- * @since 7.2
  */
 public interface SerializationDataFormat {
 

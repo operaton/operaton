@@ -20,7 +20,6 @@ package org.operaton.bpm.engine.variable.value;
  * <p>A {@link PrimitiveValue} corresponding to the Java type {@link String}.</p>
  *
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface StringValue extends PrimitiveValue<String> {
 

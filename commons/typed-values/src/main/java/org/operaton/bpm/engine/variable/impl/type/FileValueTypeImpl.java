@@ -32,7 +32,6 @@ import org.operaton.bpm.engine.variable.value.builder.FileValueBuilder;
  * process variables and retrieve them via an {@link InputStream}.
  *
  * @author Ronny Bräunlich
- * @since 7.4
  *
  */
 public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValueType {

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.variable.type;
 
 /**
  * @author Ronny Bräunlich
- * @since 7.4
  */
 public interface FileValueType extends ValueType {
 

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.variable.type;
 
 /**
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface PrimitiveValueType extends ValueType {
 

@@ -82,7 +82,9 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
    * @deprecated Use {@link #processDefinitionKeyIn(String...)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  ProcessDefinitionQueryImpl processDefinitionKeysIn(String... processDefinitionKeys);
+  default ProcessDefinitionQueryImpl processDefinitionKeysIn(String... processDefinitionKeys) {
+    return (ProcessDefinitionQueryImpl) processDefinitionKeyIn(processDefinitionKeys);
+  }
 
   /**
    * Only select process definitions with the given keys.
@@ -189,7 +191,9 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
    * @deprecated Use #messageEventSubscriptionName(String) instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  ProcessDefinitionQuery messageEventSubscription(String messageName);
+  default ProcessDefinitionQuery messageEventSubscription(String messageName) {
+    return messageEventSubscriptionName(messageName);
+  }
 
   /**
    * Selects the single process definition which has a start message event

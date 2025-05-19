@@ -55,6 +55,7 @@ public class CleanableHistoricBatchReportDto extends AbstractQueryDto<CleanableH
 
   @Override
   protected void applyFilters(CleanableHistoricBatchReport query) {
+    // no-op
   }
 
   @Override

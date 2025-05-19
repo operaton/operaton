@@ -61,6 +61,7 @@ public class TaskActivityBehavior extends AbstractBpmnActivityBehavior {
    * @throws Exception
    */
   protected void postExecution(ActivityExecution execution) throws Exception {
+    // nothing to do
   }
 
   @Override

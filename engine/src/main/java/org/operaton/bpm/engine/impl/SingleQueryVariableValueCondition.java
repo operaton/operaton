@@ -147,6 +147,7 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
 
   @Override
   public void setByteArrayValue(byte[] bytes) {
+    // no-op
   }
 
   public String getType() {

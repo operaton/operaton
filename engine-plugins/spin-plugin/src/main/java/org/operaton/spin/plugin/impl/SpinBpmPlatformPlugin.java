@@ -70,7 +70,7 @@ public class SpinBpmPlatformPlugin implements BpmPlatformPlugin {
 
   @Override
   public void postProcessApplicationUndeploy(ProcessApplicationInterface processApplication) {
-
+    // nothing to do
   }
 
 }

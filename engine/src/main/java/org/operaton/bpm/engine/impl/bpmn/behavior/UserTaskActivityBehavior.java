@@ -71,6 +71,7 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior implements Mi
 
   @Override
   public void migrateScope(ActivityExecution scopeExecution) {
+    // nothing to do
   }
 
   @Override

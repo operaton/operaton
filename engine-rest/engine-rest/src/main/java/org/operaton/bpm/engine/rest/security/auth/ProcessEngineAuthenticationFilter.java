@@ -166,7 +166,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
 
   @Override
   public void destroy() {
-
+    // no-op
   }
 
   protected void setAuthenticatedUser(ProcessEngine engine, String userId, List<String> groupIds, List<String> tenantIds) {

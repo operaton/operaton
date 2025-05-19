@@ -29,18 +29,22 @@ public class Spring5TestHelper implements SpringTestHelper {
 
       @Override
       public void prepareTestInstance(TestContext testContext) {
+        // no-op
       }
 
       @Override
       public void beforeTestMethod(TestContext testContext) {
+        // no-op
       }
 
       @Override
       public void beforeTestClass(TestContext testContext) {
+        // no-op
       }
 
       @Override
       public void afterTestMethod(TestContext testContext) {
+        // no-op
       }
 
       @Override

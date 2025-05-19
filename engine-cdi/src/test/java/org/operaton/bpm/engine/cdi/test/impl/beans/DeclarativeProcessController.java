@@ -61,10 +61,12 @@ public class DeclarativeProcessController {
 
   @CompleteTask(endConversation = false)
   public void completeTask() {
+    // behavior defined by annotation
   }
 
   @CompleteTask(endConversation = true)
   public void completeTaskEndConversation() {
+    // behavior defined by annotation
   }
 
   public TypedValue getInjectedValue() {

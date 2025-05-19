@@ -40,10 +40,10 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
   protected List<ProcessesXml> processesXmls;
   protected Map<String, DeployedProcessArchive> deploymentMap;
 
-	public JmxManagedProcessApplication(ProcessApplicationInfoImpl processApplicationInfo, ProcessApplicationReference processApplicationReference) {
+  public JmxManagedProcessApplication(ProcessApplicationInfoImpl processApplicationInfo, ProcessApplicationReference processApplicationReference) {
     this.processApplicationInfo = processApplicationInfo;
     this.processApplicationReference = processApplicationReference;
-	}
+  }
 
   @Override
   public String getProcessApplicationName() {
@@ -52,11 +52,13 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
 
   @Override
   public void start(PlatformServiceContainer mBeanServiceContainer) {
-	}
+    // no-op
+  }
 
   @Override
   public void stop(PlatformServiceContainer mBeanServiceContainer) {
-	}
+    // no-op
+  }
 
   @Override
   public JmxManagedProcessApplication getValue() {

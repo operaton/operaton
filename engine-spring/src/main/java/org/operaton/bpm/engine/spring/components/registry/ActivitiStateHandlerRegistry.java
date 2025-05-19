@@ -54,7 +54,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
 
     @Override
     public void execute(ActivityExecution execution) throws Exception {
-
+        // nothing to do here
     }
 
     @Override
@@ -153,11 +153,13 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
 
   @Override
   public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-    }
+    // no-op
+  }
 
   @Override
   public void setBeanName(String name) {
-    }
+      // no-op
+  }
 
   @Override
   public void afterPropertiesSet() {

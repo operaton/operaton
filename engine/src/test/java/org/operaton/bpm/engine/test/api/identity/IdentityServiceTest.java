@@ -67,7 +67,7 @@ class IdentityServiceTest {
   private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
-  private static final String PROCESS_ENGINE_NAME = "someProcessEngine";
+  private static final String PROCESS_ENGINE_NAME = "testProcessEngine";
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

@@ -51,7 +51,7 @@ class IdentityServiceTenantTest {
   protected static final String TENANT_TWO = "tenant2";
 
   private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
-  private static final String PROCESS_ENGINE_NAME = "someProcessEngine";
+  private static final String PROCESS_ENGINE_NAME = "testProcessEngine";
 
   protected IdentityService identityService;
   protected ProcessEngine processEngine;

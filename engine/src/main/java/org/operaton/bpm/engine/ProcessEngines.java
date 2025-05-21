@@ -176,13 +176,12 @@ public abstract class ProcessEngines {
   }
   
   /**
-   * Returns a random name for a ProcessEngine that is not yet used. This name might be used for a new ProcessEngine without explicitly name it.
+   * Returns a random name for a ProcessEngine that is not yet used.
+   * This name might be used for a new ProcessEngine without explicitly name it.
    */
   public static String newRandomUnusedProcessEngineName() {
-    String result = "randomProcessEngineName-" + RANDOM.nextLong();
-    while (processEngines.containsKey(result))
-      result = "randomProcessEngineName-" + RANDOM.nextLong();
-    return result;
+    String result = "processEngine-rnd" + RANDOM.nextLong();
+    return processEngines.containsKey(result) ? newRandomUnusedProcessEngineName() : result;
   }
 
   private static ProcessEngineInfo initProcessEngineFromResource(URL resourceUrl) {

@@ -43,7 +43,7 @@ class DmnEngineConfigurationTest {
 
   protected static final String CONFIGURATION_XML = "org/operaton/bpm/engine/test/api/cfg/custom-dmn-operaton.cfg.xml";
 
-  private static final String PROCESS_ENGINE_NAME = "someProcessEngineName";
+  private static final String PROCESS_ENGINE_NAME = "someProcessEngine";
 
   protected ProcessEngine engine;
 

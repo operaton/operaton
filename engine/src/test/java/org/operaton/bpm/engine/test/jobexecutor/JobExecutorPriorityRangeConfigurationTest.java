@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class JobExecutorPriorityRangeConfigurationTest {
 
-  private static final String SOME_PROCESS_ENGINE_NAME = "someProcessEngineName";
+  private static final String SOME_PROCESS_ENGINE_NAME = "someProcessEngine";
 
   ProcessEngineConfigurationImpl config;
 

@@ -165,7 +165,7 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
   }
 
   public static ProcessEngineConfiguration configure(ProcessEngineConfigurationImpl configuration, HistoryEventTypes... historyEventTypes) {
-    configuration.setProcessEngineName("someProcessEngineName");
+    configuration.setProcessEngineName("someProcessEngine");
     configuration.setJdbcUrl("jdbc:h2:mem:" + AbstractHistoryCleanupSchedulerTest.class.getSimpleName());
     configuration.setCustomHistoryLevels(setCustomHistoryLevel(historyEventTypes));
     configuration.setHistory(customHistoryLevel.getName());

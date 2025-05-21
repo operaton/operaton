@@ -424,7 +424,7 @@ public class ProcessEngineExtension implements TestWatcher,
   /**
    * Sets the process engine name to a random name. Use this method before calling #{@link #build()}.
    */
-  public ProcessEngineExtension withRandomName() {
+  public ProcessEngineExtension withRandomEngineName() {
     this.randomName = true;
     return this;
   }

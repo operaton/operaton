@@ -61,7 +61,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .ensureCleanAfterTest(true)
-    .withRandomName()
+    .withRandomEngineName()
     .configurator(configuration -> {
       configuration.setHistoryCleanupBatchSize(20);
       configuration.setHistoryCleanupBatchThreshold(10);

@@ -53,7 +53,7 @@ class TaskMetricsTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .withRandomName()
+      .withRandomEngineName()
       .configurator(config -> config.setTaskMetricsEnabled(true))
       .build();
   @RegisterExtension

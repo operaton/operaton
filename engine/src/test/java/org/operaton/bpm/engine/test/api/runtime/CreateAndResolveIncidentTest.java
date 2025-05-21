@@ -75,7 +75,7 @@ public class CreateAndResolveIncidentTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .withRandomName()
+      .withRandomEngineName()
       .configurator(configuration -> configuration.setCustomIncidentHandlers(HANDLERS))
       .build();
   @RegisterExtension

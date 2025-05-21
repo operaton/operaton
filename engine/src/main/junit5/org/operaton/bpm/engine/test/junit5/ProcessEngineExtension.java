@@ -70,6 +70,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
 import org.slf4j.Logger;
 
 /**
@@ -190,13 +191,25 @@ public class ProcessEngineExtension implements TestWatcher,
   protected String deploymentId;
   protected boolean ensureCleanAfterTest = false;
   protected List<String> additionalDeployments = new ArrayList<>();
+  private boolean randomName;
 
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 
   // SETUP
 
   protected void initializeProcessEngine() {
-    processEngine = TestHelper.getProcessEngine(configurationResource, processEngineConfigurator);
+    Consumer<ProcessEngineConfigurationImpl> configurator = processEngineConfigurator;
+    if (randomName) {
+      if (processEngineConfigurator == null) {
+        configurator = config -> config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+      } else {
+        configurator = config -> {
+          config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+          processEngineConfigurator.accept(config);
+        };
+      }
+    }
+    processEngine = TestHelper.getProcessEngine(configurationResource, configurator);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 
@@ -405,6 +418,14 @@ public class ProcessEngineExtension implements TestWatcher,
 
   public ProcessEngineExtension configurator (Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
     this.processEngineConfigurator = processEngineConfigurator;
+    return this;
+  }
+
+  /**
+   * Sets the process engine name to a random name. Use this method before calling #{@link #build()}.
+   */
+  public ProcessEngineExtension withRandomName() {
+    this.randomName = true;
     return this;
   }
 

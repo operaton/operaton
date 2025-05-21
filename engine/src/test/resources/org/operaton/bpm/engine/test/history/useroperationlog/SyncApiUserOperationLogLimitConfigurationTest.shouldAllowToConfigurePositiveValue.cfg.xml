@@ -6,7 +6,7 @@
 
   <bean id="processEngineConfiguration" class="org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
 
-    <property name="processEngineName" value="someName" />
+    <property name="processEngineName" value="testProcessEngine" />
 
     <!-- Database configurations -->
     <property name="databaseSchemaUpdate" value="true" />

@@ -70,8 +70,9 @@ public class ProcessEngineBootstrapRule extends TestWatcher {
   }
 
   public ProcessEngine getProcessEngine() {
-    if (processEngine == null)
+    if (processEngine == null) {
       this.processEngine = bootstrapEngine(configurationResource);
+    }
     return processEngine;
   }
 

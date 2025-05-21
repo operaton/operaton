@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
@@ -59,6 +58,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .withCloseEngine()
     .withRandomEngineName()
     .configurator(configuration -> {
       configuration.setHistoryCleanupBatchSize(20);
@@ -134,11 +134,6 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
 
       return null;
     });
-  }
-
-  @AfterAll
-  static void closeEngine() {
-    engineRule.getProcessEngine().close();
   }
 
   @TestTemplate

@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -57,6 +56,7 @@ class DeploymentCacheCfgTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension cacheFactoryEngineRule = ProcessEngineExtension.builder()
+      .withCloseEngine()
       .withRandomEngineName()
       .configurator(configuration -> {
           configuration.setCacheCapacity(2);
@@ -81,11 +81,6 @@ class DeploymentCacheCfgTest {
     managementService = cacheFactoryEngineRule.getManagementService();
   }
 
-  @AfterAll
-  static void closeEngine() {
-    cacheFactoryEngineRule.getProcessEngine().close();
-  }
-  
   @Test
   void testPlugInOwnCacheImplementation() {
 

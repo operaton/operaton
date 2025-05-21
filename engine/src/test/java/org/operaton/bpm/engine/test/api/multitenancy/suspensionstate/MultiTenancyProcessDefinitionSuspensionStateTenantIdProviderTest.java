@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.multitenancy.suspensionstate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -43,6 +42,7 @@ class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .withCloseEngine()
       .withRandomEngineName()
       .configurator(configuration -> configuration.setTenantIdProvider(new StaticTenantIdTestProvider(TENANT_ONE)))
       .build();
@@ -52,11 +52,6 @@ class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
   @BeforeEach
   void setUp() {
     testRule.deploy(PROCESS);
-  }
-
-  @AfterAll
-  static void closeEngine() {
-    engineRule.getProcessEngine().close();
   }
 
   @Test

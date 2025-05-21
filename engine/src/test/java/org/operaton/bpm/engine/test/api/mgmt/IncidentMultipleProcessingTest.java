@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -44,6 +43,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .withCloseEngine()
     .withRandomEngineName()
     .configurator(configuration -> {
       configuration.setCompositeIncidentHandlersEnabled(true);
@@ -60,13 +60,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
     JOB_HANDLER.reset();
   }
 
-  @AfterAll
-  static void closeEngine() {
-    engineRule.getProcessEngine().close();
-  }
-  
-   @Test
-   void jobHandlerShouldBeCompositeHandler() {
+  @Test
+  void jobHandlerShouldBeCompositeHandler() {
     IncidentHandler incidentHandler = engineRule.getProcessEngineConfiguration().getIncidentHandler(Incident.FAILED_JOB_HANDLER_TYPE);
 
     assertThat(incidentHandler)

@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
@@ -54,6 +53,7 @@ class MultiTenancySharedDeploymentStatisticsQueryTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .withCloseEngine()
       .withRandomEngineName()
       .configurator(configuration -> {
         tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
@@ -86,12 +86,6 @@ class MultiTenancySharedDeploymentStatisticsQueryTest {
       .operatonClass("org.operaton.bpm.engine.test.api.multitenancy.FailingDelegate")
       .operatonAsyncBefore()
     .done();
-
-
-  @AfterAll
-  static void closeEngine() {
-    engineRule.getProcessEngine().close();
-  }
 
   @Test
   void activeProcessInstancesCountWithNoAuthenticatedTenant() {

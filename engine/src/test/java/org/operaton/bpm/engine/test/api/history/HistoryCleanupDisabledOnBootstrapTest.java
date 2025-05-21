@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDAT
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -35,6 +34,7 @@ public class HistoryCleanupDisabledOnBootstrapTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .withCloseEngine()
     .withRandomEngineName()
     .configurator(configuration -> {
       configuration.setJdbcUrl("jdbc:h2:mem:" + HistoryCleanupDisabledOnBootstrapTest.class.getSimpleName());
@@ -52,11 +52,6 @@ public class HistoryCleanupDisabledOnBootstrapTest {
   @AfterEach
   void resetConfig() {
     engineConfiguration.setHistoryCleanupEnabled(true);
-  }
-
-  @AfterAll
-  static void closeEngine() {
-    engineRule.getProcessEngine().close();
   }
 
   @Test

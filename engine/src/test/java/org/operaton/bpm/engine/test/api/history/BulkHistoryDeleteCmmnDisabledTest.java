@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -49,6 +48,7 @@ class BulkHistoryDeleteCmmnDisabledTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .withCloseEngine()
     .withRandomEngineName()
     .configurator(configuration -> configuration.setCmmnEnabled(false))
     .build();
@@ -85,11 +85,6 @@ class BulkHistoryDeleteCmmnDisabledTest {
       historyService.deleteHistoricDecisionInstanceByInstanceId(historicDecisionInstance.getId());
     }
 
-  }
-
-  @AfterAll
-  static void closeEngine() {
-    engineRule.getProcessEngine().close();
   }
 
   @Test

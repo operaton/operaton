@@ -22,7 +22,6 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.stream.LongStream;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -53,6 +52,7 @@ class TaskMetricsTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .withCloseEngine()
       .withRandomEngineName()
       .configurator(config -> config.setTaskMetricsEnabled(true))
       .build();
@@ -70,11 +70,6 @@ class TaskMetricsTest {
     testRule.deleteAllStandaloneTasks();
   }
 
-  @AfterAll
-  static void closeEngine() {
-    engineRule.getProcessEngine().close();
-  }
-  
   @Test
   void shouldDeleteTaskMetrics() {
     // given

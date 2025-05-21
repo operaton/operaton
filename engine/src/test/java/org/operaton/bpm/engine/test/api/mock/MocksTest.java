@@ -26,10 +26,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.impl.mock.Mocks;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.engine.test.mock.Mocks;
 
 /**
  * @author Tassilo Weidner

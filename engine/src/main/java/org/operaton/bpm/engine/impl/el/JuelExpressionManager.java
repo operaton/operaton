@@ -20,8 +20,8 @@ import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.dmn.el.ProcessEngineJuelElProvider;
+import org.operaton.bpm.engine.impl.mock.MockElResolver;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
-import org.operaton.bpm.engine.test.mock.MockElResolver;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
 

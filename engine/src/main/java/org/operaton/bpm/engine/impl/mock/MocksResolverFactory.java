@@ -14,39 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.test.mock;
+package org.operaton.bpm.engine.impl.mock;
 
-import jakarta.el.ELContext;
-import jakarta.el.ELResolver;
+import org.operaton.bpm.engine.delegate.VariableScope;
+import org.operaton.bpm.engine.impl.scripting.engine.Resolver;
+import org.operaton.bpm.engine.impl.scripting.engine.ResolverFactory;
 
-public class MockElResolver extends ELResolver {
+import java.util.Set;
+
+/**
+ * @author Tassilo Weidner
+ */
+public class MocksResolverFactory implements ResolverFactory, Resolver {
 
   @Override
-  public Class< ? > getCommonPropertyType(ELContext context, Object base) {
-    return Object.class;
+  public Resolver createResolver(VariableScope variableScope) {
+    return this;
   }
 
   @Override
-  public Class< ? > getType(ELContext context, Object base, Object property) {
-    return null;
+  public boolean containsKey(Object key) {
+    return Mocks.get(key) != null;
   }
 
   @Override
-  public Object getValue(ELContext context, Object base, Object property) {
-    Object bean = Mocks.get(property);
-    if (bean != null) {
-      context.setPropertyResolved(true);
-    }
-    return bean;
+  public Object get(Object key) {
+    return Mocks.get(key);
   }
 
   @Override
-  public boolean isReadOnly(ELContext context, Object base, Object property) {
-    return false;
-  }
-
-  @Override
-  public void setValue(ELContext context, Object base, Object property, Object value) {
+  public Set<String> keySet() {
+    return Mocks.getMocks().keySet();
   }
 
 }

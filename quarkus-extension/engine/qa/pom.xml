@@ -69,9 +69,15 @@
     <dependency>
       <groupId>org.operaton.bpm.quarkus</groupId>
       <artifactId>operaton-bpm-quarkus-engine</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit4</classifier>
+      <scope>test</scope>
+    </dependency>
+    
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-cdi</artifactId>

@@ -19,6 +19,13 @@
     </dependency>
 
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-http-client</artifactId>
       <scope>test</scope>

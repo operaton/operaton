@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.cfg;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ class DmnEngineConfigurationTest {
 
   protected static final String CONFIGURATION_XML = "org/operaton/bpm/engine/test/api/cfg/custom-dmn-operaton.cfg.xml";
 
-  private static final String PROCESS_ENGINE_NAME = "testProcessEngine";
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
 
   protected ProcessEngine engine;
 

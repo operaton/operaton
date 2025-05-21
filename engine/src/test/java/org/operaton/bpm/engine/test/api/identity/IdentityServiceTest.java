@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,7 +68,7 @@ class IdentityServiceTest {
   private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
-  private static final String PROCESS_ENGINE_NAME = "testProcessEngine";
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

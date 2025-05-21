@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.util.Map;
 
@@ -43,7 +44,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 @ExtendWith(ProcessEngineExtension.class)
 class TelemetryDynamicDataTest {
 
-  private static final String PROCESS_ENGINE_NAME = "processEngine";
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
   protected ProcessEngineConfigurationImpl configuration;
   protected RuntimeService runtimeService;
   protected TaskService taskService;

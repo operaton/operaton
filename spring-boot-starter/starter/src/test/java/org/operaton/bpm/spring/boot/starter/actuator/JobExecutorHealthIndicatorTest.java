@@ -34,6 +34,7 @@ import org.springframework.boot.actuate.health.Status;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.*;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 @ExtendWith(MockitoExtension.class)
 class JobExecutorHealthIndicatorTest {
@@ -44,7 +45,7 @@ class JobExecutorHealthIndicatorTest {
   private static final String JOB_EXECUTOR_NAME = "job executor name";
   private static final int WAIT_TIME_IN_MILLIS = 7;
   private static final List<ProcessEngineImpl> PROCESS_ENGINES = new ArrayList<>();
-  private static final String PROCESS_ENGINE_NAME = "process engine name";
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
 
   static {
     ProcessEngineImpl processEngineImpl = mock(ProcessEngineImpl.class);

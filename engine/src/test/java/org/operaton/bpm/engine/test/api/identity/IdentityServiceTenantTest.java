@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class IdentityServiceTenantTest {
   protected static final String TENANT_TWO = "tenant2";
 
   private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
-  private static final String PROCESS_ENGINE_NAME = "testProcessEngine";
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
 
   protected IdentityService identityService;
   protected ProcessEngine processEngine;

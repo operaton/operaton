@@ -28,11 +28,12 @@ import org.springframework.boot.actuate.health.Status;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 @ExtendWith(MockitoExtension.class)
 class ProcessEngineHealthIndicatorTest {
 
-  private static final String PROCESS_ENGINE_NAME = "process engine name";
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
 
   @Mock
   private ProcessEngine processEngine;

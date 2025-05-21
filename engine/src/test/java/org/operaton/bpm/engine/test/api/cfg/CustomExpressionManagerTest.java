@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.cfg;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.el.DateTimeFunctions;
  */
 class CustomExpressionManagerTest {
 
-  private static final String PROCESS_ENGINE_NAME = "processEngineName";
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
   protected ProcessEngine engine;
 
   @Test

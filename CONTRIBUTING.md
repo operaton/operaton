@@ -177,6 +177,32 @@ tickets, list them in a comma-separated list such as `related to CAM-1234, CAM-4
 Optionally, you can reference the number of the GitHub PR from which the commit is merged. The message footer can then 
 look like `related to <ticket>, closes #<pr_number>` such as `related to CAM-1234, closes #567`.
 
+# Copyright
+
+## License Header
+
+For new files it is mandatory to add this license header:
+
+```
+/*
+ * Copyright 2025 the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+```
+
+This is for files with Java-style content. Change the comment format for files with different comment formats.
+
 # Review process
 
 We usually check for new community-submitted pull requests once a week. We will then assign a reviewer from our development team and that person will provide feedback as soon as possible. 

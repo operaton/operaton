@@ -192,6 +192,7 @@ public class ProcessEngineExtension implements TestWatcher,
   protected boolean ensureCleanAfterTest = false;
   protected List<String> additionalDeployments = new ArrayList<>();
   private boolean randomName;
+  private boolean closeEngine;
 
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 
@@ -319,7 +320,14 @@ public class ProcessEngineExtension implements TestWatcher,
   
   @Override
   public void afterAll(ExtensionContext context) {
-    deleteHistoryCleanupJob();
+    try {
+      deleteHistoryCleanupJob();
+      if (closeEngine && processEngine != null) {
+        processEngine.close();
+      }
+    } finally {
+      this.processEngine = null;
+    }
   }
 
   private void deleteHistoryCleanupJob() {
@@ -422,7 +430,21 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   /**
-   * Sets the process engine name to a random name. Use this method before calling #{@link #build()}.
+   * When set then the created ProcessEngine will be closed after all tests in the class have been executed.
+   * <p>
+   * Use this method before calling #{@link #build()}.
+   * </p>
+   */
+  public ProcessEngineExtension withCloseEngine() {
+    this.closeEngine = true;
+    return this;
+  }
+
+  /**
+   * Sets the process engine name to a random name.
+   * <p>
+   * Use this method before calling #{@link #build()}.
+   * </p>
    */
   public ProcessEngineExtension withRandomEngineName() {
     this.randomName = true;

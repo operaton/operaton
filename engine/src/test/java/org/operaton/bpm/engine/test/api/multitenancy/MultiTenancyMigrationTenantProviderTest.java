@@ -47,11 +47,9 @@ class MultiTenancyMigrationTenantProviderTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-        TenantIdProvider tenantIdProvider = new VariableBasedTenantIdProvider();
-        configuration.setTenantIdProvider(tenantIdProvider);
-      })
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setTenantIdProvider(new VariableBasedTenantIdProvider()))
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);

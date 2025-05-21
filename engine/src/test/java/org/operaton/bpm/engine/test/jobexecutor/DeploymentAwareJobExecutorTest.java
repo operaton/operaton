@@ -49,6 +49,7 @@ import org.junit.Test;
 
 public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
+  private static final String OTHER_PROCESS_ENGINE_NAME = "otherProcessEngineName";
   protected ProcessEngine otherProcessEngine = null;
 
   @Before
@@ -202,11 +203,13 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     try {
       otherProcessEngine = ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("operaton.cfg.xml")
+        .setProcessEngineName(OTHER_PROCESS_ENGINE_NAME)
         .buildProcessEngine();
     } catch (RuntimeException ex) {
       if (ex.getCause() != null && ex.getCause() instanceof FileNotFoundException) {
         otherProcessEngine = ProcessEngineConfiguration
           .createProcessEngineConfigurationFromResource("activiti.cfg.xml")
+          .setProcessEngineName(OTHER_PROCESS_ENGINE_NAME)
           .buildProcessEngine();
       } else {
         throw ex;

@@ -33,6 +33,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
@@ -69,6 +70,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
 import org.slf4j.Logger;
 
 /**
@@ -165,7 +167,7 @@ import org.slf4j.Logger;
  * </p>
  */
 public class ProcessEngineExtension implements TestWatcher,
-    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, 
+    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, BeforeAllCallback, 
     AfterAllCallback, ParameterResolver, ProcessEngineServices, ProcessEngineProvider {
 
   protected static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
@@ -189,15 +191,26 @@ public class ProcessEngineExtension implements TestWatcher,
   protected String deploymentId;
   protected boolean ensureCleanAfterTest = false;
   protected List<String> additionalDeployments = new ArrayList<>();
+  private boolean randomName;
+  private boolean closeEngine;
 
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
-
-  private boolean cacheForConfigurationResource = true;
 
   // SETUP
 
   protected void initializeProcessEngine() {
-    processEngine = TestHelper.getProcessEngine(configurationResource, processEngineConfigurator, cacheForConfigurationResource);
+    Consumer<ProcessEngineConfigurationImpl> configurator = processEngineConfigurator;
+    if (randomName) {
+      if (processEngineConfigurator == null) {
+        configurator = config -> config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+      } else {
+        configurator = config -> {
+          config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+          processEngineConfigurator.accept(config);
+        };
+      }
+    }
+    processEngine = TestHelper.getProcessEngine(configurationResource, configurator);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 
@@ -298,8 +311,23 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   @Override
+  public void beforeAll(ExtensionContext context) {
+    if (processEngine == null) {
+      initializeProcessEngine();
+      initializeServices();
+    }
+  }
+  
+  @Override
   public void afterAll(ExtensionContext context) {
-    deleteHistoryCleanupJob();
+    try {
+      deleteHistoryCleanupJob();
+      if (closeEngine && processEngine != null) {
+        processEngine.close();
+      }
+    } finally {
+      this.processEngine = null;
+    }
   }
 
   private void deleteHistoryCleanupJob() {
@@ -324,9 +352,9 @@ public class ProcessEngineExtension implements TestWatcher,
   public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
     if (processEngine == null) {
       initializeProcessEngine();
-      // allow other extensions to access the engine instance created by this extension
-      context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     }
+    // allow other extensions to access the engine instance created by this extension
+    context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     initializeServices();
     getAllFields(testInstance.getClass())
             .filter(field -> field.getType() == ProcessEngine.class)
@@ -401,16 +429,29 @@ public class ProcessEngineExtension implements TestWatcher,
     return this;
   }
 
-  public ProcessEngineExtension cacheForConfigurationResource(boolean cacheForConfigurationResource) {
-    this.cacheForConfigurationResource = cacheForConfigurationResource;
+  /**
+   * When set then the created ProcessEngine will be closed after all tests in the class have been executed.
+   * <p>
+   * Use this method before calling #{@link #build()}.
+   * </p>
+   */
+  public ProcessEngineExtension closeEngineAfterAllTests() {
+    this.closeEngine = true;
+    return this;
+  }
+
+  /**
+   * Sets the process engine name to a random name.
+   * <p>
+   * Use this method before calling #{@link #build()}.
+   * </p>
+   */
+  public ProcessEngineExtension randomEngineName() {
+    this.randomName = true;
     return this;
   }
 
   public ProcessEngineExtension build() {
-    if (processEngine == null) {
-      initializeProcessEngine();
-    }
-    initializeServices();
     return this;
   }
 

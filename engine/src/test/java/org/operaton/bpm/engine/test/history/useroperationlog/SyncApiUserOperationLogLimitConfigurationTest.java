@@ -42,6 +42,7 @@ public class SyncApiUserOperationLogLimitConfigurationTest {
     // given standard configuration
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("operaton.cfg.xml");
+    processEngineConfiguration.setProcessEngineName("secondDefault"); // different name is needed to avoid issues with cached engines
 
     // when engine startup
     startEngineManaged(processEngineConfiguration);

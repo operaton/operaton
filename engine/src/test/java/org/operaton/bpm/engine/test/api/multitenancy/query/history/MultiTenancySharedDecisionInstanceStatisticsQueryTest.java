@@ -55,11 +55,9 @@ class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-        tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
-        configuration.setTenantIdProvider(tenantIdProvider);
-      })
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setTenantIdProvider(new StaticTenantIdTestProvider(TENANT_ONE)))
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

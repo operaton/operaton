@@ -54,15 +54,14 @@ class CreateFilterConfigurationTest {
   }
 
   @RegisterExtension
-  final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(configuration).extension();
-
-  @RegisterExtension
   ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test
   void createAdminUser() {
+    ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(configuration).extension();
     assertThat(processEngineExtension.getFilterService().createFilterQuery().filterName("All").singleResult()).isNotNull();
+    processEngineExtension.getProcessEngine().close();
   }
 
   @Test

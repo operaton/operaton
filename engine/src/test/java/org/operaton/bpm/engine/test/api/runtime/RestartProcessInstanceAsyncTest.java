@@ -79,11 +79,9 @@ class RestartProcessInstanceAsyncTest {
   protected static final Date TEST_DATE = new Date(1457326800000L);
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   protected BatchRestartHelper helper = new BatchRestartHelper(engineRule);
 
   ProcessEngineConfigurationImpl processEngineConfiguration;

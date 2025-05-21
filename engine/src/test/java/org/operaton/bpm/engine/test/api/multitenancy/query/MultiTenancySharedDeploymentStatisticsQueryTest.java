@@ -53,7 +53,8 @@ class MultiTenancySharedDeploymentStatisticsQueryTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator(configuration -> {
         tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
         configuration.setTenantIdProvider(tenantIdProvider);
@@ -85,7 +86,6 @@ class MultiTenancySharedDeploymentStatisticsQueryTest {
       .operatonClass("org.operaton.bpm.engine.test.api.multitenancy.FailingDelegate")
       .operatonAsyncBefore()
     .done();
-
 
   @Test
   void activeProcessInstancesCountWithNoAuthenticatedTenant() {

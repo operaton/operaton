@@ -23,14 +23,17 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.operaton.bpm.engine.impl.ProcessEngineInfoImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -66,11 +69,11 @@ public abstract class ProcessEngines {
 
   public static final String NAME_DEFAULT = "default";
 
-  protected static boolean isInitialized = false;
-  protected static Map<String, ProcessEngine> processEngines = new HashMap<>();
-  protected static Map<String, ProcessEngineInfo> processEngineInfosByName = new HashMap<>();
-  protected static Map<String, ProcessEngineInfo> processEngineInfosByResourceUrl = new HashMap<>();
-  protected static List<ProcessEngineInfo> processEngineInfos = new ArrayList<>();
+  protected static volatile boolean isInitialized = false;
+  protected static volatile Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
+  protected static volatile Map<String, ProcessEngineInfo> processEngineInfosByName = new ConcurrentHashMap<>();
+  protected static volatile Map<String, ProcessEngineInfo> processEngineInfosByResourceUrl = new ConcurrentHashMap<>();
+  protected static volatile List<ProcessEngineInfo> processEngineInfos = new CopyOnWriteArrayList<>();
 
   public static synchronized void init() {
     init(true);
@@ -83,7 +86,7 @@ public abstract class ProcessEngines {
     if (!isInitialized) {
       if(processEngines == null) {
         // Create new map to store process-engines if current map is null
-        processEngines = new HashMap<>();
+        processEngines = new ConcurrentHashMap<>();
       }
       ClassLoader classLoader = ReflectUtil.getClassLoader();
       Enumeration<URL> resources = null;
@@ -163,8 +166,15 @@ public abstract class ProcessEngines {
     processEngines.remove(processEngine.getName());
   }
 
+  /**
+   * Check if the given process engine with that name is already registered.
+   */
+  public static boolean isRegisteredProcessEngine(String processEngineName) {
+    return processEngines.containsKey(processEngineName);
+  }
+
   private static ProcessEngineInfo initProcessEngineFromResource(URL resourceUrl) {
-    ProcessEngineInfo processEngineInfo = processEngineInfosByResourceUrl.get(resourceUrl);
+    ProcessEngineInfo processEngineInfo = processEngineInfosByResourceUrl.get(resourceUrl.toString());
     // if there is an existing process engine info
     if (processEngineInfo!=null) {
       // remove that process engine from the member fields
@@ -271,7 +281,7 @@ public abstract class ProcessEngines {
   public static synchronized void destroy() {
     if (isInitialized) {
       Map<String, ProcessEngine> engines = new HashMap<>(processEngines);
-      processEngines = new HashMap<>();
+      processEngines = new ConcurrentHashMap<>();
 
       for (var engineEntry : engines.entrySet()) {
         String processEngineName = engineEntry.getKey();

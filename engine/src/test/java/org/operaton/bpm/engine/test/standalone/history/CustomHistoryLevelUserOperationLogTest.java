@@ -88,6 +88,7 @@ public class CustomHistoryLevelUserOperationLogTest {
       configuration.setCustomHistoryLevels(Arrays.asList(customHistoryLevelUOL));
       configuration.setHistory("aCustomHistoryLevelUOL");
       configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
+      configuration.setProcessEngineName("processEngine");
   });
 
   public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);

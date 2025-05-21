@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -52,6 +53,11 @@ public class AuditHistoryTest {
     historyService = engineRule.getHistoryService();
   }
 
+  @After
+  public void tearDown() {
+    engineRule.getProcessEngine().close();
+  }
+  
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
   public void testReceivesNoHistoricVariableUpdatesAsDetails() {

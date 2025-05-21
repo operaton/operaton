@@ -50,7 +50,7 @@ public abstract class BatchCreationAuthorizationTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  protected AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
   protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 

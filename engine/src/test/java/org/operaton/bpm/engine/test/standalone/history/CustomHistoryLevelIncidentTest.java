@@ -79,6 +79,7 @@ public class CustomHistoryLevelIncidentTest {
     cfg.setCustomHistoryLevels(levels);
     cfg.setHistory("aCustomHistoryLevelIncident");
     cfg.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
+    cfg.setProcessEngineName("someRandomProcessEngineName");
   });
   protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
   protected MigrationTestRule migrationRule = new MigrationTestRule(engineRule);

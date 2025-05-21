@@ -46,7 +46,6 @@ class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanupSchedul
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(configuration ->
       configure(configuration, HistoryEventTypes.DMN_DECISION_EVALUATE)
     ).build();

@@ -66,7 +66,8 @@ class ProcessInstantiationWithVariablesInReturnTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
       .build();
   @RegisterExtension

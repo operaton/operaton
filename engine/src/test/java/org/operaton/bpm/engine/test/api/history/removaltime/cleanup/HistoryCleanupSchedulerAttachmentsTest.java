@@ -44,7 +44,6 @@ class HistoryCleanupSchedulerAttachmentsTest extends AbstractHistoryCleanupSched
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
     .configurator(
         AbstractHistoryCleanupSchedulerTest::configure
     ).build();

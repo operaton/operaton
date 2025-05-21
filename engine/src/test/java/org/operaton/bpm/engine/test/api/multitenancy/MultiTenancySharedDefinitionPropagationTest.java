@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProvider;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -35,11 +34,9 @@ class MultiTenancySharedDefinitionPropagationTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-        TenantIdProvider tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ID);
-        configuration.setTenantIdProvider(tenantIdProvider);
-      })
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setTenantIdProvider(new StaticTenantIdTestProvider(TENANT_ID)))
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

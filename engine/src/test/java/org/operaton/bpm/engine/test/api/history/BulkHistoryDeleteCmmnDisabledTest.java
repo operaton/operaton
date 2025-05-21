@@ -47,9 +47,11 @@ import org.operaton.bpm.engine.variable.Variables;
 class BulkHistoryDeleteCmmnDisabledTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
-    .configurator(configuration -> configuration.setCmmnEnabled(false)).build();
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .closeEngineAfterAllTests()
+    .randomEngineName()
+    .configurator(configuration -> configuration.setCmmnEnabled(false))
+    .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

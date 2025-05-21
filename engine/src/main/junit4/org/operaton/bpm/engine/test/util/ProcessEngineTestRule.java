@@ -16,7 +16,13 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import junit.framework.AssertionFailedError;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.TimerTask;
+
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -45,12 +51,7 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.TimerTask;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import junit.framework.AssertionFailedError;
 
 public class ProcessEngineTestRule extends TestWatcher {
 

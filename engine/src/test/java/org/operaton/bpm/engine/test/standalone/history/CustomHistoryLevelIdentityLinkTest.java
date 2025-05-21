@@ -72,9 +72,10 @@ public class CustomHistoryLevelIdentityLinkTest {
     configuration.setCustomHistoryLevels(levels);
     configuration.setHistory("aCustomHistoryLevelIL");
     configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
+    configuration.setProcessEngineName("randomProcessEngineName");
   });
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);

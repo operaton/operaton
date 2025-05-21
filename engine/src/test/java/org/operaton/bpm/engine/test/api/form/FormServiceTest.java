@@ -99,10 +99,10 @@ class FormServiceTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-          configuration.setJavaSerializationFormatEnabled(true);
-      }).build();
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
+      .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

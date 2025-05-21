@@ -43,24 +43,25 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
+    .closeEngineAfterAllTests()
+    .randomEngineName()
     .configurator(configuration -> {
-        configuration.setCompositeIncidentHandlersEnabled(true);
-        configuration.setCustomIncidentHandlers(Collections.singletonList(JOB_HANDLER));
-      }).build();
+      configuration.setCompositeIncidentHandlersEnabled(true);
+      configuration.setCustomIncidentHandlers(Collections.singletonList(JOB_HANDLER));
+    }).build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private RuntimeService runtimeService;
   private ManagementService managementService;
 
-   @BeforeEach
-   void init() {
+  @BeforeEach
+  void init() {
     JOB_HANDLER.reset();
   }
 
-   @Test
-   void jobHandlerShouldBeCompositeHandler() {
+  @Test
+  void jobHandlerShouldBeCompositeHandler() {
     IncidentHandler incidentHandler = engineRule.getProcessEngineConfiguration().getIncidentHandler(Incident.FAILED_JOB_HANDLER_TYPE);
 
     assertThat(incidentHandler)

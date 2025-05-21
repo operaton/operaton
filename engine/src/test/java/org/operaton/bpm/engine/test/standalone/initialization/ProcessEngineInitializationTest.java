@@ -34,6 +34,7 @@ public class ProcessEngineInitializationTest {
   public void testNoTables() {
     var processEngineConfiguration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/notables.operaton.cfg.xml");
+    processEngineConfiguration.setProcessEngineName("testProcessEngine");
     try {
       processEngineConfiguration.buildProcessEngine();
       fail("expected exception");

@@ -35,12 +35,9 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class JobExecutorExceptionLoggingHandlerTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
-    .cacheForConfigurationResource(false)
-    .build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ExecuteJobHelper.ExceptionLoggingHandler originalHandler;

@@ -31,11 +31,12 @@ import org.junit.runner.Description;
 
 public class ProcessEngineBootstrapRule extends TestWatcher {
 
+  private String configurationResource;
   private ProcessEngine processEngine;
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 
   public ProcessEngineBootstrapRule() {
-    this("operaton.cfg.xml");
+    this("operaton.cfg.xml", config -> config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName()));
   }
 
   public ProcessEngineBootstrapRule(String configurationResource) {
@@ -47,14 +48,17 @@ public class ProcessEngineBootstrapRule extends TestWatcher {
   }
 
   public ProcessEngineBootstrapRule(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
+    this.configurationResource = configurationResource;
     this.processEngineConfigurator = processEngineConfigurator;
-    this.processEngine = bootstrapEngine(configurationResource);
   }
 
   public ProcessEngine bootstrapEngine(String configurationResource) {
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource(configurationResource);
     configureEngine(processEngineConfiguration);
+    if (ProcessEngines.isRegisteredProcessEngine(processEngineConfiguration.getProcessEngineName())) {
+      processEngineConfiguration.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+    }
     return processEngineConfiguration.buildProcessEngine();
   }
 
@@ -66,6 +70,9 @@ public class ProcessEngineBootstrapRule extends TestWatcher {
   }
 
   public ProcessEngine getProcessEngine() {
+    if (processEngine == null) {
+      this.processEngine = bootstrapEngine(configurationResource);
+    }
     return processEngine;
   }
 

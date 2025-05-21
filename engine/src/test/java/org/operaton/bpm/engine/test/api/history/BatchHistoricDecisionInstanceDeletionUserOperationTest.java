@@ -54,12 +54,9 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   public static final String USER_ID = "userId";
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
-      .cacheForConfigurationResource(false)
-      .build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected DecisionService decisionService;
   protected HistoryService historyService;

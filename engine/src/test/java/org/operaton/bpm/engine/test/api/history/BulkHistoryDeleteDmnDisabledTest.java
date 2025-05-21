@@ -41,11 +41,13 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class BulkHistoryDeleteDmnDisabledTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
-    .configurator(configuration -> configuration.setDmnEnabled(false)).build();
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .closeEngineAfterAllTests()
+    .randomEngineName()
+    .configurator(configuration -> configuration.setDmnEnabled(false))
+    .build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private RuntimeService runtimeService;
   private HistoryService historyService;

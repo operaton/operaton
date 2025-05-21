@@ -16,9 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.test;
 
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -46,13 +55,6 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-
-import java.io.InputStream;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.function.Consumer;
-
 import org.slf4j.Logger;
 
 
@@ -69,8 +71,6 @@ public abstract class TestHelper {
     "ACT_GE_PROPERTY",
     "ACT_GE_SCHEMA_LOG"
   );
-
-  static Map<String, ProcessEngine> processEngines = new HashMap<>();
 
   public static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
 
@@ -457,33 +457,25 @@ public abstract class TestHelper {
   }
 
   public static ProcessEngine getProcessEngine(String configurationResource) {
-    return getProcessEngine(configurationResource, null, true);
+    return getProcessEngine(configurationResource, null);
   }
 
-  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, boolean cacheForConfigurationResource) {
-    if (cacheForConfigurationResource) {
-      return processEngines.computeIfAbsent(configurationResource, key -> getProcessEngine(processEngineConfigurator, configurationResource));
-    } else {
-      return getProcessEngine(processEngineConfigurator, configurationResource);
-    }
-  }
-
-  private static ProcessEngine getProcessEngine(Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, String resource) {
-    LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
-    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(resource);
+  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(configurationResource);
     if (processEngineConfigurator != null) {
       processEngineConfigurator.accept(processEngineConfiguration);
     }
+    if (ProcessEngines.isRegisteredProcessEngine(processEngineConfiguration.getProcessEngineName())) {
+      return ProcessEngines.getProcessEngine(processEngineConfiguration.getProcessEngineName());
+    }
+    LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
     ProcessEngine newProcessEngine = processEngineConfiguration.buildProcessEngine();
     LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
     return newProcessEngine;
   }
 
   public static void closeProcessEngines() {
-    for (ProcessEngine processEngine: processEngines.values()) {
-      processEngine.close();
-    }
-    processEngines.clear();
+    ProcessEngines.destroy();
   }
 
   public static void createSchema(ProcessEngineConfigurationImpl processEngineConfiguration) {

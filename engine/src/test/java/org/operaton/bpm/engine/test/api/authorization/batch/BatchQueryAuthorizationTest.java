@@ -44,11 +44,11 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
 class BatchQueryAuthorizationTest {
 
   @RegisterExtension
-  private static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  private static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  private static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected MigrationPlan migrationPlan;
   protected Batch batch1;

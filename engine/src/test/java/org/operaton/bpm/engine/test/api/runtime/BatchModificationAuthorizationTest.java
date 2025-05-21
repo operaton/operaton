@@ -51,7 +51,7 @@ public class BatchModificationAuthorizationTest {
   @RegisterExtension
   AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   BatchModificationHelper helper = new BatchModificationHelper(engineRule);
 
   ProcessDefinition processDefinition;

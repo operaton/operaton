@@ -47,7 +47,7 @@ class TaskCountByCandidateGroupAuthorizationTest {
   @RegisterExtension
   static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension processEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
+  ProcessEngineTestExtension processEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
 
 
   protected TaskService taskService;

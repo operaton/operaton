@@ -42,7 +42,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class HistoryCleanupSchedulerJobLogTest extends AbstractHistoryCleanupSchedulerTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurator(configuration ->
       configure(configuration, HistoryEventTypes.JOB_FAIL)
     ).build();

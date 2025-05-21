@@ -25,12 +25,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 
 /**
  * @author Thorben Lindhauer
@@ -54,7 +53,7 @@ public class AuditHistoryTest {
     historyService = engineRule.getHistoryService();
   }
 
-  @AfterEach
+  @After
   public void tearDown() {
     engineRule.getProcessEngine().close();
   }

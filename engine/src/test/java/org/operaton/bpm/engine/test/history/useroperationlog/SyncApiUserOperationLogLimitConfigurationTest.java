@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SyncApiUserOperationLogLimitConfigurationTest {

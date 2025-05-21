@@ -53,7 +53,7 @@ class RestartProcessInstanceUserOperationLogTest {
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
   BatchRestartHelper helper = new BatchRestartHelper(rule);
 
   RuntimeService runtimeService;

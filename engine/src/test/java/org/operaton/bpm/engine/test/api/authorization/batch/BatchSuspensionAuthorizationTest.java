@@ -55,7 +55,7 @@ public class BatchSuspensionAuthorizationTest {
   @RegisterExtension
   AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;

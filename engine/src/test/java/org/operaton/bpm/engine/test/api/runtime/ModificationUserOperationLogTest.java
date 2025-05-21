@@ -51,7 +51,7 @@ class ModificationUserOperationLogTest {
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
   BatchModificationHelper helper = new BatchModificationHelper(rule);
 
   RuntimeService runtimeService;

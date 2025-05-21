@@ -61,7 +61,7 @@ public class BatchRestartAuthorizationTest {
   @RegisterExtension
   AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   BatchModificationHelper helper = new BatchModificationHelper(engineRule);
 
   @Parameter

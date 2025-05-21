@@ -54,7 +54,7 @@ public class HistoricDecisionInstanceStatisticsAuthorizationTest {
   @RegisterExtension
   AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected DecisionService decisionService;
   protected HistoryService historyService;

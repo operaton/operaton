@@ -78,10 +78,8 @@ class MessageCorrelationTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .configurator(configuration -> {
-        configuration.setProcessEngineName("someEngine");
-        configuration.setJavaSerializationFormatEnabled(true);
-      })
+      .withRandomName()
+      .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

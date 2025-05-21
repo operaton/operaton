@@ -35,8 +35,8 @@ public class HistoryCleanupDisabledOnBootstrapTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .withRandomName()
     .configurator(configuration -> {
-      configuration.setProcessEngineName("someEngine");
       configuration.setJdbcUrl("jdbc:h2:mem:" + HistoryCleanupDisabledOnBootstrapTest.class.getSimpleName());
       configuration.setHistoryCleanupEnabled(false);
       configuration.setHistoryCleanupBatchWindowStartTime("12:00");

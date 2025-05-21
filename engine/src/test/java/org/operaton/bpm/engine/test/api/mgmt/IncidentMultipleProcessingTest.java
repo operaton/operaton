@@ -44,8 +44,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .withRandomName()
     .configurator(configuration -> {
-      configuration.setProcessEngineName("someEngine");
       configuration.setCompositeIncidentHandlersEnabled(true);
       configuration.setCustomIncidentHandlers(Collections.singletonList(JOB_HANDLER));
     }).build();

@@ -54,8 +54,8 @@ class MultiTenancySharedDeploymentStatisticsQueryTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .withRandomName()
       .configurator(configuration -> {
-        configuration.setProcessEngineName("someEngine");
         tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
         configuration.setTenantIdProvider(tenantIdProvider);
       })

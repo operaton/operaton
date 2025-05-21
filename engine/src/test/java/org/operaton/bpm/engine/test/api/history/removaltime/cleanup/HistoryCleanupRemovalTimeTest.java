@@ -111,8 +111,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class HistoryCleanupRemovalTimeTest {
 
   @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .configurator(config -> config.setProcessEngineName("someEngine")).build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().withRandomName().build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

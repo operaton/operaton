@@ -36,11 +36,8 @@ class MultiTenancySharedDefinitionPropagationTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .configurator(configuration -> {
-        configuration.setProcessEngineName("someEngine");
-        TenantIdProvider tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ID);
-        configuration.setTenantIdProvider(tenantIdProvider);
-      })
+      .withRandomName()
+      .configurator(configuration -> configuration.setTenantIdProvider(new StaticTenantIdTestProvider(TENANT_ID)))
       .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

@@ -59,8 +59,8 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .withRandomName()
     .configurator(configuration -> {
-      configuration.setProcessEngineName("someEngine");
       configuration.setHistoryCleanupBatchSize(20);
       configuration.setHistoryCleanupBatchThreshold(10);
       configuration.setDefaultNumberOfRetries(5);

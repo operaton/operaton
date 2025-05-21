@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,10 +50,9 @@ class BulkHistoryDeleteCmmnDisabledTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .configurator(configuration -> {
-      configuration.setProcessEngineName("someEngine");
-      configuration.setCmmnEnabled(false);
-    }).build();
+    .withRandomName()
+    .configurator(configuration -> configuration.setCmmnEnabled(false))
+    .build();
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 

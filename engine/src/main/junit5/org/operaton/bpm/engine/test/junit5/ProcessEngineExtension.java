@@ -435,7 +435,7 @@ public class ProcessEngineExtension implements TestWatcher,
    * Use this method before calling #{@link #build()}.
    * </p>
    */
-  public ProcessEngineExtension withCloseEngine() {
+  public ProcessEngineExtension closeEngineAfterAllTests() {
     this.closeEngine = true;
     return this;
   }
@@ -446,7 +446,7 @@ public class ProcessEngineExtension implements TestWatcher,
    * Use this method before calling #{@link #build()}.
    * </p>
    */
-  public ProcessEngineExtension withRandomEngineName() {
+  public ProcessEngineExtension randomEngineName() {
     this.randomName = true;
     return this;
   }

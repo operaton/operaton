@@ -27,7 +27,6 @@ import org.operaton.spin.json.SpinJsonException;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -47,6 +46,7 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRulePositive = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
       .configurator(configuration -> {
         configuration.setProcessEngineName("enginePositive");
         DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
@@ -60,6 +60,7 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRuleNegative = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
       .configurator(configuration -> {
         configuration.setProcessEngineName("engineNegative");
         DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
@@ -71,12 +72,6 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
       })
       .build();
 
-  @AfterAll
-  static void closeEngines() {
-    engineRulePositive.getProcessEngine().close();
-    engineRuleNegative.getProcessEngine().close();
-  }
-  
   @Test
   void shouldUsePositiveValidator() {
     // given

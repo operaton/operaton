@@ -56,8 +56,8 @@ class DeploymentCacheCfgTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension cacheFactoryEngineRule = ProcessEngineExtension.builder()
-      .withCloseEngine()
-      .withRandomEngineName()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator(configuration -> {
           configuration.setCacheCapacity(2);
           configuration.setCacheFactory(new MyCacheFactory());

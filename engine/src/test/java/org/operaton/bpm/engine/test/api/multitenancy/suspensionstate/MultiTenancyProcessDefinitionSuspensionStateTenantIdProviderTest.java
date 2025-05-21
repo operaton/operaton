@@ -42,8 +42,8 @@ class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .withCloseEngine()
-      .withRandomEngineName()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator(configuration -> configuration.setTenantIdProvider(new StaticTenantIdTestProvider(TENANT_ONE)))
       .build();
   @RegisterExtension

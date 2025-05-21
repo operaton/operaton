@@ -47,8 +47,8 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .withCloseEngine()
-      .withRandomEngineName()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator((configuration -> {
         configuration.setFailedJobRetryTimeCycle("PT5M,PT20M, PT3M");
         configuration.setEnableExceptionsAfterUnhandledBpmnError(true);

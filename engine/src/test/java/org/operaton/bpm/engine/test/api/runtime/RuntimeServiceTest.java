@@ -105,8 +105,8 @@ public class RuntimeServiceTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .withCloseEngine()
-      .withRandomEngineName()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
       .build();
   @RegisterExtension

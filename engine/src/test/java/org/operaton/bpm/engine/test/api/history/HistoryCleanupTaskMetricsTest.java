@@ -58,8 +58,8 @@ class HistoryCleanupTaskMetricsTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .withCloseEngine()
-    .withRandomEngineName()
+    .closeEngineAfterAllTests()
+    .randomEngineName()
     .configurator(configuration -> {
       configuration.setHistoryCleanupDegreeOfParallelism(3);
       configuration.setTaskMetricsEnabled(true);

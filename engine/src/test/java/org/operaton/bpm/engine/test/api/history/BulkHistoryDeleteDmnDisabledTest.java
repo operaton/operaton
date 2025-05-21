@@ -42,8 +42,8 @@ class BulkHistoryDeleteDmnDisabledTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .withCloseEngine()
-    .withRandomEngineName()
+    .closeEngineAfterAllTests()
+    .randomEngineName()
     .configurator(configuration -> configuration.setDmnEnabled(false))
     .build();
   @RegisterExtension

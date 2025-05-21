@@ -36,7 +36,7 @@ public class ProcessEngineBootstrapRule extends TestWatcher {
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 
   public ProcessEngineBootstrapRule() {
-    this("operaton.cfg.xml", config -> config.setProcessEngineName(ProcessEngines.newRandomUnusedProcessEngineName()));
+    this("operaton.cfg.xml", config -> config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName()));
   }
 
   public ProcessEngineBootstrapRule(String configurationResource) {
@@ -57,7 +57,7 @@ public class ProcessEngineBootstrapRule extends TestWatcher {
       .createProcessEngineConfigurationFromResource(configurationResource);
     configureEngine(processEngineConfiguration);
     if (ProcessEngines.isRegisteredProcessEngine(processEngineConfiguration.getProcessEngineName())) {
-      processEngineConfiguration.setProcessEngineName(ProcessEngines.newRandomUnusedProcessEngineName());
+      processEngineConfiguration.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
     }
     return processEngineConfiguration.buildProcessEngine();
   }

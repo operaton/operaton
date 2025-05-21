@@ -68,8 +68,6 @@ public abstract class ProcessEngines {
   private static final ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 
   public static final String NAME_DEFAULT = "default";
-  
-  private static final Random RANDOM = new Random();
 
   protected static volatile boolean isInitialized = false;
   protected static volatile Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
@@ -173,15 +171,6 @@ public abstract class ProcessEngines {
    */
   public static boolean isRegisteredProcessEngine(String processEngineName) {
     return processEngines.containsKey(processEngineName);
-  }
-  
-  /**
-   * Returns a random name for a ProcessEngine that is not yet used.
-   * This name might be used for a new ProcessEngine without explicitly name it.
-   */
-  public static String newRandomUnusedProcessEngineName() {
-    String result = "processEngine-rnd" + RANDOM.nextLong();
-    return processEngines.containsKey(result) ? newRandomUnusedProcessEngineName() : result;
   }
 
   private static ProcessEngineInfo initProcessEngineFromResource(URL resourceUrl) {

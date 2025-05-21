@@ -89,7 +89,7 @@ class MultiTenancySharedDeploymentStatisticsQueryTest {
 
 
   @AfterAll
-  static void closeEngien() {
+  static void closeEngine() {
     engineRule.getProcessEngine().close();
   }
 

@@ -28,6 +28,7 @@ import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,6 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.operaton.bpm.engine.test.Deployment;
@@ -108,7 +108,8 @@ class ProcessInstantiationWithVariablesInReturnTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     //when execute process with serialized variable and wait state
     ProcessInstanceWithVariables procInstance = engineRule.getRuntimeService()

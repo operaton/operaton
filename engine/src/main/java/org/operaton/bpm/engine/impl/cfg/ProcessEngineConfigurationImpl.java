@@ -287,6 +287,7 @@ import org.operaton.bpm.engine.impl.migration.validation.instruction.SameBehavio
 import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventScopeInstructionValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventTypeValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.UpdateEventTriggersValidator;
+import org.operaton.bpm.engine.impl.mock.MocksResolverFactory;
 import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.GenericManagerFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
@@ -385,7 +386,6 @@ import org.operaton.bpm.engine.repository.DeploymentHandlerFactory;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.mock.MocksResolverFactory;
 import org.operaton.bpm.engine.variable.Variables;
 
 /**

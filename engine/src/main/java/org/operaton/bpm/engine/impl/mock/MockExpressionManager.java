@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.test.mock;
+package org.operaton.bpm.engine.impl.mock;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.el.JuelExpressionManager;

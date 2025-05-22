@@ -179,6 +179,13 @@
     </dependency>
 
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit4</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
     </dependency>

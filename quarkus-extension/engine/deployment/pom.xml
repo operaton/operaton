@@ -19,7 +19,13 @@
     <dependency>
       <groupId>org.operaton.bpm.quarkus</groupId>
       <artifactId>operaton-bpm-quarkus-engine</artifactId>
-      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
+      <scope>test</scope>
     </dependency>
 
     <!-- Quarkus dependencies -->

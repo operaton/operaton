@@ -38,6 +38,13 @@
     </dependency>
 
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit4</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>jakarta.inject</groupId>
       <artifactId>jakarta.inject-api</artifactId>
       <scope>provided</scope>

@@ -43,6 +43,7 @@ public class DecisionTaskItemHandler extends CallingTaskItemHandler {
     initializeDecisionTableResultMapper(element, activity, context);
   }
 
+  @SuppressWarnings("unused")
   protected void initializeResultVariable(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     DecisionTask decisionTask = getDefinition(element);
     DmnDecisionTaskActivityBehavior behavior = getActivityBehavior(activity);
@@ -50,6 +51,7 @@ public class DecisionTaskItemHandler extends CallingTaskItemHandler {
     behavior.setResultVariable(resultVariable);
   }
 
+  @SuppressWarnings("unused")
   protected void initializeDecisionTableResultMapper(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     DecisionTask decisionTask = getDefinition(element);
     DmnDecisionTaskActivityBehavior behavior = getActivityBehavior(activity);

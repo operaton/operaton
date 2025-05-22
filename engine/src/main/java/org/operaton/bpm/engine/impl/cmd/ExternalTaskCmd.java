@@ -79,7 +79,8 @@ public abstract class ExternalTaskCmd implements Command<Void> {
   protected String getUserOperationLogOperationType() {
     return null;
   }
-  
+
+  @SuppressWarnings("unused")
   protected List<PropertyChange> getUserOperationLogPropertyChanges(ExternalTaskEntity externalTask) {
     return Collections.emptyList();
   }

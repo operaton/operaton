@@ -54,6 +54,7 @@ public class GatewayMappingValidator implements MigrationInstructionValidator {
   }
 
 
+  @SuppressWarnings("unused")
   protected void validateIncomingSequenceFlows(ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions,
       MigrationInstructionValidationReportImpl report) {
     ActivityImpl sourceActivity = instruction.getSourceActivity();

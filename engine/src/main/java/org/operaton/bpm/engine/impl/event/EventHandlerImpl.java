@@ -41,6 +41,7 @@ public class EventHandlerImpl implements EventHandler {
     this.eventType = eventType;
   }
 
+  @SuppressWarnings("unused")
   public void handleIntermediateEvent(EventSubscriptionEntity eventSubscription,
                                       Object payload,
                                       Object localPayload,

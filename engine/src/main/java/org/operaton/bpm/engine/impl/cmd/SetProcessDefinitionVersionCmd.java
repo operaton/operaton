@@ -213,6 +213,7 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
     jobEntity.setJobDefinitionId(newJobDefinitionId);
   }
 
+  @SuppressWarnings("unused")
   protected void switchVersionOfIncident(CommandContext commandContext, IncidentEntity incidentEntity, ProcessDefinitionEntity newProcessDefinition) {
     incidentEntity.setProcessDefinitionId(newProcessDefinition.getId());
   }

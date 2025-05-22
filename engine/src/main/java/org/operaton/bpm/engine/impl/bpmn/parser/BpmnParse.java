@@ -793,6 +793,7 @@ public class BpmnParse extends Parse {
     return compensationHandlers;
   }
 
+  @SuppressWarnings("unused")
   protected void parseIntermediateCatchEvents(Element scopeElement, ScopeImpl parentScope, Map<String, Element> intermediateCatchEventElements) {
     for (Element intermediateCatchEventElement : intermediateCatchEventElements.values()) {
 
@@ -1025,6 +1026,7 @@ public class BpmnParse extends Parse {
     processDefinition.setInitial(initial);
   }
 
+  @SuppressWarnings("unused")
   protected void parseProcessDefinitionStartEvent(ActivityImpl startEventActivity, Element startEventElement, Element parentElement, ScopeImpl scope) {
     ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) scope;
 
@@ -3097,6 +3099,7 @@ public class BpmnParse extends Parse {
     return taskListener;
   }
 
+  @SuppressWarnings("unused")
   protected TaskListener parseTimeoutTaskListener(Element taskListenerElement, ActivityImpl timerActivity, TaskDefinition taskDefinition) {
     String listenerId = taskListenerElement.attribute("id");
     String timerActivityId = timerActivity.getId();
@@ -4018,6 +4021,7 @@ public class BpmnParse extends Parse {
     return activity;
   }
 
+  @SuppressWarnings("unused")
   protected void parseBinding(Element callActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName) {
     String binding = callActivityElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, bindingAttributeName);
 
@@ -4032,6 +4036,7 @@ public class BpmnParse extends Parse {
     }
   }
 
+  @SuppressWarnings("unused")
   protected void parseTenantId(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String attrName) {
     ParameterValueProvider tenantIdValueProvider = null;
 
@@ -4043,6 +4048,7 @@ public class BpmnParse extends Parse {
     callableElement.setTenantIdProvider(tenantIdValueProvider);
   }
 
+  @SuppressWarnings("unused")
   protected void parseVersion(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName, String versionAttributeName) {
     String version = null;
 
@@ -4058,6 +4064,7 @@ public class BpmnParse extends Parse {
     callableElement.setVersionValueProvider(versionProvider);
   }
 
+  @SuppressWarnings("unused")
   protected void parseVersionTag(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName, String versionTagAttributeName) {
     String versionTag = null;
 

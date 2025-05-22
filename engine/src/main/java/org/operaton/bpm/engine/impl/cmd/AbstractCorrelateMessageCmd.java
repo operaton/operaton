@@ -78,6 +78,7 @@ public abstract class AbstractCorrelateMessageCmd {
     command.execute(commandContext);
   }
 
+  @SuppressWarnings("unused")
   protected ProcessInstance instantiateProcess(CommandContext commandContext, CorrelationHandlerResult correlationResult) {
     ProcessDefinitionEntity processDefinitionEntity = correlationResult.getProcessDefinitionEntity();
 

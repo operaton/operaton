@@ -48,6 +48,7 @@ public class ThrowEscalationEventActivityBehavior extends AbstractBpmnActivityBe
     }
   }
 
+  @SuppressWarnings("unused")
   protected void leaveExecution(ActivityExecution execution, final PvmActivity currentActivity, EscalationEventDefinition escalationEventDefinition) {
 
     // execution tree could have been expanded by triggering a non-interrupting event

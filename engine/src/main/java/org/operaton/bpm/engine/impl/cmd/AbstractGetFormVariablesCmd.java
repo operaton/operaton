@@ -42,6 +42,7 @@ public abstract class AbstractGetFormVariablesCmd implements Command<VariableMap
     this.deserializeObjectValues = deserializeObjectValues;
   }
 
+  @SuppressWarnings("unused")
   protected TypedValue createVariable(FormField formField, VariableScope variableScope) {
     TypedValue value = formField.getValue();
 

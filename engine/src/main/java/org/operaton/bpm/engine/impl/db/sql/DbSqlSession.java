@@ -300,6 +300,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     }
   }
 
+  @SuppressWarnings("unused")
   protected void entityInsertPerformed(DbEntityOperation operation,
                                        int rowsAffected,
                                        PersistenceException failure) {

@@ -94,10 +94,12 @@ public abstract class AbstractEventAtomicOperation<T extends CoreExecution> impl
     return scope.getBuiltInListeners(getEventName());
   }
 
+  @SuppressWarnings("unused")
   protected boolean isSkipNotifyListeners(T execution) {
     return false;
   }
 
+  @SuppressWarnings("unused")
   protected T eventNotificationsStarted(T execution) {
     // do nothing
     return execution;

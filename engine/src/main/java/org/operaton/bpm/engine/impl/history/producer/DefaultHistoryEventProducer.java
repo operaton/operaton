@@ -494,18 +494,22 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
   // event instance factory ////////////////////////
 
+  @SuppressWarnings("unused")
   protected HistoricProcessInstanceEventEntity newProcessInstanceEventEntity(ExecutionEntity execution) {
     return new HistoricProcessInstanceEventEntity();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricActivityInstanceEventEntity newActivityInstanceEventEntity(ExecutionEntity execution) {
     return new HistoricActivityInstanceEventEntity();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricTaskInstanceEventEntity newTaskInstanceEventEntity(DelegateTask task) {
     return new HistoricTaskInstanceEventEntity();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricVariableUpdateEventEntity newVariableUpdateEventEntity(ExecutionEntity execution) {
     return new HistoricVariableUpdateEventEntity();
   }
@@ -514,14 +518,17 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     return new HistoricFormPropertyEventEntity();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricIncidentEventEntity newIncidentEventEntity(Incident incident) {
     return new HistoricIncidentEventEntity();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricJobLogEventEntity newHistoricJobLogEntity(Job job) {
     return new HistoricJobLogEventEntity();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricBatchEntity newBatchEventEntity(BatchEntity batch) {
     return new HistoricBatchEntity();
   }

@@ -43,6 +43,7 @@ public class DmnVariableTransformHandler implements DmnElementTransformHandler<V
     return dmnVariable;
   }
 
+  @SuppressWarnings("unused")
   protected DmnVariableImpl createDmnElement(DmnElementTransformContext context, Variable variable) {
     return new DmnVariableImpl();
   }

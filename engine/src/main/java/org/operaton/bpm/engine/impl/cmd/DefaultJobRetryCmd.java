@@ -125,6 +125,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
     }
   }
 
+  @SuppressWarnings("unused")
   protected ActivityImpl getCurrentActivity(CommandContext commandContext, JobEntity job) {
     String type = job.getJobHandlerType();
     ActivityImpl activity = null;

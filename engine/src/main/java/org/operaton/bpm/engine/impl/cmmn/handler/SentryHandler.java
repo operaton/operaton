@@ -154,6 +154,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
 
   }
 
+  @SuppressWarnings("unused")
   protected void initializeOnPart(CaseFileItemOnPart onPart, Sentry sentry, CmmnHandlerContext context) {
     // not yet implemented
     String id = sentry.getId();
@@ -181,6 +182,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     sentryDeclaration.setIfPart(ifPartDeclaration);
   }
 
+  @SuppressWarnings("unused")
   protected void initializeVariableOnParts(CmmnElement element, CmmnSentryDeclaration sentryDeclaration,
     CmmnHandlerContext context, List<OperatonVariableOnPart> variableOnParts) {
     for(OperatonVariableOnPart variableOnPart: variableOnParts) {
@@ -188,6 +190,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     }
   }
 
+  @SuppressWarnings("unused")
   protected void initializeVariableOnPart(OperatonVariableOnPart variableOnPart, CmmnSentryDeclaration sentryDeclaration, CmmnHandlerContext context) {
     VariableTransition variableTransition;
 

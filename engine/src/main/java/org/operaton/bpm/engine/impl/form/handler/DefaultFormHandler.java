@@ -152,6 +152,7 @@ public class DefaultFormHandler implements FormHandler {
 
   }
 
+  @SuppressWarnings("unused")
   protected void parseProperties(Element formField, FormFieldHandler formFieldHandler, BpmnParse bpmnParse, ExpressionManager expressionManager) {
 
     Element propertiesElement = formField.elementNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, "properties");

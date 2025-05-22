@@ -185,20 +185,24 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
      return jobHandler;
   }
 
+  @SuppressWarnings("unused")
   protected String resolveJobHandlerType(S context) {
     return jobHandlerType;
   }
 
   protected abstract JobHandlerConfiguration resolveJobHandlerConfiguration(S context);
 
+  @SuppressWarnings("unused")
   protected boolean resolveExclusive(S context) {
     return exclusive;
   }
 
+  @SuppressWarnings("unused")
   protected int resolveRetries(S context) {
     return Context.getProcessEngineConfiguration().getDefaultNumberOfRetries();
   }
 
+  @SuppressWarnings("unused")
   public Date resolveDueDate(S context) {
     ProcessEngineConfiguration processEngineConfiguration = Context.getProcessEngineConfiguration();
     if (processEngineConfiguration != null && (processEngineConfiguration.isJobExecutorAcquireByDueDate() || processEngineConfiguration.isEnsureJobDueDateNotNull())) {

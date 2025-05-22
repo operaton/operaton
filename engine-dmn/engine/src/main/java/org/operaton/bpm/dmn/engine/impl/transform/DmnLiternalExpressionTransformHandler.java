@@ -42,6 +42,7 @@ public class DmnLiternalExpressionTransformHandler implements DmnElementTransfor
     return dmnExpression;
   }
 
+  @SuppressWarnings("unused")
   protected DmnExpressionImpl createDmnElement(DmnElementTransformContext context, LiteralExpression inputEntry) {
     return new DmnExpressionImpl();
   }

@@ -38,6 +38,7 @@ public class DmnDecisionTableInputTransformHandler implements DmnElementTransfor
     return decisionTableInput;
   }
 
+  @SuppressWarnings("unused")
   protected DmnDecisionTableInputImpl createDmnElement(DmnElementTransformContext context, Input input) {
     return new DmnDecisionTableInputImpl();
   }

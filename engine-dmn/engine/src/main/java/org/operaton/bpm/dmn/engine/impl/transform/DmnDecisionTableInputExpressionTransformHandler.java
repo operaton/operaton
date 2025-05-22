@@ -44,6 +44,7 @@ public class DmnDecisionTableInputExpressionTransformHandler implements DmnEleme
     return dmnExpression;
   }
 
+  @SuppressWarnings("unused")
   protected DmnExpressionImpl createDmnElement(DmnElementTransformContext context, InputExpression inputExpression) {
     return new DmnExpressionImpl();
   }

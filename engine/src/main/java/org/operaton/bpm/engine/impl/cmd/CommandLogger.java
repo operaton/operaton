@@ -275,6 +275,7 @@ public class CommandLogger extends ProcessEngineLogger {
     ));
   }
 
+  @SuppressWarnings("unused")
   public ProcessEngineException exceptionWhenStartFormScriptEvaluation(String processDefinitionId, Throwable cause) {
     return new ProcessEngineException(exceptionMessage(
         "041",

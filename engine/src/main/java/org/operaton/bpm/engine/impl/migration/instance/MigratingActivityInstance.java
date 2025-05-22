@@ -374,6 +374,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     });
   }
 
+  @SuppressWarnings("unused")
   protected void migrateActivityInstanceHistory(final DelegateExecution execution) {
     HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
     if (!historyLevel.isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_MIGRATE, this)) {

@@ -118,6 +118,7 @@ public class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityB
     executeWithErrorPropagation(execution, callable);
   }
 
+  @SuppressWarnings("unused")
   protected ActivityBehavior getActivityBehaviorInstance(ActivityExecution execution, Object delegateInstance) {
 
     if (delegateInstance instanceof ActivityBehavior activityBehavior) {

@@ -124,6 +124,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
    *         {@link #executionDate} can be set) so the job executor responsible
    *         for that deployment can execute the resulting job
    */
+  @SuppressWarnings("unused")
   protected String getDeploymentId(CommandContext commandContext) {
     return null;
   }

@@ -167,8 +167,9 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
    * @param e the exception which was catched
    */
   protected abstract void logNotDeterminingPriority(ExecutionEntity execution, Object value, ProcessEngineException e);
-  
-  
+
+
+  @SuppressWarnings("unused")
   protected boolean isSymptomOfContextSwitchFailure(Throwable t, ExecutionEntity contextExecution) {
     // a context switch failure can occur, if the current engine has no PA registration for the deployment
     // subclasses may assert the actual throwable to narrow down the diagnose

@@ -43,6 +43,7 @@ public class DmnDecisionTableOutputTransformHandler implements DmnElementTransfo
     return decisionTableOutput;
   }
 
+  @SuppressWarnings("unused")
   protected DmnDecisionTableOutputImpl createDmnElement(DmnElementTransformContext context, Output output) {
     return new DmnDecisionTableOutputImpl();
   }

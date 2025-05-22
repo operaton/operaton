@@ -42,6 +42,7 @@ public class CasePlanModelHandler extends StageItemHandler {
     return CASE_PLAN_MODEL_EVENTS;
   }
 
+  @SuppressWarnings("unused")
   public void initializeExitCriterias(CasePlanModel casePlanModel, CmmnActivity activity, CmmnHandlerContext context) {
     Collection<Sentry> exitCriterias = casePlanModel.getExitCriteria();
     for (Sentry sentry : exitCriterias) {

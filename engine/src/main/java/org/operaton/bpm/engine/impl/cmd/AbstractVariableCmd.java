@@ -74,6 +74,7 @@ public abstract class AbstractVariableCmd implements Command<Void>, Serializable
 
   protected abstract String getLogEntryOperation();
 
+  @SuppressWarnings("unused")
   protected void onSuccess(AbstractVariableScope scope) {
     ExecutionEntity contextExecution = getContextExecution();
     if (contextExecution != null) {

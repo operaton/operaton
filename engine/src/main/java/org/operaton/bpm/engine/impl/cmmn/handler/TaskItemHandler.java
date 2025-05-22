@@ -37,6 +37,7 @@ public class TaskItemHandler extends ItemHandler {
     initializeBlocking(element, activity, context);
   }
 
+  @SuppressWarnings("unused")
   protected void initializeBlocking(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     Task task = (Task) getDefinition(element);
     activity.setProperty("isBlocking", task.isBlocking());

@@ -160,6 +160,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     }
   }
 
+  @SuppressWarnings("unused")
   public List selectList(String statement, ListQueryParameterObject parameter, Page page) {
     return selectList(statement, parameter);
   }

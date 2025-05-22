@@ -57,6 +57,7 @@ public class HistoryEventProcessor {
       return null;
     }
 
+    @SuppressWarnings("unused")
     public List<HistoryEvent> createHistoryEvents(HistoryEventProducer producer) {
       return Collections.emptyList();
     }

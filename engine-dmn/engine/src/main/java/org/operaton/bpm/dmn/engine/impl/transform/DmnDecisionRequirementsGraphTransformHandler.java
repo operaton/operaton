@@ -28,6 +28,7 @@ public class DmnDecisionRequirementsGraphTransformHandler implements DmnElementT
     return createFromDefinitions(context, definitions);
   }
 
+  @SuppressWarnings("unused")
   protected DmnDecisionRequirementsGraphImpl createFromDefinitions(DmnElementTransformContext context, Definitions definitions) {
     DmnDecisionRequirementsGraphImpl drd = createDmnElement();
 

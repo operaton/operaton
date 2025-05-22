@@ -139,6 +139,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     // nothing to do
   }
 
+  @SuppressWarnings("unused")
   public void init(CommandContext commandContext, boolean shouldResetLock, boolean shouldCallDeleteHandler) {
     if (shouldCallDeleteHandler) {
       // clean additional data related to this job

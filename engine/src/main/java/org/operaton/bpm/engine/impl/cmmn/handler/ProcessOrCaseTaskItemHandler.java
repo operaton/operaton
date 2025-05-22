@@ -54,6 +54,7 @@ public abstract class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandle
     initializeOutputParameter(element, activity, context, callableElement);
   }
 
+  @SuppressWarnings("unused")
   protected void initializeInputParameter(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, CallableElement callableElement) {
     ExpressionManager expressionManager = context.getExpressionManager();
 
@@ -99,6 +100,7 @@ public abstract class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandle
     }
   }
 
+  @SuppressWarnings("unused")
   protected void initializeOutputParameter(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, CallableElement callableElement) {
     ExpressionManager expressionManager = context.getExpressionManager();
 

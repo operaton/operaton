@@ -567,6 +567,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     super.interrupt(reason, skipCustomListeners, skipIoMappings, externallyTerminated);
   }
 
+  @SuppressWarnings("unused")
   protected void removeActivityJobs(String reason) {
     if (activityId != null) {
       for (JobEntity job : getJobs()) {

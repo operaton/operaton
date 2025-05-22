@@ -87,6 +87,7 @@ public class SameEventScopeInstructionValidator implements MigrationInstructionV
     return null;
   }
 
+  @SuppressWarnings("unused")
   protected void addFailure(ValidatingMigrationInstruction instruction,
       MigrationInstructionValidationReportImpl report, String sourceScopeId, String targetScopeId) {
     report.addFailure("The source activity's event scope (" + sourceScopeId + ") "

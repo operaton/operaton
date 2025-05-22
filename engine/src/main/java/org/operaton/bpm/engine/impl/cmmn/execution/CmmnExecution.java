@@ -227,6 +227,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
     return sentryPart;
   }
 
+  @SuppressWarnings("unused")
   protected CmmnSentryPart createIfPart(CmmnSentryDeclaration sentryDeclaration, CmmnIfPartDeclaration ifPartDeclaration) {
     return createSentryPart(sentryDeclaration, IF_PART);
   }

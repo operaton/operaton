@@ -42,6 +42,7 @@ public class DmnDecisionTableTransformHandler implements DmnElementTransformHand
     return dmnDecisionTable;
   }
 
+  @SuppressWarnings("unused")
   protected DmnDecisionTableImpl createDmnElement(DmnElementTransformContext context, DecisionTable decisionTable) {
     return new DmnDecisionTableImpl();
   }

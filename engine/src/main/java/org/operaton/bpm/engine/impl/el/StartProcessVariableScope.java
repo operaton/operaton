@@ -95,10 +95,12 @@ public class StartProcessVariableScope implements VariableScope {
     return getVariablesLocal();
   }
 
+  @SuppressWarnings("unused")
   public Object getVariable(String variableName, boolean deserializeObjectValue) {
     return null;
   }
 
+  @SuppressWarnings("unused")
   public Object getVariableLocal(String variableName, boolean deserializeObjectValue) {
     return null;
   }
@@ -207,6 +209,7 @@ public class StartProcessVariableScope implements VariableScope {
     return Collections.emptyMap();
   }
 
+  @SuppressWarnings("unused")
   public CoreVariableInstance getVariableInstance(String name) {
     return null;
   }
@@ -215,6 +218,7 @@ public class StartProcessVariableScope implements VariableScope {
     return Collections.emptyMap();
   }
 
+  @SuppressWarnings("unused")
   public CoreVariableInstance getVariableInstanceLocal(String name) {
     return null;
   }

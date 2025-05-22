@@ -193,6 +193,7 @@ public abstract class CallableElementActivityBehavior extends AbstractBpmnActivi
     return getCallableElement().getVersion(execution);
   }
 
+  @SuppressWarnings("unused")
   protected String getDeploymentId(ActivityExecution execution) {
     return getCallableElement().getDeploymentId();
   }

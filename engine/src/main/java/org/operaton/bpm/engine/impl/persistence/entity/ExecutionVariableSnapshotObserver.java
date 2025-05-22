@@ -61,6 +61,7 @@ public class ExecutionVariableSnapshotObserver implements ExecutionObserver {
     }
   }
 
+  @SuppressWarnings("unused")
   private VariableMap getVariables(final boolean localVariables) {
     return this.localVariables ? execution.getVariablesLocalTyped(deserializeValues) : execution.getVariablesTyped(deserializeValues);
   }

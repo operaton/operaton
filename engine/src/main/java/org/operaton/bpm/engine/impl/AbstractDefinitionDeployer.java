@@ -142,6 +142,7 @@ public abstract class AbstractDefinitionDeployer<DefinitionEntity extends Resour
    *
    * @return null if no matching image resource is found.
    */
+  @SuppressWarnings("unused")
   protected String getDiagramResourceForDefinition(DeploymentEntity deployment, String resourceName, DefinitionEntity definition, Map<String, ResourceEntity> resources) {
     for (String diagramSuffix: getDiagramSuffixes()) {
       String definitionDiagramResource = getDefinitionDiagramResourceName(resourceName, definition, diagramSuffix);
@@ -163,6 +164,7 @@ public abstract class AbstractDefinitionDeployer<DefinitionEntity extends Resour
     return fileResourceBase + definitionKey + "." + diagramSuffix;
   }
 
+  @SuppressWarnings("unused")
   protected String getGeneralDiagramResourceName(String resourceName, DefinitionEntity definition, String diagramSuffix) {
     String fileResourceBase = stripDefinitionFileSuffix(resourceName);
 
@@ -320,6 +322,7 @@ public abstract class AbstractDefinitionDeployer<DefinitionEntity extends Resour
    * might want to hook in some own logic here, e.g. to align definition
    * versions with deployment / build versions.
    */
+  @SuppressWarnings("unused")
   protected int getNextVersion(DeploymentEntity deployment, DefinitionEntity newDefinition, DefinitionEntity latestDefinition) {
     int result = 1;
     if (latestDefinition != null) {
@@ -334,6 +337,7 @@ public abstract class AbstractDefinitionDeployer<DefinitionEntity extends Resour
    * and add the definition key and version if that does not exceed 64 characters.
    * You might want to hook in your own implementation here.
    */
+  @SuppressWarnings("unused")
   protected String generateDefinitionId(DeploymentEntity deployment, DefinitionEntity newDefinition, DefinitionEntity latestDefinition) {
     String nextId = idGenerator.getNextId();
 

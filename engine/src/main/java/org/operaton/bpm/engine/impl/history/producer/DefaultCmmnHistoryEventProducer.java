@@ -158,6 +158,7 @@ public class DefaultCmmnHistoryEventProducer implements CmmnHistoryEventProducer
     return evt;
   }
 
+  @SuppressWarnings("unused")
   protected HistoricCaseInstanceEventEntity newCaseInstanceEventEntity(CaseExecutionEntity caseExecutionEntity) {
     return new HistoricCaseInstanceEventEntity();
   }

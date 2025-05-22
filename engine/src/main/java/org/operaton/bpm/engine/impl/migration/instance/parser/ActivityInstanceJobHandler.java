@@ -97,6 +97,7 @@ public class ActivityInstanceJobHandler implements MigratingDependentInstancePar
     }
   }
 
+  @SuppressWarnings("unused")
   protected TimerDeclarationImpl getTargetTimerDeclaration(JobEntity job, JobHandlerConfiguration jobHandlerConfiguration,
       String targetActivity, Map<String, Map<String, TimerDeclarationImpl>> targetTimeoutListenerDeclarationsInEventScope,
       Map<String, TimerDeclarationImpl> targetTimerDeclarationsInEventScope) {

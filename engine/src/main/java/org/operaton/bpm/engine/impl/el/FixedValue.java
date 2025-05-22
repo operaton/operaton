@@ -40,6 +40,7 @@ public class FixedValue implements Expression {
     return value;
   }
 
+  @SuppressWarnings("unused")
   public Object getValue(VariableScope variableScope, BaseDelegateExecution contextExecution) {
     return getValue(variableScope);
   }

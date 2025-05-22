@@ -158,18 +158,22 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
     return event;
   }
 
+  @SuppressWarnings("unused")
   protected HistoricDecisionEvaluationEvent newDecisionEvaluationEvent(DmnDecisionEvaluationEvent evaluationEvent) {
     return new HistoricDecisionEvaluationEvent();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricDecisionInstanceEntity newDecisionInstanceEventEntity(ExecutionEntity executionEntity, DmnDecisionLogicEvaluationEvent evaluationEvent) {
     return new HistoricDecisionInstanceEntity();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricDecisionInstanceEntity newDecisionInstanceEventEntity(CaseExecutionEntity executionEntity, DmnDecisionLogicEvaluationEvent evaluationEvent) {
     return new HistoricDecisionInstanceEntity();
   }
 
+  @SuppressWarnings("unused")
   protected HistoricDecisionInstanceEntity newDecisionInstanceEventEntity(DmnDecisionLogicEvaluationEvent evaluationEvent) {
     return new HistoricDecisionInstanceEntity();
   }

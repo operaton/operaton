@@ -38,6 +38,7 @@ public class FormFieldValidationConstraintHandler {
   protected String config;
   protected FormFieldValidator validator;
 
+  @SuppressWarnings("unused")
   public FormFieldValidationConstraint createValidationConstraint(ExecutionEntity execution) {
     return new FormFieldValidationConstraintImpl(name, config);
   }

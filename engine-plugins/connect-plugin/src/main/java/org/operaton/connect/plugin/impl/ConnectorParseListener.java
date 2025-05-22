@@ -62,6 +62,7 @@ public class ConnectorParseListener extends AbstractBpmnParseListener {
     parseConnectorElement(sendTaskElement, scope, activity);
   }
 
+  @SuppressWarnings("unused")
   protected void parseConnectorElement(Element serviceTaskElement, ScopeImpl scope, ActivityImpl activity) {
     Element connectorDefinition = findOperatonExtensionElement(serviceTaskElement, "connector");
     if (connectorDefinition != null) {

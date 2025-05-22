@@ -174,6 +174,7 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
     }
   }
 
+  @SuppressWarnings("unused")
   protected void initializeCommandWithDeletions(CaseExecutionCommandBuilder commandBuilder, List<VariableNameDto> deletions, String transition) {
     for (VariableNameDto variableName : deletions) {
       if (variableName.isLocal()) {

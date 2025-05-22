@@ -254,6 +254,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
 
   }
 
+  @SuppressWarnings("unused")
   protected void initializeActivityType(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     PlanItemDefinition definition = getDefinition(element);
 
@@ -268,6 +269,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     activity.setProperty(PROPERTY_ACTIVITY_TYPE, activityType);
   }
 
+  @SuppressWarnings("unused")
   protected void initializeDescription(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     String description = getDesciption(element);
     if (description == null) {
@@ -465,6 +467,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     return variableListener;
   }
 
+  @SuppressWarnings("unused")
   protected ExecutableScript initializeScript(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonScript script) {
     String language = script.getOperatonScriptFormat();
     String resource = script.getOperatonResource();
@@ -547,6 +550,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     return null;
   }
 
+  @SuppressWarnings("unused")
   protected void initializeEntryCriterias(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     Collection<Sentry> entryCriterias = getEntryCriterias(element);
 
@@ -564,6 +568,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     }
   }
 
+  @SuppressWarnings("unused")
   protected void initializeExitCriterias(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     Collection<Sentry> exitCriterias = getExitCriterias(element);
 

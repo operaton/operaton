@@ -72,6 +72,7 @@ public class EvaluateStartConditionCmd implements Command<List<ProcessInstance>>
     }
   }
 
+  @SuppressWarnings("unused")
   protected ProcessInstance instantiateProcess(CommandContext commandContext, ConditionHandlerResult result) {
     ProcessDefinitionEntity processDefinitionEntity = result.getProcessDefinition();
 

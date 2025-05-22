@@ -27,7 +27,8 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public class FakeLdapService {
-  
+
+  @SuppressWarnings("unused")
   public String findManagerForEmployee(String employee) {
     // Pretty useless LDAP service ...
     return "Kermit The Frog";

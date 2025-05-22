@@ -28,6 +28,7 @@ public class DmnDecisionTransformHandler implements DmnElementTransformHandler<D
     return createFromDecision(context, decision);
   }
 
+  @SuppressWarnings("unused")
   protected DmnDecisionImpl createFromDecision(DmnElementTransformContext context, Decision decision) {
     DmnDecisionImpl decisionEntity = createDmnElement();
 

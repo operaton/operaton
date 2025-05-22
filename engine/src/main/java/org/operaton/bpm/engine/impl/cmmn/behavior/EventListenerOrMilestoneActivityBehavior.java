@@ -151,6 +151,7 @@ public abstract class EventListenerOrMilestoneActivityBehavior extends PlanItemD
 
   // sentry ///////////////////////////////////////////////////////////////
 
+  @SuppressWarnings("unused")
   protected boolean isAtLeastOneExitCriterionSatisfied(CmmnActivityExecution execution) {
     return false;
   }

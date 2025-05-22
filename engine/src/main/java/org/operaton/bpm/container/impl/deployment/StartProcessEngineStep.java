@@ -122,6 +122,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
 
   }
 
+  @SuppressWarnings("unused")
   protected void setJobExecutorActivate(ProcessEngineConfigurationImpl configuration, Map<String, String> properties) {
     // override job executor auto activate: set to true in shared engine scenario
     // if it is not specified (see #CAM-4817)

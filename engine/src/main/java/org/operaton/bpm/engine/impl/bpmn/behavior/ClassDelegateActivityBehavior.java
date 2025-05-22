@@ -98,6 +98,7 @@ public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior 
     });
   }
 
+  @SuppressWarnings("unused")
   protected ActivityBehavior getActivityBehaviorInstance(ActivityExecution execution) {
     Object delegateInstance = instantiateDelegate(className, fieldDeclarations);
 

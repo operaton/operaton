@@ -42,6 +42,7 @@ public class DmnDecisionTableConditionTransformHandler implements DmnElementTran
     return condition;
   }
 
+  @SuppressWarnings("unused")
   protected DmnExpressionImpl createDmnElement(DmnElementTransformContext context, InputEntry inputEntry) {
     return new DmnExpressionImpl();
   }

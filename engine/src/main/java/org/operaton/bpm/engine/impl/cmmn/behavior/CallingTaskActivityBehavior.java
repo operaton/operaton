@@ -61,6 +61,7 @@ public abstract class CallingTaskActivityBehavior extends TaskActivityBehavior {
     return getCallableElement().getVersion(caseExecution);
   }
 
+  @SuppressWarnings("unused")
   protected String getDeploymentId(CmmnActivityExecution execution) {
     return getCallableElement().getDeploymentId();
   }

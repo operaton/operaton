@@ -82,6 +82,7 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void>, Se
     return null;
   }
 
+  @SuppressWarnings("unused")
   protected void logOperation(CommandContext context, TaskEntity task) {
     task.logUserOperation(getUserOperationLogName());
   }

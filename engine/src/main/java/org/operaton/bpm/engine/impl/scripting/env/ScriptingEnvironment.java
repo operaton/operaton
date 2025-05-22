@@ -99,6 +99,7 @@ public class ScriptingEnvironment {
     return script.execute(scriptEngine, scope, bindings);
   }
 
+  @SuppressWarnings("unused")
   protected Map<String, List<ExecutableScript>> getEnv(String language) {
     ProcessEngineConfigurationImpl config = Context.getProcessEngineConfiguration();
     ProcessApplicationReference processApplication = Context.getCurrentProcessApplication();

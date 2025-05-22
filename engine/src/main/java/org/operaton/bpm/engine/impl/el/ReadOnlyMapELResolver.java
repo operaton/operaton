@@ -20,8 +20,6 @@ import jakarta.el.ELContext;
 import org.operaton.bpm.engine.ProcessEngineException;
 import jakarta.el.ELResolver;
 
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -59,10 +57,6 @@ public class ReadOnlyMapELResolver extends ELResolver {
 
   public Class< ? > getCommonPropertyType(ELContext context, Object arg) {
     return Object.class;
-  }
-
-  public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object arg) {
-    return null;
   }
 
   public Class< ? > getType(ELContext context, Object arg1, Object arg2) {

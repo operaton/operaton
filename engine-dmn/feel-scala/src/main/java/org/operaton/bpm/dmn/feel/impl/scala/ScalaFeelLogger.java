@@ -28,14 +28,6 @@ public class ScalaFeelLogger extends BaseLogger {
   public static final ScalaFeelLogger LOGGER = createLogger(ScalaFeelLogger.class,
     PROJECT_CODE, PROJECT_LOGGER, "01");
 
-  protected void logError(String id, String messageTemplate, Throwable t) {
-    super.logError(id, messageTemplate, t);
-  }
-
-  protected void logInfo(String id, String messageTemplate, Throwable t) {
-    super.logInfo(id, messageTemplate, t);
-  }
-
   public void logSpinValueMapperDetected() {
     logInfo("001", "Spin value mapper detected");
   }

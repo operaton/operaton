@@ -16,16 +16,13 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
-import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenCoordinate;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
-import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependency;
 
 public class DeploymentHelper extends AbstractDeploymentHelper {
 
@@ -51,7 +48,7 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
     return getEngineSpring(OPERATON_ENGINE_SPRING);
   }
 
-  public static JavaArchive[] getAssertJ() {
+  public static JavaArchive[] getTestingLibs() {
     if (cachedTestArtifacts != null) {
       return cachedTestArtifacts;
     } else {

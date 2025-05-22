@@ -65,7 +65,7 @@ public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformInteg
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addClass(JobExecutorWaitUtils.class)
-            .addAsLibraries(DeploymentHelper.getAssertJ());
+            .addAsLibraries(DeploymentHelper.getTestingLibs());
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
     return deployment;
   }

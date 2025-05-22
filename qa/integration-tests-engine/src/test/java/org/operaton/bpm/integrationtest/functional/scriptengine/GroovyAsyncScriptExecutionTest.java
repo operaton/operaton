@@ -63,7 +63,7 @@ public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrati
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addClass(JobExecutorWaitUtils.class)
             .addAsLibraries(DeploymentHelper.getEngineCdi())
-            .addAsLibraries(DeploymentHelper.getAssertJ());
+            .addAsLibraries(DeploymentHelper.getTestingLibs());
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
     return deployment;
   }

@@ -96,7 +96,7 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "pa2.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
 
         .addAsLibraries(processArchiveJar)
 

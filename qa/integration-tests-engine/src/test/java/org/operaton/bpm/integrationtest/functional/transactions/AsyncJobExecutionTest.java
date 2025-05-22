@@ -44,7 +44,7 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
   @Deployment
   public static WebArchive processArchive() {
     return initWebArchiveDeployment()
-            .addAsLibraries(DeploymentHelper.getAssertJ())
+            .addAsLibraries(DeploymentHelper.getTestingLibs())
             .addClass(GetVersionInfoDelegate.class)
             .addClass(UpdateRouterConfiguration.class)
             .addClass(FailingTransactionListenerDelegate.class)

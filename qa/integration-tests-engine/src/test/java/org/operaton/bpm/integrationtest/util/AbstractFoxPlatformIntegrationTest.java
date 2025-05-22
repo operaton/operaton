@@ -61,7 +61,7 @@ public abstract class AbstractFoxPlatformIntegrationTest {
     WebArchive archive = ShrinkWrap.create(WebArchive.class, name)
               .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
               .addAsLibraries(DeploymentHelper.getEngineCdi())
-              .addAsLibraries(DeploymentHelper.getAssertJ())
+              .addAsLibraries(DeploymentHelper.getTestingLibs())
               .addAsResource(processesXmlPath, "META-INF/processes.xml")
               .addClass(AbstractFoxPlatformIntegrationTest.class)
               .addClass(JobExecutorWaitUtils.class)

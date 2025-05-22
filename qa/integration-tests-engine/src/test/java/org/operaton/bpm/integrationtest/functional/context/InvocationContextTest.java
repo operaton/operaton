@@ -49,7 +49,7 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
   public static WebArchive createDeployment() {
     return ShrinkWrap.create(WebArchive.class, "app.war")
         .addAsResource("META-INF/processes.xml")
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ProcessApplicationWithInvocationContext.class)
         .addClass(NoOpJavaDelegate.class)

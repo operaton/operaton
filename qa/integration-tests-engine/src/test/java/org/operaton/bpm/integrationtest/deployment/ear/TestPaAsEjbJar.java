@@ -73,7 +73,7 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
     return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
       .addAsLibrary(DeploymentHelper.getEngineCdi())
-      .addAsLibraries(DeploymentHelper.getAssertJ());
+      .addAsLibraries(DeploymentHelper.getTestingLibs());
   }
 
   @Test

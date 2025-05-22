@@ -47,7 +47,7 @@ public class TestContainer {
 
   public static void addContainerSpecificResourcesForNonPaWithoutWeld(WebArchive webArchive) {
     webArchive.addAsManifestResource("jboss-deployment-structure.xml");
-    webArchive.addAsLibraries(DeploymentHelper.getAssertJ());
+    webArchive.addAsLibraries(DeploymentHelper.getTestingLibs());
   }
 
   public static void addContainerSpecificResourcesForSpin(WebArchive deployment) {

@@ -81,7 +81,7 @@ public class MigrationContextSwitchBeansTest extends AbstractFoxPlatformIntegrat
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-            .addAsLibraries(DeploymentHelper.getAssertJ())
+            .addAsLibraries(DeploymentHelper.getTestingLibs())
             .addClass(AbstractFoxPlatformIntegrationTest.class);
 
     TestContainer.addContainerSpecificResources(webArchive);

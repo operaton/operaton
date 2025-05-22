@@ -76,7 +76,7 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addClass(TestFoxPlatformClientAsEjbModule_pasAsEjbModule.class)
-      .addAsLibraries(DeploymentHelper.getAssertJ());
+      .addAsLibraries(DeploymentHelper.getTestingLibs());
 
     return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)

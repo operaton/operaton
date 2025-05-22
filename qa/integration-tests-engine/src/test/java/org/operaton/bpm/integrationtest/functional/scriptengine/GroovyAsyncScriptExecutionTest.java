@@ -23,6 +23,8 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
@@ -59,6 +61,7 @@ public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrati
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addClass(JobExecutorWaitUtils.class)
             .addAsLibraries(DeploymentHelper.getEngineCdi())
             .addAsLibraries(DeploymentHelper.getAssertJ());
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);

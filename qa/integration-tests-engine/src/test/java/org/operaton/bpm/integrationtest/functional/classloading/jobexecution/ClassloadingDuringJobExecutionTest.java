@@ -24,6 +24,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
@@ -63,6 +64,7 @@ public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformInteg
   public static WebArchive clientDeployment() {
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addClass(JobExecutorWaitUtils.class)
             .addAsLibraries(DeploymentHelper.getAssertJ());
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
     return deployment;

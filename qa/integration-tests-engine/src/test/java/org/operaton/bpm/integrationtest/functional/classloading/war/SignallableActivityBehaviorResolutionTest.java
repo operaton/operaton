@@ -17,8 +17,10 @@
 package org.operaton.bpm.integrationtest.functional.classloading.war;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleSignallableActivityBehavior;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -52,7 +54,9 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-            .addClass(AbstractFoxPlatformIntegrationTest.class);
+            .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addClass(JobExecutorWaitUtils.class)
+            .addAsLibraries(DeploymentHelper.getTestingLibs());
 
     TestContainer.addContainerSpecificResources(webArchive);
 

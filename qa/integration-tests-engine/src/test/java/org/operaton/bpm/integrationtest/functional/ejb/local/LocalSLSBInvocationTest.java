@@ -17,6 +17,7 @@
 package org.operaton.bpm.integrationtest.functional.ejb.local;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.ejb.local.bean.BusinessInterface;
 import org.operaton.bpm.integrationtest.functional.ejb.local.bean.LocalSLSBClientDelegateBean;
 import org.operaton.bpm.integrationtest.functional.ejb.local.bean.LocalSLSBean;
@@ -61,6 +62,7 @@ public class LocalSLSBInvocationTest extends AbstractFoxPlatformIntegrationTest 
       .addAsLibraries(DeploymentHelper.getEjbClient())
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
+      .addClass(JobExecutorWaitUtils.class)
       .addClass(LocalSLSBean.class) // the EJB
       .addClass(BusinessInterface.class); // the business interface
 

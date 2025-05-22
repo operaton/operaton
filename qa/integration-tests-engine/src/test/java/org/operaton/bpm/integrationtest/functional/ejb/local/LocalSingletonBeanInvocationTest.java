@@ -17,6 +17,7 @@
 package org.operaton.bpm.integrationtest.functional.ejb.local;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.ejb.local.bean.BusinessInterface;
 import org.operaton.bpm.integrationtest.functional.ejb.local.bean.LocalSingletonBean;
 import org.operaton.bpm.integrationtest.functional.ejb.local.bean.LocalSingletonBeanClientDelegateBean;
@@ -62,6 +63,7 @@ public class LocalSingletonBeanInvocationTest extends AbstractFoxPlatformIntegra
       .addAsLibraries(DeploymentHelper.getEjbClient())
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
+      .addClass(JobExecutorWaitUtils.class)
       .addClass(LocalSingletonBean.class) // the EJB
       .addClass(BusinessInterface.class); // the business interface
 

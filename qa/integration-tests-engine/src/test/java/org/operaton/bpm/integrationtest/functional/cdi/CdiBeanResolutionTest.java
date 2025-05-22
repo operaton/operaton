@@ -18,6 +18,7 @@ package org.operaton.bpm.integrationtest.functional.cdi;
 
 import org.operaton.bpm.engine.cdi.CdiStandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.cdi.beans.ExampleBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
@@ -61,6 +62,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addClass(JobExecutorWaitUtils.class)
             .addAsLibraries(DeploymentHelper.getEngineCdi())
             .addAsLibraries(DeploymentHelper.getAssertJ());
 

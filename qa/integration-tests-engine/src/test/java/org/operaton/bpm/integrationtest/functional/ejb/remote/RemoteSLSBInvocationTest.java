@@ -17,6 +17,7 @@
 package org.operaton.bpm.integrationtest.functional.ejb.remote;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.ejb.remote.bean.BusinessInterface;
 import org.operaton.bpm.integrationtest.functional.ejb.remote.bean.RemoteSLSBClientDelegateBean;
 import org.operaton.bpm.integrationtest.functional.ejb.remote.bean.RemoteSLSBean;
@@ -62,6 +63,7 @@ public class RemoteSLSBInvocationTest extends AbstractFoxPlatformIntegrationTest
       .addAsLibraries(DeploymentHelper.getEjbClient())
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
+      .addClass(JobExecutorWaitUtils.class)
       .addClass(RemoteSLSBean.class) // the EJB
       .addClass(BusinessInterface.class); // the business interface
 

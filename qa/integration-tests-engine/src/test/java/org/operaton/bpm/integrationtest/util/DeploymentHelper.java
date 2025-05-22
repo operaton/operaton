@@ -16,10 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
+import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenCoordinate;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
+import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependency;
 
 public class DeploymentHelper extends AbstractDeploymentHelper {
 
@@ -27,7 +33,7 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
   protected static final String OPERATON_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi";
   protected static final String OPERATON_ENGINE_SPRING = "org.operaton.bpm:operaton-engine-spring";
   protected static final String OPERATON_ENGINE = "org.operaton.bpm:operaton-engine";
-  protected static JavaArchive cachedAssertJ;
+  protected static JavaArchive[] cachedTestArtifacts;
 
   public static JavaArchive getEjbClient() {
     return getEjbClient(OPERATON_EJB_CLIENT);
@@ -45,23 +51,26 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
     return getEngineSpring(OPERATON_ENGINE_SPRING);
   }
 
-  public static JavaArchive getAssertJ() {
-    if (cachedAssertJ != null) {
-      return cachedAssertJ;
+  public static JavaArchive[] getAssertJ() {
+    if (cachedTestArtifacts != null) {
+      return cachedTestArtifacts;
     } else {
       JavaArchive[] archives = Maven.configureResolver()
         .workOffline()
         .loadPomFromFile("pom.xml")
-        .addDependencies(MavenDependencies.createDependency("org.assertj:assertj-core", ScopeType.COMPILE, false))
+        .addDependencies(
+          MavenDependencies.createDependency("org.assertj:assertj-core", ScopeType.TEST, false),
+          MavenDependencies.createDependency("org.awaitility:awaitility", ScopeType.TEST, false)
+        )
         .resolve()
         .withTransitivity()
         .as(JavaArchive.class);
 
-      if(archives.length == 0) {
-        throw new RuntimeException("Could not resolve AssertJ");
+      if(archives.length < 3) {
+        throw new RuntimeException("Could not resolve testing artifacts. Resolved: " + Stream.of(archives).map(JavaArchive::getId).collect(Collectors.joining()));
       } else {
-        cachedAssertJ = archives[0];
-        return cachedAssertJ;
+        cachedTestArtifacts = archives;
+        return cachedTestArtifacts;
       }
     }
   }

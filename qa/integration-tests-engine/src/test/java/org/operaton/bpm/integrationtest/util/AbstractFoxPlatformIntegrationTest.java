@@ -64,6 +64,7 @@ public abstract class AbstractFoxPlatformIntegrationTest {
               .addAsLibraries(DeploymentHelper.getAssertJ())
               .addAsResource(processesXmlPath, "META-INF/processes.xml")
               .addClass(AbstractFoxPlatformIntegrationTest.class)
+              .addClass(JobExecutorWaitUtils.class)
               .addClass(TestConstants.class);
 
     TestContainer.addContainerSpecificResources(archive);

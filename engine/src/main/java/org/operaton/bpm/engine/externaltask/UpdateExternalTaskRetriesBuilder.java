@@ -47,9 +47,8 @@ public interface UpdateExternalTaskRetriesBuilder extends UpdateExternalTaskRetr
    *   When the affected instances count exceeds the maximum results limit. A maximum results
    *   limit can be specified with the process engine configuration property
    *   <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
-   * @deprecated Use the batch operation {@link #setAsync} instead.
+   *   Please the batch operation {@link #setAsync} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0")
   void set(int retries);
 
   /**

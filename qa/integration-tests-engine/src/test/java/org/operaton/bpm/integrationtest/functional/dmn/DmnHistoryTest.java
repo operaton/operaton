@@ -56,8 +56,8 @@ public class DmnHistoryTest extends AbstractFoxPlatformIntegrationTest {
     assertThat(historicDecisionInstance.getDecisionDefinitionKey()).isEqualTo("decision");
     assertThat(historicDecisionInstance.getDecisionDefinitionName()).isEqualTo("Check Order");
 
-    assertThat(historicDecisionInstance.getInputs().size()).isEqualTo(2);
-    assertThat(historicDecisionInstance.getOutputs().size()).isEqualTo(2);
+    assertThat(historicDecisionInstance.getInputs()).hasSize(2);
+    assertThat(historicDecisionInstance.getOutputs()).hasSize(2);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
     taskService.complete(task.getId());

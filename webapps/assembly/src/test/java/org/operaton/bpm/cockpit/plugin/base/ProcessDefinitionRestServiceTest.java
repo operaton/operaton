@@ -453,7 +453,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   }
 
   private void assertIncidentSize(List<Incident> incidents, int size) {
-    assertThat(incidents.size()).isEqualTo(size);
+    assertThat(incidents).hasSize(size);
   }
 
   private void assertIncidentSize(List<Incident> incidents, String incidentType, int size) {

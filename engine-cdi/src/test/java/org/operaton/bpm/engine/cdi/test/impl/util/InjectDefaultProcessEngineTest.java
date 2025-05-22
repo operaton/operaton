@@ -64,15 +64,14 @@ public class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
 
   @Test
   public void testProcessEngineInject() {
-    //given only default engine exist
+    //given only the default engine exist
 
     //when TestClass is created
     InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
     assertThat(testClass).isNotNull();
 
-    //then default engine is injected
+    //then the default engine is injected
     assertThat(testClass.processEngine.getName()).isEqualTo("default");
-    assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()
-        .contains("default-process-engine")).isTrue();
+    assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()).contains("default-process-engine");
   }
 }

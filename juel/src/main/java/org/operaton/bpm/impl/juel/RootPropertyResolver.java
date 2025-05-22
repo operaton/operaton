@@ -15,10 +15,8 @@
  */
 package org.operaton.bpm.impl.juel;
 
-import java.beans.FeatureDescriptor;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import jakarta.el.ELContext;
@@ -36,7 +34,7 @@ import jakarta.el.PropertyNotWritableException;
  * @author Christoph Beck
  */
 public class RootPropertyResolver extends ELResolver {
-	private final Map<String, Object> map = Collections.synchronizedMap(new HashMap<String, Object>());
+	private final Map<String, Object> map = Collections.synchronizedMap(new HashMap<>());
 	private final boolean readOnly;
 
 	/**
@@ -49,7 +47,7 @@ public class RootPropertyResolver extends ELResolver {
 	/**
 	 * Create a root property resolver
 	 * 
-	 * @param readOnly
+	 * @param readOnly Use {@code true} to disallow setting property values
 	 */
 	public RootPropertyResolver(boolean readOnly) {
 		this.readOnly = readOnly;
@@ -67,11 +65,6 @@ public class RootPropertyResolver extends ELResolver {
 	@Override
 	public Class<?> getCommonPropertyType(ELContext context, Object base) {
 		return isResolvable(context) ? String.class : null;
-	}
-
-	@Override
-	public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
-		return null;
 	}
 
 	@Override

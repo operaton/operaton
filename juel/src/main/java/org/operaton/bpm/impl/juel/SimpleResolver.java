@@ -15,9 +15,6 @@
  */
 package org.operaton.bpm.impl.juel;
 
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
-
 import jakarta.el.ArrayELResolver;
 import jakarta.el.BeanELResolver;
 import jakarta.el.CompositeELResolver;
@@ -103,11 +100,6 @@ public class SimpleResolver extends ELResolver {
 	@Override
 	public Class<?> getCommonPropertyType(ELContext context, Object base) {
 		return delegate.getCommonPropertyType(context, base);
-	}
-
-	@Override
-	public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
-		return delegate.getFeatureDescriptors(context, base);
 	}
 
 	@Override

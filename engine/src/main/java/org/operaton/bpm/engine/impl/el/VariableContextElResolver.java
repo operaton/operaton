@@ -21,9 +21,6 @@ import jakarta.el.ELResolver;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
-
 /**
  * @author Daniel Meyer
  *
@@ -64,10 +61,6 @@ public class VariableContextElResolver extends ELResolver {
 
   public Class< ? > getCommonPropertyType(ELContext arg0, Object arg1) {
     return Object.class;
-  }
-
-  public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext arg0, Object arg1) {
-    return null;
   }
 
   public Class< ? > getType(ELContext arg0, Object arg1, Object arg2) {

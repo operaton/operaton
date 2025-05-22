@@ -21,9 +21,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import jakarta.el.ELResolver;
 import org.springframework.context.ApplicationContext;
 
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
-
 /**
  * @author Tom Baeyens
  * @author Frederik Heremans
@@ -70,11 +67,6 @@ public class ApplicationContextElResolver extends ELResolver {
   @Override
   public Class< ? > getCommonPropertyType(ELContext context, Object arg) {
     return Object.class;
-  }
-
-  @Override
-  public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object arg) {
-    return null;
   }
 
   @Override

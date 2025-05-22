@@ -22,8 +22,6 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import jakarta.el.ELResolver;
 
 import jakarta.enterprise.inject.spi.BeanManager;
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
 
 
 /**
@@ -46,11 +44,6 @@ public class CdiResolver extends ELResolver {
   @Override
   public Class< ? > getCommonPropertyType(ELContext context, Object base) {
     return getWrappedResolver().getCommonPropertyType(context, base);
-  }
-
-  @Override
-  public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
-    return getWrappedResolver().getFeatureDescriptors(context, base);
   }
 
   @Override

@@ -19,19 +19,11 @@ package org.operaton.bpm.engine.test.mock;
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
-
 public class MockElResolver extends ELResolver {
 
   @Override
   public Class< ? > getCommonPropertyType(ELContext context, Object base) {
     return Object.class;
-  }
-
-  @Override
-  public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
-    return null;
   }
 
   @Override

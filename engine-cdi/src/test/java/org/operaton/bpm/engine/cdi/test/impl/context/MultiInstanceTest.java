@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.cdi.test.impl.context;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.jboss.arquillian.junit.Arquillian;

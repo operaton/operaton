@@ -19,9 +19,6 @@ package org.operaton.bpm.engine.impl.mock;
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
-
 public class MockElResolver extends ELResolver {
 
   @Override

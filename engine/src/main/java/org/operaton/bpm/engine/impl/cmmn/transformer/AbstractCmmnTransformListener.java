@@ -52,11 +52,6 @@ public class AbstractCmmnTransformListener implements CmmnTransformListener {
   }
 
   @Override
-  public void transformCasePlanModel(org.operaton.bpm.model.cmmn.impl.instance.CasePlanModel casePlanModel, CmmnActivity activity) {
-    transformCasePlanModel((org.operaton.bpm.model.cmmn.instance.CasePlanModel) casePlanModel, activity);
-  }
-
-  @Override
   public void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity activity) {
   }
 

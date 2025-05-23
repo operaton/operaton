@@ -164,7 +164,9 @@ public interface DeploymentBuilder {
    * @deprecated Use {@link #enableDuplicateFiltering(boolean)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  DeploymentBuilder enableDuplicateFiltering();
+  default DeploymentBuilder enableDuplicateFiltering() {
+    return enableDuplicateFiltering(false);
+  }
 
   /**
    * Check the resources for duplicates in the set of previous deployments with

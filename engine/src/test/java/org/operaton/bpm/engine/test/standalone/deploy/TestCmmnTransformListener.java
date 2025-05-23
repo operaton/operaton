@@ -65,11 +65,6 @@ public class TestCmmnTransformListener implements CmmnTransformListener {
   }
 
   @Override
-  public void transformCasePlanModel(org.operaton.bpm.model.cmmn.impl.instance.CasePlanModel casePlanModel, CmmnActivity caseActivity) {
-    transformCasePlanModel((org.operaton.bpm.model.cmmn.instance.CasePlanModel) casePlanModel, caseActivity);
-  }
-
-  @Override
   public void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity activity) {
     modelElementInstances.add(casePlanModel);
     cmmnActivities.add(activity);

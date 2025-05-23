@@ -252,11 +252,6 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   }
 
   @Override
-  public DeploymentBuilder enableDuplicateFiltering() {
-    return enableDuplicateFiltering(false);
-  }
-
-  @Override
   public DeploymentBuilder enableDuplicateFiltering(boolean deployChangedOnly) {
     this.isDuplicateFilterEnabled = true;
     this.deployChangedOnly = deployChangedOnly;

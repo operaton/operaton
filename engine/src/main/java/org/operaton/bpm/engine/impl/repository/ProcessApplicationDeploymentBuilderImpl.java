@@ -114,15 +114,6 @@ public class ProcessApplicationDeploymentBuilderImpl extends DeploymentBuilderIm
     return (ProcessApplicationDeploymentBuilderImpl) super.source(source);
   }
 
-  /**
-   * @deprecated Use {@link #enableDuplicateFiltering(boolean)} instead.
-   */
-  @Override
-  @Deprecated(forRemoval = true, since = "1.0")
-  public ProcessApplicationDeploymentBuilderImpl enableDuplicateFiltering() {
-    return (ProcessApplicationDeploymentBuilderImpl) super.enableDuplicateFiltering(false);
-  }
-
   @Override
   public ProcessApplicationDeploymentBuilderImpl enableDuplicateFiltering(boolean deployChangedOnly) {
     return (ProcessApplicationDeploymentBuilderImpl) super.enableDuplicateFiltering(deployChangedOnly);

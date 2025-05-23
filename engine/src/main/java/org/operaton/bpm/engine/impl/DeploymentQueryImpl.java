@@ -132,11 +132,6 @@ public class DeploymentQueryImpl extends AbstractQuery<DeploymentQuery, Deployme
   }
 
   @Override
-  public DeploymentQuery orderByDeploymenTime() {
-    return orderBy(DeploymentQueryProperty.DEPLOY_TIME);
-  }
-
-  @Override
   public DeploymentQuery orderByDeploymentTime() {
     return orderBy(DeploymentQueryProperty.DEPLOY_TIME);
   }

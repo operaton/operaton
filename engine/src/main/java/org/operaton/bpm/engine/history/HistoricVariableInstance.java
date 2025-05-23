@@ -66,7 +66,9 @@ public interface HistoricVariableInstance {
    *
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  String getVariableName();
+  default String getVariableName() {
+    return getName();
+  }
 
   /**
    * Returns the name of the type of this variable instance.
@@ -74,7 +76,9 @@ public interface HistoricVariableInstance {
    * @deprecated Use {@link #getTypeName()} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  String getVariableTypeName();
+  default String getVariableTypeName() {
+    return getTypeName();
+  }
 
   /**
    * The process definition key reference.

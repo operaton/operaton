@@ -209,16 +209,6 @@ public class HistoricVariableInstanceEntity implements ValueFields, HistoricVari
   }
 
   @Override
-  public String getVariableTypeName() {
-    return getTypeName();
-  }
-
-  @Override
-  public String getVariableName() {
-    return name;
-  }
-
-  @Override
   public int getRevision() {
     return revision;
   }

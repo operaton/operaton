@@ -81,7 +81,7 @@ public class TestFoxPlatformClientAsEjbModule_onePaAsLib extends AbstractFoxPlat
       .addAsModule(foxPlatformClientJar)
       .addAsModule(testJar)
       .addAsLibrary(DeploymentHelper.getEngineCdi())
-      .addAsLibraries(DeploymentHelper.getAssertJ());
+      .addAsLibraries(DeploymentHelper.getTestingLibs());
   }
 
   @Test

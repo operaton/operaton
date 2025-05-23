@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.spring;
 
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.spring.beans.ExampleBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
@@ -76,7 +77,9 @@ public class SpringExpressionResolvingTest extends AbstractFoxPlatformIntegratio
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+            .addClass(JobExecutorWaitUtils.class)
+            .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getTestingLibs());
 
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
 

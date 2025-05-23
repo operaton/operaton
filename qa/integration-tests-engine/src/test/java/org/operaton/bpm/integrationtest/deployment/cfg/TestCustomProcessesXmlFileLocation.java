@@ -43,7 +43,7 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
     return ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes.xml", "my/alternate/location/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CustomProcessApplication.class)

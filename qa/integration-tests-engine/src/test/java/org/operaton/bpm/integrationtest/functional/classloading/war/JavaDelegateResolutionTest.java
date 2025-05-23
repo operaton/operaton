@@ -26,8 +26,11 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 
@@ -55,7 +58,9 @@ public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTe
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-            .addClass(AbstractFoxPlatformIntegrationTest.class);
+            .addAsLibraries(DeploymentHelper.getTestingLibs())
+            .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addClass(JobExecutorWaitUtils.class);
 
     TestContainer.addContainerSpecificResources(webArchive);
 

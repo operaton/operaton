@@ -83,7 +83,7 @@ public class TestFoxPlatformClientAsEjbModule_twoPasAsLib extends AbstractFoxPla
       .setManifest(new ByteArrayAsset(("Class-Path: " + foxPlatformClientJar.getName()+"\n").getBytes()))
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addClass(TestFoxPlatformClientAsEjbModule_twoPasAsLib.class)
-      .addAsLibraries(DeploymentHelper.getAssertJ());
+      .addAsLibraries(DeploymentHelper.getTestingLibs());
 
     return ShrinkWrap.create(EnterpriseArchive.class, "twoPasAsLib.ear")
       .addAsLibrary(processArchive1Jar)

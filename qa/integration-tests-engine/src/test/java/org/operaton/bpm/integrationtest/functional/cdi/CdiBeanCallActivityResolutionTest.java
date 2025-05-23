@@ -64,7 +64,7 @@ public class CdiBeanCallActivityResolutionTest extends AbstractFoxPlatformIntegr
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addAsLibraries(DeploymentHelper.getEngineCdi())
-            .addAsLibraries(DeploymentHelper.getAssertJ());
+            .addAsLibraries(DeploymentHelper.getTestingLibs());
 
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
 

@@ -75,7 +75,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
-        .addAsLibraries(DeploymentHelper.getAssertJ());
+        .addAsLibraries(DeploymentHelper.getTestingLibs());
 
     TestContainer.addContainerSpecificResources(webArchive);
 

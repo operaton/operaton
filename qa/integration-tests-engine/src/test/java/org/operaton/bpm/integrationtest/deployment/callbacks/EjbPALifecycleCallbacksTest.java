@@ -38,7 +38,7 @@ public class EjbPALifecycleCallbacksTest extends AbstractFoxPlatformIntegrationT
   @Deployment
   public static WebArchive createDeployment() {
     var webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(CustomEjbProcessApplication.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class);
 

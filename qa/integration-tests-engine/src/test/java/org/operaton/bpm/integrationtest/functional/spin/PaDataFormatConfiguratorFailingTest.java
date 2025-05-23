@@ -51,7 +51,7 @@ public class PaDataFormatConfiguratorFailingTest {
   @Deployment(managed = false, name = "deployment")
   public static WebArchive createDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "PaDataFormatConfiguratorFailingTest.war")
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ReferenceStoringProcessApplication.class)
@@ -69,7 +69,7 @@ public class PaDataFormatConfiguratorFailingTest {
   @Deployment(name = "checkDeployment")
   public static WebArchive createCheckDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
-        .addAsLibraries(DeploymentHelper.getAssertJ());
+        .addAsLibraries(DeploymentHelper.getTestingLibs());
     TestContainer.addContainerSpecificResourcesForNonPa(webArchive);
     return webArchive;
   }

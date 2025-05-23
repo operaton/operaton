@@ -55,7 +55,7 @@ public class CdiBeanSignallableActivityBehaviorResolutionTest extends AbstractFo
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addAsLibraries(DeploymentHelper.getEngineCdi())
-            .addAsLibraries(DeploymentHelper.getAssertJ());
+            .addAsLibraries(DeploymentHelper.getTestingLibs());
 
     TestContainer.addContainerSpecificResourcesForNonPaEmbedCdiLib(deployment);
 

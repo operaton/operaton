@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.context.beans.NoOpJavaDelegate;
 import org.operaton.bpm.integrationtest.functional.context.beans.SignalableTask;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
@@ -48,11 +49,12 @@ public class InvocationContextTest extends AbstractFoxPlatformIntegrationTest {
   public static WebArchive createDeployment() {
     return ShrinkWrap.create(WebArchive.class, "app.war")
         .addAsResource("META-INF/processes.xml")
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ProcessApplicationWithInvocationContext.class)
         .addClass(NoOpJavaDelegate.class)
         .addClass(SignalableTask.class)
+        .addClass(JobExecutorWaitUtils.class)
         .addAsResource("org/operaton/bpm/integrationtest/functional/context/InvocationContextTest-timer.bpmn")
         .addAsResource("org/operaton/bpm/integrationtest/functional/context/InvocationContextTest-message.bpmn")
         .addAsResource("org/operaton/bpm/integrationtest/functional/context/InvocationContextTest-signalTask.bpmn");

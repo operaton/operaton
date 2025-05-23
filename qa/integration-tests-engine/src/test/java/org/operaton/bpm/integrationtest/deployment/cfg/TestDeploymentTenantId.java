@@ -35,7 +35,7 @@ public class TestDeploymentTenantId extends AbstractFoxPlatformIntegrationTest {
     return ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes-with-tenant-id.xml", "META-INF/processes.xml")
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/invoice-it.bpmn20.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)

@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.ear;
 
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -60,7 +62,9 @@ public class TestJavaDelegateResolution_ClientAsLibInWebModule extends AbstractF
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
-        .addClass(AbstractFoxPlatformIntegrationTest.class);
+        .addClass(AbstractFoxPlatformIntegrationTest.class)
+        .addClass(JobExecutorWaitUtils.class)
+        .addAsLibraries(DeploymentHelper.getTestingLibs());
 
     TestContainer.addContainerSpecificResources(webArchive);
 

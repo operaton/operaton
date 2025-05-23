@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.functional.cdi.beans.ExampleDelegateBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
@@ -61,8 +62,9 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
             .addClass(ProgrammaticBeanLookup.class)
             .addClass(BeanManagerLookup.class)
             .addClass(AbstractFoxPlatformIntegrationTest.class)
+            .addClass(JobExecutorWaitUtils.class)
             .addAsLibraries(DeploymentHelper.getEngineCdi())
-            .addAsLibraries(DeploymentHelper.getAssertJ());
+            .addAsLibraries(DeploymentHelper.getTestingLibs());
 
      TestContainer.addContainerSpecificResourcesEmbedCdiLib(webArchive);
 

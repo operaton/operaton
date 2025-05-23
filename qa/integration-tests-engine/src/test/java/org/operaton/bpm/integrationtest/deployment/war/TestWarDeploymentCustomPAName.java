@@ -40,7 +40,7 @@ public class TestWarDeploymentCustomPAName extends AbstractFoxPlatformIntegratio
   @Deployment
   public static WebArchive processArchive() {
     return ShrinkWrap.create(WebArchive.class, "pa1.war")
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CustomNameServletPA.class)

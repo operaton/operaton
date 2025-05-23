@@ -44,6 +44,8 @@ public class ManagedJobExecutorTest {
     WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addClass(JobExecutorWaitUtils.class)
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(ManagedJobExecutorTest.class)
         .addClass(ManagedJobExecutorBean.class)
         .addAsResource("org/operaton/bpm/integrationtest/jobexecutor/ManagedJobExecutorTest.testManagedExecutorUsed.bpmn20.xml");

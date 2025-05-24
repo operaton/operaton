@@ -50,7 +50,7 @@ public interface AppPlugin {
    *
    * @return
    */
-  public String getId();
+  String getId();
 
   /**
    * Returns a set of JAX-RS resource classes that extend the rest API.
@@ -61,7 +61,7 @@ public interface AppPlugin {
    *
    * @return the set of resource classes provided by this plugin
    */
-  public Set<Class<?>> getResourceClasses();
+  Set<Class<?>> getResourceClasses();
 
   /**
    * Returns a uri to a plugin resources directory.
@@ -69,7 +69,7 @@ public interface AppPlugin {
    *
    * @return the directory providing the plugins client side resources
    */
-  public String getAssetDirectory();
+  String getAssetDirectory();
 
   /**
    * Allows providing a list of {@link PluginResourceOverride resource overrides}. Resource overrides allow
@@ -77,7 +77,7 @@ public interface AppPlugin {
    *
    * @return a list of {@link PluginResourceOverride} implementations.
    */
-  public List<PluginResourceOverride> getResourceOverrides();
+  List<PluginResourceOverride> getResourceOverrides();
 
 
 }

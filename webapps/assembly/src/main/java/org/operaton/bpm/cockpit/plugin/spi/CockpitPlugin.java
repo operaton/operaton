@@ -50,6 +50,6 @@ public interface CockpitPlugin extends AppPlugin {
    *
    * @return the list of additional mapping files
    */
-  public List<String> getMappingFiles();
+  List<String> getMappingFiles();
 
 }

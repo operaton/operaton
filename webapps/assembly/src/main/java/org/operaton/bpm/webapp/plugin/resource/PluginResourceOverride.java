@@ -38,6 +38,6 @@ public interface PluginResourceOverride {
    * @param requestInfo contains information about the request.
    * @return the original input stream or a modified input stream or null to remove the resource.
    */
-  public InputStream filterResource(InputStream inputStream, RequestInfo requestInfo);
+  InputStream filterResource(InputStream inputStream, RequestInfo requestInfo);
 
 }

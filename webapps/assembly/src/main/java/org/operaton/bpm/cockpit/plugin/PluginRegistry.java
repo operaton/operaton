@@ -32,12 +32,12 @@ public interface PluginRegistry {
   /**
    * @return all registered plugins
    */
-  public List<CockpitPlugin> getPlugins();
+  List<CockpitPlugin> getPlugins();
 
   /**
    * @param id
    * @return the registered plugin with the given name or
    * <code>null</code> if the plugin does not exist.
    */
-  public CockpitPlugin getPlugin(String id);
+  CockpitPlugin getPlugin(String id);
 }

@@ -35,6 +35,6 @@ public interface SecurityFilterRule {
    * @return the authorization for the given request or <code>null</code> if the authorization
    *         for the request could not be checked
    */
-  public Authorization authorize(String requestMethod, String requestUri);
+  Authorization authorize(String requestMethod, String requestUri);
 
 }

@@ -65,7 +65,7 @@ public enum RequestConfigOption {
   private final String name;
   private final BiConsumer<Builder, Object> consumer;
 
-  private RequestConfigOption(String name, BiConsumer<Builder, Object> consumer) {
+  RequestConfigOption(String name, BiConsumer<Builder, Object> consumer) {
     this.name = name;
     this.consumer = consumer;
   }

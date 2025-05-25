@@ -94,7 +94,7 @@ public interface ValueType extends Serializable {
    * @param value the value
    * @return the typed value for the value
    */
-  public TypedValue createValue(Object value, Map<String, Object> valueInfo);
+  TypedValue createValue(Object value, Map<String, Object> valueInfo);
 
   /**
    * <p>Gets the parent value type.</p>

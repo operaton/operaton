@@ -31,7 +31,7 @@ public interface DataFormatMapper {
    * @param parameter the java object to check
    * @return true if this object can be mapped.
    */
-  public boolean canMap(Object parameter);
+  boolean canMap(Object parameter);
 
   /**
    * Maps a java object to a data format's internal data representation.
@@ -39,7 +39,7 @@ public interface DataFormatMapper {
    * @param parameter object that is mapped
    * @return the data format's internal representation of that object
    */
-  public Object mapJavaToInternal(Object parameter);
+  Object mapJavaToInternal(Object parameter);
 
   /**
    * Maps the internal representation of a data format to a java object of the
@@ -50,7 +50,7 @@ public interface DataFormatMapper {
    * @return a java object of the specified class that was populated with the input
    * parameter
    */
-  public <T> T mapInternalToJava(Object parameter, Class<T> type);
+  <T> T mapInternalToJava(Object parameter, Class<T> type);
 
   /**
    * Maps the internal representation of a data format to a java object of the
@@ -64,7 +64,7 @@ public interface DataFormatMapper {
    * parameter
    */
 
-  public <T> T mapInternalToJava(Object parameter, Class<T> type, DeserializationTypeValidator validator);
+  <T> T mapInternalToJava(Object parameter, Class<T> type, DeserializationTypeValidator validator);
 
   /**
    * Maps the internal representation of a data format to a java object of the
@@ -79,7 +79,7 @@ public interface DataFormatMapper {
    * @return a java object of the specified type that was populated with the input
    *   parameter
    */
-  public <T> T mapInternalToJava(Object parameter, String typeIdentifier);
+  <T> T mapInternalToJava(Object parameter, String typeIdentifier);
 
   /**
    * Maps the internal representation of a data format to a java object of the
@@ -95,7 +95,7 @@ public interface DataFormatMapper {
    * @return a java object of the specified type that was populated with the input
    *   parameter
    */
-  public <T> T mapInternalToJava(Object parameter, String typeIdentifier, DeserializationTypeValidator validator);
+  <T> T mapInternalToJava(Object parameter, String typeIdentifier, DeserializationTypeValidator validator);
 
   String getCanonicalTypeName(Object object);
 }

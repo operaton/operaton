@@ -118,7 +118,7 @@ public interface ExternalTaskService {
    *   <li> if no suitable serializer could be found
    * </ul>
    */
-  public void setVariables(String processInstanceId, Map<String, Object> variables);
+  void setVariables(String processInstanceId, Map<String, Object> variables);
 
 
   /**
@@ -140,7 +140,7 @@ public interface ExternalTaskService {
    *   <li> if no suitable serializer could be found
    * </ul>
    */
-  public void setVariables(ExternalTask externalTask, Map<String, Object> variables);
+  void setVariables(ExternalTask externalTask, Map<String, Object> variables);
 
 
   /**

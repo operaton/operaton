@@ -59,16 +59,16 @@ public interface Cache<K, V> {
   /**
    * Returns a Set view of the keys contained in this cache.
    */
-  public Set<K> keySet();
+  Set<K> keySet();
 
   /**
    * @return the current size of the cache
    */
-  public int size();
+  int size();
 
   /**
    * Returns <code>true</code> if this cache contains no key-value mappings.
    */
-  public boolean isEmpty();
+  boolean isEmpty();
 
 }

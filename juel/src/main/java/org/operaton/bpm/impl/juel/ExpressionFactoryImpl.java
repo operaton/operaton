@@ -88,7 +88,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 
 		private final EnumSet<Builder.Feature> features;
 
-		private Profile(EnumSet<Builder.Feature> features) {
+		Profile(EnumSet<Builder.Feature> features) {
 			this.features = features;
 		}
 

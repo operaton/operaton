@@ -22,6 +22,6 @@ package org.operaton.spin.plugin.variable.type;
  */
 public interface XmlValueType extends SpinValueType {
 
-  public static final String TYPE_NAME = "xml";
+  String TYPE_NAME = "xml";
 
 }

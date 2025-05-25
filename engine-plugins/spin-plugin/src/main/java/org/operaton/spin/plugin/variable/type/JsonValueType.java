@@ -22,6 +22,6 @@ package org.operaton.spin.plugin.variable.type;
  */
 public interface JsonValueType extends SpinValueType {
 
-  public static final String TYPE_NAME = "json";
+  String TYPE_NAME = "json";
 
 }

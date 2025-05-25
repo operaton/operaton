@@ -27,11 +27,11 @@ import org.operaton.spin.spi.DataFormat;
 public interface JsonValue extends SpinValue {
 
   @Override
-  public SpinJsonNode getValue();
+  SpinJsonNode getValue();
 
   @Override
-  public DataFormat<SpinJsonNode> getDataFormat();
+  DataFormat<SpinJsonNode> getDataFormat();
 
-  public JsonValueType getType();
+  JsonValueType getType();
 
 }

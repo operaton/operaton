@@ -29,7 +29,7 @@ public interface IfPart extends CmmnElement {
   void setContext(CaseFileItem caseFileItem);
 
   @Deprecated(since = "1.0")
-  public Collection<ConditionExpression> getConditions();
+  Collection<ConditionExpression> getConditions();
 
   ConditionExpression getCondition();
 

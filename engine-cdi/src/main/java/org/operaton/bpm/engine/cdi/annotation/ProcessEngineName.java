@@ -36,7 +36,6 @@ import jakarta.inject.Qualifier;
 @Documented
 public @interface ProcessEngineName {
 
-  @Nonbinding
-  public String value();
+  @Nonbinding String value();
 
 }

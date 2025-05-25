@@ -35,53 +35,53 @@ public interface BusinessProcessEvent {
    * @return the process definition in which the event is happening / has
    *         happened or null the event was not related to a process definition
    */
-  public ProcessDefinition getProcessDefinition();
+  ProcessDefinition getProcessDefinition();
 
   /**
    * @return the id of the activity the process is currently in / was in at the
    *         moment the event was fired.
    */
-  public String getActivityId();
+  String getActivityId();
 
   /**
    * @return the name of the transition being taken / that was taken. (null, if
    *         this event is not of type {@link BusinessProcessEventType#TAKE}
    */
-  public String getTransitionName();
+  String getTransitionName();
 
   /**
    * @return the id of the {@link ProcessInstance} this event corresponds to
    */
-  public String getProcessInstanceId();
+  String getProcessInstanceId();
 
   /**
    * @return the id of the {@link Execution} this event corresponds to
    */
-  public String getExecutionId();
+  String getExecutionId();
 
   /**
    * @return the type of the event
    */
-  public BusinessProcessEventType getType();
+  BusinessProcessEventType getType();
 
   /**
    * @return the timestamp indicating the local time at which the event was
    *         fired.
    */
-  public Date getTimeStamp();
+  Date getTimeStamp();
 
   /**
    * @return the delegate task if this is a task event.
    */
-  public DelegateTask getTask();
+  DelegateTask getTask();
 
   /**
    * @return the task id of the current task or null if this is not a task event.
    */
-  public String getTaskId();
+  String getTaskId();
 
   /**
    * @return the id of the task in the process definition (BPMN XML) or null if this is not a task event.
    */
-  public String getTaskDefinitionKey();
+  String getTaskDefinitionKey();
 }

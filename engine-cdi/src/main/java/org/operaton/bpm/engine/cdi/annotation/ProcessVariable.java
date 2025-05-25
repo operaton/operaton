@@ -59,7 +59,6 @@ public @interface ProcessVariable {
    * The name of the process variable to look up. Defaults to the name of the
    * annotated field or parameter
    */
-  @Nonbinding
-  public String value() default "";
+  @Nonbinding String value() default "";
 
 }

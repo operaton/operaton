@@ -36,5 +36,5 @@ import jakarta.inject.Qualifier;
 @Qualifier
 public @interface TakeTransition {
   /** the id of the transition that is being taken */
-  public String value();
+  String value();
 }

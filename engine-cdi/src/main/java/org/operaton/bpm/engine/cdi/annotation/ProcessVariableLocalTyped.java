@@ -51,7 +51,6 @@ public @interface ProcessVariableLocalTyped {
    * The name of the local process variable to look up. Defaults to the name of the
    * annotated field or parameter
    */
-  @Nonbinding
-  public String value() default "";
+  @Nonbinding String value() default "";
 
 }

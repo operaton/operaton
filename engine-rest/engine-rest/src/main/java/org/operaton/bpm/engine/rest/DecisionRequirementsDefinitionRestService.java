@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.rest.sub.repository.DecisionRequirementsDefinitio
 @Produces(MediaType.APPLICATION_JSON)
 public interface DecisionRequirementsDefinitionRestService {
 
-  public static final String PATH = "/decision-requirements-definition";
+  String PATH = "/decision-requirements-definition";
 
   @Path("/{id}")
   DecisionRequirementsDefinitionResource getDecisionRequirementsDefinitionById(@PathParam("id") String decisionRequirementsDefinitionId);

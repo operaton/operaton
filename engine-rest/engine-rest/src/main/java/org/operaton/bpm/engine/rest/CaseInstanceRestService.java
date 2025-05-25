@@ -35,7 +35,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface CaseInstanceRestService {
 
-  public static final String PATH = "/case-instance";
+  String PATH = "/case-instance";
 
   @Path("/{id}")
   CaseInstanceResource getCaseInstance(@PathParam("id") String caseInstanceId);

@@ -33,30 +33,30 @@ public interface UserResource {
 
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  public void deleteUser();
+  void deleteUser();
 
   @POST
   @Path("/unlock")
-  public void unlockUser();
+  void unlockUser();
 
   // profile ///////////////////
 
   @GET
   @Path("/profile")
   @Produces(MediaType.APPLICATION_JSON)
-  public UserProfileDto getUserProfile(@Context UriInfo context);
+  UserProfileDto getUserProfile(@Context UriInfo context);
 
   @PUT
   @Path("/profile")
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateProfile(UserProfileDto profile);
+  void updateProfile(UserProfileDto profile);
 
   // credentials //////////////
 
   @PUT
   @Path("/credentials")
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateCredentials(UserCredentialsDto account);
+  void updateCredentials(UserCredentialsDto account);
 
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)

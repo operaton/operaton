@@ -104,7 +104,7 @@ public class MockMigrationPlanBuilder {
     return this;
   }
 
-  public static interface JoinedMigrationPlanBuilderMock extends MigrationPlanBuilder, MigrationInstructionBuilder, MigrationInstructionsBuilder {
+  public interface JoinedMigrationPlanBuilderMock extends MigrationPlanBuilder, MigrationInstructionBuilder, MigrationInstructionsBuilder {
     // Just an empty interface joining all migration plan builder interfaces together.
     // Allows it to mock all three with one mock instance, which in turn makes invocation verification easier.
     // Quite a hack that may break if the interfaces become incompatible in the future.

@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.rest.sub.history.HistoricJobLogResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricJobLogRestService {
 
-  public static final String PATH = "/job-log";
+  String PATH = "/job-log";
 
   @Path("/{id}")
   HistoricJobLogResource getHistoricJobLog(@PathParam("id") String historicJobLogId);

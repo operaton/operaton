@@ -30,7 +30,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface ExecutionRestService {
 
-  public static final String PATH = "/execution";
+  String PATH = "/execution";
 
   @Path("/{id}")
   ExecutionResource getExecution(@PathParam("id") String executionId);

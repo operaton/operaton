@@ -136,7 +136,7 @@ public interface TaskResource {
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateTask(TaskDto task);
+  void updateTask(TaskDto task);
 
   @DELETE
   void deleteTask(@PathParam("id") String id);

@@ -33,7 +33,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface TaskRestService {
 
-  public static final String PATH = "/task";
+  String PATH = "/task";
 
   @Path("/{id}")
   TaskResource getTask(@PathParam("id") String id, @QueryParam("withCommentAttachmentInfo") boolean withCommentAttachmentInfo);

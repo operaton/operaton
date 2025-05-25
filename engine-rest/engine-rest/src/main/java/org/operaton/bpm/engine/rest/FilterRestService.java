@@ -30,7 +30,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface FilterRestService {
 
-  static final String PATH = "/filter";
+  String PATH = "/filter";
 
   @Path("/{id}")
   FilterResource getFilter(@PathParam("id") String filterId);

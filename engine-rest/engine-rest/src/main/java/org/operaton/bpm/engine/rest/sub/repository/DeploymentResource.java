@@ -31,7 +31,7 @@ import jakarta.ws.rs.core.UriInfo;
 
 public interface DeploymentResource {
 
-  public static final String CASCADE = "cascade";
+  String CASCADE = "cascade";
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)

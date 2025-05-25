@@ -31,7 +31,7 @@ import java.util.Set;
 @Produces(MediaType.APPLICATION_JSON)
 public interface DeploymentRestService {
 
-  public static final String PATH = "/deployment";
+  String PATH = "/deployment";
 
   @Path("/{id}")
   DeploymentResource getDeployment(@PathParam("id") String deploymentId);

@@ -38,7 +38,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface IncidentRestService {
 
-  public static final String PATH = "/incident";
+  String PATH = "/incident";
 
   /**
    * Exposes the {@link IncidentQuery} interface as a REST service.

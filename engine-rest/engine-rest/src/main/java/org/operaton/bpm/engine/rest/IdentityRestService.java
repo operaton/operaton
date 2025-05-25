@@ -33,7 +33,7 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public interface IdentityRestService {
 
-  public static final String PATH = "/identity";
+  String PATH = "/identity";
 
   @GET
   @Path("/groups")

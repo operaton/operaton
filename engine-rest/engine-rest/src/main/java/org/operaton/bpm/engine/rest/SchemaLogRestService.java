@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.rest.dto.SchemaLogQueryDto;
 @Produces(MediaType.APPLICATION_JSON)
 public interface SchemaLogRestService {
 
-  public static final String PATH = "/schema/log";
+  String PATH = "/schema/log";
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)

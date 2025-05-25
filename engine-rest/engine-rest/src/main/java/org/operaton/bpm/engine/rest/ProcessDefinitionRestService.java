@@ -40,11 +40,11 @@ import org.operaton.bpm.engine.rest.sub.repository.ProcessDefinitionResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface ProcessDefinitionRestService {
 
-  public static final String APPLICATION_BPMN20_XML = "application/bpmn20+xml";
-  public static final MediaType APPLICATION_BPMN20_XML_TYPE =
+  String APPLICATION_BPMN20_XML = "application/bpmn20+xml";
+  MediaType APPLICATION_BPMN20_XML_TYPE =
       new MediaType("application", "bpmn20+xml");
 
-  public static final String PATH = "/process-definition";
+  String PATH = "/process-definition";
 
   @Path("/{id}")
   ProcessDefinitionResource getProcessDefinitionById(@PathParam("id") String processDefinitionId);

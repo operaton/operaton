@@ -32,7 +32,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricCaseInstanceRestService {
 
-  public static final String PATH = "/case-instance";
+  String PATH = "/case-instance";
 
   @Path("/{id}")
   HistoricCaseInstanceResource getHistoricCaseInstance(@PathParam("id") String caseInstanceId);

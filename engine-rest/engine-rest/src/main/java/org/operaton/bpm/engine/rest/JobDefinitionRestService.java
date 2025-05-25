@@ -35,7 +35,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface JobDefinitionRestService {
 
-  public static final String PATH = "/job-definition";
+  String PATH = "/job-definition";
 
   @Path("/{id}")
   JobDefinitionResource getJobDefinition(@PathParam("id") String jobDefinitionId);

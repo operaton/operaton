@@ -27,7 +27,7 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public interface MessageRestService {
 
-  public static final String PATH = "/message";
+  String PATH = "/message";
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)

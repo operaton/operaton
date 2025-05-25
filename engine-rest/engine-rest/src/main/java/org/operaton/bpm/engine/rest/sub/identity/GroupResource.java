@@ -32,15 +32,15 @@ public interface GroupResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public GroupDto getGroup(@Context UriInfo context);
+  GroupDto getGroup(@Context UriInfo context);
 
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  public void deleteGroup();
+  void deleteGroup();
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateGroup(GroupDto Group);
+  void updateGroup(GroupDto Group);
 
   @Path(GroupMembersResource.PATH)
   GroupMembersResource getGroupMembersResource();

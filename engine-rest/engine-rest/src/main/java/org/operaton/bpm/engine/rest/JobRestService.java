@@ -33,7 +33,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface JobRestService {
 
-	static final String PATH = "/job";
+	String PATH = "/job";
 
   @Path("/{id}")
   JobResource getJob(@PathParam("id") String jobId);

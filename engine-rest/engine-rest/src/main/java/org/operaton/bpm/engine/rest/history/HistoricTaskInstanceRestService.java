@@ -41,7 +41,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricTaskInstanceRestService {
 
-  public static final String PATH = "/task";
+  String PATH = "/task";
 
   /**
    * Exposes the {@link HistoricTaskInstanceQuery} interface as a REST

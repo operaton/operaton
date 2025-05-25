@@ -34,15 +34,15 @@ public interface TenantResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public TenantDto getTenant(@Context UriInfo context);
+  TenantDto getTenant(@Context UriInfo context);
 
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  public void deleteTenant();
+  void deleteTenant();
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateTenant(TenantDto tenant);
+  void updateTenant(TenantDto tenant);
 
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)

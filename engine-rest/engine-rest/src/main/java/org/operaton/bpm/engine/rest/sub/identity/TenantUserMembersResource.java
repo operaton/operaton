@@ -30,15 +30,15 @@ import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
 
 public interface TenantUserMembersResource {
 
-  public static final String PATH = "/user-members";
+  String PATH = "/user-members";
 
   @PUT
   @Path("/{userId}")
-  public void createMembership(@PathParam("userId") String userId);
+  void createMembership(@PathParam("userId") String userId);
 
   @DELETE
   @Path("/{userId}")
-  public void deleteMembership(@PathParam("userId") String userId);
+  void deleteMembership(@PathParam("userId") String userId);
 
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)

@@ -30,15 +30,15 @@ import jakarta.ws.rs.core.UriInfo;
  */
 public interface GroupMembersResource {
 
-  public static final String PATH = "/members";
+  String PATH = "/members";
 
   @PUT
   @Path("/{userId}")
-  public void createGroupMember(@PathParam("userId") String userId);
+  void createGroupMember(@PathParam("userId") String userId);
 
   @DELETE
   @Path("/{userId}")
-  public void deleteGroupMember(@PathParam("userId") String userId);
+  void deleteGroupMember(@PathParam("userId") String userId);
 
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)

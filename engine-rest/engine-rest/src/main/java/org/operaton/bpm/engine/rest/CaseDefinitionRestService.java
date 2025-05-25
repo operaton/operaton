@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.rest.sub.repository.CaseDefinitionResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface CaseDefinitionRestService {
 
-  public static final String PATH = "/case-definition";
+  String PATH = "/case-definition";
 
   @Path("/{id}")
   CaseDefinitionResource getCaseDefinitionById(@PathParam("id") String caseDefinitionId);

@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
 @Produces(MediaType.APPLICATION_JSON)
 public interface ModificationRestService {
 
-  public static final String PATH = "/modification";
+  String PATH = "/modification";
 
   @POST
   @Path("/execute")

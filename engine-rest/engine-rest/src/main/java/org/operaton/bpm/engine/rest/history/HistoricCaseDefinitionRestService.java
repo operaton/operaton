@@ -39,23 +39,23 @@ import jakarta.ws.rs.core.UriInfo;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricCaseDefinitionRestService {
 
-  public static final String PATH = "/case-definition";
+  String PATH = "/case-definition";
 
   @GET
   @Path("/{id}/statistics")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<HistoricCaseActivityStatisticsDto> getHistoricCaseActivityStatistics(@PathParam("id") String caseDefinitionId);
+  List<HistoricCaseActivityStatisticsDto> getHistoricCaseActivityStatistics(@PathParam("id") String caseDefinitionId);
 
   @GET
   @Path("/cleanable-case-instance-report")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<CleanableHistoricCaseInstanceReportResultDto> getCleanableHistoricCaseInstanceReport(@Context UriInfo uriInfo,
-                                                                                             @QueryParam("firstResult") Integer firstResult,
-                                                                                             @QueryParam("maxResults") Integer maxResults);
+  List<CleanableHistoricCaseInstanceReportResultDto> getCleanableHistoricCaseInstanceReport(@Context UriInfo uriInfo,
+                                                                                            @QueryParam("firstResult") Integer firstResult,
+                                                                                            @QueryParam("maxResults") Integer maxResults);
 
   @GET
   @Path("/cleanable-case-instance-report/count")
   @Produces(MediaType.APPLICATION_JSON)
-  public CountResultDto getCleanableHistoricCaseInstanceReportCount(@Context UriInfo uriInfo);
+  CountResultDto getCleanableHistoricCaseInstanceReportCount(@Context UriInfo uriInfo);
 
 }

@@ -36,5 +36,5 @@ import jakarta.inject.Qualifier;
 @Qualifier
 public @interface StartActivity {
   /** the id of the activity that is being entered / was entered */
-  public String value();
+  String value();
 }

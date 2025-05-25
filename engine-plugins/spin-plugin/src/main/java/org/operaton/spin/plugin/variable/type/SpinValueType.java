@@ -29,10 +29,10 @@ public interface SpinValueType extends SerializableValueType {
   /**
    * Identifies the Spin data format a value is an instance of.
    */
-  static final String VALUE_INFO_SERIALIZATION_DATA_FORMAT = "serializationDataFormat";
+  String VALUE_INFO_SERIALIZATION_DATA_FORMAT = "serializationDataFormat";
 
-  static final SpinValueType JSON = new JsonValueTypeImpl();
+  SpinValueType JSON = new JsonValueTypeImpl();
 
-  static final SpinValueType XML = new XmlValueTypeImpl();
+  SpinValueType XML = new XmlValueTypeImpl();
 
 }

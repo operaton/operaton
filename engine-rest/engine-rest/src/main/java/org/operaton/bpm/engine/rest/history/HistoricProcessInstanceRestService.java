@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.rest.sub.history.HistoricProcessInstanceResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricProcessInstanceRestService {
 
-  public static final String PATH = "/process-instance";
+  String PATH = "/process-instance";
 
   @Path("/{id}")
   HistoricProcessInstanceResource getHistoricProcessInstance(@PathParam("id") String processInstanceId);

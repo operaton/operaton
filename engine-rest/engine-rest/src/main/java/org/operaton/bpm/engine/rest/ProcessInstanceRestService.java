@@ -46,7 +46,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 @Produces(MediaType.APPLICATION_JSON)
 public interface ProcessInstanceRestService {
 
-  public static final String PATH = "/process-instance";
+  String PATH = "/process-instance";
 
   @Path("/{id}")
   ProcessInstanceResource getProcessInstance(@PathParam("id") String processInstanceId);

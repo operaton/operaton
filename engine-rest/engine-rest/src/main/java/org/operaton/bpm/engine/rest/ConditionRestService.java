@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
 @Produces(MediaType.APPLICATION_JSON)
 public interface ConditionRestService {
 
-  public static final String PATH = "/condition";
+  String PATH = "/condition";
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)

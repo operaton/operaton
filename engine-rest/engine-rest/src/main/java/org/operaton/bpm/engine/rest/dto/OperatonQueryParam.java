@@ -28,6 +28,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 
 public @interface OperatonQueryParam {
-  public String value();
-  public Class<? extends JacksonAwareStringToTypeConverter<?>> converter() default StringConverter.class;
+  String value();
+  Class<? extends JacksonAwareStringToTypeConverter<?>> converter() default StringConverter.class;
 }

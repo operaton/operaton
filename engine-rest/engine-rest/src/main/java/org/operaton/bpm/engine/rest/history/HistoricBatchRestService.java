@@ -65,7 +65,7 @@ public interface HistoricBatchRestService {
   @GET
   @Path("/cleanable-batch-report/count")
   @Produces(MediaType.APPLICATION_JSON)
-  public CountResultDto getCleanableHistoricBatchesReportCount(@Context UriInfo uriInfo);
+  CountResultDto getCleanableHistoricBatchesReportCount(@Context UriInfo uriInfo);
 
   @POST
   @Path("/set-removal-time")

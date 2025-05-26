@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.rest.sub.identity.GroupResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface GroupRestService {
 
-  public static final String PATH = "/group";
+  String PATH = "/group";
 
   @Path("/{id}")
   GroupResource getGroup(@PathParam("id") String id);

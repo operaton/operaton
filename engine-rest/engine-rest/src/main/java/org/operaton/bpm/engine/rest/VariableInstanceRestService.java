@@ -35,7 +35,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface VariableInstanceRestService {
 
-  public static final String PATH = "/variable-instance";
+  String PATH = "/variable-instance";
 
   @Path("/{id}")
   VariableInstanceResource getVariableInstance(@PathParam("id") String id);

@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.rest.sub.history.HistoricDecisionInstanceResource
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricDecisionInstanceRestService {
 
-  public static final String PATH = "/decision-instance";
+  String PATH = "/decision-instance";
 
   @Path("/{id}")
   HistoricDecisionInstanceResource getHistoricDecisionInstance(@PathParam("id") String decisionInstanceId);

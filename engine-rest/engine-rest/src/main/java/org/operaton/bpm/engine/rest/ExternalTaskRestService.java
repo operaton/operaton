@@ -46,7 +46,7 @@ import org.operaton.bpm.engine.rest.sub.externaltask.ExternalTaskResource;
  */
 public interface ExternalTaskRestService {
 
-  public static final String PATH = "/external-task";
+  String PATH = "/external-task";
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)

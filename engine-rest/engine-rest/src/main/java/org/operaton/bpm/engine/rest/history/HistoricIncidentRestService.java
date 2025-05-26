@@ -38,7 +38,7 @@ import java.util.List;
 public interface HistoricIncidentRestService {
 
 
-  public static final String PATH = "/incident";
+  String PATH = "/incident";
 
   /**
    * Exposes the {@link HistoricActivityInstanceQuery} interface as a REST

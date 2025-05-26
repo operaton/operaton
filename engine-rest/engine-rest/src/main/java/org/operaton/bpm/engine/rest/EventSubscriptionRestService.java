@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
 @Produces(MediaType.APPLICATION_JSON)
 public interface EventSubscriptionRestService {
 
-  public static final String PATH = "/event-subscription";
+  String PATH = "/event-subscription";
 
   /**
    * Exposes the {@link EventSubscriptionQuery} interface as a REST service.

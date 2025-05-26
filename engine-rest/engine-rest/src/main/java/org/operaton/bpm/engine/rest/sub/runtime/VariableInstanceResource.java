@@ -36,12 +36,12 @@ public interface VariableInstanceResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public VariableInstanceDto getResource(
-      @QueryParam(VariableResource.DESERIALIZE_VALUE_QUERY_PARAM) @DefaultValue("true") boolean deserializeObjectValue);
+  VariableInstanceDto getResource(
+          @QueryParam(VariableResource.DESERIALIZE_VALUE_QUERY_PARAM) @DefaultValue("true") boolean deserializeObjectValue);
 
 
   @GET
   @Path("/data")
-  public Response getResourceBinary();
+  Response getResourceBinary();
 
 }

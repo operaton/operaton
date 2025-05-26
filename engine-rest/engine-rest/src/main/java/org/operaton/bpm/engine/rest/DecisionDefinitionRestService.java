@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.rest.sub.repository.DecisionDefinitionResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface DecisionDefinitionRestService {
 
-  public static final String PATH = "/decision-definition";
+  String PATH = "/decision-definition";
 
   @Path("/{id}")
   DecisionDefinitionResource getDecisionDefinitionById(@PathParam("id") String decisionDefinitionId);

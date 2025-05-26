@@ -41,7 +41,7 @@ import java.util.List;
 @Path(UserOperationLogRestService.PATH)
 public interface UserOperationLogRestService {
 
-  public static final String PATH = "/user-operation";
+  String PATH = "/user-operation";
 
   @GET
   @Path("/count")

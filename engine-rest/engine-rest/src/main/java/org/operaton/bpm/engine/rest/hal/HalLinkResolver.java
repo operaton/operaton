@@ -29,6 +29,6 @@ import java.util.List;
  */
 public interface HalLinkResolver {
 
-  public List<HalResource<?>> resolveLinks(String[] linkedIds, ProcessEngine processEngine);
+  List<HalResource<?>> resolveLinks(String[] linkedIds, ProcessEngine processEngine);
 
 }

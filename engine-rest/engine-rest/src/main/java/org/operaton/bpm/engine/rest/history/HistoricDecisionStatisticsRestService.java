@@ -32,7 +32,7 @@ import java.util.List;
 @Path(HistoricDecisionStatisticsRestService.PATH)
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricDecisionStatisticsRestService {
-  public static final String PATH = "/decision-requirements-definition";
+  String PATH = "/decision-requirements-definition";
 
   @GET
   @Path("/{id}/statistics")

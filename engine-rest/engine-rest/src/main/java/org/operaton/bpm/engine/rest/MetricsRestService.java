@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.rest.sub.metrics.MetricsResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface MetricsRestService {
 
-  public static final String PATH = "/metrics";
+  String PATH = "/metrics";
 
   @Path("/{name}")
   MetricsResource getMetrics(@PathParam("name") String name);

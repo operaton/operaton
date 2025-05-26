@@ -37,8 +37,8 @@ import org.operaton.bpm.engine.rest.mapper.MultipartFormData;
 
 public interface VariableResource {
 
-  public static final String DESERIALIZE_VALUE_QUERY_PARAM = "deserializeValue";
-  public static final String DESERIALIZE_VALUES_QUERY_PARAM = DESERIALIZE_VALUE_QUERY_PARAM + "s";
+  String DESERIALIZE_VALUE_QUERY_PARAM = "deserializeValue";
+  String DESERIALIZE_VALUES_QUERY_PARAM = DESERIALIZE_VALUE_QUERY_PARAM + "s";
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -54,7 +54,7 @@ public interface VariableResource {
 
   @GET
   @Path("/{varId}/data")
-  public Response getVariableBinary(@PathParam("varId") String variableName);
+  Response getVariableBinary(@PathParam("varId") String variableName);
 
   @PUT
   @Path("/{varId}")

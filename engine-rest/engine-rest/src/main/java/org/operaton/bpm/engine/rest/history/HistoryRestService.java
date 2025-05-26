@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoryRestService {
 
-  public static final String PATH = "/history";
+  String PATH = "/history";
 
   @Path(HistoricProcessInstanceRestService.PATH)
   HistoricProcessInstanceRestService getProcessInstanceService();

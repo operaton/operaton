@@ -36,7 +36,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface AuthorizationRestService {
 
-  public static final String PATH = "/authorization";
+  String PATH = "/authorization";
 
   @GET
   @Path("/check")

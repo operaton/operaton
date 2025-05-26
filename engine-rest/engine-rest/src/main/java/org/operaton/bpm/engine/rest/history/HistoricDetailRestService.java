@@ -38,7 +38,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricDetailRestService {
 
-  public static final String PATH = "/detail";
+  String PATH = "/detail";
 
   @Path("/{id}")
   HistoricDetailResource historicDetail(@PathParam("id") String detailId);

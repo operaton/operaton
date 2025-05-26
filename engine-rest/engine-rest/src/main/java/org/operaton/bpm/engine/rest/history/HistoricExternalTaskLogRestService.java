@@ -34,7 +34,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricExternalTaskLogRestService {
 
-  public static final String PATH = "/external-task-log";
+  String PATH = "/external-task-log";
 
   @Path("/{id}")
   HistoricExternalTaskLogResource getHistoricExternalTaskLog(@PathParam("id") String historicExternalTaskLogId);

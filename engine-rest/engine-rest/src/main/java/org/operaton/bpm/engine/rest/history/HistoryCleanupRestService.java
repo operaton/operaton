@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.rest.dto.runtime.JobDto;
 
 public interface HistoryCleanupRestService {
 
-  public static final String PATH = "/cleanup";
+  String PATH = "/cleanup";
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)

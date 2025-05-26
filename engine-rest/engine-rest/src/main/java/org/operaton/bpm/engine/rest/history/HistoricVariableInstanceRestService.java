@@ -33,7 +33,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricVariableInstanceRestService {
 
-  public static final String PATH = "/variable-instance";
+  String PATH = "/variable-instance";
 
   @Path("/{id}")
   HistoricVariableInstanceResource variableInstanceResource(@PathParam("id") String id);

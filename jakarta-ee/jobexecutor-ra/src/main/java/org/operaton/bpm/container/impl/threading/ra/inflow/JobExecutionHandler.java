@@ -28,6 +28,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobFailureCollector;
  */
 public interface JobExecutionHandler {
 
-  public JobFailureCollector executeJob(String job, CommandExecutor commandExecutor);
+  JobFailureCollector executeJob(String job, CommandExecutor commandExecutor);
 
 }

@@ -27,9 +27,9 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
  */
 public interface JcaExecutorServiceConnection {
     
-  public boolean schedule(Runnable runnable, boolean isLongRunning);
+  boolean schedule(Runnable runnable, boolean isLongRunning);
 
-  public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine);
+  Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine);
   
-  public void closeConnection();
+  void closeConnection();
 }

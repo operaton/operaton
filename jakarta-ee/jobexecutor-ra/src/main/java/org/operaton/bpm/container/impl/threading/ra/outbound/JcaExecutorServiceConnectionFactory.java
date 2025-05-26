@@ -28,6 +28,6 @@ import jakarta.resource.ResourceException;
  */
 public interface JcaExecutorServiceConnectionFactory extends Serializable, Referenceable {
 
-  public JcaExecutorServiceConnection getConnection() throws ResourceException;
+  JcaExecutorServiceConnection getConnection() throws ResourceException;
 
 }

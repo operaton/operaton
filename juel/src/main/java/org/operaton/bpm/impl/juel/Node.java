@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 package org.operaton.bpm.impl.juel;
 
 /**
@@ -21,13 +21,13 @@ package org.operaton.bpm.impl.juel;
  * @author Christoph Beck
  */
 public interface Node {
-	/**
-	 * Get the node's number of children.
-	 */
-    int getCardinality();
-	
-	/**
-	 * Get i'th child
-	 */
-    Node getChild(int i);
+  /**
+   * Get the node's number of children.
+   */
+  int getCardinality();
+
+  /**
+   * Get i'th child
+   */
+  Node getChild(int i);
 }

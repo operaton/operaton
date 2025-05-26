@@ -12,24 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 package org.operaton.bpm.impl.juel;
 
+import jakarta.el.ELException;
 import java.io.Serializable;
 
-import jakarta.el.ELException;
-
 public interface TypeConverter extends Serializable {
-	/**
-	 * Default conversions as from JSR245.
-	 */
-    TypeConverter DEFAULT = new TypeConverterImpl();
-	
-	/**
-	 * Convert the given input value to the specified target type.
-	 * @param value input value
-	 * @param type target type
-	 * @return conversion result
-	 */
-    <T> T convert(Object value, Class<T> type) throws ELException;
+  /**
+   * Default conversions as from JSR245.
+   */
+  TypeConverter DEFAULT = new TypeConverterImpl();
+
+  /**
+   * Convert the given input value to the specified target type.
+   *
+   * @param value input value
+   * @param type  target type
+   * @return conversion result
+   */
+  <T> T convert(Object value, Class<T> type) throws ELException;
 }

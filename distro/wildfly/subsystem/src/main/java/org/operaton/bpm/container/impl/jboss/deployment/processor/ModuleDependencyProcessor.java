@@ -30,7 +30,6 @@ import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.as.server.deployment.module.ModuleDependency;
 import org.jboss.as.server.deployment.module.ModuleSpecification;
 import org.jboss.modules.Module;
-import org.jboss.modules.ModuleIdentifier;
 import org.jboss.modules.ModuleLoader;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController.Mode;
@@ -104,8 +103,7 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
     }
 
     // install the pa-module service
-    ModuleIdentifier identifyer = deploymentUnit.getAttachment(Attachments.MODULE_IDENTIFIER);
-    String moduleName = identifyer.toString();
+    String moduleName = deploymentUnit.getAttachment(Attachments.MODULE_NAME);
 
     ServiceName serviceName = ServiceNames.forProcessApplicationModuleService(moduleName);
 

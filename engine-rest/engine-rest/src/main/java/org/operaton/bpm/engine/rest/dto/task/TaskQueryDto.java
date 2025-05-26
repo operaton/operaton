@@ -508,10 +508,13 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.dueDate = dueDate;
   }
 
-  @Deprecated(since = "1.0")
+  /**
+   * @deprecated Use {@link #setDueDate(Date)} instead
+   */
+  @Deprecated(since = "1.0", forRemoval = true)
   @OperatonQueryParam(value = "due", converter = DateConverter.class)
   public void setDue(Date dueDate) {
-    this.dueDate = dueDate;
+    setDueDate(dueDate);
   }
 
   @OperatonQueryParam(value = "dueDateExpression")
@@ -559,10 +562,13 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.followUpDate = followUpDate;
   }
 
-  @Deprecated(since = "1.0")
+  /**
+   * @deprecated Use {@link #setFollowUpDate(Date)} instead
+   */
+  @Deprecated(since = "1.0", forRemoval = true)
   @OperatonQueryParam(value = "followUp", converter = DateConverter.class)
   public void setFollowUp(Date followUpDate) {
-    this.followUpDate = followUpDate;
+    setFollowUpDate(followUpDate);
   }
 
   @OperatonQueryParam(value = "followUpDateExpression")

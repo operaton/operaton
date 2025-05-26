@@ -34,8 +34,8 @@ public class AssertingTaskListener implements TaskListener {
     }
   }
 
-  public static interface DelegateTaskAsserter {
-    public void doAssert(DelegateTask task);
+  public interface DelegateTaskAsserter {
+    void doAssert(DelegateTask task);
   }
 
   public static void clear() {

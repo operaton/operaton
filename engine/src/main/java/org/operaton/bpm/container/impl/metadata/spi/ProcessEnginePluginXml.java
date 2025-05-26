@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 public interface ProcessEnginePluginXml {
   
   /** returns the fully qualified classname of the plugin */
-  public String getPluginClass();
+  String getPluginClass();
   
   /**
    * @return a set of additional properties. The properties are directly set on
@@ -39,6 +39,6 @@ public interface ProcessEnginePluginXml {
    *         and the bean property must be of type
    *         {@link String}, {@link Integer} or {@link Boolean}.
    */
-  public Map<String, String> getProperties();
+  Map<String, String> getProperties();
 
 }

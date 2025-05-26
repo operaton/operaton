@@ -28,6 +28,6 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
  */
 public interface RejectedJobsHandler {
 
-  public void jobsRejected(List<String> jobIds, ProcessEngineImpl processEngine, JobExecutor jobExecutor);
+  void jobsRejected(List<String> jobIds, ProcessEngineImpl processEngine, JobExecutor jobExecutor);
 
 }

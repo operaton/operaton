@@ -45,12 +45,12 @@ public interface Incident {
   /**
    * Handler type for incidents created on job execution failure
    */
-  static final String FAILED_JOB_HANDLER_TYPE = "failedJob";
+  String FAILED_JOB_HANDLER_TYPE = "failedJob";
 
   /**
    * Handler type for incidents created on external task failure
    */
-  static final String EXTERNAL_TASK_HANDLER_TYPE = "failedExternalTask";
+  String EXTERNAL_TASK_HANDLER_TYPE = "failedExternalTask";
 
   /**
    * Returns the unique identifier for this incident.

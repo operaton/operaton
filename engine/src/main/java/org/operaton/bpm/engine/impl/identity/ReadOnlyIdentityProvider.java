@@ -44,32 +44,32 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @return a {@link User} object for the given user id or null if no such user exists.
    * @throws IdentityProviderException in case an error occurs
    */
-  public User findUserById(String userId);
+  User findUserById(String userId);
 
 
   /**
    * @return a {@link UserQuery} object which can be used for querying for users.
    * @throws IdentityProviderException in case an error occurs
    */
-  public UserQuery createUserQuery();
+  UserQuery createUserQuery();
 
   /**
    * @return a {@link UserQuery} object which can be used in the current command context
    * @throws IdentityProviderException in case an error occurs
    */
-  public UserQuery createUserQuery(CommandContext commandContext);
+  UserQuery createUserQuery(CommandContext commandContext);
 
   /**
    * Creates a {@link NativeUserQuery} that allows to select users with native queries.
    * @return NativeUserQuery
    */
-  public NativeUserQuery createNativeUserQuery();
+  NativeUserQuery createNativeUserQuery();
 
   /**
    * @return 'true' if the password matches the
    * @throws IdentityProviderException in case an error occurs
    */
-  public boolean checkPassword(String userId, String password);
+  boolean checkPassword(String userId, String password);
 
   // groups //////////////////////////////////////
 
@@ -77,19 +77,19 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @return a {@link Group} object for the given group id or null if no such group exists.
    * @throws IdentityProviderException in case an error occurs
    */
-  public Group findGroupById(String groupId);
+  Group findGroupById(String groupId);
 
   /**
    * @return a {@link GroupQuery} object which can be used for querying for groups.
    * @throws IdentityProviderException in case an error occurs
    */
-  public GroupQuery createGroupQuery();
+  GroupQuery createGroupQuery();
 
   /**
    * @return a {@link GroupQuery} object which can be used for querying for groups and can be reused in the current command context.
    * @throws IdentityProviderException in case an error occurs
    */
-  public GroupQuery createGroupQuery(CommandContext commandContext);
+  GroupQuery createGroupQuery(CommandContext commandContext);
 
   // tenants //////////////////////////////////////
 
@@ -99,7 +99,7 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @throws IdentityProviderException
    *           in case an error occurs
    */
-  public Tenant findTenantById(String tenantId);
+  Tenant findTenantById(String tenantId);
 
   /**
    * @return a {@link TenantQuery} object which can be used for querying for
@@ -107,7 +107,7 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @throws IdentityProviderException
    *           in case an error occurs
    */
-  public TenantQuery createTenantQuery();
+  TenantQuery createTenantQuery();
 
   /**
    * @return a {@link TenantQuery} object which can be used for querying for
@@ -115,6 +115,6 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @throws IdentityProviderException
    *           in case an error occurs
    */
-  public TenantQuery createTenantQuery(CommandContext commandContext);
+  TenantQuery createTenantQuery(CommandContext commandContext);
 
 }

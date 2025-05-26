@@ -20,5 +20,5 @@ import org.operaton.bpm.engine.query.QueryProperty;
 
 public interface CleanableHistoricInstanceReportProperty {
 
-  public static final QueryProperty FINISHED_AMOUNT = new QueryPropertyImpl("FINISHED_");
+  QueryProperty FINISHED_AMOUNT = new QueryPropertyImpl("FINISHED_");
 }

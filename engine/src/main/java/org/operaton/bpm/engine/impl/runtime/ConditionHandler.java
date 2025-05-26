@@ -32,7 +32,7 @@ public interface ConditionHandler {
    * @param conditionSet
    * @return all matched process definitions and respective activities containing evaluated to true conditions
    */
-  public List<ConditionHandlerResult> evaluateStartCondition(CommandContext commandContext, ConditionSet conditionSet);
+  List<ConditionHandlerResult> evaluateStartCondition(CommandContext commandContext, ConditionSet conditionSet);
 
 
 }

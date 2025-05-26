@@ -205,14 +205,14 @@ public class VariableStore<T extends CoreVariableInstance> {
     observers.remove(observer);
   }
 
-  public static interface VariableStoreObserver<T extends CoreVariableInstance> {
+  public interface VariableStoreObserver<T extends CoreVariableInstance> {
 
     void onAdd(T variable);
 
     void onRemove(T variable);
   }
 
-  public static interface VariablesProvider<T extends CoreVariableInstance> {
+  public interface VariablesProvider<T extends CoreVariableInstance> {
 
     Collection<T> provideVariables();
 

@@ -38,8 +38,8 @@ public class AssertingJavaDelegate implements JavaDelegate {
     }
   }
 
-  public static interface DelegateExecutionAsserter {
-    public void doAssert(DelegateExecution execution);
+  public interface DelegateExecutionAsserter {
+    void doAssert(DelegateExecution execution);
   }
 
   public static void clear() {

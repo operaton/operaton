@@ -40,6 +40,6 @@ public interface ArtifactFactory {
    * @param clazz of the artifact to create
    * @return the instance of the fullyQualifiedClassName
    */
-  public <T> T getArtifact(Class<T> clazz);
+  <T> T getArtifact(Class<T> clazz);
 
 }

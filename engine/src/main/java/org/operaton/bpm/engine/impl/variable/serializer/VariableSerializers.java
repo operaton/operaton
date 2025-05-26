@@ -38,46 +38,46 @@ public interface VariableSerializers {
    * @return the VariableValueserializer selected for persisting the value or 'null' in case no serializer can be found
    */
   @SuppressWarnings("rawtypes")
-  public TypedValueSerializer findSerializerForValue(TypedValue value, VariableSerializerFactory fallBackSerializerFactory);
+  TypedValueSerializer findSerializerForValue(TypedValue value, VariableSerializerFactory fallBackSerializerFactory);
 
   /**
    * Same as calling {@link VariableSerializers#findSerializerForValue(TypedValue, VariableSerializerFactory)}
    * with no fallback serializer factory.
    */
   @SuppressWarnings("rawtypes")
-  public TypedValueSerializer findSerializerForValue(TypedValue value);
+  TypedValueSerializer findSerializerForValue(TypedValue value);
 
   /**
    *
    * @return the serializer for the given serializerName name.
    * Returns null if no type was found with the name.
    */
-  public TypedValueSerializer<?> getSerializerByName(String serializerName);
+  TypedValueSerializer<?> getSerializerByName(String serializerName);
 
-  public VariableSerializers addSerializer(TypedValueSerializer<?> serializer);
+  VariableSerializers addSerializer(TypedValueSerializer<?> serializer);
 
   /**
    * Add type at the given index. The index is used when finding a serializer for a VariableValue. When
    * different serializers can store a specific variable value, the one with the smallest
    * index will be used.
    */
-  public VariableSerializers addSerializer(TypedValueSerializer<?> serializer, int index);
+  VariableSerializers addSerializer(TypedValueSerializer<?> serializer, int index);
 
-  public VariableSerializers removeSerializer(TypedValueSerializer<?> serializer);
+  VariableSerializers removeSerializer(TypedValueSerializer<?> serializer);
 
-  public int getSerializerIndex(TypedValueSerializer<?> serializer);
+  int getSerializerIndex(TypedValueSerializer<?> serializer);
 
-  public int getSerializerIndexByName(String serializerName);
+  int getSerializerIndexByName(String serializerName);
 
   /**
    * Merges two {@link VariableSerializers} instances into one. Implementations may apply
    * different merging strategies.
    */
-  public VariableSerializers join(VariableSerializers other);
+  VariableSerializers join(VariableSerializers other);
 
   /**
    * Returns the serializers as a list in the order of their indices.
    */
-  public List<TypedValueSerializer<?>> getSerializers();
+  List<TypedValueSerializer<?>> getSerializers();
 
 }

@@ -31,5 +31,5 @@ public interface CacheFactory {
    * @return
    *        The cache to be created.
    */
-  public <T> Cache<String, T > createCache(int maxNumberOfElementsInCache);
+  <T> Cache<String, T > createCache(int maxNumberOfElementsInCache);
 }

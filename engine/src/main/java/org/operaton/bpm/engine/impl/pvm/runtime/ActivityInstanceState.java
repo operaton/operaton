@@ -34,7 +34,7 @@ public interface ActivityInstanceState {
 
   ///////////////////////////////////////////////////// default implementation
 
-  static class ActivityInstanceStateImpl implements ActivityInstanceState {
+  class ActivityInstanceStateImpl implements ActivityInstanceState {
 
     public final int stateCode;
     protected final String name;

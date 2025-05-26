@@ -33,7 +33,7 @@ public interface SuspensionState {
 
   ///////////////////////////////////////////////////// default implementation
 
-  static class SuspensionStateImpl implements SuspensionState {
+  class SuspensionStateImpl implements SuspensionState {
 
     public final int stateCode;
     protected final String name;

@@ -33,7 +33,7 @@ public interface ExternalTaskQueryBuilder {
    *   begins at the time of fetching
    * @return
    */
-  public ExternalTaskQueryTopicBuilder topic(String topicName, long lockDuration);
+  ExternalTaskQueryTopicBuilder topic(String topicName, long lockDuration);
 
   /**
    * Performs the fetching. Locks candidate tasks of the given topics

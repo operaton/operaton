@@ -32,7 +32,7 @@ public interface JobState {
 
   ///////////////////////////////////////////////////// default implementation
 
-  static class JobStateImpl implements JobState {
+  class JobStateImpl implements JobState {
 
     public final int stateCode;
     protected final String name;

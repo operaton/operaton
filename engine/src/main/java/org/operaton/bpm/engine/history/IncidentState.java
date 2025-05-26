@@ -31,7 +31,7 @@ public interface IncidentState {
 
   ///////////////////////////////////////////////////// default implementation
 
-  static class IncidentStateImpl implements IncidentState {
+  class IncidentStateImpl implements IncidentState {
 
     public final int stateCode;
     protected final String name;

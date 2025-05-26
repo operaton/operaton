@@ -41,7 +41,7 @@ public interface ExecutorService {
    * @return true if the runnable could be successfully scheduled for execution.
    *         'false' otherwise.
    */
-  public boolean schedule(Runnable runnable, boolean isLongRunning);
+  boolean schedule(Runnable runnable, boolean isLongRunning);
   
   /**
    * <p>Returns a runnable to be used for executing Jobs. 
@@ -50,6 +50,6 @@ public interface ExecutorService {
    * @param processEngine
    * @return
    */
-  public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine);
+  Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine);
   
 }

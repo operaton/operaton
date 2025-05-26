@@ -27,8 +27,8 @@ public interface EventSubscriptionQueryProperty {
 
   // properties used in event subscription queries:
 
-  public static final QueryProperty CREATED = new QueryPropertyImpl("CREATED_");
+  QueryProperty CREATED = new QueryPropertyImpl("CREATED_");
 
-  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
 
 }

@@ -34,6 +34,6 @@ public interface FormFieldValidator {
    *          validating the form
    * @return true if the value is valid, false otherwise.
    */
-  public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext);
+  boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext);
 
 }

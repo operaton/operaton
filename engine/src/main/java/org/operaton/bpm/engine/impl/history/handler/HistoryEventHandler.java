@@ -42,13 +42,13 @@ public interface HistoryEventHandler {
    *
    * @param historyEvent the {@link HistoryEvent} that is about to be fired.
    */
-  public void handleEvent(HistoryEvent historyEvent);
+  void handleEvent(HistoryEvent historyEvent);
 
   /**
    * Called by the process engine when an history event is fired.
    *
    * @param historyEvents the {@link HistoryEvent} that is about to be fired.
    */
-  public void handleEvents(List<HistoryEvent> historyEvents);
+  void handleEvents(List<HistoryEvent> historyEvents);
 
 }

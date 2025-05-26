@@ -26,24 +26,24 @@ package org.operaton.bpm.container.impl.jmx.services;
  */
 public interface JmxManagedThreadPoolMBean {
 
-  public abstract int getQueueCount();
+  int getQueueCount();
 
-  public abstract long getCompletedTaskCount();
+  long getCompletedTaskCount();
 
-  public abstract long getTaskCount();
+  long getTaskCount();
 
-  public abstract int getLargestPoolSize();
+  int getLargestPoolSize();
 
-  public abstract int getActiveCount();
+  int getActiveCount();
 
-  public abstract int getPoolSize();
+  int getPoolSize();
 
-  public abstract void purgeThreadPool();
+  void purgeThreadPool();
 
-  public abstract int getMaximumPoolSize();
+  int getMaximumPoolSize();
 
-  public abstract void setMaximumPoolSize(int maximumPoolSize);
+  void setMaximumPoolSize(int maximumPoolSize);
 
-  public abstract void setCorePoolSize(int corePoolSize);
+  void setCorePoolSize(int corePoolSize);
 
 }

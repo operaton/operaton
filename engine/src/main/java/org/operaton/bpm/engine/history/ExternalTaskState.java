@@ -28,7 +28,7 @@ public interface ExternalTaskState {
 
   ///////////////////////////////////////////////////// default implementation
 
-  static class ExternalTaskStateImpl implements ExternalTaskState {
+  class ExternalTaskStateImpl implements ExternalTaskState {
 
     public final int stateCode;
     protected final String name;

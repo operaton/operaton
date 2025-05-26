@@ -31,7 +31,7 @@ public enum ServiceTypes implements ServiceType {
 
   protected String serviceRealm;
 
-  private ServiceTypes(String serviceRealm) {
+  ServiceTypes(String serviceRealm) {
     this.serviceRealm = serviceRealm;
   }
 

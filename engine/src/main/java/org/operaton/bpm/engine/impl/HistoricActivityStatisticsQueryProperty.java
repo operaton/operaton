@@ -25,6 +25,6 @@ import org.operaton.bpm.engine.query.QueryProperty;
  */
 public interface HistoricActivityStatisticsQueryProperty {
 
-  public static final QueryProperty ACTIVITY_ID_ = new QueryPropertyImpl("ID_");
+  QueryProperty ACTIVITY_ID_ = new QueryPropertyImpl("ID_");
 
 }

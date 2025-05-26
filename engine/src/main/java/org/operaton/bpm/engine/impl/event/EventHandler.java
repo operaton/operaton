@@ -24,13 +24,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
  */
 public interface EventHandler {
 
-  public String getEventHandlerType();
+  String getEventHandlerType();
 
-  public void handleEvent(EventSubscriptionEntity eventSubscription,
-                          Object payload,
-                          Object localPayload,
-                          Object payloadToTriggeredScope,
-                          String businessKey,
-                          CommandContext commandContext);
+  void handleEvent(EventSubscriptionEntity eventSubscription,
+                   Object payload,
+                   Object localPayload,
+                   Object payloadToTriggeredScope,
+                   String businessKey,
+                   CommandContext commandContext);
 
 }

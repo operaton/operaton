@@ -25,6 +25,6 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
  */
 public interface TransferVariablesActivityBehavior extends CmmnActivityBehavior {
 
-  public void transferVariables(VariableScope sourceScope, CmmnActivityExecution caseExecution);
+  void transferVariables(VariableScope sourceScope, CmmnActivityExecution caseExecution);
 
 }

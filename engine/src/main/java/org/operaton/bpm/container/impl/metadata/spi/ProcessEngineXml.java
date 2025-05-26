@@ -35,12 +35,12 @@ public interface ProcessEngineXml {
   /**
    * @return the name of the process engine. Must not be null.
    */
-  public String getName();
+  String getName();
 
   /**
    * @return true if the process engine is the default process engine.
    */
-  public boolean isDefault();
+  boolean isDefault();
 
   /**
    * @return the name of the Java Class that is to be used in order to create
@@ -48,12 +48,12 @@ public interface ProcessEngineXml {
    *         {@link ProcessEngineConfiguration}. If no value is specified,
    *         {@link StandaloneProcessEngineConfiguration} is used.
    */
-  public String getConfigurationClass();
+  String getConfigurationClass();
   
   /**
    * @return the JNDI Name of the datasource to be used. 
    */
-  public String getDatasource();
+  String getDatasource();
 
   /**
    * @return a set of additional properties. The properties are directly set on
@@ -63,16 +63,16 @@ public interface ProcessEngineXml {
    *         configuration class and the bean property must be of type
    *         {@link String}, {@link Integer} or {@link Boolean}.
    */
-  public Map<String, String> getProperties();
+  Map<String, String> getProperties();
   
   /**
    * @return the name of the job acquisition to be used.
    */
-  public String getJobAcquisitionName();
+  String getJobAcquisitionName();
   
   /**
    * @return a list of {@link ProcessEnginePlugin} definitions.
    */
-  public List<ProcessEnginePluginXml> getPlugins();
+  List<ProcessEnginePluginXml> getPlugins();
 
 }

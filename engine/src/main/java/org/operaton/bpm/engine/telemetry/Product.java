@@ -31,21 +31,21 @@ public interface Product {
   /**
    * The name of the product (i.e., Operaton BPM Runtime).
    */
-  public String getName();
+  String getName();
 
   /**
    * The version of the process engine (i.e., 7.X.Y).
    */
-  public String getVersion();
+  String getVersion();
 
   /**
    * The edition of the product (i.e., either community or enterprise).
    */
-  public String getEdition();
+  String getEdition();
 
   /**
    * Information about the technical internals and the environment of the
    * Operaton installation.
    */
-  public Internals getInternals();
+  Internals getInternals();
 }

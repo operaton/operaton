@@ -51,7 +51,7 @@ public interface CaseExecutionState {
 
   ///////////////////////////////////////////////////// default implementation
 
-  static class CaseExecutionStateImpl implements CaseExecutionState {
+  class CaseExecutionStateImpl implements CaseExecutionState {
 
     public final int stateCode;
     protected final String name;

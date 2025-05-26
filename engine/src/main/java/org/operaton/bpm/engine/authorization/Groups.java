@@ -23,8 +23,8 @@ package org.operaton.bpm.engine.authorization;
  */
 public interface Groups {
 
-  public static final String OPERATON_ADMIN = "operaton-admin";
-  public static final String GROUP_TYPE_SYSTEM = "SYSTEM";
-  public static final String GROUP_TYPE_WORKFLOW = "WORKFLOW";
+  String OPERATON_ADMIN = "operaton-admin";
+  String GROUP_TYPE_SYSTEM = "SYSTEM";
+  String GROUP_TYPE_WORKFLOW = "WORKFLOW";
   
 }

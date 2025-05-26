@@ -48,7 +48,7 @@ public interface ExternalTaskService {
    * @return a builder to define and execute an external task fetching operation
    * @see {@link ExternalTaskService#fetchAndLock(int, java.lang.String, boolean)}.
    */
-  public ExternalTaskQueryBuilder fetchAndLock(int maxTasks, String workerId);
+  ExternalTaskQueryBuilder fetchAndLock(int maxTasks, String workerId);
 
   /**
    * <p>Defines fetching of external tasks by using a fluent builder.
@@ -91,7 +91,7 @@ public interface ExternalTaskService {
    * @param usePriority the flag to enable the priority fetching mechanism
    * @return a builder to define and execute an external task fetching operation
    */
-  public ExternalTaskQueryBuilder fetchAndLock(int maxTasks, String workerId, boolean usePriority);
+  ExternalTaskQueryBuilder fetchAndLock(int maxTasks, String workerId, boolean usePriority);
 
   /**
    * Fetch and Lock method which allows the configuration of all parameters through a Fluent API.
@@ -99,7 +99,7 @@ public interface ExternalTaskService {
    *
    * @return a builder to define and execute an external task fetching operation
    */
-  public FetchAndLockBuilder fetchAndLock();
+  FetchAndLockBuilder fetchAndLock();
 
   /**
    * <p>Lock an external task on behalf of a worker.
@@ -118,7 +118,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void lock(String externalTaskId, String workerId, long lockDuration);
+  void lock(String externalTaskId, String workerId, long lockDuration);
 
   /**
    * <p>Completes an external task on behalf of a worker. The given task must be
@@ -134,7 +134,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void complete(String externalTaskId, String workerId);
+  void complete(String externalTaskId, String workerId);
 
   /**
    * <p>Completes an external task on behalf of a worker and submits variables
@@ -154,7 +154,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void complete(String externalTaskId, String workerId, Map<String, Object> variables);
+  void complete(String externalTaskId, String workerId, Map<String, Object> variables);
 
   /**
    * <p>Completes an external task on behalf of a worker and submits variables
@@ -175,7 +175,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void complete(String externalTaskId, String workerId, Map<String, Object> variables, Map<String, Object> localVariables);
+  void complete(String externalTaskId, String workerId, Map<String, Object> variables, Map<String, Object> localVariables);
 
   /**
    * <p>Extends a lock of an external task on behalf of a worker.
@@ -192,7 +192,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void extendLock(String externalTaskId, String workerId, long newLockDuration);
+  void extendLock(String externalTaskId, String workerId, long newLockDuration);
 
   /**
    * <p>Signals that an external task could not be successfully executed.
@@ -222,7 +222,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void handleFailure(String externalTaskId, String workerId, String errorMessage, int retries, long retryTimeout);
+  void handleFailure(String externalTaskId, String workerId, String errorMessage, int retries, long retryTimeout);
 
   /**
    * <p>Signals that an external task could not be successfully executed.
@@ -254,7 +254,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void handleFailure(String externalTaskId, String workerId, String errorMessage, String errorDetails, int retries, long retryTimeout);
+  void handleFailure(String externalTaskId, String workerId, String errorMessage, String errorDetails, int retries, long retryTimeout);
 
   /**
    * <p>Signals that an external task could not be successfully executed.
@@ -292,7 +292,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void handleFailure(String externalTaskId, String workerId, String errorMessage, String errorDetails, int retries, long retryDuration, Map<String, Object> variables, Map<String, Object> localVariables);
+  void handleFailure(String externalTaskId, String workerId, String errorMessage, String errorDetails, int retries, long retryDuration, Map<String, Object> variables, Map<String, Object> localVariables);
 
   /**
    * <p>Signals that an business error appears, which should be handled by the process engine.
@@ -313,7 +313,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void handleBpmnError(String externalTaskId, String workerId, String errorCode);
+  void handleBpmnError(String externalTaskId, String workerId, String errorCode);
 
   /**
    * <p>Signals that an business error appears, which should be handled by the process engine.
@@ -335,7 +335,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void handleBpmnError(String externalTaskId, String workerId, String errorCode, String errorMessage);
+  void handleBpmnError(String externalTaskId, String workerId, String errorCode, String errorMessage);
 
 
   /**
@@ -359,7 +359,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void handleBpmnError(String externalTaskId, String workerId, String errorCode, String errorMessage, Map<String, Object> variables);
+  void handleBpmnError(String externalTaskId, String workerId, String errorCode, String errorMessage, Map<String, Object> variables);
 
   /**
    * Unlocks an external task instance.
@@ -372,7 +372,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void unlock(String externalTaskId);
+  void unlock(String externalTaskId);
 
   /**
    * Sets the retries for an external task. If the new value is 0, a new incident with a <code>null</code>
@@ -388,7 +388,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void setRetries(String externalTaskId, int retries);
+  void setRetries(String externalTaskId, int retries);
 
   /**
    * Sets the retries for external tasks. If the new value is 0, a new incident with a <code>null</code>
@@ -405,7 +405,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void setRetries(List<String> externalTaskIds, int retries);
+  void setRetries(List<String> externalTaskIds, int retries);
 
   /**
    * Sets the retries for external tasks asynchronously as batch. The returned batch
@@ -425,7 +425,7 @@ public interface ExternalTaskService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_SET_EXTERNAL_TASK_RETRIES} permission on {@link Resources#BATCH}.
    */
-  public Batch setRetriesAsync(List<String> externalTaskIds, ExternalTaskQuery externalTaskQuery, int retries);
+  Batch setRetriesAsync(List<String> externalTaskIds, ExternalTaskQuery externalTaskQuery, int retries);
 
   /**
    * Sets the retries for external tasks using a fluent builder.
@@ -437,7 +437,7 @@ public interface ExternalTaskService {
    *
    * @since 7.8
    */
-  public UpdateExternalTaskRetriesSelectBuilder updateRetries();
+  UpdateExternalTaskRetriesSelectBuilder updateRetries();
 
   /**
    * Sets the priority for an external task.
@@ -451,7 +451,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  public void setPriority(String externalTaskId, long priority);
+  void setPriority(String externalTaskId, long priority);
 
   /**
    * <p>
@@ -467,7 +467,7 @@ public interface ExternalTaskService {
    * @return a new {@link ExternalTaskQuery} that can be used to dynamically
    * query for external tasks.
    */
-  public ExternalTaskQuery createExternalTaskQuery();
+  ExternalTaskQuery createExternalTaskQuery();
 
   /**
    * Returns a list of distinct topic names of all currently existing external tasks.

@@ -31,7 +31,7 @@ public interface ProcessApplicationService {
   /** 
    * @returns the names of all deployed process applications 
    * */
-  public Set<String> getProcessApplicationNames();
+  Set<String> getProcessApplicationNames();
   
   /**
    * <p>Provides information about a deployed process application</p> 
@@ -40,6 +40,6 @@ public interface ProcessApplicationService {
    * 
    * @return the {@link ProcessApplicationInfo} object or null if no such process application is deployed. 
    */
-  public ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName);
+  ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName);
   
 }

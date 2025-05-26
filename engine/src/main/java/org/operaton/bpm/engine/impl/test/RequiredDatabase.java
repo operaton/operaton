@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 @Inherited
 public @interface RequiredDatabase {
 
-  public String[] excludes() default {};
+  String[] excludes() default {};
   
-  public String[] includes() default {};
+  String[] includes() default {};
 }

@@ -31,10 +31,10 @@ public interface Jdk {
   /**
    * The vendor of the Java runtime environment.
    */
-  public String getVendor();
+  String getVendor();
 
   /**
    * The version of the Java runtime environment.
    */
-  public String getVersion();
+  String getVersion();
 }

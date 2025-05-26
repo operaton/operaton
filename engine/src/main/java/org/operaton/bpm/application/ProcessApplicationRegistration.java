@@ -35,12 +35,12 @@ public interface ProcessApplicationRegistration {
   /**
    * @return the id of the {@link Deployment} for which the registration was created
    */
-  public Set<String> getDeploymentIds();
+  Set<String> getDeploymentIds();
 
   /**
    * @return the name of the process engine to which the deployment was made
    */
-  public String getProcessEngineName();
+  String getProcessEngineName();
 
 
 }

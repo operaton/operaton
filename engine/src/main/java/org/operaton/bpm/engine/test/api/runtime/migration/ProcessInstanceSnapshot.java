@@ -289,7 +289,7 @@ public class ProcessInstanceSnapshot {
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "The snapshot has not saved the " + name + " of the process instance", name, property);
   }
 
-  protected static interface Condition<T> {
+  protected interface Condition<T> {
     boolean matches(T condition);
   }
 

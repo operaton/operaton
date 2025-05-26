@@ -100,33 +100,33 @@ public interface Authorization {
    * A Global Authorization ranges over all users and groups (userId = {@link #ANY}) and are
    * usually used for fixing the "base" permission for a resource.
    */
-  public static final int AUTH_TYPE_GLOBAL = 0;
+  int AUTH_TYPE_GLOBAL = 0;
 
   /**
    * A Grant Authorization ranges over a users or a group and grants a set of permissions.
    * Grant authorizations are commonly used for adding permissions to a user or group that
    * the global authorization revokes.
    */
-  public static final int AUTH_TYPE_GRANT = 1;
+  int AUTH_TYPE_GRANT = 1;
 
   /**
    * A Revoke Authorization ranges over a user or a group and revokes a set of permissions.
    * Revoke authorizations are commonly used for revoking permissions to a user or group the
    * the global authorization grants.
    */
-  public static final int AUTH_TYPE_REVOKE = 2;
+  int AUTH_TYPE_REVOKE = 2;
 
   /** The identifier used for relating to all users or all resourceIds.
    *  Cannot be used for groups.*/
-  public static final String ANY = "*";
+  String ANY = "*";
 
   /** allows granting a permission. Out-of-the-box constants can be found in {@link Permissions}.
    * */
-  public void addPermission(Permission permission);
+  void addPermission(Permission permission);
 
   /** allows removing a permission. Out-of-the-box constants can be found in {@link Permissions}.
    * */
-  public void removePermission(Permission permission);
+  void removePermission(Permission permission);
 
   /**
    * Allows checking whether this authorization grants a specific permission.
@@ -134,7 +134,7 @@ public interface Authorization {
    * @param perm the permission to check for
    * @throws IllegalStateException if this {@link Authorization} is of type {@link #AUTH_TYPE_REVOKE}
    */
-  public boolean isPermissionGranted(Permission permission);
+  boolean isPermissionGranted(Permission permission);
 
   /**
    * Allows checking whether this authorization revokes a specific permission.
@@ -142,7 +142,7 @@ public interface Authorization {
    * @param perm the permission to check for
    * @throws IllegalStateException if this {@link Authorization} is of type {@link #AUTH_TYPE_GRANT}
    */
-  public boolean isPermissionRevoked(Permission permission);
+  boolean isPermissionRevoked(Permission permission);
 
   /**
    * Allows checking whether this authorization grants every single permission.
@@ -174,7 +174,7 @@ public interface Authorization {
    * @param an array of permissions to check for.
    * @return Returns the set of {@link Permission Permissions} provided by this {@link Authorization}.
    *  */
-  public Permission[] getPermissions(Permission[] permissions);
+  Permission[] getPermissions(Permission[] permissions);
 
   /**
    * Sets the permissions to the provided value. Replaces all permissions.
@@ -188,56 +188,56 @@ public interface Authorization {
    *
    *  @param a set of permissions.
    * */
-  public void setPermissions(Permission[] permissions);
+  void setPermissions(Permission[] permissions);
 
 
   /** @return the ID of the {@link Authorization} object */
-  public String getId();
+  String getId();
 
   /**
    * set the id of the resource
    */
-  public void setResourceId(String resourceId);
+  void setResourceId(String resourceId);
 
   /**
    * @return the id of the resource
    */
-  public String getResourceId();
+  String getResourceId();
 
   /**
    * sets the type of the resource
    */
-  public void setResourceType(int resourceTypeId);
+  void setResourceType(int resourceTypeId);
 
   /**
    * sets the type of the resource
    */
-  public void setResource(Resource resource);
+  void setResource(Resource resource);
 
   /**
    * @return the type of the resource
    */
-  public int getResourceType();
+  int getResourceType();
 
   /**
    * set the id of the user this authorization is created for
    */
-  public void setUserId(String userId);
+  void setUserId(String userId);
 
   /**
    * @return the id of the user this authorization is created for
    */
-  public String getUserId();
+  String getUserId();
 
   /**
    * set the id of the group this authorization is created for
    */
-  public void setGroupId(String groupId);
+  void setGroupId(String groupId);
 
   /**
    * @return the id of the group this authorization is created for
    */
-  public String getGroupId();
+  String getGroupId();
 
   /**
    * The type og the authorization. Legal values:
@@ -250,7 +250,7 @@ public interface Authorization {
    * @return the type of the authorization.
    *
    */
-  public int getAuthorizationType();
+  int getAuthorizationType();
 
   /**
    * The removal time indicates the date a historic instance authorization is cleaned up

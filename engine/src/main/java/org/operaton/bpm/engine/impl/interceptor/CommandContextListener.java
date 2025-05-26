@@ -24,8 +24,8 @@ package org.operaton.bpm.engine.impl.interceptor;
  */
 public interface CommandContextListener {
 
-  public void onCommandContextClose(CommandContext commandContext);
+  void onCommandContextClose(CommandContext commandContext);
 
-  public void onCommandFailed(CommandContext commandContext, Throwable t);
+  void onCommandFailed(CommandContext commandContext, Throwable t);
 
 }

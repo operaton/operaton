@@ -31,10 +31,10 @@ public interface Database {
   /**
    * The vendor of the connected database system.
    */
-  public String getVendor();
+  String getVendor();
 
   /**
    * The version of the connected database system.
    */
-  public String getVersion();
+  String getVersion();
 }

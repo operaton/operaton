@@ -76,7 +76,7 @@ public interface IdentityService {
    * @return true if this identity service implementation provides read-only
    *         access to the user repository, false otherwise.
    */
-  public boolean isReadOnly();
+  boolean isReadOnly();
 
   /**
    * Creates a new user. The user is transient and must be saved using
@@ -428,7 +428,7 @@ public interface IdentityService {
   /**
    * @param currentAuthentication
    */
-  public void setAuthentication(Authentication currentAuthentication);
+  void setAuthentication(Authentication currentAuthentication);
 
   /**
    * @return the current authentication for this process engine.

@@ -29,7 +29,7 @@ public interface ProcessApplicationReference {
    * 
    * @return the name of the process application
    */
-  public String getName();
+  String getName();
 
   /**
    * Get the process application.
@@ -38,6 +38,6 @@ public interface ProcessApplicationReference {
    * @throws ProcessApplicationUnavailableException
    *           if the process application is unavailable
    */
-  public ProcessApplicationInterface getProcessApplication() throws ProcessApplicationUnavailableException;
+  ProcessApplicationInterface getProcessApplication() throws ProcessApplicationUnavailableException;
 
 }

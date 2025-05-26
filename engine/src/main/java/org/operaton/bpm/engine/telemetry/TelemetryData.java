@@ -39,11 +39,11 @@ public interface TelemetryData {
    * same database will have the same installation ID. The ID is used to
    * identify a single installation of Operaton.
    */
-  public String getInstallation();
+  String getInstallation();
 
   /**
    * Returns a data object that stores information about the used Operaton
    * product.
    */
-  public Product getProduct();
+  Product getProduct();
 }

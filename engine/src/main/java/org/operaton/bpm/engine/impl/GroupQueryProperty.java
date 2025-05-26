@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  */
 public interface GroupQueryProperty {
 
-  public static final QueryProperty GROUP_ID = new QueryPropertyImpl("ID_");
-  public static final QueryProperty NAME = new QueryPropertyImpl("NAME_");
-  public static final QueryProperty TYPE = new QueryPropertyImpl("TYPE_");
+  QueryProperty GROUP_ID = new QueryPropertyImpl("ID_");
+  QueryProperty NAME = new QueryPropertyImpl("NAME_");
+  QueryProperty TYPE = new QueryPropertyImpl("TYPE_");
 }

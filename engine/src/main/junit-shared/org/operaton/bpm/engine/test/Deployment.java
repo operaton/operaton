@@ -73,6 +73,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface Deployment {
 
   /** Specify resources that make up the process definition. */
-  public String[] resources() default {};
+  String[] resources() default {};
 
 }

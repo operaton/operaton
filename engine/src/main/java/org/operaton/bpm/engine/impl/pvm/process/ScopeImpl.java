@@ -116,7 +116,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
     /**
      * In error case the callback will called.
      */
-    public void callback();
+    void callback();
   }
 
   /**

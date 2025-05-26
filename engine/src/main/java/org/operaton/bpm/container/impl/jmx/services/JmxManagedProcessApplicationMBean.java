@@ -38,12 +38,11 @@ public interface JmxManagedProcessApplicationMBean {
 	/** 
 	 * @return the ids of the process engine deployments performed by this application
 	 */
-    List<String> getDeploymentIds();
+	List<String> getDeploymentIds();
 	
 	/**
 	 * @return the names of the deployments performed by this application
 	 */
-    List<String> getDeploymentNames();
-	
+  List<String> getDeploymentNames();
 
 }

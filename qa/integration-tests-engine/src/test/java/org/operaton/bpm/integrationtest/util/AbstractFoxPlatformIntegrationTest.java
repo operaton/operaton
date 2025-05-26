@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
+import java.util.logging.Logger;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.engine.CaseService;
@@ -30,13 +34,7 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Before;
 import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
-
-import java.util.logging.Logger;
-
 
 public abstract class AbstractFoxPlatformIntegrationTest {
 
@@ -59,18 +57,19 @@ public abstract class AbstractFoxPlatformIntegrationTest {
 
   public static WebArchive initWebArchiveDeployment(String name, String processesXmlPath) {
     WebArchive archive = ShrinkWrap.create(WebArchive.class, name)
-              .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-              .addAsLibraries(DeploymentHelper.getEngineCdi())
-              .addAsLibraries(DeploymentHelper.getTestingLibs())
-              .addAsResource(processesXmlPath, "META-INF/processes.xml")
-              .addClass(AbstractFoxPlatformIntegrationTest.class)
-              .addClass(JobExecutorWaitUtils.class)
-              .addClass(TestConstants.class);
+      .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+      .addAsLibraries(DeploymentHelper.getEngineCdi())
+      .addAsLibraries(DeploymentHelper.getTestingLibs())
+      .addAsResource(processesXmlPath, "META-INF/processes.xml")
+      .addClass(AbstractFoxPlatformIntegrationTest.class)
+      .addClass(JobExecutorWaitUtils.class)
+      .addClass(TestConstants.class);
 
     TestContainer.addContainerSpecificResources(archive);
 
     return archive;
   }
+
   public static WebArchive initWebArchiveDeployment(String name) {
     return initWebArchiveDeployment(name, "META-INF/processes.xml");
   }
@@ -83,7 +82,7 @@ public abstract class AbstractFoxPlatformIntegrationTest {
   public void setupBeforeTest() {
     processEngineService = BpmPlatform.getProcessEngineService();
     processEngine = processEngineService.getDefaultProcessEngine();
-    processEngineConfiguration = ((ProcessEngineImpl)processEngine).getProcessEngineConfiguration();
+    processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
     processEngineConfiguration.getJobExecutor().shutdown(); // make sure the job executor is down
     formService = processEngine.getFormService();
     historyService = processEngine.getHistoryService();
@@ -97,11 +96,12 @@ public abstract class AbstractFoxPlatformIntegrationTest {
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS);
+    waitForJobExecutorToProcessAllJobs(JOBS_WAIT_TIMEOUT_MS);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, maxMillisToWait);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(maxMillisToWait, 1000L,
+      processEngineConfiguration.getJobExecutor(), processEngineConfiguration.getManagementService());
   }
 
 }

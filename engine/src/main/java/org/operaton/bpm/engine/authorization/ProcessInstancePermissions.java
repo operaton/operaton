@@ -66,7 +66,7 @@ public enum ProcessInstancePermissions implements Permission {
   private final String name;
   private final int id;
 
-  ProcessInstancePermissions(String name, int id) {
+  private ProcessInstancePermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

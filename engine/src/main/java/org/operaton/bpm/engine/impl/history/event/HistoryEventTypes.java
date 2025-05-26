@@ -200,7 +200,7 @@ public enum HistoryEventTypes implements HistoryEventType {
    */
   USER_OPERATION_LOG("user-operation-log", "create");
 
-  HistoryEventTypes(String entityType, String eventName) {
+  private HistoryEventTypes(String entityType, String eventName) {
     this.entityType = entityType;
     this.eventName = eventName;
   }

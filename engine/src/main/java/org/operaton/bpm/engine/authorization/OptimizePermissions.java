@@ -54,7 +54,7 @@ public enum OptimizePermissions implements Permission {
   private String name;
   private int id;
 
-  OptimizePermissions(String name, int id) {
+  private OptimizePermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

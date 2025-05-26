@@ -37,7 +37,7 @@ public class BaseCallableElement {
 
     private String value;
 
-    CallableElementBinding(String value) {
+    private CallableElementBinding(String value) {
       this.value = value;
     }
 

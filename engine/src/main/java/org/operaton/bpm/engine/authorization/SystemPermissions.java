@@ -49,7 +49,7 @@ public enum SystemPermissions implements Permission {
   private final String name;
   private final int id;
 
-  SystemPermissions(String name, int id) {
+  private SystemPermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

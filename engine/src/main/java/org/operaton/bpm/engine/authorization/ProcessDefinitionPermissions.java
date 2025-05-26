@@ -115,7 +115,7 @@ public enum ProcessDefinitionPermissions implements Permission {
   private final String name;
   private final int id;
 
-  ProcessDefinitionPermissions(String name, int id) {
+  private ProcessDefinitionPermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

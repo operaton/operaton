@@ -29,7 +29,7 @@ public enum ResourceTypes implements ResourceType {
   private final String name;
   private final Integer id;
 
-  ResourceTypes(String name, Integer id) {
+  private ResourceTypes(String name, Integer id) {
     this.name = name;
     this.id = id;
   }

@@ -34,6 +34,6 @@ public interface DataFormatWriter {
    * @param input The object to write. Can be safely cast to the internal
    * format of the data format.
    */
-  public void writeToWriter(Writer writer, Object input);
+  void writeToWriter(Writer writer, Object input);
 
 }

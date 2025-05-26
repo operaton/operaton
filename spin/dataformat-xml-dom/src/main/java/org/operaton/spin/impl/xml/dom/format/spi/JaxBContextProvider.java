@@ -39,7 +39,7 @@ public interface JaxBContextProvider {
    * @param types the Java Types that are going to be marshalled
    * @return the Marshaller of marshalling the provided types to XML.
    */
-  public Marshaller createMarshaller(Class<?>... types);
+  Marshaller createMarshaller(Class<?>... types);
 
   /**
    * Obtain an Unmarshaller that can map the provided types.
@@ -47,6 +47,6 @@ public interface JaxBContextProvider {
    * @param types the Java Types that are going to be unmarshalled
    * @return the Marshaller of unmarshalling the provided types from XML.
    */
-  public Unmarshaller createUnmarshaller(Class<?>... types);
+  Unmarshaller createUnmarshaller(Class<?>... types);
 
 }

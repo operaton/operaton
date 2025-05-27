@@ -27,19 +27,19 @@ import java.util.Map;
  */
 public interface JobAcquisitionXml {
 
-  public static final String LOCK_TIME_IN_MILLIS = "lockTimeInMillis";
-  public static final String WAIT_TIME_IN_MILLIS = "waitTimeInMillis";
-  public static final String MAX_JOBS_PER_ACQUISITION = "maxJobsPerAcquisition";
+  String LOCK_TIME_IN_MILLIS = "lockTimeInMillis";
+  String WAIT_TIME_IN_MILLIS = "waitTimeInMillis";
+  String MAX_JOBS_PER_ACQUISITION = "maxJobsPerAcquisition";
 
   /**
    * @return the name of the JobExecutor.
    */
-  public String getName();
+  String getName();
   
   /**
    * @return the fully qualified classname of the JobExecutor to be used.
    */
-  public String getJobExecutorClassName();
+  String getJobExecutorClassName();
 
   /**
    * @return a set of properties to configure the Job Executor. The
@@ -51,6 +51,6 @@ public interface JobAcquisitionXml {
    * @see #MAX_JOBS_PER_ACQUISITION
    * 
    */
-  public Map<String, String> getProperties();
+  Map<String, String> getProperties();
 
 }

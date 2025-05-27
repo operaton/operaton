@@ -48,6 +48,6 @@ public @interface RequiredHistoryLevel {
   /**
    * The required history level.
    */
-  public String value();
+  String value();
 
 }

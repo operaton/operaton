@@ -24,9 +24,9 @@ package org.operaton.bpm.engine.form;
 public interface FormFieldValidationConstraint {
 
   /** @return the name of the validation constraint */
-  public String getName();
+  String getName();
 
   /** @return the configuration of the validation constraint. */
-  public Object getConfiguration();
+  Object getConfiguration();
 
 }

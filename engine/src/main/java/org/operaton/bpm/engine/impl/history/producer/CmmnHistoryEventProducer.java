@@ -34,7 +34,7 @@ public interface CmmnHistoryEventProducer {
    * @param caseExecution the current case execution
    * @return the created history event
    */
-  public HistoryEvent createCaseInstanceCreateEvt(DelegateCaseExecution caseExecution);
+  HistoryEvent createCaseInstanceCreateEvt(DelegateCaseExecution caseExecution);
 
   /**
    * Creates the history event fired when a case instance is <strong>updated</strong>.
@@ -42,7 +42,7 @@ public interface CmmnHistoryEventProducer {
    * @param caseExecution the current case execution
    * @return the created history event
    */
-  public HistoryEvent createCaseInstanceUpdateEvt(DelegateCaseExecution caseExecution);
+  HistoryEvent createCaseInstanceUpdateEvt(DelegateCaseExecution caseExecution);
 
   /**
    * Creates the history event fired when a case instance is <strong>closed</strong>.
@@ -50,7 +50,7 @@ public interface CmmnHistoryEventProducer {
    * @param caseExecution the current case execution
    * @return the created history event
    */
-  public HistoryEvent createCaseInstanceCloseEvt(DelegateCaseExecution caseExecution);
+  HistoryEvent createCaseInstanceCloseEvt(DelegateCaseExecution caseExecution);
 
   /**
    * Creates the history event fired when a case activity instance is <strong>created</strong>.
@@ -58,7 +58,7 @@ public interface CmmnHistoryEventProducer {
    * @param caseExecution the current case execution
    * @return the created history event
    */
-  public HistoryEvent createCaseActivityInstanceCreateEvt(DelegateCaseExecution caseExecution);
+  HistoryEvent createCaseActivityInstanceCreateEvt(DelegateCaseExecution caseExecution);
 
   /**
    * Creates the history event fired when a case activity instance is <strong>updated</strong>.
@@ -66,7 +66,7 @@ public interface CmmnHistoryEventProducer {
    * @param caseExecution the current case execution
    * @return the created history event
    */
-  public HistoryEvent createCaseActivityInstanceUpdateEvt(DelegateCaseExecution caseExecution);
+  HistoryEvent createCaseActivityInstanceUpdateEvt(DelegateCaseExecution caseExecution);
 
   /**
    * Creates the history event fired when a case activity instance is <strong>ended</strong>.
@@ -74,6 +74,6 @@ public interface CmmnHistoryEventProducer {
    * @param caseExecution the current case execution
    * @return the created history event
    */
-  public HistoryEvent createCaseActivityInstanceEndEvt(DelegateCaseExecution caseExecution);
+  HistoryEvent createCaseActivityInstanceEndEvt(DelegateCaseExecution caseExecution);
 
 }

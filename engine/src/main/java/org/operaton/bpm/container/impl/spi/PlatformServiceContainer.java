@@ -76,13 +76,13 @@ public interface PlatformServiceContainer {
   /**
    * A ServiceType is a collection of services that share a common name prefix.
    */
-  public interface ServiceType {
+  interface ServiceType {
 
     /**
      * Returns a wildcard name that allows to query the service container
      * for all services of the type represented by this ServiceType.
      */
-    public String getTypeName();
+    String getTypeName();
 
   }
 

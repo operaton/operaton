@@ -25,12 +25,12 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
  */
 public interface CmmnCompositeActivityBehavior extends CmmnActivityBehavior {
 
-  public void handleChildDisabled(CmmnActivityExecution execution, CmmnActivityExecution child);
+  void handleChildDisabled(CmmnActivityExecution execution, CmmnActivityExecution child);
 
-  public void handleChildTermination(CmmnActivityExecution execution, CmmnActivityExecution child);
+  void handleChildTermination(CmmnActivityExecution execution, CmmnActivityExecution child);
 
-  public void handleChildSuspension(CmmnActivityExecution execution, CmmnActivityExecution child);
+  void handleChildSuspension(CmmnActivityExecution execution, CmmnActivityExecution child);
 
-  public void handleChildCompletion(CmmnActivityExecution execution, CmmnActivityExecution child);
+  void handleChildCompletion(CmmnActivityExecution execution, CmmnActivityExecution child);
 
 }

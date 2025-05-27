@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  */
 public interface HistoricDecisionInstanceQueryProperty {
 
-  public static final QueryProperty EVALUATION_TIME = new QueryPropertyImpl("EVAL_TIME_");
-  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  QueryProperty EVALUATION_TIME = new QueryPropertyImpl("EVAL_TIME_");
+  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
 
 }

@@ -22,6 +22,6 @@ package org.operaton.bpm.container.impl.jmx.services;
  */
 public interface JmxManagedBpmPlatformPluginsMBean {
 
-  public String[] getPluginNames();
+  String[] getPluginNames();
 
 }

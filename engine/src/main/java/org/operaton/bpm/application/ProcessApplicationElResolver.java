@@ -35,8 +35,8 @@ import jakarta.el.ELResolver;
 public interface ProcessApplicationElResolver {
 
   // precedences for known providers
-  static int SPRING_RESOLVER = 100;
-  static int CDI_RESOLVER = 200;
+  int SPRING_RESOLVER = 100;
+  int CDI_RESOLVER = 200;
 
   /**
    *  Allows to set a precedence to the ElResolver. Resolver with a lower precedence will be invoked first.
@@ -53,7 +53,7 @@ public interface ProcessApplicationElResolver {
    *
    * @see ProcessApplicationElResolver#getPrecedence()
    */
-  public static class ProcessApplicationElResolverSorter implements Comparator<ProcessApplicationElResolver> {
+  class ProcessApplicationElResolverSorter implements Comparator<ProcessApplicationElResolver> {
 
     @Override
     public int compare(ProcessApplicationElResolver o1, ProcessApplicationElResolver o2) {

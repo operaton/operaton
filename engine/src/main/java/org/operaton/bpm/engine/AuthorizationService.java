@@ -82,7 +82,7 @@ public interface AuthorizationService {
    * @return an non-persistent Authorization object.
    * @throws AuthorizationException if the user has no {@link Permissions#CREATE} permissions on {@link Resources#AUTHORIZATION}.
    */
-  public Authorization createNewAuthorization(int authorizationType);
+  Authorization createNewAuthorization(int authorizationType);
   
   /**
    * Allows saving an {@link Authorization} object. Use this method for persisting new 
@@ -97,7 +97,7 @@ public interface AuthorizationService {
    *          {@link Permissions#UPDATE} permissions (in case of updating a persistent object) 
    *          on {@link Resources#AUTHORIZATION}
    */
-  public Authorization saveAuthorization(Authorization authorization);
+  Authorization saveAuthorization(Authorization authorization);
   
   /**
    * Allows deleting a persistent {@link Authorization} object.
@@ -106,12 +106,12 @@ public interface AuthorizationService {
    * @throws ProcessEngineException if no such authorization exists or if an internal error occurs.
    * @throws AuthorizationException if the user has no {@link Permissions#DELETE} permissions on {@link Resources#AUTHORIZATION}.
    */
-  public void deleteAuthorization(String authorizationId);
+  void deleteAuthorization(String authorizationId);
   
   /**
    *  Constructs an authorization query.
    */
-  public AuthorizationQuery createAuthorizationQuery();
+  AuthorizationQuery createAuthorizationQuery();
   
   // Authorization Checks ////////////////////////////////
   
@@ -130,7 +130,7 @@ public interface AuthorizationService {
    * {@link Resources#HISTORIC_TASK Historic Task} or {@link Resources#HISTORIC_PROCESS_INSTANCE
    * Historic Process Instance} and historic instance permissions are disabled.
    */
-  public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource);
+  boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource);
   
   /** 
    * <p>Allows performing an authorization check.</p>
@@ -146,6 +146,6 @@ public interface AuthorizationService {
    * {@link Resources#HISTORIC_TASK Historic Task} or {@link Resources#HISTORIC_PROCESS_INSTANCE
    * Historic Process Instance} and historic instance permissions are disabled.
    */
-  public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId);
+  boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId);
   
 }

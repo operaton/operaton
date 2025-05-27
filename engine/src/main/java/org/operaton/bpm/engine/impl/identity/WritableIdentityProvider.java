@@ -43,7 +43,7 @@ public interface WritableIdentityProvider extends Session {
    * @param userId
    * @return an non-persistent user object.
    */
-  public User createNewUser(String userId);
+  User createNewUser(String userId);
 
   /**
    * Allows saving or updates a {@link User} object
@@ -52,7 +52,7 @@ public interface WritableIdentityProvider extends Session {
    * @return the operation result object.
    * @throws IdentityProviderException in case an internal error occurs
    */
-  public IdentityOperationResult saveUser(User user);
+  IdentityOperationResult saveUser(User user);
 
   /**
    * Allows deleting a persistent {@link User} object.
@@ -61,7 +61,7 @@ public interface WritableIdentityProvider extends Session {
    * @return the operation result object.
    * @throws IdentityProviderException in case an internal error occurs
    */
-  public IdentityOperationResult deleteUser(String userId);
+  IdentityOperationResult deleteUser(String userId);
 
   /**
    * Allows unlocking a {@link User} object.
@@ -69,7 +69,7 @@ public interface WritableIdentityProvider extends Session {
    * @return the operation result object.
    * @throws AuthorizationException if the user is not OPERATON_ADMIN
    */
-  public IdentityOperationResult unlockUser(String userId);
+  IdentityOperationResult unlockUser(String userId);
 
   // groups /////////////////////////////////////////////////
 
@@ -84,7 +84,7 @@ public interface WritableIdentityProvider extends Session {
    * @param groupId
    * @return an non-persistent group object.
    */
-  public Group createNewGroup(String groupId);
+  Group createNewGroup(String groupId);
 
   /**
    * Allows saving a {@link Group} object which is not yet persistent.
@@ -93,7 +93,7 @@ public interface WritableIdentityProvider extends Session {
    * @return the operation result object.
    * @throws IdentityProviderException in case an internal error occurs
    */
-  public IdentityOperationResult saveGroup(Group group);
+  IdentityOperationResult saveGroup(Group group);
 
   /**
    * Allows deleting a persistent {@link Group} object.
@@ -102,7 +102,7 @@ public interface WritableIdentityProvider extends Session {
    * @return the operation result object.
    * @throws IdentityProviderException in case an internal error occurs
    */
-  public IdentityOperationResult deleteGroup(String groupId);
+  IdentityOperationResult deleteGroup(String groupId);
 
   /**
    * <p>
@@ -119,7 +119,7 @@ public interface WritableIdentityProvider extends Session {
    *          the id of the new tenant
    * @return an non-persistent tenant object.
    */
-  public Tenant createNewTenant(String tenantId);
+  Tenant createNewTenant(String tenantId);
 
   /**
    * Allows saving a {@link Tenant} object which is not yet persistent.
@@ -130,7 +130,7 @@ public interface WritableIdentityProvider extends Session {
    * @throws IdentityProviderException
    *           in case an internal error occurs
    */
-  public IdentityOperationResult saveTenant(Tenant tenant);
+  IdentityOperationResult saveTenant(Tenant tenant);
 
   /**
    * Allows deleting a persistent {@link Tenant} object.
@@ -141,7 +141,7 @@ public interface WritableIdentityProvider extends Session {
    * @throws IdentityProviderException
    *           in case an internal error occurs
    */
-  public IdentityOperationResult deleteTenant(String tenantId);
+  IdentityOperationResult deleteTenant(String tenantId);
 
   // Membership ///////////////////////////////////////////////
 
@@ -154,7 +154,7 @@ public interface WritableIdentityProvider extends Session {
    * @return the operation result object.
    * @throws IdentityProviderException
    */
-  public IdentityOperationResult createMembership(String userId, String groupId);
+  IdentityOperationResult createMembership(String userId, String groupId);
 
   /**
    * Deletes a membership relation between a user and a group.
@@ -164,7 +164,7 @@ public interface WritableIdentityProvider extends Session {
    * @return the operation result object.
    * @throws IdentityProviderException
    */
-  public IdentityOperationResult deleteMembership(String userId, String groupId);
+  IdentityOperationResult deleteMembership(String userId, String groupId);
 
   /**
    * Creates a membership relation between a tenant and a user.
@@ -175,7 +175,7 @@ public interface WritableIdentityProvider extends Session {
    *          the id of the user
    * @return the operation result object.
    */
-  public IdentityOperationResult createTenantUserMembership(String tenantId, String userId);
+  IdentityOperationResult createTenantUserMembership(String tenantId, String userId);
 
   /**
    * Creates a membership relation between a tenant and a group.
@@ -186,7 +186,7 @@ public interface WritableIdentityProvider extends Session {
    *          the id of the group
    * @return the operation result object.
    */
-  public IdentityOperationResult createTenantGroupMembership(String tenantId, String groupId);
+  IdentityOperationResult createTenantGroupMembership(String tenantId, String groupId);
 
   /**
    * Deletes a membership relation between a tenant and a user.
@@ -197,7 +197,7 @@ public interface WritableIdentityProvider extends Session {
    *          the id of the user
    * @return the operation result object
    */
-  public IdentityOperationResult deleteTenantUserMembership(String tenantId, String userId);
+  IdentityOperationResult deleteTenantUserMembership(String tenantId, String userId);
 
   /**
    * Deletes a membership relation between a tenant and a group.
@@ -208,6 +208,6 @@ public interface WritableIdentityProvider extends Session {
    *          the id of the group
    * @return the operation result object.
    */
-  public IdentityOperationResult deleteTenantGroupMembership(String tenantId, String groupId);
+  IdentityOperationResult deleteTenantGroupMembership(String tenantId, String groupId);
 
 }

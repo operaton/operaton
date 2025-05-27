@@ -78,7 +78,7 @@ public enum TaskPermissions implements Permission {
   private final String name;
   private final int id;
 
-  private TaskPermissions(String name, int id) {
+  TaskPermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

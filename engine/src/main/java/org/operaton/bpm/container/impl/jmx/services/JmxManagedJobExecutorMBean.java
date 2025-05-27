@@ -25,28 +25,28 @@ package org.operaton.bpm.container.impl.jmx.services;
  */
 public interface JmxManagedJobExecutorMBean {
 
-  public String getName();
+  String getName();
 
-  public void setMaxJobsPerAcquisition(int maxJobsPerAcquisition);
+  void setMaxJobsPerAcquisition(int maxJobsPerAcquisition);
 
-  public int getMaxJobsPerAcquisition();
+  int getMaxJobsPerAcquisition();
 
-  public void setLockOwner(String lockOwner);
+  void setLockOwner(String lockOwner);
 
-  public String getLockOwner();
+  String getLockOwner();
 
-  public void setLockTimeInMillis(int lockTimeInMillis);
+  void setLockTimeInMillis(int lockTimeInMillis);
 
-  public int getLockTimeInMillis();
+  int getLockTimeInMillis();
 
-  public void setWaitTimeInMillis(int waitTimeInMillis);
+  void setWaitTimeInMillis(int waitTimeInMillis);
 
-  public int getWaitTimeInMillis();
+  int getWaitTimeInMillis();
 
-  public void shutdown();
+  void shutdown();
 
-  public void start();
+  void start();
 
-  public boolean isActive();
+  boolean isActive();
 
 }

@@ -58,7 +58,7 @@ package org.operaton.bpm.engine;
 public interface ProcessEngine extends ProcessEngineServices {
 
   /** the version of the process engine library */
-  public static String VERSION = "fox";
+  String VERSION = "fox";
 
   /** The name as specified in 'process-engine-name' in
    * the operaton.cfg.xml configuration file.

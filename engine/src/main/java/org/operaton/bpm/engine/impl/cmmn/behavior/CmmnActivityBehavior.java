@@ -25,54 +25,54 @@ import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
  */
 public interface CmmnActivityBehavior extends CoreActivityBehavior<CmmnActivityExecution> {
 
-  public void onCreate(CmmnActivityExecution execution);
+  void onCreate(CmmnActivityExecution execution);
 
-  public void created(CmmnActivityExecution execution);
+  void created(CmmnActivityExecution execution);
 
-  public void onEnable(CmmnActivityExecution execution);
+  void onEnable(CmmnActivityExecution execution);
 
-  public void onReenable(CmmnActivityExecution execution);
+  void onReenable(CmmnActivityExecution execution);
 
-  public void onDisable(CmmnActivityExecution execution);
+  void onDisable(CmmnActivityExecution execution);
 
-  public void onStart(CmmnActivityExecution execution);
+  void onStart(CmmnActivityExecution execution);
 
-  public void onManualStart(CmmnActivityExecution execution);
+  void onManualStart(CmmnActivityExecution execution);
 
-  public void started(CmmnActivityExecution execution);
+  void started(CmmnActivityExecution execution);
 
-  public void onCompletion(CmmnActivityExecution execution);
+  void onCompletion(CmmnActivityExecution execution);
 
-  public void onManualCompletion(CmmnActivityExecution execution);
+  void onManualCompletion(CmmnActivityExecution execution);
 
-  public void onTermination(CmmnActivityExecution execution);
+  void onTermination(CmmnActivityExecution execution);
 
-  public void onParentTermination(CmmnActivityExecution execution);
+  void onParentTermination(CmmnActivityExecution execution);
 
-  public void onExit(CmmnActivityExecution execution);
+  void onExit(CmmnActivityExecution execution);
 
-  public void onOccur(CmmnActivityExecution execution);
+  void onOccur(CmmnActivityExecution execution);
 
-  public void onSuspension(CmmnActivityExecution execution);
+  void onSuspension(CmmnActivityExecution execution);
 
-  public void onParentSuspension(CmmnActivityExecution execution);
+  void onParentSuspension(CmmnActivityExecution execution);
 
-  public void onResume(CmmnActivityExecution execution);
+  void onResume(CmmnActivityExecution execution);
 
-  public void onParentResume(CmmnActivityExecution execution);
+  void onParentResume(CmmnActivityExecution execution);
 
-  public void resumed(CmmnActivityExecution execution);
+  void resumed(CmmnActivityExecution execution);
 
-  public void onReactivation(CmmnActivityExecution execution);
+  void onReactivation(CmmnActivityExecution execution);
 
-  public void reactivated(CmmnActivityExecution execution);
+  void reactivated(CmmnActivityExecution execution);
 
-  public void onClose(CmmnActivityExecution execution);
+  void onClose(CmmnActivityExecution execution);
 
-  public void fireEntryCriteria(CmmnActivityExecution execution);
+  void fireEntryCriteria(CmmnActivityExecution execution);
 
-  public void fireExitCriteria(CmmnActivityExecution execution);
+  void fireExitCriteria(CmmnActivityExecution execution);
 
-  public void repeat(CmmnActivityExecution execution, String standardEvent);
+  void repeat(CmmnActivityExecution execution, String standardEvent);
 
 }

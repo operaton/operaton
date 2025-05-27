@@ -27,11 +27,11 @@ public interface ProcessApplicationDeploymentInfo {
   /**
    * @return the name of the process engine the deployment was made to
    */
-  public String getProcessEngineName();
+  String getProcessEngineName();
 
   /**
    * @return the id of the deployment that was performed.
    */
-  public String getDeploymentId();
+  String getDeploymentId();
 
 }

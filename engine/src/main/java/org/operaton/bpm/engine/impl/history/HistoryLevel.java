@@ -55,10 +55,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
  */
 public interface HistoryLevel {
 
-  static HistoryLevel HISTORY_LEVEL_NONE = new HistoryLevelNone();
-  static HistoryLevel HISTORY_LEVEL_ACTIVITY = new HistoryLevelActivity();
-  static HistoryLevel HISTORY_LEVEL_AUDIT = new HistoryLevelAudit();
-  static HistoryLevel HISTORY_LEVEL_FULL = new HistoryLevelFull();
+  HistoryLevel HISTORY_LEVEL_NONE = new HistoryLevelNone();
+  HistoryLevel HISTORY_LEVEL_ACTIVITY = new HistoryLevelActivity();
+  HistoryLevel HISTORY_LEVEL_AUDIT = new HistoryLevelAudit();
+  HistoryLevel HISTORY_LEVEL_FULL = new HistoryLevelFull();
 
   /** An unique id identifying the history level.
    * The id is used internally to uniquely identify the history level and also stored in the database.

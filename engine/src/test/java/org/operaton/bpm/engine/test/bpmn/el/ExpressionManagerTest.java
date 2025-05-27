@@ -715,8 +715,8 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
     }
   }
 
-  public static interface I1 {}
-  public static interface I2 {}
+  public interface I1 {}
+  public interface I2 {}
   public static class I1Impl implements I1 {}
   public static class I2Impl implements I2 {}
   public static class I1AndI2Impl implements I1, I2 {}

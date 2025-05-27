@@ -31,7 +31,7 @@ public interface JmxManagedProcessEngineMBean {
   /**
    * @return the name of the {@link ProcessEngine}
    */
-  public String getName();
+  String getName();
 
   /**
    * If the engine's job executor is deloyment aware, these are the deployments it
@@ -39,11 +39,11 @@ public interface JmxManagedProcessEngineMBean {
    *
    * @return all deployments that are registered with this {@link ProcessEngine}
    */
-  public Set<String> getRegisteredDeployments();
+  Set<String> getRegisteredDeployments();
 
-  public void registerDeployment(String deploymentId);
+  void registerDeployment(String deploymentId);
 
-  public void unregisterDeployment(String deploymentId);
+  void unregisterDeployment(String deploymentId);
 
-  public void reportDbMetrics();
+  void reportDbMetrics();
 }

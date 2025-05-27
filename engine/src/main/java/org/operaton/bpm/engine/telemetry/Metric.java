@@ -41,5 +41,5 @@ public interface Metric {
    * The count of this metric i.e., how often did the engine perform the action
    * associated with this metric.
    */
-  public long getCount();
+  long getCount();
 }

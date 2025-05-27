@@ -26,15 +26,15 @@ import org.operaton.bpm.engine.runtime.JobQuery;
  */
 public interface JobQueryProperty {
 
-  public static final QueryProperty JOB_ID = new QueryPropertyImpl("ID_");
-  public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROCESS_INSTANCE_ID_");
-  public static final QueryProperty EXECUTION_ID = new QueryPropertyImpl("EXECUTION_ID_");
-  public static final QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROCESS_DEF_ID_");
-  public static final QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("PROCESS_DEF_KEY_");
-  public static final QueryProperty DUEDATE = new QueryPropertyImpl("DUEDATE_");
-  public static final QueryProperty RETRIES = new QueryPropertyImpl("RETRIES_");
-  public static final QueryProperty TYPE = new QueryPropertyImpl("TYPE_");
-  public static final QueryProperty PRIORITY = new QueryPropertyImpl("PRIORITY_");
-  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  QueryProperty JOB_ID = new QueryPropertyImpl("ID_");
+  QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROCESS_INSTANCE_ID_");
+  QueryProperty EXECUTION_ID = new QueryPropertyImpl("EXECUTION_ID_");
+  QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROCESS_DEF_ID_");
+  QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("PROCESS_DEF_KEY_");
+  QueryProperty DUEDATE = new QueryPropertyImpl("DUEDATE_");
+  QueryProperty RETRIES = new QueryPropertyImpl("RETRIES_");
+  QueryProperty TYPE = new QueryPropertyImpl("TYPE_");
+  QueryProperty PRIORITY = new QueryPropertyImpl("PRIORITY_");
+  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
 
 }

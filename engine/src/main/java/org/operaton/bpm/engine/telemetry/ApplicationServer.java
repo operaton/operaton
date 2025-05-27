@@ -31,10 +31,10 @@ public interface ApplicationServer {
   /**
    * The vendor of the installed application server.
    */
-  public String getVendor();
+  String getVendor();
 
   /**
    * The version of the installed application server.
    */
-  public String getVersion();
+  String getVersion();
 }

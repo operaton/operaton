@@ -34,8 +34,8 @@ public class AssertingCaseExecutionListener implements CaseExecutionListener {
     }
   }
 
-  public static interface DelegateCaseExecutionAsserter {
-    public void doAssert(DelegateCaseExecution caseExecution);
+  public interface DelegateCaseExecutionAsserter {
+    void doAssert(DelegateCaseExecution caseExecution);
   }
 
   public static void clear() {

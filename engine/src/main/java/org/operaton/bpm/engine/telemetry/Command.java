@@ -40,5 +40,5 @@ public interface Command {
    * The count of this command i.e., how often did the engine engine execute
    * this command.
    */
-  public long getCount();
+  long getCount();
 }

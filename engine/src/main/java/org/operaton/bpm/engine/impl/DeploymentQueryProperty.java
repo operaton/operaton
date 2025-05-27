@@ -28,9 +28,9 @@ import org.operaton.bpm.engine.repository.DeploymentQuery;
  */
 public interface DeploymentQueryProperty {
 
-  public static final QueryProperty DEPLOYMENT_ID = new QueryPropertyImpl("ID_");
-  public static final QueryProperty DEPLOYMENT_NAME = new QueryPropertyImpl("NAME_");
-  public static final QueryProperty DEPLOY_TIME = new QueryPropertyImpl("DEPLOY_TIME_");
-  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  QueryProperty DEPLOYMENT_ID = new QueryPropertyImpl("ID_");
+  QueryProperty DEPLOYMENT_NAME = new QueryPropertyImpl("NAME_");
+  QueryProperty DEPLOY_TIME = new QueryPropertyImpl("DEPLOY_TIME_");
+  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
 
 }

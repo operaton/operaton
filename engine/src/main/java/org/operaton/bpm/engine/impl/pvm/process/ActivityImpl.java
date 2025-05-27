@@ -342,7 +342,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
      * @param asyncBefore the new value for the asyncBefore flag
      * @param exclusive the exclusive flag
      */
-    public void updateAsyncBefore(boolean asyncBefore, boolean exclusive);
+    void updateAsyncBefore(boolean asyncBefore, boolean exclusive);
   }
 
   /**
@@ -356,6 +356,6 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
      * @param asyncAfter the new value for the asyncBefore flag
      * @param exclusive the exclusive flag
      */
-    public void updateAsyncAfter(boolean asyncAfter, boolean exclusive);
+    void updateAsyncAfter(boolean asyncAfter, boolean exclusive);
   }
 }

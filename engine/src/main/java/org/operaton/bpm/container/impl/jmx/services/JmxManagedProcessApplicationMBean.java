@@ -33,17 +33,16 @@ public interface JmxManagedProcessApplicationMBean {
   /**
    * @return the name of the process application
    */
-	public String getProcessApplicationName();
+  String getProcessApplicationName();
 	
 	/** 
 	 * @return the ids of the process engine deployments performed by this application
 	 */
-	public List<String> getDeploymentIds();
+	List<String> getDeploymentIds();
 	
 	/**
 	 * @return the names of the deployments performed by this application
 	 */
-	public List<String> getDeploymentNames();
-	
+  List<String> getDeploymentNames();
 
 }

@@ -61,7 +61,7 @@ public interface IdentityLink {
   /**
    * Get the process definition id
    */
-  public String getProcessDefId();
+  String getProcessDefId();
   
   /**
    * The id of the tenant associated with this identity link.
@@ -69,6 +69,6 @@ public interface IdentityLink {
    * @since 7.5
    * 
    */
-  public String getTenantId();
+  String getTenantId();
  
 }

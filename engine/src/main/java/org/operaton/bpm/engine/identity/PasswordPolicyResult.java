@@ -32,19 +32,19 @@ public interface PasswordPolicyResult {
    * @return <code>true</code> if all rules passed, <code>false</code> if at
    *         least one rule was violated.
    */
-  public boolean isValid();
+  boolean isValid();
 
   /**
    * List of all rules that were violated during the check.
    * 
    * @return all violated rules.
    */
-  public List<PasswordPolicyRule> getViolatedRules();
+  List<PasswordPolicyRule> getViolatedRules();
 
   /**
    * List of all rules that were fulfilled during the check.
    * 
    * @return all fulfilled rules.
    */
-  public List<PasswordPolicyRule> getFulfilledRules();
+  List<PasswordPolicyRule> getFulfilledRules();
 }

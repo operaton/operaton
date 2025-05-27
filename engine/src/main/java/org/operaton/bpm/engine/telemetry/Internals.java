@@ -37,12 +37,12 @@ public interface Internals {
   /**
    * Information about the connected database system.
    */
-  public Database getDatabase();
+  Database getDatabase();
 
   /**
    * Information about the application server Operaton is running on.
    */
-  public ApplicationServer getApplicationServer();
+  ApplicationServer getApplicationServer();
 
   /**
    * The date when the engine started to collect dynamic data, such as command executions
@@ -67,7 +67,7 @@ public interface Internals {
    * @return A date that represents the start of the time frame where the current telemetry
    * data set was collected.
    */
-  public Date getDataCollectionStartDate();
+  Date getDataCollectionStartDate();
 
   /**
    * Information about the number of command executions performed by the Operaton
@@ -75,7 +75,7 @@ public interface Internals {
    * command resets on sending the data to Operaton. Retrieving the data through
    * {@link ManagementService#getTelemetryData()} will not reset the count.
    */
-  public Map<String, Command> getCommands();
+  Map<String, Command> getCommands();
 
   /**
    * A selection of metrics collected by the engine. Metrics included are:
@@ -90,23 +90,23 @@ public interface Internals {
    * through {@link ManagementService#getTelemetryData()} will not reset the
    * count.
    */
-  public Map<String, Metric> getMetrics();
+  Map<String, Metric> getMetrics();
 
   /**
    * Used Operaton integrations (e.g, Spring boot starter, Operaton Run,
    * WildFly/JBoss subsystem or Operaton EJB service).
    */
-  public Set<String> getOperatonIntegration();
+  Set<String> getOperatonIntegration();
 
   /**
    * Webapps enabled in the Operaton installation (e.g., cockpit, admin,
    * tasklist).
    */
-  public Set<String> getWebapps();
+  Set<String> getWebapps();
 
   /**
    * Information about the installed Java runtime environment.
    */
-  public Jdk getJdk();
+  Jdk getJdk();
 
 }

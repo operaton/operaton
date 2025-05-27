@@ -24,11 +24,11 @@ import org.operaton.bpm.engine.query.QueryProperty;
  */
 public interface FilterQueryProperty {
 
-  public static final QueryProperty FILTER_ID = new QueryPropertyImpl("ID_");
-  public static final QueryProperty RESOURCE_TYPE = new QueryPropertyImpl("RESOURCE_TYPE_");
-  public static final QueryProperty NAME = new QueryPropertyImpl("NAME_");
-  public static final QueryProperty OWNER = new QueryPropertyImpl("OWNER_");
-  public static final QueryProperty QUERY = new QueryPropertyImpl("QUERY_");
-  public static final QueryProperty PROPERTIES = new QueryPropertyImpl("PROPERTIES_");
+  QueryProperty FILTER_ID = new QueryPropertyImpl("ID_");
+  QueryProperty RESOURCE_TYPE = new QueryPropertyImpl("RESOURCE_TYPE_");
+  QueryProperty NAME = new QueryPropertyImpl("NAME_");
+  QueryProperty OWNER = new QueryPropertyImpl("OWNER_");
+  QueryProperty QUERY = new QueryPropertyImpl("QUERY_");
+  QueryProperty PROPERTIES = new QueryPropertyImpl("PROPERTIES_");
 
 }

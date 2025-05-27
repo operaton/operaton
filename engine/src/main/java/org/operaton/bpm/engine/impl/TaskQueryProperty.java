@@ -28,20 +28,20 @@ import org.operaton.bpm.engine.task.TaskQuery;
  */
 public interface TaskQueryProperty {
 
-  public static final QueryProperty TASK_ID = new QueryPropertyImpl("ID_");
-  public static final QueryProperty NAME = new QueryPropertyImpl("NAME_");
-  public static final QueryProperty NAME_CASE_INSENSITIVE = new QueryPropertyImpl("NAME_", "LOWER");
-  public static final QueryProperty DESCRIPTION = new QueryPropertyImpl("DESCRIPTION_");
-  public static final QueryProperty PRIORITY = new QueryPropertyImpl("PRIORITY_");
-  public static final QueryProperty ASSIGNEE = new QueryPropertyImpl("ASSIGNEE_");
-  public static final QueryProperty CREATE_TIME = new QueryPropertyImpl("CREATE_TIME_");
-  public static final QueryProperty LAST_UPDATED = new QueryPropertyImpl("LAST_UPDATED_");
-  public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
-  public static final QueryProperty CASE_INSTANCE_ID = new QueryPropertyImpl("CASE_INST_ID_");
-  public static final QueryProperty EXECUTION_ID = new QueryPropertyImpl("EXECUTION_ID_");
-  public static final QueryProperty CASE_EXECUTION_ID = new QueryPropertyImpl("CASE_EXECUTION_ID_");
-  public static final QueryProperty DUE_DATE = new QueryPropertyImpl("DUE_DATE_");
-  public static final QueryProperty FOLLOW_UP_DATE = new QueryPropertyImpl("FOLLOW_UP_DATE_");
-  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  QueryProperty TASK_ID = new QueryPropertyImpl("ID_");
+  QueryProperty NAME = new QueryPropertyImpl("NAME_");
+  QueryProperty NAME_CASE_INSENSITIVE = new QueryPropertyImpl("NAME_", "LOWER");
+  QueryProperty DESCRIPTION = new QueryPropertyImpl("DESCRIPTION_");
+  QueryProperty PRIORITY = new QueryPropertyImpl("PRIORITY_");
+  QueryProperty ASSIGNEE = new QueryPropertyImpl("ASSIGNEE_");
+  QueryProperty CREATE_TIME = new QueryPropertyImpl("CREATE_TIME_");
+  QueryProperty LAST_UPDATED = new QueryPropertyImpl("LAST_UPDATED_");
+  QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
+  QueryProperty CASE_INSTANCE_ID = new QueryPropertyImpl("CASE_INST_ID_");
+  QueryProperty EXECUTION_ID = new QueryPropertyImpl("EXECUTION_ID_");
+  QueryProperty CASE_EXECUTION_ID = new QueryPropertyImpl("CASE_EXECUTION_ID_");
+  QueryProperty DUE_DATE = new QueryPropertyImpl("DUE_DATE_");
+  QueryProperty FOLLOW_UP_DATE = new QueryPropertyImpl("FOLLOW_UP_DATE_");
+  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
 
 }

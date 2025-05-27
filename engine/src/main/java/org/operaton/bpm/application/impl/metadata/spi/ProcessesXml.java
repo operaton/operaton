@@ -36,17 +36,17 @@ public interface ProcessesXml {
   /**
    * @return A {@link List} of {@link ProcessEngineXml} Metadata Items representing process engine configurations.
    */
-  public List<ProcessEngineXml> getProcessEngines();
+  List<ProcessEngineXml> getProcessEngines();
 
   /**
    * @return A {@link List} of {@link ProcessArchiveXml} Metadata Items representing process archive deployments.
    */
-  public List<ProcessArchiveXml> getProcessArchives();
+  List<ProcessArchiveXml> getProcessArchives();
 
   /**
    * <p>Constant representing the empty processes.xml</p>
    */
-  public static final ProcessesXml EMPTY_PROCESSES_XML = new ProcessesXml() {
+  ProcessesXml EMPTY_PROCESSES_XML = new ProcessesXml() {
 
     @Override
     public List<ProcessEngineXml> getProcessEngines() {

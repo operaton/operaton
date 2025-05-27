@@ -29,11 +29,11 @@ public interface BpmPlatformXml {
   /**
    * @return the {@link JobExecutorXml} configuration of the JobExecutor. 
    */
-  public JobExecutorXml getJobExecutor();
+  JobExecutorXml getJobExecutor();
   
   /**
    * @return A {@link List} of {@link ProcessEngineXml} Metadata Items representing process engine configurations. 
    */
-  public List<ProcessEngineXml> getProcessEngines();
+  List<ProcessEngineXml> getProcessEngines();
   
 }

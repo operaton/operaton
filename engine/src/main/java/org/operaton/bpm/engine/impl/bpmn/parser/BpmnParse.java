@@ -1441,7 +1441,7 @@ public class BpmnParse extends Parse {
       addWarning("Ignoring unsupported activity type", activityElement);
     }
 
-    if (isMultiInstance) {
+    if (isMultiInstance && activity != null) {
       activity.setProperty(PROPERTYNAME_IS_MULTI_INSTANCE, true);
     }
 

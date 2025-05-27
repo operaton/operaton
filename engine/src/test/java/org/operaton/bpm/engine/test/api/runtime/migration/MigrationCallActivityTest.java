@@ -21,46 +21,44 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.CallActivityModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationCallActivityTest {
+class MigrationCallActivityTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  @Before
-  public void deployOneTaskProcess() {
+  @BeforeEach
+  void deployOneTaskProcess() {
     testHelper.deployAndGetDefinition(
         modify(ProcessModels.ONE_TASK_PROCESS)
           .changeElementId(ProcessModels.PROCESS_KEY, "oneTaskProcess"));
   }
 
-  @Before
-  public void deployOneTaskCase() {
+  @BeforeEach
+  void deployOneTaskCase() {
     testHelper.deploy("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
   }
 
   @Test
-  public void testCallBpmnProcessSimpleMigration() {
+  void testCallBpmnProcessSimpleMigration() {
     // given
     BpmnModelInstance model = CallActivityModels.oneBpmnCallActivityProcess("oneTaskProcess");
 
@@ -97,7 +95,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallCmmnCaseSimpleMigration() {
+  void testCallCmmnCaseSimpleMigration() {
     // given
     BpmnModelInstance model = CallActivityModels.oneCmmnCallActivityProcess("oneTaskCase");
 
@@ -143,7 +141,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallBpmnProcessAddParentScope() {
+  void testCallBpmnProcessAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(
         CallActivityModels.oneBpmnCallActivityProcess("oneTaskProcess"));
@@ -182,7 +180,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallBpmnProcessParallelMultiInstance() {
+  void testCallBpmnProcessParallelMultiInstance() {
     // given
     BpmnModelInstance model = modify(CallActivityModels.oneBpmnCallActivityProcess("oneTaskProcess"))
       .activityBuilder("callActivity")
@@ -237,7 +235,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallCmmnCaseParallelMultiInstance() {
+  void testCallCmmnCaseParallelMultiInstance() {
     // given
     BpmnModelInstance model = modify(CallActivityModels.oneCmmnCallActivityProcess("oneTaskCase"))
       .activityBuilder("callActivity")
@@ -301,7 +299,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallBpmnProcessParallelMultiInstanceRemoveMiBody() {
+  void testCallBpmnProcessParallelMultiInstanceRemoveMiBody() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(
         modify(CallActivityModels.oneBpmnCallActivityProcess("oneTaskProcess"))
@@ -351,7 +349,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallCmmnCaseParallelMultiInstanceRemoveMiBody() {
+  void testCallCmmnCaseParallelMultiInstanceRemoveMiBody() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(
         modify(CallActivityModels.oneCmmnCallActivityProcess("oneTaskCase"))
@@ -412,7 +410,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallBpmnProcessSequentialMultiInstanceRemoveMiBody() {
+  void testCallBpmnProcessSequentialMultiInstanceRemoveMiBody() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(
         modify(CallActivityModels.oneBpmnCallActivityProcess("oneTaskProcess"))
@@ -463,7 +461,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallCmmnCaseSequentialMultiInstanceRemoveMiBody() {
+  void testCallCmmnCaseSequentialMultiInstanceRemoveMiBody() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(
         modify(CallActivityModels.oneCmmnCallActivityProcess("oneTaskCase"))
@@ -523,7 +521,7 @@ public class MigrationCallActivityTest {
   }
 
   @Test
-  public void testCallBpmnProcessReconfigureCallActivity() {
+  void testCallBpmnProcessReconfigureCallActivity() {
     // given
     BpmnModelInstance model = CallActivityModels.oneBpmnCallActivityProcess("oneTaskProcess");
 

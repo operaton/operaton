@@ -24,28 +24,26 @@ import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.migrate;
 import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.variable;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationException;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.UserTaskBuilder;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Thorben Lindhauer
@@ -58,21 +56,15 @@ public class MigrationPlanCreationTest {
   public static final String ERROR_CODE = "Error";
   public static final String ESCALATION_CODE = "Escalation";
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-  }
+  RuntimeService runtimeService;
 
   @Test
-  public void testExplicitInstructionGeneration() {
+  void testExplicitInstructionGeneration() {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -91,7 +83,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateNonExistingSourceDefinition() {
+  void testMigrateNonExistingSourceDefinition() {
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
         .createMigrationPlan("aNonExistingProcDefId", processDefinition.getId())
@@ -106,7 +98,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateNullSourceDefinition() {
+  void testMigrateNullSourceDefinition() {
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
         .createMigrationPlan(null, processDefinition.getId())
@@ -121,7 +113,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateNonExistingTargetDefinition() {
+  void testMigrateNonExistingTargetDefinition() {
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
         .createMigrationPlan(processDefinition.getId(), "aNonExistingProcDefId")
@@ -135,7 +127,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateNullTargetDefinition() {
+  void testMigrateNullTargetDefinition() {
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
         .createMigrationPlan(processDefinition.getId(), null)
@@ -150,7 +142,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateNonExistingSourceActivityId() {
+  void testMigrateNonExistingSourceActivityId() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
@@ -167,7 +159,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateNullSourceActivityId() {
+  void testMigrateNullSourceActivityId() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
@@ -184,7 +176,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateNonExistingTargetActivityId() {
+  void testMigrateNonExistingTargetActivityId() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
@@ -201,7 +193,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateNullTargetActivityId() {
+  void testMigrateNullTargetActivityId() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
@@ -218,7 +210,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateTaskToHigherScope() {
+  void testMigrateTaskToHigherScope() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
 
@@ -236,7 +228,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateToUnsupportedActivityType() {
+  void testMigrateToUnsupportedActivityType() {
 
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_RECEIVE_TASK_PROCESS);
@@ -256,7 +248,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testNotMigrateActivitiesOfDifferentType() {
+  void testNotMigrateActivitiesOfDifferentType() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
       .swapElementIds("userTask", "subProcess")
@@ -276,7 +268,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testNotMigrateBoundaryEventsOfDifferentType() {
+  void testNotMigrateBoundaryEventsOfDifferentType() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder("userTask")
       .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -302,7 +294,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMigrateSubProcessToProcessDefinition() {
+  void testMigrateSubProcessToProcessDefinition() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     var migrationPlanBuilder = runtimeService
@@ -319,7 +311,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapEqualActivitiesWithParallelMultiInstance() {
+  void testMapEqualActivitiesWithParallelMultiInstance() {
     // given
     BpmnModelInstance testProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .getBuilderForElementById("userTask", UserTaskBuilder.class)
@@ -345,7 +337,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapEqualBoundaryEvents() {
+  void testMapEqualBoundaryEvents() {
     BpmnModelInstance testProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder("userTask")
         .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -370,7 +362,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapBoundaryEventsWithDifferentId() {
+  void testMapBoundaryEventsWithDifferentId() {
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder("userTask")
         .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -397,7 +389,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapBoundaryToMigratedActivity() {
+  void testMapBoundaryToMigratedActivity() {
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder("userTask")
         .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -424,7 +416,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapBoundaryToParallelActivity() {
+  void testMapBoundaryToParallelActivity() {
     BpmnModelInstance sourceProcess = modify(ProcessModels.PARALLEL_GATEWAY_PROCESS)
       .activityBuilder("userTask1")
         .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -455,7 +447,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapBoundaryToHigherScope() {
+  void testMapBoundaryToHigherScope() {
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder("userTask")
         .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -484,7 +476,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapBoundaryToLowerScope() {
+  void testMapBoundaryToLowerScope() {
     BpmnModelInstance sourceProcess = modify(ProcessModels.SUBPROCESS_PROCESS)
       .activityBuilder("userTask")
         .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -513,7 +505,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapBoundaryToChildActivity() {
+  void testMapBoundaryToChildActivity() {
     BpmnModelInstance sourceProcess = modify(ProcessModels.SUBPROCESS_PROCESS)
       .activityBuilder("subProcess")
         .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -544,7 +536,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapBoundaryToParentActivity() {
+  void testMapBoundaryToParentActivity() {
     BpmnModelInstance sourceProcess = modify(ProcessModels.SUBPROCESS_PROCESS)
       .activityBuilder("userTask")
         .boundaryEvent("boundary").message(MESSAGE_NAME)
@@ -577,7 +569,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapAllBoundaryEvents() {
+  void testMapAllBoundaryEvents() {
     BpmnModelInstance testProcess = modify(ProcessModels.SUBPROCESS_PROCESS)
       .activityBuilder("subProcess")
         .boundaryEvent("error").error(ERROR_CODE)
@@ -609,7 +601,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapProcessDefinitionWithEventSubProcess() {
+  void testMapProcessDefinitionWithEventSubProcess() {
     BpmnModelInstance testProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .addSubProcessTo(ProcessModels.PROCESS_KEY)
       .triggerByEvent()
@@ -636,7 +628,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapSubProcessWithEventSubProcess() {
+  void testMapSubProcessWithEventSubProcess() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.NESTED_EVENT_SUB_PROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.NESTED_EVENT_SUB_PROCESS_PROCESS);
 
@@ -656,7 +648,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapActivityWithUnmappedParentWhichHasAEventSubProcessChild() {
+  void testMapActivityWithUnmappedParentWhichHasAEventSubProcessChild() {
     BpmnModelInstance testProcess = modify(ProcessModels.SUBPROCESS_PROCESS)
       .addSubProcessTo("subProcess")
       .triggerByEvent()
@@ -683,7 +675,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testMapUserTaskInEventSubProcess() {
+  void testMapUserTaskInEventSubProcess() {
     BpmnModelInstance testProcess = modify(ProcessModels.SUBPROCESS_PROCESS)
       .addSubProcessTo("subProcess")
       .triggerByEvent()
@@ -713,7 +705,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testNotMapActivitiesMoreThanOnce() {
+  void testNotMapActivitiesMoreThanOnce() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     var migrationPlanBuilder = runtimeService
@@ -735,7 +727,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testCannotUpdateEventTriggerForNonEvent() {
+  void testCannotUpdateEventTriggerForNonEvent() {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -756,7 +748,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testCannotUpdateEventTriggerForEventSubProcess() {
+  void testCannotUpdateEventTriggerForEventSubProcess() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
     var migrationPlanBuilder = runtimeService
@@ -776,7 +768,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void testCanUpdateEventTriggerForEventSubProcessStartEvent() {
+  void testCanUpdateEventTriggerForEventSubProcessStartEvent() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
 
@@ -794,7 +786,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetVariable() {
+  void shouldSetVariable() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -815,7 +807,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetVariables() {
+  void shouldSetVariables() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -841,7 +833,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetUntypedVariable() {
+  void shouldSetUntypedVariable() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -862,7 +854,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetUntypedVariables() {
+  void shouldSetUntypedVariables() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -887,7 +879,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetMapOfTypedVariable() {
+  void shouldSetMapOfTypedVariable() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -908,7 +900,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetVariableMapOfTypedVariable() {
+  void shouldSetVariableMapOfTypedVariable() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -931,7 +923,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetTypedAndUntypedVariables() {
+  void shouldSetTypedAndUntypedVariables() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -956,7 +948,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetNullVariables() {
+  void shouldSetNullVariables() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -975,7 +967,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldSetEmptyVariables() {
+  void shouldSetEmptyVariables() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -994,7 +986,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldThrowValidationExceptionDueToSerializationFormatForbiddenForVariable() {
+  void shouldThrowValidationExceptionDueToSerializationFormatForbiddenForVariable() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -1022,7 +1014,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldThrowValidationExceptionDueToSerializationFormatForbiddenForVariables() {
+  void shouldThrowValidationExceptionDueToSerializationFormatForbiddenForVariables() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
@@ -1054,7 +1046,7 @@ public class MigrationPlanCreationTest {
   }
 
   @Test
-  public void shouldThrowExceptionDueToInstructionsAndSerializationFormatForbiddenForVariable() {
+  void shouldThrowExceptionDueToInstructionsAndSerializationFormatForbiddenForVariable() {
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =

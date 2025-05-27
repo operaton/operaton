@@ -27,6 +27,8 @@ import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAss
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigratingProcessInstanceValidationException;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationException;
@@ -36,29 +38,25 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.CompensationModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationCompensationTest {
+class MigrationCompensationTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testCannotMigrateActivityInstanceForCompensationThrowingEvent() {
+  void testCannotMigrateActivityInstanceForCompensationThrowingEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -89,7 +87,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotMigrateActivityInstanceForCancelEndEvent() {
+  void testCannotMigrateActivityInstanceForCancelEndEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.TRANSACTION_COMPENSATION_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.TRANSACTION_COMPENSATION_MODEL);
@@ -119,7 +117,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotMigrateActiveCompensationWithoutInstructionForThrowingEventCase1() {
+  void testCannotMigrateActiveCompensationWithoutInstructionForThrowingEventCase1() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -150,7 +148,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotMigrateActiveCompensationWithoutInstructionForThrowingEventCase2() {
+  void testCannotMigrateActiveCompensationWithoutInstructionForThrowingEventCase2() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_END_EVENT_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_END_EVENT_MODEL);
@@ -181,7 +179,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotMigrateWithoutMappingCompensationBoundaryEvents() {
+  void testCannotMigrateWithoutMappingCompensationBoundaryEvents() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -211,7 +209,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotRemoveCompensationEventSubscriptions() {
+  void testCannotRemoveCompensationEventSubscriptions() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
@@ -241,7 +239,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanRemoveCompensationBoundaryWithoutEventSubscriptions() {
+  void testCanRemoveCompensationBoundaryWithoutEventSubscriptions() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
@@ -265,7 +263,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotTriggerAddedCompensationForCompletedInstances() {
+  void testCannotTriggerAddedCompensationForCompletedInstances() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -290,7 +288,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanTriggerAddedCompensationForActiveInstances() {
+  void testCanTriggerAddedCompensationForActiveInstances() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -313,7 +311,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationSubscriptionsInMigratingScope() {
+  void testCanMigrateWithCompensationSubscriptionsInMigratingScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -340,7 +338,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationSubscriptionsInMigratingScopeAssertActivityInstance() {
+  void testCanMigrateWithCompensationSubscriptionsInMigratingScopeAssertActivityInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -370,7 +368,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationSubscriptionsInMigratingScopeAssertExecutionTree() {
+  void testCanMigrateWithCompensationSubscriptionsInMigratingScopeAssertExecutionTree() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -395,7 +393,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationSubscriptionsInMigratingScopeChangeIds() {
+  void testCanMigrateWithCompensationSubscriptionsInMigratingScopeChangeIds() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(CompensationModels.ONE_COMPENSATION_TASK_MODEL)
@@ -425,7 +423,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationEventScopeExecution() {
+  void testCanMigrateWithCompensationEventScopeExecution() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
@@ -454,7 +452,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationEventScopeExecutionAssertActivityInstance() {
+  void testCanMigrateWithCompensationEventScopeExecutionAssertActivityInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
@@ -484,7 +482,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationEventScopeExecutionAssertExecutionTree() {
+  void testCanMigrateWithCompensationEventScopeExecutionAssertExecutionTree() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
@@ -516,7 +514,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationEventScopeExecutionChangeIds() {
+  void testCanMigrateWithCompensationEventScopeExecutionChangeIds() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL)
@@ -549,7 +547,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationEventScopeExecutionChangeIdsAssertActivityInstance() {
+  void testCanMigrateWithCompensationEventScopeExecutionChangeIdsAssertActivityInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL)
@@ -583,7 +581,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithCompensationEventScopeExecutionChangeIdsAssertExecutionTree() {
+  void testCanMigrateWithCompensationEventScopeExecutionChangeIdsAssertExecutionTree() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL)
@@ -620,7 +618,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateEventScopeVariables() {
+  void testCanMigrateEventScopeVariables() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
@@ -656,7 +654,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithEventSubProcessHandler() {
+  void testCanMigrateWithEventSubProcessHandler() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
@@ -687,7 +685,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithEventSubProcessHandlerAssertActivityInstance() {
+  void testCanMigrateWithEventSubProcessHandlerAssertActivityInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
@@ -720,7 +718,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithEventSubProcessHandlerAssertExecutionTree() {
+  void testCanMigrateWithEventSubProcessHandlerAssertExecutionTree() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
@@ -755,7 +753,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateWithEventSubProcessHandlerChangeIds() {
+  void testCanMigrateWithEventSubProcessHandlerChangeIds() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL)
@@ -787,7 +785,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCanMigrateSiblingEventScopeExecutions() {
+  void testCanMigrateSiblingEventScopeExecutions() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
@@ -833,7 +831,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotMigrateWithoutCompensationStartEventCase1() {
+  void testCannotMigrateWithoutCompensationStartEventCase1() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
@@ -864,7 +862,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotMigrateWithoutCompensationStartEventCase2() {
+  void testCannotMigrateWithoutCompensationStartEventCase2() {
     // given
     BpmnModelInstance model = modify(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL)
         .removeFlowNode("compensationBoundary");
@@ -897,7 +895,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testEventScopeHierarchyPreservation() {
+  void testEventScopeHierarchyPreservation() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
@@ -922,7 +920,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCompensationBoundaryHierarchyPreservation() {
+  void testCompensationBoundaryHierarchyPreservation() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL)
@@ -952,7 +950,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotMapCompensateStartEventWithoutMappingEventScopeCase1() {
+  void testCannotMapCompensateStartEventWithoutMappingEventScopeCase1() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
@@ -974,7 +972,7 @@ public class MigrationCompensationTest {
   }
 
   @Test
-  public void testCannotMapCompensateStartEventWithoutMappingEventScopeCase2() {
+  void testCannotMapCompensateStartEventWithoutMappingEventScopeCase2() {
     // given
     BpmnModelInstance model = modify(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL)
         .removeFlowNode("compensationBoundary");

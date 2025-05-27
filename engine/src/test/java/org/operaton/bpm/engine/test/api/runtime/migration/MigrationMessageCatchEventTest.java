@@ -20,31 +20,29 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 
 import java.util.HashMap;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MessageReceiveModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationMessageCatchEventTest {
+class MigrationMessageCatchEventTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testMigrateEventSubscription() {
+  void testMigrateEventSubscription() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_MESSAGE_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_MESSAGE_CATCH_PROCESS);
@@ -67,7 +65,7 @@ public class MigrationMessageCatchEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionChangeActivityId() {
+  void testMigrateEventSubscriptionChangeActivityId() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_MESSAGE_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(MessageReceiveModels.ONE_MESSAGE_CATCH_PROCESS)
@@ -91,7 +89,7 @@ public class MigrationMessageCatchEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionPreserveMessageName() {
+  void testMigrateEventSubscriptionPreserveMessageName() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_MESSAGE_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.newModel()
@@ -121,7 +119,7 @@ public class MigrationMessageCatchEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionUpdateMessageName() {
+  void testMigrateEventSubscriptionUpdateMessageName() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_MESSAGE_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(MessageReceiveModels.ONE_MESSAGE_CATCH_PROCESS)
@@ -149,7 +147,7 @@ public class MigrationMessageCatchEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionUpdateMessageNameWithExpression() {
+  void testMigrateEventSubscriptionUpdateMessageNameWithExpression() {
     // given
     String newMessageName = "new" + MessageReceiveModels.MESSAGE_NAME + "-${var}";
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_MESSAGE_CATCH_PROCESS);

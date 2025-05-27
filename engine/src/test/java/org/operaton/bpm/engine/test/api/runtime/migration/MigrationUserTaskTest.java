@@ -16,10 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
+import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
+
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.joda.time.DateTime;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerTaskListenerJobHandler;
@@ -33,41 +43,29 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.util.AccessModelInstanceTaskListener;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonTaskListener;
 
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
-
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationUserTaskTest {
+class MigrationUserTaskTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testUserTaskMigrationInProcessDefinitionScope() {
+  void testUserTaskMigrationInProcessDefinitionScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -99,7 +97,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testUserTaskMigrationInSubProcessScope() {
+  void testUserTaskMigrationInSubProcessScope() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
@@ -133,7 +131,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testConcurrentUserTaskMigration() {
+  void testConcurrentUserTaskMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
@@ -171,7 +169,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testCannotMigrateWhenNotAllActivityInstancesAreMapped() {
+  void testCannotMigrateWhenNotAllActivityInstancesAreMapped() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
@@ -192,7 +190,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testCannotMigrateWhenNotAllTransitionInstancesAreMapped() {
+  void testCannotMigrateWhenNotAllTransitionInstancesAreMapped() {
     // given
     BpmnModelInstance model = ModifiableBpmnModelInstance.modify(ProcessModels.PARALLEL_GATEWAY_PROCESS)
         .activityBuilder("userTask1")
@@ -220,7 +218,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testChangeActivityId() {
+  void testChangeActivityId() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
 
@@ -260,7 +258,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testMigrateWithSubTask() {
+  void testMigrateWithSubTask() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -296,7 +294,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testAccessModelInNewAssignmentTaskListenerAfterMigration() {
+  void testAccessModelInNewAssignmentTaskListenerAfterMigration() {
     BpmnModelInstance targetModel = modify(ProcessModels.ONE_TASK_PROCESS).changeElementId("userTask", "newUserTask");
     addTaskListener(targetModel, "newUserTask", TaskListener.EVENTNAME_ASSIGNMENT, AccessModelInstanceTaskListener.class.getName());
 
@@ -324,7 +322,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testAccessModelInNewTimeoutTaskListenerAfterMigration() {
+  void testAccessModelInNewTimeoutTaskListenerAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
@@ -348,7 +346,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerRemovedAfterMigration() {
+  void testTimeoutTaskListenerRemovedAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
@@ -369,7 +367,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerMigratedAfterMigration() {
+  void testTimeoutTaskListenerMigratedAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
@@ -393,7 +391,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerMigratedAndUpdatedAfterMigration() {
+  void testTimeoutTaskListenerMigratedAndUpdatedAfterMigration() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -423,7 +421,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testAccessModelInNewTimeoutTaskListenerAfterMigrationToDifferentUserTask() {
+  void testAccessModelInNewTimeoutTaskListenerAfterMigrationToDifferentUserTask() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
@@ -449,7 +447,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerRemovedAfterMigrationToDifferentUserTask() {
+  void testTimeoutTaskListenerRemovedAfterMigrationToDifferentUserTask() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerDifferentTask.bpmn20.xml")
@@ -472,7 +470,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerMigratedAfterMigrationToDifferentUserTask() {
+  void testTimeoutTaskListenerMigratedAfterMigrationToDifferentUserTask() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerDifferentTask.bpmn20.xml")
@@ -498,7 +496,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerMigratedAndUpdatedAfterMigrationToDifferentUserTask() {
+  void testTimeoutTaskListenerMigratedAndUpdatedAfterMigrationToDifferentUserTask() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -527,7 +525,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testAccessModelInNewTimeoutTaskListenerAfterMultipleListenerMigration() {
+  void testAccessModelInNewTimeoutTaskListenerAfterMultipleListenerMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
@@ -553,7 +551,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testOneTimeoutTaskListenerRemovedAfterMigration() {
+  void testOneTimeoutTaskListenerRemovedAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListeners.bpmn20.xml")
@@ -578,7 +576,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testOneTimeoutTaskListenerAddedAfterMigration() {
+  void testOneTimeoutTaskListenerAddedAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
@@ -607,7 +605,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTriggeredTimeoutTaskListenerNotStartedAgainAfterMigration() {
+  void testTriggeredTimeoutTaskListenerNotStartedAgainAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListenersPastDate.bpmn20.xml")
@@ -634,7 +632,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerMigratedAfterMultipleListenerMigration() {
+  void testTimeoutTaskListenerMigratedAfterMultipleListenerMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
@@ -658,7 +656,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerMigratedAndUpdatedAfterMultipleListenerMigration() {
+  void testTimeoutTaskListenerMigratedAndUpdatedAfterMultipleListenerMigration() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -688,7 +686,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testAccessModelInMigratedTimeoutTaskListenerAfterMigrationToDifferentUserTask() {
+  void testAccessModelInMigratedTimeoutTaskListenerAfterMigrationToDifferentUserTask() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
@@ -713,7 +711,7 @@ public class MigrationUserTaskTest {
 
 
   @Test
-  public void testAccessModelInNewTimeoutTaskListenerAfterMigrationWithBoundaryEvent() {
+  void testAccessModelInNewTimeoutTaskListenerAfterMigrationWithBoundaryEvent() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
@@ -737,7 +735,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerRemovedAfterMigrationWithBoundaryEvent() {
+  void testTimeoutTaskListenerRemovedAfterMigrationWithBoundaryEvent() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
@@ -758,7 +756,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerMigratedAfterMigrationWithBoundaryEvent() {
+  void testTimeoutTaskListenerMigratedAfterMigrationWithBoundaryEvent() {
     // given
     String sourceProcessDefinitionId = testHelper
         .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
@@ -782,7 +780,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void testTimeoutTaskListenerMigratedAndUpdatedAfterMigrationWithBoundaryEvent() {
+  void testTimeoutTaskListenerMigratedAndUpdatedAfterMigrationWithBoundaryEvent() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -812,7 +810,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void shouldRemainActiveAfterBecomingNoneScope() {
+  void shouldRemainActiveAfterBecomingNoneScope() {
     // given
     BpmnModelInstance sourceProcess = Bpmn.createExecutableProcess("source")
         .startEvent()
@@ -874,7 +872,7 @@ public class MigrationUserTaskTest {
   }
 
   @Test
-  public void shouldRemainActiveAfterBecomingScope() {
+  void shouldRemainActiveAfterBecomingScope() {
     // given
     BpmnModelInstance sourceProcess = Bpmn.createExecutableProcess("source")
         .startEvent()

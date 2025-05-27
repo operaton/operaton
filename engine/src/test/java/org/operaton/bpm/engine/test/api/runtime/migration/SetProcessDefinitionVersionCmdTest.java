@@ -22,7 +22,16 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -39,15 +48,15 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
 
 
 /**
  * @author Falko Menge
  */
-public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTest {
+class SetProcessDefinitionVersionCmdTest {
 
   private static final String TEST_PROCESS_WITH_PARALLEL_GATEWAY = "org/operaton/bpm/engine/test/bpmn/gateway/ParallelGatewayTest.testForkJoin.bpmn20.xml";
   private static final String TEST_PROCESS = "org/operaton/bpm/engine/test/api/runtime/migration/SetProcessDefinitionVersionCmdTest.testSetProcessDefinitionVersion.bpmn20.xml";
@@ -67,8 +76,22 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   private static final String TEST_PROCESS_ATTACHED_TIMER = "org/operaton/bpm/engine/test/api/runtime/migration/SetProcessDefinitionVersionCmdTest.testAttachedTimer.bpmn20.xml";
 
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  HistoryService historyService;
+  TaskService taskService;
+  FormService formService;
+  ManagementService managementService;
+  IdentityService identityService;
+
   @Test
-  public void testSetProcessDefinitionVersionEmptyArguments() {
+  void testSetProcessDefinitionVersionEmptyArguments() {
     try {
       new SetProcessDefinitionVersionCmd(null, 23);
       fail("ProcessEngineException expected");
@@ -99,7 +122,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
   }
 
   @Test
-  public void testSetProcessDefinitionVersionNonExistingPI() {
+  void testSetProcessDefinitionVersionNonExistingPI() {
     // given
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     var setProcessDefinitionVersionCmd = new SetProcessDefinitionVersionCmd("42", 23);
@@ -113,7 +136,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = {TEST_PROCESS_WITH_PARALLEL_GATEWAY})
   @Test
-  public void testSetProcessDefinitionVersionPIIsSubExecution() {
+  void testSetProcessDefinitionVersionPIIsSubExecution() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("forkJoin");
 
@@ -132,7 +155,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = {TEST_PROCESS})
   @Test
-  public void testSetProcessDefinitionVersionNonExistingPD() {
+  void testSetProcessDefinitionVersionNonExistingPD() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("receiveTask");
 
@@ -149,7 +172,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = {TEST_PROCESS})
   @Test
-  public void testSetProcessDefinitionVersionActivityMissing() {
+  void testSetProcessDefinitionVersionActivityMissing() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("receiveTask");
 
@@ -182,7 +205,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment
   @Test
-  public void testSetProcessDefinitionVersion() {
+  void testSetProcessDefinitionVersion() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("receiveTask");
 
@@ -234,7 +257,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = {TEST_PROCESS_WITH_PARALLEL_GATEWAY})
   @Test
-  public void testSetProcessDefinitionVersionSubExecutions() {
+  void testSetProcessDefinitionVersionSubExecutions() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("forkJoin");
 
@@ -271,7 +294,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = {TEST_PROCESS_CALL_ACTIVITY})
   @Test
-  public void testSetProcessDefinitionVersionWithCallActivity() {
+  void testSetProcessDefinitionVersionWithCallActivity() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("parentProcess");
 
@@ -305,7 +328,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = {TEST_PROCESS_USER_TASK_V1})
   @Test
-  public void testSetProcessDefinitionVersionWithWithTask() {
+  void testSetProcessDefinitionVersionWithWithTask() {
     try {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("userTask");
@@ -345,7 +368,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = TEST_PROCESS_SERVICE_TASK_V1)
   @Test
-  public void testSetProcessDefinitionVersionWithFollowUpTask() {
+  void testSetProcessDefinitionVersionWithFollowUpTask() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     String secondDeploymentId =
@@ -368,7 +391,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = {TEST_PROCESS_WITH_MULTIPLE_PARENTS})
   @Test
-  public void testSetProcessDefinitionVersionWithMultipleParents(){
+  void testSetProcessDefinitionVersionWithMultipleParents(){
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("multipleJoins");
 
@@ -420,7 +443,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = TEST_PROCESS_ONE_JOB)
   @Test
-  public void testSetProcessDefinitionVersionMigrateJob() {
+  void testSetProcessDefinitionVersionMigrateJob() {
     // given a process instance
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneJobProcess");
 
@@ -459,7 +482,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = TEST_PROCESS_TWO_JOBS)
   @Test
-  public void testMigrateJobWithMultipleDefinitionsOnActivity() {
+  void testMigrateJobWithMultipleDefinitionsOnActivity() {
     // given a process instance
     ProcessInstance asyncAfterInstance = runtimeService.startProcessInstanceByKey("twoJobsProcess");
 
@@ -520,7 +543,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = TEST_PROCESS_ONE_JOB)
   @Test
-  public void testSetProcessDefinitionVersionMigrateIncident() {
+  void testSetProcessDefinitionVersionMigrateIncident() {
     // given a process instance
     ProcessInstance instance =
         runtimeService.startProcessInstanceByKey("oneJobProcess", Variables.createVariables().putValue("shouldFail", true));
@@ -561,7 +584,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
    */
   @Deployment(resources = TEST_PROCESS_ONE_JOB)
   @Test
-  public void testPreserveTimestampOnUpdatedIncident() {
+  void testPreserveTimestampOnUpdatedIncident() {
     // given
     ProcessInstance instance =
         runtimeService.startProcessInstanceByKey("oneJobProcess", Variables.createVariables().putValue("shouldFail", true));
@@ -597,7 +620,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Deployment(resources = TEST_PROCESS_ATTACHED_TIMER)
   @Test
-  public void testSetProcessDefinitionVersionAttachedTimer() {
+  void testSetProcessDefinitionVersionAttachedTimer() {
     // given a process instance
     ProcessInstance instance =
         runtimeService.startProcessInstanceByKey("attachedTimer");
@@ -624,7 +647,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
   }
 
   @Test
-  public void testHistoryOfSetProcessDefinitionVersionCmd() {
+  void testHistoryOfSetProcessDefinitionVersionCmd() {
     // given
     String resource = "org/operaton/bpm/engine/test/api/runtime/migration/SetProcessDefinitionVersionCmdTest.bpmn";
 
@@ -677,7 +700,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
   }
 
   @Test
-  public void testOpLogSetProcessDefinitionVersionCmd() {
+  void testOpLogSetProcessDefinitionVersionCmd() {
     // given
     try {
       identityService.setAuthenticatedUserId("demo");

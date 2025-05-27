@@ -23,6 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -31,38 +34,27 @@ import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class MigrationTimerBoundryEventTest {
+class MigrationTimerBoundryEventTest {
 
   private static final String DUE_DATE_IN_THE_PAST = "2018-02-11T12:13:14Z";
   protected static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-  protected ManagementService managementService;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-  @Before
-  public void init() {
-    managementService = rule.getManagementService();
-    runtimeService = rule.getRuntimeService();
-    taskService = rule.getTaskService();
-  }
+  ManagementService managementService;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
-  @After
-  public void cleanUpJobs() {
+  @AfterEach
+  void cleanUpJobs() {
     List<Job> jobs = managementService.createJobQuery().list();
     if (!jobs.isEmpty()) {
       for (Job job : jobs) {
@@ -72,7 +64,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationNonInterruptingTimerEvent() {
+  void testMigrationNonInterruptingTimerEvent() {
     // given
     BpmnModelInstance model = createModel(false, DUE_DATE_IN_THE_PAST);
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(model);
@@ -99,7 +91,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationInterruptingTimerEvent() {
+  void testMigrationInterruptingTimerEvent() {
     // given
     BpmnModelInstance model = createModel(true, DUE_DATE_IN_THE_PAST);
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(model);
@@ -126,7 +118,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationNonTriggeredInterruptingTimerEvent() {
+  void testMigrationNonTriggeredInterruptingTimerEvent() {
     // given
     Date futureDueDate = DateUtils.addYears(ClockUtil.getCurrentTime(), 1);
     BpmnModelInstance model = createModel(true, sdf.format(futureDueDate));
@@ -150,7 +142,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationTwoNonInterruptingTimerEvents() {
+  void testMigrationTwoNonInterruptingTimerEvents() {
     // given
     Date futureDueDate = DateUtils.addYears(ClockUtil.getCurrentTime(), 1);
     BpmnModelInstance model = Bpmn.createExecutableProcess()
@@ -192,7 +184,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationWithTargetNonInterruptingTimerEvent() {
+  void testMigrationWithTargetNonInterruptingTimerEvent() {
     // given
     BpmnModelInstance sourceModel = Bpmn.createExecutableProcess()
         .startEvent("startEvent")
@@ -220,7 +212,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationWithSourceNonInterruptingTimerEvent() {
+  void testMigrationWithSourceNonInterruptingTimerEvent() {
     // given
     BpmnModelInstance sourceModel = createModel(false, DUE_DATE_IN_THE_PAST);
     BpmnModelInstance targetModel = Bpmn.createExecutableProcess()
@@ -253,7 +245,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationTwoToOneNonInterruptingTimerEvents() {
+  void testMigrationTwoToOneNonInterruptingTimerEvents() {
     // given
     Date futureDueDate = DateUtils.addYears(ClockUtil.getCurrentTime(), 1);
     BpmnModelInstance sourceModel = Bpmn.createExecutableProcess()
@@ -303,7 +295,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationOneToTwoNonInterruptingTimerEvents() {
+  void testMigrationOneToTwoNonInterruptingTimerEvents() {
     // given
     Date futureDueDate = DateUtils.addYears(ClockUtil.getCurrentTime(), 1);
     BpmnModelInstance sourceModel = Bpmn.createExecutableProcess()
@@ -347,7 +339,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   @Test
-  public void testMigrationNonInterruptingTimerEventDifferentActivityId() {
+  void testMigrationNonInterruptingTimerEventDifferentActivityId() {
     // given
     BpmnModelInstance sourceModel = createModel(false, DUE_DATE_IN_THE_PAST);
     BpmnModelInstance targetModel = Bpmn.createExecutableProcess()

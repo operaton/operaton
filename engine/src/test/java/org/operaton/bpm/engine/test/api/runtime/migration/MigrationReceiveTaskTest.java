@@ -21,32 +21,30 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MessageReceiveModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationReceiveTaskTest {
+class MigrationReceiveTaskTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testCannotMigrateActivityInstance() {
+  void testCannotMigrateActivityInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS);
@@ -69,7 +67,7 @@ public class MigrationReceiveTaskTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionProperties() {
+  void testMigrateEventSubscriptionProperties() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS);
@@ -94,7 +92,7 @@ public class MigrationReceiveTaskTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionChangeActivityId() {
+  void testMigrateEventSubscriptionChangeActivityId() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS)
@@ -118,7 +116,7 @@ public class MigrationReceiveTaskTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionPreserveMessageName() {
+  void testMigrateEventSubscriptionPreserveMessageName() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS)
@@ -143,7 +141,7 @@ public class MigrationReceiveTaskTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionUpdateMessageName() {
+  void testMigrateEventSubscriptionUpdateMessageName() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS)
@@ -171,7 +169,7 @@ public class MigrationReceiveTaskTest {
   }
 
   @Test
-  public void testMigrateParallelMultiInstanceEventSubscription() {
+  void testMigrateParallelMultiInstanceEventSubscription() {
     BpmnModelInstance parallelMiReceiveTaskProcess = modify(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS)
       .activityBuilder("receiveTask")
         .multiInstance()
@@ -201,7 +199,7 @@ public class MigrationReceiveTaskTest {
   }
 
   @Test
-  public void testMigrateSequentialMultiInstanceEventSubscription() {
+  void testMigrateSequentialMultiInstanceEventSubscription() {
     BpmnModelInstance parallelMiReceiveTaskProcess = modify(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS)
       .activityBuilder("receiveTask")
         .multiInstance()
@@ -233,7 +231,7 @@ public class MigrationReceiveTaskTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionAddParentScope() {
+  void testMigrateEventSubscriptionAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.ONE_RECEIVE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.SUBPROCESS_RECEIVE_TASK_PROCESS);

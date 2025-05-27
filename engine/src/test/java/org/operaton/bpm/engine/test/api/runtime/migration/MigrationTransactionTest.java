@@ -20,32 +20,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.TransactionModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationTransactionTest {
+class MigrationTransactionTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testRule = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testRule = new MigrationTestExtension(rule);
 
   @Test
-  public void testContinueProcess() {
+  void testContinueProcess() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
@@ -65,7 +63,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testContinueProcessTriggerCancellation() {
+  void testContinueProcessTriggerCancellation() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.CANCEL_BOUNDARY_EVENT);
@@ -86,7 +84,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testAssertTrees() {
+  void testAssertTrees() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
@@ -116,7 +114,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testAddTransactionContinueProcess() {
+  void testAddTransactionContinueProcess() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
@@ -135,7 +133,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testAddTransactionTriggerCancellation() {
+  void testAddTransactionTriggerCancellation() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.CANCEL_BOUNDARY_EVENT);
@@ -155,7 +153,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testAddTransactionAssertTrees() {
+  void testAddTransactionAssertTrees() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
@@ -184,7 +182,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testRemoveTransactionContinueProcess() {
+  void testRemoveTransactionContinueProcess() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -203,7 +201,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testRemoveTransactionAssertTrees() {
+  void testRemoveTransactionAssertTrees() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -230,7 +228,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testMigrateTransactionToEmbeddedSubProcess() {
+  void testMigrateTransactionToEmbeddedSubProcess() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
@@ -252,7 +250,7 @@ public class MigrationTransactionTest {
   }
 
   @Test
-  public void testMigrateEventSubProcessToTransaction() {
+  void testMigrateEventSubProcessToTransaction() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(EventSubProcessModels.MESSAGE_EVENT_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testRule.deployAndGetDefinition(TransactionModels.ONE_TASK_TRANSACTION);

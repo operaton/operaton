@@ -23,31 +23,29 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationException;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.GatewayModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationGatewayTest {
+class MigrationGatewayTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testParallelGatewayContinueExecution() {
+  void testParallelGatewayContinueExecution() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
@@ -77,7 +75,7 @@ public class MigrationGatewayTest {
   }
 
   @Test
-  public void testParallelGatewayAssertTrees() {
+  void testParallelGatewayAssertTrees() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
@@ -114,7 +112,7 @@ public class MigrationGatewayTest {
   }
 
   @Test
-  public void testParallelGatewayAddScope() {
+  void testParallelGatewayAddScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW_IN_SUBPROCESS);
@@ -144,7 +142,7 @@ public class MigrationGatewayTest {
   }
 
   @Test
-  public void testInclusiveGatewayContinueExecution() {
+  void testInclusiveGatewayContinueExecution() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
@@ -174,7 +172,7 @@ public class MigrationGatewayTest {
   }
 
   @Test
-  public void testInclusiveGatewayAssertTrees() {
+  void testInclusiveGatewayAssertTrees() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
@@ -211,7 +209,7 @@ public class MigrationGatewayTest {
   }
 
   @Test
-  public void testInclusiveGatewayAddScope() {
+  void testInclusiveGatewayAddScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW_IN_SUBPROCESS);
@@ -241,7 +239,7 @@ public class MigrationGatewayTest {
   }
 
   @Test
-  public void testCannotMigrateParallelToInclusiveGateway() {
+  void testCannotMigrateParallelToInclusiveGateway() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
@@ -263,7 +261,7 @@ public class MigrationGatewayTest {
   }
 
   @Test
-  public void testCannotMigrateInclusiveToParallelGateway() {
+  void testCannotMigrateInclusiveToParallelGateway() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
@@ -289,7 +287,7 @@ public class MigrationGatewayTest {
    * than it has incoming flows
    */
   @Test
-  public void testCannotRemoveGatewayIncomingSequenceFlow() {
+  void testCannotRemoveGatewayIncomingSequenceFlow() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(GatewayModels.PARALLEL_GW)
@@ -315,7 +313,7 @@ public class MigrationGatewayTest {
    * than it has incoming flows
    */
   @Test
-  public void testAddGatewayIncomingSequenceFlow() {
+  void testAddGatewayIncomingSequenceFlow() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(GatewayModels.PARALLEL_GW)
@@ -358,7 +356,7 @@ public class MigrationGatewayTest {
    * than it has incoming flows
    */
   @Test
-  public void testCannotRemoveParentScope() {
+  void testCannotRemoveParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW_IN_SUBPROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
@@ -383,7 +381,7 @@ public class MigrationGatewayTest {
    * than it has incoming flows
    */
   @Test
-  public void testCannotMapMultipleGatewaysToOne() {
+  void testCannotMapMultipleGatewaysToOne() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);

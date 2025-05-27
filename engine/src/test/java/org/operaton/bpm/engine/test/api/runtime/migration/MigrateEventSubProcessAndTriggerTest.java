@@ -22,11 +22,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.util.BpmnEventFactory;
 import org.operaton.bpm.engine.test.api.runtime.migration.util.ConditionalEventFactory;
@@ -34,21 +36,17 @@ import org.operaton.bpm.engine.test.api.runtime.migration.util.MessageEventFacto
 import org.operaton.bpm.engine.test.api.runtime.migration.util.MigratingBpmnEventTrigger;
 import org.operaton.bpm.engine.test.api.runtime.migration.util.SignalEventFactory;
 import org.operaton.bpm.engine.test.api.runtime.migration.util.TimerEventFactory;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class MigrateEventSubProcessAndTriggerTest {
 
   @Parameters
@@ -64,19 +62,18 @@ public class MigrateEventSubProcessAndTriggerTest {
   @Parameter
   public BpmnEventFactory eventFactory;
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     ClockUtil.setCurrentTime(new Date()); // lock time so that timer job is effectively not updated
   }
 
-  @Test
-  public void testMigrateEventSubprocessSignalTrigger() {
+  @TestTemplate
+  void testMigrateEventSubprocessSignalTrigger() {
     BpmnModelInstance processModel = ProcessModels.ONE_TASK_PROCESS.clone();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addEventSubProcess(
         rule.getProcessEngine(),

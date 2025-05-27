@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.runtime.migration.util;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 /**
@@ -83,6 +84,11 @@ public class MessageEventFactory implements BpmnEventFactory {
       migrationContext.assertEventSubscriptionMigrated(activityId, targetActivityId, messageName);
     }
 
+    @Override
+    public void assertEventTriggerMigrated(MigrationTestExtension migrationContext, String targetActivityId) {
+      migrationContext.assertEventSubscriptionMigrated(activityId, targetActivityId, messageName);
+    }
+    
     @Override
     public MigratingBpmnEventTrigger inContextOf(String newActivityId) {
       MessageTrigger newTrigger = new MessageTrigger();

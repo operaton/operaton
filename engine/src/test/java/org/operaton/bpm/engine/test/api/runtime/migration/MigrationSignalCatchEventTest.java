@@ -23,32 +23,30 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 
 import java.util.HashMap;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.SignalCatchModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationSignalCatchEventTest {
+class MigrationSignalCatchEventTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testMigrateEventSubscription() {
+  void testMigrateEventSubscription() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(SignalCatchModels.ONE_SIGNAL_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(SignalCatchModels.ONE_SIGNAL_CATCH_PROCESS);
@@ -84,7 +82,7 @@ public class MigrationSignalCatchEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionChangeActivityId() {
+  void testMigrateEventSubscriptionChangeActivityId() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(SignalCatchModels.ONE_SIGNAL_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(SignalCatchModels.ONE_SIGNAL_CATCH_PROCESS)
@@ -109,7 +107,7 @@ public class MigrationSignalCatchEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionPreserveSignalName() {
+  void testMigrateEventSubscriptionPreserveSignalName() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(SignalCatchModels.ONE_SIGNAL_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.newModel()
@@ -139,7 +137,7 @@ public class MigrationSignalCatchEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionUpdateSignalName() {
+  void testMigrateEventSubscriptionUpdateSignalName() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(SignalCatchModels.ONE_SIGNAL_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.newModel()
@@ -172,7 +170,7 @@ public class MigrationSignalCatchEventTest {
   }
 
   @Test
-  public void testMigrateJobAddParentScope() {
+  void testMigrateJobAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(SignalCatchModels.ONE_SIGNAL_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(SignalCatchModels.SUBPROCESS_SIGNAL_CATCH_PROCESS);
@@ -210,7 +208,7 @@ public class MigrationSignalCatchEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionUpdateSignalExpressionNameWithVariables() {
+  void testMigrateEventSubscriptionUpdateSignalExpressionNameWithVariables() {
     // given
     String newSignalName = "new" + SignalCatchModels.SIGNAL_NAME + "-${var}";
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(SignalCatchModels.ONE_SIGNAL_CATCH_PROCESS);

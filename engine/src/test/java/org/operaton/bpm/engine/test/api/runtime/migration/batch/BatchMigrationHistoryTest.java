@@ -23,6 +23,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -36,45 +40,42 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class BatchMigrationHistoryTest {
 
   protected static final Date START_DATE = new Date(1457326800000L);
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule migrationRule = new MigrationTestRule(engineRule);
-  protected BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
 
-  protected ProcessEngineConfigurationImpl configuration;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected HistoryService historyService;
+  ProcessEngineConfigurationImpl configuration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  HistoryService historyService;
 
-  protected ProcessDefinition sourceProcessDefinition;
-  protected ProcessDefinition targetProcessDefinition;
+  ProcessDefinition sourceProcessDefinition;
+  ProcessDefinition targetProcessDefinition;
 
-  protected boolean defaultEnsureJobDueDateSet;
+  boolean defaultEnsureJobDueDateSet;
 
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public boolean ensureJobDueDateSet;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public Date currentTime;
 
-  @Parameterized.Parameters(name = "Job DueDate is set: {0}")
+  @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { false, null },
@@ -82,44 +83,34 @@ public class BatchMigrationHistoryTest {
     });
   }
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(migrationRule);
-
-  @Before
-  public void initServices() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    historyService = engineRule.getHistoryService();
-  }
-
-  @Before
-  public void setupConfiguration() {
+  @BeforeEach
+  void setupConfiguration() {
     configuration = engineRule.getProcessEngineConfiguration();
     defaultEnsureJobDueDateSet = configuration.isEnsureJobDueDateNotNull();
     configuration.setEnsureJobDueDateNotNull(ensureJobDueDateSet);
   }
 
-  @Before
-  public void setClock() {
+  @BeforeEach
+  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @After
-  public void removeBatches() {
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
-  @After
-  public void resetConfiguration() {
+  @AfterEach
+  void resetConfiguration() {
     configuration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchCreation() {
     // when
     Batch batch = helper.migrateProcessInstancesAsync(10);
@@ -141,7 +132,7 @@ public class BatchMigrationHistoryTest {
     assertThat(historicBatch.getEndTime()).isNull();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchCompletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
@@ -158,7 +149,7 @@ public class BatchMigrationHistoryTest {
     assertThat(historicBatch.getEndTime()).isEqualTo(endDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricSeedJobLog() {
     // when
     Batch batch = helper.migrateProcessInstancesAsync(1);
@@ -195,7 +186,7 @@ public class BatchMigrationHistoryTest {
 
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricMonitorJobLog() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -255,7 +246,7 @@ public class BatchMigrationHistoryTest {
     assertThat(jobLog.getJobDueDate()).isEqualTo(monitorJobDueDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchJobLog() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
@@ -292,7 +283,7 @@ public class BatchMigrationHistoryTest {
     assertThat(jobLog.getJobDueDate()).isEqualTo(currentTime);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchForBatchDeletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -306,7 +297,7 @@ public class BatchMigrationHistoryTest {
     assertThat(historicBatch.getEndTime()).isEqualTo(deletionDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricSeedJobLogForBatchDeletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -321,7 +312,7 @@ public class BatchMigrationHistoryTest {
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricMonitorJobLogForBatchDeletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
@@ -337,7 +328,7 @@ public class BatchMigrationHistoryTest {
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchJobLogForBatchDeletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
@@ -353,7 +344,7 @@ public class BatchMigrationHistoryTest {
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
-  @Test
+  @TestTemplate
   public void testDeleteHistoricBatch() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
@@ -371,7 +362,7 @@ public class BatchMigrationHistoryTest {
     assertThat(helper.getHistoricBatchJobLog(batch)).isEmpty();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricSeedJobIncidentDeletion() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
@@ -389,7 +380,7 @@ public class BatchMigrationHistoryTest {
     assertThat(historicIncidents).isZero();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricMonitorJobIncidentDeletion() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
@@ -408,7 +399,7 @@ public class BatchMigrationHistoryTest {
     assertThat(historicIncidents).isZero();
   }
 
-  @Test
+  @TestTemplate
   public void testHistoricBatchJobLogIncidentDeletion() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(3);

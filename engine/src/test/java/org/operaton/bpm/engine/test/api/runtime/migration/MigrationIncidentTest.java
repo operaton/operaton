@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -30,16 +32,12 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  *
@@ -92,17 +90,16 @@ public class MigrationIncidentTest {
     .done();
 
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(engineRule);
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/migration/calledProcess.bpmn",
-                           "org/operaton/bpm/engine/test/api/runtime/migration/callingProcess.bpmn",
-                           "org/operaton/bpm/engine/test/api/runtime/migration/callingProcess_v2.bpmn"})
-  public void testCallActivityExternalTaskIncidentMigration() {
+      "org/operaton/bpm/engine/test/api/runtime/migration/callingProcess.bpmn",
+      "org/operaton/bpm/engine/test/api/runtime/migration/callingProcess_v2.bpmn"})
+  void testCallActivityExternalTaskIncidentMigration() {
     // Given we create a new process instance
     ProcessDefinition callingProcess = engineRule.getRepositoryService()
         .createProcessDefinitionQuery()
@@ -146,8 +143,8 @@ public class MigrationIncidentTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/migration/calledProcess.bpmn",
-                           "org/operaton/bpm/engine/test/api/runtime/migration/calledProcess_v2.bpmn"})
-  public void testExternalTaskIncidentMigration() {
+      "org/operaton/bpm/engine/test/api/runtime/migration/calledProcess_v2.bpmn"})
+  void testExternalTaskIncidentMigration() {
 
     // Given we create a new process instance
     ProcessDefinition callingProcess = engineRule.getRepositoryService()
@@ -189,9 +186,8 @@ public class MigrationIncidentTest {
   }
 
 
-
   @Test
-  public void testCallActivityJobIncidentMigration() {
+  void testCallActivityJobIncidentMigration() {
     // Given we deploy process definitions
     testHelper.deploy(FAIL_CALLED_PROC, FAIL_CALL_ACT_JOB_PROC, NEW_CALLED_PROC, NEW_CALL_ACT_PROC);
 
@@ -236,9 +232,8 @@ public class MigrationIncidentTest {
   }
 
 
-
   @Test
-  public void testJobIncidentMigration() {
+  void testJobIncidentMigration() {
     // Given we deploy process definitions
     testHelper.deploy(FAIL_CALLED_PROC, NEW_CALLED_PROC);
 
@@ -284,7 +279,7 @@ public class MigrationIncidentTest {
   }
 
   @Test
-  public void testCustomIncidentMigration() {
+  void testCustomIncidentMigration() {
     // given
     RuntimeService runtimeService = engineRule.getRuntimeService();
     BpmnModelInstance instance1 = Bpmn.createExecutableProcess("process1").startEvent().userTask("u1").endEvent().done();
@@ -313,7 +308,7 @@ public class MigrationIncidentTest {
   }
 
   @Test
-  public void testCustomIncidentMigrationWithoutConfiguration() {
+  void testCustomIncidentMigrationWithoutConfiguration() {
     // given
     RuntimeService runtimeService = engineRule.getRuntimeService();
     BpmnModelInstance instance1 = Bpmn.createExecutableProcess("process1").startEvent().userTask("u1").endEvent().done();
@@ -344,8 +339,8 @@ public class MigrationIncidentTest {
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/migration/calledProcess.bpmn",
-                           "org/operaton/bpm/engine/test/api/runtime/migration/calledProcess_v2.bpmn"})
-  public void historicIncidentRemainsOpenAfterMigration() {
+      "org/operaton/bpm/engine/test/api/runtime/migration/calledProcess_v2.bpmn"})
+  void historicIncidentRemainsOpenAfterMigration() {
 
     // Given we create a new process instance
     ProcessDefinition process1 = engineRule.getRepositoryService()

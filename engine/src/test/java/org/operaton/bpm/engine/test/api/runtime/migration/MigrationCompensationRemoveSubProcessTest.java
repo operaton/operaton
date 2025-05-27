@@ -22,6 +22,10 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -30,38 +34,32 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.CompensationModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationCompensationRemoveSubProcessTest {
+class MigrationCompensationRemoveSubProcessTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  @Before
-  @After
-  public void clearExecutionListener() {
+  @BeforeEach
+  @AfterEach
+  void clearExecutionListener() {
     RecorderExecutionListener.clear();
   }
 
   @Test
-  public void testCase1() {
+  void testCase1() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_TWO_TASKS_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -88,7 +86,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testCase1AssertActivityInstance() {
+  void testCase1AssertActivityInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_TWO_TASKS_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -116,7 +114,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testCase1AssertExecutionTree() {
+  void testCase1AssertExecutionTree() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_TWO_TASKS_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -141,7 +139,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testCase2() {
+  void testCase2() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -168,7 +166,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testCase2ActivityInstance() {
+  void testCase2ActivityInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -197,7 +195,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testCase2AssertExecutionTree() {
+  void testCase2AssertExecutionTree() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -222,7 +220,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testCanOnlyTriggerCompensationInParentOfRemovedScope() {
+  void testCanOnlyTriggerCompensationInParentOfRemovedScope() {
 
     BpmnModelInstance sourceModel = ProcessModels.newModel()
       .startEvent()
@@ -279,7 +277,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testCanRemoveEventScopeWithVariables() {
+  void testCanRemoveEventScopeWithVariables() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.ONE_COMPENSATION_TASK_MODEL);
@@ -307,7 +305,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testDeletesOnlyVariablesFromRemovingScope() {
+  void testDeletesOnlyVariablesFromRemovingScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
@@ -344,7 +342,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testNoListenersCalled() {
+  void testNoListenersCalled() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL)
         .activityBuilder("subProcess")
@@ -371,7 +369,7 @@ public class MigrationCompensationRemoveSubProcessTest {
   }
 
   @Test
-  public void testNoOutputMappingExecuted() {
+  void testNoOutputMappingExecuted() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL)
       .activityBuilder("subProcess")

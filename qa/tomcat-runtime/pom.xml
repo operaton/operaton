@@ -13,7 +13,7 @@
   </parent>
 
   <properties>
-    <version.asm>9.7.1</version.asm>
+    <version.asm>9.8</version.asm>
   </properties>
 
   <dependencyManagement>

@@ -2293,29 +2293,6 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalVariableWithUnparseableLong() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String type = "Long";
-
-    Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(variableValue, type);
-
-    given()
-      .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
-      .pathParam("varId", variableKey)
-      .contentType(ContentType.JSON)
-      .body(variableJson)
-    .then()
-      .expect()
-        .statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Cannot put case execution variable aVariableKey: "
-            + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Long.class)))
-    .when()
-      .put(SINGLE_CASE_EXECUTION_LOCAL_VARIABLE_URL);
-  }
-
-  @Test
   public void testPutSingleVariableWithUnparseableLong() {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";

@@ -30,11 +30,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Base64;
 import java.util.List;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -107,7 +107,8 @@ public class JavaSerializationTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     runtimeService.setVariable(instance.getId(), "simpleBean",
         serializedObjectValue(serializedObject)
@@ -136,7 +137,7 @@ public class JavaSerializationTest {
     JavaSerializable javaSerializable = new JavaSerializable("foo");
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
 
     // if
     // I start a process instance in which a Java Delegate reads the value in its deserialized form
@@ -163,7 +164,7 @@ public class JavaSerializationTest {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
     byte[] serializedObjectBytes = baos.toByteArray();
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(serializedObjectBytes), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(serializedObjectBytes), engineRule.getProcessEngine());
 
     // which cannot be deserialized
     ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(serializedObjectBytes));
@@ -322,7 +323,7 @@ public class JavaSerializationTest {
     String taskId = task.getId();
     try (var baos = new ByteArrayOutputStream(); var oos = new ObjectOutputStream(baos)) {
       oos.writeObject("trumpet");
-      String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+      String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
 
       taskService.setVariable(taskId, "instrument",
         serializedObjectValue(serializedObject)
@@ -357,7 +358,7 @@ public class JavaSerializationTest {
     JavaSerializable bean = new JavaSerializable("bar");
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(bean);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
     ObjectValue javaValue = serializedObjectValue(serializedObject, true)
         .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
         .objectTypeName(JavaSerializable.class.getName())

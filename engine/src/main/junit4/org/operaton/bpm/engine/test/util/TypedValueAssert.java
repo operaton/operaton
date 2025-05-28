@@ -22,7 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.charset.StandardCharsets;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
+import java.util.Base64;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
@@ -71,7 +71,7 @@ public class TypedValueAssert {
     try {
       // validate this is the base 64 encoded string representation of the serialized value of the java object
       String valueSerialized = typedValue.getValueSerialized();
-      byte[] decodedObject = Base64.decodeBase64(valueSerialized.getBytes(StandardCharsets.UTF_8));
+      byte[] decodedObject = Base64.getDecoder().decode(valueSerialized.getBytes(StandardCharsets.UTF_8));
       ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(decodedObject));
       assertThat(objectInputStream.readObject()).isEqualTo(value);
     }

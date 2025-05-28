@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,6 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -406,7 +406,8 @@ class MessageCorrelationTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {
@@ -447,7 +448,8 @@ class MessageCorrelationTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {
@@ -595,7 +597,8 @@ class MessageCorrelationTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {
@@ -636,7 +639,8 @@ class MessageCorrelationTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {

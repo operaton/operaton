@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.security.auth.impl;
 
+import java.util.Base64;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
+import org.operaton.bpm.engine.rest.impl.AuthLogger;
+import org.operaton.bpm.engine.rest.impl.RestLogger;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationProvider;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
 
@@ -26,24 +28,54 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.core.HttpHeaders;
 
 /**
+ * Implementation of the {@link AuthenticationProvider} interface that performs
+ * HTTP Basic Authentication against the identity service of a process engine.
+ *
  * <p>
- * Authenticates a request against the provided process engine's identity service by applying http basic authentication.
+ * This class extracts credentials from the "Authorization" HTTP header, decodes
+ * them, and validates them using the process engine's identity service.
+ * </p>
+ *
+ * <p>
+ * If authentication fails, an appropriate challenge response is added to the
+ * HTTP response.
  * </p>
  *
  * @author Thorben Lindhauer
  */
 public class HttpBasicAuthenticationProvider implements AuthenticationProvider {
 
+  // Prefix for the HTTP Basic Authentication header
   protected static final String BASIC_AUTH_HEADER_PREFIX = "Basic ";
 
+  private static final AuthLogger LOG = RestLogger.AUTH_LOGGER;
+
+  /**
+   * Extracts and authenticates the user from the HTTP request using Basic Authentication.
+   *
+   * @param request the HTTP request containing the "Authorization" header
+   * @param engine the process engine used for authentication
+   * @return an {@link AuthenticationResult} indicating success or failure
+   */
   @Override
   public AuthenticationResult extractAuthenticatedUser(HttpServletRequest request,
       ProcessEngine engine) {
     String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-
+    // Check if the Authorization header is present and starts with the Basic prefix
     if (authorizationHeader != null && authorizationHeader.startsWith(BASIC_AUTH_HEADER_PREFIX)) {
+      // Extract and decode the Base64-encoded credentials
       String encodedCredentials = authorizationHeader.substring(BASIC_AUTH_HEADER_PREFIX.length());
-      String decodedCredentials = new String(Base64.decodeBase64(encodedCredentials));
+      String decodedCredentials;
+      try {
+        decodedCredentials = new String(Base64.getDecoder().decode(encodedCredentials));
+      } catch (IllegalArgumentException e) {
+        // IllegalArgumentException is thrown if the Base64 decoding fails.
+        // Maintains compatibility with previous behavior where an invalid
+        // Base64 string would lead to an unsuccessful authentication.
+        LOG.warnInvalidAuthHeader(e);
+        return AuthenticationResult.unsuccessful();
+      }
+      // Find the first colon to separate username and password
       int firstColonIndex = decodedCredentials.indexOf(":");
 
       if (firstColonIndex == -1) {
@@ -51,6 +83,8 @@ public class HttpBasicAuthenticationProvider implements AuthenticationProvider {
       } else {
         String userName = decodedCredentials.substring(0, firstColonIndex);
         String password = decodedCredentials.substring(firstColonIndex + 1);
+
+        // Authenticate the user using the process engine's identity service
         if (isAuthenticated(engine, userName, password)) {
           return AuthenticationResult.successful(userName);
         } else {
@@ -62,10 +96,24 @@ public class HttpBasicAuthenticationProvider implements AuthenticationProvider {
     }
   }
 
+  /**
+   * Validates the provided username and password against the process engine's identity service.
+   *
+   * @param engine the process engine used for authentication
+   * @param userName the username to authenticate
+   * @param password the password to authenticate
+   * @return true if the credentials are valid, false otherwise
+   */
   protected boolean isAuthenticated(ProcessEngine engine, String userName, String password) {
     return engine.getIdentityService().checkPassword(userName, password);
   }
 
+  /**
+   * Adds an HTTP Basic Authentication challenge to the response.
+   *
+   * @param response the HTTP response to augment
+   * @param engine the process engine providing the authentication realm
+   */
   @Override
   public void augmentResponseByAuthenticationChallenge(
       HttpServletResponse response, ProcessEngine engine) {

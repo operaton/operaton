@@ -26,11 +26,11 @@ import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 
+import java.util.Base64;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.impl.variable.serializer.JavaObjectSerializer;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -109,7 +109,8 @@ public class JavaSerializationProhibitedTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
     ObjectValue serializedJavaObject = serializedObjectValue(serializedObject)
       .serializationDataFormat(JAVA_DATA_FORMAT)
       .objectTypeName(JavaSerializable.class.getName())
@@ -134,7 +135,8 @@ public class JavaSerializationProhibitedTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
     ObjectValue serializedObjectValue = serializedObjectValue(serializedObject)
       .objectTypeName(JavaSerializable.class.getName())
       .create();

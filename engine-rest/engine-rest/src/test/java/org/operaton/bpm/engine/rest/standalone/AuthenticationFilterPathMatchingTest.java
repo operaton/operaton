@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.standalone;
 
 import jakarta.servlet.Filter;
+import java.util.Base64;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -24,7 +25,6 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.AuthorizationServiceImpl;
 import org.operaton.bpm.engine.impl.IdentityServiceImpl;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
@@ -165,7 +165,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
 
   protected void applyFilter(MockHttpServletRequest request, MockHttpServletResponse response, String username, String password) throws IOException, ServletException {
     String credentials = username + ":" + password;
-    request.addHeader("Authorization", "Basic " + new String(Base64.encodeBase64(credentials.getBytes())));
+    request.addHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString(credentials.getBytes()));
     FilterChain filterChain = new MockFilterChain();
 
     authenticationFilter.doFilter(request, response, filterChain);

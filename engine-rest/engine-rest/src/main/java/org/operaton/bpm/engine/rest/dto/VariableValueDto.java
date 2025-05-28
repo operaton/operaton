@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
+import java.util.Base64;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.mapper.MultipartFormData.FormPart;
@@ -118,7 +118,7 @@ public class VariableValueDto {
       else if(valueType instanceof FileValueType) {
 
         if (value instanceof String stringValue) {
-          value = Base64.decodeBase64(stringValue);
+          value = Base64.getDecoder().decode(stringValue);
         }
 
         return valueType.createValue(value, valueInfo);
@@ -127,14 +127,6 @@ public class VariableValueDto {
       }
     }
 
-  }
-
-  protected FileValue fileValueWithDecodedString(FileValue fileValue, String value) {
-    return Variables.fileValue(fileValue.getFilename())
-                    .file(Base64.decodeBase64(value))
-                    .mimeType(fileValue.getMimeType())
-                    .encoding(fileValue.getEncoding())
-                    .create();
   }
 
   public static VariableMap toMap(Map<String, VariableValueDto> variables, ProcessEngine processEngine, ObjectMapper objectMapper) {

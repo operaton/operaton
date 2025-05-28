@@ -83,7 +83,7 @@ public abstract class AbstractAuthenticationFilterTest extends AbstractRestServi
 
     // example method
     ProcessDefinition mockDefinition = MockProvider.createMockDefinition();
-    List<ProcessDefinition> mockDefinitions = Collections.singletonList(mockDefinition);
+    List<ProcessDefinition> mockDefinitions = List.of(mockDefinition);
     ProcessDefinitionQuery mockQuery = mock(ProcessDefinitionQuery.class);
     when(repositoryServiceMock.createProcessDefinitionQuery()).thenReturn(mockQuery);
     when(mockQuery.list()).thenReturn(mockDefinitions);

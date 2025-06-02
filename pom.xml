@@ -22,7 +22,7 @@
     <version.joda-time>2.12.5</version.joda-time>
     <version.uuid-generator>5.1.0</version.uuid-generator>
     <version.feel-scala>1.19.1</version.feel-scala>
-    <version.quarkus>3.20.0</version.quarkus>
+    <version.quarkus>3.23.0</version.quarkus>
     <version.java>17</version.java>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>

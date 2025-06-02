@@ -20,31 +20,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.Execution;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
-public class ExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<ExecutionQueryImpl, Execution> {
+class ExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<ExecutionQueryImpl, Execution> {
 
   RepositoryService repositoryService;
   RuntimeService runtimeService;
 
-  @Before
-  public void init() {
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-
+  @BeforeEach
+  void init() {
     repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml").deploy();
     instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     for (Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }
@@ -61,7 +58,7 @@ public class ExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnore
   }
 
   @Test
-  public void testProcessVariableNameEqualsIgnoreCase() {
+  void testProcessVariableNameEqualsIgnoreCase() {
     // given
     // when
     List<Execution> eq = queryNameIgnoreCase().processVariableValueEquals(VARIABLE_NAME, VARIABLE_VALUE).list();
@@ -77,7 +74,7 @@ public class ExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnore
   }
 
   @Test
-  public void testProcessVariableNameNotEqualsIgnoreCase() {
+  void testProcessVariableNameNotEqualsIgnoreCase() {
     // given
     // when
     List<Execution> neq = queryNameIgnoreCase().processVariableValueNotEquals(VARIABLE_NAME, VARIABLE_VALUE).list();
@@ -93,7 +90,7 @@ public class ExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnore
   }
 
   @Test
-  public void testProcessVariableValueEqualsIgnoreCase() {
+  void testProcessVariableValueEqualsIgnoreCase() {
     // given
     // when
     List<Execution> eq = queryValueIgnoreCase().processVariableValueEquals(VARIABLE_NAME, VARIABLE_VALUE).list();
@@ -109,7 +106,7 @@ public class ExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnore
   }
 
   @Test
-  public void testProcessVariableValueNotEqualsIgnoreCase() {
+  void testProcessVariableValueNotEqualsIgnoreCase() {
     // given
     // when
     List<Execution> neq = queryValueIgnoreCase().processVariableValueNotEquals(VARIABLE_NAME, VARIABLE_VALUE).list();
@@ -125,7 +122,7 @@ public class ExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnore
   }
 
   @Test
-  public void testProcessVariableNameAndValueEqualsIgnoreCase() {
+  void testProcessVariableNameAndValueEqualsIgnoreCase() {
     // given
     // when
     List<Execution> eq = queryNameValueIgnoreCase().processVariableValueEquals(VARIABLE_NAME, VARIABLE_VALUE).list();
@@ -145,7 +142,7 @@ public class ExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnore
   }
 
   @Test
-  public void testProcessVariableNameAndValueNotEqualsIgnoreCase() {
+  void testProcessVariableNameAndValueNotEqualsIgnoreCase() {
     // given
     // when
     List<Execution> neq = queryNameValueIgnoreCase().processVariableValueNotEquals(VARIABLE_NAME, VARIABLE_VALUE).list();

@@ -20,6 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.Event;
@@ -28,29 +33,36 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.GetIdentityLinksTaskListener;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 import ch.qos.logback.classic.Level;
-
 
 
 /**
  * @author Tom Baeyens
  * @author Falko Menge
  */
-public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
+class TaskIdentityLinksTest {
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().level(Level.ERROR);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().level(Level.ERROR);
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  IdentityService identityService;
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
   @Test
-  public void testCandidateUserLink() {
+  void testCandidateUserLink() {
     runtimeService.startProcessInstanceByKey("IdentityLinksProcess");
 
     String taskId = taskService
@@ -78,10 +90,10 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     assertThat(taskService.getIdentityLinksForTask(taskId)).isEmpty();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
   @Test
   @SuppressWarnings("deprecation")
-  public void testCandidateGroupLink() {
+  void testCandidateGroupLink() {
     try {
       identityService.setAuthenticatedUserId("demo");
 
@@ -135,7 +147,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testAssigneeLink() {
+  void testAssigneeLink() {
     Task task = taskService.newTask("task");
     task.setAssignee("assignee");
     taskService.saveTask(task);
@@ -158,7 +170,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testOwnerLink() {
+  void testOwnerLink() {
     Task task = taskService.newTask("task");
     task.setOwner("owner");
     taskService.saveTask(task);
@@ -190,9 +202,9 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     throw new AssertionError("no task event found with action "+action);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
   @Test
-  public void testCustomTypeUserLink() {
+  void testCustomTypeUserLink() {
     runtimeService.startProcessInstanceByKey("IdentityLinksProcess");
 
     String taskId = taskService
@@ -217,9 +229,9 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     assertThat(taskService.getIdentityLinksForTask(taskId)).isEmpty();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
   @Test
-  public void testCustomLinkGroupLink() {
+  void testCustomLinkGroupLink() {
     runtimeService.startProcessInstanceByKey("IdentityLinksProcess");
 
     String taskId = taskService
@@ -245,7 +257,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeleteAssignee() {
+  void testDeleteAssignee() {
     Task task = taskService.newTask();
     task.setAssignee("nonExistingUser");
     taskService.saveTask(task);
@@ -261,7 +273,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeleteOwner() {
+  void testDeleteOwner() {
     Task task = taskService.newTask();
     task.setOwner("nonExistingUser");
     taskService.saveTask(task);
@@ -277,7 +289,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testAssigneeGetIdentityLinksInCompleteListener() {
+  void testAssigneeGetIdentityLinksInCompleteListener() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -308,7 +320,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testOwnerGetIdentityLinksInCompleteListener() {
+  void testOwnerGetIdentityLinksInCompleteListener() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)

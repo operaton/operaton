@@ -28,6 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -40,41 +43,25 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Tassilo Weidner
  */
-public class TaskQueryOrTest {
+@ExtendWith(ProcessEngineExtension.class)
+class TaskQueryOrTest {
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
+  RuntimeService runtimeService;
+  TaskService taskService;
+  CaseService caseService;
+  RepositoryService repositoryService;
+  FilterService filterService;
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected CaseService caseService;
-  protected RepositoryService repositoryService;
-  protected FilterService filterService;
-
-  @Before
-  public void init() {
-    runtimeService = processEngineRule.getRuntimeService();
-    taskService = processEngineRule.getTaskService();
-    caseService = processEngineRule.getCaseService();
-    repositoryService = processEngineRule.getRepositoryService();
-    filterService = processEngineRule.getFilterService();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     for (org.operaton.bpm.engine.repository.Deployment deployment:
       repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
@@ -86,7 +73,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByMissingStartOr() {
+  void shouldThrowExceptionByMissingStartOr() {
     // given
     var taskQuery = taskService.createTaskQuery().or().endOr();
 
@@ -97,7 +84,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByNesting() {
+  void shouldThrowExceptionByNesting() {
     // given
     var taskQuery = taskService.createTaskQuery().or();
     // when/then
@@ -108,7 +95,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByWithCandidateGroupsApplied() {
+  void shouldThrowExceptionByWithCandidateGroupsApplied() {
     // given
     var taskQuery = taskService.createTaskQuery().or();
     // when/then
@@ -118,7 +105,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByWithoutCandidateGroupsApplied() {
+  void shouldThrowExceptionByWithoutCandidateGroupsApplied() {
     // given
     var taskQuery = taskService.createTaskQuery().or();
     // when/then
@@ -128,7 +115,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByWithCandidateUsersApplied() {
+  void shouldThrowExceptionByWithCandidateUsersApplied() {
     // given
     var taskQuery = taskService.createTaskQuery().or();
     // when/then
@@ -138,7 +125,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByWithoutCandidateUsersApplied() {
+  void shouldThrowExceptionByWithoutCandidateUsersApplied() {
     // given
     var taskQuery = taskService.createTaskQuery().or();
     // when/then
@@ -148,7 +135,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByOrderingApplied() {
+  void shouldThrowExceptionByOrderingApplied() {
     // given
     var taskQuery = taskService.createTaskQuery().or();
     // when/then
@@ -158,7 +145,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByInitializeFormKeysInOrQuery() {
+  void shouldThrowExceptionByInitializeFormKeysInOrQuery() {
     // given
     var taskQuery = taskService.createTaskQuery().or();
     // when/then
@@ -168,7 +155,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnTenantIdsAndWithoutTenantIdInAndQuery() {
+  void shouldThrowExceptionOnTenantIdsAndWithoutTenantIdInAndQuery() {
     // given
     var taskQuery = taskService.createTaskQuery().tenantIdIn("tenant1", "tenant2");
     // when/then
@@ -178,7 +165,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksOnTenantIdsAndWithoutTenantIdInOrQuery() {
+  void shouldReturnTasksOnTenantIdsAndWithoutTenantIdInOrQuery() {
     // given
     Task taskTenant1 = taskService.newTask();
     taskTenant1.setTenantId("tenant1");
@@ -198,7 +185,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnNoTasksWithTaskCandidateUserAndOrTaskCandidateGroup() {
+  void shouldReturnNoTasksWithTaskCandidateUserAndOrTaskCandidateGroup() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -221,7 +208,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithEmptyOrQuery() {
+  void shouldReturnTasksWithEmptyOrQuery() {
     // given
     taskService.saveTask(taskService.newTask());
     taskService.saveTask(taskService.newTask());
@@ -237,7 +224,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithTaskCandidateUserOrTaskCandidateGroup() {
+  void shouldReturnTasksWithTaskCandidateUserOrTaskCandidateGroup() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -260,7 +247,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithTaskCandidateUserOrTaskCandidateGroupWithIncludeAssignedTasks() {
+  void shouldReturnTasksWithTaskCandidateUserOrTaskCandidateGroupWithIncludeAssignedTasks() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -285,7 +272,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithTaskCandidateUserOrAssignee() {
+  void shouldReturnTasksWithTaskCandidateUserOrAssignee() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -308,7 +295,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithTaskCandidateUserOrTaskCandidateGroupIn() {
+  void shouldReturnTasksWithTaskCandidateUserOrTaskCandidateGroupIn() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -335,7 +322,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithTaskCandidateGroupOrTaskCandidateGroupIn() {
+  void shouldReturnTasksWithTaskCandidateGroupOrTaskCandidateGroupIn() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -362,7 +349,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithTaskNameOrTaskDescription() {
+  void shouldReturnTasksWithTaskNameOrTaskDescription() {
     // given
     Task task1 = taskService.newTask();
     task1.setName("aTaskName");
@@ -385,7 +372,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithMultipleOrCriteria() {
+  void shouldReturnTasksWithMultipleOrCriteria() {
     // given
     Task task1 = taskService.newTask();
     task1.setName("aTaskName");
@@ -422,7 +409,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksFilteredByMultipleOrAndCriteria() {
+  void shouldReturnTasksFilteredByMultipleOrAndCriteria() {
     // given
     Task task1 = taskService.newTask();
     task1.setPriority(4);
@@ -472,7 +459,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksFilteredByMultipleOrQueries() {
+  void shouldReturnTasksFilteredByMultipleOrQueries() {
     // given
     Task task1 = taskService.newTask();
     task1.setName("aTaskName");
@@ -540,7 +527,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWhereSameCriterionWasAppliedThreeTimesInOneQuery() {
+  void shouldReturnTasksWhereSameCriterionWasAppliedThreeTimesInOneQuery() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -568,7 +555,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithTaskVariableValueEqualsOrTaskVariableValueGreaterThan() {
+  void shouldReturnTasksWithTaskVariableValueEqualsOrTaskVariableValueGreaterThan() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -590,7 +577,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithProcessVariableValueNotLikeOrEquals() {
+  void shouldReturnTasksWithProcessVariableValueNotLikeOrEquals() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -619,7 +606,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldInitializeFormKeys() {
+  void shouldInitializeFormKeys() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
         .operatonHistoryTimeToLive(180)
@@ -669,7 +656,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithProcessDefinitionNameOrProcessDefinitionKey() {
+  void shouldReturnTasksWithProcessDefinitionNameOrProcessDefinitionKey() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
         .operatonHistoryTimeToLive(180)
@@ -713,7 +700,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithProcessInstanceBusinessKeyOrProcessInstanceBusinessKeyLike() {
+  void shouldReturnTasksWithProcessInstanceBusinessKeyOrProcessInstanceBusinessKeyLike() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
         .operatonHistoryTimeToLive(180)
@@ -758,7 +745,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithProcessInstanceBusinessKeyOrProcessInstanceBusinessKeyLikeAndAssignee() {
+  void shouldReturnTasksWithProcessInstanceBusinessKeyOrProcessInstanceBusinessKeyLikeAndAssignee() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
         .operatonHistoryTimeToLive(180)
@@ -815,7 +802,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithProcessInstanceBusinessKeyOrProcessInstanceBusinessKeyLikeOrStandaloneAssignee() {
+  void shouldReturnTasksWithProcessInstanceBusinessKeyOrProcessInstanceBusinessKeyLikeOrStandaloneAssignee() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
         .operatonHistoryTimeToLive(180)
@@ -866,10 +853,10 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn"})
-  public void shouldReturnTasksWithCaseDefinitionKeyCaseDefinitionName() {
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn"})
+  void shouldReturnTasksWithCaseDefinitionKeyCaseDefinitionName() {
     // given
     String caseDefinitionId1 = repositoryService
       .createCaseDefinitionQuery()
@@ -904,10 +891,10 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn"})
-  public void shouldReturnTasksWithCaseInstanceBusinessKeyOrCaseInstanceBusinessKeyLike() {
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn"})
+  void shouldReturnTasksWithCaseInstanceBusinessKeyOrCaseInstanceBusinessKeyLike() {
     // given
     String caseDefinitionId1 = repositoryService
       .createCaseDefinitionQuery()
@@ -944,10 +931,10 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn"})
-  public void shouldReturnTasksWithCaseInstanceBusinessKeyOrCaseInstanceBusinessKeyLikeOrStandaloneAssignee() {
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn"})
+  void shouldReturnTasksWithCaseInstanceBusinessKeyOrCaseInstanceBusinessKeyLikeOrStandaloneAssignee() {
     // given
     String caseDefinitionId1 = repositoryService
       .createCaseDefinitionQuery()
@@ -991,8 +978,8 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void shouldReturnTasksWithCaseInstanceBusinessKeyOrProcessInstanceBusinessKey() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void shouldReturnTasksWithCaseInstanceBusinessKeyOrProcessInstanceBusinessKey() {
     String businessKey = "aBusinessKey";
 
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
@@ -1031,7 +1018,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithActivityInstanceIdInOrTaskId() {
+  void shouldReturnTasksWithActivityInstanceIdInOrTaskId() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
       .startEvent()
@@ -1066,7 +1053,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksByExtendingQuery_OrInExtendingQuery() {
+  void shouldReturnTasksByExtendingQuery_OrInExtendingQuery() {
     // given
     TaskQuery extendedQuery = taskService.createTaskQuery()
       .taskCandidateGroup("sales");
@@ -1089,7 +1076,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksByExtendingQuery_OrInExtendedQuery() {
+  void shouldReturnTasksByExtendingQuery_OrInExtendedQuery() {
     // given
     TaskQuery extendedQuery = taskService.createTaskQuery()
       .or()
@@ -1112,7 +1099,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksByExtendingQuery_OrInBothExtendedAndExtendingQuery() {
+  void shouldReturnTasksByExtendingQuery_OrInBothExtendedAndExtendingQuery() {
     // given
     TaskQuery extendedQuery = taskService.createTaskQuery()
       .or()
@@ -1141,7 +1128,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldTestDueDateCombinations() throws ParseException {
+  void shouldTestDueDateCombinations() throws ParseException {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
     taskService.saveTask(taskService.newTask());
 
@@ -1224,7 +1211,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldTestFollowUpDateCombinations() throws ParseException {
+  void shouldTestFollowUpDateCombinations() throws ParseException {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
 
     assertThat(taskService.createTaskQuery()
@@ -1299,7 +1286,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksByVariableAndActiveProcesses() {
+  void shouldReturnTasksByVariableAndActiveProcesses() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("oneTaskProcess")
         .startEvent()
@@ -1331,7 +1318,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksWithProcessInstanceBusinessKeyOrProcessInstanceIdIn() {
+  void shouldReturnTasksWithProcessInstanceBusinessKeyOrProcessInstanceIdIn() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
       .startEvent()

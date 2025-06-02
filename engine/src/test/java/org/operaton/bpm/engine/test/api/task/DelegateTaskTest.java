@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -31,23 +33,20 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Falko Menge
  */
-public class DelegateTaskTest {
+class DelegateTaskTest {
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String FOLLOW_UP_DATE_STRING = "2019-01-01T01:00:00";
@@ -62,24 +61,15 @@ public class DelegateTaskTest {
     }
   }
 
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   /**
    * @see <a href="http://jira.codehaus.org/browse/ACT-380">http://jira.codehaus.org/browse/ACT-380</a>
    */
   @Test
   @Deployment
-  public void testGetCandidates() {
+  void testGetCandidates() {
     runtimeService.startProcessInstanceByKey("DelegateTaskTest.testGetCandidates");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -95,7 +85,7 @@ public class DelegateTaskTest {
   }
 
   @Test
-  public void testGetFollowUpDate() {
+  void testGetFollowUpDate() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -119,7 +109,7 @@ public class DelegateTaskTest {
   }
 
   @Test
-  public void testSetFollowUpDate() {
+  void testSetFollowUpDate() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -142,7 +132,7 @@ public class DelegateTaskTest {
   }
 
   @Test
-  public void testLastUpdated() {
+  void testLastUpdated() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)

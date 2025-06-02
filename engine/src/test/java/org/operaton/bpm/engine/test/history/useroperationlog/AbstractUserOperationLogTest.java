@@ -16,27 +16,59 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public abstract class AbstractUserOperationLogTest extends PluggableProcessEngineTest {
+public abstract class AbstractUserOperationLogTest {
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected ProcessEngine processEngine;
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected IdentityService identityService;
+  protected TaskService taskService;
+  protected RuntimeService runtimeService;
+  protected HistoryService historyService;
+  protected CaseService caseService;
+  protected RepositoryService repositoryService;
+  protected ManagementService managementService;
+  protected DecisionService decisionService;
+  protected ExternalTaskService externalTaskService;
+  protected FormService formService;
+  
   public static final String USER_ID = "demo";
 
-  @Before
+  @BeforeEach
   public void abstractSetUp() {
     identityService.setAuthenticatedUserId(USER_ID);
   }
 
-  @After
+  @AfterEach
   public void abstractTearDown() {
     identityService.clearAuthentication();
   }

@@ -1,12 +1,11 @@
 /*
- * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
- * under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright
- * ownership. Camunda licenses this file to you under the Apache License,
- * Version 2.0; you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright 2025 the Operaton contributors.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,13 +18,33 @@ package org.operaton.bpm.dmn.engine.impl;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElExpression;
 
 /**
- * @author Daniel Meyer
- *
+ * Interface for managing cached EL (Expression Language) expressions with thread-safe access.
+ * <p>
+ * This interface extends {@link LockSupport} to provide locking mechanisms
+ * for safely caching and retrieving EL expressions in a concurrent environment.
+ * It is designed to optimize expression evaluation by reusing pre-parsed expressions.
+ * </p>
+ * <p>
+ * Implementations of this interface should ensure proper synchronization
+ * when accessing or modifying the cached expression.
+ * </p>
+ * Author: Daniel Meyer
  */
-public interface CachedExpressionSupport {
+public interface CachedExpressionSupport extends LockSupport {
 
+  /**
+   * Caches the given EL expression.
+   *
+   * @param expression the {@link ElExpression} to be cached.
+   *                   This expression will be stored for reuse in subsequent evaluations.
+   */
   void setCachedExpression(ElExpression expression);
 
+  /**
+   * Retrieves the cached EL expression.
+   *
+   * @return the cached {@link ElExpression}, or {@code null} if no expression is cached.
+   */
   ElExpression getCachedExpression();
 
 }

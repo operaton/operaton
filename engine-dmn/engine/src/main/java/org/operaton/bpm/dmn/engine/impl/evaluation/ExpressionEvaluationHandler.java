@@ -1,12 +1,11 @@
 /*
- * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
- * under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright
- * ownership. Camunda licenses this file to you under the Apache License,
- * Version 2.0; you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright 2025 the Operaton contributors.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,20 +27,41 @@ import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 import javax.script.*;
 
+/**
+ * Handles the evaluation of various types of expressions in the DMN engine.
+ * This class supports FEEL, EL, and script-based expressions.
+ */
 public class ExpressionEvaluationHandler {
 
+  // Logger for the DMN engine
   protected static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
 
+  // Resolver for script engines
   protected final DmnScriptEngineResolver scriptEngineResolver;
+  // Provider for EL expressions
   protected final ElProvider elProvider;
+  // Engine for FEEL expressions
   protected final FeelEngine feelEngine;
 
+  /**
+   * Constructor for initializing the ExpressionEvaluationHandler.
+   *
+   * @param configuration the DMN engine configuration
+   */
   public ExpressionEvaluationHandler(DefaultDmnEngineConfiguration configuration) {
     this.scriptEngineResolver = configuration.getScriptEngineResolver();
     this.elProvider = configuration.getElProvider();
     this.feelEngine = configuration.getFeelEngine();
   }
 
+  /**
+   * Evaluates an expression based on its language.
+   *
+   * @param expressionLanguage the language of the expression (e.g., FEEL, EL, script)
+   * @param expression the expression to evaluate
+   * @param variableContext the context containing variables for evaluation
+   * @return the result of the evaluated expression
+   */
   public Object evaluateExpression(String expressionLanguage, DmnExpressionImpl expression, VariableContext variableContext) {
     String expressionText = getExpressionTextForLanguage(expression, expressionLanguage);
     if (expressionText != null) {
@@ -60,29 +80,40 @@ public class ExpressionEvaluationHandler {
     }
   }
 
-  protected Object evaluateScriptExpression(String expressionLanguage, VariableContext variableContext, String expressionText, CachedCompiledScriptSupport cachedCompiledScriptSupport) {
+  /**
+   * Evaluates a script-based expression.
+   *
+   * @param expressionLanguage the language of the script
+   * @param variableContext the context containing variables for evaluation
+   * @param expressionText the script expression text
+   * @param cachedCompiledScriptSupport support for caching compiled scripts
+   * @return the result of the evaluated script
+   */
+  protected Object evaluateScriptExpression(String expressionLanguage, VariableContext variableContext,
+                                            String expressionText, CachedCompiledScriptSupport cachedCompiledScriptSupport) {
     ScriptEngine scriptEngine = getScriptEngineForName(expressionLanguage);
-    // wrap script engine bindings + variable context and pass enhanced
-    // bindings to the script engine.
     Bindings bindings = VariableContextScriptBindings.wrap(scriptEngine.createBindings(), variableContext);
     bindings.put("variableContext", variableContext);
 
     try {
       if (scriptEngine instanceof Compilable compilableScriptEngine) {
-
         CompiledScript compiledScript = cachedCompiledScriptSupport.getCachedCompiledScript();
         if (compiledScript == null) {
-          synchronized (cachedCompiledScriptSupport) {
-            compiledScript = cachedCompiledScriptSupport.getCachedCompiledScript();
-
-            if (compiledScript == null) {
-              compiledScript = compilableScriptEngine.compile(expressionText);
-
-              cachedCompiledScriptSupport.cacheCompiledScript(compiledScript);
+          compiledScript = cachedCompiledScriptSupport.executeWithLock(() -> {
+            CompiledScript cached = cachedCompiledScriptSupport.getCachedCompiledScript();
+            if (cached == null) {
+              try {
+                CompiledScript cs = compilableScriptEngine.compile(expressionText);
+                cachedCompiledScriptSupport.cacheCompiledScript(cs);
+                return cs;
+              } catch (ScriptException e) {
+                throw new IllegalStateException("Error compiling script", e);
+              }
+            } else {
+              return cached;
             }
-          }
+          });
         }
-
         return compiledScript.eval(bindings);
       }
       else {
@@ -94,34 +125,56 @@ public class ExpressionEvaluationHandler {
     }
   }
 
-  protected Object evaluateElExpression(String expressionLanguage, String expressionText, VariableContext variableContext, CachedExpressionSupport cachedExpressionSupport) {
+  /**
+   * Evaluates an EL (Expression Language) expression.
+   *
+   * @param expressionLanguage the language of the expression
+   * @param expressionText the EL expression text
+   * @param variableContext the context containing variables for evaluation
+   * @param cachedExpressionSupport support for caching EL expressions
+   * @return the result of the evaluated EL expression
+   */
+  protected Object evaluateElExpression(String expressionLanguage, String expressionText,
+                                        VariableContext variableContext, CachedExpressionSupport cachedExpressionSupport) {
     try {
       ElExpression elExpression = cachedExpressionSupport.getCachedExpression();
-
       if (elExpression == null) {
-        synchronized (cachedExpressionSupport) {
-          elExpression = cachedExpressionSupport.getCachedExpression();
-          if(elExpression == null) {
-            elExpression = elProvider.createExpression(expressionText);
-            cachedExpressionSupport.setCachedExpression(elExpression);
+        elExpression = cachedExpressionSupport.executeWithLock(() -> {
+          ElExpression cached = cachedExpressionSupport.getCachedExpression();
+          if (cached == null) {
+            ElExpression el = elProvider.createExpression(expressionText);
+            cachedExpressionSupport.setCachedExpression(el);
+            return el;
+          } else {
+            return cached;
           }
-        }
+        });
       }
-
       return elExpression.getValue(variableContext);
     }
-    // yes, we catch all exceptions
     catch(Exception e) {
       throw LOG.unableToEvaluateExpression(expressionText, expressionLanguage, e);
     }
   }
 
+  /**
+   * Evaluates a simple FEEL expression.
+   *
+   * @param expressionText the FEEL expression text
+   * @param variableContext the context containing variables for evaluation
+   * @return the result of the evaluated FEEL expression
+   */
   protected Object evaluateFeelSimpleExpression(String expressionText, VariableContext variableContext) {
     return feelEngine.evaluateSimpleExpression(expressionText, variableContext);
   }
 
-  // helper ///////////////////////////////////////////////////////////////////
-
+  /**
+   * Retrieves the expression text for a given language.
+   *
+   * @param expression the expression object
+   * @param expressionLanguage the language of the expression
+   * @return the expression text, or null if not applicable
+   */
   protected String getExpressionTextForLanguage(DmnExpressionImpl expression, String expressionLanguage) {
     String expressionText = expression.getExpression();
     if (expressionText != null) {
@@ -135,10 +188,23 @@ public class ExpressionEvaluationHandler {
     }
   }
 
+  /**
+   * Checks if the given language is a JUEL expression language.
+   *
+   * @param expressionLanguage the language to check
+   * @return true if it is a JUEL expression language, false otherwise
+   */
   private boolean isJuelExpression(String expressionLanguage) {
     return DefaultDmnEngineConfiguration.JUEL_EXPRESSION_LANGUAGE.equalsIgnoreCase(expressionLanguage);
   }
 
+  /**
+   * Retrieves the script engine for a given language.
+   *
+   * @param expressionLanguage the language of the script
+   * @return the corresponding script engine
+   * @throws IllegalArgumentException if no script engine is found
+   */
   protected ScriptEngine getScriptEngineForName(String expressionLanguage) {
     ensureNotNull("expressionLanguage", expressionLanguage);
     ScriptEngine scriptEngine = scriptEngineResolver.getScriptEngineForLanguage(expressionLanguage);
@@ -150,10 +216,22 @@ public class ExpressionEvaluationHandler {
     }
   }
 
+  /**
+   * Checks if the given language is an EL expression language.
+   *
+   * @param expressionLanguage the language to check
+   * @return true if it is an EL expression language, false otherwise
+   */
   protected boolean isElExpression(String expressionLanguage) {
     return isJuelExpression(expressionLanguage);
   }
 
+  /**
+   * Checks if the given language is a FEEL expression language.
+   *
+   * @param expressionLanguage the language to check
+   * @return true if it is a FEEL expression language, false otherwise
+   */
   public boolean isFeelExpressionLanguage(String expressionLanguage) {
     ensureNotNull("expressionLanguage", expressionLanguage);
     return expressionLanguage.equals(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE) ||

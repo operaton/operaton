@@ -18,20 +18,19 @@ package org.operaton.bpm.engine.test.api.variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Before;
 
 @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-public class ProcessInstanceQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<ProcessInstanceQueryImpl, ProcessInstance> {
+class ProcessInstanceQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<ProcessInstanceQueryImpl, ProcessInstance> {
 
   RuntimeService runtimeService;
 
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
+  @BeforeEach
+  void init() {
     instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
   }
 

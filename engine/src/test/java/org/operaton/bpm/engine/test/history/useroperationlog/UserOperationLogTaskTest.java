@@ -16,6 +16,27 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ASSIGN;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CLAIM;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_COMPLETE;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELEGATE;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_RESOLVE;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_OWNER;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELEGATION;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELETE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PRIORITY;
+
+import java.util.Date;
+import java.util.HashMap;
+
+import org.joda.time.DateTime;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -28,26 +49,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELEGATION;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELETE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PRIORITY;
-
-import java.util.Date;
-import java.util.HashMap;
-
-import org.joda.time.DateTime;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Danny Gräf
  */
-public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
+class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   protected ProcessDefinition processDefinition;
   protected ProcessInstance process;
@@ -55,7 +61,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testCreateAndCompleteTask() {
+  void testCreateAndCompleteTask() {
     startTestProcess();
 
     // expect: one entry for process instance creation,
@@ -76,7 +82,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testAssignTask() {
+  void testAssignTask() {
     startTestProcess();
 
     // then: assign the task
@@ -97,7 +103,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testChangeTaskOwner() {
+  void testChangeTaskOwner() {
     startTestProcess();
 
     // then: change the task owner
@@ -118,7 +124,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testSetPriority() {
+  void testSetPriority() {
     startTestProcess();
 
     // then: set the priority of the task to 10
@@ -158,7 +164,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testSetName() {
+  void testSetName() {
     // given
     startTestProcess();
 
@@ -182,7 +188,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testSetDescription() {
+  void testSetDescription() {
     // given
     startTestProcess();
 
@@ -206,7 +212,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testSetDueDate() {
+  void testSetDueDate() {
     // given
     startTestProcess();
 
@@ -232,7 +238,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void setFollowUpDate() {
+  void setFollowUpDate() {
     // given
     startTestProcess();
 
@@ -257,7 +263,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testClaimTask() {
+  void testClaimTask() {
     startTestProcess();
 
     // then: claim a new the task
@@ -278,7 +284,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testDelegateTask() {
+  void testDelegateTask() {
     startTestProcess();
 
     // then: delegate the assigned task
@@ -300,7 +306,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testResolveTask() {
+  void testResolveTask() {
     startTestProcess();
 
     // then: resolve the task
@@ -320,7 +326,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testSubmitTaskForm_Complete() {
+  void testSubmitTaskForm_Complete() {
     startTestProcess();
 
     formService.submitTaskForm(task.getId(), new HashMap<>());
@@ -340,7 +346,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testSubmitTaskForm_Resolve() {
+  void testSubmitTaskForm_Resolve() {
     startTestProcess();
 
     taskService.delegateTask(task.getId(), "demo");
@@ -367,7 +373,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
   }
 
   @Test
-  public void testDeleteTask() {
+  void testDeleteTask() {
     // given
     Task newTask = taskService.newTask();
     taskService.saveTask(newTask);
@@ -391,7 +397,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testCompleteTask() {
+  void testCompleteTask() {
     // given
     startTestProcess();
 
@@ -412,7 +418,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCompleteCaseExecution() {
+  void testCompleteCaseExecution() {
     // given
     CaseDefinition caseDefinition = repositoryService
         .createCaseDefinitionQuery()
@@ -456,7 +462,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testKeepOpLogEntriesOnUndeployment() {
+  void testKeepOpLogEntriesOnUndeployment() {
     // given
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     startTestProcess();
@@ -481,7 +487,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteOpLogEntry() {
+  void testDeleteOpLogEntry() {
     // given
     startTestProcess();
 
@@ -504,7 +510,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteOpLogEntryWithNullArgument() {
+  void testDeleteOpLogEntryWithNullArgument() {
     // given
     startTestProcess();
 
@@ -522,7 +528,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteOpLogNonExistingEntry() {
+  void testDeleteOpLogNonExistingEntry() {
     // given
     startTestProcess();
 
@@ -539,7 +545,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Deployment
   @Test
-  public void testOnlyTaskCompletionIsLogged() {
+  void testOnlyTaskCompletionIsLogged() {
     // given
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();

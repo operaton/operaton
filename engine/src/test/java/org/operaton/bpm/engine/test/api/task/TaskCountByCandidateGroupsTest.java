@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -29,35 +33,26 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Daniel Meyer
  * @author Stefan Hentschel
  *
  */
-public class TaskCountByCandidateGroupsTest {
+class TaskCountByCandidateGroupsTest {
 
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule processEngineTestRule = new ProcessEngineTestRule(processEngineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain
-    .outerRule(processEngineTestRule)
-    .around(processEngineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
 
-  protected TaskService taskService;
-  protected IdentityService identityService;
-  protected AuthorizationService authorizationService;
-  protected ProcessEngineConfiguration processEngineConfiguration;
+  TaskService taskService;
+  IdentityService identityService;
+  AuthorizationService authorizationService;
+  ProcessEngineConfiguration processEngineConfiguration;
 
   protected String userId = "user";
   protected List<String> tasks = new ArrayList<>();
@@ -65,28 +60,23 @@ public class TaskCountByCandidateGroupsTest {
   protected List<String> groups = Arrays.asList("aGroupId", "anotherGroupId");
 
 
-  @Before
-  public void setUp() {
-    taskService = processEngineRule.getTaskService();
-    identityService = processEngineRule.getIdentityService();
-    authorizationService = processEngineRule.getAuthorizationService();
-    processEngineConfiguration = processEngineRule.getProcessEngineConfiguration();
-
+  @BeforeEach
+  void setUp() {
     createTask(groups.get(0), tenants.get(0));
     createTask(groups.get(0), tenants.get(1));
     createTask(groups.get(1), tenants.get(1));
     createTask(null, tenants.get(1));
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     for (String taskId : tasks) {
       taskService.deleteTask(taskId, true);
     }
   }
 
   @Test
-  public void shouldReturnTaskCountsByGroup() {
+  void shouldReturnTaskCountsByGroup() {
     // when
     List<TaskCountByCandidateGroupResult> results = taskService.createTaskReport().taskCountByCandidateGroup();
 
@@ -95,7 +85,7 @@ public class TaskCountByCandidateGroupsTest {
   }
 
   @Test
-  public void shouldProvideTaskCountForEachGroup() {
+  void shouldProvideTaskCountForEachGroup() {
     // when
     List<TaskCountByCandidateGroupResult> results = taskService.createTaskReport().taskCountByCandidateGroup();
 
@@ -108,7 +98,7 @@ public class TaskCountByCandidateGroupsTest {
   }
 
   @Test
-  public void shouldProvideGroupNameForEachGroup() {
+  void shouldProvideGroupNameForEachGroup() {
     // when
     List<TaskCountByCandidateGroupResult> results = taskService.createTaskReport().taskCountByCandidateGroup();
 
@@ -119,7 +109,7 @@ public class TaskCountByCandidateGroupsTest {
   }
 
   @Test
-  public void shouldFetchCountOfTasksWithoutAssignee() {
+  void shouldFetchCountOfTasksWithoutAssignee() {
     // given
     User user = identityService.newUser(userId);
     identityService.saveUser(user);

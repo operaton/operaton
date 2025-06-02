@@ -20,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -30,44 +33,26 @@ import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.authorization.TaskPermissions;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class StandaloneTasksAndCmmnDisabledTest {
+class StandaloneTasksAndCmmnDisabledTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(p ->
-     p.setStandaloneTasksEnabled(false).setCmmnEnabled(false));
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .randomEngineName().closeEngineAfterAllTests()
+      .configurator(config -> config.setCmmnEnabled(false)).build();
+  @RegisterExtension
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
 
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule);
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-  private IdentityService identityService;
-  private AuthorizationService authorizationService;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  IdentityService identityService;
+  AuthorizationService authorizationService;
 
 
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    identityService = engineRule.getIdentityService();
-    authorizationService = engineRule.getAuthorizationService();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.clearAuthentication();
     engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(false);
     engineTestRule.deleteAllAuthorizations();
@@ -80,7 +65,7 @@ public class StandaloneTasksAndCmmnDisabledTest {
    * that the query generally works in this case.
    */
   @Test
-  public void testTaskQueryAuthorization() {
+  void testTaskQueryAuthorization() {
     // given
     engineTestRule.deploy("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml");
     engineTestRule.deploy("org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml");
@@ -126,7 +111,7 @@ public class StandaloneTasksAndCmmnDisabledTest {
    * both are used.
    */
   @Test
-  public void testTaskQueryAuthorizationWithProcessDefinitionFilter() {
+  void testTaskQueryAuthorizationWithProcessDefinitionFilter() {
     // given
     engineTestRule.deploy("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml");
     engineTestRule.deploy("org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml");
@@ -155,7 +140,7 @@ public class StandaloneTasksAndCmmnDisabledTest {
   }
 
   @Test
-  public void testTaskQueryAuthorizationWithProcessDefinitionFilterInOrQuery() {
+  void testTaskQueryAuthorizationWithProcessDefinitionFilterInOrQuery() {
     // given
     engineTestRule.deploy("org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml");
     engineTestRule.deploy("org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml");

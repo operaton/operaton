@@ -18,43 +18,32 @@ package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class TaskServiceWithJdbcSimpleProcessingTest {
+class TaskServiceWithJdbcSimpleProcessingTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-    configuration.setJdbcBatchProcessing(false));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setJdbcBatchProcessing(false))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testUserTaskOptimisticLocking() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testUserTaskOptimisticLocking() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task task1 = taskService.createTaskQuery().singleResult();

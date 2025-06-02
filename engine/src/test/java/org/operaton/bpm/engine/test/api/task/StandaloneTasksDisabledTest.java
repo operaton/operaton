@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.test.api.task;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -26,44 +29,25 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class StandaloneTasksDisabledTest {
+class StandaloneTasksDisabledTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(p ->
-     p.setStandaloneTasksEnabled(false));
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .randomEngineName().closeEngineAfterAllTests()
+      .configurator(config -> config.setStandaloneTasksEnabled(false)).build();
+  @RegisterExtension
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
 
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
+  RuntimeService runtimeService;
+  TaskService taskService;
+  IdentityService identityService;
+  CaseService caseService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule);
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-  private IdentityService identityService;
-  private CaseService caseService;
-
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    identityService = engineRule.getIdentityService();
-    caseService = engineRule.getCaseService();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.clearAuthentication();
     engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(false);
     engineTestRule.deleteAllAuthorizations();
@@ -71,7 +55,7 @@ public class StandaloneTasksDisabledTest {
   }
 
   @Test
-  public void shouldNotCreateStandaloneTask() {
+  void shouldNotCreateStandaloneTask() {
     // given
     Task task = taskService.newTask();
 
@@ -83,7 +67,7 @@ public class StandaloneTasksDisabledTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldAllowToUpdateProcessInstanceTask() {
+  void shouldAllowToUpdateProcessInstanceTask() {
 
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -101,7 +85,7 @@ public class StandaloneTasksDisabledTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
-  public void shouldAllowToUpdateCaseInstanceTask() {
+  void shouldAllowToUpdateCaseInstanceTask() {
 
     // given
     caseService.createCaseInstanceByKey("oneTaskCase").getId();

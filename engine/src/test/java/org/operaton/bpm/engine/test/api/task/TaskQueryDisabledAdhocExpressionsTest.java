@@ -20,18 +20,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.filter.Filter;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngineTest {
+public class TaskQueryDisabledAdhocExpressionsTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected static final String EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE = "Expressions are forbidden in adhoc queries. "
       + "This behavior can be toggled in the process engine configuration";
@@ -40,19 +50,23 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
 
   public static long mutableField = 0;
 
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  TaskService taskService;
+  FilterService filterService;
+
   @Test
-  public void testDefaultSetting() {
+  void testDefaultSetting() {
     assertThat(processEngineConfiguration.isEnableExpressionsInStoredQueries()).isTrue();
     assertThat(processEngineConfiguration.isEnableExpressionsInAdhocQueries()).isFalse();
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     mutableField = 0;
   }
 
   @Test
-  public void testAdhocExpressionsFail() {
+  void testAdhocExpressionsFail() {
     executeAndValidateFailingQuery(taskService.createTaskQuery().dueAfterExpression(STATE_MANIPULATING_EXPRESSION));
     executeAndValidateFailingQuery(taskService.createTaskQuery().dueBeforeExpression(STATE_MANIPULATING_EXPRESSION));
     executeAndValidateFailingQuery(taskService.createTaskQuery().dueDateExpression(STATE_MANIPULATING_EXPRESSION));
@@ -71,7 +85,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
   }
 
   @Test
-  public void testExtendStoredFilterByExpression() {
+  void testExtendStoredFilterByExpression() {
 
     // given a stored filter
     TaskQuery taskQuery = taskService.createTaskQuery().dueAfterExpression("${now()}");
@@ -91,7 +105,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
   }
 
   @Test
-  public void testExtendStoredFilterByScalar() {
+  void testExtendStoredFilterByScalar() {
     // given a stored filter
     TaskQuery taskQuery = taskService.createTaskQuery().dueAfterExpression("${now()}");
     Filter filter = filterService.newTaskFilter("filter");

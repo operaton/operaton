@@ -16,43 +16,32 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class SubTaskDataTest {
+@ExtendWith(ProcessEngineExtension.class)
+class SubTaskDataTest {
 
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
-
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-
-  @Before
-  public void init() {
-    repositoryService = rule.getRepositoryService();
-    runtimeService = rule.getRuntimeService();
-    taskService = rule.getTaskService();
-  }
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Test
   @Deployment
-  public void testSubTaskData() {
+  void testSubTaskData() {
     //given simple process with user task
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subTaskTest");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();

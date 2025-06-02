@@ -18,20 +18,20 @@ package org.operaton.bpm.engine.test.api.variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.junit.Before;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-public class HistoricProcessInstanceQueryVariableIgnoreCaseTest
+class HistoricProcessInstanceQueryVariableIgnoreCaseTest
     extends AbstractVariableIgnoreCaseTest<HistoricProcessInstanceQueryImpl, HistoricProcessInstance> {
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     engineRule.getRuntimeService().startProcessInstanceByKey("oneTaskProcess", VARIABLES);
     instance = engineRule.getHistoryService().createHistoricProcessInstanceQuery().singleResult();
   }

@@ -27,6 +27,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 
 import java.util.Base64;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -36,43 +39,33 @@ import org.operaton.bpm.engine.impl.variable.serializer.JavaObjectSerializer;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Svetlana Dorokhova
  */
-public class JavaSerializationProhibitedTest {
+class JavaSerializationProhibitedTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/variables/oneTaskProcess.bpmn20.xml";
 
   protected static final String JAVA_DATA_FORMAT = Variables.SerializationDataFormats.JAVA.getName();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  RuntimeService runtimeService;
+  TaskService taskService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
+  @BeforeEach
+  void init() {
     ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration())
         .getVariableSerializers()
         .addSerializer(new JavaCustomSerializer());
@@ -81,7 +74,7 @@ public class JavaSerializationProhibitedTest {
   //still works for normal objects (not serialized)
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObject() {
+  void testSetJavaObject() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JavaSerializable javaSerializable = new JavaSerializable("foo");
@@ -100,7 +93,7 @@ public class JavaSerializationProhibitedTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectSerialized() throws Exception {
+  void testSetJavaObjectSerialized() throws Exception {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
@@ -126,7 +119,7 @@ public class JavaSerializationProhibitedTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectSerializedEmptySerializationDataFormat() throws Exception {
+  void testSetJavaObjectSerializedEmptySerializationDataFormat() throws Exception {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
@@ -150,7 +143,7 @@ public class JavaSerializationProhibitedTest {
   }
 
   @Test
-  public void testStandaloneTaskTransientVariableSerializedObject() {
+  void testStandaloneTaskTransientVariableSerializedObject() {
     // given
     Task task = taskService.newTask();
     task.setName("gonzoTask");

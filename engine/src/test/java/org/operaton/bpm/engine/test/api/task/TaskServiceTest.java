@@ -16,7 +16,40 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.OptimisticLockingException;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskAlreadyClaimedException;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -34,12 +67,17 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.task.*;
+import org.operaton.bpm.engine.task.Attachment;
+import org.operaton.bpm.engine.task.Comment;
+import org.operaton.bpm.engine.task.DelegationState;
+import org.operaton.bpm.engine.task.Event;
+import org.operaton.bpm.engine.task.IdentityLink;
+import org.operaton.bpm.engine.task.IdentityLinkType;
+import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -48,27 +86,12 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import org.junit.*;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 /**
  * @author Frederik Heremans
  * @author Joram Barrez
  * @author Falko Menge
  */
-public class TaskServiceTest {
+class TaskServiceTest {
 
 
   protected static final String TWO_TASKS_PROCESS = "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml";
@@ -81,43 +104,31 @@ public class TaskServiceTest {
   protected static final String USER_TASK_AFTER_THROW = "after-throw";
   protected static final String USER_TASK_THROW_ESCALATION = "throw-escalation";
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJavaSerializationFormatEnabled(true));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setJavaSerializationFormatEnabled(true))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-  private RepositoryService repositoryService;
-  private HistoryService historyService;
-  private CaseService caseService;
-  private IdentityService identityService;
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+  HistoryService historyService;
+  CaseService caseService;
+  IdentityService identityService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-    historyService = engineRule.getHistoryService();
-    caseService = engineRule.getCaseService();
-    identityService = engineRule.getIdentityService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.setCurrentTime(new Date());
   }
 
   @Test
-  public void testSaveTaskUpdate() throws Exception{
+  void testSaveTaskUpdate() throws Exception{
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
     Task task = taskService.newTask();
@@ -195,7 +206,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSaveTaskSetParentTaskId() {
+  void testSaveTaskSetParentTaskId() {
     // given
     Task parent = taskService.newTask("parent");
     taskService.saveTask(parent);
@@ -218,7 +229,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSaveTaskWithNonExistingParentTask() {
+  void testSaveTaskWithNonExistingParentTask() {
     // given
     Task task = taskService.newTask();
 
@@ -235,7 +246,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testTaskOwner() {
+  void testTaskOwner() {
     Task task = taskService.newTask();
     task.setOwner("johndoe");
     taskService.saveTask(task);
@@ -255,7 +266,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskCommentNullTaskId() {
+  void testDeleteTaskCommentNullTaskId() {
     try {
       taskService.deleteTaskComment(null, "test");
       fail("BadUserRequestException expected");
@@ -265,7 +276,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskCommentNotExistingTaskId() {
+  void testDeleteTaskCommentNotExistingTaskId() {
     try {
       taskService.deleteTaskComment("notExistingId", "notExistingCommentId");
       fail("NullValueException expected");
@@ -275,7 +286,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskCommentNotExistingCommentId() {
+  void testDeleteTaskCommentNotExistingCommentId() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -289,7 +300,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskCommentWithoutProcessInstance() {
+  void testDeleteTaskCommentWithoutProcessInstance() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -309,9 +320,9 @@ public class TaskServiceTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteTaskCommentWithProcessInstance() {
+  void testDeleteTaskCommentWithProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     String taskId = task.getId();
@@ -329,7 +340,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskCommentsNullTaskId() {
+  void testDeleteTaskCommentsNullTaskId() {
     try {
       taskService.deleteTaskComments(null);
       fail("BadUserRequestException expected");
@@ -339,7 +350,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskCommentsNonExistingTaskId() {
+  void testDeleteTaskCommentsNonExistingTaskId() {
     try {
       taskService.deleteTaskComments("nonExistingTaskId");
       fail("NullValueException expected");
@@ -349,7 +360,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskCommentsNoComments() {
+  void testDeleteTaskCommentsNoComments() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -363,7 +374,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskComments() {
+  void testDeleteTaskComments() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -382,9 +393,9 @@ public class TaskServiceTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstanceTaskComments() {
+  void testDeleteProcessInstanceTaskComments() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     String taskId = task.getId();
@@ -401,7 +412,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateTaskCommentNullCommentId() {
+  void testUpdateTaskCommentNullCommentId() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -417,7 +428,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateTaskCommentNullTaskId() {
+  void testUpdateTaskCommentNullTaskId() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -435,7 +446,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateTaskCommentNullMessage() {
+  void testUpdateTaskCommentNullMessage() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -453,7 +464,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateTaskCommentNotExistingCommentId() {
+  void testUpdateTaskCommentNotExistingCommentId() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -472,7 +483,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateTaskComment() {
+  void testUpdateTaskComment() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -489,9 +500,9 @@ public class TaskServiceTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUpdateProcessTaskComment() {
+  void testUpdateProcessTaskComment() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     String taskId = task.getId();
@@ -508,7 +519,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceCommentNullId() {
+  void testDeleteProcessInstanceCommentNullId() {
     try {
       taskService.deleteProcessInstanceComment(null, null);
       fail("BadUserRequestException expected");
@@ -517,9 +528,9 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstanceCommentNotExistingCommentId() {
+  void testDeleteProcessInstanceCommentNotExistingCommentId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -528,9 +539,9 @@ public class TaskServiceTest {
       .doesNotThrowAnyException();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteTaskProcessInstanceComment() {
+  void testDeleteTaskProcessInstanceComment() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     String taskId = task.getId();
@@ -547,9 +558,9 @@ public class TaskServiceTest {
     assertThat(shouldBeDeletedLst).isEmpty();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstanceComment() {
+  void testDeleteProcessInstanceComment() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -565,7 +576,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceCommentsNullId() {
+  void testDeleteProcessInstanceCommentsNullId() {
     try {
       taskService.deleteProcessInstanceComments(null);
       fail("BadUserRequestException expected");
@@ -575,7 +586,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceCommentsNonExistingId() {
+  void testDeleteProcessInstanceCommentsNonExistingId() {
     try {
       taskService.deleteProcessInstanceComments("nonExistingId");
       fail("NullValueException expected");
@@ -584,9 +595,9 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstanceCommentsNoComments() {
+  void testDeleteProcessInstanceCommentsNoComments() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -595,9 +606,9 @@ public class TaskServiceTest {
       .doesNotThrowAnyException();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstanceCommentsWithoutTaskComments() {
+  void testDeleteProcessInstanceCommentsWithoutTaskComments() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -613,9 +624,9 @@ public class TaskServiceTest {
     assertThat(shouldBeDeletedLst).isEmpty();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstanceCommentsWithTask() {
+  void testDeleteProcessInstanceCommentsWithTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     String taskId = task.getId();
@@ -633,9 +644,9 @@ public class TaskServiceTest {
     assertThat(shouldBeDeletedLst).isEmpty();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUpdateProcessInstanceCommentNullCommentId() {
+  void testUpdateProcessInstanceCommentNullCommentId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     var processInstanceId = processInstance.getId();
     try {
@@ -646,9 +657,9 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUpdateProcessInstanceCommentNullProcessInstanceId() {
+  void testUpdateProcessInstanceCommentNullProcessInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Comment comment = taskService.createComment(null, processInstance.getId(), "originalMessage");
@@ -662,9 +673,9 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUpdateProcessInstanceCommentNullMessage() {
+  void testUpdateProcessInstanceCommentNullMessage() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -679,9 +690,9 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUpdateProcessInstanceCommentNotExistingCommentId() {
+  void testUpdateProcessInstanceCommentNotExistingCommentId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -698,9 +709,9 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUpdateProcessInstanceCommentWithTask() {
+  void testUpdateProcessInstanceCommentWithTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     String taskId = task.getId();
@@ -719,9 +730,9 @@ public class TaskServiceTest {
     assertThat(actual.getFullMessage()).isEqualTo(updatedMessage);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUpdateProcessInstanceCommentWithoutTask() {
+  void testUpdateProcessInstanceCommentWithoutTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -740,7 +751,7 @@ public class TaskServiceTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testTaskComments() {
+  void testTaskComments() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       Task task = taskService.newTask();
@@ -779,7 +790,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddTaskCommentNull() {
+  void testAddTaskCommentNull() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       Task task = taskService.newTask("testId");
@@ -799,7 +810,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddTaskNullComment() {
+  void testAddTaskNullComment() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       try {
@@ -813,7 +824,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testTaskAttachments() {
+  void testTaskAttachments() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       Task task = taskService.newTask();
@@ -843,8 +854,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testProcessAttachmentsOneProcessExecution() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testProcessAttachmentsOneProcessExecution() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -864,8 +875,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/twoParallelTasksProcess.bpmn20.xml" })
-  public void testProcessAttachmentsTwoProcessExecutions() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/twoParallelTasksProcess.bpmn20.xml"})
+  void testProcessAttachmentsTwoProcessExecutions() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("twoParallelTasksProcess");
@@ -885,7 +896,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSaveAttachment() {
+  void testSaveAttachment() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       // given
@@ -926,7 +937,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testTaskDelegation() {
+  void testTaskDelegation() {
     Task task = taskService.newTask();
     task.setOwner("johndoe");
     task.delegate("joesmoe");
@@ -965,7 +976,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testTaskDelegationThroughServiceCall() {
+  void testTaskDelegationThroughServiceCall() {
     Task task = taskService.newTask();
     task.setOwner("johndoe");
     taskService.saveTask(task);
@@ -994,7 +1005,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testTaskAssignee() {
+  void testTaskAssignee() {
     Task task = taskService.newTask();
     task.setAssignee("johndoe");
     taskService.saveTask(task);
@@ -1015,7 +1026,7 @@ public class TaskServiceTest {
 
 
   @Test
-  public void testSaveTaskNullTask() {
+  void testSaveTaskNullTask() {
     try {
       taskService.saveTask(null);
       fail("ProcessEngineException expected");
@@ -1025,7 +1036,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskNullTaskId() {
+  void testDeleteTaskNullTaskId() {
     try {
       taskService.deleteTask(null);
       fail("ProcessEngineException expected");
@@ -1035,14 +1046,14 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskUnexistingTaskId() {
+  void testDeleteTaskUnexistingTaskId() {
     // Deleting unexisting task should be silently ignored
     assertThatCode(() -> taskService.deleteTask("unexistingtaskid"))
       .doesNotThrowAnyException();
   }
 
   @Test
-  public void testDeleteTasksNullTaskIds() {
+  void testDeleteTasksNullTaskIds() {
     try {
       taskService.deleteTasks(null);
       fail("ProcessEngineException expected");
@@ -1052,7 +1063,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTasksTaskIdsUnexistingTaskId() {
+  void testDeleteTasksTaskIdsUnexistingTaskId() {
 
     Task existingTask = taskService.newTask();
     taskService.saveTask(existingTask);
@@ -1066,7 +1077,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testClaimNullArguments() {
+  void testClaimNullArguments() {
     try {
       taskService.claim(null, "userid");
       fail("ProcessEngineException expected");
@@ -1076,7 +1087,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testClaimUnexistingTaskId() {
+  void testClaimUnexistingTaskId() {
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
@@ -1092,7 +1103,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testClaimAlreadyClaimedTaskByOtherUser() {
+  void testClaimAlreadyClaimedTaskByOtherUser() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     User user = identityService.newUser("user");
@@ -1118,7 +1129,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testClaimAlreadyClaimedTaskBySameUser() {
+  void testClaimAlreadyClaimedTaskBySameUser() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     User user = identityService.newUser("user");
@@ -1137,7 +1148,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUnClaimTask() {
+  void testUnClaimTask() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     User user = identityService.newUser("user");
@@ -1159,7 +1170,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testCompleteTaskNullTaskId() {
+  void testCompleteTaskNullTaskId() {
     try {
       taskService.complete(null);
       fail("ProcessEngineException expected");
@@ -1169,7 +1180,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testCompleteTaskUnexistingTaskId() {
+  void testCompleteTaskUnexistingTaskId() {
     try {
       taskService.complete("unexistingtask");
       fail("ProcessEngineException expected");
@@ -1179,7 +1190,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testCompleteTaskWithParametersNullTaskId() {
+  void testCompleteTaskWithParametersNullTaskId() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("myKey", "myValue");
 
@@ -1192,7 +1203,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testCompleteTaskWithParametersUnexistingTaskId() {
+  void testCompleteTaskWithParametersUnexistingTaskId() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("myKey", "myValue");
 
@@ -1205,7 +1216,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testCompleteTaskWithParametersNullParameters() {
+  void testCompleteTaskWithParametersNullParameters() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
 
@@ -1223,7 +1234,7 @@ public class TaskServiceTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testCompleteTaskWithParametersEmptyParameters() {
+  void testCompleteTaskWithParametersEmptyParameters() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
 
@@ -1242,7 +1253,7 @@ public class TaskServiceTest {
 
   @Deployment(resources = TWO_TASKS_PROCESS)
   @Test
-  public void testCompleteWithParametersTask() {
+  void testCompleteWithParametersTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("twoTasksProcess");
 
     // Fetch first task
@@ -1265,9 +1276,9 @@ public class TaskServiceTest {
             .containsEntry("myParam", "myValue");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/task/TaskServiceTest.testCompleteTaskWithVariablesInReturn.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.testCompleteTaskWithVariablesInReturn.bpmn20.xml"})
   @Test
-  public void testCompleteTaskWithVariablesInReturn() {
+  void testCompleteTaskWithVariablesInReturn() {
     String processVarName = "processVar";
     String processVarValue = "processVarValue";
 
@@ -1313,7 +1324,7 @@ public class TaskServiceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testCompleteStandaloneTaskWithVariablesInReturn() {
+  void testCompleteStandaloneTaskWithVariablesInReturn() {
     String taskVarName = "taskVar";
     String taskVarValue = "taskVarValue";
 
@@ -1331,9 +1342,9 @@ public class TaskServiceTest {
     historyService.deleteHistoricTaskInstance(taskId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/twoParallelTasksProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/twoParallelTasksProcess.bpmn20.xml"})
   @Test
-  public void testCompleteTaskWithVariablesInReturnParallel() {
+  void testCompleteTaskWithVariablesInReturnParallel() {
     String processVarName = "processVar";
     String processVarValue = "processVarValue";
 
@@ -1380,7 +1391,7 @@ public class TaskServiceTest {
    * Loading all variables may be expensive.
    */
   @Test
-  public void testCompleteTaskAndDoNotDeserializeVariables()
+  void testCompleteTaskAndDoNotDeserializeVariables()
   {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
@@ -1415,7 +1426,7 @@ public class TaskServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml")
-  public void testCompleteTaskWithVariablesInReturnShouldDeserializeObjectValue()
+  void testCompleteTaskWithVariablesInReturnShouldDeserializeObjectValue()
   {
     // given
     ObjectValue value = Variables.objectValue("value").create();
@@ -1436,7 +1447,7 @@ public class TaskServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml")
-  public void testCompleteTaskWithVariablesInReturnShouldNotDeserializeObjectValue()
+  void testCompleteTaskWithVariablesInReturnShouldNotDeserializeObjectValue()
   {
     // given
     ObjectValue value = Variables.objectValue("value").create();
@@ -1456,9 +1467,9 @@ public class TaskServiceTest {
     assertThat(returnedValue.getValueSerialized()).isEqualTo(serializedValue);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCompleteTaskWithVariablesInReturnCMMN() {
+  void testCompleteTaskWithVariablesInReturnCMMN() {
     String taskVariableName = "taskVar";
     String taskVariableValue = "taskVal";
 
@@ -1473,9 +1484,9 @@ public class TaskServiceTest {
     assertThat(vars).isNull();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCompleteTaskShouldCompleteCaseExecution() {
+  void testCompleteTaskShouldCompleteCaseExecution() {
     // given
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -1522,7 +1533,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testResolveTaskNullTaskId() {
+  void testResolveTaskNullTaskId() {
     try {
       taskService.resolveTask(null);
       fail("ProcessEngineException expected");
@@ -1532,7 +1543,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testResolveTaskUnexistingTaskId() {
+  void testResolveTaskUnexistingTaskId() {
     try {
       taskService.resolveTask("unexistingtask");
       fail("ProcessEngineException expected");
@@ -1542,7 +1553,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testResolveTaskWithParametersNullParameters() {
+  void testResolveTaskWithParametersNullParameters() {
     Task task = taskService.newTask();
     task.setDelegationState(DelegationState.PENDING);
     taskService.saveTask(task);
@@ -1563,7 +1574,7 @@ public class TaskServiceTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testResolveTaskWithParametersEmptyParameters() {
+  void testResolveTaskWithParametersEmptyParameters() {
     Task task = taskService.newTask();
     task.setDelegationState(DelegationState.PENDING);
     taskService.saveTask(task);
@@ -1584,7 +1595,7 @@ public class TaskServiceTest {
 
   @Deployment(resources = TWO_TASKS_PROCESS)
   @Test
-  public void testResolveWithParametersTask() {
+  void testResolveWithParametersTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("twoTasksProcess");
 
     // Fetch first task
@@ -1610,7 +1621,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetAssignee() {
+  void testSetAssignee() {
     User user = identityService.newUser("user");
     identityService.saveUser(user);
 
@@ -1630,7 +1641,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetAssigneeNullTaskId() {
+  void testSetAssigneeNullTaskId() {
     try {
       taskService.setAssignee(null, "userId");
       fail("ProcessEngineException expected");
@@ -1640,7 +1651,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetAssigneeUnexistingTask() {
+  void testSetAssigneeUnexistingTask() {
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
@@ -1656,7 +1667,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetOwnerNullTaskId() {
+  void testSetOwnerNullTaskId() {
     try {
       taskService.setOwner(null, "userId");
       fail("ProcessEngineException expected");
@@ -1666,7 +1677,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetOwnerUnexistingTask() {
+  void testSetOwnerUnexistingTask() {
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
@@ -1682,7 +1693,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetOwnerNullUser() {
+  void testSetOwnerNullUser() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     var taskId = task.getId();
@@ -1698,7 +1709,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddCandidateUserDuplicate() {
+  void testAddCandidateUserDuplicate() {
     // Check behavior when adding the same user twice as candidate
     User user = identityService.newUser("user");
     identityService.saveUser(user);
@@ -1716,7 +1727,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddCandidateUserNullTaskId() {
+  void testAddCandidateUserNullTaskId() {
     try {
       taskService.addCandidateUser(null, "userId");
       fail("ProcessEngineException expected");
@@ -1726,7 +1737,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddCandidateUserNullUserId() {
+  void testAddCandidateUserNullUserId() {
     try {
       taskService.addCandidateUser("taskId", null);
       fail("ProcessEngineException expected");
@@ -1736,7 +1747,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddCandidateUserUnexistingTask() {
+  void testAddCandidateUserUnexistingTask() {
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
@@ -1752,7 +1763,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddCandidateGroupNullTaskId() {
+  void testAddCandidateGroupNullTaskId() {
     try {
       taskService.addCandidateGroup(null, "groupId");
       fail("ProcessEngineException expected");
@@ -1762,7 +1773,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddCandidateGroupNullGroupId() {
+  void testAddCandidateGroupNullGroupId() {
     try {
       taskService.addCandidateGroup("taskId", null);
       fail("ProcessEngineException expected");
@@ -1772,7 +1783,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddCandidateGroupUnexistingTask() {
+  void testAddCandidateGroupUnexistingTask() {
     Group group = identityService.newGroup("group");
     identityService.saveGroup(group);
     var groupId = group.getId();
@@ -1786,7 +1797,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddGroupIdentityLinkNullTaskId() {
+  void testAddGroupIdentityLinkNullTaskId() {
     try {
       taskService.addGroupIdentityLink(null, "groupId", IdentityLinkType.CANDIDATE);
       fail("ProcessEngineException expected");
@@ -1796,7 +1807,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddGroupIdentityLinkNullUserId() {
+  void testAddGroupIdentityLinkNullUserId() {
     try {
       taskService.addGroupIdentityLink("taskId", null, IdentityLinkType.CANDIDATE);
       fail("ProcessEngineException expected");
@@ -1806,7 +1817,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddGroupIdentityLinkUnexistingTask() {
+  void testAddGroupIdentityLinkUnexistingTask() {
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
@@ -1822,7 +1833,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddUserIdentityLinkNullTaskId() {
+  void testAddUserIdentityLinkNullTaskId() {
     try {
       taskService.addUserIdentityLink(null, "userId", IdentityLinkType.CANDIDATE);
       fail("ProcessEngineException expected");
@@ -1832,7 +1843,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddUserIdentityLinkNullUserId() {
+  void testAddUserIdentityLinkNullUserId() {
     try {
       taskService.addUserIdentityLink("taskId", null, IdentityLinkType.CANDIDATE);
       fail("ProcessEngineException expected");
@@ -1842,7 +1853,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testAddUserIdentityLinkUnexistingTask() {
+  void testAddUserIdentityLinkUnexistingTask() {
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
@@ -1858,7 +1869,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetIdentityLinksWithCandidateUser() {
+  void testGetIdentityLinksWithCandidateUser() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -1878,7 +1889,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetIdentityLinksWithCandidateGroup() {
+  void testGetIdentityLinksWithCandidateGroup() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -1898,7 +1909,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetIdentityLinksWithAssignee() {
+  void testGetIdentityLinksWithAssignee() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -1918,7 +1929,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetIdentityLinksWithNonExistingAssignee() {
+  void testGetIdentityLinksWithNonExistingAssignee() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -1935,7 +1946,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetIdentityLinksWithOwner() {
+  void testGetIdentityLinksWithOwner() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -1966,7 +1977,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetIdentityLinksWithNonExistingOwner() {
+  void testGetIdentityLinksWithNonExistingOwner() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -1991,7 +2002,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetPriority() {
+  void testSetPriority() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
 
@@ -2005,7 +2016,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetPriorityUnexistingTaskId() {
+  void testSetPriorityUnexistingTaskId() {
     try {
       taskService.setPriority("unexistingtask", 12345);
       fail("ProcessEngineException expected");
@@ -2015,7 +2026,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetPriorityNullTaskId() {
+  void testSetPriorityNullTaskId() {
     try {
       taskService.setPriority(null, 12345);
       fail("ProcessEngineException expected");
@@ -2025,7 +2036,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetNameUnexistingTaskId() {
+  void testSetNameUnexistingTaskId() {
     try {
       taskService.setName("unexistingtask", "foo");
       fail("ProcessEngineException expected");
@@ -2035,7 +2046,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetNameNullTaskId() {
+  void testSetNameNullTaskId() {
     try {
       taskService.setName(null, "foo");
       fail("ProcessEngineException expected");
@@ -2045,7 +2056,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetNameNullTaskName() {
+  void testSetNameNullTaskName() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     var taskId = task.getId();
@@ -2061,7 +2072,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetDescriptionUnexistingTaskId() {
+  void testSetDescriptionUnexistingTaskId() {
     try {
       taskService.setDescription("unexistingtask", "foo");
       fail("ProcessEngineException expected");
@@ -2071,7 +2082,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetDescriptionNullTaskId() {
+  void testSetDescriptionNullTaskId() {
     try {
       taskService.setDescription(null, "foo");
       fail("ProcessEngineException expected");
@@ -2081,7 +2092,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetDescriptionNullDescription() {
+  void testSetDescriptionNullDescription() {
     // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
@@ -2098,7 +2109,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetDueDateUnexistingTaskId() {
+  void testSetDueDateUnexistingTaskId() {
     Date dueDate = new Date();
     try {
       taskService.setDueDate("unexistingtask", dueDate);
@@ -2109,7 +2120,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetDueDateNullTaskId() {
+  void testSetDueDateNullTaskId() {
     Date dueDate = new Date();
     try {
       taskService.setDueDate(null, dueDate);
@@ -2120,7 +2131,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetDueDateNullDueDate() {
+  void testSetDueDateNullDueDate() {
     // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
@@ -2137,7 +2148,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetFollowUpDateUnexistingTaskId() {
+  void testSetFollowUpDateUnexistingTaskId() {
     Date followUpDate = new Date();
     try {
       taskService.setFollowUpDate("unexistingtask", followUpDate);
@@ -2148,7 +2159,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetFollowUpDateNullTaskId() {
+  void testSetFollowUpDateNullTaskId() {
     Date followUpDate = new Date();
     try {
       taskService.setFollowUpDate(null, followUpDate);
@@ -2159,7 +2170,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testSetFollowUpDateNullFollowUpDate() {
+  void testSetFollowUpDateNullFollowUpDate() {
     // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
@@ -2179,7 +2190,7 @@ public class TaskServiceTest {
    * @see <a href="http://jira.codehaus.org/browse/ACT-1059">ACT-1059</a>
    */
   @Test
-  public void testSetDelegationState() {
+  void testSetDelegationState() {
     Task task = taskService.newTask();
     task.setOwner("wuzh");
     task.delegate("other");
@@ -2225,9 +2236,9 @@ public class TaskServiceTest {
   }
 
   @Deployment(resources = {
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariable() {
+  void testRemoveVariable() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task currentTask = taskService.createTaskQuery().singleResult();
@@ -2244,7 +2255,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testRemoveVariableNullTaskId() {
+  void testRemoveVariableNullTaskId() {
     try {
       taskService.removeVariable(null, "variable");
       fail("ProcessEngineException expected");
@@ -2254,9 +2265,9 @@ public class TaskServiceTest {
   }
 
   @Deployment(resources = {
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariables() {
+  void testRemoveVariables() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task currentTask = taskService.createTaskQuery().singleResult();
@@ -2290,7 +2301,7 @@ public class TaskServiceTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testRemoveVariablesNullTaskId() {
+  void testRemoveVariablesNullTaskId() {
     try {
       taskService.removeVariables(null, Collections.EMPTY_LIST);
       fail("ProcessEngineException expected");
@@ -2300,9 +2311,9 @@ public class TaskServiceTest {
   }
 
   @Deployment(resources = {
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariableLocal() {
+  void testRemoveVariableLocal() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task currentTask = taskService.createTaskQuery().singleResult();
@@ -2320,7 +2331,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testRemoveVariableLocalNullTaskId() {
+  void testRemoveVariableLocalNullTaskId() {
     try {
       taskService.removeVariableLocal(null, "variable");
       fail("ProcessEngineException expected");
@@ -2330,9 +2341,9 @@ public class TaskServiceTest {
   }
 
   @Deployment(resources = {
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testRemoveVariablesLocal() {
+  void testRemoveVariablesLocal() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task currentTask = taskService.createTaskQuery().singleResult();
@@ -2366,7 +2377,7 @@ public class TaskServiceTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testRemoveVariablesLocalNullTaskId() {
+  void testRemoveVariablesLocalNullTaskId() {
     try {
       taskService.removeVariablesLocal(null, Collections.EMPTY_LIST);
       fail("ProcessEngineException expected");
@@ -2375,9 +2386,9 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testUserTaskOptimisticLocking() {
+  void testUserTaskOptimisticLocking() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task task1 = taskService.createTaskQuery().singleResult();
@@ -2397,7 +2408,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskWithDeleteReason() {
+  void testDeleteTaskWithDeleteReason() {
     // ACT-900: deleteReason can be manually specified - can only be validated when historyLevel > ACTIVITY
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
 
@@ -2421,9 +2432,9 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteTaskPartOfProcess() {
+  void testDeleteTaskPartOfProcess() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();
@@ -2468,9 +2479,9 @@ public class TaskServiceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testDeleteTaskPartOfCaseInstance() {
+  void testDeleteTaskPartOfCaseInstance() {
     String caseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
         .singleResult()
@@ -2538,7 +2549,7 @@ public class TaskServiceTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testGetTaskCommentByTaskIdAndCommentId() {
+  void testGetTaskCommentByTaskIdAndCommentId() {
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       // create and save new task
       Task task = taskService.newTask();
@@ -2565,7 +2576,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testTaskAttachmentByTaskIdAndAttachmentId() throws ParseException {
+  void testTaskAttachmentByTaskIdAndAttachmentId() throws ParseException {
     Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
 
@@ -2603,7 +2614,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetTaskAttachmentContentByTaskIdAndAttachmentId() {
+  void testGetTaskAttachmentContentByTaskIdAndAttachmentId() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       // create and save task
@@ -2628,7 +2639,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetTaskAttachmentWithNullParameters() {
+  void testGetTaskAttachmentWithNullParameters() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       Attachment attachment = taskService.getTaskAttachment(null, null);
@@ -2637,7 +2648,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetTaskAttachmentContentWithNullParameters() {
+  void testGetTaskAttachmentContentWithNullParameters() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       InputStream content = taskService.getTaskAttachmentContent(null, null);
@@ -2647,7 +2658,7 @@ public class TaskServiceTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  public void testCreateTaskAttachmentWithNullTaskAndProcessInstance() {
+  void testCreateTaskAttachmentWithNullTaskAndProcessInstance() {
     var content = new ByteArrayInputStream("someContent".getBytes());
     try {
       taskService.createAttachment("web page", null, null, "weatherforcast", "temperatures and more", content);
@@ -2657,11 +2668,11 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  public void testCreateTaskAttachmentWithNullTaskId() throws ParseException {
+  void testCreateTaskAttachmentWithNullTaskId() throws ParseException {
     Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -2675,7 +2686,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskAttachmentWithNullParameter() {
+  void testDeleteTaskAttachmentWithNullParameter() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       try {
@@ -2688,10 +2699,10 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testDeleteAttachment() {
+  void testDeleteAttachment() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -2707,7 +2718,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskAttachmentWithNullParameters() {
+  void testDeleteTaskAttachmentWithNullParameters() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       try {
@@ -2720,7 +2731,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testDeleteTaskAttachmentWithTaskIdNull() {
+  void testDeleteTaskAttachmentWithTaskIdNull() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       try {
@@ -2733,17 +2744,17 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testGetTaskAttachmentsWithTaskIdNull() {
+  void testGetTaskAttachmentsWithTaskIdNull() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       assertThat(taskService.getTaskAttachments(null)).isEqualTo(Collections.<Attachment>emptyList());
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
   @Test
-  public void testUpdateVariablesLocal() {
+  void testUpdateVariablesLocal() {
     Map<String, Object> globalVars = new HashMap<>();
     globalVars.put("variable4", "value4");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("startSimpleSubProcess", globalVars);
@@ -2773,7 +2784,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateVariablesLocalForNonExistingTaskId() {
+  void testUpdateVariablesLocalForNonExistingTaskId() {
     Map<String, Object> modifications = new HashMap<>();
     modifications.put("variable1", "anotherValue1");
     modifications.put("variable2", "anotherValue2");
@@ -2792,7 +2803,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateVariablesLocaForNullTaskId() {
+  void testUpdateVariablesLocaForNullTaskId() {
     Map<String, Object> modifications = new HashMap<>();
     modifications.put("variable1", "anotherValue1");
     modifications.put("variable2", "anotherValue2");
@@ -2810,10 +2821,10 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
   @Test
-  public void testUpdateVariables() {
+  void testUpdateVariables() {
     Map<String, Object> globalVars = new HashMap<>();
     globalVars.put("variable4", "value4");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("startSimpleSubProcess", globalVars);
@@ -2843,7 +2854,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateVariablesForNonExistingTaskId() {
+  void testUpdateVariablesForNonExistingTaskId() {
     Map<String, Object> modifications = new HashMap<>();
     modifications.put("variable1", "anotherValue1");
     modifications.put("variable2", "anotherValue2");
@@ -2862,7 +2873,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testUpdateVariablesForNullTaskId() {
+  void testUpdateVariablesForNullTaskId() {
     Map<String, Object> modifications = new HashMap<>();
     modifications.put("variable1", "anotherValue1");
     modifications.put("variable2", "anotherValue2");
@@ -2881,7 +2892,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testTaskCaseInstanceId() {
+  void testTaskCaseInstanceId() {
     Task task = taskService.newTask();
     task.setCaseInstanceId("aCaseInstanceId");
     taskService.saveTask(task);
@@ -2901,10 +2912,10 @@ public class TaskServiceTest {
 
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariablesTyped() {
+  void testGetVariablesTyped() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -2915,10 +2926,10 @@ public class TaskServiceTest {
     assertThat(variablesTyped).isEqualTo(vars);
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariablesTypedDeserialize() {
+  void testGetVariablesTypedDeserialize() {
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables()
@@ -2948,10 +2959,10 @@ public class TaskServiceTest {
     }
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariablesLocalTyped() {
+  void testGetVariablesLocalTyped() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("variable1", "value1");
     vars.put("variable2", "value2");
@@ -2964,10 +2975,10 @@ public class TaskServiceTest {
     assertThat(variablesTyped).isEqualTo(vars);
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGetVariablesLocalTypedDeserialize() {
+  void testGetVariablesLocalTypedDeserialize() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.setVariablesLocal(taskId, Variables.createVariables()
@@ -2997,9 +3008,9 @@ public class TaskServiceTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testHumanTaskCompleteWithVariables() {
+  void testHumanTaskCompleteWithVariables() {
     // given
     caseService.createCaseInstanceByKey("oneTaskCase");
 
@@ -3024,9 +3035,9 @@ public class TaskServiceTest {
     assertThat(variable.getValue()).isEqualTo(variableValue);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testHumanTaskWithLocalVariablesCompleteWithVariable() {
+  void testHumanTaskWithLocalVariablesCompleteWithVariable() {
     // given
     caseService.createCaseInstanceByKey("oneTaskCase");
 
@@ -3054,9 +3065,9 @@ public class TaskServiceTest {
     assertThat(variable.getValue()).isEqualTo(variableAnotherValue);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml"})
   @Test
-  public void testUserTaskWithLocalVariablesCompleteWithVariable() {
+  void testUserTaskWithLocalVariablesCompleteWithVariable() {
     // given
     runtimeService.startProcessInstanceByKey("twoTasksProcess");
 
@@ -3078,9 +3089,9 @@ public class TaskServiceTest {
     assertThat(variable.getValue()).isEqualTo(variableAnotherValue);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testHumanTaskLocalVariables() {
+  void testHumanTaskLocalVariables() {
     // given
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 
@@ -3110,8 +3121,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testGetVariablesByEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testGetVariablesByEmptyList() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
     String taskId = taskService.createTaskQuery()
@@ -3127,8 +3138,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testGetVariablesTypedByEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testGetVariablesTypedByEmptyList() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
     String taskId = taskService.createTaskQuery()
@@ -3144,8 +3155,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testGetVariablesLocalByEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testGetVariablesLocalByEmptyList() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
     String taskId = taskService.createTaskQuery()
@@ -3161,8 +3172,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testGetVariablesLocalTypedByEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testGetVariablesLocalTypedByEmptyList() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
     String taskId = taskService.createTaskQuery()
@@ -3178,7 +3189,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testHandleBpmnErrorWithNonexistingTask() {
+  void testHandleBpmnErrorWithNonexistingTask() {
     // given
     // non-existing task
 
@@ -3189,7 +3200,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testThrowBpmnErrorWithoutCatch() {
+  void testThrowBpmnErrorWithoutCatch() {
     // given
     BpmnModelInstance model =Bpmn.createExecutableProcess(PROCESS_KEY)
         .operatonHistoryTimeToLive(180)
@@ -3212,7 +3223,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testHandleBpmnErrorWithErrorCodeVariable() {
+  void testHandleBpmnErrorWithErrorCodeVariable() {
     // given
     BpmnModelInstance model = createUserTaskProcessWithCatchBoundaryEvent();
     testRule.deploy(model);
@@ -3231,8 +3242,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testHandleBpmnErrorWithEmptyErrorCode() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testHandleBpmnErrorWithEmptyErrorCode() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -3245,8 +3256,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testHandleBpmnErrorWithNullErrorCode() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testHandleBpmnErrorWithNullErrorCode() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -3259,7 +3270,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testHandleBpmnErrorIncludingMessage() {
+  void testHandleBpmnErrorIncludingMessage() {
     // given
     BpmnModelInstance model = createUserTaskProcessWithCatchBoundaryEvent();
     testRule.deploy(model);
@@ -3279,7 +3290,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testHandleBpmnErrorWithVariables() {
+  void testHandleBpmnErrorWithVariables() {
     // given
     BpmnModelInstance model = createUserTaskProcessWithCatchBoundaryEvent();
     testRule.deploy(model);
@@ -3300,7 +3311,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testThrowBpmnErrorCatchInEventSubprocess() {
+  void testThrowBpmnErrorCatchInEventSubprocess() {
     // given
     String errorCodeVariableName = "errorCodeVar";
     String errorMessageVariableName = "errorMessageVar";
@@ -3328,7 +3339,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testHandleEscalationWithNonexistingTask() {
+  void testHandleEscalationWithNonexistingTask() {
     // given
     // non-existing task
 
@@ -3339,7 +3350,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testHandleEscalationWithoutEscalationCode() {
+  void testHandleEscalationWithoutEscalationCode() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .operatonHistoryTimeToLive(180)
@@ -3364,7 +3375,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testThrowEscalationWithoutCatchEvent() {
+  void testThrowEscalationWithoutCatchEvent() {
     // given
     BpmnModelInstance model =Bpmn.createExecutableProcess(PROCESS_KEY)
         .operatonHistoryTimeToLive(180)
@@ -3388,7 +3399,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testHandleEscalationInterruptEventWithVariables() {
+  void testHandleEscalationInterruptEventWithVariables() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .operatonHistoryTimeToLive(180)
@@ -3417,8 +3428,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml" })
-  public void testHandleEscalationNonInterruptWithVariables() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
+  void testHandleEscalationNonInterruptWithVariables() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -3440,8 +3451,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml" })
-  public void testHandleEscalationInterruptWithVariables() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
+  void testHandleEscalationInterruptWithVariables() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -3457,8 +3468,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml" })
-  public void testHandleEscalationNonInterruptEventSubprocess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
+  void testHandleEscalationNonInterruptEventSubprocess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -3479,8 +3490,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml" })
-  public void testHandleEscalationInterruptInEventSubprocess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
+  void testHandleEscalationInterruptInEventSubprocess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -3497,8 +3508,8 @@ public class TaskServiceTest {
 
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml" })
-  public void testHandleEscalationNonInterruptEmbeddedSubprocess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
+  void testHandleEscalationNonInterruptEmbeddedSubprocess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -3519,8 +3530,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml" })
-  public void testHandleEscalationInterruptInEmbeddedSubprocess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskServiceTest.handleUserTaskEscalation.bpmn20.xml"})
+  void testHandleEscalationInterruptInEmbeddedSubprocess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();

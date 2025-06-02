@@ -112,6 +112,7 @@ class ExecutionQueryTest {
     // Concurrent process with 3 executions for each process instance
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).list()).hasSize(12);
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(SEQUENTIAL_PROCESS_KEY).list()).hasSize(1);
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(SEQUENTIAL_PROCESS_KEY).singleResult().getProcessDefinitionKey()).isNotNull();
   }
 
   @Test

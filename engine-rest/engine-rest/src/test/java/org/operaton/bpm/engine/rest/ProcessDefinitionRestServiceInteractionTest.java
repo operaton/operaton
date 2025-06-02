@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.form.validator.FormFieldValidationException;
 import org.operaton.bpm.engine.impl.repository.CalledProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -593,7 +592,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   public void testSubmitStartFormWithBase64EncodedBytes() {
 
     Map<String, Object> variables = VariablesBuilder.create()
-        .variable("aVariable", Base64.encodeBase64String("someBytes".getBytes()), ValueType.BYTES.getName())
+        .variable("aVariable", Base64.getEncoder().encodeToString("someBytes".getBytes()), ValueType.BYTES.getName())
         .getVariables();
 
     Map<String, Object> json = new HashMap<>();

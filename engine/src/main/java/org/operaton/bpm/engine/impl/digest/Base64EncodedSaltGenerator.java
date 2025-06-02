@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.digest;
 
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
-
 import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Random;
 
 public abstract class Base64EncodedSaltGenerator implements SaltGenerator {
@@ -39,7 +38,7 @@ public abstract class Base64EncodedSaltGenerator implements SaltGenerator {
   }
 
   protected String encodeSalt(byte[] salt) {
-    return new String(Base64.encodeBase64(salt));
+    return Base64.getEncoder().encodeToString(salt);
   }
 
   protected abstract Integer getSaltLengthInByte();

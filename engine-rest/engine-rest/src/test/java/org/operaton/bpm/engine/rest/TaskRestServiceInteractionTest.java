@@ -2274,6 +2274,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   public void testGetTaskNonExistingCommentsWithHistoryDisabled() {
     mockHistoryDisabled();
+    when(taskServiceMock.getTaskComments(EXAMPLE_TASK_ID)).thenReturn(Collections.<Comment>emptyList());
 
     given()
       .pathParam("id", EXAMPLE_TASK_ID)

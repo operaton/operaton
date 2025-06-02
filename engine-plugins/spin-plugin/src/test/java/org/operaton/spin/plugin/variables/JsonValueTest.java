@@ -176,12 +176,13 @@ class JsonValueTest {
     // given
     JsonValueBuilder builder = jsonValue(jsonString).serializationDataFormat("non existing data format");
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
+    JsonValue jsonValue = builder.create();
 
     assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, variableName, builder))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("Cannot find serializer for value");
 
-    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, variableName, builder.create()))
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, variableName, jsonValue))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("Cannot find serializer for value");
   }

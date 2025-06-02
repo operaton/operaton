@@ -90,11 +90,9 @@ public class JobExecutorPriorityRangeConfigurationTest {
     config.setJobExecutorPriorityRangeMax(-10L);
 
     // then
-    assertThatThrownBy(() -> {
-      ProcessEngine engine = config.buildProcessEngine();
-      engine.close();
-    }).isInstanceOf(ProcessEngineException.class)
-    .hasMessage("ENGINE-14031 Invalid configuration for job executor priority range. Reason: jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
+    assertThatThrownBy(() -> config.buildProcessEngine())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-14031 Invalid configuration for job executor priority range. Reason: jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
   }
 
   @Test
@@ -104,10 +102,8 @@ public class JobExecutorPriorityRangeConfigurationTest {
     config.setJobExecutorPriorityRangeMax(5L);
 
     // then
-    assertThatThrownBy(() -> {
-      ProcessEngine engine = config.buildProcessEngine();
-      engine.close();
-    }).isInstanceOf(ProcessEngineException.class)
-    .hasMessage("ENGINE-14031 Invalid configuration for job executor priority range. Reason: jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
+    assertThatThrownBy(() -> config.buildProcessEngine())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-14031 Invalid configuration for job executor priority range. Reason: jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
   }
 }

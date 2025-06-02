@@ -97,8 +97,9 @@ class DomXmlDeserializationValidationTest {
   void shouldFailForSimpleClass() {
     // given
     validator = createValidatorMock(false);
+    DomXmlDataFormatMapper mapper = format.getMapper();
     // when
-    assertThatThrownBy(() -> format.getMapper().validateType(String.class, validator))
+    assertThatThrownBy(() -> mapper.validateType(String.class, validator))
         .isInstanceOf(SpinRuntimeException.class)
         .hasMessageContaining("'java.lang.String'");
   }
@@ -107,8 +108,9 @@ class DomXmlDeserializationValidationTest {
   void shouldFailForComplexClass() {
     // given
     validator = createValidatorMock(false);
+    DomXmlDataFormatMapper mapper = format.getMapper();
     // when
-    assertThatThrownBy(() -> format.getMapper().validateType(Complex.class, validator))
+    assertThatThrownBy(() -> mapper.validateType(Complex.class, validator))
         .isInstanceOf(SpinRuntimeException.class)
         .hasMessageContaining("'org.operaton.spin.impl.xml.dom.format.DomXmlDeserializationValidationTest$Complex'");
   }
@@ -117,9 +119,10 @@ class DomXmlDeserializationValidationTest {
   void shouldFailForArrayClass() {
     // given
     validator = createValidatorMock(false);
+    DomXmlDataFormatMapper mapper = format.getMapper();
 
     // when, then
-    assertThatThrownBy(() -> format.getMapper().validateType(Integer[].class, validator))
+    assertThatThrownBy(() -> mapper.validateType(Integer[].class, validator))
         .isInstanceOf(SpinRuntimeException.class)
         .hasMessageContaining("'java.lang.Integer'");
   }

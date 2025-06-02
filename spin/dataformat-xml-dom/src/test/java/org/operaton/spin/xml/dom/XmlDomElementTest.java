@@ -498,7 +498,7 @@ class XmlDomElementTest {
 
     element.remove(child);
 
-    assertThrows(SpinXmlElementException.class, () -> assertThat(element.childElement(null, "child")));
+    assertThrows(SpinXmlElementException.class, () -> element.childElement(null, "child"));
   }
 
   @Test
@@ -527,7 +527,7 @@ class XmlDomElementTest {
 
     element.remove(child1, child2, child3);
 
-    assertThrows(SpinXmlElementException.class, () -> assertThat(element.childElements(null, "child")));
+    assertThrows(SpinXmlElementException.class, () -> element.childElements(null, "child"));
   }
 
   @Test

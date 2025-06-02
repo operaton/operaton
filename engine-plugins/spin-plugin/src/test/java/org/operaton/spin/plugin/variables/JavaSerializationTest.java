@@ -26,6 +26,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 
@@ -76,32 +78,26 @@ class JavaSerializationTest {
   @Test
   void javaSerializedValuesAreProhibited() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String processInstanceId = instance.getId();
+    // request object to be serialized as Java
+    var serializedObjectValue = serializedObjectValue("").serializationDataFormat(Variables.SerializationDataFormats.JAVA).create();
 
-    try {
-      // request object to be serialized as Java
-      runtimeService
-        .setVariable(instance.getId(), "simpleBean", serializedObjectValue("").serializationDataFormat(Variables.SerializationDataFormats.JAVA).create());
-      fail("Exception is expected.");
-    } catch (ProcessEngineException ex) {
-      assertEquals("ENGINE-17007 Cannot set variable with name simpleBean. Java serialization format is prohibited", ex.getMessage());
-    }
-
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, "simpleBean", serializedObjectValue))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-17007 Cannot set variable with name simpleBean. Java serialization format is prohibited");
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
   void javaSerializedValuesAreProhibitedForTransient() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String processInstanceId = instance.getId();
+    // request object to be serialized as Java
+    var serializedObjectValue = serializedObjectValue("").serializationDataFormat(Variables.SerializationDataFormats.JAVA).create();
 
-    try {
-      // request object to be serialized as Java
-      runtimeService
-        .setVariable(instance.getId(), "simpleBean", serializedObjectValue("").serializationDataFormat(Variables.SerializationDataFormats.JAVA).create());
-      fail("Exception is expected.");
-    } catch (ProcessEngineException ex) {
-      assertEquals("ENGINE-17007 Cannot set variable with name simpleBean. Java serialization format is prohibited", ex.getMessage());
-    }
-
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, "simpleBean", serializedObjectValue))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-17007 Cannot set variable with name simpleBean. Java serialization format is prohibited");
   }
 
   @Test
@@ -111,17 +107,13 @@ class JavaSerializationTest {
     taskService.saveTask(task);
 
     String taskId = task.getId();
+    var serializedObjectValue = serializedObjectValue("trumpet").serializationDataFormat(Variables.SerializationDataFormats.JAVA).create();
 
-    try {
-      taskService
-        .setVariable(taskId, "instrument", Variables.serializedObjectValue("trumpet").serializationDataFormat(Variables.SerializationDataFormats.JAVA).create());
-      fail("Exception is expected.");
-    } catch (ProcessEngineException ex) {
-      assertEquals("ENGINE-17007 Cannot set variable with name instrument. Java serialization format is prohibited", ex.getMessage());
-    } finally {
-      taskService.deleteTask(taskId, true);
-    }
+    assertThatThrownBy(() -> taskService.setVariable(taskId, "instrument", serializedObjectValue))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-17007 Cannot set variable with name instrument. Java serialization format is prohibited");
 
+    taskService.deleteTask(taskId, true);
   }
 
   @Test
@@ -131,20 +123,15 @@ class JavaSerializationTest {
     taskService.saveTask(task);
 
     String taskId = task.getId();
+    var serializedObjectValue = serializedObjectValue("trumpet")
+      .serializationDataFormat(Variables.SerializationDataFormats.JAVA).setTransient(true)
+      .create();
 
-    try {
-      taskService
-        .setVariable(taskId, "instrument", Variables.serializedObjectValue("trumpet")
-          .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
-          .setTransient(true)
-          .create());
-      fail("Exception is expected.");
-    } catch (ProcessEngineException ex) {
-      assertEquals("ENGINE-17007 Cannot set variable with name instrument. Java serialization format is prohibited", ex.getMessage());
-    } finally {
-      taskService.deleteTask(taskId, true);
-    }
+    assertThatThrownBy(() -> taskService.setVariable(taskId, "instrument", serializedObjectValue))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-17007 Cannot set variable with name instrument. Java serialization format is prohibited");
 
+    taskService.deleteTask(taskId, true);
   }
 
 }

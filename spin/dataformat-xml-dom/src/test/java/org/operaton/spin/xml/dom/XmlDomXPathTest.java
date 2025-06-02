@@ -26,6 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.xml.SpinXPathException;
+import org.operaton.spin.xml.SpinXPathQuery;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlElement;
 
@@ -47,44 +48,44 @@ class XmlDomXPathTest {
 
   @Test
   void canNotQueryDocumentAsElement() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/").element());
+    SpinXPathQuery pathQuery = element.xPath("/");
+    assertThrows(SpinXPathException.class, pathQuery::element);
   }
 
   @Test
   void canNotQueryDocumentAsElementList() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/").elementList());
+    SpinXPathQuery pathQuery = element.xPath("/");
+    assertThrows(SpinXPathException.class, pathQuery::elementList);
   }
 
   @Test
   void canNotQueryDocumentAsAttribute() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/").attribute());
+    SpinXPathQuery pathQuery = element.xPath("/");
+    assertThrows(SpinXPathException.class, pathQuery::attribute);
   }
 
   @Test
   void canNotQueryDocumentAsAttributeList() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/").attributeList());
+    SpinXPathQuery pathQuery = element.xPath("/");
+    assertThrows(SpinXPathException.class, pathQuery::attributeList);
   }
 
   @Test
   void canNotQueryDocumentAsString() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/").string());
+    SpinXPathQuery pathQuery = element.xPath("/");
+    assertThrows(SpinXPathException.class, pathQuery::string);
   }
 
   @Test
   void canNotQueryDocumentAsNumber() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/").number());
+    SpinXPathQuery pathQuery = element.xPath("/");
+    assertThrows(SpinXPathException.class, pathQuery::number);
   }
 
   @Test
   void canNotQueryDocumentAsBoolean() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/").bool());
+    SpinXPathQuery pathQuery = element.xPath("/");
+    assertThrows(SpinXPathException.class, pathQuery::bool);
   }
 
   @Test
@@ -100,14 +101,14 @@ class XmlDomXPathTest {
 
   @Test
   void canNotQueryElement() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/root/nonExisting").element());
+    SpinXPathQuery pathQuery = element.xPath("/root/nonExisting");
+    assertThrows(SpinXPathException.class, pathQuery::element);
   }
 
   @Test
   void canNotQueryElementAsAttribute() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/root/child/").attribute());
+    SpinXPathQuery pathQuery = element.xPath("/root/child/");
+    assertThrows(SpinXPathException.class, pathQuery::attribute);
   }
 
   @Test
@@ -118,8 +119,8 @@ class XmlDomXPathTest {
 
   @Test
   void canNotQueryElementList() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/root/child/nonExisting").elementList());
+    SpinXPathQuery pathQuery = element.xPath("/root/child/nonExisting");
+    assertThrows(SpinXPathException.class, pathQuery::elementList);
   }
 
   @Test
@@ -130,14 +131,14 @@ class XmlDomXPathTest {
 
   @Test
   void canNotQueryAttribute() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/root/child/@nonExisting").attribute());
+    SpinXPathQuery pathQuery = element.xPath("/root/child/@nonExisting");
+    assertThrows(SpinXPathException.class, pathQuery::attribute);
   }
 
   @Test
   void canNotQueryAttributeAsElement() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/root/child/@id").element());
+    SpinXPathQuery pathQuery = element.xPath("/root/child/@id");
+    assertThrows(SpinXPathException.class, pathQuery::element);
   }
 
   @Test
@@ -148,8 +149,8 @@ class XmlDomXPathTest {
 
   @Test
   void canNotQueryAttributeList() {
-    assertThrows(SpinXPathException.class, () ->
-      element.xPath("/root/child/a/@nonExisting").attributeList());
+    SpinXPathQuery pathQuery = element.xPath("/root/child/a/@nonExisting");
+    assertThrows(SpinXPathException.class, pathQuery::attributeList);
   }
 
   @Test

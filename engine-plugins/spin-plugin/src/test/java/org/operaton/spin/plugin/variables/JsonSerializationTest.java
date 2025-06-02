@@ -270,6 +270,7 @@ class JsonSerializationTest {
   @Deployment(resources = ONE_TASK_PROCESS)
   void setSerializedVariableValueMismatchingTypeName() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
     String beanAsJson = bean.toExpectedJsonString();
 
@@ -277,18 +278,18 @@ class JsonSerializationTest {
       .serializationDataFormat(JSON_FORMAT_NAME)
       .objectTypeName("Insensible type name."); // < not a valid type name
 
-    runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue);
+    runtimeService.setVariable(instanceId, "simpleBean", serializedValue);
 
-    assertThatThrownBy(() -> runtimeService.getVariable(instance.getId(), "simpleBean"))
+    assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
             .isInstanceOf(ProcessEngineException.class);
 
     serializedValue = serializedObjectValue(beanAsJson)
       .serializationDataFormat(JSON_FORMAT_NAME)
       .objectTypeName(JsonSerializationTest.class.getName()); // < not the right type name
 
-    runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue);
+    runtimeService.setVariable(instanceId, "simpleBean", serializedValue);
 
-    assertThatThrownBy(() -> runtimeService.getVariable(instance.getId(), "simpleBean"))
+    assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
             .isInstanceOf(ProcessEngineException.class);
   }
 

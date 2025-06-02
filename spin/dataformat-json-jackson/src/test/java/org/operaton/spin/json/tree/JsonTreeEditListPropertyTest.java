@@ -148,7 +148,8 @@ class JsonTreeEditListPropertyTest {
 
   @Test
   void appendWrongNode() {
-    assertThatThrownBy(() -> jsonNode.append(new Date()))
+    Date date = new Date();
+    assertThatThrownBy(() -> jsonNode.append(date))
         .isInstanceOf(SpinJsonException.class);
   }
 
@@ -222,7 +223,8 @@ class JsonTreeEditListPropertyTest {
 
   @Test
   void insertAtWithWrongObject() {
-    assertThatThrownBy(() -> currencies.insertAt(1, new Date()))
+    Date date = new Date();
+    assertThatThrownBy(() -> currencies.insertAt(1, date))
         .isInstanceOf(SpinJsonException.class);
   }
 
@@ -294,13 +296,15 @@ class JsonTreeEditListPropertyTest {
 
   @Test
   void insertWrongObjectBeforeSearchObject() {
-    assertThatThrownBy(() -> currencies.insertBefore("euro", new Date()))
+    Date date = new Date();
+    assertThatThrownBy(() -> currencies.insertBefore("euro", date))
         .isInstanceOf(SpinJsonPropertyException.class);
   }
 
   @Test
   void insertObjectBeforeWrongSearchObject() {
-    assertThatThrownBy(() -> currencies.insertBefore(new Date(), "test"))
+    Date date = new Date();
+    assertThatThrownBy(() -> currencies.insertBefore(date, "test"))
         .isInstanceOf(SpinJsonPropertyException.class);
   }
 
@@ -364,7 +368,8 @@ class JsonTreeEditListPropertyTest {
 
   @Test
   void insertWrongObjectAfterSearchObject() {
-    assertThatThrownBy(() -> currencies.insertBefore("euro", new Date()))
+    Date date = new Date();
+    assertThatThrownBy(() -> currencies.insertBefore("euro", date))
         .isInstanceOf(SpinJsonException.class);
   }
 
@@ -376,7 +381,8 @@ class JsonTreeEditListPropertyTest {
 
   @Test
   void insertObjectAfterWrongSearchObject() {
-    assertThatThrownBy(() -> currencies.insertAfter(new Date(), "test"))
+    Date date = new Date();
+    assertThatThrownBy(() -> currencies.insertAfter(date, "test"))
         .isInstanceOf(SpinJsonPropertyException.class);
   }
 
@@ -427,7 +433,8 @@ class JsonTreeEditListPropertyTest {
 
   @Test
   void removeLastWrongObject() {
-    assertThatThrownBy(() -> currencies.removeLast(new Date()))
+    Date date = new Date();
+    assertThatThrownBy(() -> currencies.removeLast(date))
         .isInstanceOf(SpinJsonException.class);
   }
 

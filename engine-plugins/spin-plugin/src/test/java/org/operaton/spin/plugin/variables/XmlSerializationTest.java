@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+import org.operaton.bpm.engine.variable.value.builder.ObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuilder;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
@@ -110,10 +111,12 @@ class XmlSerializationTest {
   @Test
   void failingSerialization() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
 
     FailingXmlSerializable failingBean = new FailingXmlSerializable("a String", 42, true);
+    ObjectValueBuilder bean = objectValue(failingBean).serializationDataFormat(XML_FORMAT_NAME);
 
-    assertThatThrownBy(() -> runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(failingBean).serializationDataFormat(XML_FORMAT_NAME)))
+    assertThatThrownBy(() -> runtimeService.setVariable(instanceId, "simpleBean", bean))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("I am failing");
   }
@@ -122,26 +125,27 @@ class XmlSerializationTest {
   @Test
   void failingDeserialization() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
 
     FailingXmlDeserializationBean failingBean = new FailingXmlDeserializationBean("a String", 42, true);
 
-    runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(failingBean).serializationDataFormat(XML_FORMAT_NAME));
+    runtimeService.setVariable(instanceId, "simpleBean", objectValue(failingBean).serializationDataFormat(XML_FORMAT_NAME));
 
-    assertThatThrownBy(() -> runtimeService.getVariable(instance.getId(), "simpleBean"))
+    assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("Cannot deserialize object in variable 'simpleBean'");
 
-    assertThatThrownBy(() -> runtimeService.getVariableTyped(instance.getId(), "simpleBean"))
+    assertThatThrownBy(() -> runtimeService.getVariableTyped(instanceId, "simpleBean"))
             .isInstanceOf(ProcessEngineException.class);
 
     // However, I can access the serialized value
-    ObjectValue objectValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean", false);
+    ObjectValue objectValue = runtimeService.getVariableTyped(instanceId, "simpleBean", false);
     assertFalse(objectValue.isDeserialized());
     assertNotNull(objectValue.getObjectTypeName());
     assertNotNull(objectValue.getValueSerialized());
 
     // but not the deserialized properties
-    assertThatThrownBy(() -> objectValue.getValue())
+    assertThatThrownBy(objectValue::getValue)
             .isInstanceOf(IllegalStateException.class)
             .hasMessageContaining("Object is not deserialized");
 
@@ -149,7 +153,7 @@ class XmlSerializationTest {
             .isInstanceOf(IllegalStateException.class)
             .hasMessageContaining("Object is not deserialized");
 
-    assertThatThrownBy(() -> objectValue.getObjectType())
+    assertThatThrownBy(objectValue::getObjectType)
             .isInstanceOf(IllegalStateException.class)
             .hasMessageContaining("Object is not deserialized");
   }
@@ -158,10 +162,12 @@ class XmlSerializationTest {
   @Test
   void failForNonExistingSerializationFormat() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
 
-    XmlSerializable XmlSerializable = new XmlSerializable();
+    XmlSerializable xmlSerializable = new XmlSerializable();
+    ObjectValueBuilder bean = objectValue(xmlSerializable).serializationDataFormat("non existing data format");
 
-    assertThatThrownBy(() -> runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(XmlSerializable).serializationDataFormat("non existing data format")))
+    assertThatThrownBy(() -> runtimeService.setVariable(instanceId, "simpleBean", bean))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("Cannot find serializer for value");
   }
@@ -236,14 +242,15 @@ class XmlSerializationTest {
   @Test
   void setSerializedVariableValueNoTypeName() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
     XmlSerializable bean = new XmlSerializable("a String", 42, true);
     String beanAsXml = bean.toExpectedXmlString();
 
     SerializedObjectValueBuilder serializedValue = serializedObjectValue(beanAsXml)
       .serializationDataFormat(XML_FORMAT_NAME);
-      // no type name
+    // no type name
 
-    assertThatThrownBy(() -> runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue))
+    assertThatThrownBy(() -> runtimeService.setVariable(instanceId, "simpleBean", serializedValue))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("no 'objectTypeName' provided for non-null value");
   }
@@ -252,6 +259,7 @@ class XmlSerializationTest {
   @Test
   void setSerializedVariableValueMismatchingTypeName() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
     XmlSerializable bean = new XmlSerializable("a String", 42, true);
     String beanAsXml = bean.toExpectedXmlString();
 
@@ -259,9 +267,9 @@ class XmlSerializationTest {
       .serializationDataFormat(XML_FORMAT_NAME)
       .objectTypeName("Insensible type name."); // < not a valid type name
 
-    runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue);
+    runtimeService.setVariable(instanceId, "simpleBean", serializedValue);
 
-    assertThatThrownBy(() -> runtimeService.getVariable(instance.getId(), "simpleBean"))
+    assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
             .isInstanceOf(ProcessEngineException.class);
   }
 

@@ -98,15 +98,17 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
     engineRuleNegative.manageDeployment(engineRuleNegative.getRepositoryService().createDeployment()
         .addModelInstance("foo.bpmn", getOneTaskModel())
         .deploy());
-    ProcessInstance instance = engineRuleNegative.getRuntimeService().startProcessInstanceByKey("oneTaskProcess");
+    var runtimeService = engineRuleNegative.getRuntimeService();
+    ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
 
     // add serialized value
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
-    engineRuleNegative.getRuntimeService().setVariable(instance.getId(), "simpleBean",
+    runtimeService.setVariable(instanceId, "simpleBean",
         objectValue(bean).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create());
 
     // when
-    Assertions.assertThatThrownBy(() -> engineRuleNegative.getRuntimeService().getVariable(instance.getId(), "simpleBean"))
+    Assertions.assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
         .isExactlyInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Cannot deserialize")
         .hasCauseExactlyInstanceOf(SpinJsonException.class);

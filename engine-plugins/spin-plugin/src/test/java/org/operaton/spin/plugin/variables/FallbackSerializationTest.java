@@ -51,14 +51,15 @@ class FallbackSerializationTest {
       .objectTypeName("org.operaton.Foo")
       .create();
 
-    runtimeService.setVariable(instance.getId(), "var", objectValue);
+    String processInstanceId = instance.getId();
+    runtimeService.setVariable(processInstanceId, "var", objectValue);
 
     // then
-    assertThatThrownBy(() -> runtimeService.getVariable(instance.getId(), "var"))
+    assertThatThrownBy(() -> runtimeService.getVariable(processInstanceId, "var"))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("Fallback serializer cannot handle deserialized objects");
 
-    ObjectValue returnedValue = runtimeService.getVariableTyped(instance.getId(), "var", false);
+    ObjectValue returnedValue = runtimeService.getVariableTyped(processInstanceId, "var", false);
     assertFalse(returnedValue.isDeserialized());
     assertEquals("application/foo", returnedValue.getSerializationDataFormat());
     assertEquals("foo", returnedValue.getValueSerialized());

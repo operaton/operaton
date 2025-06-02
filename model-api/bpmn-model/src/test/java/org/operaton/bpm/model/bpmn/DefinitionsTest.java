@@ -66,7 +66,8 @@ class DefinitionsTest extends BpmnModelTest {
 
   @Test
   void shouldNotImportWrongOrderedSequence() {
-    assertThatThrownBy(() -> Bpmn.readModelFromStream(getClass().getResourceAsStream("DefinitionsTest.shouldNotImportWrongOrderedSequence.bpmn")))
+    var inputStream = getClass().getResourceAsStream("DefinitionsTest.shouldNotImportWrongOrderedSequence.bpmn");
+    assertThatThrownBy(() -> Bpmn.readModelFromStream(inputStream))
             .isInstanceOf(ModelParseException.class);
   }
 

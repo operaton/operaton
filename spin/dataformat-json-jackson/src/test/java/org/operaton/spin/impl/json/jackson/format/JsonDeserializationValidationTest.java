@@ -156,8 +156,9 @@ class JsonDeserializationValidationTest {
   @MethodSource("provideInvalidTypes")
   void shouldFailForInvalidTypes(JavaType type, String expectedMessage) {
     validator = createValidatorMock(false);
+    var mapper = format.getMapper();
 
-    assertThatThrownBy(() -> format.getMapper().validateType(type, validator))
+    assertThatThrownBy(() -> mapper.validateType(type, validator))
         .isInstanceOf(SpinRuntimeException.class)
         .hasMessageContaining(expectedMessage);
   }

@@ -20,7 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Event;
@@ -29,20 +34,21 @@ import org.operaton.bpm.model.bpmn.instance.ServiceTask;
 import org.operaton.bpm.model.bpmn.instance.Task;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.junit.After;
-import org.junit.Test;
-
 
 /**
  * @author Sebastian Menski
  */
-public class ServiceTaskBpmnModelExecutionContextTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ServiceTaskBpmnModelExecutionContextTest {
 
   private static final String PROCESS_ID = "process";
   private String deploymentId;
 
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+
   @Test
-  public void testJavaDelegateModelExecutionContext() {
+  void testJavaDelegateModelExecutionContext() {
     deploy();
 
     runtimeService.startProcessInstanceByKey(PROCESS_ID);
@@ -76,8 +82,8 @@ public class ServiceTaskBpmnModelExecutionContextTest extends PluggableProcessEn
     deploymentId = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance).deploy().getId();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ModelExecutionContextServiceTask.clear();
     repositoryService.deleteDeployment(deploymentId, true);
   }

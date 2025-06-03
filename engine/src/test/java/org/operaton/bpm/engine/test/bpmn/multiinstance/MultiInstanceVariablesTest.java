@@ -21,17 +21,16 @@ import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBe
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.CallActivityBuilder;
 import org.operaton.bpm.model.bpmn.instance.CallActivity;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonIn;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOut;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Askar Akhmerov
@@ -43,11 +42,11 @@ public class MultiInstanceVariablesTest {
   public static final String PROCESS_ID = "process";
   public static final String CALL_ACTIVITY = "callActivity";
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
   @Test
-  public void testMultiInstanceWithAllInOutMapping() {
+  void testMultiInstanceWithAllInOutMapping() {
     BpmnModelInstance modelInstance = getBpmnModelInstance();
 
     CallActivityBuilder callActivityBuilder = ((CallActivity) modelInstance.getModelElementById(CALL_ACTIVITY)).builder();

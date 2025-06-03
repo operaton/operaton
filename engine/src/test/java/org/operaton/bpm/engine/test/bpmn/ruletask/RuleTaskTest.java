@@ -18,20 +18,30 @@ package org.operaton.bpm.engine.test.bpmn.ruletask;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  * @author Bernd Ruecker
  */
-public class RuleTaskTest extends PluggableProcessEngineTest {
+class RuleTaskTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testJavaDelegate() {
+  void testJavaDelegate() {
     DummyServiceTask.wasExecuted = false;
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("businessRuleTaskJavaDelegate");
     

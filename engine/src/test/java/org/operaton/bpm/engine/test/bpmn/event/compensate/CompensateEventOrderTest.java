@@ -21,13 +21,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.bpmn.event.compensate.helper.IncreaseCurrentTimeServiceTask;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.AssociationDirection;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -36,22 +37,20 @@ import org.operaton.bpm.model.bpmn.instance.Association;
 import org.operaton.bpm.model.bpmn.instance.BaseElement;
 import org.operaton.bpm.model.bpmn.instance.BoundaryEvent;
 import org.operaton.bpm.model.bpmn.instance.ServiceTask;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Svetlana Dorokhova
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class CompensateEventOrderTest {
+class CompensateEventOrderTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  @Rule
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void testTwoCompensateEventsInReverseOrder() {
+  void testTwoCompensateEventsInReverseOrder() {
     //given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()

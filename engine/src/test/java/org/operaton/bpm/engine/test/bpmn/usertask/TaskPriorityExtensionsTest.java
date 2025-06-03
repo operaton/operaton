@@ -21,20 +21,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Thilo-Alexander Ginkel
  */
-public class TaskPriorityExtensionsTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class TaskPriorityExtensionsTest {
+
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testPriorityExtension() {
+  void testPriorityExtension() {
     testPriorityExtension(25);
     testPriorityExtension(75);
   }
@@ -53,7 +60,7 @@ public class TaskPriorityExtensionsTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testPriorityExtensionString() {
+  void testPriorityExtensionString() {
     final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskPriorityExtensionString");
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(task.getPriority()).isEqualTo(42);

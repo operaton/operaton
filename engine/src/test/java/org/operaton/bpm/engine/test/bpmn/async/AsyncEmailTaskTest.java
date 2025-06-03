@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.mail.EmailServiceTaskTest;
 import org.operaton.bpm.engine.test.bpmn.mail.EmailTestCase;
@@ -31,11 +32,12 @@ import org.subethamail.wiser.WiserMessage;
  *
  * @author Daniel Meyer
  */
-public class AsyncEmailTaskTest extends EmailTestCase {
+class AsyncEmailTaskTest extends EmailTestCase {
 
   // copied from org.operaton.bpm.engine.test.bpmn.mail.EmailServiceTaskTest
   @Deployment
-  public void testSimpleTextMail() {
+  @Test
+  void testSimpleTextMail() {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<WiserMessage> messages = wiser.getMessages();
@@ -54,7 +56,8 @@ public class AsyncEmailTaskTest extends EmailTestCase {
 
   // copied from org.operaton.bpm.engine.test.bpmn.mail.EmailSendTaskTest
   @Deployment
-  public void testSimpleTextMailSendTask() {
+  @Test
+  void testSimpleTextMailSendTask() {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
     List<WiserMessage> messages = wiser.getMessages();

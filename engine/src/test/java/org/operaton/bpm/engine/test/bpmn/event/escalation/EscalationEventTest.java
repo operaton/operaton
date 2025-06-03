@@ -21,20 +21,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Philipp Ossler
  */
-public class EscalationEventTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class EscalationEventTest {
+
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testThrowEscalationEventFromEmbeddedSubprocess() {
+  void testThrowEscalationEventFromEmbeddedSubprocess() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -47,7 +54,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testThrowEscalationEventHierarchical() {
+  void testThrowEscalationEventHierarchical() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -61,7 +68,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.nonInterruptingEscalationBoundaryEventOnCallActivity.bpmn20.xml"})
   @Test
-  public void testThrowEscalationEventFromCallActivity() {
+  void testThrowEscalationEventFromCallActivity() {
     runtimeService.startProcessInstanceByKey("catchEscalationProcess");
     // when throw an escalation event on called process
 
@@ -74,7 +81,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml")
   @Test
-  public void testThrowEscalationEventNotCaught() {
+  void testThrowEscalationEventNotCaught() {
     runtimeService.startProcessInstanceByKey("throwEscalationProcess");
     // when throw an escalation event
 
@@ -85,7 +92,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryEventWithEscalationCode() {
+  void testBoundaryEventWithEscalationCode() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess with escalationCode=1
 
@@ -98,7 +105,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryEventWithoutEscalationCode() {
+  void testBoundaryEventWithoutEscalationCode() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -111,7 +118,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryEventWithEmptyEscalationCode() {
+  void testBoundaryEventWithEmptyEscalationCode() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -124,7 +131,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryEventWithoutEscalationRef() {
+  void testBoundaryEventWithoutEscalationRef() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -137,7 +144,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInterruptingEscalationBoundaryEventOnMultiInstanceSubprocess() {
+  void testInterruptingEscalationBoundaryEventOnMultiInstanceSubprocess() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the multi-instance subprocess
 
@@ -148,7 +155,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingEscalationBoundaryEventOnMultiInstanceSubprocess() {
+  void testNonInterruptingEscalationBoundaryEventOnMultiInstanceSubprocess() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the multi-instance subprocess
 
@@ -163,9 +170,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
    * current bug: default value of 'cancelActivity' is 'true'
    */
   @Deployment
-  @Ignore("CAM-4403")
+  @Disabled("CAM-4403")
   @Test
-  public void testImplicitNonInterruptingEscalationBoundaryEvent() {
+  void testImplicitNonInterruptingEscalationBoundaryEvent() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -178,7 +185,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInterruptingEscalationBoundaryEvent(){
+  void testInterruptingEscalationBoundaryEvent(){
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -187,10 +194,10 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().taskName("task after catched escalation").count()).isEqualTo(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.interruptingEscalationBoundaryEventOnCallActivity.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.interruptingEscalationBoundaryEventOnCallActivity.bpmn20.xml"})
   @Test
-  public void testInterruptingEscalationBoundaryEventOnCallActivity(){
+  void testInterruptingEscalationBoundaryEventOnCallActivity(){
     runtimeService.startProcessInstanceByKey("catchEscalationProcess");
     // when throw an escalation event on called process
 
@@ -201,7 +208,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelEscalationEndEvent() {
+  void testParallelEscalationEndEvent() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation end event inside the subprocess
 
@@ -214,7 +221,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testEscalationEndEvent() {
+  void testEscalationEndEvent() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation end event inside the subprocess
 
@@ -225,9 +232,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testPropagateOutputVariablesWhileCatchEscalationOnCallActivity.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testPropagateOutputVariablesWhileCatchEscalationOnCallActivity.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileCatchEscalationOnCallActivity() {
+  void testPropagateOutputVariablesWhileCatchEscalationOnCallActivity() {
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("catchEscalationProcess", variables).getId();
@@ -240,9 +247,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testPropagateOutputVariablesWhileCatchEscalationOnCallActivity.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testPropagateOutputVariablesWhileCatchEscalationOnCallActivity.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesTwoTimes() {
+  void testPropagateOutputVariablesTwoTimes() {
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("catchEscalationProcess", variables).getId();
@@ -264,9 +271,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testPropagateOutputVariablesWhileCatchInterruptingEscalationOnCallActivity.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testPropagateOutputVariablesWhileCatchInterruptingEscalationOnCallActivity.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileCatchInterruptingEscalationOnCallActivity() {
+  void testPropagateOutputVariablesWhileCatchInterruptingEscalationOnCallActivity() {
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("catchEscalationProcess", variables).getId();
@@ -279,9 +286,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testPropagateOutputVariablesWithoutCatchEscalation.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testPropagateOutputVariablesWithoutCatchEscalation.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWithoutCatchEscalation() {
+  void testPropagateOutputVariablesWithoutCatchEscalation() {
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("catchEscalationProcess", variables).getId();
@@ -294,7 +301,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testRetrieveEscalationCodeVariableOnBoundaryEvent() {
+  void testRetrieveEscalationCodeVariableOnBoundaryEvent() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -308,7 +315,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testRetrieveEscalationCodeVariableOnBoundaryEventWithoutEscalationCode() {
+  void testRetrieveEscalationCodeVariableOnBoundaryEventWithoutEscalationCode() {
     runtimeService.startProcessInstanceByKey("escalationProcess");
     // when throw an escalation event inside the subprocess
 
@@ -321,9 +328,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testInterruptingRetrieveEscalationCodeInSuperProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testInterruptingRetrieveEscalationCodeInSuperProcess.bpmn20.xml"})
   @Test
-  public void testInterruptingRetrieveEscalationCodeInSuperProcess() {
+  void testInterruptingRetrieveEscalationCodeInSuperProcess() {
     runtimeService.startProcessInstanceByKey("catchEscalationProcess");
 
     // the event subprocess without escalationCode should catch the escalation event
@@ -335,22 +342,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode.bpmn20.xml"})
   @Test
-  public void testInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode() {
-    runtimeService.startProcessInstanceByKey("catchEscalationProcess");
-
-    // the event subprocess without escalationCode should catch the escalation event
-    Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertThat(task).isNotNull();
-
-    // and set the escalationCode of the escalation event to the declared variable
-    assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
-  }
-  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testNonInterruptingRetrieveEscalationCodeInSuperProcess.bpmn20.xml"})
-  @Test
-  public void testNonInterruptingRetrieveEscalationCodeInSuperProcess() {
+  void testInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode() {
     runtimeService.startProcessInstanceByKey("catchEscalationProcess");
 
     // the event subprocess without escalationCode should catch the escalation event
@@ -362,9 +356,23 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testNonInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testNonInterruptingRetrieveEscalationCodeInSuperProcess.bpmn20.xml"})
   @Test
-  public void testNonInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode() {
+  void testNonInterruptingRetrieveEscalationCodeInSuperProcess() {
+    runtimeService.startProcessInstanceByKey("catchEscalationProcess");
+
+    // the event subprocess without escalationCode should catch the escalation event
+    Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
+    assertThat(task).isNotNull();
+
+    // and set the escalationCode of the escalation event to the declared variable
+    assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
+  }
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.throwEscalationEvent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testNonInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode.bpmn20.xml"})
+  @Test
+  void testNonInterruptingRetrieveEscalationCodeInSuperProcessWithoutEscalationCode() {
     runtimeService.startProcessInstanceByKey("catchEscalationProcess");
 
     // the event subprocess without escalationCode should catch the escalation event
@@ -376,9 +384,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/testOutputVariablesWhileThrowEscalation.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileThrowEscalation() {
+  void testPropagateOutputVariablesWhileThrowEscalation() {
     // given
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
@@ -393,9 +401,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/testOutputVariablesWhileThrowEscalationTwoLevels.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileThrowEscalationTwoLevels() {
+  void testPropagateOutputVariablesWhileThrowEscalationTwoLevels() {
     // given
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
@@ -410,9 +418,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/testOutputVariablesWhileThrowEscalationThreeLevels.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileThrowEscalationThreeLevels() {
+  void testPropagateOutputVariablesWhileThrowEscalationThreeLevels() {
     // given
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
@@ -427,9 +435,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/testOutputVariablesWhileThrowEscalationInSubProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileThrowEscalationInSubProcess() {
+  void testPropagateOutputVariablesWhileThrowEscalationInSubProcess() {
     // given
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
@@ -444,9 +452,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/testOutputVariablesWhileThrowEscalationInSubProcessThreeLevels.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileThrowEscalationInSubProcessThreeLevels() {
+  void testPropagateOutputVariablesWhileThrowEscalationInSubProcessThreeLevels() {
     // given
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
@@ -461,9 +469,9 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/escalation/testOutputVariablesWhileThrowEscalation2.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.escalationParent.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileThrowEscalation2() {
+  void testPropagateOutputVariablesWhileThrowEscalation2() {
     // given
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);

@@ -21,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.bpmn.executionlistener.ThrowingHistoryEventProducer.ERROR_CODE;
 import static org.operaton.bpm.engine.test.bpmn.executionlistener.ThrowingHistoryEventProducer.EXCEPTION_MESSAGE;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -31,60 +34,43 @@ import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class ThrowingHistoryExecutionListenerTest {
+class ThrowingHistoryExecutionListenerTest {
 
   protected static final String PROCESS_KEY = "Process";
   protected static final String INTERNAL_ERROR_CODE = "208";
   protected static final ThrowingHistoryEventProducer HISTORY_PRODUCER = new ThrowingHistoryEventProducer();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(config -> config.setHistoryEventProducer(HISTORY_PRODUCER));
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(processEngineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setHistoryEventProducer(HISTORY_PRODUCER))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(processEngineRule).around(testRule);
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  ManagementService managementService;
+  RepositoryService repositoryService;
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-  protected RepositoryService repositoryService;
-
-  @Before
-  public void initServices() {
-    runtimeService = processEngineRule.getRuntimeService();
-    taskService = processEngineRule.getTaskService();
-    historyService = processEngineRule.getHistoryService();
-    managementService = processEngineRule.getManagementService();
-    repositoryService = processEngineRule.getRepositoryService();
-  }
-
-  @After
-  public void reset() {
+  @AfterEach
+  void reset() {
     HISTORY_PRODUCER.reset();
   }
 
   // UNCAUGHT EXCEPTION AFTER FAILED CUSTOM END LISTENER
 
   @Test
-  public void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundary() {
+  void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundary() {
     // given
     HISTORY_PRODUCER.failsWithException().failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_END);
@@ -102,7 +88,7 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   @Test
-  public void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundaryOnSubprocess() {
+  void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundaryOnSubprocess() {
     // given
     HISTORY_PRODUCER.failsWithException().failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInSubprocessAndListener(ExecutionListener.EVENTNAME_END);
@@ -120,7 +106,7 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   @Test
-  public void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInEndListenerWithErrorStartInEventSubprocess() {
+  void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInEndListenerWithErrorStartInEventSubprocess() {
     // given
     HISTORY_PRODUCER.failsWithException().failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInEventSubprocessAndListener(ExecutionListener.EVENTNAME_END);
@@ -140,7 +126,7 @@ public class ThrowingHistoryExecutionListenerTest {
   // UNCAUGHT EXCEPTION AFTER FAILED CUSTOM START LISTENER
 
   @Test
-  public void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInStartListenerWithErrorBoundary() {
+  void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInStartListenerWithErrorBoundary() {
     // given
     HISTORY_PRODUCER.failsWithException().failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_START);
@@ -158,7 +144,7 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   @Test
-  public void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInStartListenerWithErrorBoundaryOnSubprocess() {
+  void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInStartListenerWithErrorBoundaryOnSubprocess() {
     // given
     HISTORY_PRODUCER.failsWithException().failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInSubprocessAndListener(ExecutionListener.EVENTNAME_START);
@@ -176,7 +162,7 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   @Test
-  public void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInStartListenerWithErrorStartInEventSubprocess() {
+  void shouldFailForExceptionInHistoryListenerAfterBpmnErrorInStartListenerWithErrorStartInEventSubprocess() {
     // given
     HISTORY_PRODUCER.failsWithException().failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInEventSubprocessAndListener(ExecutionListener.EVENTNAME_START);
@@ -197,7 +183,7 @@ public class ThrowingHistoryExecutionListenerTest {
   // NOTE: it is fine to alter the result of these tests, see https://jira.camunda.com/browse/CAM-14408
 
   @Test
-  public void shouldCatchBpmnErrorFromHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundary() {
+  void shouldCatchBpmnErrorFromHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundary() {
     // given
     HISTORY_PRODUCER.failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_END);
@@ -215,7 +201,7 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   @Test
-  public void shouldCatchBpmnErrorFromHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundaryOnSubprocess() {
+  void shouldCatchBpmnErrorFromHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundaryOnSubprocess() {
     // given
     HISTORY_PRODUCER.failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInSubprocessAndListener(ExecutionListener.EVENTNAME_END);
@@ -233,7 +219,7 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   @Test
-  public void shouldCatchBpmnErrorFromHistoryListenerAfterBpmnErrorInEndListenerWithErrorStartInEventSubprocess() {
+  void shouldCatchBpmnErrorFromHistoryListenerAfterBpmnErrorInEndListenerWithErrorStartInEventSubprocess() {
     // given
     HISTORY_PRODUCER.failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInEventSubprocessAndListener(ExecutionListener.EVENTNAME_END);
@@ -253,7 +239,7 @@ public class ThrowingHistoryExecutionListenerTest {
   // CAUGHT EXCEPTION AFTER FAILED CUSTOM START LISTENER
 
   @Test
-  public void shouldFailForBpmnErrorInHistoryListenerAfterBpmnErrorInStartListenerWithErrorBoundary() {
+  void shouldFailForBpmnErrorInHistoryListenerAfterBpmnErrorInStartListenerWithErrorBoundary() {
     // given
     HISTORY_PRODUCER.failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_START);
@@ -268,8 +254,9 @@ public class ThrowingHistoryExecutionListenerTest {
       .isInstanceOf(BpmnError.class);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
   }
+
   @Test
-  public void shouldFailForBpmnErrorInHistoryListenerAfterBpmnErrorInStartListenerWithErrorBoundaryOnSubprocess() {
+  void shouldFailForBpmnErrorInHistoryListenerAfterBpmnErrorInStartListenerWithErrorBoundaryOnSubprocess() {
     // given
     HISTORY_PRODUCER.failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInSubprocessAndListener(ExecutionListener.EVENTNAME_START);
@@ -284,8 +271,9 @@ public class ThrowingHistoryExecutionListenerTest {
       .isInstanceOf(BpmnError.class);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
   }
+
   @Test
-  public void shouldFailForBpmnErrorInHistoryListenerAfterBpmnErrorInStartListenerWithErrorStartInEventSubprocess() {
+  void shouldFailForBpmnErrorInHistoryListenerAfterBpmnErrorInStartListenerWithErrorStartInEventSubprocess() {
     // given
     HISTORY_PRODUCER.failsAtActivity("throw");
     BpmnModelInstance model = createModelWithCatchInEventSubprocessAndListener(ExecutionListener.EVENTNAME_START);

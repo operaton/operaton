@@ -16,48 +16,41 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Stefan Hentschel.
  */
-public class JobRetryCmdWithDefaultPropertyTest {
+class JobRetryCmdWithDefaultPropertyTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/bpmn/async/default.job.retry.property.operaton.cfg.xml");
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurationResource("org/operaton/bpm/engine/test/bpmn/async/default.job.retry.property.operaton.cfg.xml")
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  RuntimeService runtimeService;
+  ManagementService managementService;
 
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-  }
   /**
    * Check if property "DefaultNumberOfRetries" will be used
    */
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedTask.bpmn20.xml"})
   @Test
-  public void testDefaultNumberOfRetryProperty() {
+  void testDefaultNumberOfRetryProperty() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedTask");
     assertThat(pi).isNotNull();
 
@@ -67,9 +60,9 @@ public class JobRetryCmdWithDefaultPropertyTest {
     assertThat(job.getRetries()).isEqualTo(2);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml"})
   @Test
-  public void testOverwritingPropertyWithBpmnExtension() {
+  void testOverwritingPropertyWithBpmnExtension() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedServiceTask");
     assertThat(pi).isNotNull();
 

@@ -20,26 +20,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
 
 
 /**
  * @author Falko Menge
  */
-public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
+public class ErrorEventSubProcessTest  {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
 
   @Deployment
   // an event subprocesses takes precedence over a boundary event
   @Test
-  public void testEventSubprocessTakesPrecedence() {
+  void testEventSubprocessTakesPrecedence() {
     String procId = runtimeService.startProcessInstanceByKey("CatchErrorInEmbeddedSubProcess").getId();
     assertThatErrorHasBeenCaught(procId);
   }
@@ -47,7 +61,7 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   @Deployment
   // an event subprocess with errorCode takes precedence over a catch-all handler
   @Test
-  public void testErrorCodeTakesPrecedence() {
+  void testErrorCodeTakesPrecedence() {
     String procId = runtimeService.startProcessInstanceByKey("CatchErrorInEmbeddedSubProcess").getId();
 
     // The process will throw an error event,
@@ -66,53 +80,53 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorInEmbeddedSubProcess() {
+  void testCatchErrorInEmbeddedSubProcess() {
     String procId = runtimeService.startProcessInstanceByKey("CatchErrorInEmbeddedSubProcess").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByScriptTaskInEmbeddedSubProcess() {
+  void testCatchErrorThrownByScriptTaskInEmbeddedSubProcess() {
     String procId = runtimeService.startProcessInstanceByKey("CatchErrorThrownByScriptTaskInEmbeddedSubProcess").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByScriptTaskInEmbeddedSubProcessWithErrorCode() {
+  void testCatchErrorThrownByScriptTaskInEmbeddedSubProcessWithErrorCode() {
     String procId = runtimeService.startProcessInstanceByKey("CatchErrorThrownByScriptTaskInEmbeddedSubProcessWithErrorCode").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByScriptTaskInTopLevelProcess() {
+  void testCatchErrorThrownByScriptTaskInTopLevelProcess() {
     String procId = runtimeService.startProcessInstanceByKey("CatchErrorThrownByScriptTaskInTopLevelProcess").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByScriptTaskInsideSubProcessInTopLevelProcess() {
+  void testCatchErrorThrownByScriptTaskInsideSubProcessInTopLevelProcess() {
     String procId = runtimeService.startProcessInstanceByKey("CatchErrorThrownByScriptTaskInsideSubProcessInTopLevelProcess").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testThrowErrorInScriptTaskInsideCallActivitiCatchInTopLevelProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"})
   @Test
-  public void testThrowErrorInScriptTaskInsideCallActivitiCatchInTopLevelProcess() {
+  void testThrowErrorInScriptTaskInsideCallActivitiCatchInTopLevelProcess() {
     String procId = runtimeService.startProcessInstanceByKey("testThrowErrorInScriptTaskInsideCallActivitiCatchInTopLevelProcess").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownByExecuteOfAbstractBpmnActivityBehavior() {
+  void testCatchExceptionThrownByExecuteOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -126,10 +140,10 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByExecuteOfAbstractBpmnActivityBehavior() {
+  void testCatchErrorThrownByExecuteOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -143,10 +157,10 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownBySignalOfAbstractBpmnActivityBehavior() {
+  void testCatchExceptionThrownBySignalOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -169,10 +183,10 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownBySignalOfAbstractBpmnActivityBehavior() {
+  void testCatchErrorThrownBySignalOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -195,10 +209,10 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownByExecuteOfDelegateExpression() {
+  void testCatchExceptionThrownByExecuteOfDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     variables.putAll(throwException());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
@@ -214,10 +228,10 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByExecuteOfDelegateExpression() {
+  void testCatchErrorThrownByExecuteOfDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     variables.putAll(throwError());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
@@ -233,10 +247,10 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownBySignalOfDelegateExpression() {
+  void testCatchExceptionThrownBySignalOfDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
@@ -260,10 +274,10 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownBySignalOfDelegateExpression() {
+  void testCatchErrorThrownBySignalOfDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
@@ -300,7 +314,7 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorEventSubprocessSetErrorVariables(){
+  void testCatchErrorEventSubprocessSetErrorVariables(){
     runtimeService.startProcessInstanceByKey("Process_1");
     //the name used in "operaton:errorCodeVariable" in the BPMN
     String variableName = "errorCode";
@@ -313,12 +327,12 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/ThrowErrorProcess.bpmn",
       "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchErrorFromCallActivitySetsErrorVariables.bpmn"
   })
   @Test
-  public void testCatchErrorFromCallActivitySetsErrorVariable(){
+  void testCatchErrorFromCallActivitySetsErrorVariable(){
     runtimeService.startProcessInstanceByKey("Process_1");
     //the name used in "operaton:errorCodeVariable" in the BPMN
     String variableName = "errorCode";
@@ -330,12 +344,12 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     assertThat(errorVariable.getValue()).isEqualTo(errorCode);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testCatchBpmnErrorFromJavaDelegateInsideCallActivitySetsErrorVariable.bpmn",
       "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithThrownError.bpmn"
-    })
+  })
   @Test
-  public void testCatchBpmnErrorFromJavaDelegateInsideCallActivitySetsErrorVariable(){
+  void testCatchBpmnErrorFromJavaDelegateInsideCallActivitySetsErrorVariable(){
     runtimeService.startProcessInstanceByKey("Process_1");
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
@@ -350,11 +364,11 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     assertThat(errorVariable.getValue()).isEqualTo("ouch!");
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testThrowErrorInLoop.bpmn20.xml"
-    })
+  })
   @Test
-  public void testShouldNotThrowErrorInLoop(){
+  void testShouldNotThrowErrorInLoop(){
     runtimeService.startProcessInstanceByKey("looping-error");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -364,12 +378,12 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("ErrorHandlingUserTask");
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testThrowErrorInLoopWithCallActivity.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/error/ThrowErrorToCallActivity.bpmn20.xml"
-    })
+  })
   @Test
-  public void testShouldNotThrowErrorInLoopWithCallActivity(){
+  void testShouldNotThrowErrorInLoopWithCallActivity(){
     runtimeService.startProcessInstanceByKey("CallActivityErrorInLoop");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -379,11 +393,11 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("ErrorHandlingUserTask");
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testThrowErrorInLoopWithMultipleSubProcess.bpmn20.xml",
-    })
+  })
   @Test
-  public void testShouldNotThrowErrorInLoopForMultipleSubProcess(){
+  void testShouldNotThrowErrorInLoopForMultipleSubProcess(){
     runtimeService.startProcessInstanceByKey("looping-error");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -415,7 +429,7 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testThrownAnErrorInEventSubprocessInSubprocessDifferentTransaction() {
+  void testThrownAnErrorInEventSubprocessInSubprocessDifferentTransaction() {
     runtimeService.startProcessInstanceByKey("eventSubProcess");
 
     Task taskBefore = taskService.createTaskQuery().singleResult();
@@ -443,7 +457,7 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testThrownAnErrorInEventSubprocessInSubprocess() {
+  void testThrownAnErrorInEventSubprocessInSubprocess() {
     runtimeService.startProcessInstanceByKey("eventSubProcess");
 
     Task taskBefore = taskService.createTaskQuery().singleResult();

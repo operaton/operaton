@@ -16,24 +16,24 @@
  */
 package org.operaton.bpm.engine.test.bpmn.exclusive;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class ExclusiveTaskReuseCacheTest extends ExclusiveTaskTest {
+class ExclusiveTaskReuseCacheTest extends ExclusiveTaskTest {
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     processEngineConfiguration.setDbEntityCacheReuseEnabled(true);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setDbEntityCacheReuseEnabled(false);
   }
 

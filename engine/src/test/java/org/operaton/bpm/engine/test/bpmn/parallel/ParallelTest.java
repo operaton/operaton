@@ -16,19 +16,24 @@
  */
 package org.operaton.bpm.engine.test.bpmn.parallel;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 
 /**
  * @author Tom Baeyens
  */
-public class ParallelTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ParallelTest {
+
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testParallel() {
+  void testParallel() {
     runtimeService.startProcessInstanceByKey("myProc");
   }
 }

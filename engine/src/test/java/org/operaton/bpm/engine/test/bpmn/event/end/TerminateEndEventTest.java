@@ -20,6 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -28,13 +33,23 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Nico Rehwaldt
  */
-public class TerminateEndEventTest extends PluggableProcessEngineTest {
+public class TerminateEndEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
 
   public static int serviceTaskInvokedCount = 0;
 
@@ -61,7 +76,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testProcessTerminate() {
+  void testProcessTerminate() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     long executionEntities = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
@@ -75,7 +90,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTerminateWithSubProcess() {
+  void testTerminateWithSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     // should terminate the process and
@@ -88,12 +103,12 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateWithCallActivity.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessNoTerminate.bpmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateWithCallActivity.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessNoTerminate.bpmn"
   })
   @Test
-  public void testTerminateWithCallActivity() {
+  void testTerminateWithCallActivity() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     long executionEntities = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
@@ -107,7 +122,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTerminateInSubProcess() {
+  void testTerminateInSubProcess() {
     serviceTaskInvokedCount = 0;
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
@@ -127,7 +142,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testTerminateInSubProcessShouldNotInvokeProcessEndListeners() {
+  void testTerminateInSubProcessShouldNotInvokeProcessEndListeners() {
     RecorderExecutionListener.clear();
 
     // when process instance is started and terminate end event in subprocess executed
@@ -148,7 +163,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testTerminateInSubProcessConcurrentShouldNotInvokeProcessEndListeners() {
+  void testTerminateInSubProcessConcurrentShouldNotInvokeProcessEndListeners() {
     RecorderExecutionListener.clear();
 
     // when process instance is started and terminate end event in subprocess executed
@@ -169,7 +184,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInSubProcess.bpmn")
   @Test
-  public void testTerminateInSubProcessShouldNotEndProcessInstanceInHistory() {
+  void testTerminateInSubProcessShouldNotEndProcessInstanceInHistory() {
     // when process instance is started and terminate end event in subprocess executed
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
@@ -188,7 +203,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTerminateInSubProcessConcurrent() {
+  void testTerminateInSubProcessConcurrent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     long executionEntities = runtimeService.createExecutionQuery().count();
@@ -205,7 +220,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInSubProcessConcurrent.bpmn")
   @Test
-  public void testTerminateInSubProcessConcurrentShouldNotEndProcessInstanceInHistory() {
+  void testTerminateInSubProcessConcurrentShouldNotEndProcessInstanceInHistory() {
     // when process instance is started and terminate end event in subprocess executed
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
@@ -224,7 +239,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTerminateInSubProcessConcurrentMultiInstance() {
+  void testTerminateInSubProcessConcurrentMultiInstance() {
     serviceTaskInvokedCount = 0;
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
@@ -248,7 +263,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTerminateInSubProcessMultiInstance() {
+  void testTerminateInSubProcessMultiInstance() {
     serviceTaskInvokedCount = 0;
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
@@ -265,7 +280,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTerminateInSubProcessSequentialConcurrentMultiInstance() {
+  void testTerminateInSubProcessSequentialConcurrentMultiInstance() {
     serviceTaskInvokedCount = 0;
     serviceTaskInvokedCount2 = 0;
 
@@ -287,12 +302,12 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInCallActivity.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessTerminate.bpmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInCallActivity.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessTerminate.bpmn"
   })
   @Test
-  public void testTerminateInCallActivity() {
+  void testTerminateInCallActivity() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     // should terminate the called process and continue the parent
@@ -305,12 +320,12 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInCallActivityMulitInstance.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessTerminate.bpmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInCallActivityMulitInstance.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessTerminate.bpmn"
   })
   @Test
-  public void testTerminateInCallActivityMulitInstance() {
+  void testTerminateInCallActivityMulitInstance() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     // should terminate the called process and continue the parent
@@ -323,12 +338,12 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInCallActivityConcurrent.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessConcurrentTerminate.bpmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInCallActivityConcurrent.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessConcurrentTerminate.bpmn"
   })
   @Test
-  public void testTerminateInCallActivityConcurrent() {
+  void testTerminateInCallActivityConcurrent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     // should terminate the called process and continue the parent
@@ -341,12 +356,12 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInCallActivityConcurrentMulitInstance.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessConcurrentTerminate.bpmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInCallActivityConcurrentMulitInstance.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.subProcessConcurrentTerminate.bpmn"
   })
   @Test
-  public void testTerminateInCallActivityConcurrentMulitInstance() {
+  void testTerminateInCallActivityConcurrentMulitInstance() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     // should terminate the called process and continue the parent

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.multiinstance;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.leaveExecution;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +31,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -47,24 +53,35 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Test;
 
 
 /**
  * @author Joram Barrez
  * @author Bernd Ruecker
  */
-public class MultiInstanceTest extends PluggableProcessEngineTest {
+class MultiInstanceTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  ManagementService managementService;
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.sequentialUserTasks.bpmn20.xml"})
   @Test
-  public void testSequentialUserTasks() {
+  void testSequentialUserTasks() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSequentialUserTasks",
             CollectionUtil.singletonMap("nrOfLoops", 3));
     String procId = processInstance.getId();
@@ -104,7 +121,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.sequentialUserTasks.bpmn20.xml"})
   @Test
-  public void testSequentialUserTasksHistory() {
+  void testSequentialUserTasksHistory() {
     runtimeService.startProcessInstanceByKey("miSequentialUserTasks",
             CollectionUtil.singletonMap("nrOfLoops", 4)).getId();
     for (int i=0; i<4; i++) {
@@ -139,7 +156,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.sequentialUserTasks.bpmn20.xml"})
   @Test
-  public void testSequentialUserTasksWithTimer() {
+  void testSequentialUserTasksWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miSequentialUserTasks",
             CollectionUtil.singletonMap("nrOfLoops", 3)).getId();
 
@@ -158,7 +175,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.sequentialUserTasks.bpmn20.xml"})
   @Test
-  public void testSequentialUserTasksCompletionCondition() {
+  void testSequentialUserTasksCompletionCondition() {
     String procId = runtimeService.startProcessInstanceByKey("miSequentialUserTasks",
             CollectionUtil.singletonMap("nrOfLoops", 10)).getId();
 
@@ -173,7 +190,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialMITasksExecutionListener() {
+  void testSequentialMITasksExecutionListener() {
     RecordInvocationListener.reset();
 
     Map<String, Object> vars = new HashMap<>();
@@ -198,7 +215,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelMITasksExecutionListener() {
+  void testParallelMITasksExecutionListener() {
     RecordInvocationListener.reset();
 
     Map<String, Object> vars = new HashMap<>();
@@ -225,14 +242,14 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedSequentialUserTasks() {
+  void testNestedSequentialUserTasks() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedSequentialUserTasks").getId();
 
     for (int i=0; i<3; i++) {
       Task task = taskService.createTaskQuery().taskAssignee("kermit").singleResult();
       assertThat(task.getName()).isEqualTo("My Task");
       ActivityInstance processInstance = runtimeService.getActivityInstance(procId);
-      List<ActivityInstance> instancesForActivityId = getInstancesForActivityId(processInstance, "miTasks");
+      List<ActivityInstance> instancesForActivityId = testRule.getInstancesForActivityId(processInstance, "miTasks");
       assertThat(instancesForActivityId).hasSize(1);
       taskService.complete(task.getId());
     }
@@ -242,7 +259,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelUserTasks() {
+  void testParallelUserTasks() {
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("miParallelUserTasks");
     String procId = procInst.getId();
 
@@ -272,7 +289,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelReceiveTasks() {
+  void testParallelReceiveTasks() {
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("miParallelReceiveTasks");
     String procId = procInst.getId();
 
@@ -289,7 +306,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelReceiveTasks.bpmn20.xml")
   @Test
-  public void testParallelReceiveTasksAssertEventSubscriptionRemoval() {
+  void testParallelReceiveTasksAssertEventSubscriptionRemoval() {
     runtimeService.startProcessInstanceByKey("miParallelReceiveTasks");
 
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(3);
@@ -306,7 +323,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelUserTasks.bpmn20.xml"})
   @Test
-  public void testParallelUserTasksHistory() {
+  void testParallelUserTasksHistory() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("miParallelUserTasks");
     for (Task task : taskService.createTaskQuery().list()) {
       taskService.complete(task.getId());
@@ -342,7 +359,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelUserTasksWithTimer() {
+  void testParallelUserTasksWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelUserTasksWithTimer").getId();
 
     List<Task> tasks = taskService.createTaskQuery().list();
@@ -360,7 +377,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelUserTasksCompletionCondition() {
+  void testParallelUserTasksCompletionCondition() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelUserTasksCompletionCondition").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(5);
@@ -375,7 +392,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelUserTasksBasedOnCollection() {
+  void testParallelUserTasksBasedOnCollection() {
     List<String> assigneeList = Arrays.asList("kermit", "gonzo", "mispiggy", "fozzie", "bubba");
     String procId = runtimeService.startProcessInstanceByKey("miParallelUserTasksBasedOnCollection",
           CollectionUtil.singletonMap("assigneeList", assigneeList)).getId();
@@ -396,9 +413,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelUserTasksBasedOnCollection.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelUserTasksBasedOnCollection.bpmn20.xml")
   @Test
-  public void testEmptyCollectionInMI() {
+  void testEmptyCollectionInMI() {
     List<String> assigneeList = new ArrayList<>();
     String procId = runtimeService.startProcessInstanceByKey("miParallelUserTasksBasedOnCollection",
       CollectionUtil.singletonMap("assigneeList", assigneeList)).getId();
@@ -420,7 +437,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelUserTasksBasedOnCollectionExpression() {
+  void testParallelUserTasksBasedOnCollectionExpression() {
     DelegateEvent.clearEvents();
 
     runtimeService.startProcessInstanceByKey("process",
@@ -436,7 +453,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testSequentialUserTasksBasedOnCollectionExpression() {
+  void testSequentialUserTasksBasedOnCollectionExpression() {
     DelegateEvent.clearEvents();
 
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
@@ -468,7 +485,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelUserTasksCustomExtensions() {
+  void testParallelUserTasksCustomExtensions() {
     Map<String, Object> vars = new HashMap<>();
     List<String> assigneeList = Arrays.asList("kermit", "gonzo", "fozzie");
     vars.put("assigneeList", assigneeList);
@@ -483,7 +500,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelUserTasksExecutionAndTaskListeners() {
+  void testParallelUserTasksExecutionAndTaskListeners() {
     runtimeService.startProcessInstanceByKey("miParallelUserTasks");
     List<Task> tasks = taskService.createTaskQuery().list();
     for (Task task : tasks) {
@@ -497,7 +514,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedParallelUserTasks() {
+  void testNestedParallelUserTasks() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedParallelUserTasks").getId();
 
     List<Task> tasks = taskService.createTaskQuery().taskAssignee("kermit").list();
@@ -511,7 +528,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialScriptTasks() {
+  void testSequentialScriptTasks() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 5);
@@ -521,9 +538,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     assertThat(sum).isEqualTo(10);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml")
   @Test
-  public void testSequentialScriptTasksNoStackOverflow() {
+  void testSequentialScriptTasksNoStackOverflow() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 200);
@@ -535,7 +552,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml"})
   @Test
-  public void testSequentialScriptTasksHistory() {
+  void testSequentialScriptTasksHistory() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 7);
@@ -556,7 +573,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialScriptTasksCompletionCondition() {
+  void testSequentialScriptTasksCompletionCondition() {
     runtimeService.startProcessInstanceByKey("miSequentialScriptTaskCompletionCondition").getId();
     Execution waitStateExecution = runtimeService.createExecutionQuery().singleResult();
     int sum = (Integer) runtimeService.getVariable(waitStateExecution.getId(), "sum");
@@ -565,7 +582,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelScriptTasks() {
+  void testParallelScriptTasks() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 10);
@@ -577,7 +594,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelScriptTasks.bpmn20.xml"})
   @Test
-  public void testParallelScriptTasksHistory() {
+  void testParallelScriptTasksHistory() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 4);
@@ -594,7 +611,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelScriptTasksCompletionCondition() {
+  void testParallelScriptTasksCompletionCondition() {
     runtimeService.startProcessInstanceByKey("miParallelScriptTaskCompletionCondition");
     Execution waitStateExecution = runtimeService.createExecutionQuery().singleResult();
     int sum = (Integer) runtimeService.getVariable(waitStateExecution.getId(), "sum");
@@ -603,7 +620,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelScriptTasksCompletionCondition.bpmn20.xml"})
   @Test
-  public void testParallelScriptTasksCompletionConditionHistory() {
+  void testParallelScriptTasksCompletionConditionHistory() {
     runtimeService.startProcessInstanceByKey("miParallelScriptTaskCompletionCondition");
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().activityType("scriptTask").list();
@@ -613,7 +630,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialSubProcess() {
+  void testSequentialSubProcess() {
     String procId = runtimeService.startProcessInstanceByKey("miSequentialSubprocess").getId();
 
     TaskQuery query = taskService.createTaskQuery().orderByTaskName().asc();
@@ -640,7 +657,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialSubProcessEndEvent() {
+  void testSequentialSubProcessEndEvent() {
     // ACT-1185: end-event in subprocess causes inactivated execution
     String procId = runtimeService.startProcessInstanceByKey("miSequentialSubprocess").getId();
 
@@ -667,7 +684,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialSubProcess.bpmn20.xml"})
   @Test
-  public void testSequentialSubProcessHistory() {
+  void testSequentialSubProcessHistory() {
     runtimeService.startProcessInstanceByKey("miSequentialSubprocess");
     for (int i=0; i<4; i++) {
       List<Task> tasks = taskService.createTaskQuery().list();
@@ -698,7 +715,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialSubProcessWithTimer() {
+  void testSequentialSubProcessWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miSequentialSubprocessWithTimer").getId();
 
     // Complete one subprocess
@@ -722,7 +739,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialSubProcessCompletionCondition() {
+  void testSequentialSubProcessCompletionCondition() {
     String procId = runtimeService.startProcessInstanceByKey("miSequentialSubprocessCompletionCondition").getId();
 
     TaskQuery query = taskService.createTaskQuery().orderByTaskName().asc();
@@ -742,7 +759,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedSequentialSubProcess() {
+  void testNestedSequentialSubProcess() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedSequentialSubProcess").getId();
 
     for (int i=0; i<3; i++) {
@@ -756,7 +773,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedSequentialSubProcessWithTimer() {
+  void testNestedSequentialSubProcessWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedSequentialSubProcessWithTimer").getId();
 
     for (int i=0; i<2; i++) {
@@ -782,7 +799,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelSubProcess() {
+  void testParallelSubProcess() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelSubprocess").getId();
     List<Task> tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
     assertThat(tasks).hasSize(4);
@@ -795,7 +812,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelSubProcess.bpmn20.xml"})
   @Test
-  public void testParallelSubProcessHistory() {
+  void testParallelSubProcessHistory() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     // Validate history
@@ -828,7 +845,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelSubProcessWithTimer() {
+  void testParallelSubProcessWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelSubprocessWithTimer").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(6);
@@ -850,7 +867,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelSubProcessCompletionCondition() {
+  void testParallelSubProcessCompletionCondition() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelSubprocessCompletionCondition").getId();
 
     List<Task> tasks = taskService.createTaskQuery().list();
@@ -871,7 +888,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelSubProcessAllAutomatic() {
+  void testParallelSubProcessAllAutomatic() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelSubprocessAllAutomatics",
             CollectionUtil.singletonMap("nrOfLoops", 5)).getId();
     Execution waitState = runtimeService.createExecutionQuery().singleResult();
@@ -883,7 +900,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelSubProcessAllAutomatic.bpmn20.xml"})
   @Test
-  public void testParallelSubProcessAllAutomaticCompletionCondition() {
+  void testParallelSubProcessAllAutomaticCompletionCondition() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelSubprocessAllAutomatics",
             CollectionUtil.singletonMap("nrOfLoops", 10)).getId();
     Execution waitState = runtimeService.createExecutionQuery().singleResult();
@@ -895,7 +912,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedParallelSubProcess() {
+  void testNestedParallelSubProcess() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedParallelSubProcess").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(8);
@@ -908,7 +925,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedParallelSubProcessWithTimer() {
+  void testNestedParallelSubProcessWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedParallelSubProcess").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(12);
@@ -929,9 +946,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialCallActivity.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testSequentialCallActivity() {
+  void testSequentialCallActivity() {
     String procId = runtimeService.startProcessInstanceByKey("miSequentialCallActivity").getId();
 
     for (int i=0; i<3; i++) {
@@ -948,7 +965,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialCallActivityWithList.bpmn20.xml")
   @Test
-  public void testSequentialCallActivityWithList() {
+  void testSequentialCallActivityWithList() {
     ArrayList<String> list = new ArrayList<>();
     list.add("one");
     list.add("two");
@@ -981,10 +998,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialCallActivityWithTimer.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialCallActivityWithTimer.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testSequentialCallActivityWithTimer() {
+  void testSequentialCallActivityWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miSequentialCallActivityWithTimer").getId();
 
     // Complete first subprocess
@@ -1006,10 +1023,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelCallActivity.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testParallelCallActivity() {
+  void testParallelCallActivity() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelCallActivity").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(12);
@@ -1020,10 +1037,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelCallActivity.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testParallelCallActivityHistory() {
+  void testParallelCallActivityHistory() {
     runtimeService.startProcessInstanceByKey("miParallelCallActivity");
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(12);
@@ -1063,10 +1080,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   }
 
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelCallActivityWithTimer.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelCallActivityWithTimer.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testParallelCallActivityWithTimer() {
+  void testParallelCallActivityWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miParallelCallActivity").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(6);
@@ -1085,10 +1102,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedSequentialCallActivity.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedSequentialCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testNestedSequentialCallActivity() {
+  void testNestedSequentialCallActivity() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedSequentialCallActivity").getId();
 
     for (int i=0; i<4; i++) {
@@ -1103,10 +1120,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedSequentialCallActivityWithTimer.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedSequentialCallActivityWithTimer.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testNestedSequentialCallActivityWithTimer() {
+  void testNestedSequentialCallActivityWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedSequentialCallActivityWithTimer").getId();
 
     // first instance
@@ -1133,10 +1150,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivity.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testNestedParallelCallActivity() {
+  void testNestedParallelCallActivity() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedParallelCallActivity").getId();
 
     List<Task> tasks = taskService.createTaskQuery().list();
@@ -1148,10 +1165,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivityWithTimer.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivityWithTimer.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testNestedParallelCallActivityWithTimer() {
+  void testNestedParallelCallActivityWithTimer() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedParallelCallActivityWithTimer").getId();
 
     List<Task> tasks = taskService.createTaskQuery().list();
@@ -1171,10 +1188,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivityCompletionCondition.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivityCompletionCondition.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
-  public void testNestedParallelCallActivityCompletionCondition() {
+  void testNestedParallelCallActivityCompletionCondition() {
     String procId = runtimeService.startProcessInstanceByKey("miNestedParallelCallActivityCompletionCondition").getId();
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(8);
@@ -1194,7 +1211,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   // ACT-764
   @Deployment
   @Test
-  public void testSequentialServiceTaskWithClass() {
+  void testSequentialServiceTaskWithClass() {
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("multiInstanceServiceTask", CollectionUtil.singletonMap("result", 5));
     Integer result = (Integer) runtimeService.getVariable(procInst.getId(), "result");
     assertThat(result.intValue()).isEqualTo(160);
@@ -1205,7 +1222,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialServiceTaskWithClassAndCollection() {
+  void testSequentialServiceTaskWithClassAndCollection() {
     Collection<Integer> items = Arrays.asList(1,2,3,4,5,6);
     Map<String, Object> vars = new HashMap<>();
     vars.put("result", 1);
@@ -1222,7 +1239,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   // ACT-901
   @Deployment
   @Test
-  public void testAct901() {
+  void testAct901() {
 
     Date startTime = ClockUtil.getCurrentTime();
 
@@ -1243,10 +1260,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     assertThat(tasks).isEmpty();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.callActivityWithBoundaryErrorEvent.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.throwingErrorEventSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.callActivityWithBoundaryErrorEvent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.throwingErrorEventSubProcess.bpmn20.xml"})
   @Test
-  public void testMultiInstanceCallActivityWithErrorBoundaryEvent() {
+  void testMultiInstanceCallActivityWithErrorBoundaryEvent() {
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("assignees", Arrays.asList("kermit", "gonzo"));
 
@@ -1270,10 +1287,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.callActivityWithBoundaryErrorEventSequential.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.throwingErrorEventSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.callActivityWithBoundaryErrorEventSequential.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.throwingErrorEventSubProcess.bpmn20.xml"})
   @Test
-  public void testSequentialMultiInstanceCallActivityWithErrorBoundaryEvent() {
+  void testSequentialMultiInstanceCallActivityWithErrorBoundaryEvent() {
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("assignees", Arrays.asList("kermit", "gonzo"));
 
@@ -1295,9 +1312,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedMultiInstanceTasks.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedMultiInstanceTasks.bpmn20.xml"})
   @Test
-  public void testNestedMultiInstanceTasks() {
+  void testNestedMultiInstanceTasks() {
     List<String> processes = Arrays.asList("process A", "process B");
     List<String> assignees = Arrays.asList("kermit", "gonzo");
     Map<String, Object> variableMap = new HashMap<>();
@@ -1318,9 +1335,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedMultiInstanceTasks.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedMultiInstanceTasks.bpmn20.xml"})
   @Test
-  public void testNestedMultiInstanceTasksActivityInstance() {
+  void testNestedMultiInstanceTasksActivityInstance() {
     List<String> processes = Arrays.asList("process A", "process B");
     List<String> assignees = Arrays.asList("kermit", "gonzo");
     Map<String, Object> variableMap = new HashMap<>();
@@ -1354,7 +1371,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelUserTasks.bpmn20.xml"})
   @Test
-  public void testActiveExecutionsInParallelTasks() {
+  void testActiveExecutionsInParallelTasks() {
     runtimeService.startProcessInstanceByKey("miParallelUserTasks").getId();
 
     ProcessInstance instance = runtimeService.createProcessInstanceQuery().singleResult();
@@ -1375,11 +1392,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownByExecuteOfSequentialAbstractBpmnActivityBehavior() {
+  void testCatchExceptionThrownByExecuteOfSequentialAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -1392,11 +1409,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByExecuteOfSequentialAbstractBpmnActivityBehavior() {
+  void testCatchErrorThrownByExecuteOfSequentialAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -1409,11 +1426,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownBySignalOfSequentialAbstractBpmnActivityBehavior() {
+  void testCatchExceptionThrownBySignalOfSequentialAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -1441,11 +1458,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownBySignalOfSequentialAbstractBpmnActivityBehavior() {
+  void testCatchErrorThrownBySignalOfSequentialAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -1473,11 +1490,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownByExecuteOfParallelAbstractBpmnActivityBehavior() {
+  void testCatchExceptionThrownByExecuteOfParallelAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -1490,11 +1507,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByExecuteOfParallelAbstractBpmnActivityBehavior() {
+  void testCatchErrorThrownByExecuteOfParallelAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -1507,11 +1524,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownBySignalOfParallelAbstractBpmnActivityBehavior() {
+  void testCatchExceptionThrownBySignalOfParallelAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -1533,11 +1550,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownBySignalOfParallelAbstractBpmnActivityBehavior() {
+  void testCatchErrorThrownBySignalOfParallelAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -1559,11 +1576,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownByExecuteOfSequentialDelegateExpression() {
+  void testCatchExceptionThrownByExecuteOfSequentialDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     variables.putAll(throwException());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
@@ -1578,11 +1595,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByExecuteOfSequentialDelegateExpression() {
+  void testCatchErrorThrownByExecuteOfSequentialDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     variables.putAll(throwError());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
@@ -1597,11 +1614,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownBySignalOfSequentialDelegateExpression() {
+  void testCatchExceptionThrownBySignalOfSequentialDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
@@ -1630,11 +1647,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownBySequentialDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownBySignalOfSequentialDelegateExpression() {
+  void testCatchErrorThrownBySignalOfSequentialDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
@@ -1663,11 +1680,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownByExecuteOfParallelDelegateExpression() {
+  void testCatchExceptionThrownByExecuteOfParallelDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     variables.putAll(throwException());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
@@ -1682,11 +1699,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByExecuteOfParallelDelegateExpression() {
+  void testCatchErrorThrownByExecuteOfParallelDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     variables.putAll(throwError());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
@@ -1701,11 +1718,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownBySignalOfParallelDelegateExpression() {
+  void testCatchExceptionThrownBySignalOfParallelDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
@@ -1728,11 +1745,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testCatchErrorThrownByParallelDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownBySignalOfParallelDelegateExpression() {
+  void testCatchErrorThrownBySignalOfParallelDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 

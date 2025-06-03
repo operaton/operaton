@@ -19,20 +19,25 @@ package org.operaton.bpm.engine.test.bpmn.event.escalation;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Philipp Ossler
  */
-public class EscalationActivityInstanceTreeTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class EscalationActivityInstanceTreeTest {
+
+  RuntimeService runtimeService;
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testThrowEscalationEventFromEmbeddedSubprocess.bpmn20.xml")
   @Test
-  public void testNonInterruptingEscalationBoundaryEvent(){
+  void testNonInterruptingEscalationBoundaryEvent(){
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("escalationProcess");
     // an escalation event is thrown from embedded subprocess and caught by non-interrupting boundary event on subprocess
 
@@ -47,7 +52,7 @@ public class EscalationActivityInstanceTreeTest extends PluggableProcessEngineTe
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventTest.testInterruptingEscalationBoundaryEvent.bpmn20.xml")
   @Test
-  public void testInterruptingEscalationBoundaryEvent(){
+  void testInterruptingEscalationBoundaryEvent(){
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("escalationProcess");
     // an escalation event is thrown from embedded subprocess and caught by interrupting boundary event on subprocess
 
@@ -60,7 +65,7 @@ public class EscalationActivityInstanceTreeTest extends PluggableProcessEngineTe
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventSubprocessTest.testCatchEscalationEventInsideSubprocess.bpmn20.xml")
   @Test
-  public void testNonInterruptingEscalationEventSubprocessInsideSubprocess() {
+  void testNonInterruptingEscalationEventSubprocessInsideSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("escalationProcess");
     // an escalation event is thrown from embedded subprocess and caught by non-interrupting event subprocess inside the subprocess
 
@@ -76,7 +81,7 @@ public class EscalationActivityInstanceTreeTest extends PluggableProcessEngineTe
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventSubprocessTest.testCatchEscalationEventFromEmbeddedSubprocess.bpmn20.xml")
   @Test
-  public void testNonInterruptingEscalationEventSubprocessOutsideSubprocess() {
+  void testNonInterruptingEscalationEventSubprocessOutsideSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("escalationProcess");
     // an escalation event is thrown from embedded subprocess and caught by non-interrupting event subprocess outside the subprocess
 
@@ -93,7 +98,7 @@ public class EscalationActivityInstanceTreeTest extends PluggableProcessEngineTe
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventSubprocessTest.testInterruptionEscalationEventSubprocess.bpmn20.xml")
   @Test
-  public void testInterruptingEscalationEventSubprocessInsideSubprocess() {
+  void testInterruptingEscalationEventSubprocessInsideSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("escalationProcess");
     // an escalation event is thrown from embedded subprocess and caught by interrupting event subprocess inside the subprocess
 

@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @author Joram Barrez
  */
 public class ExclusiveGatewayTestOrder implements Serializable {
-  
+   
   private static final long serialVersionUID = 1L;
   
   private int price;

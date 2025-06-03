@@ -23,8 +23,17 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.impl.mock.Mocks;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -32,22 +41,32 @@ import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Frederik Heremans
  */
-public class ExpressionManagerTest extends PluggableProcessEngineTest {
+class ExpressionManagerTest {
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  IdentityService identityService;
+  TaskService taskService;
+  HistoryService historyService;
+  
   protected String deploymentId;
 
-  @After
-  public void clear() {
+  @AfterEach
+  void clear() {
     Mocks.reset();
 
     if (deploymentId != null) {
@@ -58,7 +77,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMethodExpressions() {
+  void testMethodExpressions() {
     // Process contains 2 service tasks. one containing a method with no params, the other
     // contains a method with 2 params. When the process completes without exception,
     // test passed.
@@ -71,7 +90,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionAvailable() {
+  void testExecutionAvailable() {
     Map<String, Object> vars = new HashMap<>();
 
     vars.put("myVar", new ExecutionTestVariable());
@@ -84,7 +103,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAuthenticatedUserIdAvailable() {
+  void testAuthenticatedUserIdAvailable() {
     try {
       // Setup authentication
       identityService.setAuthenticatedUserId("frederik");
@@ -102,7 +121,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testResolvesVariablesFromDifferentScopes() {
+  void testResolvesVariablesFromDifferentScopes() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("assignee", "michael");
 
@@ -119,7 +138,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   @Deployment
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testSetVariableByExpressionFromListener() {
+  void testSetVariableByExpressionFromListener() {
     // given
     runtimeService.startProcessInstanceByKey("fieldInjectionTest", Variables.putValue("myCounter", 5));
     // when
@@ -130,7 +149,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testJuelExpressionWithNonPublicClass() {
+  void testJuelExpressionWithNonPublicClass() {
     final BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
           .exclusiveGateway()
@@ -157,7 +176,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldCompareWithBigDecimal() {
+  void shouldCompareWithBigDecimal() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
@@ -189,7 +208,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void shouldResolveMethodExpressionTwoParametersSameType() {
+  void shouldResolveMethodExpressionTwoParametersSameType() {
     // given process with two service tasks that resolve expression and store the result as variable
     Map<String, Object> vars = new HashMap<>();
     vars.put("myVar", new ExpressionTestParameter());
@@ -206,7 +225,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldResolveMethodExpressionWithOneNullParameter() {
+  void shouldResolveMethodExpressionWithOneNullParameter() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
@@ -246,7 +265,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldResolveMethodExpressionWithTwoNullParameter() {
+  void shouldResolveMethodExpressionWithTwoNullParameter() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
@@ -286,7 +305,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldResolveMethodExpressionWithNoNullParameter() {
+  void shouldResolveMethodExpressionWithNoNullParameter() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
@@ -329,7 +348,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
    * https://github.com/eclipse-ee4j/expressly.
    */ 
   @Test
-  public void shouldInvokeMethodWithStringArg() {
+  void shouldInvokeMethodWithStringArg() {
     // given
     String expression = "myBean.myStringMethod('foo')";
     String expectedOutput = "foo";
@@ -338,7 +357,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldInvokeMethodWithNullStringArg() {
+  void shouldInvokeMethodWithNullStringArg() {
     // given
     String expression = "myBean.myStringMethod(execution.getVariable('foo'))";
     String expectedOutput = "";
@@ -347,7 +366,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldInvokeMethodWithNullPrimitiveArg() {
+  void shouldInvokeMethodWithNullPrimitiveArg() {
     // given
     String expression = "myBean.myIntMethod(execution.getVariable('foo'))";
     int expectedOutput = 0;
@@ -356,7 +375,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldInvokeMethodWithNullObjectArg() {
+  void shouldInvokeMethodWithNullObjectArg() {
     // given
     String expression = "myBean.myObjectMethod(execution.getVariable('foo'))";
     Object expectedOutput = null;
@@ -365,7 +384,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithNoArg() {
+  void shouldResolveMethodExpressionWithNoArg() {
     // given
     String expression = "myBean.methodWithNoArg()";
     String expectedOutput = "methodWithNoArg";
@@ -374,7 +393,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldFailResolveMethodExpressionNonExistingMethod() {
+  void shouldFailResolveMethodExpressionNonExistingMethod() {
     // given
     String expression = "myBean.methodNotExisted()";
     // when
@@ -385,7 +404,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithOverloadedSingleArg_1() {
+  void shouldResolveMethodExpressionWithOverloadedSingleArg_1() {
     // given
     String expression = "myBean.methodWithSingleArg(i1)";
     String expectedOutput = "I1";
@@ -394,7 +413,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithOverloadedSingleArg_2() {
+  void shouldResolveMethodExpressionWithOverloadedSingleArg_2() {
     // given
     String expression = "myBean.methodWithSingleArg(i2)";
     String expectedOutput = "I2Impl";
@@ -403,7 +422,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithOverloadedSingleArg_3() {
+  void shouldResolveMethodExpressionWithOverloadedSingleArg_3() {
     // given
     String expression = "myBean.methodWithSingleArg(i12)";
     String expectedOutput = "I1AndI2Impl";
@@ -412,7 +431,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithOverloadedDoubleArgs_1() {
+  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_1() {
     // given
     String expression = "myBean.methodWithDoubleArgs(i1, i2)";
     String expectedOutput = "I1Impl, I2";
@@ -421,7 +440,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithOverloadedDoubleArgs_2() {
+  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_2() {
     // given
     String expression = "myBean.methodWithDoubleArgs(i12, i2)";
     String expectedOutput = "I1, I2";
@@ -430,7 +449,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithOverloadedDoubleArgs_3() {
+  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_3() {
     // given
     String expression = "myBean.methodWithDoubleArgs(i12, i12)";
     String expectedOutput = "I1AndI2Impl, I1AndI2Impl";
@@ -439,7 +458,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithOverloadedDoubleArgs_4() {
+  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_4() {
     // given
     String expression = "myBean.methodWithDoubleArgs(i12s, i12)";
     String expectedOutput = "I1AndI2Impl, I1AndI2Impl";
@@ -448,7 +467,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithOverloadedDoubleArgs_5() {
+  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_5() {
     // given
     String expression = "myBean.methodWithDoubleArgs(i12s, i12s)";
     String expectedOutput = "I1AndI2Impl, I1AndI2Impl";
@@ -457,7 +476,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithAmbiguousArgs_1() {
+  void shouldResolveMethodExpressionWithAmbiguousArgs_1() {
     // given
     String expression = "myBean.methodWithAmbiguousArgs(i12, i2)";
     String expectedOutput = "I1AndI2Impl, I2";
@@ -466,7 +485,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithAmbiguousArgs_2() {
+  void shouldResolveMethodExpressionWithAmbiguousArgs_2() {
     // given
     String expression = "myBean.methodWithAmbiguousArgs(i1, i12)";
     String expectedOutput = "I1, I1AndI2Impl";
@@ -475,7 +494,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldFailResolveMethodExpressionWithAmbiguousArgs() {
+  void shouldFailResolveMethodExpressionWithAmbiguousArgs() {
     // given
     String expression = "myBean.methodWithAmbiguousArgs(i12, i12)";
     assertThatThrownBy(() -> assertMethodExpressionResult(expression, null))
@@ -485,7 +504,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithCoercibleArgs_1() {
+  void shouldResolveMethodExpressionWithCoercibleArgs_1() {
     // given
     String expression = "myBean.methodWithCoercibleArgs('foo', 'bar')";
     String expectedOutput = "String, String";
@@ -494,7 +513,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithCoercibleArgs_2() {
+  void shouldResolveMethodExpressionWithCoercibleArgs_2() {
     // given
     String expression = "myBean.methodWithCoercibleArgs(i1, i12)";
     String expectedOutput = "String, String";
@@ -503,7 +522,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithCoercibleArgs_3() {
+  void shouldResolveMethodExpressionWithCoercibleArgs_3() {
     // given
     String expression = "myBean.methodWithCoercibleArgs2(i1, 12345678)";
     String expectedOutput = "String, String";
@@ -512,7 +531,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithCoercibleArgs_4() {
+  void shouldResolveMethodExpressionWithCoercibleArgs_4() {
     // given
     String expression = "myBean.methodWithCoercibleArgs2(i1, intVal)";
     String expectedOutput = "String, String";
@@ -522,7 +541,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithCoercibleArgs_5() {
+  void shouldResolveMethodExpressionWithCoercibleArgs_5() {
     // given
     String expression = "myBean.methodWithCoercibleArgs2(12345678, 12345678)";
     String expectedOutput = "Integer, Integer";
@@ -531,7 +550,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithCoercibleArgs_6() {
+  void shouldResolveMethodExpressionWithCoercibleArgs_6() {
     // given
     String expression = "myBean.methodWithCoercibleArgs2(intVal, intVal)";
     String expectedOutput = "Integer, Integer";
@@ -541,7 +560,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithVarArgs_1() {
+  void shouldResolveMethodExpressionWithVarArgs_1() {
     // given
     String expression = "myBean.methodWithVarArgs(i1)";
     String expectedOutput = "I1, I1...";
@@ -550,7 +569,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithVarArgs_2() {
+  void shouldResolveMethodExpressionWithVarArgs_2() {
     // given
     String expression = "myBean.methodWithVarArgs(i1, i1)";
     String expectedOutput = "I1, I1...";
@@ -559,7 +578,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithVarArgs_3() {
+  void shouldResolveMethodExpressionWithVarArgs_3() {
     // given
     String expression = "myBean.methodWithVarArgs(i12, i1, i12)";
     String expectedOutput = "I1, I1...";
@@ -568,7 +587,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithVarArgs_4() {
+  void shouldResolveMethodExpressionWithVarArgs_4() {
     // given
     String expression = "myBean.methodWithVarArgs2(i1)";
     String expectedOutput = "I1, I1AndI2Impl...";
@@ -577,7 +596,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithVarArgs_5() {
+  void shouldResolveMethodExpressionWithVarArgs_5() {
     // given
     String expression = "myBean.methodWithVarArgs2(i12)";
     String expectedOutput = "I1, I1AndI2Impl...";
@@ -586,7 +605,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithVarArgs_6() {
+  void shouldResolveMethodExpressionWithVarArgs_6() {
     // given
     String expression = "myBean.methodWithVarArgs2(i1, i1)";
     String expectedOutput = "I1, I1...";
@@ -595,7 +614,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldResolveMethodExpressionWithVarArgs_7() {
+  void shouldResolveMethodExpressionWithVarArgs_7() {
     // given
     String expression = "myBean.methodWithVarArgs2(i1, i12)";
     String expectedOutput = "I1, I1AndI2Impl...";
@@ -716,10 +735,15 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   }
 
   public interface I1 {}
+
   public interface I2 {}
+
   public static class I1Impl implements I1 {}
+
   public static class I2Impl implements I2 {}
+
   public static class I1AndI2Impl implements I1, I2 {}
+
   public static class I1AndI2ImplSub extends I1AndI2Impl {}
 
 }

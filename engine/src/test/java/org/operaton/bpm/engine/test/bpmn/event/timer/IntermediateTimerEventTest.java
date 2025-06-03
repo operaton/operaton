@@ -25,22 +25,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.joda.time.LocalDateTime;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.joda.time.LocalDateTime;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+class IntermediateTimerEventTest {
 
-public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testCatchingTimerEvent() {
+  void testCatchingTimerEvent() {
 
     // Set the clock fixed
     Date startTime = new Date();
@@ -60,7 +75,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExpression() {
+  void testExpression() {
     // Set the clock fixed
     HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("dueDate", new Date());
@@ -88,10 +103,10 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
     testRule.assertProcessEnded(pi2.getProcessInstanceId());
   }
-  
+
   @Deployment
   @Test
-  public void testExpressionRecalculateCurrentDateBased() {
+  void testExpressionRecalculateCurrentDateBased() {
     // Set the clock fixed
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("duration", "PT1H");
@@ -123,10 +138,10 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
   }
-  
+
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpressionRecalculateCurrentDateBased.bpmn20.xml")
   @Test
-  public void testExpressionRecalculateCreationDateBased() {
+  void testExpressionRecalculateCreationDateBased() {
     // Set the clock fixed
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("duration", "PT1H");
@@ -160,7 +175,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTimeCycle() {
+  void testTimeCycle() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     JobQuery query = managementService.createJobQuery();
@@ -176,10 +191,10 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
     testRule.assertProcessEnded(processInstanceId);
   }
-  
+
   @Deployment
   @Test
-  public void testRecalculateTimeCycleExpressionCurrentDateBased() {
+  void testRecalculateTimeCycleExpressionCurrentDateBased() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("cycle", "R/PT15M");
@@ -205,10 +220,10 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
     testRule.assertProcessEnded(processInstanceId);
   }
-  
+
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testRecalculateTimeCycleExpressionCurrentDateBased.bpmn20.xml")
   @Test
-  public void testRecalculateTimeCycleExpressionCreationDateBased() {
+  void testRecalculateTimeCycleExpressionCreationDateBased() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("cycle", "R/PT15M");

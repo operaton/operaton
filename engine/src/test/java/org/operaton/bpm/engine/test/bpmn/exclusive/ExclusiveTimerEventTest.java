@@ -20,19 +20,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
-public class ExclusiveTimerEventTest extends PluggableProcessEngineTest {
+class ExclusiveTimerEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  ManagementService managementService;
 
   @Deployment
   @Test
-  public void testCatchingTimerEvent() {
+  void testCatchingTimerEvent() {
 
     // Set the clock fixed
     Date startTime = new Date();

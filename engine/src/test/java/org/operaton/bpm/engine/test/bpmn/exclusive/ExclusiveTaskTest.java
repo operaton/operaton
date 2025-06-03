@@ -18,21 +18,35 @@ package org.operaton.bpm.engine.test.bpmn.exclusive;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  *
  * @author Daniel Meyer
  */
-public class ExclusiveTaskTest extends PluggableProcessEngineTest {
+public class ExclusiveTaskTest {
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected RuntimeService runtimeService;
+  protected ManagementService managementService;
 
   @Deployment
   @Test
-  public void testNonExclusiveService() {
+  void testNonExclusiveService() {
     // start process
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 non-exclusive job in the database:
@@ -48,7 +62,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExclusiveService() {
+  void testExclusiveService() {
     // start process
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 exclusive job in the database:
@@ -64,7 +78,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExclusiveServiceConcurrent() {
+  void testExclusiveServiceConcurrent() {
     // start process
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 3 exclusive jobs in the database:
@@ -78,7 +92,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExclusiveSequence2() {
+  void testExclusiveSequence2() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -89,7 +103,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExclusiveSequence3() {
+  void testExclusiveSequence3() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     testRule.waitForJobExecutorToProcessAllJobs(6000L);

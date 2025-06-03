@@ -23,88 +23,101 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
-
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * Test timer expression according to act-865
  * 
  * @author Saeid Mirzaei
  */
+@ExtendWith(ProcessEngineExtension.class)
+class TimeExpressionTest {
 
-public class TimeExpressionTest extends PluggableProcessEngineTest {
-	
-	  
-	  private Date testExpression(String timeExpression) {
-		    // Set the clock fixed
-		    HashMap<String, Object> variables1 = new HashMap<>();
-		    variables1.put("dueDate", timeExpression);
-		  
-		    // After process start, there should be timer created    
-		    ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);
-      assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(1);
+  RuntimeService runtimeService;
+  ManagementService managementService;
 
+  private Date testExpression(String timeExpression) {
+    // Set the clock fixed
+    HashMap<String, Object> variables1 = new HashMap<>();
+    variables1.put("dueDate", timeExpression);
 
-		    List<Job> jobs = managementService.createJobQuery().executable().list();
-      assertThat(jobs).hasSize(1);
-		    return jobs.get(0).getDuedate();
-	  }
-	  
-	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
-  @Test
-	  public void testTimeExpressionComplete() {
-		    Date dt = new Date();
-		    
-		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt));
-      assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt));		    	  
-	  }
-	  
-	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
-  @Test
-	  public void testTimeExpressionWithoutSeconds() {
-		    Date dt = new Date();
-		    
-		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt));
-      assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt));
-	  }
-	  
-	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	 
-  @Test
-	  public void testTimeExpressionWithoutMinutes() {
-		    Date dt = new Date();
+    // After process start, there should be timer created
+    ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(1);
 
-		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(new Date()));
-      assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(dt));
-	  }
-	  
-	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
-  @Test
-	  public void testTimeExpressionWithoutTime() {
-		    Date dt = new Date();
+    List<Job> jobs = managementService.createJobQuery().executable().list();
+    assertThat(jobs).hasSize(1);
+    return jobs.get(0).getDuedate();
+  }
 
-		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-      assertThat(new SimpleDateFormat("yyyy-MM-dd").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM-dd").format(dt));
-	  }
-	
-	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})
   @Test
-	  public void testTimeExpressionWithoutDay() {
-		    Date dt = new Date();
+  void testTimeExpressionComplete() {
+    Date dt = new Date();
 
-		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM").format(new Date()));
-      assertThat(new SimpleDateFormat("yyyy-MM").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM").format(dt));
-	  }
-	  
-	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
+    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt));
+    assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dueDate))
+        .isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt));
+  }
+
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})
   @Test
-	  public void testTimeExpressionWithoutMonth() {
-		    Date dt = new Date();
-		    
-		    Date dueDate = testExpression(new SimpleDateFormat("yyyy").format(new Date()));
-      assertThat(new SimpleDateFormat("yyyy").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy").format(dt));
-	  }
+  void testTimeExpressionWithoutSeconds() {
+    Date dt = new Date();
+
+    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt));
+    assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dueDate))
+        .isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt));
+  }
+
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})
+  @Test
+  void testTimeExpressionWithoutMinutes() {
+    Date dt = new Date();
+
+    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(new Date()));
+    assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(dueDate))
+        .isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(dt));
+  }
+
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})
+  @Test
+  void testTimeExpressionWithoutTime() {
+    Date dt = new Date();
+
+    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+    assertThat(new SimpleDateFormat("yyyy-MM-dd").format(dueDate))
+        .isEqualTo(new SimpleDateFormat("yyyy-MM-dd").format(dt));
+  }
+
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})
+  @Test
+  void testTimeExpressionWithoutDay() {
+    Date dt = new Date();
+
+    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM").format(new Date()));
+    assertThat(new SimpleDateFormat("yyyy-MM").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM").format(dt));
+  }
+
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})
+  @Test
+  void testTimeExpressionWithoutMonth() {
+    Date dt = new Date();
+
+    Date dueDate = testExpression(new SimpleDateFormat("yyyy").format(new Date()));
+    assertThat(new SimpleDateFormat("yyyy").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy").format(dt));
+  }
 }

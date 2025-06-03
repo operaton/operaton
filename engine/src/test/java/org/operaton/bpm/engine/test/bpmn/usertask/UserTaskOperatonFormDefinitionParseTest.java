@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.test.bpmn.usertask;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
@@ -30,34 +33,21 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class UserTaskOperatonFormDefinitionParseTest {
+class UserTaskOperatonFormDefinitionParseTest {
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
 
-  public RepositoryService repositoryService;
-  public ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Before
-  public void setup() {
-    repositoryService = engineRule.getRepositoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }
@@ -74,7 +64,7 @@ public class UserTaskOperatonFormDefinitionParseTest {
 
   @Test
   @Deployment
-  public void shouldParseOperatonFormDefinitionVersionBinding() {
+  void shouldParseOperatonFormDefinitionVersionBinding() {
     // given a deployed process with a UserTask containing an Operaton Form definition with version binding
     // then
     TaskDefinition taskDefinition = findUserTaskDefinition("UserTask");
@@ -92,7 +82,7 @@ public class UserTaskOperatonFormDefinitionParseTest {
 
   @Test
   @Deployment
-  public void shouldParseOperatonFormDefinitionLatestBinding() {
+  void shouldParseOperatonFormDefinitionLatestBinding() {
     // given a deployed process with a UserTask containing an Operaton Form definition with latest binding
     // then
     TaskDefinition taskDefinition = findUserTaskDefinition("UserTask");
@@ -107,7 +97,7 @@ public class UserTaskOperatonFormDefinitionParseTest {
 
   @Test
   @Deployment
-  public void shouldParseOperatonFormDefinitionDeploymentBinding() {
+  void shouldParseOperatonFormDefinitionDeploymentBinding() {
     // given a deployed process with a UserTask containing an Operaton Form definition with deployment binding
     // then
     TaskDefinition taskDefinition = findUserTaskDefinition("UserTask");
@@ -122,7 +112,7 @@ public class UserTaskOperatonFormDefinitionParseTest {
 
   @Test
   @Deployment
-  public void shouldParseTwoUserTasksWithOperatonFormDefinition() {
+  void shouldParseTwoUserTasksWithOperatonFormDefinition() {
     // given a deployed process with two UserTask containing an Operaton Form definition with deployment binding
     // then
     TaskDefinition taskDefinition1 = findUserTaskDefinition("UserTask_1");
@@ -147,7 +137,7 @@ public class UserTaskOperatonFormDefinitionParseTest {
   }
 
   @Test
-  public void shouldNotParseOperatonFormDefinitionUnsupportedBinding() {
+  void shouldNotParseOperatonFormDefinitionUnsupportedBinding() {
     // given a deployed process with a UserTask containing an Operaton Form definition with unsupported binding
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "shouldNotParseOperatonFormDefinitionUnsupportedBinding");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -159,7 +149,7 @@ public class UserTaskOperatonFormDefinitionParseTest {
   }
 
   @Test
-  public void shouldNotParseOperatonFormDefinitionAndFormKey() {
+  void shouldNotParseOperatonFormDefinitionAndFormKey() {
     // given a deployed process with a UserTask containing an Operaton Form definition and formKey
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "shouldNotParseOperatonFormDefinitionAndFormKey");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);

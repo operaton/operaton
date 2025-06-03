@@ -18,46 +18,37 @@ package org.operaton.bpm.engine.test.bpmn.tasklistener.builtin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
 
-public class BuiltinTaskListenerTest {
+import ch.qos.logback.classic.spi.ILoggingEvent;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/bpmn/tasklistener/builtin/task.listener.operaton.cfg.xml");
+class BuiltinTaskListenerTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .closeEngineAfterAllTests()
+    .configurationResource("org/operaton/bpm/engine/test/bpmn/tasklistener/builtin/task.listener.operaton.cfg.xml")
+    .build();
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
-
-  protected RuntimeService runtimeService;
-  protected RepositoryService repositoryService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-  }
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
 
   @Test
   @Deployment
   @WatchLogger(loggerNames = {"org.operaton.bpm.engine.test"}, level = "INFO")
-  public void shouldExecuteBuiltinTaskListerInOrderAfterModification() {
+  void shouldExecuteBuiltinTaskListerInOrderAfterModification() {
     // given
     // PreParseListener registered as customPreBPMNParseListener, registers a 'create' TaskListener
     // PostParseListener registered as customPostBPMNParseListener, registers a 'create' TaskListener

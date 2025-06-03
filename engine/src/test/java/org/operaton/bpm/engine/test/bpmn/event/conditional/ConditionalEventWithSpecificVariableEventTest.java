@@ -16,27 +16,28 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class ConditionalEventWithSpecificVariableEventTest extends AbstractConditionalEventTestCase {
 
   private interface ConditionalProcessVarSpecification {
@@ -45,7 +46,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     BpmnModelInstance getProcessWithVarEvents(boolean interrupting, String varEvent);
   }
 
-  @Parameterized.Parameters(name = "{0}")
+  @Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
       {
@@ -172,10 +173,10 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
   }
 
 
-  @Parameterized.Parameter
+  @Parameter
   public ConditionalProcessVarSpecification specifier;
 
-  @Test
+  @TestTemplate
   public void testVariableConditionWithVariableName() {
 
     //given process with boundary conditional event and defined variable name
@@ -205,7 +206,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
-  @Test
+  @TestTemplate
   public void testVariableConditionWithVariableNameAndEvent() {
 
     //given process with boundary conditional event and defined variable name and event
@@ -235,7 +236,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
-  @Test
+  @TestTemplate
   public void testNonInterruptingVariableConditionWithVariableName() {
 
     //given process with non interrupting boundary conditional event and defined variable name and true condition
@@ -271,7 +272,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
-  @Test
+  @TestTemplate
   public void testNonInterruptingVariableConditionWithVariableNameAndEvents() {
 
     //given process with non interrupting boundary conditional event and defined variable name and events
@@ -296,7 +297,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
   }
 
 
-  @Test
+  @TestTemplate
   public void testVariableConditionWithVariableEvent() {
 
     //given process with boundary conditional event and defined variable event
@@ -328,7 +329,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
-  @Test
+  @TestTemplate
   public void testNonInterruptingVariableConditionWithVariableEvent() {
 
     //given process with non interrupting boundary conditional event and defined variable event

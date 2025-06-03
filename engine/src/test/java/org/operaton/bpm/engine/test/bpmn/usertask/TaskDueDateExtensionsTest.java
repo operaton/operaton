@@ -23,22 +23,29 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.Period;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.joda.time.Period;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 
 /**
  * @author Frederik Heremans
  */
-public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class TaskDueDateExtensionsTest {
+  
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testDueDateExtension() throws Exception {
+  void testDueDateExtension() throws Exception {
     
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("06-07-1986 12:10:00");
     Map<String, Object> variables = new HashMap<>();
@@ -52,10 +59,10 @@ public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
     assertThat(task.getDueDate()).isNotNull();
     assertThat(task.getDueDate()).isEqualTo(date);
   }
-  
+
   @Deployment
   @Test
-  public void testDueDateStringExtension() throws Exception {
+  void testDueDateStringExtension() throws Exception {
     
     Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "1986-07-06T12:10:00");
@@ -69,10 +76,10 @@ public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
     Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("06-07-1986 12:10:00");
     assertThat(task.getDueDate()).isEqualTo(date);
   }
-  
+
   @Deployment
   @Test
-  public void testRelativeDueDate() {
+  void testRelativeDueDate() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "P2DT2H30M");
     

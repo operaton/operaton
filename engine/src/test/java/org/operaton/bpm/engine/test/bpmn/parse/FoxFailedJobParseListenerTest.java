@@ -16,95 +16,100 @@
  */
 package org.operaton.bpm.engine.test.bpmn.parse;
 
-import static org.operaton.bpm.engine.impl.bpmn.parser.DefaultFailedJobParseListener.FAILED_JOB_CONFIGURATION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.impl.bpmn.parser.DefaultFailedJobParseListener.FAILED_JOB_CONFIGURATION;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessInstanceWithVariablesImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class FoxFailedJobParseListenerTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class FoxFailedJobParseListenerTest {
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testUserTask.bpmn20.xml" })
+  RuntimeService runtimeService;
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testUserTask.bpmn20.xml"})
   @Test
-  public void testUserTaskParseFailedJobRetryTimeCycle() {
+  void testUserTaskParseFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("asyncUserTaskFailedJobRetryTimeCycle");
 
     ActivityImpl userTask = findActivity(pi, "task");
     checkFoxFailedJobConfig(userTask);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/OperatonFailedJobParseListenerTest.testUserTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/OperatonFailedJobParseListenerTest.testUserTask.bpmn20.xml"})
   @Test
-  public void testUserTaskParseFailedJobRetryTimeCycleInActivitiNamespace() {
+  void testUserTaskParseFailedJobRetryTimeCycleInActivitiNamespace() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("asyncUserTaskFailedJobRetryTimeCycle");
 
     ActivityImpl userTask = findActivity(pi, "task");
     checkFoxFailedJobConfig(userTask);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testUserTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testUserTask.bpmn20.xml"})
   @Test
-  public void testNotAsyncUserTaskParseFailedJobRetryTimeCycle() {
+  void testNotAsyncUserTaskParseFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("notAsyncUserTaskFailedJobRetryTimeCycle");
 
     ActivityImpl userTask = findActivity(pi, "notAsyncTask");
     checkNotContainingFoxFailedJobConfig(userTask);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testUserTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testUserTask.bpmn20.xml"})
   @Test
-  public void testAsyncUserTaskButWithoutParseFailedJobRetryTimeCycle() {
+  void testAsyncUserTaskButWithoutParseFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("asyncUserTaskButWithoutFailedJobRetryTimeCycle");
 
     ActivityImpl userTask = findActivity(pi, "asyncTaskWithoutFailedJobRetryTimeCycle");
     checkNotContainingFoxFailedJobConfig(userTask);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testTimer.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testTimer.bpmn20.xml"})
   @Test
-  public void testTimerBoundaryEventWithFailedJobRetryTimeCycle() {
+  void testTimerBoundaryEventWithFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("boundaryEventWithFailedJobRetryTimeCycle");
 
     ActivityImpl boundaryActivity = findActivity(pi, "boundaryTimerWithFailedJobRetryTimeCycle");
     checkFoxFailedJobConfig(boundaryActivity);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testTimer.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testTimer.bpmn20.xml"})
   @Test
-  public void testTimerBoundaryEventWithoutFailedJobRetryTimeCycle() {
+  void testTimerBoundaryEventWithoutFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("boundaryEventWithoutFailedJobRetryTimeCycle");
 
     ActivityImpl boundaryActivity = findActivity(pi, "boundaryTimerWithoutFailedJobRetryTimeCycle");
     checkNotContainingFoxFailedJobConfig(boundaryActivity);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testTimer.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testTimer.bpmn20.xml"})
   @Test
-  public void testTimerStartEventWithFailedJobRetryTimeCycle() {
+  void testTimerStartEventWithFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("startEventWithFailedJobRetryTimeCycle");
 
     ActivityImpl startEvent = findActivity(pi, "startEventFailedJobRetryTimeCycle");
     checkFoxFailedJobConfig(startEvent);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testTimer.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testTimer.bpmn20.xml"})
   @Test
-  public void testIntermediateCatchTimerEventWithFailedJobRetryTimeCycle() {
+  void testIntermediateCatchTimerEventWithFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("intermediateTimerEventWithFailedJobRetryTimeCycle");
 
     ActivityImpl timer = findActivity(pi, "timerEventWithFailedJobRetryTimeCycle");
     checkFoxFailedJobConfig(timer);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testSignal.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/parse/FoxFailedJobParseListenerTest.testSignal.bpmn20.xml"})
   @Test
-  public void testSignalEventWithFailedJobRetryTimeCycle() {
+  void testSignalEventWithFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("signalEventWithFailedJobRetryTimeCycle");
 
     ActivityImpl signal = findActivity(pi, "signalWithFailedJobRetryTimeCycle");
@@ -113,7 +118,7 @@ public class FoxFailedJobParseListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultiInstanceBodyWithFailedJobRetryTimeCycle() {
+  void testMultiInstanceBodyWithFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     ActivityImpl miBody = findMultiInstanceBody(pi, "task");
@@ -125,7 +130,7 @@ public class FoxFailedJobParseListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInnerMultiInstanceActivityWithFailedJobRetryTimeCycle() {
+  void testInnerMultiInstanceActivityWithFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     ActivityImpl miBody = findMultiInstanceBody(pi, "task");
@@ -137,7 +142,7 @@ public class FoxFailedJobParseListenerTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultiInstanceBodyAndInnerActivityWithFailedJobRetryTimeCycle() {
+  void testMultiInstanceBodyAndInnerActivityWithFailedJobRetryTimeCycle() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     ActivityImpl miBody = findMultiInstanceBody(pi, "task");

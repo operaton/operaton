@@ -16,27 +16,43 @@
  */
 package org.operaton.bpm.engine.test.bpmn.common;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Task;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public abstract class AbstractProcessEngineServicesAccessTest extends PluggableProcessEngineTest {
+public abstract class AbstractProcessEngineServicesAccessTest {
 
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  
+  protected RuntimeService runtimeService;
+  protected RepositoryService repositoryService;
+  protected TaskService taskService;
+  
   private static final String TASK_DEF_KEY = "someTask";
 
   private static final String PROCESS_DEF_KEY = "testProcess";
@@ -45,7 +61,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
 
   protected List<String> deploymentIds = new ArrayList<>();
 
-  @After
+  @AfterEach
   public void tearDown() {
     for (String deploymentId : deploymentIds) {
       repositoryService.deleteDeployment(deploymentId, true);

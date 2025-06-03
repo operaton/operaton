@@ -18,23 +18,31 @@ package org.operaton.bpm.engine.test.bpmn.async;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class AsyncCallActivityTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class AsyncCallActivityTest {
 
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/AsyncCallActivityTest.asyncStartEvent.bpmn20.xml",
-  "org/operaton/bpm/engine/test/bpmn/async/AsyncCallActivityTest.testCallSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/AsyncCallActivityTest.asyncStartEvent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/async/AsyncCallActivityTest.testCallSubProcess.bpmn20.xml"})
   @Test
-  public void testCallProcessWithAsyncOnStartEvent() {
+  void testCallProcessWithAsyncOnStartEvent() {
 
     runtimeService.startProcessInstanceByKey("callAsyncSubProcess");
 

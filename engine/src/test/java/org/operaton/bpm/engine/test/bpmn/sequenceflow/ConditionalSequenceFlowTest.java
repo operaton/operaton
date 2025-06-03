@@ -21,24 +21,36 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  * @author Joram Barrez
  * @author Falko Menge (operaton)
  */
-public class ConditionalSequenceFlowTest extends PluggableProcessEngineTest {
+class ConditionalSequenceFlowTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testUelExpression() {
+  void testUelExpression() {
     Map<String, Object> variables = CollectionUtil.singletonMap("input", "right");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("condSeqFlowUelExpr", variables);
 
@@ -53,7 +65,7 @@ public class ConditionalSequenceFlowTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testValueAndMethodExpression() {
+  void testValueAndMethodExpression() {
     // An order of price 150 is a standard order (goes through an UEL value expression)
     ConditionalSequenceFlowTestOrder order = new ConditionalSequenceFlowTestOrder(150);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("uelExpressions",
@@ -84,7 +96,7 @@ public class ConditionalSequenceFlowTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testNoExpressionTrueThrowsException() {
+  void testNoExpressionTrueThrowsException() {
     Map<String, Object> variables = CollectionUtil.singletonMap("input", "non-existing-value");
     try {
       runtimeService.startProcessInstanceByKey("condSeqFlowUelExpr", variables);

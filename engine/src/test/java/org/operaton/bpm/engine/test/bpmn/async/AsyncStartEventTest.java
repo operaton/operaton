@@ -16,30 +16,48 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
 
-public class AsyncStartEventTest extends PluggableProcessEngineTest {
+class AsyncStartEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+  ManagementService managementService;
 
   @Deployment
   @Test
-  public void testAsyncStartEvent() {
+  void testAsyncStartEvent() {
     runtimeService.startProcessInstanceByKey("asyncStartEvent");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -57,7 +75,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncStartEventListeners() {
+  void testAsyncStartEventListeners() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("asyncStartEvent");
 
     assertThat(runtimeService.getVariable(instance.getId(), "listener")).isNull();
@@ -69,7 +87,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testAsyncStartEvent.bpmn20.xml")
   @Test
-  public void testAsyncStartEventActivityInstance() {
+  void testAsyncStartEventActivityInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncStartEvent");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -81,7 +99,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleAsyncStartEvents() {
+  void testMultipleAsyncStartEvents() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("foo", "bar");
     runtimeService.correlateMessage("newInvoiceMessage", new HashMap<>(), variables);
@@ -106,7 +124,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testCallActivity-sub.bpmn20.xml"
   })
   @Test
-  public void testCallActivity() {
+  void testCallActivity() {
     runtimeService.startProcessInstanceByKey("super");
 
     ProcessInstance pi = runtimeService
@@ -122,7 +140,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncSubProcessStartEvent() {
+  void testAsyncSubProcessStartEvent() {
     runtimeService.startProcessInstanceByKey("process");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -139,7 +157,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testAsyncSubProcessStartEvent.bpmn")
   @Test
-  public void testAsyncSubProcessStartEventActivityInstance() {
+  void testAsyncSubProcessStartEventActivityInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -152,7 +170,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void shouldRunAfterMessageStartInEventSubprocess() {
+  void shouldRunAfterMessageStartInEventSubprocess() {
     // given
     // instance is waiting in async before on start event
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();

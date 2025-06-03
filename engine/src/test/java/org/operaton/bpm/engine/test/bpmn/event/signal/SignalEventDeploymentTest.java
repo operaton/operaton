@@ -20,24 +20,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.EventSubscription;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Philipp Ossler
  */
-public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
+class SignalEventDeploymentTest {
 
   private static final String SIGNAL_START_EVENT_PROCESS = "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml";
   private static final String SIGNAL_START_EVENT_PROCESS_NEW_VERSION = "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent_v2.bpmn20.xml";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  HistoryService historyService;
+
   @Test
-  public void testCreateEventSubscriptionOnDeployment() {
+  void testCreateEventSubscriptionOnDeployment() {
     testRule.deploy(repositoryService.createDeployment()
         .addClasspathResource(SIGNAL_START_EVENT_PROCESS));
 
@@ -50,7 +66,7 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testUpdateEventSubscriptionOnDeployment(){
+  void testUpdateEventSubscriptionOnDeployment(){
     testRule.deploy(repositoryService.createDeployment()
         .addClasspathResource(SIGNAL_START_EVENT_PROCESS));
 
@@ -79,7 +95,7 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testAsyncSignalStartEventDeleteDeploymentWhileAsync() {
+  void testAsyncSignalStartEventDeleteDeploymentWhileAsync() {
     // given a deployment
     org.operaton.bpm.engine.repository.Deployment deployment =
         repositoryService.createDeployment()

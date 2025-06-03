@@ -16,12 +16,16 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -34,19 +38,14 @@ import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class ConditionalStartEventTest {
+class ConditionalStartEventTest {
 
   private static final String SINGLE_CONDITIONAL_START_EVENT_XML = "org/operaton/bpm/engine/test/bpmn/event/conditional/ConditionalStartEventTest.testSingleConditionalStartEvent.bpmn20.xml";
   private static final String SINGLE_CONDITIONAL_XML = "org/operaton/bpm/engine/test/bpmn/event/conditional/ConditionalStartEventTest.testSingleConditionalStartEvent1.bpmn20.xml";
@@ -66,25 +65,17 @@ public class ConditionalStartEventTest {
       .endEvent()
       .done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void setUp() {
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-  }
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
 
   @Test
   @Deployment(resources = SINGLE_CONDITIONAL_START_EVENT_XML)
-  public void testDeploymentCreatesSubscriptions() {
+  void testDeploymentCreatesSubscriptions() {
     // given a deployed process
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().processDefinitionKey(CONDITIONAL_EVENT_PROCESS).singleResult().getId();
 
@@ -103,7 +94,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = SINGLE_CONDITIONAL_START_EVENT_XML)
-  public void testUpdateProcessVersionCancelsSubscriptions() {
+  void testUpdateProcessVersionCancelsSubscriptions() {
     // given a deployed process
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
@@ -138,7 +129,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = SINGLE_CONDITIONAL_START_EVENT_XML)
-  public void testEventSubscriptionAfterDeleteLatestProcessVersion() {
+  void testEventSubscriptionAfterDeleteLatestProcessVersion() {
     // given a deployed process
     ProcessDefinition processDefinitionV1 = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinitionV1).isNotNull();
@@ -160,7 +151,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = SINGLE_CONDITIONAL_START_EVENT_XML)
-  public void testStartInstanceAfterDeleteLatestProcessVersionByIds() {
+  void testStartInstanceAfterDeleteLatestProcessVersionByIds() {
     // given a deployed process
 
     // deploy second version of the process
@@ -185,7 +176,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = SINGLE_CONDITIONAL_START_EVENT_XML)
-  public void testStartInstanceAfterDeleteLatestProcessVersion() {
+  void testStartInstanceAfterDeleteLatestProcessVersion() {
     // given a deployed process
 
     // deploy second version of the process
@@ -207,7 +198,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testVersionWithoutConditionAfterDeleteLatestProcessVersionWithCondition() {
+  void testVersionWithoutConditionAfterDeleteLatestProcessVersionWithCondition() {
     // given a process
     testRule.deploy(MODEL_WITHOUT_CONDITION);
 
@@ -230,7 +221,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByKeys() {
+  void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByKeys() {
     // given three versions of the process
     testRule.deploy(SINGLE_CONDITIONAL_XML);
     testRule.deploy(SINGLE_CONDITIONAL_XML);
@@ -246,7 +237,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
+  void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
     // given
     String processDefId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String processDefId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -282,7 +273,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByIdOrdered() {
+  void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByIdOrdered() {
     // given
     String definitionId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String definitionId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -298,7 +289,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByIdReverseOrder() {
+  void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByIdReverseOrder() {
     // given
     String definitionId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String definitionId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -314,7 +305,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById1() {
+  void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById1() {
     // given first version without condition
     String definitionId1 = deployModel(MODEL_WITHOUT_CONDITION);
     String definitionId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -330,7 +321,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById2() {
+  void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById2() {
     // given second version without condition
     String definitionId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String definitionId2 = deployModel(MODEL_WITHOUT_CONDITION);
@@ -346,7 +337,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById3() {
+  void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById3() {
     // given third version without condition
     String definitionId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String definitionId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -362,7 +353,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction1() {
+  void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction1() {
     // given first version without condition
     String definitionId1 = deployModel(MODEL_WITHOUT_CONDITION);
     String definitionId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -379,7 +370,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction2() {
+  void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction2() {
     // given second version without condition
     String definitionId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String definitionId2 = deployModel(MODEL_WITHOUT_CONDITION);
@@ -396,7 +387,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction3() {
+  void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction3() {
     // given third version without condition
     String definitionId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String definitionId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -416,7 +407,7 @@ public class ConditionalStartEventTest {
    * Tests the case, when no new subscription is needed, as it is not the latest version, that is being deleted.
    */
   @Test
-  public void testDeleteNotLatestVersion() {
+  void testDeleteNotLatestVersion() {
     @SuppressWarnings("unused")
     String definitionId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String definitionId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -436,7 +427,7 @@ public class ConditionalStartEventTest {
    * Tests the case when the previous of the previous version will be needed.
    */
   @Test
-  public void testSubscribePreviousPreviousVersion() {
+  void testSubscribePreviousPreviousVersion() {
 
     String definitionId1 = deployProcess(SINGLE_CONDITIONAL_XML);
     String definitionId2 = deployProcess(SINGLE_CONDITIONAL_XML);
@@ -453,7 +444,7 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  public void testDeploymentOfTwoEqualConditionalStartEvent() {
+  void testDeploymentOfTwoEqualConditionalStartEvent() {
     try {
       // when
       testRule.deploy(TWO_EQUAL_CONDITIONAL_START_EVENT_XML);
@@ -469,7 +460,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment
-  public void testStartInstanceWithTrueConditionalStartEvent() {
+  void testStartInstanceWithTrueConditionalStartEvent() {
     // given a deployed process
 
     // when
@@ -488,7 +479,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = SINGLE_CONDITIONAL_START_EVENT_XML)
-  public void testStartInstanceWithVariableCondition() {
+  void testStartInstanceWithVariableCondition() {
     // given a deployed process
 
     // when
@@ -507,7 +498,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = SINGLE_CONDITIONAL_START_EVENT_XML)
-  public void testStartInstanceWithTransientVariableCondition() {
+  void testStartInstanceWithTransientVariableCondition() {
     // given a deployed process
     VariableMap variableMap = Variables.createVariables()
         .putValueTyped("foo", Variables.integerValue(1, true));
@@ -527,7 +518,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = SINGLE_CONDITIONAL_START_EVENT_XML)
-  public void testStartInstanceWithoutResult() {
+  void testStartInstanceWithoutResult() {
     // given a deployed process
 
     // when
@@ -544,7 +535,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = MULTIPLE_CONDITION_XML)
-  public void testStartInstanceWithMultipleConditions() {
+  void testStartInstanceWithMultipleConditions() {
     // given a deployed process with three conditional start events
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
@@ -571,10 +562,10 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  @Deployment(resources = { SINGLE_CONDITIONAL_START_EVENT_XML,
-                            MULTIPLE_CONDITION_XML,
-                            TRUE_CONDITION_START_XML })
-  public void testStartInstanceWithMultipleSubscriptions() {
+  @Deployment(resources = {SINGLE_CONDITIONAL_START_EVENT_XML,
+      MULTIPLE_CONDITION_XML,
+      TRUE_CONDITION_START_XML})
+  void testStartInstanceWithMultipleSubscriptions() {
     // given three deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
@@ -595,10 +586,10 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  @Deployment(resources = { SINGLE_CONDITIONAL_START_EVENT_XML,
-                            MULTIPLE_CONDITION_XML,
-                            TRUE_CONDITION_START_XML })
-  public void testStartInstanceWithMultipleSubscriptionsWithoutProvidingAllVariables() {
+  @Deployment(resources = {SINGLE_CONDITIONAL_START_EVENT_XML,
+      MULTIPLE_CONDITION_XML,
+      TRUE_CONDITION_START_XML})
+  void testStartInstanceWithMultipleSubscriptionsWithoutProvidingAllVariables() {
     // given three deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
@@ -618,8 +609,8 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  @Deployment(resources = { SINGLE_CONDITIONAL_START_EVENT_XML, MULTIPLE_CONDITION_XML })
-  public void testStartInstanceWithBusinessKey() {
+  @Deployment(resources = {SINGLE_CONDITIONAL_START_EVENT_XML, MULTIPLE_CONDITION_XML})
+  void testStartInstanceWithBusinessKey() {
     // given two deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
@@ -638,8 +629,8 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  @Deployment(resources = { SINGLE_CONDITIONAL_START_EVENT_XML, TRUE_CONDITION_START_XML })
-  public void testStartInstanceByProcessDefinitionId() {
+  @Deployment(resources = {SINGLE_CONDITIONAL_START_EVENT_XML, TRUE_CONDITION_START_XML})
+  void testStartInstanceByProcessDefinitionId() {
     // given two deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
@@ -660,8 +651,8 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  @Deployment(resources = { SINGLE_CONDITIONAL_START_EVENT_XML, MULTIPLE_CONDITION_XML})
-  public void testStartInstanceByProcessDefinitionFirstVersion() {
+  @Deployment(resources = {SINGLE_CONDITIONAL_START_EVENT_XML, MULTIPLE_CONDITION_XML})
+  void testStartInstanceByProcessDefinitionFirstVersion() {
     // given two deployed processes
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().processDefinitionKey(CONDITIONAL_EVENT_PROCESS).singleResult().getId();
 
@@ -684,8 +675,8 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  @Deployment(resources = { SINGLE_CONDITIONAL_START_EVENT_XML, TRUE_CONDITION_START_XML })
-  public void testStartInstanceByNonExistingProcessDefinitionId() {
+  @Deployment(resources = {SINGLE_CONDITIONAL_START_EVENT_XML, TRUE_CONDITION_START_XML})
+  void testStartInstanceByNonExistingProcessDefinitionId() {
     // given two deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
@@ -703,8 +694,8 @@ public class ConditionalStartEventTest {
   }
 
   @Test
-  @Deployment(resources = { ONE_TASK_PROCESS })
-  public void testStartInstanceByProcessDefinitionIdWithoutCondition() {
+  @Deployment(resources = {ONE_TASK_PROCESS})
+  void testStartInstanceByProcessDefinitionIdWithoutCondition() {
     // given deployed process without conditional start event
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess").singleResult().getId();
 
@@ -724,7 +715,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment
-  public void testStartInstanceWithVariableName() {
+  void testStartInstanceWithVariableName() {
     // given deployed process
     // ${true} variableName="foo"
 
@@ -744,7 +735,7 @@ public class ConditionalStartEventTest {
 
   @Test
   @Deployment(resources = START_INSTANCE_WITH_VARIABLE_NAME_XML)
-  public void testStartInstanceWithVariableNameNotFullfilled() {
+  void testStartInstanceWithVariableNameNotFullfilled() {
     // given deployed process
     // ${true} variableName="foo"
 

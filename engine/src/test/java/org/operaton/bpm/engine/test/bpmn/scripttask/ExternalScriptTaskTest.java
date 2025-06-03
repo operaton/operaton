@@ -22,22 +22,34 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.ScriptCompilationException;
 import org.operaton.bpm.engine.exception.NotFoundException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Sebastian Menski
  */
-public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
+class ExternalScriptTaskTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testDefaultExternalScript() {
+  void testDefaultExternalScript() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
@@ -46,7 +58,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDefaultExternalScriptAsVariable() {
+  void testDefaultExternalScriptAsVariable() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
@@ -57,7 +69,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testDefaultExternalScriptAsVariable.bpmn20.xml"})
   @Test
-  public void testDefaultExternalScriptAsNonExistingVariable() {
+  void testDefaultExternalScriptAsNonExistingVariable() {
     try {
       runtimeService.startProcessInstanceByKey("process");
       fail("Process variable 'scriptPath' not defined");
@@ -69,7 +81,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDefaultExternalScriptAsBean() {
+  void testDefaultExternalScriptAsBean() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
@@ -80,7 +92,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testScriptInClasspath() {
+  void testScriptInClasspath() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
@@ -89,7 +101,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testScriptInClasspathAsVariable() {
+  void testScriptInClasspathAsVariable() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "classpath://org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
@@ -100,7 +112,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testScriptInClasspathAsBean() {
+  void testScriptInClasspathAsBean() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
@@ -111,7 +123,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testScriptNotFoundInClasspath() {
+  void testScriptNotFoundInClasspath() {
     try {
       runtimeService.startProcessInstanceByKey("process");
       fail("Resource does not exist in classpath");
@@ -122,11 +134,11 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
   })
   @Test
-  public void testScriptInDeployment() {
+  void testScriptInDeployment() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
@@ -134,11 +146,11 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
   })
   @Test
-  public void testScriptInDeploymentAfterCacheWasCleaned() {
+  void testScriptInDeploymentAfterCacheWasCleaned() {
     processEngineConfiguration.getDeploymentCache().discardProcessDefinitionCache();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -148,11 +160,11 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsVariable.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsVariable.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
   })
   @Test
-  public void testScriptInDeploymentAsVariable() {
+  void testScriptInDeploymentAsVariable() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "deployment://org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
@@ -162,11 +174,11 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsBean.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsBean.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
   })
   @Test
-  public void testScriptInDeploymentAsBean() {
+  void testScriptInDeploymentAsBean() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
@@ -177,7 +189,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testScriptNotFoundInDeployment() {
+  void testScriptNotFoundInDeployment() {
     try {
       runtimeService.startProcessInstanceByKey("process");
       fail("Resource does not exist in classpath");
@@ -189,7 +201,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNotExistingImport() {
+  void testNotExistingImport() {
     try {
       runtimeService.startProcessInstanceByKey("process");
       fail("Should fail during script compilation");

@@ -17,13 +17,14 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.repository.Deployment;
@@ -92,28 +93,26 @@ class MultiTenancyTimerStartEventTest {
 
   @Test
   void deleteJobsWhileUndeployment() {
+    Deployment deploymentForTenantOne = testRule.deployForTenant(TENANT_ONE, PROCESS);
+    Deployment deploymentForTenantTwo = testRule.deployForTenant(TENANT_TWO, PROCESS);
 
-     Deployment deploymentForTenantOne = testRule.deployForTenant(TENANT_ONE, PROCESS);
-     Deployment deploymentForTenantTwo = testRule.deployForTenant(TENANT_TWO, PROCESS);
+    JobQuery query = managementService.createJobQuery();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
 
-     JobQuery query = managementService.createJobQuery();
-     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-     assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    repositoryService.deleteDeployment(deploymentForTenantOne.getId(), true);
 
-     repositoryService.deleteDeployment(deploymentForTenantOne.getId(), true);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
 
-     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
-     assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    repositoryService.deleteDeployment(deploymentForTenantTwo.getId(), true);
 
-     repositoryService.deleteDeployment(deploymentForTenantTwo.getId(), true);
-
-     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
-     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
   @Test
   void dontCreateNewJobsWhileReDeployment() {
-
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
     testRule.deployForTenant(TENANT_ONE, PROCESS);
@@ -180,14 +179,12 @@ class MultiTenancyTimerStartEventTest {
   }
 
   protected void executeFailingJobs(List<Job> jobs) {
-    for (Job job : jobs) {
-
-      try {
-        managementService.executeJob(job.getId());
-
-        fail("expected exception");
-      } catch (Exception e) {}
-    }
+    jobs.forEach(job -> {
+      String jobId = job.getId();
+      assertThatThrownBy(() -> managementService.executeJob(jobId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot resolve identifier 'failing'");
+    });
   }
 
 }

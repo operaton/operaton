@@ -16,30 +16,42 @@
  */
 package org.operaton.bpm.engine.test.bpmn.authorization;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import java.util.List;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  * @author Saeid Mirzaei
  * @author Tijs Rademakers
  */
-public class StartAuthorizationTest extends PluggableProcessEngineTest {
+class StartAuthorizationTest {
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
   IdentityService identityService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
 
   User userInGroup1;
   User userInGroup2;
@@ -100,10 +112,10 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
     identityService.deleteUser("user2");
     identityService.deleteUser("user3");
   }
-  
+
   @Deployment
   @Test
-  public void testIdentityLinks() {
+  void testIdentityLinks() {
     
     setUpUsersAndGroups();
     
@@ -147,10 +159,10 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
       tearDownUsersAndGroups();
     }
   }
-  
+
   @Deployment
   @Test
-  public void testAddAndRemoveIdentityLinks() {
+  void testAddAndRemoveIdentityLinks() {
     
     setUpUsersAndGroups();
     
@@ -207,7 +219,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testPotentialStarter() {
+  void testPotentialStarter() {
     // first check an unauthorized user. An exception is expected
 
     setUpUsersAndGroups();
@@ -240,7 +252,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testPotentialStarterNoDefinition() {
+  void testPotentialStarterNoDefinition() {
     identityService = processEngine.getIdentityService();
 
     identityService.setAuthenticatedUserId("someOneFromMars");
@@ -249,11 +261,11 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstance.getId());
     assertThat(processInstance.isEnded()).isTrue();
   }
-  
+
   // this test checks the list without user constraint
   @Deployment
   @Test
-	public void testProcessDefinitionList() {
+  void testProcessDefinitionList() {
 	  
     setUpUsersAndGroups();
     try {

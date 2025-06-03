@@ -21,20 +21,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.servicetask.util.ValueBean;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Christian Stettler
  */
-public class ExpressionServiceTaskTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ExpressionServiceTaskTest {
+
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testSetServiceResultToProcessVariables() {
+  void testSetServiceResultToProcessVariables() {
     Map<String,Object> variables = new HashMap<>();
     variables.put("bean", new ValueBean("ok"));
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("setServiceResultToProcessVariables", variables);
@@ -43,7 +48,7 @@ public class ExpressionServiceTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBackwardsCompatibleExpression() {
+  void testBackwardsCompatibleExpression() {
     Map<String,Object> variables = new HashMap<>();
     variables.put("var", "---");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("BackwardsCompatibleExpressionProcess", variables);

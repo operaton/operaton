@@ -18,20 +18,20 @@ package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class TriggerConditionalEventOnStartAtActivityTest extends AbstractConditionalEventTestCase {
+class TriggerConditionalEventOnStartAtActivityTest extends AbstractConditionalEventTestCase {
 
   @Test
-  public void testTriggerGlobalEventSubProcess() {
+  void testTriggerGlobalEventSubProcess() {
     //given
     deployConditionalEventSubProcess(TASK_MODEL, CONDITIONAL_EVENT_PROCESS_KEY, true);
 
@@ -49,7 +49,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
 
   @Test
-  public void testNonInterruptingTriggerGlobalEventSubProcess() {
+  void testNonInterruptingTriggerGlobalEventSubProcess() {
     //given
     deployConditionalEventSubProcess(TASK_MODEL, CONDITIONAL_EVENT_PROCESS_KEY, false);
 
@@ -68,7 +68,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
 
   @Test
-  public void testTriggerInnerEventSubProcess() {
+  void testTriggerInnerEventSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -97,7 +97,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
   }
 
   @Test
-  public void testNonInterruptingTriggerInnerEventSubProcess() {
+  void testNonInterruptingTriggerInnerEventSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -127,7 +127,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
   }
 
   @Test
-  public void testTriggerGlobalEventSubProcessFromInnerSubProcess() {
+  void testTriggerGlobalEventSubProcessFromInnerSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -155,7 +155,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
   }
 
   @Test
-  public void testNonInterruptingTriggerGlobalEventSubProcessFromInnerSubProcess() {
+  void testNonInterruptingTriggerGlobalEventSubProcessFromInnerSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -185,7 +185,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
 
   @Test
-  public void testTriggerGlobalAndInnerEventSubProcessFromInnerSubProcess() {
+  void testTriggerGlobalAndInnerEventSubProcessFromInnerSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -215,7 +215,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
 
   @Test
-  public void testNonInterruptingTriggerGlobalAndInnerEventSubProcessFromInnerSubProcess() {
+  void testNonInterruptingTriggerGlobalAndInnerEventSubProcessFromInnerSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -248,7 +248,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
 
   @Test
-  public void testTriggerBoundaryEvent() {
+  void testTriggerBoundaryEvent() {
     //given
     deployConditionalBoundaryEventProcess(TASK_MODEL, TASK_BEFORE_CONDITION_ID, true);
 
@@ -265,7 +265,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
   }
 
   @Test
-  public void testNonInterruptingTriggerBoundaryEvent() {
+  void testNonInterruptingTriggerBoundaryEvent() {
     //given
     deployConditionalBoundaryEventProcess(TASK_MODEL, TASK_BEFORE_CONDITION_ID, false);
 
@@ -284,7 +284,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
 
   @Test
-  public void testTriggerBoundaryEventFromInnerSubProcess() {
+  void testTriggerBoundaryEventFromInnerSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -313,7 +313,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
   }
 
   @Test
-  public void testNonInterruptingTriggerBoundaryEventFromInnerSubProcess() {
+  void testNonInterruptingTriggerBoundaryEventFromInnerSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -343,7 +343,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
   }
 
   @Test
-  public void testTriggerUserAndSubProcessBoundaryEventFromInnerSubProcess() {
+  void testTriggerUserAndSubProcessBoundaryEventFromInnerSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -374,7 +374,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
 
   @Test
-  public void testNonInterruptingTriggerUserAndSubProcessBoundaryEventFromInnerSubProcess() {
+  void testNonInterruptingTriggerUserAndSubProcessBoundaryEventFromInnerSubProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -407,7 +407,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
   }
 
   @Test
-  public void testTriggerMixedProcess() {
+  void testTriggerMixedProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -440,7 +440,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
 
   @Test
-  public void testNonInterruptingTriggerMixedProcess() {
+  void testNonInterruptingTriggerMixedProcess() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -477,8 +477,8 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
   }
 
   @Test
-  @Ignore
-  public void testTwoInstructions() {
+  @Disabled
+  void testTwoInstructions() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent("start")
@@ -519,7 +519,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testSubProcessNonInterruptingTriggerGlobalEventSubProcess() {
+  void testSubProcessNonInterruptingTriggerGlobalEventSubProcess() {
     // given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent("start")
@@ -556,7 +556,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testSubProcessInterruptingTriggerGlobalEventSubProcess() {
+  void testSubProcessInterruptingTriggerGlobalEventSubProcess() {
     // given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent("start")

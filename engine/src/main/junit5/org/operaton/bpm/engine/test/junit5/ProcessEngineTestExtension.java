@@ -17,6 +17,7 @@ package org.operaton.bpm.engine.test.junit5;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +46,7 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -428,6 +430,17 @@ public class ProcessEngineTestExtension
     processInstanceAuthorization.setPermissions(permissions);
     processInstanceAuthorization.setUserId(userId);
     authorizationService.saveAuthorization(processInstanceAuthorization);
+  }
+
+  public List<ActivityInstance> getInstancesForActivityId(ActivityInstance activityInstance, String activityId) {
+    List<ActivityInstance> result = new ArrayList<>();
+    if(activityInstance.getActivityId().equals(activityId)) {
+      result.add(activityInstance);
+    }
+    for (ActivityInstance childInstance : activityInstance.getChildActivityInstances()) {
+      result.addAll(getInstancesForActivityId(childInstance, activityId));
+    }
+    return result;
   }
 
 }

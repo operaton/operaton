@@ -21,15 +21,19 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * see https://app.camunda.com/jira/browse/CAM-1612
@@ -38,7 +42,15 @@ import org.junit.Test;
  * @author Danny Gräf
  * @author Falko Menge
  */
-public class ReceiveTaskTest extends PluggableProcessEngineTest {
+class ReceiveTaskTest {
+  
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   private List<EventSubscription> getEventSubscriptionList() {
     return runtimeService.createEventSubscriptionQuery()
@@ -57,7 +69,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.simpleReceiveTask.bpmn20.xml")
   @Test
-  public void testReceiveTaskWithoutMessageReference() {
+  void testReceiveTaskWithoutMessageReference() {
 
     // given: a process instance waiting in the receive task
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -74,7 +86,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.singleReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsLegacySignalingOnSingleReceiveTask() {
+  void testSupportsLegacySignalingOnSingleReceiveTask() {
 
     // given: a process instance waiting in the receive task
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -94,7 +106,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.singleReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnSingleReceiveTask() {
+  void testSupportsMessageEventReceivedOnSingleReceiveTask() {
 
     // given: a process instance waiting in the receive task
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -116,7 +128,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.singleReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsCorrelateMessageOnSingleReceiveTask() {
+  void testSupportsCorrelateMessageOnSingleReceiveTask() {
 
     // given: a process instance waiting in the receive task
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -138,7 +150,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.singleReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsCorrelateMessageByBusinessKeyOnSingleReceiveTask() {
+  void testSupportsCorrelateMessageByBusinessKeyOnSingleReceiveTask() {
 
     // given: a process instance with business key 23 waiting in the receive task
     ProcessInstance processInstance23 = runtimeService.startProcessInstanceByKey("testProcess", "23");
@@ -174,7 +186,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiSequentialReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsLegacySignalingOnSequentialMultiReceiveTask() {
+  void testSupportsLegacySignalingOnSequentialMultiReceiveTask() {
 
     // given: a process instance waiting in the first receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -210,7 +222,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiSequentialReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnSequentialMultiReceiveTask() {
+  void testSupportsMessageEventReceivedOnSequentialMultiReceiveTask() {
 
     // given: a process instance waiting in the first receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -246,7 +258,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiSequentialReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsCorrelateMessageOnSequentialMultiReceiveTask() {
+  void testSupportsCorrelateMessageOnSequentialMultiReceiveTask() {
 
     // given: a process instance waiting in the first receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -282,7 +294,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsLegacySignalingOnParallelMultiReceiveTask() {
+  void testSupportsLegacySignalingOnParallelMultiReceiveTask() {
 
     // given: a process instance waiting in two receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -310,7 +322,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnParallelMultiReceiveTask() {
+  void testSupportsMessageEventReceivedOnParallelMultiReceiveTask() {
 
     // given: a process instance waiting in two receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -332,7 +344,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTask.bpmn20.xml")
   @Test
-  public void testNotSupportsCorrelateMessageOnParallelMultiReceiveTask() {
+  void testNotSupportsCorrelateMessageOnParallelMultiReceiveTask() {
 
     // given: a process instance waiting in two receive tasks
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -353,7 +365,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTaskCompensate.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnParallelMultiReceiveTaskWithCompensation() {
+  void testSupportsMessageEventReceivedOnParallelMultiReceiveTaskWithCompensation() {
 
     // given: a process instance waiting in two receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -386,7 +398,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTaskBoundary.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnParallelMultiInstanceWithBoundary() {
+  void testSupportsMessageEventReceivedOnParallelMultiInstanceWithBoundary() {
 
     // given: a process instance waiting in two receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -411,7 +423,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTaskBoundary.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnParallelMultiInstanceWithBoundaryEventReceived() {
+  void testSupportsMessageEventReceivedOnParallelMultiInstanceWithBoundaryEventReceived() {
 
     // given: a process instance waiting in two receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -436,7 +448,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.subProcessReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnSubProcessReceiveTask() {
+  void testSupportsMessageEventReceivedOnSubProcessReceiveTask() {
 
     // given: a process instance waiting in the sub-process receive task
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -458,7 +470,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiSubProcessReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnMultiSubProcessReceiveTask() {
+  void testSupportsMessageEventReceivedOnMultiSubProcessReceiveTask() {
 
     // given: a process instance waiting in two parallel sub-process receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -480,7 +492,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.parallelGatewayReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsMessageEventReceivedOnReceiveTaskBehindParallelGateway() {
+  void testSupportsMessageEventReceivedOnReceiveTaskBehindParallelGateway() {
 
     // given: a process instance waiting in two receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -502,7 +514,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.parallelGatewayReceiveTask.bpmn20.xml")
   @Test
-  public void testSupportsCorrelateMessageOnReceiveTaskBehindParallelGateway() {
+  void testSupportsCorrelateMessageOnReceiveTaskBehindParallelGateway() {
 
     // given: a process instance waiting in two receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -524,7 +536,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testWaitStateBehavior() {
+  void testWaitStateBehavior() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("receiveTask");
     Execution execution = runtimeService.createExecutionQuery()
       .processInstanceId(pi.getId())

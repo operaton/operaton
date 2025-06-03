@@ -16,15 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.iomapping;
 
-import org.operaton.bpm.engine.ParseException;
-import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
-import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,30 +25,47 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
+import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class InputOutputEventTest extends PluggableProcessEngineTest {
+class InputOutputEventTest {
 
-  @Before
-  public void setUp() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
 
+  @BeforeEach
+  void setUp() {
     VariableLogDelegate.reset();
   }
 
-
   @Deployment
   @Test
-  public void testMessageThrowEvent() {
+  void testMessageThrowEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     // input mapping
@@ -71,7 +81,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMessageCatchEvent() {
+  void testMessageCatchEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     Execution messageExecution = runtimeService.createExecutionQuery().activityId("messageCatch").singleResult();
@@ -92,7 +102,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTimerCatchEvent() {
+  void testTimerCatchEvent() {
     Map<String, Object> variables = new HashMap<>();
     Date dueDate = DateTimeUtil.now().plusMinutes(5).toDate();
     variables.put("outerVariable", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dueDate));
@@ -110,7 +120,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNoneThrowEvent() {
+  void testNoneThrowEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     Map<String, Object> mappedVariables = VariableLogDelegate.localVariables;
@@ -124,7 +134,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testMessageStartEvent() {
+  void testMessageStartEvent() {
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testMessageStartEvent.bpmn20.xml");
@@ -139,7 +149,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testNoneEndEvent() {
+  void testNoneEndEvent() {
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testNoneEndEvent.bpmn20.xml");
@@ -154,7 +164,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMessageEndEvent() {
+  void testMessageEndEvent() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
@@ -168,7 +178,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMessageCatchAfterEventGateway() {
+  void testMessageCatchAfterEventGateway() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -189,7 +199,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTimerCatchAfterEventGateway() {
+  void testTimerCatchAfterEventGateway() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -212,7 +222,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSignalCatchAfterEventGateway() {
+  void testSignalCatchAfterEventGateway() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -238,7 +248,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testConditionalCatchAfterEventGateway() {
+  void testConditionalCatchAfterEventGateway() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -256,7 +266,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testMessageBoundaryEvent() {
+  void testMessageBoundaryEvent() {
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testMessageBoundaryEvent.bpmn20.xml");
@@ -269,10 +279,8 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
     }
   }
 
-  @After
-  public void tearDown() {
-
-
+  @AfterEach
+  void tearDown() {
     VariableLogDelegate.reset();
   }
 

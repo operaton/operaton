@@ -29,6 +29,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -46,54 +51,40 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.api.variables.FailingJavaSerializable;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Daniel Meyer
  */
-public class SignalEventTest {
+class SignalEventTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJavaSerializationFormatEnabled(true));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setJavaSerializationFormatEnabled(true))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected RepositoryService repositoryService;
-  protected ManagementService managementService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  boolean defaultEnsureJobDueDateSet;
 
-  protected boolean defaultEnsureJobDueDateSet;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-    managementService = engineRule.getManagementService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void init() {
     defaultEnsureJobDueDateSet = processEngineConfiguration.isEnsureJobDueDateNotNull();
   }
 
-  @After
-  public void resetConfiguration() {
+  @AfterEach
+  void resetConfiguration() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
   }
 
@@ -101,7 +92,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertSignal.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignal.bpmn20.xml"})
   @Test
-  public void testSignalCatchIntermediate() {
+  void testSignalCatchIntermediate() {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
@@ -119,7 +110,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertSignalBoundary.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignal.bpmn20.xml"})
   @Test
-  public void testSignalCatchBoundary() {
+  void testSignalCatchBoundary() {
     runtimeService.startProcessInstanceByKey("catchSignal");
 
     assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
@@ -135,7 +126,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertSignalBoundaryWithReceiveTask.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignal.bpmn20.xml"})
   @Test
-  public void testSignalCatchBoundaryWithVariables() {
+  void testSignalCatchBoundaryWithVariables() {
     HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("processName", "catchSignal");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("catchSignal", variables1);
@@ -151,7 +142,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertSignal.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignalAsynch.bpmn20.xml"})
   @Test
-  public void testSignalCatchIntermediateAsynch() {
+  void testSignalCatchIntermediateAsynch() {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
@@ -184,7 +175,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignal.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAbortSignal.bpmn20.xml"})
   @Test
-  public void testSignalCatchDifferentSignals() {
+  void testSignalCatchDifferentSignals() {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
@@ -211,7 +202,7 @@ public class SignalEventTest {
    */
   @Deployment
   @Test
-  public void testSignalBoundaryOnSubProcess() {
+  void testSignalBoundaryOnSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("signalEventOnSubprocess");
     runtimeService.signalEventReceived("stopSignal");
     testRule.assertProcessEnded(pi.getProcessInstanceId());
@@ -226,7 +217,7 @@ public class SignalEventTest {
    */
   @Deployment
   @Test
-  public void testNonInterruptingSignal() {
+  void testNonInterruptingSignal() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingSignalEvent");
 
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
@@ -259,7 +250,7 @@ public class SignalEventTest {
    */
   @Deployment
   @Test
-  public void testNonInterruptingSignalWithSubProcess() {
+  void testNonInterruptingSignalWithSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingSignalWithSubProcess");
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
     assertThat(tasks).hasSize(1);
@@ -295,7 +286,7 @@ public class SignalEventTest {
 
   @Deployment
   @Test
-  public void testSignalStartEventInEventSubProcess() {
+  void testSignalStartEventInEventSubProcess() {
     // start process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalStartEventInEventSubProcess");
 
@@ -323,7 +314,7 @@ public class SignalEventTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingSignalStartEventInEventSubProcess() {
+  void testNonInterruptingSignalStartEventInEventSubProcess() {
     // start process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nonInterruptingSignalStartEventInEventSubProcess");
 
@@ -351,7 +342,7 @@ public class SignalEventTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml"})
   @Test
-  public void testSignalStartEvent() {
+  void testSignalStartEvent() {
     // event subscription for signal start event
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(1);
 
@@ -362,7 +353,7 @@ public class SignalEventTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml"})
   @Test
-  public void testSuspendedProcessWithSignalStartEvent() {
+  void testSuspendedProcessWithSignalStartEvent() {
     // event subscription for signal start event
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(1);
 
@@ -377,7 +368,7 @@ public class SignalEventTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.testOtherSignalStartEvent.bpmn20.xml"})
   @Test
-  public void testMultipleProcessesWithSameSignalStartEvent() {
+  void testMultipleProcessesWithSameSignalStartEvent() {
     // event subscriptions for signal start event
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(2);
 
@@ -390,7 +381,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignal.bpmn20.xml"})
   @Test
-  public void testStartProcessInstanceBySignalFromIntermediateThrowingSignalEvent() {
+  void testStartProcessInstanceBySignalFromIntermediateThrowingSignalEvent() {
     // start a process instance to throw a signal
     runtimeService.startProcessInstanceByKey("throwSignal");
     // the signal should start a new process instance
@@ -401,7 +392,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignal.bpmn20.xml"})
   @Test
-  public void testIntermediateThrowingSignalEventWithSuspendedSignalStartEvent() {
+  void testIntermediateThrowingSignalEventWithSuspendedSignalStartEvent() {
     // event subscription for signal start event
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(1);
 
@@ -416,7 +407,7 @@ public class SignalEventTest {
 
   @Deployment
   @Test
-  public void testProcessesWithMultipleSignalStartEvents() {
+  void testProcessesWithMultipleSignalStartEvents() {
     // event subscriptions for signal start event
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isEqualTo(2);
 
@@ -427,7 +418,7 @@ public class SignalEventTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertTwiceAndTerminate.bpmn20.xml"})
   @Test
-  public void testThrowSignalMultipleCancellingReceivers() {
+  void testThrowSignalMultipleCancellingReceivers() {
     RecorderExecutionListener.clear();
 
     runtimeService.startProcessInstanceByKey("catchAlertTwiceAndTerminate");
@@ -449,7 +440,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertTwiceAndTerminate.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignal.bpmn20.xml"})
   @Test
-  public void testIntermediateThrowSignalMultipleCancellingReceivers() {
+  void testIntermediateThrowSignalMultipleCancellingReceivers() {
     RecorderExecutionListener.clear();
 
     runtimeService.startProcessInstanceByKey("catchAlertTwiceAndTerminate");
@@ -468,10 +459,10 @@ public class SignalEventTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignalAsync.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignalAsync.bpmn20.xml"})
   @Test
-  public void testAsyncSignalStartEventJobProperties() {
+  void testAsyncSignalStartEventJobProperties() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(false);
 
     ProcessDefinition catchingProcessDefinition = repositoryService
@@ -504,7 +495,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignalAsync.bpmn20.xml"})
   @Test
-  public void testAsyncSignalStartEventJobPropertiesDueDateSet() {
+  void testAsyncSignalStartEventJobPropertiesDueDateSet() {
     Date testTime = new Date(1457326800000L);
     ClockUtil.setCurrentTime(testTime);
     processEngineConfiguration.setEnsureJobDueDateNotNull(true);
@@ -539,7 +530,7 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignalAsync.bpmn20.xml"})
   @Test
-  public void testAsyncSignalStartEvent() {
+  void testAsyncSignalStartEvent() {
     ProcessDefinition catchingProcessDefinition = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("startBySignal")
@@ -568,7 +559,7 @@ public class SignalEventTest {
    */
   @Deployment
   @Test
-  public void testNoContinuationWhenSignalInterruptsThrowingActivity() {
+  void testNoContinuationWhenSignalInterruptsThrowingActivity() {
 
     // given a process instance
     runtimeService.startProcessInstanceByKey("signalEventSubProcess");
@@ -585,7 +576,7 @@ public class SignalEventTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml")
   @Test
-  public void testSetSerializedVariableValues() throws IOException, ClassNotFoundException {
+  void testSetSerializedVariableValues() throws IOException, ClassNotFoundException {
 
     // when
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");
@@ -631,8 +622,8 @@ public class SignalEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertSignalBoundary.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignalAsync.bpmn20.xml"})
   @Test
-  @Ignore("CAM-6807")
-  public void testAsyncSignalBoundary() {
+  @Disabled("CAM-6807")
+  void testAsyncSignalBoundary() {
     runtimeService.startProcessInstanceByKey("catchSignal");
 
     // given a process instance that throws a signal asynchronously
@@ -655,7 +646,7 @@ public class SignalEventTest {
 
   @Test
   @Deployment
-  public void testThrownSignalInEventSubprocessInSubprocess() {
+  void testThrownSignalInEventSubprocessInSubprocess() {
     runtimeService.startProcessInstanceByKey("embeddedEventSubprocess");
 
     Task taskBefore = taskService.createTaskQuery().singleResult();

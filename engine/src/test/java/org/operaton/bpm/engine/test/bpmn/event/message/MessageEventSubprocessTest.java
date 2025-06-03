@@ -16,14 +16,22 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.EventSubscriptionQueryImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -34,11 +42,10 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.test.util.TestExecutionListener;
-import org.junit.After;
-import org.junit.Test;
 
 
 /**
@@ -46,16 +53,28 @@ import org.junit.Test;
  * @author Falko Menge
  * @author Danny Gräf
  */
-public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
+class MessageEventSubprocessTest {
 
-  @After
-  public void tearDown() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  ManagementService managementService;
+
+  @AfterEach
+  void tearDown() {
     TestExecutionListener.reset();
   }
 
   @Deployment
   @Test
-  public void testInterruptingUnderProcessDefinition() {
+  void testInterruptingUnderProcessDefinition() {
     testInterruptingUnderProcessDefinition(1);
   }
 
@@ -64,7 +83,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testTwoInterruptingUnderProcessDefinition() {
+  void testTwoInterruptingUnderProcessDefinition() {
     testInterruptingUnderProcessDefinition(2);
   }
 
@@ -102,7 +121,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testEventSubprocessListenersInvoked() {
+  void testEventSubprocessListenersInvoked() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     runtimeService.correlateMessage("message");
@@ -135,7 +154,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingEventSubprocessListenersInvoked() {
+  void testNonInterruptingEventSubprocessListenersInvoked() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     runtimeService.correlateMessage("message");
@@ -171,7 +190,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedEventSubprocessListenersInvoked() {
+  void testNestedEventSubprocessListenersInvoked() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     runtimeService.correlateMessage("message");
@@ -205,7 +224,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedNonInterruptingEventSubprocessListenersInvoked() {
+  void testNestedNonInterruptingEventSubprocessListenersInvoked() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     runtimeService.correlateMessage("message");
@@ -243,7 +262,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testEventSubprocessBoundaryListenersInvoked() {
+  void testEventSubprocessBoundaryListenersInvoked() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     runtimeService.correlateMessage("message");
@@ -277,7 +296,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingUnderProcessDefinition() {
+  void testNonInterruptingUnderProcessDefinition() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -338,7 +357,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingUnderProcessDefinitionScope() {
+  void testNonInterruptingUnderProcessDefinitionScope() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -399,7 +418,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingInEmbeddedSubprocess() {
+  void testNonInterruptingInEmbeddedSubprocess() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -458,7 +477,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleNonInterruptingInEmbeddedSubprocess() {
+  void testMultipleNonInterruptingInEmbeddedSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     // the process instance must have a message event subscription:
@@ -511,7 +530,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingInMultiParallelEmbeddedSubprocess() {
+  void testNonInterruptingInMultiParallelEmbeddedSubprocess() {
     // #################### I. start process and only complete the tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -581,7 +600,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingInMultiSequentialEmbeddedSubprocess() {
+  void testNonInterruptingInMultiSequentialEmbeddedSubprocess() {
     // start process and trigger the first message sub process
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     runtimeService.messageEventReceived("message", runtimeService.createEventSubscriptionQuery().singleResult().getExecutionId());
@@ -609,7 +628,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingWithParallelForkInsideEmbeddedSubProcess() {
+  void testNonInterruptingWithParallelForkInsideEmbeddedSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     runtimeService.messageEventReceived("newMessage", runtimeService.createEventSubscriptionQuery().singleResult().getExecutionId());
 
@@ -637,7 +656,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingWithReceiveTask() {
+  void testNonInterruptingWithReceiveTask() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     // when (1)
@@ -705,7 +724,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testNonInterruptingWithAsyncConcurrentTask() {
+  void testNonInterruptingWithAsyncConcurrentTask() {
     // given a process instance with an asyncBefore user task
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -734,7 +753,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingWithReceiveTaskInsideEmbeddedSubProcess() {
+  void testNonInterruptingWithReceiveTaskInsideEmbeddedSubProcess() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     // when (1)
@@ -798,7 +817,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingWithUserTaskAndBoundaryEventInsideEmbeddedSubProcess() {
+  void testNonInterruptingWithUserTaskAndBoundaryEventInsideEmbeddedSubProcess() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     // when
@@ -844,7 +863,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingOutsideEmbeddedSubProcessWithReceiveTaskInsideEmbeddedSubProcess() {
+  void testNonInterruptingOutsideEmbeddedSubProcessWithReceiveTaskInsideEmbeddedSubProcess() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     // when (1)
@@ -884,7 +903,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInterruptingActivityInstanceTree() {
+  void testInterruptingActivityInstanceTree() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = instance.getId();
@@ -906,7 +925,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingActivityInstanceTree() {
+  void testNonInterruptingActivityInstanceTree() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = instance.getId();
@@ -929,7 +948,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingWithTerminatingEndEvent() {
+  void testNonInterruptingWithTerminatingEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Inner User Task");
@@ -952,7 +971,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExpressionInMessageNameInInterruptingSubProcessDefinition() {
+  void testExpressionInMessageNameInInterruptingSubProcessDefinition() {
     // given an process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 

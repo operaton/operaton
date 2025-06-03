@@ -21,23 +21,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Joram Barrez
  * @author Falko Menge <falko.menge@camunda.com>
  * @author Frederik Heremans
  */
-public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class CustomTaskAssignmentTest {
   
-  @Before
-  public void setUp() {
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  IdentityService identityService;
+  TaskService taskService;
+
+  @BeforeEach
+  void setUp() {
 
     
     identityService.saveUser(identityService.newUser("kermit"));
@@ -48,46 +58,46 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
     
     identityService.createMembership("kermit", "management");
   }
-  
-  @After
-  public void tearDown() {
+
+  @AfterEach
+  void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("fozzie");
     identityService.deleteUser("gonzo");
     identityService.deleteGroup("management");
 
   }
-  
+
   @Deployment
   @Test
-  public void testCandidateGroupAssignment() {
+  void testCandidateGroupAssignment() {
     runtimeService.startProcessInstanceByKey("customTaskAssignment");
     assertThat(taskService.createTaskQuery().taskCandidateGroup("management").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isZero();
   }
-  
+
   @Deployment
   @Test
-  public void testCandidateUserAssignment() {
+  void testCandidateUserAssignment() {
     runtimeService.startProcessInstanceByKey("customTaskAssignment");
     assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser("gonzo").count()).isZero();
   }
-  
+
   @Deployment
   @Test
-  public void testAssigneeAssignment() {
+  void testAssigneeAssignment() {
     runtimeService.startProcessInstanceByKey("setAssigneeInListener");
     assertThat(taskService.createTaskQuery().taskAssignee("kermit").singleResult()).isNotNull();
     assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isZero();
     assertThat(taskService.createTaskQuery().taskAssignee("gonzo").count()).isZero();
   }
-  
+
   @Deployment
   @Test
-  public void testOverwriteExistingAssignments() {
+  void testOverwriteExistingAssignments() {
     runtimeService.startProcessInstanceByKey("overrideAssigneeInListener");
     assertThat(taskService.createTaskQuery().taskAssignee("kermit").singleResult()).isNotNull();
     assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isZero();
@@ -96,7 +106,7 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testOverwriteExistingAssignmentsFromVariable() {
+  void testOverwriteExistingAssignmentsFromVariable() {
     // prepare variables
     Map<String, String> assigneeMappingTable = new HashMap<>();
     assigneeMappingTable.put("fozzie", "gonzo");
@@ -112,10 +122,10 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isZero();
     assertThat(taskService.createTaskQuery().taskAssignee("kermit").count()).isZero();
   }
-  
+
   @Deployment
   @Test
-  public void testReleaseTask() {
+  void testReleaseTask() {
     runtimeService.startProcessInstanceByKey("releaseTaskProcess");
     
     Task task = taskService.createTaskQuery().taskAssignee("fozzie").singleResult();

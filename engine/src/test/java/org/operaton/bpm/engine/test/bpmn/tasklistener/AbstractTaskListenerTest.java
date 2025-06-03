@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -23,22 +25,18 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.UserTaskBuilder;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.RuleChain;
 
 public abstract class AbstractTaskListenerTest {
 
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public   ProcessEngineTestRule     testRule   = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService                 runtimeService;
   protected TaskService                    taskService;
@@ -46,16 +44,7 @@ public abstract class AbstractTaskListenerTest {
   protected HistoryService                 historyService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    managementService = engineRule.getManagementService();
-    historyService = engineRule.getHistoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @Before
+  @BeforeEach
   public void resetListeners() {
     RecorderTaskListener.clear();
   }

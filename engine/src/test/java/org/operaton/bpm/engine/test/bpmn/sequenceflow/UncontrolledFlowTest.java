@@ -19,12 +19,16 @@ package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * Tests things that BPMN describes as 'uncontrolled flow':
@@ -33,11 +37,19 @@ import org.junit.Test;
  *
  * @author Thorben Lindhauer
  */
-public class UncontrolledFlowTest extends PluggableProcessEngineTest {
+class UncontrolledFlowTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testSubProcessTwoOutgoingFlowsCorrelateMessage() {
+  void testSubProcessTwoOutgoingFlowsCorrelateMessage() {
     // given a process instance
     runtimeService.startProcessInstanceByKey("process");
 
@@ -61,7 +73,7 @@ public class UncontrolledFlowTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSubProcessTwoOutgoingFlowsEndProcess() {
+  void testSubProcessTwoOutgoingFlowsEndProcess() {
     // given a process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     Task innerTask = taskService.createTaskQuery().singleResult();

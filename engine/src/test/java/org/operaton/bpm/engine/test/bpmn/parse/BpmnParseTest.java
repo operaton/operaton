@@ -16,10 +16,33 @@
  */
 package org.operaton.bpm.engine.test.bpmn.parse;
 
-import org.junit.*;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.impl.bpmn.behavior.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assumptions.assumeThat;
+
+import java.util.List;
+import java.util.Locale;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ActivityTypes;
+import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.Problem;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryConditionalEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.CompensationEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartConditionalEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.IntermediateConditionalEventBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.NoneStartEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ThrowEscalationEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -36,20 +59,13 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.bpm.engine.test.util.SystemPropertiesRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.SystemPropertiesExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
-
-import java.util.List;
-import java.util.Locale;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assumptions.assumeThat;
 
 /**
  *
@@ -57,17 +73,14 @@ import static org.assertj.core.api.Assumptions.assumeThat;
  */
 public class BpmnParseTest {
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testRule);
-
-  @Rule
-  public SystemPropertiesRule systemProperties = SystemPropertiesRule.resetPropsAfterTest();
-
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  SystemPropertiesExtension systemProperties = SystemPropertiesExtension.resetPropsAfterTest();
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
   public RepositoryService repositoryService;
   public RuntimeService runtimeService;
@@ -75,18 +88,15 @@ public class BpmnParseTest {
 
   private Locale defaultLocale;
 
-  @Before
-  public void setup() {
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void setup() {
     processEngineConfiguration.setEnableXxeProcessing(false);
     defaultLocale = Locale.getDefault();
     Locale.setDefault(Locale.US);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     Locale.setDefault(defaultLocale);
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
@@ -94,7 +104,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSubProcessWithTimerStartEvent() {
+  void testInvalidSubProcessWithTimerStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithTimerStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -109,7 +119,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSubProcessWithMessageStartEvent() {
+  void testInvalidSubProcessWithMessageStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithMessageStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -124,7 +134,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSubProcessWithoutStartEvent() {
+  void testInvalidSubProcessWithoutStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithoutStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -137,7 +147,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSubProcessWithConditionalStartEvent() {
+  void testInvalidSubProcessWithConditionalStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithConditionalStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -154,7 +164,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSubProcessWithSignalStartEvent() {
+  void testInvalidSubProcessWithSignalStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithSignalStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -169,7 +179,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSubProcessWithErrorStartEvent() {
+  void testInvalidSubProcessWithErrorStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithErrorStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -184,7 +194,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSubProcessWithEscalationStartEvent() {
+  void testInvalidSubProcessWithEscalationStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithEscalationStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -199,7 +209,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSubProcessWithCompensationStartEvent() {
+  void testInvalidSubProcessWithCompensationStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithCompensationStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -214,7 +224,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidTransactionWithMessageStartEvent() {
+  void testInvalidTransactionWithMessageStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithMessageStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -229,7 +239,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidTransactionWithTimerStartEvent() {
+  void testInvalidTransactionWithTimerStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithTimerStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -244,7 +254,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidTransactionWithConditionalStartEvent() {
+  void testInvalidTransactionWithConditionalStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithConditionalStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -261,7 +271,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidTransactionWithSignalStartEvent() {
+  void testInvalidTransactionWithSignalStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithSignalStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -276,7 +286,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidTransactionWithErrorStartEvent() {
+  void testInvalidTransactionWithErrorStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithErrorStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -291,7 +301,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidTransactionWithEscalationStartEvent() {
+  void testInvalidTransactionWithEscalationStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithEscalationStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -306,7 +316,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidTransactionWithCompensationStartEvent() {
+  void testInvalidTransactionWithCompensationStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithCompensationStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -321,7 +331,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidProcessDefinition() {
+  void testInvalidProcessDefinition() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidProcessDefinition");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -336,7 +346,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testExpressionParsingErrors() {
+  void testExpressionParsingErrors() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testExpressionParsingErrors");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -348,7 +358,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testXmlParsingErrors() {
+  void testXmlParsingErrors() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testXMLParsingErrors");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -360,7 +370,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidSequenceFlowInAndOutEventSubProcess() {
+  void testInvalidSequenceFlowInAndOutEventSubProcess() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSequenceFlowInAndOutEventSubProcess");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -379,7 +389,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidProcessWithoutStartEvent() {
+  void testInvalidProcessWithoutStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidProcessWithoutStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -398,7 +408,7 @@ public class BpmnParseTest {
    * taken
    **/
   @Test
-  public void testParseMultipleStartEvent() {
+  void testParseMultipleStartEvent() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseMultipleStartEvent");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -418,27 +428,27 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseWithBpmnNamespacePrefix() {
+  void testParseWithBpmnNamespacePrefix() {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseWithBpmnNamespacePrefix.bpmn20.xml").deploy();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
-  public void testParseWithMultipleDocumentation() {
+  void testParseWithMultipleDocumentation() {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseWithMultipleDocumentation.bpmn20.xml").deploy();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
-  public void testParseCollaborationPlane() {
+  void testParseCollaborationPlane() {
     repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseCollaborationPlane.bpmn").deploy();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
-  public void testInvalidAsyncAfterEventBasedGateway() {
+  void testInvalidAsyncAfterEventBasedGateway() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidAsyncAfterEventBasedGateway");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -453,7 +463,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseDiagramInterchangeElements() {
+  void testParseDiagramInterchangeElements() {
 
     // Graphical information is not yet exposed publicly, so we need to do some
     // plumbing
@@ -516,7 +526,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseNamespaceInConditionExpressionType() {
+  void testParseNamespaceInConditionExpressionType() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("resolvableNamespacesProcess"));
 
@@ -540,7 +550,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseDiagramInterchangeElementsForUnknownModelElements() {
+  void testParseDiagramInterchangeElementsForUnknownModelElements() {
   }
 
   /**
@@ -548,19 +558,19 @@ public class BpmnParseTest {
    */
   @Test
   @Deployment
-  public void testParseDefinitionWithDeprecatedActivitiNamespace(){
+  void testParseDefinitionWithDeprecatedActivitiNamespace(){
 
   }
 
   @Test
   @Deployment
-  public void testParseDefinitionWithOperatonNamespace(){
+  void testParseDefinitionWithOperatonNamespace(){
 
   }
 
   @Deployment
   @Test
-  public void testParseCompensationEndEvent() {
+  void testParseCompensationEndEvent() {
     ActivityImpl endEvent = findActivityInDeployedProcessDefinition("end");
 
     assertThat(endEvent.getProperty("type")).isEqualTo("compensationEndEvent");
@@ -570,7 +580,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseCompensationStartEvent() {
+  void testParseCompensationStartEvent() {
     ActivityImpl compensationStartEvent = findActivityInDeployedProcessDefinition("compensationStartEvent");
 
     assertThat(compensationStartEvent.getProperty("type")).isEqualTo("compensationStartEvent");
@@ -585,7 +595,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseAsyncMultiInstanceBody(){
+  void testParseAsyncMultiInstanceBody(){
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
     ActivityImpl miBody = innerTask.getParentFlowScopeActivity();
 
@@ -598,7 +608,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseAsyncActivityWrappedInMultiInstanceBody(){
+  void testParseAsyncActivityWrappedInMultiInstanceBody(){
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
     assertThat(innerTask.isAsyncBefore()).isTrue();
     assertThat(innerTask.isAsyncAfter()).isTrue();
@@ -610,7 +620,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseAsyncActivityWrappedInMultiInstanceBodyWithAsyncMultiInstance(){
+  void testParseAsyncActivityWrappedInMultiInstanceBodyWithAsyncMultiInstance(){
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
     assertThat(innerTask.isAsyncBefore()).isTrue();
     assertThat(innerTask.isAsyncAfter()).isFalse();
@@ -621,7 +631,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseSwitchedSourceAndTargetRefsForAssociations() {
+  void testParseSwitchedSourceAndTargetRefsForAssociations() {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseSwitchedSourceAndTargetRefsForAssociations.bpmn20.xml").deploy();
 
@@ -631,7 +641,7 @@ public class BpmnParseTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.compensationMiActivity.bpmn20.xml")
   @Test
   @SuppressWarnings("deprecation")
-  public void testParseCompensationHandlerOfMiActivity() {
+  void testParseCompensationHandlerOfMiActivity() {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
 
@@ -642,7 +652,7 @@ public class BpmnParseTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.compensationMiSubprocess.bpmn20.xml")
   @Test
   @SuppressWarnings("deprecation")
-  public void testParseCompensationHandlerOfMiSubprocess() {
+  void testParseCompensationHandlerOfMiSubprocess() {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
 
@@ -652,7 +662,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseSignalStartEvent(){
+  void testParseSignalStartEvent(){
     ActivityImpl signalStartActivity = findActivityInDeployedProcessDefinition("start");
 
     assertThat(signalStartActivity.getProperty("type")).isEqualTo(ActivityTypes.START_EVENT_SIGNAL);
@@ -661,7 +671,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseEscalationBoundaryEvent() {
+  void testParseEscalationBoundaryEvent() {
     ActivityImpl escalationBoundaryEvent = findActivityInDeployedProcessDefinition("escalationBoundaryEvent");
 
     assertThat(escalationBoundaryEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.BOUNDARY_ESCALATION);
@@ -670,7 +680,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseEscalationIntermediateThrowingEvent() {
+  void testParseEscalationIntermediateThrowingEvent() {
     ActivityImpl escalationThrowingEvent = findActivityInDeployedProcessDefinition("escalationThrowingEvent");
 
     assertThat(escalationThrowingEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.INTERMEDIATE_EVENT_ESCALATION_THROW);
@@ -679,7 +689,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseEscalationEndEvent() {
+  void testParseEscalationEndEvent() {
     ActivityImpl escalationEndEvent = findActivityInDeployedProcessDefinition("escalationEndEvent");
 
     assertThat(escalationEndEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.END_EVENT_ESCALATION);
@@ -688,7 +698,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseEscalationStartEvent() {
+  void testParseEscalationStartEvent() {
     ActivityImpl escalationStartEvent = findActivityInDeployedProcessDefinition("escalationStartEvent");
 
     assertThat(escalationStartEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.START_EVENT_ESCALATION);
@@ -713,13 +723,13 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseInvalidConditionalBoundaryEvent() {
+  void testParseInvalidConditionalBoundaryEvent() {
     parseInvalidConditionalEvent("testParseInvalidConditionalBoundaryEvent", "conditionalBoundaryEvent");
   }
 
   @Deployment
   @Test
-  public void testParseConditionalBoundaryEvent() {
+  void testParseConditionalBoundaryEvent() {
     ActivityImpl conditionalBoundaryEvent = findActivityInDeployedProcessDefinition("conditionalBoundaryEvent");
 
     assertThat(conditionalBoundaryEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.BOUNDARY_CONDITIONAL);
@@ -728,7 +738,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseAsyncBoundaryEvent() {
+  void testParseAsyncBoundaryEvent() {
     ActivityImpl conditionalBoundaryEvent1 = findActivityInDeployedProcessDefinition("conditionalBoundaryEvent1");
     ActivityImpl conditionalBoundaryEvent2 = findActivityInDeployedProcessDefinition("conditionalBoundaryEvent2");
 
@@ -740,13 +750,13 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseInvalidIntermediateConditionalEvent() {
+  void testParseInvalidIntermediateConditionalEvent() {
     parseInvalidConditionalEvent("testParseInvalidIntermediateConditionalEvent", "intermediateConditionalEvent");
   }
 
   @Deployment
   @Test
-  public void testParseIntermediateConditionalEvent() {
+  void testParseIntermediateConditionalEvent() {
     ActivityImpl intermediateConditionalEvent = findActivityInDeployedProcessDefinition("intermediateConditionalEvent");
 
     assertThat(intermediateConditionalEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.INTERMEDIATE_EVENT_CONDITIONAL);
@@ -754,13 +764,13 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseInvalidEventSubprocessConditionalStartEvent() {
+  void testParseInvalidEventSubprocessConditionalStartEvent() {
     parseInvalidConditionalEvent("testParseInvalidEventSubprocessConditionalStartEvent", "conditionalStartEventSubProcess");
   }
 
   @Deployment
   @Test
-  public void testParseEventSubprocessConditionalStartEvent() {
+  void testParseEventSubprocessConditionalStartEvent() {
     ActivityImpl conditionalStartEventSubProcess = findActivityInDeployedProcessDefinition("conditionalStartEventSubProcess");
 
     assertThat(conditionalStartEventSubProcess.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.START_EVENT_CONDITIONAL);
@@ -793,7 +803,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testNoOperatonInSourceThrowsError() {
+  void testNoOperatonInSourceThrowsError() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInSourceThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -810,7 +820,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testNoOperatonInSourceShouldWithoutValidation() {
+  void testNoOperatonInSourceShouldWithoutValidation() {
     try {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
@@ -822,7 +832,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testEmptyOperatonInSourceThrowsError() {
+  void testEmptyOperatonInSourceThrowsError() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonInSourceThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -839,7 +849,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testEmptyOperatonInSourceWithoutValidation() {
+  void testEmptyOperatonInSourceWithoutValidation() {
     try {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
@@ -851,7 +861,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testNoOperatonInTargetThrowsError() {
+  void testNoOperatonInTargetThrowsError() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInTargetThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -864,7 +874,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testNoOperatonInTargetWithoutValidation() {
+  void testNoOperatonInTargetWithoutValidation() {
     processEngineConfiguration.setDisableStrictCallActivityValidation(true);
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInTargetThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -880,7 +890,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testEmptyOperatonInTargetThrowsError() {
+  void testEmptyOperatonInTargetThrowsError() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonInTargetThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -893,7 +903,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testEmptyOperatonInTargetWithoutValidation() {
+  void testEmptyOperatonInTargetWithoutValidation() {
     try {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
@@ -905,7 +915,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testNoOperatonOutSourceThrowsError() {
+  void testNoOperatonOutSourceThrowsError() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutSourceThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -922,7 +932,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testNoOperatonOutSourceWithoutValidation() {
+  void testNoOperatonOutSourceWithoutValidation() {
     try {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
@@ -934,7 +944,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testEmptyOperatonOutSourceThrowsError() {
+  void testEmptyOperatonOutSourceThrowsError() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonOutSourceThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -951,7 +961,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testEmptyOperatonOutSourceWithoutValidation() {
+  void testEmptyOperatonOutSourceWithoutValidation() {
     try {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
@@ -963,7 +973,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testNoOperatonOutTargetThrowsError() {
+  void testNoOperatonOutTargetThrowsError() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutTargetThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -976,7 +986,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testNoOperatonOutTargetWithoutValidation() {
+  void testNoOperatonOutTargetWithoutValidation() {
     processEngineConfiguration.setDisableStrictCallActivityValidation(true);
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutTargetThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -992,7 +1002,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testEmptyOperatonOutTargetThrowsError() {
+  void testEmptyOperatonOutTargetThrowsError() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonOutTargetThrowsError");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -1005,7 +1015,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testEmptyOperatonOutTargetWithoutValidation() {
+  void testEmptyOperatonOutTargetWithoutValidation() {
     try {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
@@ -1018,7 +1028,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseProcessDefinitionTtl() {
+  void testParseProcessDefinitionTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions)
             .isNotNull()
@@ -1033,7 +1043,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseProcessDefinitionStringTtl() {
+  void testParseProcessDefinitionStringTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions)
             .isNotNull()
@@ -1045,7 +1055,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseProcessDefinitionMalformedStringTtl() {
+  void testParseProcessDefinitionMalformedStringTtl() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionMalformedStringTtl");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -1059,7 +1069,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseProcessDefinitionEmptyTtl() {
+  void testParseProcessDefinitionEmptyTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions)
             .isNotNull()
@@ -1071,7 +1081,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseProcessDefinitionWithoutTtl() {
+  void testParseProcessDefinitionWithoutTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions)
             .isNotNull()
@@ -1082,7 +1092,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseProcessDefinitionWithoutTtlWithConfigDefault() {
+  void testParseProcessDefinitionWithoutTtlWithConfigDefault() {
     processEngineConfiguration.setHistoryTimeToLive("6");
     try {
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
@@ -1101,7 +1111,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseProcessDefinitionWithoutTtlWithMalformedConfigDefault() {
+  void testParseProcessDefinitionWithoutTtlWithMalformedConfigDefault() {
     processEngineConfiguration.setHistoryTimeToLive("PP555DDD");
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -1116,7 +1126,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseProcessDefinitionWithoutTtlWithInvalidConfigDefault() {
+  void testParseProcessDefinitionWithoutTtlWithInvalidConfigDefault() {
     processEngineConfiguration.setHistoryTimeToLive("invalidValue");
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -1131,7 +1141,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseProcessDefinitionWithoutTtlWithNegativeConfigDefault() {
+  void testParseProcessDefinitionWithoutTtlWithNegativeConfigDefault() {
     processEngineConfiguration.setHistoryTimeToLive("-6");
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -1146,7 +1156,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseProcessDefinitionInvalidTtl() {
+  void testParseProcessDefinitionInvalidTtl() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionInvalidTtl");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -1158,7 +1168,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseProcessDefinitionNegativTtl() {
+  void testParseProcessDefinitionNegativTtl() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionNegativeTtl");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -1171,7 +1181,7 @@ public class BpmnParseTest {
 
   @Deployment
   @Test
-  public void testParseProcessDefinitionStartable() {
+  void testParseProcessDefinitionStartable() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertThat(processDefinitions)
             .isNotNull()
@@ -1181,7 +1191,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidExecutionListenerClassDefinition() {
+  void testInvalidExecutionListenerClassDefinition() {
     // given
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidExecutionListenerClassDefinition");
     DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -1197,7 +1207,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testInvalidExecutionListenerDelegateDefinition() {
+  void testInvalidExecutionListenerDelegateDefinition() {
     // given
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidExecutionListenerDelegateDefinition");
     DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -1213,7 +1223,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void shouldPreventXxeProcessing() {
+  void shouldPreventXxeProcessing() {
     // given
     String resource =
         TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionXXE");
@@ -1229,7 +1239,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void shouldAllowXxeProcessing() {
+  void shouldAllowXxeProcessing() {
     // given
     processEngineConfiguration.setEnableXxeProcessing(true);
     String resource =
@@ -1246,7 +1256,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testFeatureSecureProcessingRejectsDefinitionDueToAttributeLimit() {
+  void testFeatureSecureProcessingRejectsDefinitionDueToAttributeLimit() {
     // IBM JDKs do not check on attribute number limits, skip the test there
     assumeThat(System.getProperty("java.vm.vendor")).doesNotContain("IBM");
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionFSP");
@@ -1260,7 +1270,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testFeatureSecureProcessingAcceptsDefinitionWhenAttributeLimitOverridden() {
+  void testFeatureSecureProcessingAcceptsDefinitionWhenAttributeLimitOverridden() {
     // given
     System.setProperty("jdk.xml.elementAttributeLimit", "0");
 
@@ -1275,11 +1285,11 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testFeatureSecureProcessingRestrictExternalSchemaAccess() {
+  void testFeatureSecureProcessingRestrictExternalSchemaAccess() {
     // given
     // the external schema access property is not supported on certain
     // IBM JDK versions, in which case schema access cannot be restricted
-    Assume.assumeTrue(doesJdkSupportExternalSchemaAccessProperty());
+    Assumptions.assumeTrue(doesJdkSupportExternalSchemaAccessProperty());
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -1301,7 +1311,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testFeatureSecureProcessingAllowExternalSchemaAccess() {
+  void testFeatureSecureProcessingAllowExternalSchemaAccess() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -1319,7 +1329,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testTimerWithoutFullDefinition() {
+  void testTimerWithoutFullDefinition() {
     String timerWithoutDetails = "<?xml version='1.0' encoding='UTF-8'?>" +
           "<definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'" +
           "  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'" +
@@ -1344,7 +1354,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testSequenceFlowNoIdAndUnexistentDestination() {
+  void testSequenceFlowNoIdAndUnexistentDestination() {
     String incorrectSequenceFlow = "<?xml version='1.0' encoding='UTF-8'?>" +
           "<definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'" +
           "  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'" +
@@ -1369,7 +1379,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testMultipleTimerStartEvents() {
+  void testMultipleTimerStartEvents() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testMultipleTimerStartEvents");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
@@ -1389,7 +1399,7 @@ public class BpmnParseTest {
 
   @Test
   @WatchLogger(loggerNames = {"org.operaton.bpm.engine.bpmn.parser"}, level = "INFO")
-  public void testIntermediateCatchTimerEventWithTimeCycleNotRecommendedInfoMessage() {
+  void testIntermediateCatchTimerEventWithTimeCycleNotRecommendedInfoMessage() {
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
         .intermediateCatchEvent("timerintermediatecatchevent1")
@@ -1404,7 +1414,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testParseEmptyExtensionProperty() {
+  void testParseEmptyExtensionProperty() {
     // given process definition with empty property (key and value = null) is deployed
     // when
     repositoryService.createDeployment()

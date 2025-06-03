@@ -16,18 +16,37 @@
  */
 package org.operaton.bpm.engine.test.bpmn.callactivity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.EventSubscription;
+import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -39,29 +58,32 @@ import org.operaton.bpm.model.bpmn.instance.CallActivity;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonIn;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOut;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 /**
  * @author Joram Barrez
  * @author Nils Preusker
  * @author Bernd Ruecker
  * @author Falko Menge
  */
-public class CallActivityTest extends PluggableProcessEngineTest {
+class CallActivityTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+  RepositoryService repositoryService;
+  HistoryService historyService;
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
   @Test
-  public void testCallSimpleSubProcess() {
+  void testCallSimpleSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     // one task in the subprocess should be active after starting the process instance
@@ -85,11 +107,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcessParentVariableAccess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcessParentVariableAccess.bpmn20.xml"
   })
   @Test
-  public void testAccessSuperInstanceVariables() {
+  void testAccessSuperInstanceVariables() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     // one task in the subprocess should be active after starting the process instance
@@ -109,11 +131,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/concurrentSubProcessParentVariableAccess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/concurrentSubProcessParentVariableAccess.bpmn20.xml"
   })
   @Test
-  public void testAccessSuperInstanceVariablesFromConcurrentExecution() {
+  void testAccessSuperInstanceVariablesFromConcurrentExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     // one task in the subprocess should be active after starting the process instance
@@ -133,9 +155,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithExpressions.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testCallSimpleSubProcessWithExpressions() {
+  void testCallSimpleSubProcessWithExpressions() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
@@ -168,10 +190,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * subprocess leads to an end event in the super process instance.
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessEndsSuperProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessEndsSuperProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessEndsSuperProcess() {
+  void testSubProcessEndsSuperProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessEndsSuperProcess");
 
     // one task in the subprocess should be active after starting the process instance
@@ -186,10 +208,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallParallelSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleParallelSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallParallelSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleParallelSubProcess.bpmn20.xml"})
   @Test
-  public void testCallParallelSubProcess() {
+  void testCallParallelSubProcess() {
     runtimeService.startProcessInstanceByKey("callParallelSubProcess");
 
     // The two tasks in the parallel subprocess should be active
@@ -215,11 +237,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSequentialSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithExpressions.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess2.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithExpressions.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess2.bpmn20.xml"})
   @Test
-  public void testCallSequentialSubProcessWithExpressions() {
+  void testCallSequentialSubProcessWithExpressions() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSequentialSubProcess");
 
@@ -272,10 +294,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTimerOnCallActivity.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTimerOnCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testTimerOnCallActivity() {
+  void testTimerOnCallActivity() {
     // After process start, the task in the subprocess should be active
     runtimeService.startProcessInstanceByKey("timerOnCallActivity");
     TaskQuery taskQuery = taskService.createTaskQuery();
@@ -299,10 +321,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for handing over process variables to a sub process
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutput.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutput.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessWithDataInputOutput() {
+  void testSubProcessWithDataInputOutput() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("superVariable", "Hello from the super process.");
 
@@ -362,10 +384,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * api and passing only certain variables
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLimitedDataInputOutputTypedApi.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLimitedDataInputOutputTypedApi.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessWithLimitedDataInputOutputTypedApi() {
+  void testSubProcessWithLimitedDataInputOutputTypedApi() {
 
     TypedValue superVariable = Variables.stringValue(null);
     VariableMap vars = Variables.createVariables();
@@ -406,10 +428,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * api and passing all variables
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessAllDataInputOutputTypedApi.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessAllDataInputOutputTypedApi.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessWithAllDataInputOutputTypedApi() {
+  void testSubProcessWithAllDataInputOutputTypedApi() {
 
     TypedValue superVariable = Variables.stringValue(null);
     VariableMap vars = Variables.createVariables();
@@ -446,7 +468,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for handing over process variables without target attribute set
    */
   @Test
-  public void testSubProcessWithDataInputOutputWithoutTarget() {
+  void testSubProcessWithDataInputOutputWithoutTarget() {
     String processId = "subProcessDataInputOutputWithoutTarget";
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(processId)
@@ -507,10 +529,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for handing over a null process variables to a sub process
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutput.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutput.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessWithNullDataInput() {
+  void testSubProcessWithNullDataInput() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("subProcessDataInputOutput").getId();
 
     // the variable named "subVariable" is not set on process instance
@@ -555,10 +577,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for handing over a null process variables to a sub process
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutputAsExpression.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutputAsExpression.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessWithNullDataInputAsExpression() {
+  void testSubProcessWithNullDataInputAsExpression() {
     Map<String, Object> params = new HashMap<>();
     params.put("superVariable", null);
     String processInstanceId = runtimeService.startProcessInstanceByKey("subProcessDataInputOutput", params).getId();
@@ -603,10 +625,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutput.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutput.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessWithNullDataOutput() {
+  void testSubProcessWithNullDataOutput() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("subProcessDataInputOutput").getId();
 
     // the variable named "subVariable" is not set on process instance
@@ -657,10 +679,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutputAsExpression.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutputAsExpression.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessWithNullDataOutputAsExpression() {
+  void testSubProcessWithNullDataOutputAsExpression() {
     Map<String, Object> params = new HashMap<>();
     params.put("superVariable", null);
     String processInstanceId = runtimeService.startProcessInstanceByKey("subProcessDataInputOutput", params).getId();
@@ -729,10 +751,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for handing over process variables to a sub process
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcesses.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcesses.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testTwoSubProcesses() {
+  void testTwoSubProcesses() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
@@ -758,10 +780,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for handing all over process variables to a sub process
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessAllDataInputOutput.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessAllDataInputOutput.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessAllDataInputOutput() {
+  void testSubProcessAllDataInputOutput() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("superVariable", "Hello from the super process.");
     vars.put("testVariable", "Only a test.");
@@ -813,10 +835,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for handing all over process variables to a sub process
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessAllDataInputOutputWithAdditionalInputMapping.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessAllDataInputOutputWithAdditionalInputMapping.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessAllDataInputOutputWithAdditionalInputMapping() {
+  void testSubProcessAllDataInputOutputWithAdditionalInputMapping() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("superVariable", "Hello from the super process.");
     vars.put("testVariable", "Only a test.");
@@ -873,10 +895,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    *
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessAllDataInputOutput.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessAllDataInputOutput.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessAllDataOutput() {
+  void testSubProcessAllDataOutput() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessAllDataInputOutput");
 
@@ -914,10 +936,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalInputAllVariables.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalInputAllVariables.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessLocalInputAllVariables() {
+  void testSubProcessLocalInputAllVariables() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessLocalInputAllVariables");
     Task beforeCallActivityTask = taskService.createTaskQuery().singleResult();
 
@@ -955,10 +977,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalInputSingleVariable.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalInputSingleVariable.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessLocalInputSingleVariable() {
+  void testSubProcessLocalInputSingleVariable() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessLocalInputSingleVariable");
     Task beforeCallActivityTask = taskService.createTaskQuery().singleResult();
 
@@ -997,10 +1019,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalInputSingleVariableExpression.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalInputSingleVariableExpression.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessLocalInputSingleVariableExpression() {
+  void testSubProcessLocalInputSingleVariableExpression() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessLocalInputSingleVariableExpression");
     Task beforeCallActivityTask = taskService.createTaskQuery().singleResult();
 
@@ -1036,10 +1058,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalOutputAllVariables.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalOutputAllVariables.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessLocalOutputAllVariables() {
+  void testSubProcessLocalOutputAllVariables() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessLocalOutputAllVariables");
     Task beforeCallActivityTask = taskService.createTaskQuery().singleResult();
 
@@ -1076,10 +1098,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalOutputSingleVariable.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessLocalOutputSingleVariable.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessLocalOutputSingleVariable() {
+  void testSubProcessLocalOutputSingleVariable() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessLocalOutputSingleVariable");
     Task beforeCallActivityTask = taskService.createTaskQuery().singleResult();
 
@@ -1119,10 +1141,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for handing businessKey to a sub process
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessBusinessKeyInput.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessBusinessKeyInput.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSubProcessBusinessKeyInput() {
+  void testSubProcessBusinessKeyInput() {
     String businessKey = "myBusinessKey";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessBusinessKeyInput", businessKey);
 
@@ -1170,9 +1192,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithHashExpressions.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testCallSimpleSubProcessWithHashExpressions() {
+  void testCallSimpleSubProcessWithHashExpressions() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
@@ -1201,9 +1223,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testInterruptingEventSubProcessEventSubscriptions.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/interruptingEventSubProcessEventSubscriptions.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/interruptingEventSubProcessEventSubscriptions.bpmn20.xml"})
   @Test
-  public void testInterruptingMessageEventSubProcessEventSubscriptionsInsideCallActivity() {
+  void testInterruptingMessageEventSubProcessEventSubscriptionsInsideCallActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callInterruptingEventSubProcess");
 
     // one task in the call activity subprocess should be active after starting the process instance
@@ -1235,9 +1257,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testInterruptingEventSubProcessEventSubscriptions.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/interruptingEventSubProcessEventSubscriptions.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/interruptingEventSubProcessEventSubscriptions.bpmn20.xml"})
   @Test
-  public void testInterruptingSignalEventSubProcessEventSubscriptionsInsideCallActivity() {
+  void testInterruptingSignalEventSubProcessEventSubscriptionsInsideCallActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callInterruptingEventSubProcess");
 
     // one task in the call activity subprocess should be active after starting the process instance
@@ -1269,11 +1291,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testLiteralSourceExpression.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testLiteralSourceExpression.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
   @Test
-  public void testInputParameterLiteralSourceExpression() {
+  void testInputParameterLiteralSourceExpression() {
     runtimeService.startProcessInstanceByKey("process");
 
     String subInstanceId = runtimeService
@@ -1287,11 +1309,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testLiteralSourceExpression.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testLiteralSourceExpression.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
   @Test
-  public void testOutputParameterLiteralSourceExpression() {
+  void testOutputParameterLiteralSourceExpression() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     String taskId = taskService
@@ -1305,11 +1327,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataOutputOnError.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithError.bpmn"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataOutputOnError.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithError.bpmn"
   })
   @Test
-  public void testSubProcessDataOutputOnError() {
+  void testSubProcessDataOutputOnError() {
     String variableName = "subVariable";
     Object variableValue = "Hello from Subprocess";
 
@@ -1329,11 +1351,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataOutputOnThrownError.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithThrownError.bpmn"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataOutputOnThrownError.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithThrownError.bpmn"
   })
   @Test
-  public void testSubProcessDataOutputOnThrownError() {
+  void testSubProcessDataOutputOnThrownError() {
     String variableName = "subVariable";
     Object variableValue = "Hello from Subprocess";
 
@@ -1353,12 +1375,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcessesDataOutputOnError.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessCallErrorSubProcess.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithError.bpmn"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcessesDataOutputOnError.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessCallErrorSubProcess.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithError.bpmn"
   })
   @Test
-  public void testTwoSubProcessesDataOutputOnError() {
+  void testTwoSubProcessesDataOutputOnError() {
     String variableName = "subVariable";
     Object variableValue = "Hello from Subprocess";
 
@@ -1379,12 +1401,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcessesLimitedDataOutputOnError.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessCallErrorSubProcessWithLimitedOutMapping.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithError.bpmn"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcessesLimitedDataOutputOnError.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessCallErrorSubProcessWithLimitedOutMapping.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithError.bpmn"
   })
   @Test
-  public void testTwoSubProcessesLimitedDataOutputOnError() {
+  void testTwoSubProcessesLimitedDataOutputOnError() {
     String variableName1 = "subSubVariable1";
     String variableName2 = "subSubVariable2";
     String variableName3 = "subVariable";
@@ -1418,11 +1440,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityAdvancedTest.testCallProcessByVersionAsExpression.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityAdvancedTest.testCallProcessByVersionAsExpression.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
   })
   @Test
-  public void testCallCaseByVersionAsExpression() {
+  void testCallCaseByVersionAsExpression() {
     // given
 
     String bpmnResourceName = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
@@ -1460,11 +1482,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityAdvancedTest.testCallProcessByVersionAsDelegateExpression.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityAdvancedTest.testCallProcessByVersionAsDelegateExpression.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
   })
   @Test
-  public void testCallCaseByVersionAsDelegateExpression() {
+  void testCallCaseByVersionAsDelegateExpression() {
     processEngineConfiguration.getBeans().put("myDelegate", new MyVersionDelegate());
 
     // given
@@ -1502,9 +1524,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     repositoryService.deleteDeployment(thirdDeploymentId, true);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml"})
   @Test
-  public void testCallProcessByVersionTag() {
+  void testCallProcessByVersionTag() {
     // given
     BpmnModelInstance modelInstance = getModelWithCallActivityVersionTagBinding("ver_tag_1");
 
@@ -1521,9 +1543,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     cleanupDeployments();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml"})
   @Test
-  public void testCallProcessByVersionTagAsExpression() {
+  void testCallProcessByVersionTagAsExpression() {
     // given
     BpmnModelInstance modelInstance = getModelWithCallActivityVersionTagBinding("${versionTagExpr}");
 
@@ -1541,9 +1563,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     cleanupDeployments();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml"})
   @Test
-  public void testCallProcessByVersionTagAsDelegateExpression() {
+  void testCallProcessByVersionTagAsDelegateExpression() {
     // given
     processEngineConfiguration.getBeans().put("myDelegate", new MyVersionDelegate());
     BpmnModelInstance modelInstance = getModelWithCallActivityVersionTagBinding("${myDelegate.getVersionTag()}");
@@ -1562,7 +1584,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCallProcessWithoutVersionTag() {
+  void testCallProcessWithoutVersionTag() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -1584,7 +1606,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCallProcessByVersionTagNoneSubprocess() {
+  void testCallProcessByVersionTagNoneSubprocess() {
     // given
     BpmnModelInstance modelInstance = getModelWithCallActivityVersionTagBinding("ver_tag_1");
 
@@ -1600,9 +1622,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml"})
   @Test
-  public void testCallProcessByVersionTagTwoSubprocesses() {
+  void testCallProcessByVersionTagTwoSubprocesses() {
     // given
     BpmnModelInstance modelInstance = getModelWithCallActivityVersionTagBinding("ver_tag_1");
 
@@ -1623,11 +1645,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/orderProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/checkCreditProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/orderProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/checkCreditProcess.bpmn20.xml"
   })
   @Test
-  public void testOrderProcessWithCallActivity() {
+  void testOrderProcessWithCallActivity() {
     // After the process has started, the 'verify credit history' task should be active
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("orderProcess");
     TaskQuery taskQuery = taskService.createTaskQuery();
@@ -1649,11 +1671,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * Test case for checking deletion of process instances in call activity subprocesses
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
   @Test
-  public void testDeleteProcessInstanceInCallActivity() {
+  void testDeleteProcessInstanceInCallActivity() {
     // given
     runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
@@ -1692,10 +1714,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * </p>
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcesses.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcesses.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
-  public void testSingleDeletionWithTwoSubProcesses() {
+  void testSingleDeletionWithTwoSubProcesses() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
 
@@ -1738,12 +1760,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * </p>
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testNestedCallActivity.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testNestedCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
   @Test
-  public void testDeleteMultilevelProcessInstanceInCallActivity() {
+  void testDeleteMultilevelProcessInstanceInCallActivity() {
     // given
     runtimeService.startProcessInstanceByKey("nestedCallActivity");
 
@@ -1789,13 +1811,13 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * </p>
    */
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testNestedCallActivity.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testDoubleNestedCallActivity.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testNestedCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testDoubleNestedCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
   @Test
-  public void testDeleteDoubleNestedProcessInstanceInCallActivity() {
+  void testDeleteDoubleNestedProcessInstanceInCallActivity() {
     // given
     runtimeService.startProcessInstanceByKey("doubleNestedCallActivity");
 
@@ -1835,7 +1857,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testTransientVariableInputMapping() {
+  void testTransientVariableInputMapping() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("simpleSubProcess")
       .startEvent()
@@ -1863,7 +1885,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
 
   @Test
-  public void testTransientVariableOutputMapping() {
+  void testTransientVariableOutputMapping() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("superProcess")
       .startEvent()

@@ -16,6 +16,21 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -32,64 +47,41 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
  */
-public class BoundaryTimerNonInterruptingEventTest {
+class BoundaryTimerNonInterruptingEventTest {
 
   protected static final String TIMER_NON_INTERRUPTING_EVENT = "org/operaton/bpm/engine/test/bpmn/event/timer/BoundaryTimerNonInterruptingEventTest.shouldReevaluateTimerCycleWhenDue.bpmn20.xml";
 
   protected static final long ONE_HOUR = TimeUnit.HOURS.toMillis(1L);
   protected static final long TWO_HOURS = TimeUnit.HOURS.toMillis(2L);
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
+  TaskService taskService;
+  boolean reevaluateTimeCycleWhenDue;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected RepositoryService repositoryService;
-  protected ManagementService managementService;
-  protected TaskService taskService;
-  protected boolean reevaluateTimeCycleWhenDue;
-
-  @Before
-  public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    repositoryService = engineRule.getRepositoryService();
-    managementService = engineRule.getManagementService();
-    taskService = engineRule.getTaskService();
+  @BeforeEach
+  void setUp() {
     reevaluateTimeCycleWhenDue = processEngineConfiguration.isReevaluateTimeCycleWhenDue();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
     processEngineConfiguration.getBeans().remove("myCycleTimerBean");
     processEngineConfiguration.setReevaluateTimeCycleWhenDue(reevaluateTimeCycleWhenDue);
@@ -97,7 +89,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testMultipleTimersOnUserTask() {
+  void testMultipleTimersOnUserTask() {
     // Set the clock fixed
     Date startTime = new Date();
 
@@ -159,7 +151,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testTimerOnMiUserTask() {
+  void testTimerOnMiUserTask() {
 
     // After process start, there should be 1 timer created
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimersOnUserTask");
@@ -202,7 +194,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testJoin() {
+  void testJoin() {
     // After process start, there should be 3 timers created
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testJoin");
     Task task1 = taskService.createTaskQuery().singleResult();
@@ -233,7 +225,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testTimerOnConcurrentMiTasks() {
+  void testTimerOnConcurrentMiTasks() {
 
     // After process start, there should be 1 timer created
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("timerOnConcurrentMiTasks");
@@ -280,7 +272,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testTimerOnConcurrentTasks() {
+  void testTimerOnConcurrentTasks() {
     String procId = runtimeService.startProcessInstanceByKey("nonInterruptingOnConcurrentTasks").getId();
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
@@ -303,7 +295,7 @@ public class BoundaryTimerNonInterruptingEventTest {
   // Difference with previous test: now the join will be reached first
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/timer/BoundaryTimerNonInterruptingEventTest.testTimerOnConcurrentTasks.bpmn20.xml"})
   @Test
-  public void testTimerOnConcurrentTasks2() {
+  void testTimerOnConcurrentTasks2() {
     String procId = runtimeService.startProcessInstanceByKey("nonInterruptingOnConcurrentTasks").getId();
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
@@ -327,7 +319,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testTimerWithCycle() {
+  void testTimerWithCycle() {
     runtimeService.startProcessInstanceByKey("nonInterruptingCycle").getId();
     TaskQuery tq = taskService.createTaskQuery().taskDefinitionKey("timerFiredTask");
     assertThat(tq.count()).isZero();
@@ -348,7 +340,7 @@ public class BoundaryTimerNonInterruptingEventTest {
    */
   @Deployment
   @Test
-  public void testTimerOnEmbeddedSubprocess() {
+  void testTimerOnEmbeddedSubprocess() {
     String id = runtimeService.startProcessInstanceByKey("nonInterruptingTimerOnEmbeddedSubprocess").getId();
 
     TaskQuery tq = taskService.createTaskQuery().taskAssignee("kermit");
@@ -376,7 +368,7 @@ public class BoundaryTimerNonInterruptingEventTest {
    * see http://jira.codehaus.org/browse/ACT-1106
    */
   @Test
-  public void testReceiveTaskWithBoundaryTimer(){
+  void testReceiveTaskWithBoundaryTimer(){
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("timeCycle", "R/PT1H");
 
@@ -409,7 +401,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testTimerOnConcurrentSubprocess() {
+  void testTimerOnConcurrentSubprocess() {
     String procId = runtimeService.startProcessInstanceByKey("testTimerOnConcurrentSubprocess").getId();
     assertThat(taskService.createTaskQuery().count()).isEqualTo(4);
 
@@ -435,9 +427,9 @@ public class BoundaryTimerNonInterruptingEventTest {
     testHelper.assertProcessEnded(procId);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/bpmn/event/timer/BoundaryTimerNonInterruptingEventTest.testTimerOnConcurrentSubprocess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/BoundaryTimerNonInterruptingEventTest.testTimerOnConcurrentSubprocess.bpmn20.xml")
   @Test
-  public void testTimerOnConcurrentSubprocess2() {
+  void testTimerOnConcurrentSubprocess2() {
     String procId = runtimeService.startProcessInstanceByKey("testTimerOnConcurrentSubprocess").getId();
     assertThat(taskService.createTaskQuery().count()).isEqualTo(4);
 
@@ -465,7 +457,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testMultipleOutgoingSequenceFlows() {
+  void testMultipleOutgoingSequenceFlows() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -487,7 +479,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testMultipleOutgoingSequenceFlowsOnSubprocess() {
+  void testMultipleOutgoingSequenceFlowsOnSubprocess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -543,7 +535,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testMultipleOutgoingSequenceFlowsOnSubprocessMi() {
+  void testMultipleOutgoingSequenceFlowsOnSubprocessMi() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -565,7 +557,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/timer/BoundaryTimerNonInterruptingEventTest.testTimerWithCycle.bpmn20.xml"})
   @Test
-  public void testTimeCycle() {
+  void testTimeCycle() {
     // given
     runtimeService.startProcessInstanceByKey("nonInterruptingCycle");
 
@@ -585,7 +577,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testFailingTimeCycle() {
+  void testFailingTimeCycle() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -637,7 +629,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testUpdateTimerRepeat() {
+  void testUpdateTimerRepeat() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     Calendar currentTime = Calendar.getInstance();
     ClockUtil.setCurrentTime(currentTime.getTime());
@@ -696,7 +688,7 @@ public class BoundaryTimerNonInterruptingEventTest {
   }
 
   @Test
-  public void shouldExecuteTimerJobOnOrAfterDueDate() {
+  void shouldExecuteTimerJobOnOrAfterDueDate() {
     // given
     Date currentTime = ClockTestUtil.setClockToDateWithoutMilliseconds();
     Date timerDueDate = Date.from(currentTime.toInstant().plusMillis(3000L));
@@ -731,8 +723,9 @@ public class BoundaryTimerNonInterruptingEventTest {
     assertThat(timerJob.getDuedate()).isEqualTo(timerDueDate);
   }
 
-  @Test(timeout = 10000L)
-  public void shouldExecuteTimeoutListenerJobOnOrAfterDueDate() {
+  @Test
+  @Timeout(value = 10000L, unit = TimeUnit.MILLISECONDS)
+  void shouldExecuteTimeoutListenerJobOnOrAfterDueDate() {
     // given
     Date currentTime = ClockTestUtil.setClockToDateWithoutMilliseconds();
     Date timerDueDate = Date.from(currentTime.toInstant().plusMillis(3000L));
@@ -767,7 +760,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Test
   @Deployment(resources = {TIMER_NON_INTERRUPTING_EVENT})
-  public void shouldReevaluateLongerTimerCycleWhenDue() {
+  void shouldReevaluateLongerTimerCycleWhenDue() {
     // given
     ClockUtil.setCurrentTime(new Date(1457326800000L));
 
@@ -804,7 +797,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Test
   @Deployment(resources = {TIMER_NON_INTERRUPTING_EVENT})
-  public void shouldReevaluateShorterTimerCycleWhenDue() {
+  void shouldReevaluateShorterTimerCycleWhenDue() {
     // given
     ClockUtil.setCurrentTime(new Date(1457326800000L));
 
@@ -841,7 +834,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Test
   @Deployment(resources = {TIMER_NON_INTERRUPTING_EVENT})
-  public void shouldNotReevaluateTimerCycleIfCycleDoesNotChange() {
+  void shouldNotReevaluateTimerCycleIfCycleDoesNotChange() {
     // given
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R2/PT1H");
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
@@ -863,7 +856,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Test
   @Deployment(resources = {TIMER_NON_INTERRUPTING_EVENT})
-  public void shouldNotReevaluateTimerCycleWhenNewCycleIsIncorrect() {
+  void shouldNotReevaluateTimerCycleWhenNewCycleIsIncorrect() {
     // given
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R2/PT1H");
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);

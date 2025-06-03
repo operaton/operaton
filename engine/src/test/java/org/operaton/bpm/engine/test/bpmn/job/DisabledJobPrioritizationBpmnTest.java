@@ -20,32 +20,41 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class DisabledJobPrioritizationBpmnTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class DisabledJobPrioritizationBpmnTest {
 
-  @Before
-  public void setUp() {
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+
+  @BeforeEach
+  void setUp() {
     processEngineConfiguration.setProducePrioritizedJobs(false);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setProducePrioritizedJobs(true);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testJobPriority() {
+  void testJobPriority() {
     // when
     runtimeService
       .createProcessInstanceByKey("jobPrioProcess")

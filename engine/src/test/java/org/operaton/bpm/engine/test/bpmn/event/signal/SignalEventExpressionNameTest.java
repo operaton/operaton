@@ -21,24 +21,35 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Johannes Heinemann
  */
-public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class SignalEventExpressionNameTest {
+
+  RuntimeService runtimeService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
 
   @Deployment
   @Test
-  public void testSignalCatchIntermediate() {
+  void testSignalCatchIntermediate() {
 
     // given
     HashMap<String, Object> variables = new HashMap<>();
@@ -54,7 +65,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalCatchIntermediate.bpmn20.xml"})
   @Test
-  public void testSignalCatchIntermediateActsOnEventReceive() {
+  void testSignalCatchIntermediateActsOnEventReceive() {
 
     // given
     HashMap<String, Object> variables = new HashMap<>();
@@ -72,7 +83,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalCatchIntermediate.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalThrowIntermediate.bpmn20.xml"})
   @Test
-  public void testSignalThrowCatchIntermediate() {
+  void testSignalThrowCatchIntermediate() {
 
     // given
     HashMap<String, Object> variables = new HashMap<>();
@@ -94,7 +105,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalCatchIntermediate.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalThrowEnd.bpmn20.xml"})
   @Test
-  public void testSignalThrowEndCatchIntermediate() {
+  void testSignalThrowEndCatchIntermediate() {
 
     // given
     HashMap<String, Object> variables = new HashMap<>();
@@ -116,7 +127,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalCatchBoundary.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalThrowIntermediate.bpmn20.xml"})
   @Test
-  public void testSignalCatchBoundary() {
+  void testSignalCatchBoundary() {
 
     // given
     HashMap<String, Object> variables = new HashMap<>();
@@ -136,7 +147,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalStartEvent.bpmn20.xml"})
   @Test
-  public void testSignalStartEvent() {
+  void testSignalStartEvent() {
 
     // given
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-foo").count()).isEqualTo(1);
@@ -152,7 +163,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSignalStartEventInEventSubProcess() {
+  void testSignalStartEventInEventSubProcess() {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalStartEventInEventSubProcess");
@@ -180,7 +191,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalStartEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.throwAlertSignalAsync.bpmn20.xml"})
   @Test
-  public void testAsyncSignalStartEvent() {
+  void testAsyncSignalStartEvent() {
     ProcessDefinition catchingProcessDefinition = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("startBySignal")
@@ -207,7 +218,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalCatchIntermediate.bpmn20.xml"})
   @Test
-  public void testSignalExpressionErrorHandling() {
+  void testSignalExpressionErrorHandling() {
 
     String expectedErrorMessage = "Unknown property used in expression: alert-${var}. Cannot resolve identifier 'var'";
 

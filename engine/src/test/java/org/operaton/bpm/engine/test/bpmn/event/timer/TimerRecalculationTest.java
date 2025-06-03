@@ -16,7 +16,22 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupJobHandler;
@@ -25,18 +40,8 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.After;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
@@ -45,12 +50,22 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Tobias Metzke
  */
 
-public class TimerRecalculationTest extends PluggableProcessEngineTest {
+class TimerRecalculationTest {
 	
-  private Set<String> jobIds = new HashSet<>();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  ManagementService managementService;
+  RuntimeService runtimeService;
+  HistoryService historyService;
   
-  @After
-  public void tearDown() {
+  private Set<String> jobIds = new HashSet<>();
+
+  @AfterEach
+  void tearDown() {
     clearMeterLog();
 
     for (String jobId : jobIds) {
@@ -60,9 +75,9 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
     
     jobIds = new HashSet<>();
   }
-	  
+
   @Test
-  public void testUnknownId() {
+  void testUnknownId() {
     try {
       // when
       managementService.recalculateJobDuedate("unknownID", false);
@@ -72,9 +87,9 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
       testRule.assertTextPresent("No job found with id '" + "unknownID", pe.getMessage());
     }
   }
-  
+
   @Test
-  public void testEmptyId() {
+  void testEmptyId() {
     try {
       // when
       managementService.recalculateJobDuedate("", false);
@@ -84,9 +99,9 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
       testRule.assertTextPresent("The job id is mandatory: jobId is empty", pe.getMessage());
     }
   }
-  
+
   @Test
-  public void testNullId() {
+  void testNullId() {
     try {
       // when
       managementService.recalculateJobDuedate(null, false);
@@ -99,7 +114,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testFinishedJob() {
+  void testFinishedJob() {
     // given
     HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("dueDate", new Date());
@@ -127,9 +142,9 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
       testRule.assertTextPresent("No job found with id '" + jobId, pe.getMessage());
     }
   }
-  
+
   @Test
-  public void testEverLivingJob() {
+  void testEverLivingJob() {
     // given
     Job job = historyService.cleanUpHistoryAsync(true);
     jobIds.add(job.getId());
@@ -137,10 +152,10 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
     // when & then
     tryRecalculateUnsupported(job, HistoryCleanupJobHandler.TYPE);
   }
-  
+
   @Deployment
   @Test
-  public void testMessageJob() {
+  void testMessageJob() {
     // given
     runtimeService.startProcessInstanceByKey("asyncService");
     Job job = managementService.createJobQuery().singleResult();

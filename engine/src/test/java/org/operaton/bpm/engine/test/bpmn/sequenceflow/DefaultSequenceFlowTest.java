@@ -18,11 +18,13 @@ package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.gateway.ExclusiveGatewayTest;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 
 /**
@@ -30,11 +32,14 @@ import org.junit.Test;
  * 
  * @author Joram Barrez
  */
-public class DefaultSequenceFlowTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class DefaultSequenceFlowTest {
   
+  RuntimeService runtimeService;
+
   @Deployment
   @Test
-  public void testDefaultSequenceFlowOnTask() {
+  void testDefaultSequenceFlowOnTask() {
     String procId = runtimeService.startProcessInstanceByKey("defaultSeqFlow",
             CollectionUtil.singletonMap("input", 2)).getId();
     assertThat(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task2").singleResult()).isNotNull();

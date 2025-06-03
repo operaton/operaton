@@ -26,6 +26,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.joda.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -50,21 +53,18 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
-import org.joda.time.LocalDateTime;
-import org.junit.Before;
-import org.junit.Test;
 
 
 /**
  * @author Joram Barrez
  */
-public class TaskListenerTest extends AbstractTaskListenerTest {
+class TaskListenerTest extends AbstractTaskListenerTest {
   /*
   Testing use-cases when Task Events are thrown and caught by Task Listeners
    */
 
-  @Before
-  public void resetListenerCounters() {
+  @BeforeEach
+  void resetListenerCounters() {
     VariablesCollectingListener.reset();
   }
 
@@ -72,7 +72,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.bpmn20.xml"})
-  public void testTaskCreateListener() {
+  void testTaskCreateListener() {
     runtimeService.startProcessInstanceByKey("taskListenerProcess");
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Schedule meeting");
@@ -80,7 +80,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testCompleteTaskInCreateEventTaskListener() {
+  void testCompleteTaskInCreateEventTaskListener() {
     // given process with user task and task create listener
     BpmnModelInstance modelInstance =
         Bpmn.createExecutableProcess("startToEnd")
@@ -100,7 +100,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testCompleteTaskInCreateEventTaskListenerWithIdentityLinks() {
+  void testCompleteTaskInCreateEventTaskListenerWithIdentityLinks() {
     // given process with user task, identity links and task create listener
     BpmnModelInstance modelInstance =
         Bpmn.createExecutableProcess("startToEnd")
@@ -122,7 +122,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testCompleteTaskInCreateEventListenerWithFollowingCallActivity() {
+  void testCompleteTaskInCreateEventListenerWithFollowingCallActivity() {
     final BpmnModelInstance subProcess = Bpmn.createExecutableProcess("subProc")
                                              .startEvent()
                                              .userTask("calledTask")
@@ -149,7 +149,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.bpmn20.xml"})
-  public void testTaskCompleteListener() {
+  void testTaskCompleteListener() {
     TaskDeleteListener.clear();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess");
     assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isNull();
@@ -172,7 +172,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.bpmn20.xml"})
-  public void testTaskDeleteListenerByProcessDeletion() {
+  void testTaskDeleteListenerByProcessDeletion() {
     TaskDeleteListener.clear();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess");
 
@@ -191,7 +191,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.bpmn20.xml"})
-  public void testTaskDeleteListenerByBoundaryEvent() {
+  void testTaskDeleteListenerByBoundaryEvent() {
     TaskDeleteListener.clear();
     runtimeService.startProcessInstanceByKey("taskListenerProcess");
 
@@ -209,7 +209,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testActivityInstanceIdOnDeleteInCalledProcess() {
+  void testActivityInstanceIdOnDeleteInCalledProcess() {
     // given
     RecorderTaskListener.clear();
 
@@ -244,7 +244,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testVariableAccessOnDeleteInCalledProcess() {
+  void testVariableAccessOnDeleteInCalledProcess() {
     // given
     VariablesCollectingListener.reset();
 
@@ -282,7 +282,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.bpmn20.xml"})
-  public void testTaskListenerWithExpression() {
+  void testTaskListenerWithExpression() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess");
     assertThat(runtimeService.getVariable(processInstance.getId(), "greeting2")).isNull();
 
@@ -295,7 +295,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testScriptListener() {
+  void testScriptListener() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -323,10 +323,10 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.testScriptResourceListener.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/tasklistener/taskListener.groovy"
+      "org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.testScriptResourceListener.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/tasklistener/taskListener.groovy"
   })
-  public void testScriptResourceListener() {
+  void testScriptResourceListener() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -355,7 +355,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   // UPDATE Task Listener tests
 
   @Test
-  public void testUpdateTaskListenerOnAssign() {
+  void testUpdateTaskListenerOnAssign() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -370,7 +370,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnOwnerSet() {
+  void testUpdateTaskListenerOnOwnerSet() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -384,7 +384,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnUserIdLinkAdd() {
+  void testUpdateTaskListenerOnUserIdLinkAdd() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -398,7 +398,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnUserIdLinkDelete() {
+  void testUpdateTaskListenerOnUserIdLinkDelete() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -413,7 +413,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnGroupIdLinkAdd() {
+  void testUpdateTaskListenerOnGroupIdLinkAdd() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -427,7 +427,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnGroupIdLinkDelete() {
+  void testUpdateTaskListenerOnGroupIdLinkDelete() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -442,7 +442,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnTaskResolve() {
+  void testUpdateTaskListenerOnTaskResolve() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -456,7 +456,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnDelegate() {
+  void testUpdateTaskListenerOnDelegate() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -470,7 +470,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnClaim() {
+  void testUpdateTaskListenerOnClaim() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -484,7 +484,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnPrioritySet() {
+  void testUpdateTaskListenerOnPrioritySet() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -498,7 +498,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnTaskFormSubmit() {
+  void testUpdateTaskListenerOnTaskFormSubmit() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     engineRule.getRuntimeService().startProcessInstanceByKey("process");
@@ -515,7 +515,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnPropertyUpdate() {
+  void testUpdateTaskListenerOnPropertyUpdate() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -530,7 +530,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnPropertyUpdateOnlyOnce() {
+  void testUpdateTaskListenerOnPropertyUpdateOnlyOnce() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -548,7 +548,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void testUpdateTaskListenerOnCommentCreate() {
+  void testUpdateTaskListenerOnCommentCreate() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -564,7 +564,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void testUpdateTaskListenerOnCommentAdd() {
+  void testUpdateTaskListenerOnCommentAdd() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -580,7 +580,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void testUpdateTaskListenerOnAttachmentCreate() {
+  void testUpdateTaskListenerOnAttachmentCreate() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -596,7 +596,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void testUpdateTaskListenerOnAttachmentUpdate() {
+  void testUpdateTaskListenerOnAttachmentUpdate() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -615,7 +615,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnAttachmentDelete() {
+  void testUpdateTaskListenerOnAttachmentDelete() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -632,7 +632,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnAttachmentDeleteWithTaskId() {
+  void testUpdateTaskListenerOnAttachmentDeleteWithTaskId() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -649,7 +649,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnSetLocalVariable() {
+  void testUpdateTaskListenerOnSetLocalVariable() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -664,7 +664,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnSetLocalVariables() {
+  void testUpdateTaskListenerOnSetLocalVariables() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -684,7 +684,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnSetVariableInTaskScope() {
+  void testUpdateTaskListenerOnSetVariableInTaskScope() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -700,7 +700,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerOnSetVariableInHigherScope() {
+  void testUpdateTaskListenerOnSetVariableInHigherScope() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_UPDATE);
     runtimeService.startProcessInstanceByKey("process");
@@ -715,7 +715,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testUpdateTaskListenerInvokedBeforeConditionalEventsOnSetVariable() {
+  void testUpdateTaskListenerInvokedBeforeConditionalEventsOnSetVariable() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -747,7 +747,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testAssignmentTaskListenerWhenSavingTask() {
+  void testAssignmentTaskListenerWhenSavingTask() {
     // given
     createAndDeployModelWithTaskEventsRecorderOnUserTask(TaskListener.EVENTNAME_ASSIGNMENT);
     runtimeService.startProcessInstanceByKey("process");
@@ -765,7 +765,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testTimeoutTaskListenerDuration() {
+  void testTimeoutTaskListenerDuration() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
 
@@ -779,7 +779,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testTimeoutTaskListenerDate() throws ParseException {
+  void testTimeoutTaskListenerDate() throws ParseException {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
 
@@ -793,7 +793,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testTimeoutTaskListenerCycle() {
+  void testTimeoutTaskListenerCycle() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
 
@@ -809,7 +809,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testMultipleTimeoutTaskListeners() {
+  void testMultipleTimeoutTaskListeners() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
 
@@ -827,7 +827,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.testTimeoutTaskListenerDuration.bpmn20.xml")
-  public void testTimeoutTaskListenerNotCalledWhenTaskCompleted() {
+  void testTimeoutTaskListenerNotCalledWhenTaskCompleted() {
     // given
     JobQuery jobQuery = managementService.createJobQuery();
     TaskQuery taskQuery = taskService.createTaskQuery();
@@ -847,7 +847,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testTimeoutTaskListenerNotCalledWhenTaskCompletedByBoundaryEvent() {
+  void testTimeoutTaskListenerNotCalledWhenTaskCompletedByBoundaryEvent() {
     // given
     JobQuery jobQuery = managementService.createJobQuery();
     runtimeService.startProcessInstanceByKey("process");
@@ -867,7 +867,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testRecalculateTimeoutTaskListenerDuedateCreationDateBased() {
+  void testRecalculateTimeoutTaskListenerDuedateCreationDateBased() {
     // given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process", Variables.putValue("duration", "PT1H"));
 
@@ -891,7 +891,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.testRecalculateTimeoutTaskListenerDuedateCreationDateBased.bpmn20.xml")
-  public void testRecalculateTimeoutTaskListenerDuedateCurrentDateBased() {
+  void testRecalculateTimeoutTaskListenerDuedateCurrentDateBased() {
     // given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process", Variables.putValue("duration", "PT1H"));
 
@@ -914,7 +914,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testRecalculateTimeoutTaskListenerDuedateCreationDateBasedWithDefinedBoundaryEvent() {
+  void testRecalculateTimeoutTaskListenerDuedateCreationDateBasedWithDefinedBoundaryEvent() {
     // given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process", Variables.putValue("duration", "PT1H"));
 

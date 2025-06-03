@@ -18,20 +18,32 @@ package org.operaton.bpm.engine.test.bpmn.exclusive;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Stefan Hentschel
  */
-public class ExclusiveStartEventTest extends PluggableProcessEngineTest {
+class ExclusiveStartEventTest {
   
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  ManagementService managementService;
+
   @Deployment
   @Test
-  public void testNonExclusiveStartEvent() {
+  void testNonExclusiveStartEvent() {
     // start process 
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 non-exclusive job in the database:
@@ -47,7 +59,7 @@ public class ExclusiveStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExclusiveStartEvent() {
+  void testExclusiveStartEvent() {
     // start process 
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 exclusive job in the database:

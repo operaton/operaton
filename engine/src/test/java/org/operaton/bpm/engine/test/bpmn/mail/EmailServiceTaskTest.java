@@ -19,10 +19,6 @@ package org.operaton.bpm.engine.test.bpmn.mail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import jakarta.activation.DataHandler;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,10 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Test;
 import org.subethamail.wiser.WiserMessage;
+
+import jakarta.activation.DataHandler;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 
 /**
@@ -46,7 +46,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testSimpleTextMail() {
+  void testSimpleTextMail() {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<WiserMessage> messages = wiser.getMessages();
@@ -60,7 +60,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testSimpleTextMailMultipleRecipients() {
+  void testSimpleTextMailMultipleRecipients() {
     runtimeService.startProcessInstanceByKey("simpleTextOnlyMultipleRecipients");
 
     // 3 recipients == 3 emails in wiser with different receivers
@@ -81,7 +81,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testTextMailExpressions() {
+  void testTextMailExpressions() {
 
     String sender = "mispiggy@activiti.org";
     String recipient = "fozziebear@activiti.org";
@@ -106,7 +106,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testCcAndBcc() {
+  void testCcAndBcc() {
     runtimeService.startProcessInstanceByKey("ccAndBcc");
 
     List<WiserMessage> messages = wiser.getMessages();
@@ -120,7 +120,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testHtmlMail() {
+  void testHtmlMail() {
     runtimeService.startProcessInstanceByKey("htmlMail", CollectionUtil.singletonMap("gender", "male"));
 
     List<WiserMessage> messages = wiser.getMessages();
@@ -130,7 +130,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testSendEmail() throws MessagingException {
+  void testSendEmail() throws MessagingException {
 
     String from = "ordershipping@activiti.org";
     boolean male = true;

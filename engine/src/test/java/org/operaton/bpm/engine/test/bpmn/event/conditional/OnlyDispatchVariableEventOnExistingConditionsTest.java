@@ -16,31 +16,31 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.CONDITIONAL_EVENT_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.CONDITIONAL_MODEL;
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.TASK_WITH_CONDITION_ID;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.persistence.entity.DelayedVariableEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessInstanceWithVariablesImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class OnlyDispatchVariableEventOnExistingConditionsTest {
+class OnlyDispatchVariableEventOnExistingConditionsTest {
 
   public static class CheckDelayedVariablesDelegate implements JavaDelegate {
     @Override
@@ -71,11 +71,13 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
     }
   }
 
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
 
   @Test
-  public void testProcessWithIntermediateConditionalEvent() {
+  void testProcessWithIntermediateConditionalEvent() {
     //given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -100,7 +102,7 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
   }
 
   @Test
-  public void testProcessWithBoundaryConditionalEvent() {
+  void testProcessWithBoundaryConditionalEvent() {
     //given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -130,7 +132,7 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
   }
 
   @Test
-  public void testProcessWithEventSubProcessConditionalEvent() {
+  void testProcessWithEventSubProcessConditionalEvent() {
     //given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -162,7 +164,7 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
   }
 
   @Test
-  public void testProcessWithoutConditionalEvent() {
+  void testProcessWithoutConditionalEvent() {
     //given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()

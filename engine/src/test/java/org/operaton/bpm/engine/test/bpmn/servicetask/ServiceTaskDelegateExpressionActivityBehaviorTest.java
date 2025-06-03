@@ -22,21 +22,28 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.Collections;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.exception.NullValueException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Ronny Bräunlich
  *
  */
-public class ServiceTaskDelegateExpressionActivityBehaviorTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ServiceTaskDelegateExpressionActivityBehaviorTest {
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testExceptionThrownBySecondScopeServiceTaskIsNotHandled() {
+  void testExceptionThrownBySecondScopeServiceTaskIsNotHandled() {
     Map<Object, Object> beans = processEngineConfiguration.getBeans();
     beans.put("dummyServiceTask", new DummyServiceTask());
     processEngineConfiguration.setBeans(beans);

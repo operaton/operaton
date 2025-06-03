@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -26,14 +28,12 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class MixedConditionalEventTest extends AbstractConditionalEventTestCase {
+class MixedConditionalEventTest extends AbstractConditionalEventTestCase {
 
   protected static final String TASK_AFTER_CONDITIONAL_BOUNDARY_EVENT = "Task after conditional boundary event";
   protected static final String TASK_AFTER_CONDITIONAL_START_EVENT = "Task after conditional start event";
@@ -84,7 +84,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
 
   @Test
-  public void testSetVariableOnInputMapping() {
+  void testSetVariableOnInputMapping() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -111,7 +111,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testSetVariableOnOutputMapping() {
+  void testSetVariableOnOutputMapping() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -138,7 +138,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
 
   @Test
-  public void testNonInterruptingSetVariableOnInputMapping() {
+  void testNonInterruptingSetVariableOnInputMapping() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -165,7 +165,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testNonInterruptingSetVariableOnOutputMapping() {
+  void testNonInterruptingSetVariableOnOutputMapping() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -197,7 +197,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   // execution listener in sub process //////////////////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testSetVariableOnStartExecutionListenerInSubProcess() {
+  void testSetVariableOnStartExecutionListenerInSubProcess() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
@@ -229,7 +229,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testSetVariableOnEndExecutionListenerInSubProcess() {
+  void testSetVariableOnEndExecutionListenerInSubProcess() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -261,7 +261,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
 
   @Test
-  public void testNonInterruptingSetVariableOnStartExecutionListenerInSubProcess() {
+  void testNonInterruptingSetVariableOnStartExecutionListenerInSubProcess() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
@@ -297,7 +297,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testNonInterruptingSetVariableOnEndExecutionListenerInSubProcess() {
+  void testNonInterruptingSetVariableOnEndExecutionListenerInSubProcess() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -334,7 +334,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
 
   @Test
-  public void testSetVariableOnInputMappingInSubProcess() {
+  void testSetVariableOnInputMappingInSubProcess() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
@@ -368,7 +368,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testSetVariableOnOutputMappingInSubProcess() {
+  void testSetVariableOnOutputMappingInSubProcess() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -400,7 +400,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
 
   @Test
-  public void testNonInterruptingSetVariableOnInputMappingInSubProcess() {
+  void testNonInterruptingSetVariableOnInputMappingInSubProcess() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
@@ -432,7 +432,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testNonInterruptingSetVariableOnOutputMappingInSubProcess() {
+  void testNonInterruptingSetVariableOnOutputMappingInSubProcess() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -471,7 +471,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   // execution listener in sub process /////////////////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testSetVariableOnStartExecutionListenerInSubProcessWithBoundary() {
+  void testSetVariableOnStartExecutionListenerInSubProcessWithBoundary() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
@@ -500,7 +500,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testSetVariableOnEndExecutionListenerInSubProcessWithBoundary() {
+  void testSetVariableOnEndExecutionListenerInSubProcessWithBoundary() {
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -532,7 +532,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testNonInterruptingSetVariableOnStartExecutionListenerInSubProcessWithBoundary() {
+  void testNonInterruptingSetVariableOnStartExecutionListenerInSubProcessWithBoundary() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
@@ -567,7 +567,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testNonInterruptingSetVariableOnEndExecutionListenerInSubProcessWithBoundary() {
+  void testNonInterruptingSetVariableOnEndExecutionListenerInSubProcessWithBoundary() {
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -602,7 +602,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
 
   @Test
-  public void testSetVariableOnInputMappingInSubProcessWithBoundary() {
+  void testSetVariableOnInputMappingInSubProcessWithBoundary() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
@@ -634,7 +634,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testSetVariableOnOutputMappingInSubProcessWithBoundary() {
+  void testSetVariableOnOutputMappingInSubProcessWithBoundary() {
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -667,7 +667,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
 
   @Test
-  public void testNonInterruptingSetVariableOnInputMappingInSubProcessWithBoundary() {
+  void testNonInterruptingSetVariableOnInputMappingInSubProcessWithBoundary() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
@@ -702,7 +702,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testNonInterruptingSetVariableOnOutputMappingInSubProcessWithBoundary() {
+  void testNonInterruptingSetVariableOnOutputMappingInSubProcessWithBoundary() {
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -739,7 +739,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   //conditional start event event sub process on process instance level and on sub process /////////////////////////////
 
   @Test
-  public void testSetVariableInOutMappingOfCallActivity() {
+  void testSetVariableInOutMappingOfCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -780,7 +780,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
   }
 
   @Test
-  public void testNonInterruptingSetVariableInOutMappingOfCallActivity() {
+  void testNonInterruptingSetVariableInOutMappingOfCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -823,10 +823,10 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
     assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(3);
   }
 
-  @Ignore
+  @Disabled
   @Deployment
   @Test
-  public void testCompensationWithConditionalEvents() {
+  void testCompensationWithConditionalEvents() {
     //given process with compensation and conditional events
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -844,7 +844,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
   @Test
   @Deployment
-  public void testCompactedExecutionTree() {
+  void testCompactedExecutionTree() {
     //given process with concurrent execution and conditional events
     runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 

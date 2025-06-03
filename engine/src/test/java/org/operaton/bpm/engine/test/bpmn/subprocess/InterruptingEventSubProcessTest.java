@@ -16,28 +16,45 @@
  */
 package org.operaton.bpm.engine.test.bpmn.subprocess;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.runtime.*;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.runtime.EventSubscription;
+import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.JobQuery;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.task.TaskQuery;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Roman Smirnov
  */
-public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest {
+class InterruptingEventSubProcessTest {
 
-  @Deployment(resources="org/operaton/bpm/engine/test/bpmn/subprocess/InterruptingEventSubProcessTest.testCancelEventSubscriptions.bpmn")
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/InterruptingEventSubProcessTest.testCancelEventSubscriptions.bpmn")
   @Test
-  public void testCancelEventSubscriptionsWhenReceivingAMessage() {
+  void testCancelEventSubscriptionsWhenReceivingAMessage() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     TaskQuery taskQuery = taskService.createTaskQuery();
@@ -71,9 +88,9 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/bpmn/subprocess/InterruptingEventSubProcessTest.testCancelEventSubscriptions.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/InterruptingEventSubProcessTest.testCancelEventSubscriptions.bpmn")
   @Test
-  public void testCancelEventSubscriptionsWhenReceivingASignal() {
+  void testCancelEventSubscriptionsWhenReceivingASignal() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     TaskQuery taskQuery = taskService.createTaskQuery();
@@ -109,7 +126,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
 
   @Deployment
   @Test
-  public void testCancelTimer() {
+  void testCancelTimer() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     TaskQuery taskQuery = taskService.createTaskQuery();
@@ -137,7 +154,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
 
   @Deployment
   @Test
-  public void testKeepCompensation() {
+  void testKeepCompensation() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     TaskQuery taskQuery = taskService.createTaskQuery();
@@ -165,7 +182,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
 
   @Deployment
   @Test
-  public void testTimeCycle() {
+  void testTimeCycle() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();

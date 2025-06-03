@@ -20,19 +20,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.Serializable;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  *
  * @author Daniel Meyer
  */
-public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
+class ServiceTaskVariablesTest {
   
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  
+  RuntimeService runtimeService;
+
   static boolean isNullInDelegate2;
   static boolean isNullInDelegate3;
   
@@ -78,10 +88,10 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
     }
     
   }
-  
+
   @Deployment
   @Test
-  public void testSerializedVariablesBothAsync() {
+  void testSerializedVariablesBothAsync() {
     
     // in this test, there is an async cont. both before the second and the
     // third service task in the sequence
@@ -97,7 +107,7 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSerializedVariablesThirdAsync() {
+  void testSerializedVariablesThirdAsync() {
     
     // in this test, only the third service task is async
         

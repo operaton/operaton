@@ -16,31 +16,45 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
 
 /**
  *
  * @author Kristin Polenz
  */
-public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEngineTest {
+class MessageNonInterruptingBoundaryEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testSingleNonInterruptingBoundaryMessageEvent() {
+  void testSingleNonInterruptingBoundaryMessageEvent() {
     runtimeService.startProcessInstanceByKey("process");
 
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(2);
@@ -127,7 +141,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
   @Deployment
   @Test
-  public void testNonInterruptingEventInCombinationWithReceiveTask() {
+  void testNonInterruptingEventInCombinationWithReceiveTask() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -190,7 +204,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
   @Deployment
   @Test
-  public void testNonInterruptingEventInCombinationWithReceiveTaskInConcurrentSubprocess() {
+  void testNonInterruptingEventInCombinationWithReceiveTaskInConcurrentSubprocess() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -246,7 +260,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
   @Deployment
   @Test
-  public void testNonInterruptingEventInCombinationWithReceiveTaskInsideSubProcess() {
+  void testNonInterruptingEventInCombinationWithReceiveTaskInsideSubProcess() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = instance.getId();
@@ -320,7 +334,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
   @Deployment
   @Test
-  public void testNonInterruptingEventInCombinationWithUserTaskInsideSubProcess() {
+  void testNonInterruptingEventInCombinationWithUserTaskInsideSubProcess() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -386,7 +400,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
   @Deployment
   @Test
-  public void testNonInterruptingEventInCombinationWithUserTask() {
+  void testNonInterruptingEventInCombinationWithUserTask() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -450,7 +464,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
   @Deployment
   @Test
-  public void testNonInterruptingWithUserTaskAndBoundaryEvent() {
+  void testNonInterruptingWithUserTaskAndBoundaryEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -524,7 +538,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
   @Deployment
   @Test
-  public void testNestedEvents() {
+  void testNestedEvents() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -619,7 +633,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/message/MessageNonInterruptingBoundaryEventTest.testNestedEvents.bpmn20.xml"})
   @Test
-  public void testNestedEventsAnotherExecutionOrder() {
+  void testNestedEventsAnotherExecutionOrder() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 

@@ -316,11 +316,4 @@ class GroupQueryTest {
     }
   }
 
-  private void verifySingleResultFails(GroupQuery query) {
-    try {
-      query.singleResult();
-      fail("");
-    } catch (ProcessEngineException e) {}
-  }
-
 }

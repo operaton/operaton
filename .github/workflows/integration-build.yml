@@ -55,7 +55,7 @@ on:
           - '["postgresql"]'
           - '["postgresql-xa"]'
           - '["mariadb"]'
-          - '["mssql"]'
+          - '["sqlserver"]'
           - '["mysql"]'
           - '["oracle"]'
           - '["db2"]'

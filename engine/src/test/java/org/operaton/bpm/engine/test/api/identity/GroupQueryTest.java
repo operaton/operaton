@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
@@ -295,15 +296,9 @@ class GroupQueryTest {
   @Test
   void testQueryInvalidSortingUsage() {
     var groupQuery = identityService.createGroupQuery().orderByGroupId().orderByGroupName();
-    try {
-      groupQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
-
-    try {
-      groupQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(groupQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
   }
 
   private void verifyQueryResults(GroupQuery query, int countExpected) {
@@ -312,8 +307,10 @@ class GroupQueryTest {
 
     if (countExpected == 1) {
       assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
+    } else if (countExpected > 1) {
+      assertThatThrownBy(query::singleResult)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessage("Query return %s results instead of max 1", countExpected);
     } else if (countExpected == 0) {
       assertThat(query.singleResult()).isNull();
     }

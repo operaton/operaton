@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.cmmn.query.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -120,12 +120,10 @@ class MultiTenancyHistoricCaseInstanceQueryTest {
   @Test
   void shouldFailQueryByTenantIdNull() {
     var historicCaseInstanceQuery = historyService.createHistoricCaseInstanceQuery();
-    try {
-      historicCaseInstanceQuery.tenantIdIn((String) null);
 
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    assertThatThrownBy(() -> historicCaseInstanceQuery.tenantIdIn((String) null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("tenantIds contains null value");
   }
 
   @Test

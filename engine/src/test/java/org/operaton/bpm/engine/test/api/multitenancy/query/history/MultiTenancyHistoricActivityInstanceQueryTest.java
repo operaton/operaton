@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicActivityInstanceByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
@@ -136,15 +136,10 @@ class MultiTenancyHistoricActivityInstanceQueryTest {
   @Test
   void shouldFailQueryByTenantIdNull() {
     var historicActivityInstanceQuery = historyService.createHistoricActivityInstanceQuery();
-    try {
-      // when
-      historicActivityInstanceQuery.tenantIdIn((String) null);
 
-      fail("expected exception");
-
-      // then
-    } catch (NullValueException e) {
-    }
+    assertThatThrownBy(() -> historicActivityInstanceQuery.tenantIdIn((String) null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("tenantIds contains null value");
   }
 
   @Test

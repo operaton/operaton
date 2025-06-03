@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,11 +49,9 @@ class SuspendJobTest {
 
   @Test
   void testSuspensionById_shouldThrowProcessEngineException() {
-    try {
-      managementService.suspendJobById(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-    }
+    assertThatThrownBy(() -> managementService.suspendJobById(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("jobId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})

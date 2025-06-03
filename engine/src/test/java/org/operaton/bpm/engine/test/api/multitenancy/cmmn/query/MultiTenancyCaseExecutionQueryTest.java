@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.cmmn.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -117,12 +117,9 @@ class MultiTenancyCaseExecutionQueryTest {
   @Test
   void testFailQueryByTenantIdNull() {
     var caseExecutionQuery = caseService.createCaseExecutionQuery();
-    try {
-      caseExecutionQuery.tenantIdIn((String) null);
-
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    assertThatThrownBy(() -> caseExecutionQuery.tenantIdIn((String) null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("tenantIds contains null value");
   }
 
   @Test

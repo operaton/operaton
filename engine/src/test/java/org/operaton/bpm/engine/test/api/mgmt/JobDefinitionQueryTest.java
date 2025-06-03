@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -74,10 +74,9 @@ class JobDefinitionQueryTest {
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
-    try {
-      jobDefinitionQuery.jobDefinitionId(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(() -> jobDefinitionQuery.jobDefinitionId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Job definition id is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -103,19 +102,13 @@ class JobDefinitionQueryTest {
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
-    try {
-      jobDefinitionQuery.activityIdIn(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Activity ids is null");
-    }
+    assertThatThrownBy(() -> jobDefinitionQuery.activityIdIn((String[]) null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Activity ids is null");
 
-    try {
-      jobDefinitionQuery.activityIdIn((String)null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Activity ids contains null value");
-    }
+    assertThatThrownBy(() -> jobDefinitionQuery.activityIdIn((String) null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Activity ids contains null value");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -134,10 +127,9 @@ class JobDefinitionQueryTest {
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
-    try {
-      jobDefinitionQuery.processDefinitionId(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(() -> jobDefinitionQuery.processDefinitionId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Process definition id is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -156,10 +148,9 @@ class JobDefinitionQueryTest {
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
-    try {
-      jobDefinitionQuery.processDefinitionKey(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(() -> jobDefinitionQuery.processDefinitionKey(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Process definition key is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -185,10 +176,9 @@ class JobDefinitionQueryTest {
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
-    try {
-      jobDefinitionQuery.jobType(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(() -> jobDefinitionQuery.jobType(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Job type is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -198,10 +188,9 @@ class JobDefinitionQueryTest {
     verifyQueryResults(query, 0);
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
-    try {
-      jobDefinitionQuery.jobConfiguration(null);
-      fail("A ProcessEngineException was expected.");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(() -> jobDefinitionQuery.jobConfiguration(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Job configuration is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -311,20 +300,14 @@ class JobDefinitionQueryTest {
   @Test
   void testQueryInvalidSortingUsage() {
     var jobDefinitionQuery = managementService.createJobDefinitionQuery().orderByJobDefinitionId();
-    try {
-      jobDefinitionQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    assertThatThrownBy(jobDefinitionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("call asc() or desc() after using orderByXX()");
 
     var jobQuery = managementService.createJobQuery();
-    try {
-      jobQuery.asc();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("You should call any of the orderBy methods first before specifying a direction", e.getMessage());
-    }
+    assertThatThrownBy(jobQuery::asc)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("You should call any of the orderBy methods first before specifying a direction");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -344,7 +327,6 @@ class JobDefinitionQueryTest {
 
     // and
     assertThat(managementService.createJobDefinitionQuery().withOverridingJobPriority().count()).isEqualTo(1);
-
   }
 
   // Test Helpers ////////////////////////////////////////////////////////
@@ -355,18 +337,12 @@ class JobDefinitionQueryTest {
 
     if (countExpected == 1) {
       assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
+    } else if (countExpected > 1) {
+      assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class)
+        .hasMessage("Query return %s results instead of max 1", countExpected);
     } else if (countExpected == 0) {
       assertThat(query.singleResult()).isNull();
     }
-  }
-
-  private void verifySingleResultFails(JobDefinitionQuery query) {
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
   }
 
 }

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -111,12 +111,10 @@ class MultiTenancyIncidentQueryTest {
   @Test
   void testFailQueryByTenantIdNull() {
     var incidentQuery = runtimeService.createIncidentQuery();
-    try {
-      incidentQuery.tenantIdIn((String) null);
 
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    assertThatThrownBy(() -> incidentQuery.tenantIdIn((String[]) null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("tenantIds is null");
   }
 
   @Test

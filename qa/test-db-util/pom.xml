@@ -15,7 +15,7 @@
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-bom</artifactId>
-        <version>7.2.0</version>
+        <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -30,6 +30,13 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <version>${project.version}</version>
+      <classifier>junit4</classifier>
     </dependency>
   </dependencies>
 </project>

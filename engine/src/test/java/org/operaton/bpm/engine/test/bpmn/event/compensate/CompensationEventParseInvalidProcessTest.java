@@ -79,7 +79,7 @@ public class CompensationEventParseInvalidProcessTest {
   RepositoryService repositoryService;
 
   @TestTemplate
-  public void testParseInvalidProcessDefinition() {
+  void testParseInvalidProcessDefinition() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource);
     try {

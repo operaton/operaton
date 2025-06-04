@@ -132,7 +132,7 @@ public class BatchMigrationTest {
 
 
   @TestTemplate
-  public void testNullMigrationPlan() {
+  void testNullMigrationPlan() {
     var migrationPlanExecutionBuilder = runtimeService.newMigration(null).processInstanceIds(List.of("process"));
     try {
       migrationPlanExecutionBuilder.executeAsync();
@@ -143,7 +143,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testNullProcessInstanceIdsList() {
+  void testNullProcessInstanceIdsList() {
     ProcessDefinition testProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
@@ -159,7 +159,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testProcessInstanceIdsListWithNullValue() {
+  void testProcessInstanceIdsListWithNullValue() {
     ProcessDefinition testProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
@@ -175,7 +175,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testEmptyProcessInstanceIdsList() {
+  void testEmptyProcessInstanceIdsList() {
     ProcessDefinition testProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
@@ -191,7 +191,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testNullProcessInstanceIdsArray() {
+  void testNullProcessInstanceIdsArray() {
     ProcessDefinition testProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
@@ -208,7 +208,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testProcessInstanceIdsArrayWithNullValue() {
+  void testProcessInstanceIdsArrayWithNullValue() {
     ProcessDefinition testProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
@@ -225,7 +225,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testNullProcessInstanceQuery() {
+  void testNullProcessInstanceQuery() {
     ProcessDefinition testProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
@@ -241,7 +241,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testEmptyProcessInstanceQuery() {
+  void testEmptyProcessInstanceQuery() {
     ProcessDefinition testProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
@@ -260,7 +260,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchCreation() {
+  void testBatchCreation() {
     // when
     Batch batch = helper.migrateProcessInstancesAsync(15);
 
@@ -269,7 +269,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testSeedJobCreation() {
+  void testSeedJobCreation() {
     ClockUtil.setCurrentTime(TEST_DATE);
 
     // when
@@ -304,7 +304,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testMigrationJobsCreation() {
+  void testMigrationJobsCreation() {
     ClockUtil.setCurrentTime(TEST_DATE);
 
     // reduce number of batch jobs per seed to not have to create a lot of instances
@@ -338,7 +338,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testMonitorJobCreation() {
+  void testMonitorJobCreation() {
     Batch batch = helper.migrateProcessInstancesAsync(10);
 
     // when
@@ -360,7 +360,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testMigrationJobsExecution() {
+  void testMigrationJobsExecution() {
     Batch batch = helper.migrateProcessInstancesAsync(10);
     helper.completeSeedJobs(batch);
     List<Job> migrationJobs = helper.getExecutionJobs(batch);
@@ -382,7 +382,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testMigrationJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
+  void testMigrationJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
     ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
 
     processEngineConfiguration.setAuthorizationEnabled(true);
@@ -403,7 +403,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testNumberOfJobsCreatedBySeedJobPerInvocation() {
+  void testNumberOfJobsCreatedBySeedJobPerInvocation() {
     // reduce number of batch jobs per seed to not have to create a lot of instances
     int batchJobsPerSeed = 10;
     engineRule.getProcessEngineConfiguration().setBatchJobsPerSeed(10);
@@ -433,7 +433,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testDefaultBatchConfiguration() {
+  void testDefaultBatchConfiguration() {
     ProcessEngineConfigurationImpl cfg = engineRule.getProcessEngineConfiguration();
     assertThat(cfg.getBatchJobsPerSeed()).isEqualTo(100);
     assertThat(cfg.getInvocationsPerBatchJob()).isEqualTo(1);
@@ -441,7 +441,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testCustomNumberOfJobsCreateBySeedJob() {
+  void testCustomNumberOfJobsCreateBySeedJob() {
     ProcessEngineConfigurationImpl cfg = engineRule.getProcessEngineConfiguration();
     cfg.setBatchJobsPerSeed(2);
     cfg.setInvocationsPerBatchJob(5);
@@ -473,7 +473,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testMonitorJobPollingForCompletion() {
+  void testMonitorJobPollingForCompletion() {
     ClockUtil.setCurrentTime(TEST_DATE);
 
     Batch batch = helper.migrateProcessInstancesAsync(10);
@@ -497,7 +497,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testMonitorJobRemovesBatchAfterCompletion() {
+  void testMonitorJobRemovesBatchAfterCompletion() {
     Batch batch = helper.migrateProcessInstancesAsync(10);
     helper.completeSeedJobs(batch);
     helper.executeJobs(batch);
@@ -513,7 +513,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchDeletionWithCascade() {
+  void testBatchDeletionWithCascade() {
     Batch batch = helper.migrateProcessInstancesAsync(10);
     helper.completeSeedJobs(batch);
 
@@ -531,7 +531,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchDeletionWithoutCascade() {
+  void testBatchDeletionWithoutCascade() {
     Batch batch = helper.migrateProcessInstancesAsync(10);
     helper.completeSeedJobs(batch);
 
@@ -549,7 +549,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchWithFailedSeedJobDeletionWithCascade() {
+  void testBatchWithFailedSeedJobDeletionWithCascade() {
     Batch batch = helper.migrateProcessInstancesAsync(2);
 
     // create incident
@@ -565,7 +565,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchWithFailedMigrationJobDeletionWithCascade() {
+  void testBatchWithFailedMigrationJobDeletionWithCascade() {
     Batch batch = helper.migrateProcessInstancesAsync(2);
     helper.completeSeedJobs(batch);
 
@@ -584,7 +584,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchWithFailedMonitorJobDeletionWithCascade() {
+  void testBatchWithFailedMonitorJobDeletionWithCascade() {
     Batch batch = helper.migrateProcessInstancesAsync(2);
     helper.completeSeedJobs(batch);
 
@@ -601,7 +601,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchExecutionFailureWithMissingProcessInstance() {
+  void testBatchExecutionFailureWithMissingProcessInstance() {
     Batch batch = helper.migrateProcessInstancesAsync(2);
     helper.completeSeedJobs(batch);
 
@@ -627,7 +627,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchCreationWithProcessInstanceQuery() {
+  void testBatchCreationWithProcessInstanceQuery() {
     int processInstanceCount = 15;
 
     ProcessDefinition sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -655,7 +655,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testBatchCreationWithOverlappingProcessInstanceIdsAndQuery() {
+  void testBatchCreationWithOverlappingProcessInstanceIdsAndQuery() {
     int processInstanceCount = 15;
 
     ProcessDefinition sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -687,7 +687,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testListenerInvocationForNewlyCreatedScope() {
+  void testListenerInvocationForNewlyCreatedScope() {
     // given
     DelegateEvent.clearEvents();
 
@@ -725,7 +725,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testSkipListenerInvocationForNewlyCreatedScope() {
+  void testSkipListenerInvocationForNewlyCreatedScope() {
     // given
     DelegateEvent.clearEvents();
 
@@ -757,7 +757,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testIoMappingInvocationForNewlyCreatedScope() {
+  void testIoMappingInvocationForNewlyCreatedScope() {
     // given
     ProcessDefinition sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = migrationRule.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
@@ -792,7 +792,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testSkipIoMappingInvocationForNewlyCreatedScope() {
+  void testSkipIoMappingInvocationForNewlyCreatedScope() {
  // given
     ProcessDefinition sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = migrationRule.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
@@ -822,7 +822,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testUpdateEventTrigger() {
+  void testUpdateEventTrigger() {
     // given
     String newMessageName = "newMessage";
 
@@ -852,7 +852,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testDeleteBatchJobManually() {
+  void testDeleteBatchJobManually() {
     // given
     Batch batch = helper.createMigrationBatchWithSize(1);
     helper.completeSeedJobs(batch);
@@ -874,7 +874,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void testMigrateWithVarargsArray() {
+  void testMigrateWithVarargsArray() {
     ProcessDefinition sourceDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -900,7 +900,7 @@ public class BatchMigrationTest {
   }
 
   @TestTemplate
-  public void shouldSetInvocationsPerBatchType() {
+  void shouldSetInvocationsPerBatchType() {
     // given
     configuration.getInvocationsPerBatchJobByBatchType()
         .put(Batch.TYPE_PROCESS_INSTANCE_MIGRATION, 42);

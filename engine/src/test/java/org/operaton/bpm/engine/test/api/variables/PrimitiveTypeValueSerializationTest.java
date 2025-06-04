@@ -85,7 +85,7 @@ public class PrimitiveTypeValueSerializationTest {
   }
 
   @TestTemplate
-  public void shouldGetUntypedVariable() {
+  void shouldGetUntypedVariable() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, typedValue);
@@ -95,7 +95,7 @@ public class PrimitiveTypeValueSerializationTest {
   }
 
   @TestTemplate
-  public void shouldGetTypedVariable() {
+  void shouldGetTypedVariable() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, typedValue);
@@ -106,7 +106,7 @@ public class PrimitiveTypeValueSerializationTest {
   }
 
   @TestTemplate
-  public void shouldGetTypedNullVariable() {
+  void shouldGetTypedNullVariable() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, nullValue);

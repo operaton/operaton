@@ -44,7 +44,7 @@ class DeploymentTest {
           .build();
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     api.setCustomBaseUrl(api.getApiClient()
             .getBasePath()
             .replace("8080", String.valueOf(wireMock.getPort())));

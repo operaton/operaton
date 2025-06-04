@@ -195,7 +195,7 @@ public class MigrationNestedEventSubProcessTest {
   MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @TestTemplate
-  public void testMapUserTaskSiblingOfEventSubProcess() {
+  void testMapUserTaskSiblingOfEventSubProcess() {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(configuration.getSourceProcess());
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(configuration.getSourceProcess());
@@ -230,7 +230,7 @@ public class MigrationNestedEventSubProcessTest {
   }
 
   @TestTemplate
-  public void testMapUserTaskSiblingOfEventSubProcessAndTriggerEvent() {
+  void testMapUserTaskSiblingOfEventSubProcessAndTriggerEvent() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(configuration.getSourceProcess());
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(configuration.getSourceProcess());
 

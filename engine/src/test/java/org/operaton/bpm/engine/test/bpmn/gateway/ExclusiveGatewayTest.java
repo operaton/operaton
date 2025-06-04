@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.variable.Variables;
 /**
  * @author Joram Barrez
  */
-public class ExclusiveGatewayTest {
+class ExclusiveGatewayTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

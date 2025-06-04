@@ -74,7 +74,7 @@ public class FoxJobRetryCmdEventsTest {
   }
 
   @TestTemplate
-  public void testFailedIntermediateThrowingSignalEventAsync () {
+  void testFailedIntermediateThrowingSignalEventAsync () {
     ProcessInstance pi = engineRule.getRuntimeService().startProcessInstanceByKey(RetryCmdDeployment.PROCESS_ID);
     assertJobRetries(pi);
   }

@@ -93,7 +93,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   public boolean enableNashornCompat;
 
   @TestTemplate
-  public void testJavascriptProcessVarVisibility() {
+  void testJavascriptProcessVarVisibility() {
 
     deployProcess(GRAALJS,
 
@@ -147,7 +147,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   }
 
   @TestTemplate
-  public void testJavascriptFunctionInvocation() {
+  void testJavascriptFunctionInvocation() {
 
     deployProcess(GRAALJS,
 
@@ -187,7 +187,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   }
 
   @TestTemplate
-  public void testJsVariable() {
+  void testJsVariable() {
 
     String scriptText = "var foo = 1;";
 
@@ -210,7 +210,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   }
 
   @TestTemplate
-  public void testJavascriptVariableSerialization() {
+  void testJavascriptVariableSerialization() {
     deployProcess(GRAALJS,
         // GIVEN
         // setting Java classes as variables
@@ -238,7 +238,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   }
 
   @TestTemplate
-  public void shouldLoadExternalScript() {
+  void shouldLoadExternalScript() {
       // GIVEN
       // an external JS file with a function
       deployProcess(GRAALJS,

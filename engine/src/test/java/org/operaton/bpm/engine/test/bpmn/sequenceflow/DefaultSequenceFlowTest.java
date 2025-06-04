@@ -23,17 +23,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.bpmn.gateway.ExclusiveGatewayTest;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 
 /**
- * See {@link ExclusiveGatewayTest} for a default sequence flow test on an exclusive gateway.
+ * See {@link org.operaton.bpm.engine.test.bpmn.gateway.ExclusiveGatewayTest} for a default sequence flow test on an exclusive gateway.
  * 
  * @author Joram Barrez
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class DefaultSequenceFlowTest {
+class DefaultSequenceFlowTest {
   
   RuntimeService runtimeService;
 

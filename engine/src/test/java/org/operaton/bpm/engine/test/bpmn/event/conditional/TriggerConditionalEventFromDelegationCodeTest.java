@@ -112,7 +112,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   public ConditionalEventProcessSpecifier specifier;
 
   @TestTemplate
-  public void testSetVariableInStartListener() {
+  void testSetVariableInStartListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -141,7 +141,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
   @TestTemplate
-  public void testNonInterruptingSetVariableInStartListener() {
+  void testNonInterruptingSetVariableInStartListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -168,7 +168,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
   @TestTemplate
-  public void testSetVariableInTakeListener() {
+  void testSetVariableInTakeListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -201,7 +201,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
   @TestTemplate
-  public void testNonInterruptingSetVariableInTakeListener() {
+  void testNonInterruptingSetVariableInTakeListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -235,7 +235,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
   @TestTemplate
-  public void testSetVariableInTakeListenerWithAsyncBefore() {
+  void testSetVariableInTakeListenerWithAsyncBefore() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -268,7 +268,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
   @TestTemplate
-  public void testNonInterruptingSetVariableInTakeListenerWithAsyncBefore() {
+  void testNonInterruptingSetVariableInTakeListenerWithAsyncBefore() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -315,7 +315,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
   @TestTemplate
-  public void testSetVariableInEndListener() {
+  void testSetVariableInEndListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -342,7 +342,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
   @TestTemplate
-  public void testNonInterruptingSetVariableInEndListener() {
+  void testNonInterruptingSetVariableInEndListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -369,7 +369,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
   @TestTemplate
-  public void testSetVariableInStartAndEndListener() {
+  void testSetVariableInStartAndEndListener() {
     //given process with start and end listener on user task
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()

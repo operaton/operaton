@@ -111,7 +111,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricBatchCreation() {
+  void testHistoricBatchCreation() {
     // when
     Batch batch = helper.migrateProcessInstancesAsync(10);
 
@@ -133,7 +133,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricBatchCompletion() {
+  void testHistoricBatchCompletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
     helper.executeJobs(batch);
@@ -150,7 +150,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricSeedJobLog() {
+  void testHistoricSeedJobLog() {
     // when
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -187,7 +187,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricMonitorJobLog() {
+  void testHistoricMonitorJobLog() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
     // when the seed job is executed
@@ -247,7 +247,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricBatchJobLog() {
+  void testHistoricBatchJobLog() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
 
@@ -284,7 +284,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricBatchForBatchDeletion() {
+  void testHistoricBatchForBatchDeletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
     // when
@@ -298,7 +298,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricSeedJobLogForBatchDeletion() {
+  void testHistoricSeedJobLogForBatchDeletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
     // when
@@ -313,7 +313,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricMonitorJobLogForBatchDeletion() {
+  void testHistoricMonitorJobLogForBatchDeletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
 
@@ -329,7 +329,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricBatchJobLogForBatchDeletion() {
+  void testHistoricBatchJobLogForBatchDeletion() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
 
@@ -345,7 +345,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testDeleteHistoricBatch() {
+  void testDeleteHistoricBatch() {
     Batch batch = helper.migrateProcessInstancesAsync(1);
     helper.completeSeedJobs(batch);
     helper.executeJobs(batch);
@@ -363,7 +363,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricSeedJobIncidentDeletion() {
+  void testHistoricSeedJobIncidentDeletion() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -381,7 +381,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricMonitorJobIncidentDeletion() {
+  void testHistoricMonitorJobIncidentDeletion() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -400,7 +400,7 @@ public class BatchMigrationHistoryTest {
   }
 
   @TestTemplate
-  public void testHistoricBatchJobLogIncidentDeletion() {
+  void testHistoricBatchJobLogIncidentDeletion() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(3);
 

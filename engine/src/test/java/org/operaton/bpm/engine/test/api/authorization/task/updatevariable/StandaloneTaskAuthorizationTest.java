@@ -407,7 +407,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesLocalAddRemove() {
+  void testUpdateVariablesLocalAddRemove() {
     // given
     createTask(taskId);
 

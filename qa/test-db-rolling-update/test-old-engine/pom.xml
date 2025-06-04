@@ -119,8 +119,8 @@
                 <configuration>
                   <srcFiles>
                     <!-- finally drop db -->
-                    <srcFile>${project.build.directory}/scripts-current/sql/drop/${database.type}_engine_${project.version}.sql</srcFile>
-                    <srcFile>${project.build.directory}/scripts-current/sql/drop/${database.type}_identity_${project.version}.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/drop/${database.type}_engine_${version.operaton.dbscheme}.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/drop/${database.type}_identity_${version.operaton.dbscheme}.sql</srcFile>
                   </srcFiles>
                 </configuration>
               </execution>

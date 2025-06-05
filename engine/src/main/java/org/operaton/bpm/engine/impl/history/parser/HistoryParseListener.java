@@ -48,7 +48,7 @@ import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
  * @author Tom Baeyens
  * @author Joram Barrez
  * @author Falko Menge
- * @author Bernd Ruecker (operaton)
+ * @author Bernd Ruecker (Camunda)
  * @author Christian Lipphardt (Camunda)
  *
  * @author Daniel Meyer

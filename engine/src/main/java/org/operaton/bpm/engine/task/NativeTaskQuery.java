@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.query.NativeQuery;
 
 /**
  * Allows querying of {@link Task}s via native (SQL) queries
- * @author Bernd Ruecker (operaton)
+ * @author Bernd Ruecker (Camunda)
  */
 public interface NativeTaskQuery extends NativeQuery<NativeTaskQuery, Task> {
 

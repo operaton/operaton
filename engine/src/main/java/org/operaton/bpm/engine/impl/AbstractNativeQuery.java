@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.query.NativeQuery;
 /**
  * Abstract superclass for all native query types.
  *
- * @author Bernd Ruecker (operaton)
+ * @author Bernd Ruecker (Camunda)
  */
 public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> implements Command<Object>, NativeQuery<T, U>,
         Serializable {

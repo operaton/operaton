@@ -78,7 +78,7 @@ import org.operaton.bpm.engine.runtime.Job;
 
 /**
  * @author Tom Baeyens
- * @author Bernd Ruecker (operaton)
+ * @author Bernd Ruecker (Camunda)
  * @author Christian Stettler
  */
 public class HistoryServiceImpl extends ServiceImpl implements HistoryService {

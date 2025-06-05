@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.impl.el.FixedValue;
 
 /**
  * @author Joram Barrez
- * @author Bernd Ruecker (operaton)
+ * @author Bernd Ruecker (Camunda)
  */
 @SuppressWarnings("unused")
 public class DelegateExpressionBean implements JavaDelegate {

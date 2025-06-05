@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 /**
  * Describes basic methods for doing native queries
  * 
- * @author Bernd Ruecker (operaton)
+ * @author Bernd Ruecker (Camunda)
  */
 public interface NativeQuery<T extends NativeQuery< ? , ? >, U extends Object> {
 

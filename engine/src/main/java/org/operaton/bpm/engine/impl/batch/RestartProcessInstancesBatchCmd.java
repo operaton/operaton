@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  */
 public class RestartProcessInstancesBatchCmd extends AbstractRestartProcessInstanceCmd<Batch> {
 
-  private final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   public RestartProcessInstancesBatchCmd(CommandExecutor commandExecutor, RestartProcessInstanceBuilderImpl builder) {
     super(commandExecutor, builder);

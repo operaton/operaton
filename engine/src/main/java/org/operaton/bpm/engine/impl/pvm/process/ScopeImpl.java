@@ -124,7 +124,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * The value is the error callback, which is called if the activity is not
    * read till the end of parsing.
    */
-  protected final Map<String, BacklogErrorCallback> BACKLOG = new HashMap<>();
+  protected final Map<String, BacklogErrorCallback> backlog = new HashMap<>();
 
   /**
    * Returns the backlog error callback's.
@@ -132,7 +132,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * @return the callback's
    */
   public Collection<BacklogErrorCallback> getBacklogErrorCallbacks() {
-    return BACKLOG.values();
+    return backlog.values();
   }
 
   /**
@@ -141,7 +141,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * @return true if empty, false otherwise
    */
   public boolean isBacklogEmpty() {
-    return BACKLOG.isEmpty();
+    return backlog.isEmpty();
   }
 
   /**
@@ -151,7 +151,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * @param callback the error callback which should called if activity will not be read
    */
   public void addToBacklog(String activityRef, BacklogErrorCallback callback) {
-    BACKLOG.put(activityRef, callback);
+    backlog.put(activityRef, callback);
   }
 
   @Override
@@ -161,8 +161,8 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
       if (processDefinition.findActivity(activityId) != null) {
         throw new PvmException("duplicate activity id '" + activityId + "'");
       }
-      if (BACKLOG.containsKey(activityId)) {
-        BACKLOG.remove(activityId);
+      if (backlog.containsKey(activityId)) {
+        backlog.remove(activityId);
       }
       namedFlowActivities.put(activityId, activity);
     }

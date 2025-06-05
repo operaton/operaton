@@ -38,27 +38,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  */
 class RootProcessInstanceTest {
 
-  protected final String CALLED_PROCESS_KEY = "calledProcess";
-  protected final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
-    .startEvent()
-      .userTask("userTask")
-    .endEvent().done();
-
-  protected final String CALLED_AND_CALLING_PROCESS_KEY = "calledAndCallingProcess";
-  protected final BpmnModelInstance CALLED_AND_CALLING_PROCESS =
-    Bpmn.createExecutableProcess(CALLED_AND_CALLING_PROCESS_KEY)
-    .startEvent()
-      .callActivity()
-        .calledElement(CALLED_PROCESS_KEY)
-    .endEvent().done();
-
-  protected final String CALLING_PROCESS_KEY = "callingProcess";
-  protected final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
-    .startEvent()
-      .callActivity()
-        .calledElement(CALLED_AND_CALLING_PROCESS_KEY)
-    .endEvent().done();
-
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
@@ -66,6 +45,27 @@ class RootProcessInstanceTest {
 
   RuntimeService runtimeService;
   FormService formService;
+
+  static final String CALLED_PROCESS_KEY = "calledProcess";
+  static final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
+    .startEvent()
+      .userTask("userTask")
+    .endEvent().done();
+
+  static final String CALLED_AND_CALLING_PROCESS_KEY = "calledAndCallingProcess";
+  static final BpmnModelInstance CALLED_AND_CALLING_PROCESS =
+    Bpmn.createExecutableProcess(CALLED_AND_CALLING_PROCESS_KEY)
+    .startEvent()
+      .callActivity()
+        .calledElement(CALLED_PROCESS_KEY)
+    .endEvent().done();
+
+  static final String CALLING_PROCESS_KEY = "callingProcess";
+  static final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
+    .startEvent()
+      .callActivity()
+        .calledElement(CALLED_AND_CALLING_PROCESS_KEY)
+    .endEvent().done();
 
   @Test
   void shouldPointToItself() {

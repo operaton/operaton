@@ -51,13 +51,13 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
   // listeners can be reused for a given process engine instance but cannot be cached in static fields since
   // different process engine instances on the same Classloader may have different HistoryEventProducer
   // configurations wired
-  protected CaseExecutionListener CASE_INSTANCE_CREATE_LISTENER;
-  protected CaseExecutionListener CASE_INSTANCE_UPDATE_LISTENER;
-  protected CaseExecutionListener CASE_INSTANCE_CLOSE_LISTENER;
+  protected CaseExecutionListener caseInstanceCreateListener;
+  protected CaseExecutionListener caseInstanceUpdateListener;
+  protected CaseExecutionListener caseInstanceCloseListener;
 
-  protected CaseExecutionListener CASE_ACTIVITY_INSTANCE_CREATE_LISTENER;
-  protected CaseExecutionListener CASE_ACTIVITY_INSTANCE_UPDATE_LISTENER;
-  protected CaseExecutionListener CASE_ACTIVITY_INSTANCE_END_LISTENER;
+  protected CaseExecutionListener caseActivityInstanceCreateListener;
+  protected CaseExecutionListener caseActivityInstanceUpdateListener;
+  protected CaseExecutionListener caseActivityInstanceEndListener;
 
   // The history level set in the process engine configuration
   protected HistoryLevel historyLevel;
@@ -67,13 +67,13 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
   }
 
   protected void initCaseExecutionListeners(CmmnHistoryEventProducer historyEventProducer) {
-    CASE_INSTANCE_CREATE_LISTENER = new CaseInstanceCreateListener(historyEventProducer);
-    CASE_INSTANCE_UPDATE_LISTENER = new CaseInstanceUpdateListener(historyEventProducer);
-    CASE_INSTANCE_CLOSE_LISTENER = new CaseInstanceCloseListener(historyEventProducer);
+    caseInstanceCreateListener = new CaseInstanceCreateListener(historyEventProducer);
+    caseInstanceUpdateListener = new CaseInstanceUpdateListener(historyEventProducer);
+    caseInstanceCloseListener = new CaseInstanceCloseListener(historyEventProducer);
 
-    CASE_ACTIVITY_INSTANCE_CREATE_LISTENER = new CaseActivityInstanceCreateListener(historyEventProducer);
-    CASE_ACTIVITY_INSTANCE_UPDATE_LISTENER = new CaseActivityInstanceUpdateListener(historyEventProducer);
-    CASE_ACTIVITY_INSTANCE_END_LISTENER = new CaseActivityInstanceEndListener(historyEventProducer);
+    caseActivityInstanceCreateListener = new CaseActivityInstanceCreateListener(historyEventProducer);
+    caseActivityInstanceUpdateListener = new CaseActivityInstanceUpdateListener(historyEventProducer);
+    caseActivityInstanceEndListener = new CaseActivityInstanceEndListener(historyEventProducer);
   }
 
   @Override
@@ -138,17 +138,17 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
     if (caseActivity != null) {
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_INSTANCE_CREATE, null)) {
         for (String event : ItemHandler.CASE_PLAN_MODEL_CREATE_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_INSTANCE_CREATE_LISTENER);
+          caseActivity.addBuiltInListener(event, caseInstanceCreateListener);
         }
       }
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_INSTANCE_UPDATE, null)) {
         for (String event : ItemHandler.CASE_PLAN_MODEL_UPDATE_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_INSTANCE_UPDATE_LISTENER);
+          caseActivity.addBuiltInListener(event, caseInstanceUpdateListener);
         }
       }
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_INSTANCE_CLOSE, null)) {
         for (String event : ItemHandler.CASE_PLAN_MODEL_CLOSE_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_INSTANCE_CLOSE_LISTENER);
+          caseActivity.addBuiltInListener(event, caseInstanceCloseListener);
         }
       }
     }
@@ -159,17 +159,17 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
     if (caseActivity != null) {
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_CREATE, null)) {
         for (String event : ItemHandler.TASK_OR_STAGE_CREATE_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_ACTIVITY_INSTANCE_CREATE_LISTENER);
+          caseActivity.addBuiltInListener(event, caseActivityInstanceCreateListener);
         }
       }
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_UPDATE, null)) {
         for (String event : ItemHandler.TASK_OR_STAGE_UPDATE_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_ACTIVITY_INSTANCE_UPDATE_LISTENER);
+          caseActivity.addBuiltInListener(event, caseActivityInstanceUpdateListener);
         }
       }
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_END, null)) {
         for (String event : ItemHandler.TASK_OR_STAGE_END_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_ACTIVITY_INSTANCE_END_LISTENER);
+          caseActivity.addBuiltInListener(event, caseActivityInstanceEndListener);
         }
       }
     }
@@ -180,17 +180,17 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
     if (caseActivity != null) {
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_CREATE, null)) {
         for (String event : ItemHandler.EVENT_LISTENER_OR_MILESTONE_CREATE_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_ACTIVITY_INSTANCE_CREATE_LISTENER);
+          caseActivity.addBuiltInListener(event, caseActivityInstanceCreateListener);
         }
       }
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_UPDATE, null)) {
         for (String event : ItemHandler.EVENT_LISTENER_OR_MILESTONE_UPDATE_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_ACTIVITY_INSTANCE_UPDATE_LISTENER);
+          caseActivity.addBuiltInListener(event, caseActivityInstanceUpdateListener);
         }
       }
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_END, null)) {
         for (String event : ItemHandler.EVENT_LISTENER_OR_MILESTONE_END_EVENTS) {
-          caseActivity.addBuiltInListener(event, CASE_ACTIVITY_INSTANCE_END_LISTENER);
+          caseActivity.addBuiltInListener(event, caseActivityInstanceEndListener);
         }
       }
     }

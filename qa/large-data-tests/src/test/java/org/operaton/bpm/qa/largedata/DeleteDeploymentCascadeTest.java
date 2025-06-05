@@ -41,7 +41,7 @@ class DeleteDeploymentCascadeTest {
 
   protected static final String DATA_PREFIX = DeleteDeploymentCascadeTest.class.getSimpleName();
 
-  protected int GENERATE_PROCESS_INSTANCES_COUNT = 2500;
+  static final int GENERATE_PROCESS_INSTANCES_COUNT = 2500;
   protected ProcessEngine processEngine;
   protected RepositoryService repositoryService;
   protected HistoryService historyService;

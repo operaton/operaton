@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class MessageAddedNotification implements TransactionListener {
 
-  private final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected JobExecutor jobExecutor;
 

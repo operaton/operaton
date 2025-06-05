@@ -34,7 +34,7 @@ import org.operaton.connect.spi.Connector;
 
 public class AbstractHttpRequest<Q extends HttpBaseRequest<?, ?>, R extends HttpResponse> extends AbstractConnectorRequest<R> {
 
-  private final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
+  private static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
   public AbstractHttpRequest(Connector connector) {
     super(connector);

@@ -31,7 +31,7 @@ public abstract class AcquireJobsRunnable implements Runnable {
 
   protected volatile boolean isInterrupted = false;
   protected volatile boolean isJobAdded = false;
-  protected final Object MONITOR = new Object();
+  protected final Object monitor = new Object();
   protected final AtomicBoolean isWaiting = new AtomicBoolean(false);
 
   protected AcquireJobsRunnable(JobExecutor jobExecutor) {
@@ -45,10 +45,10 @@ public abstract class AcquireJobsRunnable implements Runnable {
 
     try {
       LOG.debugJobAcquisitionThreadSleeping(millis);
-      synchronized (MONITOR) {
+      synchronized (monitor) {
         if(!isInterrupted) {
           isWaiting.set(true);
-          MONITOR.wait(millis);
+          monitor.wait(millis);
         }
       }
       LOG.jobExecutorThreadWokeUp();
@@ -62,10 +62,10 @@ public abstract class AcquireJobsRunnable implements Runnable {
   }
 
   public void stop() {
-    synchronized (MONITOR) {
+    synchronized (monitor) {
       isInterrupted = true;
       if(isWaiting.compareAndSet(true, false)) {
-        MONITOR.notifyAll();
+        monitor.notifyAll();
       }
     }
   }
@@ -75,8 +75,8 @@ public abstract class AcquireJobsRunnable implements Runnable {
     if(isWaiting.compareAndSet(true, false)) {
       // ensures we only notify once
       // I am OK with the race condition
-      synchronized (MONITOR) {
-        MONITOR.notifyAll();
+      synchronized (monitor) {
+        monitor.notifyAll();
       }
     }
   }

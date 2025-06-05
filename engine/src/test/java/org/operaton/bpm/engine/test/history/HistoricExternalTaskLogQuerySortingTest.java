@@ -63,8 +63,8 @@ import org.junit.rules.RuleChain;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricExternalTaskLogQuerySortingTest {
 
-  protected final String WORKER_ID = "aWorkerId";
-  protected final long LOCK_DURATION = 5 * 60L * 1000L;
+  private static final String WORKER_ID = "aWorkerId";
+  private static final Long LOCK_DURATION = 5 * 60L * 1000L;
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);

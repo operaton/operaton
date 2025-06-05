@@ -32,7 +32,7 @@ public class ProblemDto {
   protected int line;
   protected int column;
   protected String mainElementId;
-  protected List<String> еlementIds;
+  protected List<String> elementIds;
 
   // transformer /////////////////////////////
 
@@ -43,7 +43,7 @@ public class ProblemDto {
     dto.setLine(problem.getLine());
     dto.setColumn(problem.getColumn());
     dto.setMainElementId(problem.getMainElementId());
-    dto.setЕlementIds(problem.getElementIds());
+    dto.setElementIds(problem.getElementIds());
 
     return dto;
   }
@@ -82,12 +82,12 @@ public class ProblemDto {
     this.mainElementId = mainElementId;
   }
 
-  public List<String> getЕlementIds() {
-    return еlementIds;
+  public List<String> getElementIds() {
+    return elementIds;
   }
 
-  public void setЕlementIds(List<String> elementIds) {
-    this.еlementIds = elementIds;
+  public void setElementIds(List<String> elementIds) {
+    this.elementIds = elementIds;
   }
 
 }

@@ -105,7 +105,7 @@ class PluginsRootResourceIT extends AbstractWebIT {
     JerseyClient client = (JerseyClient) JerseyClientBuilder.newClient();
 
     // Build the target URI using the base path and path parameter
-    String fullPath = APP_BASE_PATH + path;
+    String fullPath = appBasePath + path;
 
     // Perform the GET request to fetch the asset
     return client.target(fullPath)  // Use target() to define the endpoint

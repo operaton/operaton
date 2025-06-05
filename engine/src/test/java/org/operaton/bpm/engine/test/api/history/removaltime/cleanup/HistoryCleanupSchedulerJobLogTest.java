@@ -57,8 +57,8 @@ class HistoryCleanupSchedulerJobLogTest extends AbstractHistoryCleanupSchedulerT
     initEngineConfiguration(engineRule, engineConfiguration);
   }
 
-  protected final String PROCESS_KEY = "process";
-  protected final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
+  static final String PROCESS_KEY = "process";
+  static final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
     .operatonHistoryTimeToLive(5)
     .startEvent()
       .scriptTask()

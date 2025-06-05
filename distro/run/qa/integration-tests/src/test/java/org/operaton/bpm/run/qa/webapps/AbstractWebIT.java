@@ -39,7 +39,7 @@ public abstract class AbstractWebIT {
 
   protected static final String TASKLIST_PATH = "app/tasklist/default/";
   protected static final String HOST_NAME = "localhost";
-  public String APP_BASE_PATH;
+  protected String appBasePath;
 
   protected String appUrl;
   protected TestUtil testUtil;
@@ -67,8 +67,8 @@ public abstract class AbstractWebIT {
     testProperties = new TestProperties();
 
     // Get the application base path
-    APP_BASE_PATH = testProperties.getApplicationPath("/" + ctxPath);
-    LOGGER.info("Connecting to application " + APP_BASE_PATH);
+    appBasePath = testProperties.getApplicationPath("/" + ctxPath);
+    LOGGER.info("Connecting to application " + appBasePath);
 
     // Create ClientConfig and register JacksonFeature for POJO mapping
     ClientConfig clientConfig = new ClientConfig();

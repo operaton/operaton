@@ -43,27 +43,28 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
 
 class HistoryCleanupSchedulerCmdTest {
 
-    @Mock
-    private CommandContext commandContext;
-    @Mock
-    private JobEntity jobEntity;
-    @Mock
-    private DbMetricsReporter dbMetricsReporter;
-    @Mock
-    private JobManager jobManager;
-    @Spy
-    private ProcessEngineConfigurationImpl engineConfigurationSpy;
-    @Mock
-    private MockedStatic<HistoryCleanupHelper> mockedHistoryCleanupHelper;
+  @Mock
+  private CommandContext commandContext;
+  @Mock
+  private JobEntity jobEntity;
+  @Mock
+  private DbMetricsReporter dbMetricsReporter;
+  @Mock
+  private JobManager jobManager;
+  @Spy
+  private ProcessEngineConfigurationImpl engineConfigurationSpy;
+  @Mock
+  private MockedStatic<HistoryCleanupHelper> mockedHistoryCleanupHelper;
 
-    private HistoryCleanupSchedulerCmd historyCleanupSchedulerCmd;
-    private Map<String, Long> reports;
-    private HistoryCleanupJobHandlerConfiguration configuration;
-    private final String jobId = "testJobId";
+  private HistoryCleanupSchedulerCmd historyCleanupSchedulerCmd;
+  private Map<String, Long> reports;
+  private HistoryCleanupJobHandlerConfiguration configuration;
 
-    String METRICS_KEY = "Key";
-    Long METRICS_VALUE = 123L;
-    private AutoCloseable closeable;
+  static final String JOB_ID = "testJobId";
+  static final String METRICS_KEY = "Key";
+  static final Long METRICS_VALUE = 123L;
+
+  private AutoCloseable closeable;
 
   @BeforeEach
   void setUp() {
@@ -71,7 +72,7 @@ class HistoryCleanupSchedulerCmdTest {
 
         when(commandContext.getProcessEngineConfiguration()).thenReturn(engineConfigurationSpy);
         when(commandContext.getJobManager()).thenReturn(jobManager);
-        when(jobManager.findJobById(jobId)).thenReturn(jobEntity);
+        when(jobManager.findJobById(JOB_ID)).thenReturn(jobEntity);
 
         when(engineConfigurationSpy.getDbMetricsReporter()).thenReturn(dbMetricsReporter);
 
@@ -93,7 +94,7 @@ class HistoryCleanupSchedulerCmdTest {
         // given
         engineConfigurationSpy.setMetricsEnabled(true);
         engineConfigurationSpy.setHistoryCleanupMetricsEnabled(true);
-        historyCleanupSchedulerCmd = new HistoryCleanupSchedulerCmd(false, reports, configuration, jobId);
+        historyCleanupSchedulerCmd = new HistoryCleanupSchedulerCmd(false, reports, configuration, JOB_ID);
 
         // when
         historyCleanupSchedulerCmd.execute(commandContext);
@@ -107,7 +108,7 @@ class HistoryCleanupSchedulerCmdTest {
         // given
         engineConfigurationSpy.setMetricsEnabled(false);
         engineConfigurationSpy.setHistoryCleanupMetricsEnabled(true);
-        historyCleanupSchedulerCmd = new HistoryCleanupSchedulerCmd(false, reports, configuration, jobId);
+        historyCleanupSchedulerCmd = new HistoryCleanupSchedulerCmd(false, reports, configuration, JOB_ID);
 
         // when
         historyCleanupSchedulerCmd.execute(commandContext);
@@ -122,7 +123,7 @@ class HistoryCleanupSchedulerCmdTest {
         // given
         engineConfigurationSpy.setMetricsEnabled(true);
         engineConfigurationSpy.setHistoryCleanupMetricsEnabled(false);
-        historyCleanupSchedulerCmd = new HistoryCleanupSchedulerCmd(false, reports, configuration, jobId);
+        historyCleanupSchedulerCmd = new HistoryCleanupSchedulerCmd(false, reports, configuration, JOB_ID);
 
         // when
         historyCleanupSchedulerCmd.execute(commandContext);

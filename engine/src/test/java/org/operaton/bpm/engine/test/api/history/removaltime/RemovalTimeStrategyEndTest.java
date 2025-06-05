@@ -95,9 +95,9 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
     clearAuthorization();
   }
 
-  protected final String CALLED_PROCESS_KEY = "calledProcess";
+  static final String CALLED_PROCESS_KEY = "calledProcess";
 
-  protected final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
+  static final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
       .operatonHistoryTimeToLive(180)
       .startEvent()
       .userTask("userTask")
@@ -106,16 +106,16 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
       .endEvent()
       .done();
 
-  protected final String CALLING_PROCESS_KEY = "callingProcess";
-  protected final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
+  static final String CALLING_PROCESS_KEY = "callingProcess";
+  static final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
     .operatonHistoryTimeToLive(5)
     .startEvent()
       .callActivity()
         .calledElement(CALLED_PROCESS_KEY)
     .endEvent().done();
 
-  protected final Date START_DATE = new Date(1363607000000L);
-  protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  static final Date START_DATE = new Date(1363607000000L);
+  static final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   @Test
   @Deployment(resources = {

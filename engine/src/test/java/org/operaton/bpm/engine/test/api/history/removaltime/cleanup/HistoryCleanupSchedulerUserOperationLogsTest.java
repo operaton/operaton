@@ -50,12 +50,12 @@ class HistoryCleanupSchedulerUserOperationLogsTest extends AbstractHistoryCleanu
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected IdentityService identityService;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  IdentityService identityService;
 
-  protected final String PROCESS_KEY = "process";
-  protected final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
+  static final String PROCESS_KEY = "process";
+  static final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
     .operatonHistoryTimeToLive(5)
       .startEvent().operatonAsyncBefore()
     .endEvent().done();

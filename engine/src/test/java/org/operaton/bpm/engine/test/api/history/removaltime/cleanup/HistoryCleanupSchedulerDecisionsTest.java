@@ -59,8 +59,8 @@ class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanupSchedul
     initEngineConfiguration(engineRule, engineConfiguration);
   }
 
-  protected final String CALLING_PROCESS_CALLS_DMN_KEY = "callingProcessCallsDmn";
-  protected final BpmnModelInstance CALLING_PROCESS_CALLS_DMN = Bpmn.createExecutableProcess(CALLING_PROCESS_CALLS_DMN_KEY)
+  static final String CALLING_PROCESS_CALLS_DMN_KEY = "callingProcessCallsDmn";
+  static final BpmnModelInstance CALLING_PROCESS_CALLS_DMN = Bpmn.createExecutableProcess(CALLING_PROCESS_CALLS_DMN_KEY)
     .operatonHistoryTimeToLive(5)
     .startEvent()
       .businessRuleTask()
@@ -71,7 +71,7 @@ class HistoryCleanupSchedulerDecisionsTest extends AbstractHistoryCleanupSchedul
         .multiInstanceDone()
     .endEvent().done();
 
-  protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  static final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   @Test
   @Deployment(resources = {

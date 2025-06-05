@@ -59,14 +59,14 @@ class HistoryCleanupSchedulerProcessInstancesTest extends AbstractHistoryCleanup
     initEngineConfiguration(engineRule, engineConfiguration);
   }
 
-  protected final String PROCESS_KEY = "process";
-  protected final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
+  static final String PROCESS_KEY = "process";
+  static final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
     .operatonHistoryTimeToLive(5)
     .startEvent()
       .userTask("userTask").name("userTask")
     .endEvent().done();
 
-  protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  static final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   @Test
   void shouldScheduleToNow() {

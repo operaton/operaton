@@ -29,7 +29,7 @@ import org.operaton.commons.utils.IoUtil;
 
 public class HttpResponseImpl extends AbstractCloseableConnectorResponse implements HttpResponse {
 
-  private final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
+  private static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
   protected CloseableHttpResponse httpResponse;
 

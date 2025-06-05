@@ -44,15 +44,15 @@ import org.junit.rules.RuleChain;
 @RequiredHistoryLevel(HISTORY_FULL)
 public class UserOperationLogAnnotationTest {
 
-  protected static final String USER_ID = "demo";
-  protected static final String TASK_ID = "aTaskId";
-  protected static final String ANNOTATION = "anAnnotation";
-  protected static final String TASK_NAME = "aTaskName";
-  protected static final String OPERATION_ID = "operationId";
-  protected final Date CREATE_TIME = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  static final String USER_ID = "demo";
+  static final String TASK_ID = "aTaskId";
+  static final String ANNOTATION = "anAnnotation";
+  static final String TASK_NAME = "aTaskName";
+  static final String OPERATION_ID = "operationId";
+  static final Date CREATE_TIME = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
+  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
 
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule);

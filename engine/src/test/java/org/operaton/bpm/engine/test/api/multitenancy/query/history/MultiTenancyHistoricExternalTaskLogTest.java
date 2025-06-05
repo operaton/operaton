@@ -60,13 +60,13 @@ class MultiTenancyHistoricExternalTaskLogTest {
   protected IdentityService identityService;
   protected ExternalTaskService externalTaskService;
 
-  protected final String TENANT_NULL = null;
-  protected final String TENANT_ONE = "tenant1";
-  protected final String TENANT_TWO = "tenant2";
+  static final String TENANT_NULL = null;
+  static final String TENANT_ONE = "tenant1";
+  static final String TENANT_TWO = "tenant2";
 
-  protected final String WORKER_ID = "aWorkerId";
-  protected final String ERROR_DETAILS = "These are the error details!";
-  protected final long LOCK_DURATION = 5 * 60L * 1000L;
+  static final String WORKER_ID = "aWorkerId";
+  static final String ERROR_DETAILS = "These are the error details!";
+  static final long LOCK_DURATION = 5 * 60L * 1000L;
 
 
   @BeforeEach

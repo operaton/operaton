@@ -87,7 +87,7 @@ class ManagementServiceTest {
 
   protected boolean tearDownEnsureJobDueDateNotNull;
 
-  protected final Date TEST_DUE_DATE = new Date(1675752840000L);
+  static final Date TEST_DUE_DATE = new Date(1675752840000L);
 
   @AfterEach
   void tearDown() {

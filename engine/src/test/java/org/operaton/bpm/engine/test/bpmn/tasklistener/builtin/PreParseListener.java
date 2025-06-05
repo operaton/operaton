@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 
 public class PreParseListener extends AbstractBpmnParseListener {
 
-  Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   @Override
   public void parseUserTask(final Element userTaskElement, final ScopeImpl scope, final ActivityImpl activity) {

@@ -31,7 +31,7 @@ import java.io.InputStream;
  */
 public class ParseCmmnModelRule implements BeforeEachCallback {
 
-  protected CmmnModelInstance CmmnModelInstance;
+  protected CmmnModelInstance cmmnModelInstance;
 
   @Override
   public void beforeEach(ExtensionContext context){
@@ -46,7 +46,7 @@ public class ParseCmmnModelRule implements BeforeEachCallback {
 
       InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(cmmnResourceName);
       try {
-        CmmnModelInstance = Cmmn.readModelFromStream(resourceAsStream);
+        cmmnModelInstance = Cmmn.readModelFromStream(resourceAsStream);
       } finally {
         IoUtil.closeSilently(resourceAsStream);
       }
@@ -54,7 +54,7 @@ public class ParseCmmnModelRule implements BeforeEachCallback {
   }
 
   public CmmnModelInstance getCmmnModel() {
-    return CmmnModelInstance;
+    return cmmnModelInstance;
   }
 
 }

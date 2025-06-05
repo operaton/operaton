@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class NotifyCreditorService implements JavaDelegate {
 
-  private final Logger LOGGER = Logger.getLogger(NotifyCreditorService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(NotifyCreditorService.class.getName());
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

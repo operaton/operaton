@@ -77,7 +77,7 @@ public class PartitioningTest {
     managementService = engineRule.getManagementService();
   }
 
-  protected final BpmnModelInstance PROCESS_WITH_USERTASK = Bpmn.createExecutableProcess("process")
+  private static final BpmnModelInstance PROCESS_WITH_USERTASK = Bpmn.createExecutableProcess("process")
     .startEvent()
       .userTask()
     .endEvent().done();

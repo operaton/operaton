@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 
 public class TestTaskListener implements TaskListener {
 
-  Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   @Override
   public void notify(DelegateTask delegateTask) {

@@ -71,12 +71,12 @@ public abstract class AbstractCockpitPluginTest {
 
   @Before
   public void before() {
-    RUNTIME_DELEGATE.ENGINE = getProcessEngine();
+    RUNTIME_DELEGATE.engine = getProcessEngine();
   }
 
   @After
   public void after() {
-    RUNTIME_DELEGATE.ENGINE = null;
+    RUNTIME_DELEGATE.engine = null;
     getProcessEngine().getIdentityService().clearAuthentication();
   }
 
@@ -141,13 +141,13 @@ public abstract class AbstractCockpitPluginTest {
 
   private static class TestCockpitRuntimeDelegate extends DefaultCockpitRuntimeDelegate {
 
-    public ProcessEngine ENGINE;
+    public ProcessEngine engine;
 
     @Override
     public ProcessEngine getProcessEngine(String processEngineName) {
 
       // always return default engine for plugin tests
-      return ENGINE;
+      return engine;
     }
   }
 }

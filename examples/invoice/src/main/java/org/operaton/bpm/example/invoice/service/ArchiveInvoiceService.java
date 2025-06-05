@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.variable.value.FileValue;
  */
 public class ArchiveInvoiceService implements JavaDelegate {
 
-  private final Logger LOGGER = Logger.getLogger(ArchiveInvoiceService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ArchiveInvoiceService.class.getName());
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
@@ -44,7 +44,5 @@ public class ArchiveInvoiceService implements JavaDelegate {
       LOGGER.info("\n\n  ... Now archiving invoice "+execution.getVariable("invoiceNumber")
           +", filename: "+invoiceDocumentVar.getFilename()+" \n\n");
     }
-
   }
-
 }

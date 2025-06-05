@@ -46,7 +46,7 @@ public abstract class AbstractDefinitionDeployer<DefinitionEntity extends Resour
 
   public static final String[] DIAGRAM_SUFFIXES = new String[] { "png", "jpg", "gif", "svg" };
 
-  private final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected IdGenerator idGenerator;
 

@@ -30,8 +30,8 @@ public class EmptyHalCollection extends HalCollectionResource<EmptyHalCollection
   }
 
   public EmptyHalCollection(long count) {
-    _links = Collections.emptyMap();
-    _embedded = Collections.emptyMap();
+    links = Collections.emptyMap();
+    embedded = Collections.emptyMap();
     this.count = count;
   }
 

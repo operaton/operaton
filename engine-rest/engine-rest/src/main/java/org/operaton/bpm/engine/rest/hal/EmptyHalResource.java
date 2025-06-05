@@ -26,8 +26,8 @@ public class EmptyHalResource extends HalResource<EmptyHalResource> {
   public static final HalResource INSTANCE = new EmptyHalResource();
 
   public EmptyHalResource() {
-    _links = Collections.emptyMap();
-    _embedded = Collections.emptyMap();
+    links = Collections.emptyMap();
+    embedded = Collections.emptyMap();
   }
 
   @SuppressWarnings("unchecked")

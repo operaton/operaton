@@ -55,7 +55,7 @@ class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperationsTest {
   @RegisterExtension
   static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected final Date TEST_DUE_DATE = new Date(1675752840000L);
+  static final Date TEST_DUE_DATE = new Date(1675752840000L);
 
   protected List<String> processInstanceIds;
   protected List<String> ids;

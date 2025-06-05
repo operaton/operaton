@@ -81,9 +81,9 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   protected Date processDefinitionsActivationDate;
 
   protected String nameFromDeployment;
-  protected Set<String> deployments = new HashSet<>();
-  protected Map<String, Set<String>> deploymentResourcesById = new HashMap<>();
-  protected Map<String, Set<String>> deploymentResourcesByName = new HashMap<>();
+  private final Set<String> deployments = new HashSet<>();
+  private final Map<String, Set<String>> deploymentResourcesById = new HashMap<>();
+  private final Map<String, Set<String>> deploymentResourcesByName = new HashMap<>();
 
   public DeploymentBuilderImpl(RepositoryServiceImpl repositoryService) {
     this.repositoryService = repositoryService;

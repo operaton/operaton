@@ -66,6 +66,12 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  private static final String DEPLOYMENT_ID = "deploymentId";
+  private static final String MODEL_INSTANCE = "modelInstance";
+  private static final String RESOURCE_IDS = "resourceIds";
+  private static final String RESOURCE_NAME = "resourceName";
+  private static final String RESOURCE_NAMES = "resourceNames";
+
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected transient RepositoryServiceImpl repositoryService;
@@ -111,7 +117,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentBuilder addModelInstance(String resourceName, CmmnModelInstance modelInstance) {
-    ensureNotNull("modelInstance", modelInstance);
+    ensureNotNull(MODEL_INSTANCE, modelInstance);
 
     validateResouceName(resourceName, CmmnDeployer.CMMN_RESOURCE_SUFFIXES);
 
@@ -123,7 +129,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentBuilder addModelInstance(String resourceName, BpmnModelInstance modelInstance) {
-    ensureNotNull("modelInstance", modelInstance);
+    ensureNotNull(MODEL_INSTANCE, modelInstance);
 
     validateResouceName(resourceName, BpmnDeployer.BPMN_RESOURCE_SUFFIXES);
 
@@ -135,7 +141,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentBuilder addModelInstance(String resourceName, DmnModelInstance modelInstance) {
-    ensureNotNull("modelInstance", modelInstance);
+    ensureNotNull(MODEL_INSTANCE, modelInstance);
 
     validateResouceName(resourceName, DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES);
 
@@ -179,14 +185,14 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentBuilder addDeploymentResources(String deploymentId) {
-    ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
+    ensureNotNull(NotValidException.class, DEPLOYMENT_ID, deploymentId);
     deployments.add(deploymentId);
     return this;
   }
 
   @Override
   public DeploymentBuilder addDeploymentResourceById(String deploymentId, String resourceId) {
-    ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
+    ensureNotNull(NotValidException.class, DEPLOYMENT_ID, deploymentId);
     ensureNotNull(NotValidException.class, "resourceId", resourceId);
 
     CollectionUtil.addToMapOfSets(deploymentResourcesById, deploymentId, resourceId);
@@ -196,11 +202,11 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentBuilder addDeploymentResourcesById(String deploymentId, List<String> resourceIds) {
-    ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
+    ensureNotNull(NotValidException.class, DEPLOYMENT_ID, deploymentId);
 
-    ensureNotNull(NotValidException.class, "resourceIds", resourceIds);
-    ensureNotEmpty(NotValidException.class, "resourceIds", resourceIds);
-    ensureNotContainsNull(NotValidException.class, "resourceIds", resourceIds);
+    ensureNotNull(NotValidException.class, RESOURCE_IDS, resourceIds);
+    ensureNotEmpty(NotValidException.class, RESOURCE_IDS, resourceIds);
+    ensureNotContainsNull(NotValidException.class, RESOURCE_IDS, resourceIds);
 
     CollectionUtil.addCollectionToMapOfSets(deploymentResourcesById, deploymentId, resourceIds);
 
@@ -209,8 +215,8 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentBuilder addDeploymentResourceByName(String deploymentId, String resourceName) {
-    ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
-    ensureNotNull(NotValidException.class, "resourceName", resourceName);
+    ensureNotNull(NotValidException.class, DEPLOYMENT_ID, deploymentId);
+    ensureNotNull(NotValidException.class, RESOURCE_NAME, resourceName);
 
     CollectionUtil.addToMapOfSets(deploymentResourcesByName, deploymentId, resourceName);
 
@@ -219,11 +225,11 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentBuilder addDeploymentResourcesByName(String deploymentId, List<String> resourceNames) {
-    ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
+    ensureNotNull(NotValidException.class, DEPLOYMENT_ID, deploymentId);
 
-    ensureNotNull(NotValidException.class, "resourceNames", resourceNames);
-    ensureNotEmpty(NotValidException.class, "resourceNames", resourceNames);
-    ensureNotContainsNull(NotValidException.class, "resourceNames", resourceNames);
+    ensureNotNull(NotValidException.class, RESOURCE_NAMES, resourceNames);
+    ensureNotEmpty(NotValidException.class, RESOURCE_NAMES, resourceNames);
+    ensureNotContainsNull(NotValidException.class, RESOURCE_NAMES, resourceNames);
 
     CollectionUtil.addCollectionToMapOfSets(deploymentResourcesByName, deploymentId, resourceNames);
 

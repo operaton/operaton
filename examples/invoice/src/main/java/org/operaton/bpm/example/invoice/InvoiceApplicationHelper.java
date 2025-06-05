@@ -39,6 +39,15 @@ public class InvoiceApplicationHelper {
 
   private static final Logger LOGGER = Logger.getLogger(InvoiceApplicationHelper.class.getName());
 
+  private static final String PROCDEFKEY_INVOICE = "invoice";
+  private static final String RESOURCE_INVOICE_PDF = "invoice.pdf";
+
+  private static final String VAR_CREDITOR = "creditor";
+  private static final String VAR_AMOUNT = "amount";
+  private static final String VAR_INVOICE_CATEGORY = "invoiceCategory";
+  private static final String VAR_INVOICE_NUMBER = "invoiceNumber";
+  private static final String VAR_INVOICE_DOCUMENT = "invoiceDocument";
+
   private InvoiceApplicationHelper() {
   }
 
@@ -50,8 +59,8 @@ public class InvoiceApplicationHelper {
     processEngineConfiguration.setDbMetricsReporterActivate(true);
     processEngineConfiguration.getDbMetricsReporter().setReporterId("REPORTER");
 
-    startProcessInstances(processEngine, "invoice", 1);
-    startProcessInstances(processEngine, "invoice", null);
+    startProcessInstances(processEngine, PROCDEFKEY_INVOICE, 1);
+    startProcessInstances(processEngine, PROCDEFKEY_INVOICE, null);
 
     //disable reporting
     processEngineConfiguration.setDbMetricsReporterActivate(false);
@@ -64,7 +73,7 @@ public class InvoiceApplicationHelper {
 
       RepositoryService repositoryService = processEngine.getRepositoryService();
 
-      if (!isProcessDeployed(repositoryService, "invoice")) {
+      if (!isProcessDeployed(repositoryService, PROCDEFKEY_INVOICE)) {
         repositoryService.createDeployment(applicationReference)
           .addInputStream("invoice.v1.bpmn", classLoader.getResourceAsStream("invoice.v1.bpmn"))
           .addInputStream("invoiceBusinessDecisions.dmn", classLoader.getResourceAsStream("invoiceBusinessDecisions.dmn"))
@@ -75,7 +84,7 @@ public class InvoiceApplicationHelper {
   }
 
   protected static boolean isProcessDeployed(RepositoryService repositoryService, String key) {
-    return repositoryService.createProcessDefinitionQuery().processDefinitionKey("invoice").count() > 0;
+    return repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCDEFKEY_INVOICE).count() > 0;
   }
 
   protected static void startProcessInstances(ProcessEngine processEngine, String processDefinitionKey, Integer version) {
@@ -95,7 +104,8 @@ public class InvoiceApplicationHelper {
 
     ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
 
-    InputStream invoiceInputStream = InvoiceApplicationHelper.class.getClassLoader().getResourceAsStream("invoice.pdf");
+    InputStream invoiceInputStream = InvoiceApplicationHelper.class.getClassLoader().getResourceAsStream(
+      RESOURCE_INVOICE_PDF);
 
     long numberOfRunningProcessInstances = processEngine.getRuntimeService().createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).count();
 
@@ -104,17 +114,17 @@ public class InvoiceApplicationHelper {
       LOGGER.info("Start 3 instances of " + processDefinition.getName() + ", version " + processDefinition.getVersion());
       // process instance 1
       processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
-          .putValue("creditor", "Great Pizza for Everyone Inc.")
-          .putValue("amount", 30.00d)
-          .putValue("invoiceCategory", "Travel Expenses")
-          .putValue("invoiceNumber", "GPFE-23232323")
-          .putValue("invoiceDocument", fileValue("invoice.pdf")
+          .putValue(VAR_CREDITOR, "Great Pizza for Everyone Inc.")
+          .putValue(VAR_AMOUNT, 30.00d)
+          .putValue(VAR_INVOICE_CATEGORY, "Travel Expenses")
+          .putValue(VAR_INVOICE_NUMBER, "GPFE-23232323")
+          .putValue(VAR_INVOICE_DOCUMENT, fileValue(RESOURCE_INVOICE_PDF)
               .file(invoiceInputStream)
               .mimeType("application/pdf")
               .create()));
 
       IoUtil.closeSilently(invoiceInputStream);
-      invoiceInputStream = InvoiceApplicationHelper.class.getClassLoader().getResourceAsStream("invoice.pdf");
+      invoiceInputStream = InvoiceApplicationHelper.class.getClassLoader().getResourceAsStream(RESOURCE_INVOICE_PDF);
       processEngineConfiguration.getDbMetricsReporter().reportNow();
 
       // process instance 2
@@ -124,11 +134,11 @@ public class InvoiceApplicationHelper {
         ClockUtil.setCurrentTime(calendar.getTime());
 
         ProcessInstance pi = processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
-            .putValue("creditor", "Bobby's Office Supplies")
-            .putValue("amount", 900.00d)
-            .putValue("invoiceCategory", "Misc")
-            .putValue("invoiceNumber", "BOS-43934")
-            .putValue("invoiceDocument", fileValue("invoice.pdf")
+            .putValue(VAR_CREDITOR, "Bobby's Office Supplies")
+            .putValue(VAR_AMOUNT, 900.00d)
+            .putValue(VAR_INVOICE_CATEGORY, "Misc")
+            .putValue(VAR_INVOICE_NUMBER, "BOS-43934")
+            .putValue(VAR_INVOICE_DOCUMENT, fileValue(RESOURCE_INVOICE_PDF)
                 .file(invoiceInputStream)
                 .mimeType("application/pdf")
                 .create()));
@@ -149,7 +159,7 @@ public class InvoiceApplicationHelper {
       }
 
       IoUtil.closeSilently(invoiceInputStream);
-      invoiceInputStream = InvoiceApplicationHelper.class.getClassLoader().getResourceAsStream("invoice.pdf");
+      invoiceInputStream = InvoiceApplicationHelper.class.getClassLoader().getResourceAsStream(RESOURCE_INVOICE_PDF);
 
       // process instance 3
       try {
@@ -158,11 +168,11 @@ public class InvoiceApplicationHelper {
         ClockUtil.setCurrentTime(calendar.getTime());
 
         ProcessInstance pi = processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
-            .putValue("creditor", "Papa Steve's all you can eat")
-            .putValue("amount", 10.99d)
-            .putValue("invoiceCategory", "Travel Expenses")
-            .putValue("invoiceNumber", "PSACE-5342")
-            .putValue("invoiceDocument", fileValue("invoice.pdf")
+            .putValue(VAR_CREDITOR, "Papa Steve's all you can eat")
+            .putValue(VAR_AMOUNT, 10.99d)
+            .putValue(VAR_INVOICE_CATEGORY, "Travel Expenses")
+            .putValue(VAR_INVOICE_NUMBER, "PSACE-5342")
+            .putValue(VAR_INVOICE_DOCUMENT, fileValue(RESOURCE_INVOICE_PDF)
                 .file(invoiceInputStream)
                 .mimeType("application/pdf")
                 .create()));

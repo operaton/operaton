@@ -38,6 +38,10 @@ import java.util.Set;
  * @author Daniel Meyer
  */
 public class EventSubscriptionManager extends AbstractManager {
+  private static final String EVENT_NAME = "eventName";
+  private static final String EVENT_TYPE = "eventType";
+  private static final String EXECUTION_ID = "executionId";
+  private static final String LOCK_RESULT = "lockResult";
   private static final String MESSAGE_NAME = "messageName";
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -112,8 +116,8 @@ public class EventSubscriptionManager extends AbstractManager {
     final String query = "selectSignalEventSubscriptionsByEventNameAndTenantId";
 
     Map<String, Object> parameter = new HashMap<>();
-    parameter.put("eventName", eventName);
-    parameter.put("tenantId", tenantId);
+    parameter.put(EVENT_NAME, eventName);
+    parameter.put(TENANT_ID, tenantId);
     Set<EventSubscriptionEntity> eventSubscriptions = new HashSet<>( getDbEntityManager().selectList(query, parameter));
 
     // add events created in this command (not visible yet in query)
@@ -133,8 +137,8 @@ public class EventSubscriptionManager extends AbstractManager {
     final String query = "selectSignalEventSubscriptionsByEventNameAndTenantIdIncludeWithoutTenantId";
 
     Map<String, Object> parameter = new HashMap<>();
-    parameter.put("eventName", eventName);
-    parameter.put("tenantId", tenantId);
+    parameter.put(EVENT_NAME, eventName);
+    parameter.put(TENANT_ID, tenantId);
     Set<EventSubscriptionEntity> eventSubscriptions = new HashSet<>( getDbEntityManager().selectList(query, parameter));
 
     // add events created in this command (not visible yet in query)
@@ -172,8 +176,8 @@ public class EventSubscriptionManager extends AbstractManager {
   public List<EventSubscriptionEntity> findSignalEventSubscriptionsByNameAndExecution(String name, String executionId) {
     final String query = "selectSignalEventSubscriptionsByNameAndExecution";
     Map<String,String> params = new HashMap<>();
-    params.put("executionId", executionId);
-    params.put("eventName", name);
+    params.put(EXECUTION_ID, executionId);
+    params.put(EVENT_NAME, name);
     Set<EventSubscriptionEntity> selectList = new HashSet<>( getDbEntityManager().selectList(query, params));
 
     // add events created in this command (not visible yet in query)
@@ -190,9 +194,9 @@ public class EventSubscriptionManager extends AbstractManager {
   public List<EventSubscriptionEntity> findEventSubscriptionsByExecutionAndType(String executionId, String type, boolean lockResult) {
     final String query = "selectEventSubscriptionsByExecutionAndType";
     Map<String, Object> params = new HashMap<>();
-    params.put("executionId", executionId);
-    params.put("eventType", type);
-    params.put("lockResult", lockResult);
+    params.put(EXECUTION_ID, executionId);
+    params.put(EVENT_TYPE, type);
+    params.put(LOCK_RESULT, lockResult);
     return getDbEntityManager().selectList(query, params);
   }
 
@@ -206,9 +210,9 @@ public class EventSubscriptionManager extends AbstractManager {
   public List<EventSubscriptionEntity> findEventSubscriptions(String executionId, String type, String activityId) {
     final String query = "selectEventSubscriptionsByExecutionTypeAndActivity";
     Map<String,String> params = new HashMap<>();
-    params.put("executionId", executionId);
-    params.put("eventType", type);
-    params.put("activityId", activityId);
+    params.put(EXECUTION_ID, executionId);
+    params.put(EVENT_TYPE, type);
+    params.put(ACTIVITY_ID, activityId);
     return getDbEntityManager().selectList(query, params);
   }
 
@@ -216,7 +220,7 @@ public class EventSubscriptionManager extends AbstractManager {
   public List<EventSubscriptionEntity> findEventSubscriptionsByConfiguration(String type, String configuration) {
     final String query = "selectEventSubscriptionsByConfiguration";
     Map<String,String> params = new HashMap<>();
-    params.put("eventType", type);
+    params.put(EVENT_TYPE, type);
     params.put("configuration", configuration);
     return getDbEntityManager().selectList(query, params);
   }
@@ -232,9 +236,9 @@ public class EventSubscriptionManager extends AbstractManager {
   public List<EventSubscriptionEntity> findEventSubscriptionsByNameAndTenantId(String type, String eventName, String tenantId) {
     final String query = "selectEventSubscriptionsByNameAndTenantId";
     Map<String,String> params = new HashMap<>();
-    params.put("eventType", type);
-    params.put("eventName", eventName);
-    params.put("tenantId", tenantId);
+    params.put(EVENT_TYPE, type);
+    params.put(EVENT_NAME, eventName);
+    params.put(TENANT_ID, tenantId);
     return getDbEntityManager().selectList(query, params);
   }
 
@@ -255,10 +259,10 @@ public class EventSubscriptionManager extends AbstractManager {
     else {
       final String query = "selectEventSubscriptionsByNameAndExecution";
       Map<String, Object> params = new HashMap<>();
-      params.put("eventType", type);
-      params.put("eventName", eventName);
-      params.put("executionId", executionId);
-      params.put("lockResult", lockResult);
+      params.put(EVENT_TYPE, type);
+      params.put(EVENT_NAME, eventName);
+      params.put(EXECUTION_ID, executionId);
+      params.put(LOCK_RESULT, lockResult);
       return getDbEntityManager().selectList(query, params);
     }
   }

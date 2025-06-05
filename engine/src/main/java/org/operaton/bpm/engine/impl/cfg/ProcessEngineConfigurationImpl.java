@@ -1721,13 +1721,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected static Properties databaseTypeMappings = getDefaultDatabaseTypeMappings();
   protected static final String MY_SQL_PRODUCT_NAME = "MySQL";
   protected static final String MARIA_DB_PRODUCT_NAME = "MariaDB";
+  protected static final String MARIA_DB_IDENTIFIER = "mariadb";
   protected static final String POSTGRES_DB_PRODUCT_NAME = "PostgreSQL";
 
   protected static Properties getDefaultDatabaseTypeMappings() {
     Properties databaseTypeMappings = new Properties();
     databaseTypeMappings.setProperty("H2", "h2");
     databaseTypeMappings.setProperty(MY_SQL_PRODUCT_NAME, "mysql");
-    databaseTypeMappings.setProperty(MARIA_DB_PRODUCT_NAME, "mariadb");
+    databaseTypeMappings.setProperty(MARIA_DB_PRODUCT_NAME, MARIA_DB_IDENTIFIER);
     databaseTypeMappings.setProperty("Oracle", "oracle");
     databaseTypeMappings.setProperty(POSTGRES_DB_PRODUCT_NAME, "postgres");
     databaseTypeMappings.setProperty("Microsoft SQL Server", "mssql");
@@ -1793,7 +1794,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected String checkForMariaDb(DatabaseMetaData databaseMetaData, String databaseName) {
     try {
       String databaseProductVersion = databaseMetaData.getDatabaseProductVersion();
-      if (databaseProductVersion != null && databaseProductVersion.toLowerCase().contains("mariadb")) {
+      if (databaseProductVersion != null && databaseProductVersion.toLowerCase().contains(MARIA_DB_IDENTIFIER)) {
         return MARIA_DB_PRODUCT_NAME;
       }
     } catch (SQLException ignore) {
@@ -1801,14 +1802,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     try {
       String driverName = databaseMetaData.getDriverName();
-      if (driverName != null && driverName.toLowerCase().contains("mariadb")) {
+      if (driverName != null && driverName.toLowerCase().contains(MARIA_DB_IDENTIFIER)) {
         return MARIA_DB_PRODUCT_NAME;
       }
     } catch (SQLException ignore) {
     }
 
     String metaDataClassName = databaseMetaData.getClass().getName();
-    if (metaDataClassName != null && metaDataClassName.toLowerCase().contains("mariadb")) {
+    if (metaDataClassName != null && metaDataClassName.toLowerCase().contains(MARIA_DB_IDENTIFIER)) {
       return MARIA_DB_PRODUCT_NAME;
     }
 

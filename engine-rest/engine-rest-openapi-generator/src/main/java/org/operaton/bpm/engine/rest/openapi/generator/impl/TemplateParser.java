@@ -145,8 +145,8 @@ public class TemplateParser {
       }
     } else {
       // only for debug cases
-      templateData.put("operatonbpmVersion", "develop");
-      templateData.put("docsVersion", "develop");
+      templateData.put("operatonbpmVersion", VERSION_DEVELOP);
+      templateData.put(DATA_DOCS_VERSION, VERSION_DEVELOP);
     }
   }
 

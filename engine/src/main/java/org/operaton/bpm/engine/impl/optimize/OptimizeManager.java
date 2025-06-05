@@ -45,6 +45,18 @@ import static org.operaton.bpm.engine.authorization.Resources.TENANT;
 
 public class OptimizeManager extends AbstractManager {
 
+  private static final String CREATED_AFTER = "createdAfter";
+  private static final String CREATED_AT = "createdAt";
+  private static final String EVALUATED_AFTER = "evaluatedAfter";
+  private static final String EVALUATED_AT = "evaluatedAt";
+  private static final String FINISHED_AFTER = "finishedAfter";
+  private static final String FINISHED_AT = "finishedAt";
+  private static final String OCCURRED_AFTER = "occurredAfter";
+  private static final String OCCURRED_AT = "occurredAt";
+  private static final String OPERATION_TYPES = "operationTypes";
+  private static final String STARTED_AFTER = "startedAfter";
+  private static final String STARTED_AT = "startedAt";
+
   /**
    * Loads the byte arrays into the cache; does currently not return a list
    * because it is not needed by the calling code and we can avoid concatenating
@@ -66,9 +78,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("finishedAfter", finishedAfter);
-    params.put("finishedAt", finishedAt);
-    params.put("maxResults", maxResults);
+    params.put(FINISHED_AFTER, finishedAfter);
+    params.put(FINISHED_AT, finishedAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectCompletedHistoricActivityPage", params);
   }
@@ -80,9 +92,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("startedAfter", startedAfter);
-    params.put("startedAt", startedAt);
-    params.put("maxResults", maxResults);
+    params.put(STARTED_AFTER, startedAfter);
+    params.put(STARTED_AT, startedAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectRunningHistoricActivityPage", params);
   }
@@ -94,9 +106,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("finishedAfter", finishedAfter);
-    params.put("finishedAt", finishedAt);
-    params.put("maxResults", maxResults);
+    params.put(FINISHED_AFTER, finishedAfter);
+    params.put(FINISHED_AT, finishedAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectCompletedHistoricTaskInstancePage", params);
   }
@@ -108,9 +120,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("startedAfter", startedAfter);
-    params.put("startedAt", startedAt);
-    params.put("maxResults", maxResults);
+    params.put(STARTED_AFTER, startedAfter);
+    params.put(STARTED_AT, startedAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectRunningHistoricTaskInstancePage", params);
   }
@@ -129,10 +141,10 @@ public class OptimizeManager extends AbstractManager {
       UserOperationLogEntry.OPERATION_TYPE_SUSPEND,
       UserOperationLogEntry.OPERATION_TYPE_ACTIVATE};
     Map<String, Object> params = new HashMap<>();
-    params.put("occurredAfter", occurredAfter);
-    params.put("occurredAt", occurredAt);
-    params.put("operationTypes", operationTypes);
-    params.put("maxResults", maxResults);
+    params.put(OCCURRED_AFTER, occurredAfter);
+    params.put(OCCURRED_AT, occurredAt);
+    params.put(OPERATION_TYPES, operationTypes);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectHistoricUserOperationLogPage", params);
   }
@@ -144,9 +156,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("occurredAfter", occurredAfter);
-    params.put("occurredAt", occurredAt);
-    params.put("maxResults", maxResults);
+    params.put(OCCURRED_AFTER, occurredAfter);
+    params.put(OCCURRED_AT, occurredAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectHistoricIdentityLinkPage", params);
   }
@@ -158,9 +170,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("finishedAfter", finishedAfter);
-    params.put("finishedAt", finishedAt);
-    params.put("maxResults", maxResults);
+    params.put(FINISHED_AFTER, finishedAfter);
+    params.put(FINISHED_AT, finishedAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectCompletedHistoricProcessInstancePage", params);
   }
@@ -172,9 +184,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("startedAfter", startedAfter);
-    params.put("startedAt", startedAt);
-    params.put("maxResults", maxResults);
+    params.put(STARTED_AFTER, startedAfter);
+    params.put(STARTED_AT, startedAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectRunningHistoricProcessInstancePage", params);
   }
@@ -186,9 +198,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("occurredAfter", occurredAfter);
-    params.put("occurredAt", occurredAt);
-    params.put("maxResults", maxResults);
+    params.put(OCCURRED_AFTER, occurredAfter);
+    params.put(OCCURRED_AT, occurredAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectHistoricVariableUpdatePage", params);
   }
@@ -200,9 +212,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("finishedAfter", finishedAfter);
-    params.put("finishedAt", finishedAt);
-    params.put("maxResults", maxResults);
+    params.put(FINISHED_AFTER, finishedAfter);
+    params.put(FINISHED_AT, finishedAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectCompletedHistoricIncidentsPage", params);
   }
@@ -214,9 +226,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("createdAfter", createdAfter);
-    params.put("createdAt", createdAt);
-    params.put("maxResults", maxResults);
+    params.put(CREATED_AFTER, createdAfter);
+    params.put(CREATED_AT, createdAt);
+    params.put(MAX_RESULTS, maxResults);
 
     return getDbEntityManager().selectList("selectOpenHistoricIncidentsPage", params);
   }
@@ -228,9 +240,9 @@ public class OptimizeManager extends AbstractManager {
     checkIsAuthorizedToReadHistoryAndTenants();
 
     Map<String, Object> params = new HashMap<>();
-    params.put("evaluatedAfter", evaluatedAfter);
-    params.put("evaluatedAt", evaluatedAt);
-    params.put("maxResults", maxResults);
+    params.put(EVALUATED_AFTER, evaluatedAfter);
+    params.put(EVALUATED_AT, evaluatedAt);
+    params.put(MAX_RESULTS, maxResults);
 
     List<HistoricDecisionInstance> decisionInstances =
       getDbEntityManager().selectList("selectHistoricDecisionInstancePage", params);

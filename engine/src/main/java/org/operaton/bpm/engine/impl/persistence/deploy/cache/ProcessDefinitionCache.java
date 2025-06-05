@@ -29,6 +29,9 @@ import org.operaton.bpm.engine.exception.NotFoundException;
  */
 public class ProcessDefinitionCache extends ResourceDefinitionCache<ProcessDefinitionEntity> {
 
+  private static final String VAR_PROCESS_DEFINITION = "processDefinition";
+  private static final String VAR_PROCESS_DEFINITION_ID = "processDefinitionId";
+  private static final String VAR_CACHED_PROCESS_DEFINITION = "cachedProcessDefinition";
 
   public ProcessDefinitionCache(CacheFactory factory, int cacheCapacity, CacheDeployer cacheDeployer) {
     super(factory, cacheCapacity, cacheDeployer);
@@ -41,44 +44,48 @@ public class ProcessDefinitionCache extends ResourceDefinitionCache<ProcessDefin
 
   @Override
   protected void checkInvalidDefinitionId(String definitionId) {
-    ensureNotNull("Invalid process definition id", "processDefinitionId", definitionId);
+    ensureNotNull("Invalid process definition id", VAR_PROCESS_DEFINITION_ID, definitionId);
   }
 
   @Override
   protected void checkDefinitionFound(String definitionId, ProcessDefinitionEntity definition) {
-    ensureNotNull(NotFoundException.class, "no deployed process definition found with id '" + definitionId + "'", "processDefinition", definition);
+    ensureNotNull(NotFoundException.class, "no deployed process definition found with id '" + definitionId + "'",
+      VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKey(String definitionKey, ProcessDefinitionEntity definition) {
-    ensureNotNull("no processes deployed with key '" + definitionKey + "'", "processDefinition", definition);
+    ensureNotNull("no processes deployed with key '" + definitionKey + "'", VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, ProcessDefinitionEntity definition) {
-    ensureNotNull("no processes deployed with key '" + definitionKey + "' and tenant-id '" + tenantId + "'", "processDefinition", definition);
+    ensureNotNull("no processes deployed with key '" + definitionKey + "' and tenant-id '" + tenantId + "'",
+      VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, ProcessDefinitionEntity definition) {
     ensureNotNull("no processes deployed with key = '" + definitionKey + "', version = '" + definitionVersion
-        + "' and tenant-id = '" + tenantId + "'", "processDefinition", definition);
+        + "' and tenant-id = '" + tenantId + "'", VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId,
       ProcessDefinitionEntity definition) {
     ensureNotNull("no processes deployed with key = '" + definitionKey + "', versionTag = '" + definitionVersionTag
-        + "' and tenant-id = '" + tenantId + "'", "processDefinition", definition);
+        + "' and tenant-id = '" + tenantId + "'", VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, ProcessDefinitionEntity definition) {
-    ensureNotNull("no processes deployed with key = '" + definitionKey + "' in deployment = '" + deploymentId + "'", "processDefinition", definition);
+    ensureNotNull("no processes deployed with key = '" + definitionKey + "' in deployment = '" + deploymentId + "'",
+      VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, ProcessDefinitionEntity definition) {
-    ensureNotNull("deployment '" + deploymentId + "' didn't put process definition '" + definitionId + "' in the cache", "cachedProcessDefinition", definition);
+    ensureNotNull("deployment '" + deploymentId + "' didn't put process definition '" + definitionId + "' in the cache",
+      VAR_CACHED_PROCESS_DEFINITION, definition);
   }
 }

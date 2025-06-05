@@ -29,6 +29,12 @@ import jakarta.el.ValueReference;
 
 
 public class AstIdentifier extends AstNode implements IdentifierNode {
+	private static final String ERROR_IDENTIFIER_METHOD_ACCESS = "error.identifier.method.access";
+	private static final String ERROR_IDENTIFIER_METHOD_INVOCATION = "error.identifier.method.invocation";
+	private static final String ERROR_IDENTIFIER_METHOD_NOTAMETHOD = "error.identifier.method.notamethod";
+	private static final String ERROR_IDENTIFIER_METHOD_NOTFOUND = "error.identifier.method.notfound";
+	private static final String ERROR_IDENTIFIER_PROPERTY_NOTFOUND = "error.identifier.property.notfound";
+
 	private final String name;
 	private final int index;
 
@@ -46,7 +52,7 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		context.setPropertyResolved(false);
 		Class<?> result = context.getELResolver().getType(context, null, name);
 		if (!context.isPropertyResolved()) {
-			throw new PropertyNotFoundException(LocalMessages.get("error.identifier.property.notfound", name));
+			throw new PropertyNotFoundException(LocalMessages.get(ERROR_IDENTIFIER_PROPERTY_NOTFOUND, name));
 		}
 		return result;
 	}
@@ -85,7 +91,7 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		context.setPropertyResolved(false);
 		Object result = context.getELResolver().getValue(context, null, name);
 		if (!context.isPropertyResolved()) {
-			throw new PropertyNotFoundException(LocalMessages.get("error.identifier.property.notfound", name));
+			throw new PropertyNotFoundException(LocalMessages.get(ERROR_IDENTIFIER_PROPERTY_NOTFOUND, name));
 		}
 		return result;
 	}
@@ -100,7 +106,7 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		context.setPropertyResolved(false);
 		context.getELResolver().setValue(context, null, name, value);
 		if (!context.isPropertyResolved()) {
-			throw new PropertyNotFoundException(LocalMessages.get("error.identifier.property.notfound", name));
+			throw new PropertyNotFoundException(LocalMessages.get(ERROR_IDENTIFIER_PROPERTY_NOTFOUND, name));
 		}
 	}
 
@@ -113,7 +119,7 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		context.setPropertyResolved(false);
 		boolean result = context.getELResolver().isReadOnly(context, null, name);
 		if (!context.isPropertyResolved()) {
-			throw new PropertyNotFoundException(LocalMessages.get("error.identifier.property.notfound", name));
+			throw new PropertyNotFoundException(LocalMessages.get(ERROR_IDENTIFIER_PROPERTY_NOTFOUND, name));
 		}
 		return result;
 	}
@@ -121,18 +127,18 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 	protected Method getMethod(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
 		Object value = eval(bindings, context);
 		if (value == null) {
-			throw new MethodNotFoundException(LocalMessages.get("error.identifier.method.notfound", name));
+			throw new MethodNotFoundException(LocalMessages.get(ERROR_IDENTIFIER_METHOD_NOTFOUND, name));
 		}
 		if (value instanceof Method method) {
 			if (returnType != null && !returnType.isAssignableFrom(method.getReturnType())) {
-				throw new MethodNotFoundException(LocalMessages.get("error.identifier.method.notfound", name));
+				throw new MethodNotFoundException(LocalMessages.get(ERROR_IDENTIFIER_METHOD_NOTFOUND, name));
 			}
 			if (!Arrays.equals(method.getParameterTypes(), paramTypes)) {
-				throw new MethodNotFoundException(LocalMessages.get("error.identifier.method.notfound", name));
+				throw new MethodNotFoundException(LocalMessages.get(ERROR_IDENTIFIER_METHOD_NOTFOUND, name));
 			}
 			return method;
 		}
-		throw new MethodNotFoundException(LocalMessages.get("error.identifier.method.notamethod", name, value.getClass()));
+		throw new MethodNotFoundException(LocalMessages.get(ERROR_IDENTIFIER_METHOD_NOTAMETHOD, name, value.getClass()));
 	}
 
   @Override
@@ -147,11 +153,11 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		try {
 			return method.invoke(null, params);
 		} catch (IllegalAccessException e) {
-			throw new ELException(LocalMessages.get("error.identifier.method.access", name));
+			throw new ELException(LocalMessages.get(ERROR_IDENTIFIER_METHOD_ACCESS, name));
 		} catch (IllegalArgumentException e) {
-			throw new ELException(LocalMessages.get("error.identifier.method.invocation", name, e));
+			throw new ELException(LocalMessages.get(ERROR_IDENTIFIER_METHOD_INVOCATION, name, e));
 		} catch (InvocationTargetException e) {
-			throw new ELException(LocalMessages.get("error.identifier.method.invocation", name, e.getCause()));
+			throw new ELException(LocalMessages.get(ERROR_IDENTIFIER_METHOD_INVOCATION, name, e.getCause()));
 		}
 	}
 

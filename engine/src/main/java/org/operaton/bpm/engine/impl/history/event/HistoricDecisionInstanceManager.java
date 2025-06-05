@@ -162,10 +162,10 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
   @SuppressWarnings("unchecked")
   public List<String> findHistoricDecisionInstanceIdsForCleanup(Integer batchSize, int minuteFrom, int minuteTo) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("currentTimestamp", ClockUtil.getCurrentTime());
+    parameters.put(CURRENT_TIMESTAMP, ClockUtil.getCurrentTime());
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
     ListQueryParameterObject parameterObject = new ListQueryParameterObject(parameters, 0, batchSize);
     return getDbEntityManager().selectList("selectHistoricDecisionInstanceIdsForCleanup", parameterObject);
@@ -313,9 +313,9 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
     Map<Class<? extends DbEntity>, DbOperation> updateOperations = new HashMap<>();
 
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     if (isPerformUpdate(entities, HistoricDecisionInstanceEntity.class)) {
       addOperation(getDbEntityManager().updatePreserveOrder(HistoricDecisionInstanceEntity.class,
@@ -346,9 +346,9 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
     Map<Class<? extends DbEntity>, DbOperation> updateOperations = new HashMap<>();
 
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     if (isPerformUpdate(entities, HistoricDecisionInstanceEntity.class)) {
       addOperation(getDbEntityManager().updatePreserveOrder(HistoricDecisionInstanceEntity.class,
@@ -371,7 +371,7 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
   public void addRemovalTimeToDecisionsByRootDecisionInstanceId(String rootInstanceId, Date removalTime) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("rootDecisionInstanceId", rootInstanceId);
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
 
     getDbEntityManager()
       .updatePreserveOrder(HistoricDecisionInstanceEntity.class, "updateHistoricDecisionInstancesByRootDecisionInstanceId", parameters);
@@ -393,7 +393,7 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
   public void addRemovalTimeToDecisionsByDecisionInstanceId(String instanceId, Date removalTime) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionInstanceId", instanceId);
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
 
     getDbEntityManager()
       .updatePreserveOrder(HistoricDecisionInstanceEntity.class, "updateHistoricDecisionInstancesByDecisionInstanceId", parameters);
@@ -415,12 +415,12 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
 
   public Map<Class<? extends DbEntity>, DbOperation> deleteHistoricDecisionsByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     Map<Class<? extends DbEntity>, DbOperation> deleteOperations = new HashMap<>();
 

@@ -119,6 +119,8 @@ public class JsonTaskQueryConverter extends JsonObjectConverter<TaskQuery> {
   public static final String ORDERING_PROPERTIES = "orderingProperties";
   public static final String OR_QUERIES = "orQueries";
 
+  private static final String KEY_SUFFIX_EXPRESSION = "Expression";
+
   /**
    * Exists for backwards compatibility with Camunda 7.2; deprecated since Camunda 7.3
    */
@@ -237,7 +239,7 @@ public class JsonTaskQueryConverter extends JsonObjectConverter<TaskQuery> {
 
     // expressions
     for (Map.Entry<String, String> expressionEntry : query.getExpressions().entrySet()) {
-      JsonUtil.addField(json, expressionEntry.getKey() + "Expression", expressionEntry.getValue());
+      JsonUtil.addField(json, expressionEntry.getKey() + KEY_SUFFIX_EXPRESSION, expressionEntry.getValue());
     }
 
     return json;
@@ -532,9 +534,9 @@ public class JsonTaskQueryConverter extends JsonObjectConverter<TaskQuery> {
     // expressions
     for (Map.Entry<String, JsonElement> entry : json.entrySet()) {
       String key = entry.getKey();
-      if (key.endsWith("Expression")) {
+      if (key.endsWith(KEY_SUFFIX_EXPRESSION)) {
         String expression = JsonUtil.getString(json, key);
-        query.addExpression(key.substring(0, key.length() - "Expression".length()), expression);
+        query.addExpression(key.substring(0, key.length() - KEY_SUFFIX_EXPRESSION.length()), expression);
       }
     }
 

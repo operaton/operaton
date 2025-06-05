@@ -192,55 +192,48 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
 
   @Override
   public HistoricCaseActivityInstanceQuery available() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
-            CASE_ACTIVITY_STATE, caseActivityInstanceState);
+    ensureCaseActivityInstanceStateIsNull();
     this.caseActivityInstanceState = AVAILABLE.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery enabled() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
-            CASE_ACTIVITY_STATE, caseActivityInstanceState);
+    ensureCaseActivityInstanceStateIsNull();
     this.caseActivityInstanceState = ENABLED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery disabled() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
-            CASE_ACTIVITY_STATE, caseActivityInstanceState);
+    ensureCaseActivityInstanceStateIsNull();
     this.caseActivityInstanceState = DISABLED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery active() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
-            CASE_ACTIVITY_STATE, caseActivityInstanceState);
+    ensureCaseActivityInstanceStateIsNull();
     this.caseActivityInstanceState = ACTIVE.getStateCode();
     return this;
   }
 
   public HistoricCaseActivityInstanceQuery suspended() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
-            CASE_ACTIVITY_STATE, caseActivityInstanceState);
+    ensureCaseActivityInstanceStateIsNull();
     this.caseActivityInstanceState = SUSPENDED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery completed() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
-            CASE_ACTIVITY_STATE, caseActivityInstanceState);
+    ensureCaseActivityInstanceStateIsNull();
     this.caseActivityInstanceState = COMPLETED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseActivityInstanceQuery terminated() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
-            CASE_ACTIVITY_STATE, caseActivityInstanceState);
+    ensureCaseActivityInstanceStateIsNull();
     this.caseActivityInstanceState = TERMINATED.getStateCode();
     return this;
   }
@@ -391,4 +384,10 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
   public boolean isTenantIdSet() {
     return isTenantIdSet;
   }
+
+  private void ensureCaseActivityInstanceStateIsNull() {
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
+      CASE_ACTIVITY_STATE, caseActivityInstanceState);
+  }
+
 }

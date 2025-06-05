@@ -66,7 +66,7 @@ public final class ScriptUtil {
    * @throws NotValidException if language is null or empty or both of source and resource are invalid
    */
   public static ExecutableScript getScript(String language, String source, String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
-    ensureNotEmpty(NotValidException.class, "Script language", language);
+    ensureScriptLanguageNotEmpty(language);
     ensureAtLeastOneNotNull(NotValidException.class, "No script source or resource was given", source, resource);
     if (resource != null && !resource.isEmpty()) {
       return getScriptFromResource(language, resource, expressionManager, scriptFactory);
@@ -88,7 +88,7 @@ public final class ScriptUtil {
    * @throws NotValidException if language is null or empty or source is null
    */
   public static ExecutableScript getScriptFormSource(String language, String source, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
-    ensureNotEmpty(NotValidException.class, "Script language", language);
+    ensureScriptLanguageNotEmpty(language);
     ensureNotNull(NotValidException.class, "Script source", source);
     if (isDynamicScriptExpression(language, source)) {
       Expression sourceExpression = expressionManager.createExpression(source);
@@ -109,7 +109,7 @@ public final class ScriptUtil {
    * @throws NotValidException if language is null or empty or source is null
    */
   public static ExecutableScript getScriptFromSource(String language, String source, ScriptFactory scriptFactory) {
-    ensureNotEmpty(NotValidException.class, "Script language", language);
+    ensureScriptLanguageNotEmpty(language);
     ensureNotNull(NotValidException.class, "Script source", source);
     return scriptFactory.createScriptFromSource(language, source);
   }
@@ -125,7 +125,7 @@ public final class ScriptUtil {
    * @throws NotValidException if language is null or empty or sourceExpression is null
    */
   public static ExecutableScript getScriptFromSourceExpression(String language, Expression sourceExpression, ScriptFactory scriptFactory) {
-    ensureNotEmpty(NotValidException.class, "Script language", language);
+    ensureScriptLanguageNotEmpty(language);
     ensureNotNull(NotValidException.class, "Script source expression", sourceExpression);
     return scriptFactory.createScriptFromSource(language, sourceExpression);
   }
@@ -142,7 +142,7 @@ public final class ScriptUtil {
    * @throws NotValidException if language or resource are null or empty
    */
   public static ExecutableScript getScriptFromResource(String language, String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
-    ensureNotEmpty(NotValidException.class, "Script language", language);
+    ensureScriptLanguageNotEmpty(language);
     ensureNotEmpty(NotValidException.class, "Script resource", resource);
     if (isDynamicScriptExpression(language, resource)) {
       Expression resourceExpression = expressionManager.createExpression(resource);
@@ -163,7 +163,7 @@ public final class ScriptUtil {
    * @throws NotValidException if language or resource are null or empty
    */
   public static ExecutableScript getScriptFromResource(String language, String resource, ScriptFactory scriptFactory) {
-    ensureNotEmpty(NotValidException.class, "Script language", language);
+    ensureScriptLanguageNotEmpty(language);
     ensureNotEmpty(NotValidException.class, "Script resource", resource);
     return scriptFactory.createScriptFromResource(language, resource);
   }
@@ -179,7 +179,7 @@ public final class ScriptUtil {
    * @throws NotValidException if language is null or empty or resourceExpression is null
    */
   public static ExecutableScript getScriptFromResourceExpression(String language, Expression resourceExpression, ScriptFactory scriptFactory) {
-    ensureNotEmpty(NotValidException.class, "Script language", language);
+    ensureScriptLanguageNotEmpty(language);
     ensureNotNull(NotValidException.class, "Script resource expression", resourceExpression);
     return scriptFactory.createScriptFromResource(language, resourceExpression);
   }
@@ -207,4 +207,9 @@ public final class ScriptUtil {
       return new ScriptFactory();
     }
   }
+
+  private static void ensureScriptLanguageNotEmpty(String language) {
+    ensureNotEmpty(NotValidException.class, "Script language", language);
+  }
+
 }

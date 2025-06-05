@@ -31,6 +31,8 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  *
  */
 public class BpmnStackTrace {
+  private static final String ACTIVITY_ID = "activityId";
+  private static final String ACTIVITY_NAME = "activityName";
 
   private static final ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
@@ -83,10 +85,10 @@ public class BpmnStackTrace {
       writer.write("\t");
 
       Map<String, String> activity = activities.get(i);
-      String activityId = activity.get("activityId");
+      String activityId = activity.get(ACTIVITY_ID);
       writer.write(activityId);
 
-      String activityName = activity.get("activityName");
+      String activityName = activity.get(ACTIVITY_NAME);
       if (activityName != null) {
         writer.write(", name=");
         writer.write(activityName);
@@ -105,15 +107,15 @@ public class BpmnStackTrace {
       }
 
       Map<String, String> activity = new HashMap<>();
-      activity.put("activityId", activityId);
+      activity.put(ACTIVITY_ID, activityId);
 
       String activityName = atomicOperationInvocation.getActivityName();
       if (activityName != null) {
-        activity.put("activityName", activityName);
+        activity.put(ACTIVITY_NAME, activityName);
       }
 
       if(activityTrace.isEmpty() ||
-          !activity.get("activityId").equals(activityTrace.get(0).get("activityId"))) {
+          !activity.get(ACTIVITY_ID).equals(activityTrace.get(0).get(ACTIVITY_ID))) {
         activityTrace.add(0, activity);
       }
     }

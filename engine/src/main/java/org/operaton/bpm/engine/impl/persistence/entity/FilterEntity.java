@@ -49,6 +49,8 @@ import org.operaton.bpm.engine.query.Query;
 public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
 
   private static final long serialVersionUID = 1L;
+  private static final String QUERY = "query";
+
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   public static final Map<String, JsonObjectConverter<?>> queryConverter = new HashMap<>();
@@ -132,13 +134,13 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
 
   @Override
   public <T extends Query<?, ?>> Filter setQuery(T query) {
-    ensureNotNull(NotValidException.class, "query", query);
+    ensureNotNull(NotValidException.class, QUERY, query);
     this.query = (AbstractQuery<?, ?>) query;
     return this;
   }
 
   public void setQueryInternal(String query) {
-    ensureNotNull(NotValidException.class, "query", query);
+    ensureNotNull(NotValidException.class, QUERY, query);
     JsonObjectConverter<Object> converter = getConverter();
     this.query = (AbstractQuery<?, ?>) converter.toObject(JsonUtil.asObject(query));
   }
@@ -214,7 +216,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("name", this.name);
     persistentState.put("owner", this.owner);
-    persistentState.put("query", this.query);
+    persistentState.put(QUERY, this.query);
     persistentState.put("properties", this.properties);
     return persistentState;
   }

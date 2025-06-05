@@ -24,7 +24,7 @@
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
     <version.groovy>4.0.26</version.groovy>
     <version.jython>2.7.4</version.jython>
-    <version.graal.js>21.3.12</version.graal.js>
+    <version.graal.js>23.0.8</version.graal.js>
     <version.nashorn>15.6</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->

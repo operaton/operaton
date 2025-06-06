@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,18 +25,18 @@ import org.operaton.bpm.engine.IdentityService;
  * Holds the result of an {@link IdentityService} operation including the
  * operation that was executed and optionally a resulting value.
  * </p>
- * 
+ *
  * <p>
  * This metadata can be used to distinguish between the different resulting
  * actions of a logical operation, e.g. if the 'save' operation lead to an
  * 'update' or an 'insert'.
  * </p>
- * 
+ *
  * @author Tobias Metzke
  *
  */
 public class IdentityOperationResult {
-  
+
   public static final String OPERATION_CREATE = "create";
   public static final String OPERATION_UPDATE = "update";
   public static final String OPERATION_DELETE = "delete";
@@ -45,7 +45,7 @@ public class IdentityOperationResult {
 
   protected Serializable value;
   protected String operation;
-  
+
   public IdentityOperationResult(Serializable value, String operation) {
     this.value = value;
     this.operation = operation;

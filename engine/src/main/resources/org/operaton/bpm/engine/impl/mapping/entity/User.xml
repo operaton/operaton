@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,8 +17,8 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.UserEntity">
 
   <!-- USER INSERT -->
@@ -49,7 +49,7 @@
     where ID_ = #{id}
       and REV_ = #{revision}
   </update>
-  
+
   <update id="updateUserLock" parameterType="org.operaton.bpm.engine.impl.persistence.entity.UserEntity">
     update ${prefix}ACT_ID_USER set
       REV_ = #{revisionNext ,jdbcType=INTEGER},
@@ -58,7 +58,7 @@
     where ID_ = #{id}
       and REV_ = #{revision}
   </update>
-  
+
   <!-- USER DELETE -->
 
   <delete id="deleteUser" parameterType="org.operaton.bpm.engine.impl.persistence.entity.UserEntity">
@@ -78,32 +78,32 @@
     <result property="lockExpirationTime" column="LOCK_EXP_TIME_" jdbcType="TIMESTAMP" />
     <result property="attempts" column="ATTEMPTS_" jdbcType="INTEGER" />
   </resultMap>
-  
+
   <!-- USER SELECT -->
 
   <select id="selectUser" parameterType="string" resultMap="userResultMap">
     select * from ${prefix}ACT_ID_USER where ID_ = #{id,jdbcType=VARCHAR}
   </select>
-    
+
   <select id="selectUserByQueryCriteria" parameterType="org.operaton.bpm.engine.impl.UserQueryImpl" resultMap="userResultMap">
   	<include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
     ${limitBefore}
-    select ${distinct} RES.* 
+    select ${distinct} RES.*
     ${limitBetween}
     <include refid="selectUserByQueryCriteriaSql" />
     ${orderBy}
     ${limitAfter}
   </select>
-  
+
    <select id="selectUserCountByQueryCriteria" parameterType="org.operaton.bpm.engine.impl.UserQueryImpl" resultType="long">
     ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
     <include refid="selectUserByQueryCriteriaSql" />
     ${countDistinctAfterEnd}
   </select>
-  
+
   <sql id="selectUserByQueryCriteriaSql">
 
-    from ${prefix}ACT_ID_USER RES 
+    from ${prefix}ACT_ID_USER RES
     <if test="groupId != null">
       inner join ${prefix}ACT_ID_MEMBERSHIP M on RES.ID_ = M.USER_ID_
       inner join ${prefix}ACT_ID_GROUP G on M.GROUP_ID_ = G.ID_
@@ -111,9 +111,9 @@
     <if test="tenantId != null">
       inner join ${prefix}ACT_ID_TENANT_MEMBER TM on RES.ID_ = TM.USER_ID_
     </if>
-    
-    <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoin" /> 
-    
+
+    <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoin" />
+
     <where>
       <if test="id != null">
         RES.ID_ = #{id}
@@ -151,10 +151,10 @@
       </if>
       <if test="tenantId != null">
         and TM.TENANT_ID_ = #{tenantId}
-      </if>      
-      
+      </if>
+
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.queryAuthorizationCheck" />
-      
+
     </where>
   </sql>
 
@@ -181,5 +181,5 @@
   <select id="selectUserCountByNativeQuery" parameterType="java.util.Map" resultType="long">
     ${sql}
   </select>
-  
+
 </mapper>

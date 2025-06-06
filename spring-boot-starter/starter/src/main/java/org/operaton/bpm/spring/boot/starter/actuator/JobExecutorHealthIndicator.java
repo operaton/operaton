@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,8 +52,8 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
     private final int maxJobsPerAcquisition;
     private final int waitTimeInMillis;
     private final Set<String> processEngineNames;
-    
-    
+
+
     private Details(DetailsBuilder builder) {
       name = builder.name;
       lockOwner = builder.lockOwner;

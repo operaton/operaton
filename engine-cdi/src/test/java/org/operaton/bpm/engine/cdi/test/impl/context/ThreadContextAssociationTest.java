@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,26 +27,26 @@ import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 
 /**
- * 
+ *
  * @author Daniel Meyer
  */
 @RunWith(Arquillian.class)
 public class ThreadContextAssociationTest extends CdiProcessEngineTestCase {
-  
+
   @Test
   @Deployment
   public void testBusinessProcessScopedWithJobExecutor() {
     String pid = runtimeService.startProcessInstanceByKey("processkey").getId();
 
     JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration,5000L, 25L);
-        
+
     assertThat(managementService.createJobQuery().singleResult()).isNull();
-    
+
     ProcessScopedMessageBean messageBean = (ProcessScopedMessageBean) runtimeService.getVariable(pid, "processScopedMessageBean");
     assertThat(messageBean.getMessage()).isEqualTo("Greetings from Berlin");
-    
+
     runtimeService.signal(pid);
-    
+
   }
 
 }

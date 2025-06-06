@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,7 +46,7 @@
     <result property="lastFailureLogId" column="LAST_FAILURE_LOG_ID_" jdbcType="VARCHAR" />
     <!-- note: if you add mappings here, make sure to select the columns in 'columnSelection' -->
   </resultMap>
-  
+
   <resultMap type="org.operaton.bpm.engine.impl.util.ImmutablePair" id="deploymentIdMapping">
     <id property="left" column="DEPLOYMENT_ID_" jdbcType="VARCHAR" />
     <id property="right" column="ID_" jdbcType="VARCHAR" />
@@ -95,7 +95,7 @@
       1
     )
   </insert>
-  
+
   <update id="updateExternalTask" parameterType="org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity">
     update ${prefix}ACT_RU_EXT_TASK
     <set>
@@ -119,7 +119,7 @@
     where ID_= #{id, jdbcType=VARCHAR}
       and REV_ = #{revision, jdbcType=INTEGER}
   </update>
-  
+
   <update id="updateExternalTaskSuspensionStateByParameters" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject">
     update ${prefix}ACT_RU_EXT_TASK
     <set>
@@ -138,7 +138,7 @@
         </if>
         <if test="parameter.isProcessDefinitionTenantIdSet">
           and PROC_DEF_ID_ IN (
-            SELECT ID_ 
+            SELECT ID_
             FROM ${prefix}ACT_RE_PROCDEF PD
             WHERE PD.KEY_ = #{parameter.processDefinitionKey, jdbcType=VARCHAR}
             <if test="parameter.processDefinitionTenantId != null">
@@ -154,23 +154,23 @@
       </if>
     </where>
   </update>
-  
+
   <delete id="deleteExternalTask" parameterType="org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity">
     delete from ${prefix}ACT_RU_EXT_TASK where ID_ = #{id} and REV_ = #{revision}
   </delete>
-  
+
   <select id="selectExternalTask" parameterType="string" resultMap="externalTaskResultMap">
    select * from ${prefix}ACT_RU_EXT_TASK where ID_ = #{id, jdbcType=VARCHAR}
   </select>
-  
+
   <select id="selectExternalTasksByExecutionId" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="externalTaskResultMap">
     select * from ${prefix}ACT_RU_EXT_TASK where EXECUTION_ID_ = #{parameter, jdbcType=VARCHAR}
   </select>
-  
+
   <select id="selectExternalTasksByProcessInstanceId" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="externalTaskResultMap">
     select * from ${prefix}ACT_RU_EXT_TASK where PROC_INST_ID_ = #{parameter, jdbcType=VARCHAR}
   </select>
-  
+
   <select id="selectExternalTasksForTopics" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="externalTaskResultMap">
     <bind name="orderingProperties" value="parameter.orderingProperties" />
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
@@ -178,12 +178,12 @@
     <bind name="performAuthorizationCheck" value="authCheck.shouldPerformAuthorizatioCheck &amp;&amp; !authCheck.revokeAuthorizationCheckEnabled &amp;&amp; authCheck.authUserId != null" />
 
     ${limitBefore}
-    select 
+    select
     <!-- Distinct can only be omitted when there are no joins with a 1:n relationship.
       Currently this is only the case for the authorization joins. When you add a join
       in this statement in the future, check if distinct can be omitted or not -->
     <if test="!parameter.usesPostgres || performAuthorizationCheck">
-      ${distinct} 
+      ${distinct}
     </if>
     RES.*
     ${limitBetween}
@@ -195,26 +195,26 @@
     inner join ${prefix}ACT_RE_PROCDEF PD on RES.PROC_DEF_ID_ = PD.ID_
 
     <if test="performAuthorizationCheck">
-      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" /> 
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
       AUTH ON (
-       (AUTH.RESOURCE_TYPE_ = 8 
-        AND (AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_INST_ID_ ${authJoinSeparator} '*' ${authJoinEnd})   
+       (AUTH.RESOURCE_TYPE_ = 8
+        AND (AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_INST_ID_ ${authJoinSeparator} '*' ${authJoinEnd})
         AND ${bitand1}AUTH.PERMS_${bitand2}2${bitand3} = 2)
       OR
-       (AUTH.RESOURCE_TYPE_ = 6 
-        AND (AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_DEF_KEY_ ${authJoinSeparator} '*' ${authJoinEnd}) 
-        AND ${bitand1}AUTH.PERMS_${bitand2}512${bitand3} = 512) 
+       (AUTH.RESOURCE_TYPE_ = 6
+        AND (AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_DEF_KEY_ ${authJoinSeparator} '*' ${authJoinEnd})
+        AND ${bitand1}AUTH.PERMS_${bitand2}512${bitand3} = 512)
       )
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
       AUTH1 ON (
-         (AUTH1.RESOURCE_TYPE_ = 8 
+         (AUTH1.RESOURCE_TYPE_ = 8
           AND (AUTH1.RESOURCE_ID_ ${authJoin1Start} RES.PROC_INST_ID_ ${authJoin1Separator} '*' ${authJoin1End})
-          AND ${bitand1}AUTH1.PERMS_${bitand2}4${bitand3} = 4)         
+          AND ${bitand1}AUTH1.PERMS_${bitand2}4${bitand3} = 4)
       OR
-         (AUTH1.RESOURCE_TYPE_ = 6 
-          AND (AUTH1.RESOURCE_ID_ ${authJoin1Start} RES.PROC_DEF_KEY_ ${authJoin1Separator} '*' ${authJoin1End}) 
+         (AUTH1.RESOURCE_TYPE_ = 6
+          AND (AUTH1.RESOURCE_ID_ ${authJoin1Start} RES.PROC_DEF_KEY_ ${authJoin1Separator} '*' ${authJoin1End})
           AND ${bitand1}AUTH1.PERMS_${bitand2}1024${bitand3} = 1024)
-      )    
+      )
     </if>
     <where>
       (RES.LOCK_EXP_TIME_ is null or RES.LOCK_EXP_TIME_ &lt;= #{parameter.now, jdbcType=TIMESTAMP})
@@ -321,7 +321,7 @@
     <include refid="selectExternalTaskByQueryCriteriaSql"/>
     ${countDistinctAfterEnd}
   </select>
-  
+
   <select id="selectExternalTaskDeploymentIdMappingsByQueryCriteria" parameterType="org.operaton.bpm.engine.impl.ExternalTaskQueryImpl" resultMap="deploymentIdMapping">
     select distinct PD.DEPLOYMENT_ID_, RES.ID_
     <include refid="selectExternalTaskByQueryCriteriaSql"/>
@@ -333,20 +333,20 @@
     from (
     select RES.*, PI.BUSINESS_KEY_, PD.VERSION_TAG_
     from ${prefix}ACT_RU_EXT_TASK RES
-    
+
     left join ${prefix}ACT_RU_EXECUTION PI on RES.PROC_INST_ID_ = PI.ID_
     left join ${prefix}ACT_RE_PROCDEF PD on RES.PROC_DEF_ID_ = PD.ID_
 
     <if test="authCheck.shouldPerformAuthorizatioCheck &amp;&amp; !authCheck.revokeAuthorizationCheckEnabled &amp;&amp; authCheck.authUserId != null">
-      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" /> 
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
       AUTH ON (
-       (AUTH.RESOURCE_TYPE_ = 8 
-        AND AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_INST_ID_ ${authJoinSeparator} '*' ${authJoinEnd} 
+       (AUTH.RESOURCE_TYPE_ = 8
+        AND AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_INST_ID_ ${authJoinSeparator} '*' ${authJoinEnd}
         AND ${bitand1}AUTH.PERMS_${bitand2}2${bitand3} = 2)
       OR
        (AUTH.RESOURCE_TYPE_ = 6
-        AND AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_DEF_KEY_ ${authJoinSeparator} '*' ${authJoinEnd} 
-        AND ${bitand1}AUTH.PERMS_${bitand2}512${bitand3} = 512) 
+        AND AUTH.RESOURCE_ID_ ${authJoinStart} RES.PROC_DEF_KEY_ ${authJoinSeparator} '*' ${authJoinEnd}
+        AND ${bitand1}AUTH.PERMS_${bitand2}512${bitand3} = 512)
       )
     </if>
     <where>
@@ -438,12 +438,12 @@
     </where>
     ) RES
   </sql>
-  
+
   <sql id="columnSelection">
-    RES.REV_, 
-    RES.ID_, 
-    RES.TOPIC_NAME_, 
-    RES.WORKER_ID_, 
+    RES.REV_,
+    RES.ID_,
+    RES.TOPIC_NAME_,
+    RES.WORKER_ID_,
     RES.LOCK_EXP_TIME_,
     RES.CREATE_TIME_,
     RES.RETRIES_,

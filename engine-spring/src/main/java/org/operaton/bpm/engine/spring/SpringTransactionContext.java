@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,8 +34,8 @@ public class SpringTransactionContext implements TransactionContext {
 
   protected PlatformTransactionManager transactionManager;
   protected CommandContext commandContext;
-  protected TransactionState lastTransactionState = null; 
-  
+  protected TransactionState lastTransactionState = null;
+
   public SpringTransactionContext(PlatformTransactionManager transactionManager, CommandContext commandContext) {
     this.transactionManager = transactionManager;
     this.commandContext = commandContext;
@@ -76,34 +76,34 @@ public class SpringTransactionContext implements TransactionContext {
   @Override
   public void addTransactionListener(final TransactionState transactionState, final TransactionListener transactionListener) {
     if (transactionState.equals(TransactionState.COMMITTING)) {
-      
+
       TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
         @Override
         public void beforeCommit(boolean readOnly) {
           transactionListener.execute(commandContext);
         }
       });
-      
+
     } else if (transactionState.equals(TransactionState.COMMITTED)) {
-    
+
       TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
         @Override
         public void afterCommit() {
           transactionListener.execute(commandContext);
         }
       });
-      
+
     } else if (transactionState.equals(TransactionState.ROLLINGBACK)) {
-      
+
       TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
         @Override
         public void beforeCompletion() {
           transactionListener.execute(commandContext);
         }
       });
-      
+
     } else if (transactionState.equals(TransactionState.ROLLED_BACK)) {
-      
+
       TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
         @Override
         public void afterCompletion(int status) {
@@ -112,9 +112,9 @@ public class SpringTransactionContext implements TransactionContext {
           }
         }
       });
-      
+
     }
-    
+
   }
 
   @Override
@@ -123,7 +123,7 @@ public class SpringTransactionContext implements TransactionContext {
            !TransactionState.ROLLED_BACK.equals(lastTransactionState) &&
            !TransactionState.ROLLINGBACK.equals(lastTransactionState);
   }
-  
+
   protected abstract class TransactionSynchronizationAdapter implements TransactionSynchronization {
 
     @Override
@@ -153,7 +153,7 @@ public class SpringTransactionContext implements TransactionContext {
     @Override
     public void afterCompletion(int status) {
     }
-    
+
   }
 
 }

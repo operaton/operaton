@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,38 +55,38 @@ public class BenchmarkLongtermAggregator extends TabularResultAggregator {
   protected List<Object> processRow(PerfTestResult passResult, PerfTestResults results) {
     List<Object> row = new ArrayList<>();
     PerfTestConfiguration configuration = results.getConfiguration();
-    
+
     // test name
     row.add(results.getTestName());
 
     // number of runs
     int numberOfRuns = configuration.getNumberOfRuns();
     row.add(numberOfRuns);
-    
+
     // database
     row.add(configuration.getDatabaseName());
-    
+
     // history level
     row.add(configuration.getHistoryLevel());
-    
+
     // start time
     row.add(configuration.getStartTime());
-    
+
     // platform
     row.add(configuration.getPlatform());
-    
+
     // number of threads
     row.add(passResult.getNumberOfThreads());
-    
+
     // add duration
     long duration = passResult.getDuration();
     row.add(duration);
-    
+
     // throughput
     float numberOfRunsFloat = numberOfRuns;
     float throughput = (numberOfRunsFloat / duration) * 1000;
     row.add(throughput);
-    
+
     return row;
   }
 

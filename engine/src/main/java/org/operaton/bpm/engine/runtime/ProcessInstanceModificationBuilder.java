@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -134,7 +134,7 @@ public interface ProcessInstanceModificationBuilder extends
    * internally. (e.g. by the engine)</li>
    *   </ul>
    * </p>
-   * 
+   *
    * @param external
    *          was the cancellation triggered by an external source?
    *          <code>true</code> for <code>EXTERNALLY_TERMINATED</code>,

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,43 +27,43 @@ public class MailServerInfo {
   protected int mailServerPort;
   protected String mailServerUsername;
   protected String mailServerPassword;
-  
+
   public String getMailServerDefaultFrom() {
     return mailServerDefaultFrom;
   }
-  
+
   public void setMailServerDefaultFrom(String mailServerDefaultFrom) {
     this.mailServerDefaultFrom = mailServerDefaultFrom;
   }
-  
+
   public String getMailServerHost() {
     return mailServerHost;
   }
-  
+
   public void setMailServerHost(String mailServerHost) {
     this.mailServerHost = mailServerHost;
   }
-  
+
   public int getMailServerPort() {
     return mailServerPort;
   }
-  
+
   public void setMailServerPort(int mailServerPort) {
     this.mailServerPort = mailServerPort;
   }
-  
+
   public String getMailServerUsername() {
     return mailServerUsername;
   }
-  
+
   public void setMailServerUsername(String mailServerUsername) {
     this.mailServerUsername = mailServerUsername;
   }
-  
+
   public String getMailServerPassword() {
     return mailServerPassword;
   }
-  
+
   public void setMailServerPassword(String mailServerPassword) {
     this.mailServerPassword = mailServerPassword;
   }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 /**
  * <p>Integration test making sure that we can look up a managed process engine
  * and expose it as a Spring Bean inside a Spring Application</p>
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 public class SpringLookupManagedProcessEngineTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive processArchive() {    
+  public static WebArchive processArchive() {
     return ShrinkWrap.create(WebArchive.class, "test.war")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addAsWebInfResource("org/operaton/bpm/integrationtest/deployment/spring/SpringLookupManagedProcessEngineTest-context.xml", "applicationContext.xml")
@@ -47,11 +47,11 @@ public class SpringLookupManagedProcessEngineTest extends AbstractFoxPlatformInt
       .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
       .addAsWebInfResource("org/operaton/bpm/integrationtest/deployment/spring/web.xml", "web.xml");
   }
-  
-    
+
+
   @Test
   public void testDeployProcessArchive() {
-    assertThat(processEngine).isNotNull();   
+    assertThat(processEngine).isNotNull();
   }
-  
+
 }

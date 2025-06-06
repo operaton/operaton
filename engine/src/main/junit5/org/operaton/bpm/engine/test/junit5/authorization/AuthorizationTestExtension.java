@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at:
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -67,7 +67,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AuthorizationTestExtension implements BeforeEachCallback, AfterEachCallback {
 
   private ProcessEngineExtension processEngineExtension;
-  
+
   private final AuthorizationExceptionInterceptor interceptor;
   private AuthorizationScenarioInstance scenarioInstance;
 
@@ -282,7 +282,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
     }
     managedGroups.clear();
   }
-  
+
   public static Collection<AuthorizationScenario[]> asParameters(AuthorizationScenario... scenarios) {
     List<AuthorizationScenario[]> scenarioList = new ArrayList<>();
     for (AuthorizationScenario scenario : scenarios) {

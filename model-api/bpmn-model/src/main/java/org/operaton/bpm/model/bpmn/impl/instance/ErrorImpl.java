@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,9 +36,9 @@ public class ErrorImpl extends RootElementImpl implements Error {
   protected static Attribute<String> nameAttribute;
   protected static Attribute<String> errorCodeAttribute;
   protected static Attribute<String> operatonErrorMessageAttribute;
-  
+
   protected static AttributeReference<ItemDefinition> structureRefAttribute;
-  
+
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Error.class, BPMN_ELEMENT_ERROR)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
@@ -57,7 +57,7 @@ public class ErrorImpl extends RootElementImpl implements Error {
     structureRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_STRUCTURE_REF)
       .qNameAttributeReference(ItemDefinition.class)
       .build();
-  
+
     typeBuilder.build();
   }
 

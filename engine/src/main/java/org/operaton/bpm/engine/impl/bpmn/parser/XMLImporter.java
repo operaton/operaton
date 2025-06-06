@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,14 +20,14 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
 
 /**
  * A XML importer
- * 
+ *
  * @author Esteban Robles Luna
  */
 public interface XMLImporter {
 
   /**
    * Imports the definitions in the XML declared in element
-   * 
+   *
    * @param element the declarations to be imported
    * @param parse the parse who called this importer
    */

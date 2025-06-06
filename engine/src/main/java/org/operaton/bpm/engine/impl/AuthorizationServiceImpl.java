@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,7 +51,7 @@ public class AuthorizationServiceImpl extends ServiceImpl implements Authorizati
 
   @Override
   public void deleteAuthorization(String authorizationId) {
-    commandExecutor.execute(new DeleteAuthorizationCmd(authorizationId));    
+    commandExecutor.execute(new DeleteAuthorizationCmd(authorizationId));
   }
 
   @Override
@@ -63,5 +63,5 @@ public class AuthorizationServiceImpl extends ServiceImpl implements Authorizati
   public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId) {
     return commandExecutor.execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, resourceId));
   }
-  
+
 }

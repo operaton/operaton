@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ class BpmnErrorTest {
   void testCreation_ErrorCodeOnly() {
     // when
     BpmnError bpmnError = new BpmnError(ERROR_CODE);
-    
+
     // then
     assertThat(bpmnError).hasMessage(null);
     assertThat(bpmnError.getErrorCode()).isEqualTo(ERROR_CODE);
@@ -50,7 +50,7 @@ class BpmnErrorTest {
   void testCreation_ErrorMessagePresent() {
     // when
     BpmnError bpmnError = new BpmnError(ERROR_CODE, ERROR_MESSAGE);
-    
+
     // then
     assertThat(bpmnError).hasMessage(ERROR_MESSAGE);
     assertThat(bpmnError.getErrorCode()).isEqualTo(ERROR_CODE);
@@ -60,7 +60,7 @@ class BpmnErrorTest {
   void testCreation_ErrorCodeOnlyWithCause() {
     // when
     BpmnError bpmnError = new BpmnError(ERROR_CODE, CAUSE);
-    
+
     // then
     assertThat(bpmnError)
             .hasMessage(null)
@@ -72,7 +72,7 @@ class BpmnErrorTest {
   void testCreation_ErrorMessageAndCausePresent() {
     // when
     BpmnError bpmnError = new BpmnError(ERROR_CODE, ERROR_MESSAGE, CAUSE);
-    
+
     // then
     assertThat(bpmnError)
             .hasMessageContaining(ERROR_MESSAGE)

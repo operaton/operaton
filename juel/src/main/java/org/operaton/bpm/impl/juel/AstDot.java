@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,7 @@ import jakarta.el.ELException;
 
 public class AstDot extends AstProperty {
 	protected final String property;
-	
+
 	public AstDot(AstNode base, String property, boolean lvalue) {
 		super(base, lvalue, true);
 		this.property = property;
@@ -37,7 +37,7 @@ public class AstDot extends AstProperty {
 		return ". " + property;
 	}
 
-	@Override 
+	@Override
 	public void appendStructure(StringBuilder b, Bindings bindings) {
 		getChild(0).appendStructure(b, bindings);
 		b.append(".");

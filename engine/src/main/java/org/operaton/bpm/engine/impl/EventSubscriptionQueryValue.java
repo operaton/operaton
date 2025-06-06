@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,12 +23,12 @@ import java.io.Serializable;
  * @author Daniel Meyer
  */
 public class EventSubscriptionQueryValue implements Serializable {
-  
+
   private static final long serialVersionUID = 1L;
-  
+
   protected String eventType;
   protected String eventName;
-  
+
   public EventSubscriptionQueryValue(String eventName, String eventType) {
     this.eventName = eventName;
     this.eventType = eventType;
@@ -37,19 +37,19 @@ public class EventSubscriptionQueryValue implements Serializable {
   public String getEventType() {
     return eventType;
   }
-  
+
   public void setEventType(String eventType) {
     this.eventType = eventType;
   }
-  
+
   public String getEventName() {
     return eventName;
   }
-  
+
   public void setEventName(String eventName) {
     this.eventName = eventName;
   }
-  
-    
+
+
 
 }

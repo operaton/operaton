@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 
 /**
  * This time, we have two process-engines.xml files in separate library jars.
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -39,8 +39,8 @@ import org.junit.runner.RunWith;
 public class TestMultipleProcessEnginesXmlsInLibrary extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive processArchive() {    
-    
+  public static WebArchive processArchive() {
+
     return initWebArchiveDeployment()
             .addAsLibraries(
               ShrinkWrap.create(JavaArchive.class, "engine1.jar")
@@ -49,7 +49,7 @@ public class TestMultipleProcessEnginesXmlsInLibrary extends AbstractFoxPlatform
                    .addAsResource("twoEngines.xml", "META-INF/processes.xml")
          );
   }
-  
+
   @Test
   public void testDeployProcessArchive() {
     assertThat(processEngineService.getProcessEngine("engine1")).isNotNull();

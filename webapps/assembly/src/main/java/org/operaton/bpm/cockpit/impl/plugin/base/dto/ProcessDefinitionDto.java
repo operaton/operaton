@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,15 +19,15 @@ package org.operaton.bpm.cockpit.impl.plugin.base.dto;
 import java.util.List;
 
 public class ProcessDefinitionDto {
-  
+
   protected String id;
   protected String name;
   protected String key;
   protected long version;
   protected List<String> calledFromActivityIds;
-  
+
   protected int failedJobs;
-  
+
   public ProcessDefinitionDto() {}
 
   public String getId() {
@@ -53,11 +53,11 @@ public class ProcessDefinitionDto {
   public void setKey(String key) {
     this.key = key;
   }
-  
+
   public long getVersion() {
     return version;
   }
-  
+
   public void setVersion(long version) {
     this.version = version;
   }

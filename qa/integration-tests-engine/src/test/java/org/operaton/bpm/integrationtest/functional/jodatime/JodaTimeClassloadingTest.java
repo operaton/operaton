@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,8 +39,8 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
   public static WebArchive createDeployment() {
     return initWebArchiveDeployment().addAsResource("org/operaton/bpm/integrationtest/functional/jodatime/JodaTimeClassloadingTest.bpmn20.xml");
   }
-  
-  
+
+
   private Date testExpression(String timeExpression) {
     // Set the clock fixed
     HashMap<String, Object> variables1 = new HashMap<>();
@@ -53,7 +53,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
     List<Job> jobs = managementService.createJobQuery().processDefinitionKey("intermediateTimerEventExample").executable().list();
     Assert.assertEquals(1, jobs.size());
     runtimeService.deleteProcessInstance(pi1.getId(), "test");
-    
+
     return jobs.get(0).getDuedate();
   }
 

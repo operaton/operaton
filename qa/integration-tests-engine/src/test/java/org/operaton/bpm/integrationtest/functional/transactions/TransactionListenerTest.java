@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
 
 
 /**
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -43,69 +43,69 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
   public static WebArchive processArchive() {
     return initWebArchiveDeployment();
   }
-  
+
   @Test
   public void testSynchronizationOnRollback() {
-    
+
     final TestTransactionListener rolledBackListener = new TestTransactionListener();
     final TestTransactionListener committedListener = new TestTransactionListener();
     assertThat(rolledBackListener.isInvoked()).isFalse();
     assertThat(committedListener.isInvoked()).isFalse();
-    
+
     try {
-      
+
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
 
         @Override
-        public Void execute(CommandContext commandContext) {         
+        public Void execute(CommandContext commandContext) {
           commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, rolledBackListener);
-          commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);  
-          
+          commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);
+
           throw new RuntimeException("Booum! Rollback!");
         }
-        
+
       });
-      
+
     }catch(Exception e) {
       assertThat(e.getMessage()).contains("Rollback!");
     }
 
     assertThat(rolledBackListener.isInvoked()).isTrue();
     assertThat(committedListener.isInvoked()).isFalse();
-    
+
   }
-  
+
   @Test
   public void testSynchronizationOnCommitted() {
-    
+
     final TestTransactionListener rolledBackListener = new TestTransactionListener();
     final TestTransactionListener committedListener = new TestTransactionListener();
 
     assertThat(rolledBackListener.isInvoked()).isFalse();
     assertThat(committedListener.isInvoked()).isFalse();
-    
+
     try {
-      
+
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
 
         @Override
-        public Void execute(CommandContext commandContext) {         
+        public Void execute(CommandContext commandContext) {
           commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, rolledBackListener);
-          commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);  
+          commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);
           return null;
         }
-        
+
       });
-      
+
     }catch(Exception e) {
       assertThat(e.getMessage()).contains("Rollback!");
     }
 
     assertThat(rolledBackListener.isInvoked()).isFalse();
     assertThat(committedListener.isInvoked()).isTrue();
-    
+
   }
-  
+
   protected static class TestTransactionListener implements TransactionListener {
 
     protected volatile boolean invoked = false;
@@ -114,11 +114,11 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
     public void execute(CommandContext commandContext) {
       invoked = true;
     }
-    
+
     public boolean isInvoked() {
       return invoked;
     }
-    
+
   }
 
 }

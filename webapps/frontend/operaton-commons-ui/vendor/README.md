@@ -92,4 +92,4 @@ Source: https://raw.githubusercontent.com/adobe-webplatform/Snap.svg/v0.3.0/dist
 
 - snap.svg.js
 
-License: [Apache](http://www.apache.org/licenses/LICENSE-2.0)
+License: [Apache](https://www.apache.org/licenses/LICENSE-2.0)

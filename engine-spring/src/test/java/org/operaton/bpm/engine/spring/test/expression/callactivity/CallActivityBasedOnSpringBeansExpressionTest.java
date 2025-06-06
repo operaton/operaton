@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,10 +29,10 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * The CallActivityBasedOnSpringBeansExpressionTest is used to test dynamically wiring in the calledElement 
+ * The CallActivityBasedOnSpringBeansExpressionTest is used to test dynamically wiring in the calledElement
  * in the callActivity task. This test case helps verify that we do not have to hard code the sub process
  * definition key within the process.
- * 
+ *
  * @author  Sang Venkatraman
  */
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/expression/callactivity/testCallActivityByExpression-context.xml")

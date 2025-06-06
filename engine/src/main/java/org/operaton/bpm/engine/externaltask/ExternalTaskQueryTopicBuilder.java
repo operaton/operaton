@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -105,7 +105,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
 
   /**
    * Define a process definition version tag to filter external tasks by.
-   * 
+   *
    * @param versionTag the version tag to filter by
    * @return this builder
    */
@@ -143,7 +143,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
 
   /**
    * Configure the query to include custom extension properties, if available, for all fetched tasks.
-   * 
+   *
    * @return this builder
    */
   ExternalTaskQueryTopicBuilder includeExtensionProperties();

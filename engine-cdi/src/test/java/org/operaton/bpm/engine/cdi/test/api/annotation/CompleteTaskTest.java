@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 /**
  * Testcase for assuring that the {@link CompleteTaskInterceptor} works as
  * expected
- * 
+ *
  * @author Daniel Meyer
  */
 @RunWith(Arquillian.class)
@@ -46,7 +46,7 @@ public class CompleteTaskTest extends CdiProcessEngineTestCase {
     businessProcess.startProcessByKey("keyOfTheProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
-    
+
     // associate current unit of work with the task:
     businessProcess.startTask(task.getId());
 
@@ -56,5 +56,5 @@ public class CompleteTaskTest extends CdiProcessEngineTestCase {
     assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
 
-  
+
 }

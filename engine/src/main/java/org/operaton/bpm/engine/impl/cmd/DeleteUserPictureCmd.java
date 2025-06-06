@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  */
 public class DeleteUserPictureCmd implements Command<Void> {
-  
+
   protected String userId;
 
   public DeleteUserPictureCmd(String userId) {
@@ -40,7 +40,7 @@ public class DeleteUserPictureCmd implements Command<Void> {
 
     IdentityInfoEntity infoEntity = commandContext.getIdentityInfoManager()
       .findUserInfoByUserIdAndKey(userId, "picture");
-    
+
     if(infoEntity != null) {
       String byteArrayId = infoEntity.getValue();
       if(byteArrayId != null) {
@@ -50,8 +50,8 @@ public class DeleteUserPictureCmd implements Command<Void> {
       commandContext.getIdentityInfoManager()
         .delete(infoEntity);
     }
-    
-    
+
+
     return null;
   }
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,9 +18,9 @@ package org.operaton.bpm.engine.impl.pvm.process;
 
 
 /**
- * Object indicating that a {@link ProcessDefinitionImpl} is a participant in a collaboration (pool). 
+ * Object indicating that a {@link ProcessDefinitionImpl} is a participant in a collaboration (pool).
  * Currently only used to store graphical information and the pool name.
- * 
+ *
  * @author Frederik Heremans
  */
 public class ParticipantProcess implements HasDIBounds {
@@ -31,20 +31,20 @@ public class ParticipantProcess implements HasDIBounds {
   protected int y = -1;
   protected int width = -1;
   protected int height = -1;
-  
+
   public void setId(String id) {
     this.id = id;
   }
-  
+
   public String getId() {
     return id;
   }
-  
-  
+
+
   public String getName() {
     return name;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }
@@ -88,6 +88,6 @@ public class ParticipantProcess implements HasDIBounds {
   public void setHeight(int height) {
     this.height = height;
   }
-  
-  
+
+
 }

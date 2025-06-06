@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>This test ensures that we can use a custom location for the <em>processes.xml</em> file.</p>
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -38,8 +38,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive processArchive() {    
-    
+  public static WebArchive processArchive() {
+
     return ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
@@ -48,9 +48,9 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CustomProcessApplication.class)
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/invoice-it.bpmn20.xml");
-    
+
   }
-  
+
   @Test
   public void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();
@@ -61,7 +61,7 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
 
     assertThat(count).isOne();
   }
-  
-  
+
+
 
 }

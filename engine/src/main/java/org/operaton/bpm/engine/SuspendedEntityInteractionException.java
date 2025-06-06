@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,10 +19,10 @@ package org.operaton.bpm.engine;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 
 /**
- * This exception is thrown, if an operation that requires a non-suspended entity (execution, task, process definition) 
- * is executed on a suspended one. 
- * 
- * 
+ * This exception is thrown, if an operation that requires a non-suspended entity (execution, task, process definition)
+ * is executed on a suspended one.
+ *
+ *
  * @author Thorben Lindhauer
  */
 public class SuspendedEntityInteractionException extends NotAllowedException {
@@ -32,5 +32,5 @@ public class SuspendedEntityInteractionException extends NotAllowedException {
   public SuspendedEntityInteractionException(String message) {
     super(message);
   }
-  
+
 }

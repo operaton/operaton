@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,21 +28,21 @@ import java.util.Map;
  * @author Thorben Lindhauer
  */
 public class ManagedProcessEngineMetadata {
-  
-  /** indicates whether the process engine should automatically create / 
-   * update the database schema upon startup */ 
+
+  /** indicates whether the process engine should automatically create /
+   * update the database schema upon startup */
   public static String PROP_IS_AUTO_SCHEMA_UPDATE = "isAutoSchemaUpdate";
 
   /** indicates whether the identity module is used and if this tables are
-   *  required */ 
+   *  required */
   public static String PROP_IS_IDENTITY_USED = "isIdentityUsed";
 
   /** indicates whether the job executor should be automatically activated */
   public static String PROP_IS_ACTIVATE_JOB_EXECUTOR = "isActivateJobExecutor";
-  
+
   /** the prefix to be used for all process engine database tables */
   public static String PROP_DB_TABLE_PREFIX = "dbTablePrefix";
-  
+
   /** the name of the platform job executor acquisition to use */
   public static String PROP_JOB_EXECUTOR_ACQUISITION_NAME = "jobExecutorAcquisitionName";
 
@@ -106,11 +106,11 @@ public class ManagedProcessEngineMetadata {
   public void setHistoryLevel(String historyLevel) {
     this.historyLevel = historyLevel;
   }
-  
+
   public String getConfiguration() {
     return configuration;
   }
-  
+
   public void setConfiguration(String configuration) {
     this.configuration = configuration;
   }
@@ -122,7 +122,7 @@ public class ManagedProcessEngineMetadata {
   public void setConfigurationProperties(Map<String, String> properties) {
     this.configurationProperties = properties;
   }
-  
+
   public Map<String, String> getFoxLegacyProperties() {
     return foxLegacyProperties;
   }
@@ -147,7 +147,7 @@ public class ManagedProcessEngineMetadata {
       return Boolean.parseBoolean((String) object);
     }
   }
-  
+
   public boolean isAutoSchemaUpdate() {
     Object object = getFoxLegacyProperties().get(PROP_IS_AUTO_SCHEMA_UPDATE);
     if(object == null) {
@@ -156,7 +156,7 @@ public class ManagedProcessEngineMetadata {
       return Boolean.parseBoolean((String) object);
     }
   }
-  
+
   public boolean isActivateJobExecutor() {
     Object object = getFoxLegacyProperties().get(PROP_IS_ACTIVATE_JOB_EXECUTOR);
     if(object == null) {
@@ -165,7 +165,7 @@ public class ManagedProcessEngineMetadata {
       return Boolean.parseBoolean((String) object);
     }
   }
-  
+
   public String getDbTablePrefix() {
     Object object = getFoxLegacyProperties().get(PROP_DB_TABLE_PREFIX);
     if(object == null) {
@@ -174,7 +174,7 @@ public class ManagedProcessEngineMetadata {
       return (String) object;
     }
   }
-  
+
   public String getJobExecutorAcquisitionName() {
     Object object = getFoxLegacyProperties().get(PROP_JOB_EXECUTOR_ACQUISITION_NAME);
     if(object == null) {
@@ -183,18 +183,18 @@ public class ManagedProcessEngineMetadata {
       return (String) object;
     }
   }
-  
+
   /**
-   * validates the configuration and throws {@link ProcessEngineException} 
+   * validates the configuration and throws {@link ProcessEngineException}
    * if the configuration is invalid.
    */
   public void validate() {
     StringBuilder validationErrorBuilder = new StringBuilder("Process engine configuration is invalid: \n");
-    boolean isValid = true;    
-    
+    boolean isValid = true;
+
     if(datasourceJndiName == null || datasourceJndiName.isEmpty()) {
       isValid = false;
-      validationErrorBuilder.append(" property 'datasource' cannot be null \n");      
+      validationErrorBuilder.append(" property 'datasource' cannot be null \n");
     }
     if(engineName == null || engineName.isEmpty()) {
       isValid = false;
@@ -208,12 +208,12 @@ public class ManagedProcessEngineMetadata {
         validationErrorBuilder.append(" property 'class' in plugin[" + i + "] cannot be null \n");
       }
     }
-    
+
     if(!isValid) {
       throw new ProcessEngineException(validationErrorBuilder.toString());
     }
   }
-  
+
   private Map<String, String> selectProperties(Map<String, String> allProperties, boolean selectFoxProperties) {
     Map<String, String> result = null;
     if (selectFoxProperties) {
@@ -223,7 +223,7 @@ public class ManagedProcessEngineMetadata {
       String isIdentityUsed = allProperties.get(PROP_IS_IDENTITY_USED);
       String dbTablePrefix = allProperties.get(PROP_DB_TABLE_PREFIX);
       String jobExecutorAcquisitionName = allProperties.get(PROP_JOB_EXECUTOR_ACQUISITION_NAME);
-      
+
       if (isAutoSchemaUpdate != null) {
         result.put(PROP_IS_AUTO_SCHEMA_UPDATE, isAutoSchemaUpdate);
       }

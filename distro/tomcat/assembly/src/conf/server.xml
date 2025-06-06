@@ -7,7 +7,7 @@
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+      https://www.apache.org/licenses/LICENSE-2.0
 
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,9 +30,9 @@
 
   <!-- Prevent memory leaks due to use of particular java/jakarta APIs-->
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
-  
+
   <Listener className="org.operaton.bpm.container.impl.tomcat.TomcatBpmPlatformBootstrap" />
-  
+
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
@@ -56,13 +56,13 @@
     -->
     <Resource name="jdbc/ProcessEngine"
               auth="Container"
-              type="javax.sql.DataSource" 
+              type="javax.sql.DataSource"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
               uniqueResourceName="process-engine"
-              driverClassName="org.h2.Driver" 
+              driverClassName="org.h2.Driver"
               url="jdbc:h2:./operaton-h2-dbs/process-engine;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE"
               defaultTransactionIsolation="READ_COMMITTED"
-              username="sa"  
+              username="sa"
               password="sa"
               maxActive="20"
               minIdle="5"
@@ -72,12 +72,12 @@
               type="org.operaton.bpm.ProcessEngineService"
               description="Operaton Process Engine Service"
               factory="org.operaton.bpm.container.impl.jndi.ProcessEngineServiceObjectFactory" />
-              
+
     <Resource name="global/operaton/process-engine/ProcessApplicationService!org.operaton.bpm.ProcessApplicationService" auth="Container"
               type="org.operaton.bpm.ProcessApplicationService"
               description="Operaton Process Application Service"
               factory="org.operaton.bpm.container.impl.jndi.ProcessApplicationServiceObjectFactory" />
-			  
+
   </GlobalNamingResources>
 
   <!-- A "Service" is a collection of one or more "Connectors" that share

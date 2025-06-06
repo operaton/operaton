@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,30 +29,30 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 class IntermediateNoneEventTest {
-  
+
   private static boolean listenerExcecuted = false;
-  
+
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   RuntimeService runtimeService;
-  
+
   public static class MyExecutionListener implements ExecutionListener {
     @Override
     public void notify(DelegateExecution execution) throws Exception {
       listenerExcecuted = true;
-    }    
+    }
   }
 
   @Deployment
   @Test
   void testIntermediateNoneTimerEvent() {
-    assertThat(listenerExcecuted).isFalse();    
+    assertThat(listenerExcecuted).isFalse();
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("intermediateNoneEventExample");
     testRule.assertProcessEnded(pi.getProcessInstanceId());
-    assertThat(listenerExcecuted).isTrue();    
+    assertThat(listenerExcecuted).isTrue();
   }
 
 

@@ -7,7 +7,7 @@
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+      https://www.apache.org/licenses/LICENSE-2.0
 
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,9 +30,9 @@
 
   <!-- Prevent memory leaks due to use of particular java/javax APIs-->
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
-  
+
   <Listener className="org.operaton.bpm.container.impl.tomcat.TomcatBpmPlatformBootstrap" />
-  
+
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
@@ -48,7 +48,7 @@
               description="User database that can be updated and saved"
               factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
               pathname="conf/tomcat-users.xml" />
-              
+
 	    <!-- Additional properties can be set to avoid a common exception
          regarding connection timeout in the connection pool:
           testOnBorrow="true"
@@ -56,7 +56,7 @@
     -->
     <Resource name="jdbc/ProcessEngine"
               auth="Container"
-              type="javax.sql.DataSource" 
+              type="javax.sql.DataSource"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
               uniqueResourceName="process-engine"
               url="${database.url}"
@@ -66,17 +66,17 @@
               maxActive="20"
               minIdle="5"
               maxIdle="20" />
-              
+
     <Resource name="global/operaton-bpm-platform/process-engine/ProcessEngineService!org.operaton.bpm.ProcessEngineService" auth="Container"
               type="org.operaton.bpm.ProcessEngineService"
               description="Operaton Process Engine Service"
               factory="org.operaton.bpm.container.impl.jndi.ProcessEngineServiceObjectFactory" />
-              
+
     <Resource name="global/operaton-bpm-platform/process-engine/ProcessApplicationService!org.operaton.bpm.ProcessApplicationService" auth="Container"
               type="org.operaton.bpm.ProcessApplicationService"
               description="Operaton Process Application Service"
-              factory="org.operaton.bpm.container.impl.jndi.ProcessApplicationServiceObjectFactory" />              
-              
+              factory="org.operaton.bpm.container.impl.jndi.ProcessApplicationServiceObjectFactory" />
+
   </GlobalNamingResources>
 
   <!-- A "Service" is a collection of one or more "Connectors" that share
@@ -100,8 +100,8 @@
          APR (HTTP/AJP) Connector: /docs/apr.html
          Define a non-SSL HTTP/1.1 Connector on port 8080
     -->
-    <Connector port="${tomcat.connector.http.port}" protocol="HTTP/1.1" 
-               connectionTimeout="20000" 
+    <Connector port="${tomcat.connector.http.port}" protocol="HTTP/1.1"
+               connectionTimeout="20000"
                redirectPort="${tomcat.connector.http.redirectPort}" />
     <!-- A "Connector" using the shared thread pool-->
     <!--

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
 public class LdapIdentityProviderFactory implements SessionFactory {
 
   protected LdapConfiguration ldapConfiguration;
-  
+
   public Class<?> getSessionType() {
     return ReadOnlyIdentityProvider.class;
   }
@@ -35,11 +35,11 @@ public class LdapIdentityProviderFactory implements SessionFactory {
   public Session openSession() {
     return new LdapIdentityProviderSession(ldapConfiguration);
   }
-  
+
   public LdapConfiguration getLdapConfiguration() {
     return ldapConfiguration;
   }
-  
+
   public void setLdapConfiguration(LdapConfiguration ldapConfiguration) {
     this.ldapConfiguration = ldapConfiguration;
   }

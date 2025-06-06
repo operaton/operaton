@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -104,7 +104,7 @@ public class AstBinary extends AstRightValue {
 		return operator;
 	}
 
-	@Override 
+	@Override
 	public Object eval(Bindings bindings, ELContext context) {
 		return operator.eval(bindings, context, left, right);
 	}
@@ -112,9 +112,9 @@ public class AstBinary extends AstRightValue {
 	@Override
 	public String toString() {
 		return "'" + operator.toString() + "'";
-	}	
+	}
 
-	@Override 
+	@Override
 	public void appendStructure(StringBuilder b, Bindings bindings) {
 		left.appendStructure(b, bindings);
 		b.append(' ');

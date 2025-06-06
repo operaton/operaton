@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,21 +19,21 @@ package org.operaton.bpm.container.impl.metadata.spi;
 import java.util.List;
 
 /**
- * <p>Java API representation of the bpm-platform.xml file.</p> 
- * 
+ * <p>Java API representation of the bpm-platform.xml file.</p>
+ *
  * @author Daniel Meyer
  *
  */
 public interface BpmPlatformXml {
-  
+
   /**
-   * @return the {@link JobExecutorXml} configuration of the JobExecutor. 
+   * @return the {@link JobExecutorXml} configuration of the JobExecutor.
    */
   JobExecutorXml getJobExecutor();
-  
+
   /**
-   * @return A {@link List} of {@link ProcessEngineXml} Metadata Items representing process engine configurations. 
+   * @return A {@link List} of {@link ProcessEngineXml} Metadata Items representing process engine configurations.
    */
   List<ProcessEngineXml> getProcessEngines();
-  
+
 }

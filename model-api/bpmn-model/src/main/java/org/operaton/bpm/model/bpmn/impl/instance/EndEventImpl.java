@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,13 +33,13 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_E
  * @author Sebastian Menski
  */
 public class EndEventImpl extends ThrowEventImpl implements EndEvent {
-  
+
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EndEvent.class, BPMN_ELEMENT_END_EVENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(ThrowEvent.class)
       .instanceProvider(EndEventImpl::new);
-    
+
     typeBuilder.build();
   }
 

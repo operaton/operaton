@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -226,7 +226,7 @@
     <include refid="selectTaskByQueryCriteriaSql"/>
     ${countDistinctAfterEnd}
   </select>
-  
+
   <sql id="columnSelection">
     RES.REV_, RES.ID_, RES.NAME_, RES.PARENT_TASK_ID_, RES.DESCRIPTION_, RES.PRIORITY_,
     RES.CREATE_TIME_, RES.OWNER_, RES.ASSIGNEE_, RES.DELEGATION_, RES.EXECUTION_ID_,
@@ -256,9 +256,9 @@
       <!-- the process definition table is joined if
       1. a process-definition-related filter is used
       2. authorization check is enabled (as permissions are defined per process definition) -->
-      <if test="query != null &amp;&amp; 
-        (query.processDefinitionKey != null || query.processDefinitionName != null || 
-        query.processDefinitionNameLike != null ||              
+      <if test="query != null &amp;&amp;
+        (query.processDefinitionKey != null || query.processDefinitionName != null ||
+        query.processDefinitionNameLike != null ||
         (query.processDefinitionKeys != null &amp;&amp; query.processDefinitionKeys.length > 0)) ||
         authCheck.shouldPerformAuthorizatioCheck &amp;&amp; authCheck.authUserId != null">
         <bind name="D_JOIN" value="true" />
@@ -314,17 +314,17 @@
     </if>
 
     <if test="authCheck.shouldPerformAuthorizatioCheck &amp;&amp; authCheck.authUserId != null">
-      <if test="!authCheck.revokeAuthorizationCheckEnabled">    
-        <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" /> 
+      <if test="!authCheck.revokeAuthorizationCheckEnabled">
+        <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
         AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart} RES.ID_ ${authJoinSeparator} D.KEY_ ${authJoinSeparator} '*' ${authJoinEnd})
       </if>
     </if>
-    
+
     <foreach collection="orderingProperties" item="orderingProperty" index="i">
       <if test="orderingProperty.relation != null">
         <bind name="tableAlias" value="@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@tableAlias(orderingProperty.relation, i)"/>
-        left join 
-        ${prefix}${@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@tableMapping(orderingProperty.relation)} 
+        left join
+        ${prefix}${@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@tableMapping(orderingProperty.relation)}
         ${tableAlias}
         on
         <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.filterOrderByRelations"/>
@@ -710,13 +710,13 @@
         </trim>
         )
       </foreach>
-      
-      <!-- Task query does not use left join if cmmn is disabled, 
+
+      <!-- Task query does not use left join if cmmn is disabled,
         so we don't need to account for case tasks in this case. -->
       <bind name="applyAuthorizationCheckForCaseInstances" value="authCheck.useLeftJoin" />
-      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.contextualAuthorizationCheck" /> 
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.contextualAuthorizationCheck" />
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />
- 
+
     </where>
   </sql>
 

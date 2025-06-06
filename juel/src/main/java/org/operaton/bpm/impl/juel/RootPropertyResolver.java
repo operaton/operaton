@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,7 @@ import jakarta.el.PropertyNotWritableException;
  * properties can be accessed via the {@link #getProperty(String)},
  * {@link #setProperty(String, Object)}, {@link #isProperty(String)} and {@link #properties()}
  * methods.
- * 
+ *
  * @author Christoph Beck
  */
 public class RootPropertyResolver extends ELResolver {
@@ -46,7 +46,7 @@ public class RootPropertyResolver extends ELResolver {
 
 	/**
 	 * Create a root property resolver
-	 * 
+	 *
 	 * @param readOnly Use {@code true} to disallow setting property values
 	 */
 	public RootPropertyResolver(boolean readOnly) {
@@ -109,7 +109,7 @@ public class RootPropertyResolver extends ELResolver {
 
 	/**
 	 * Get property value
-	 * 
+	 *
 	 * @param property
 	 *            property name
 	 * @return value associated with the given property
@@ -120,7 +120,7 @@ public class RootPropertyResolver extends ELResolver {
 
 	/**
 	 * Set property value
-	 * 
+	 *
 	 * @param property
 	 *            property name
 	 * @param value
@@ -132,7 +132,7 @@ public class RootPropertyResolver extends ELResolver {
 
 	/**
 	 * Test property
-	 * 
+	 *
 	 * @param property
 	 *            property name
 	 * @return <code>true</code> if the given property is associated with a value
@@ -143,7 +143,7 @@ public class RootPropertyResolver extends ELResolver {
 
 	/**
 	 * Get properties
-	 * 
+	 *
 	 * @return all property names (in no particular order)
 	 */
 	public Iterable<String> properties() {

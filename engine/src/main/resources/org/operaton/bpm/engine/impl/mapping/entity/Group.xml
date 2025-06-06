@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,8 +17,8 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.GroupEntity">
 
   <!-- GROUP INSERT -->
@@ -34,7 +34,7 @@
   </insert>
 
   <!-- GROUP UPDATE -->
-  
+
   <update id="updateGroup" parameterType="org.operaton.bpm.engine.impl.persistence.entity.GroupEntity">
     update ${prefix}ACT_ID_GROUP set
       REV_ = #{revisionNext ,jdbcType=INTEGER},
@@ -43,11 +43,11 @@
     where ID_ = #{id}
        and REV_ = #{revision}
   </update>
-  
+
   <!-- GROUP DELETE -->
 
   <delete id="deleteGroup" parameterType="org.operaton.bpm.engine.impl.persistence.entity.GroupEntity">
-    delete from ${prefix}ACT_ID_GROUP where ID_ = #{id} and REV_ = #{revision} 
+    delete from ${prefix}ACT_ID_GROUP where ID_ = #{id} and REV_ = #{revision}
   </delete>
 
   <!-- GROUP RESULTMAP -->
@@ -58,13 +58,13 @@
     <result property="name" column="NAME_" jdbcType="VARCHAR" />
     <result property="type" column="TYPE_" jdbcType="VARCHAR" />
   </resultMap>
-  
+
   <!-- GROUP SELECT -->
 
   <select id="selectGroup" parameterType="string" resultMap="groupResultMap">
     select * from ${prefix}ACT_ID_GROUP where ID_ = #{id}
   </select>
-    
+
   <select id="selectGroupsByUserId" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="groupResultMap">
     select g.*
     from ${prefix}ACT_ID_GROUP g, ${prefix}ACT_ID_MEMBERSHIP membership
@@ -81,23 +81,23 @@
          and g.TYPE_ = #{parameter.groupType}
       </if>
   </select>
-  
+
   <select id="selectGroupByQueryCriteria" parameterType="org.operaton.bpm.engine.impl.GroupQueryImpl" resultMap="groupResultMap">
   	<include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
     ${limitBefore}
-    select ${distinct} RES.* 
+    select ${distinct} RES.*
     ${limitBetween}
     <include refid="selectGroupByQueryCriteriaSql" />
     ${orderBy}
     ${limitAfter}
   </select>
-  
+
    <select id="selectGroupCountByQueryCriteria" parameterType="org.operaton.bpm.engine.impl.GroupQueryImpl" resultType="long">
     ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
     <include refid="selectGroupByQueryCriteriaSql" />
     ${countDistinctAfterEnd}
   </select>
-  
+
   <sql id="selectGroupByQueryCriteriaSql">
 
     from ${prefix}ACT_ID_GROUP RES
@@ -109,7 +109,7 @@
       inner join ${prefix}ACT_ID_TENANT_MEMBER TM on RES.ID_ = TM.GROUP_ID_
     </if>
 
-    <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoin" /> 
+    <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoin" />
 
     <where>
       <if test="id != null">
@@ -140,9 +140,9 @@
       <if test="tenantId != null">
         and TM.TENANT_ID_ = #{tenantId}
       </if>
-      
+
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.queryAuthorizationCheck" />
     </where>
-  </sql> 
-  
+  </sql>
+
 </mapper>

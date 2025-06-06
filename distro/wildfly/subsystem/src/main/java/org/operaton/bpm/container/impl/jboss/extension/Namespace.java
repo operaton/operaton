@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * An Element.
- * 
+ *
  * @author christian.lipphardt@operaton.com
  */
 public enum Namespace {
@@ -29,15 +29,15 @@ public enum Namespace {
    * always first
    */
   UNKNOWN((String) null),
-  
+
   CAMUNDA_BPM_PLATFORM_1_1("urn:org.operaton.bpm.jboss:1.1");
-  
+
   /**
    * The current namespace version.
    */
-  
+
   public static final Namespace CURRENT = CAMUNDA_BPM_PLATFORM_1_1;
-  
+
   private final String name;
 
   Namespace(final String name) {

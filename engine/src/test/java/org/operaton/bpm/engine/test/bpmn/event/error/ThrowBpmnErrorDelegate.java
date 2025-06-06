@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,7 +37,7 @@ public class ThrowBpmnErrorDelegate implements JavaDelegate {
     executions++;
     if (executionsBeforeError == null || executionsBeforeError < executions) {
       if (exceptionType != null && exceptionType) {
-        throw new MyBusinessException("This is a business exception, which can be caught by a BPMN Error Event.");  
+        throw new MyBusinessException("This is a business exception, which can be caught by a BPMN Error Event.");
       } else {
         throw new BpmnError("23", "This is a business fault, which can be caught by a BPMN Error Event.");
       }

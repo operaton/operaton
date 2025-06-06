@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -72,7 +72,7 @@ public abstract class AbstractBoundaryEventBuilder<B extends AbstractBoundaryEve
 
   /**
    * Sets an error definition for the given error code. If already an error
-   * with this code exists it will be used, otherwise a new error with the 
+   * with this code exists it will be used, otherwise a new error with the
    * given error message is created.
    *
    * @param errorCode the code of the error
@@ -83,7 +83,7 @@ public abstract class AbstractBoundaryEventBuilder<B extends AbstractBoundaryEve
   public B error(String errorCode, String errorMessage) {
     ErrorEventDefinition errorEventDefinition = createErrorEventDefinition(errorCode, errorMessage);
     element.getEventDefinitions().add(errorEventDefinition);
-    
+
     return myself;
   }
 

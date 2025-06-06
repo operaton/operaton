@@ -5,14 +5,14 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 package org.operaton.bpm.impl.juel;
 
 import java.util.EnumMap;
@@ -41,7 +41,7 @@ public class Scanner {
 			this.expected = expected;
 		}
 	}
-	
+
 	public static class Token {
 		private final Symbol symbol;
 		private final String image;
@@ -74,7 +74,7 @@ public class Scanner {
 			super(Scanner.Symbol.EXTENSION, image);
 		}
 	}
-	
+
 	/**
 	 * Symbol type
 	 */
@@ -117,8 +117,8 @@ public class Scanner {
 
 	private static void addKeyToken(Token token) {
 		KEYMAP.put(token.getImage(), token);
-	}	
-	
+	}
+
 	static {
 		addFixToken(new Token(Symbol.PLUS, "+"));
 		addFixToken(new Token(Symbol.MINUS, "-"));
@@ -146,7 +146,7 @@ public class Scanner {
 		addFixToken(new Token(Symbol.START_EVAL_DYNAMIC, "${"));
 		addFixToken(new Token(Symbol.END_EVAL, "}"));
 		addFixToken(new Token(Symbol.EOF, null, 0));
-		
+
 		addKeyToken(new Token(Symbol.NULL, "null"));
 		addKeyToken(new Token(Symbol.TRUE, "true"));
 		addKeyToken(new Token(Symbol.FALSE, "false"));
@@ -168,9 +168,9 @@ public class Scanner {
 	private Token token;  // current token
  	private int position; // start position of current token
 	private final String input;
-	
+
 	protected final StringBuilder builder = new StringBuilder();
-	
+
 	/**
 	 * Constructor.
 	 * @param input expression string
@@ -182,7 +182,7 @@ public class Scanner {
 	public String getInput() {
 		return input;
 	}
-	
+
 	/**
 	 * @return current token
 	 */
@@ -203,7 +203,7 @@ public class Scanner {
 	protected boolean isDigit(char c) {
 		return c >= '0' && c <= '9';
 	}
-	
+
 	/**
 	 * @param s name
 	 * @return token for the given keyword or <code>null</code>
@@ -211,7 +211,7 @@ public class Scanner {
 	protected Token keyword(String s) {
 		return KEYMAP.get(s);
 	}
-	
+
 	/**
 	 * @param symbol
 	 * @return token for the given symbol
@@ -227,7 +227,7 @@ public class Scanner {
 	protected boolean isEval() {
 		return token != null && token.getSymbol() != Symbol.TEXT && token.getSymbol() != Symbol.END_EVAL;
 	}
-	
+
 	/**
 	 * text token
 	 */
@@ -275,7 +275,7 @@ public class Scanner {
 		}
 		return token(Symbol.TEXT, builder.toString(), i - position);
 	}
-	
+
 	/**
 	 * string token
 	 */
@@ -305,7 +305,7 @@ public class Scanner {
 		}
 		throw new ScanException(position, "unterminated string", String.valueOf(quote));
 	}
-	
+
 	/**
 	 * number token
 	 */
@@ -341,7 +341,7 @@ public class Scanner {
 		}
 		return token(symbol, input.substring(position, i), i - position);
 	}
-	
+
 	/**
 	 * token inside an eval expression
 	 */
@@ -392,18 +392,18 @@ public class Scanner {
 					return fixed(Symbol.LE);
 				}
 				return fixed(Symbol.LT);
-			case '>': 
+			case '>':
 				if (c2 == '=') {
 					return fixed(Symbol.GE);
 				}
 				return fixed(Symbol.GT);
 			case '"', '\'': return nextString();
 		}
-		
+
 		if (isDigit(c1) || c1 == '.') {
 			return nextNumber();
 		}
-		
+
 		if (Character.isJavaIdentifierStart(c1)) {
 			int i = position+1;
 			int l = input.length();
@@ -417,7 +417,7 @@ public class Scanner {
 
 		throw new ScanException(position, "invalid character '" + c1 + "'", "expression token");
 	}
-	
+
 	protected Token nextToken() throws ScanException {
 		if (isEval()) {
 			if (input.charAt(position) == '}') {
@@ -447,9 +447,9 @@ public class Scanner {
 		if (token != null) {
 			position += token.getSize();
 		}
-	
+
 		int length = input.length();
-				
+
 		if (isEval()) {
 			while (position < length && Character.isWhitespace(input.charAt(position))) {
 				position++;

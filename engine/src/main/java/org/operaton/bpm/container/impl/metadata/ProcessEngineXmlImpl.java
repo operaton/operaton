@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,11 +24,11 @@ import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 
 /**
  * <p>Implementation of the {@link ProcessEngineXml} descriptor.</p>
- * 
+ *
  * @author Daniel Meyer
  */
 public class ProcessEngineXmlImpl implements ProcessEngineXml {
-  
+
   protected String name;
   protected boolean isDefault;
   protected String configurationClass;
@@ -41,7 +41,7 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public String getName() {
     return name;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }
@@ -50,7 +50,7 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public boolean isDefault() {
     return isDefault;
   }
-  
+
   public void setDefault(boolean isDefault) {
     this.isDefault = isDefault;
   }
@@ -59,7 +59,7 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public String getConfigurationClass() {
     return configurationClass;
   }
-  
+
   public void setConfigurationClass(String configurationClass) {
     this.configurationClass = configurationClass;
   }
@@ -68,7 +68,7 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public Map<String, String> getProperties() {
     return properties;
   }
-  
+
   public void setProperties(Map<String, String> properties) {
     this.properties = properties;
   }
@@ -77,7 +77,7 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public String getDatasource() {
     return datasource;
   }
-  
+
   public void setDatasource(String datasource) {
     this.datasource = datasource;
   }
@@ -86,7 +86,7 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public String getJobAcquisitionName() {
     return jobAcquisitionName;
   }
-  
+
   public void setJobAcquisitionName(String jobAcquisitionName) {
     this.jobAcquisitionName = jobAcquisitionName;
   }
@@ -95,7 +95,7 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public List<ProcessEnginePluginXml> getPlugins() {
     return plugins;
   }
-  
+
   public void setPlugins(List<ProcessEnginePluginXml> plugins) {
     this.plugins = plugins;
   }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.test.Deployment;
 /**
  * Represents a base class for authorization test cases to handle
  * an already locked (single) external task.
- * 
+ *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public abstract class HandleLockedExternalTaskAuthorizationTest extends HandleExternalTaskAuthorizationTest {
@@ -55,21 +55,21 @@ public abstract class HandleLockedExternalTaskAuthorizationTest extends HandleEx
     testExternalTaskApi(task);
 
     // then
-    if (authRule.assertScenario(scenario)) {      
+    if (authRule.assertScenario(scenario)) {
       assertExternalTaskResults();
     }
   }
-  
+
   /**
    * Tests or either executes the external task api.
    * The given locked external task is used to test there api.
-   * 
+   *
    * @param task the external task which should be tested
    */
   public abstract void testExternalTaskApi(LockedExternalTask task);
-  
+
   /**
-   *  Contains assertions for the external task results, which are executed after the external task 
+   *  Contains assertions for the external task results, which are executed after the external task
    *  was executed.
    */
   public abstract void assertExternalTaskResults();

@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,14 +25,14 @@
 
   <insert id="insertDecisionRequirementsDefinition" parameterType="org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionRequirementsDefinitionEntity">
     insert into ${prefix}ACT_RE_DECISION_REQ_DEF(
-      ID_, 
-      CATEGORY_, 
-      NAME_, 
-      KEY_, 
-      VERSION_, 
-      DEPLOYMENT_ID_, 
-      RESOURCE_NAME_, 
-      DGRM_RESOURCE_NAME_, 
+      ID_,
+      CATEGORY_,
+      NAME_,
+      KEY_,
+      VERSION_,
+      DEPLOYMENT_ID_,
+      RESOURCE_NAME_,
+      DGRM_RESOURCE_NAME_,
       TENANT_ID_,
       REV_)
     values (#{id, jdbcType=VARCHAR},
@@ -83,7 +83,7 @@
   <select id="selectDecisionRequirementsDefinition" parameterType="string" resultMap="decisionRequirementsDefinitionsResultMap">
     select * from ${prefix}ACT_RE_DECISION_REQ_DEF where ID_ = #{decisionRequirementsDefinitionId}
   </select>
-  
+
   <select id="selectDecisionRequirementsDefinitionByDeploymentId" parameterType="string" resultMap="decisionRequirementsDefinitionsResultMap">
     select * from ${prefix}ACT_RE_DECISION_REQ_DEF where DEPLOYMENT_ID_ = #{parameter}
   </select>
@@ -105,29 +105,29 @@
             <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />
           group by TENANT_ID_, KEY_) d2
         on d1.KEY_ = d2.KEY_
-    where d1.VERSION_ = d2.MAX_VERSION and 
+    where d1.VERSION_ = d2.MAX_VERSION and
           (d1.TENANT_ID_ = d2.TENANT_ID_ or (d1.TENANT_ID_ is null and d2.TENANT_ID_ is null))
   </select>
-  
+
   <select id="selectLatestDecisionRequirementsDefinitionByKeyWithoutTenantId" parameterType="map" resultMap="decisionRequirementsDefinitionsResultMap">
     select *
-    from ${prefix}ACT_RE_DECISION_REQ_DEF 
+    from ${prefix}ACT_RE_DECISION_REQ_DEF
     where KEY_ = #{decisionRequirementsDefinitionKey}
           and TENANT_ID_ is null
           and VERSION_ = (
-              select max(VERSION_) 
-              from ${prefix}ACT_RE_DECISION_REQ_DEF 
+              select max(VERSION_)
+              from ${prefix}ACT_RE_DECISION_REQ_DEF
               where KEY_ = #{decisionRequirementsDefinitionKey} and TENANT_ID_ is null)
   </select>
-  
+
   <select id="selectLatestDecisionRequirementsDefinitionByKeyAndTenantId" parameterType="map" resultMap="decisionRequirementsDefinitionsResultMap">
     select *
     from ${prefix}ACT_RE_DECISION_REQ_DEF RES
     where KEY_ = #{decisionRequirementsDefinitionKey}
           and TENANT_ID_ = #{tenantId}
           and VERSION_ = (
-              select max(VERSION_) 
-              from ${prefix}ACT_RE_DECISION_REQ_DEF 
+              select max(VERSION_)
+              from ${prefix}ACT_RE_DECISION_REQ_DEF
               where KEY_ = #{decisionRequirementsDefinitionKey} and TENANT_ID_ = #{tenantId})
   </select>
 
@@ -142,9 +142,9 @@
           AND TENANT_ID_ is null
         </if>
        and RES.VERSION_ = (
-        select MAX(VERSION_) 
-        from ${prefix}ACT_RE_DECISION_REQ_DEF 
-        where KEY_ = #{key} 
+        select MAX(VERSION_)
+        from ${prefix}ACT_RE_DECISION_REQ_DEF
+        where KEY_ = #{key}
           <if test="tenantId != null">
             AND TENANT_ID_ = #{tenantId}
           </if>
@@ -169,7 +169,7 @@
     <include refid="selectDecisionRequirementsDefinitionsByQueryCriteriaSql"/>
     ${countDistinctAfterEnd}
   </select>
-   
+
   <!-- mysql specific sql -->
   <select id="selectDecisionRequirementsDefinitionsByQueryCriteria_mysql" parameterType="org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionRequirementsDefinitionQueryImpl" resultMap="decisionRequirementsDefinitionsResultMap">
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
@@ -202,12 +202,12 @@
           group by TENANT_ID_, KEY_) VER
         on RES.KEY_ = VER.KEY_
     </if>
-    
+
     <if test="authCheck.shouldPerformAuthorizatioCheck &amp;&amp; !authCheck.revokeAuthorizationCheckEnabled &amp;&amp; authCheck.authUserId != null">
-      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" /> 
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
       AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart} RES.ID_ ${authJoinSeparator} RES.KEY_ ${authJoinSeparator} '*' ${authJoinEnd})
     </if>
-    
+
     <where>
       <if test="id != null">
         RES.ID_ = #{id}
@@ -250,8 +250,8 @@
         and RES.DEPLOYMENT_ID_ = #{deploymentId}
       </if>
       <if test="latest">
-       and RES.VERSION_ = VER.MAX_VERSION and 
-          (RES.TENANT_ID_ = VER.TENANT_ID_ or (RES.TENANT_ID_ is null and VER.TENANT_ID_ is null)) 
+       and RES.VERSION_ = VER.MAX_VERSION and
+          (RES.TENANT_ID_ = VER.TENANT_ID_ or (RES.TENANT_ID_ is null and VER.TENANT_ID_ is null))
       </if>
       <if test="isTenantIdSet">
         <if test="tenantIds != null &amp;&amp; tenantIds.length > 0">
@@ -261,7 +261,7 @@
             #{tenantId}
           </foreach>
           <if test="includeDefinitionsWithoutTenantId">
-            or RES.TENANT_ID_ is null 
+            or RES.TENANT_ID_ is null
           </if>
           )
         </if>
@@ -272,7 +272,7 @@
 
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.queryAuthorizationCheck" />
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />
-      
+
     </where>
   </sql>
 

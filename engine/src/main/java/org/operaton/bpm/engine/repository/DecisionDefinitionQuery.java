@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -95,7 +95,7 @@ public interface DecisionDefinitionQuery extends Query<DecisionDefinitionQuery, 
    * @param java.util.Date that constitutes the lower boundary for the deployment time in the query
    */
   DecisionDefinitionQuery deployedAfter(Date deployedAfter);
-  
+
   /**
    * Only select decision definitions that were deployed at the given Date.
    *
@@ -213,7 +213,7 @@ public interface DecisionDefinitionQuery extends Query<DecisionDefinitionQuery, 
    * Note that the ordering of decision definitions without tenant id is database-specific. */
   DecisionDefinitionQuery orderByTenantId();
 
-  /** Order by key of the decision requirements definition 
+  /** Order by key of the decision requirements definition
    * (needs to be followed by {@link #asc()} or {@link #desc()}).
    * Note that the ordering of decision definitions without decision requirements definition
    * is database-specific. */

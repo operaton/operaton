@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  */
 @ExtendWith(ProcessEngineExtension.class)
 class CustomTaskAssignmentTest {
-  
+
   RuntimeService runtimeService;
   RepositoryService repositoryService;
   IdentityService identityService;
@@ -49,13 +49,13 @@ class CustomTaskAssignmentTest {
   @BeforeEach
   void setUp() {
 
-    
+
     identityService.saveUser(identityService.newUser("kermit"));
     identityService.saveUser(identityService.newUser("fozzie"));
     identityService.saveUser(identityService.newUser("gonzo"));
-    
+
     identityService.saveGroup(identityService.newGroup("management"));
-    
+
     identityService.createMembership("kermit", "management");
   }
 
@@ -110,7 +110,7 @@ class CustomTaskAssignmentTest {
     // prepare variables
     Map<String, String> assigneeMappingTable = new HashMap<>();
     assigneeMappingTable.put("fozzie", "gonzo");
-   
+
     Map<String, Object> variables = new HashMap<>();
     variables.put("assigneeMappingTable", assigneeMappingTable);
 
@@ -127,17 +127,17 @@ class CustomTaskAssignmentTest {
   @Test
   void testReleaseTask() {
     runtimeService.startProcessInstanceByKey("releaseTaskProcess");
-    
+
     Task task = taskService.createTaskQuery().taskAssignee("fozzie").singleResult();
     assertThat(task).isNotNull();
     String taskId = task.getId();
-    
+
     // Set assignee to null
     taskService.setAssignee(taskId, null);
-    
+
     task = taskService.createTaskQuery().taskAssignee("fozzie").singleResult();
     assertThat(task).isNull();
-    
+
     task = taskService.createTaskQuery().taskId(taskId).singleResult();
     assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isNull();

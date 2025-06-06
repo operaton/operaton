@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity">
 
@@ -25,21 +25,21 @@
 
   <insert id="insertCaseDefinition" parameterType="org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity">
     insert into ${prefix}ACT_RE_CASE_DEF(
-      ID_, 
-      CATEGORY_, 
-      NAME_, 
-      KEY_, 
-      VERSION_, 
-      DEPLOYMENT_ID_, 
-      RESOURCE_NAME_, 
-      DGRM_RESOURCE_NAME_, 
+      ID_,
+      CATEGORY_,
+      NAME_,
+      KEY_,
+      VERSION_,
+      DEPLOYMENT_ID_,
+      RESOURCE_NAME_,
+      DGRM_RESOURCE_NAME_,
       TENANT_ID_,
       HISTORY_TTL_,
       REV_)
     values (#{id, jdbcType=VARCHAR},
             #{category, jdbcType=VARCHAR},
             #{name, jdbcType=VARCHAR},
-            #{key, jdbcType=VARCHAR}, 
+            #{key, jdbcType=VARCHAR},
             #{version, jdbcType=INTEGER},
             #{deploymentId, jdbcType=VARCHAR},
             #{resourceName, jdbcType=VARCHAR},
@@ -63,7 +63,7 @@
   <!-- CASEDEFINITION DELETE -->
 
   <delete id="deleteCaseDefinitionsByDeploymentId" parameterType="string">
-    delete from ${prefix}ACT_RE_CASE_DEF where DEPLOYMENT_ID_ = #{deploymentId} 
+    delete from ${prefix}ACT_RE_CASE_DEF where DEPLOYMENT_ID_ = #{deploymentId}
   </delete>
 
   <!-- CASEDEFINITION RESULTMAP -->
@@ -79,7 +79,7 @@
     <result property="resourceName" column="RESOURCE_NAME_" jdbcType="VARCHAR"/>
     <result property="diagramResourceName" column="DGRM_RESOURCE_NAME_" jdbcType="VARCHAR"/>
     <result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
-    <result property="historyTimeToLive" column="HISTORY_TTL_" jdbcType="INTEGER" /> 
+    <result property="historyTimeToLive" column="HISTORY_TTL_" jdbcType="INTEGER" />
   </resultMap>
 
   <!-- CASEDEFINITION SELECT -->
@@ -93,8 +93,8 @@
   </select>
 
   <select id="selectCaseDefinitionByDeploymentAndKey" parameterType="map" resultMap="caseDefinitionResultMap">
-    select * 
-    from ${prefix}ACT_RE_CASE_DEF 
+    select *
+    from ${prefix}ACT_RE_CASE_DEF
     where DEPLOYMENT_ID_ = #{deploymentId}
       and KEY_ = #{caseDefinitionKey}
   </select>
@@ -109,35 +109,35 @@
             <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />
           group by TENANT_ID_, KEY_) c2
         on c1.KEY_ = c2.KEY_
-    where c1.VERSION_ = c2.MAX_VERSION and 
+    where c1.VERSION_ = c2.MAX_VERSION and
           (c1.TENANT_ID_ = c2.TENANT_ID_ or (c1.TENANT_ID_ is null and c2.TENANT_ID_ is null))
   </select>
-  
+
   <select id="selectLatestCaseDefinitionByKeyWithoutTenantId" parameterType="map" resultMap="caseDefinitionResultMap">
     select *
-    from ${prefix}ACT_RE_CASE_DEF 
+    from ${prefix}ACT_RE_CASE_DEF
     where KEY_ = #{caseDefinitionKey}
           and TENANT_ID_ is null
           and VERSION_ = (
-              select max(VERSION_) 
-              from ${prefix}ACT_RE_CASE_DEF 
+              select max(VERSION_)
+              from ${prefix}ACT_RE_CASE_DEF
               where KEY_ = #{caseDefinitionKey} and TENANT_ID_ is null)
   </select>
-  
+
   <select id="selectLatestCaseDefinitionByKeyAndTenantId" parameterType="map" resultMap="caseDefinitionResultMap">
     select *
     from ${prefix}ACT_RE_CASE_DEF RES
     where KEY_ = #{caseDefinitionKey}
           and TENANT_ID_ = #{tenantId}
           and VERSION_ = (
-              select max(VERSION_) 
-              from ${prefix}ACT_RE_CASE_DEF 
+              select max(VERSION_)
+              from ${prefix}ACT_RE_CASE_DEF
               where KEY_ = #{caseDefinitionKey} and TENANT_ID_ = #{tenantId})
   </select>
 
   <select id="selectCaseDefinitionByKeyVersionAndTenantId" parameterType="map" resultMap="caseDefinitionResultMap">
     select *
-    from ${prefix}ACT_RE_CASE_DEF 
+    from ${prefix}ACT_RE_CASE_DEF
     where KEY_ = #{caseDefinitionKey}
       and VERSION_ = #{caseDefinitionVersion}
       <if test="tenantId != null">
@@ -159,9 +159,9 @@
           AND TENANT_ID_ is null
         </if>
        and RES.VERSION_ = (
-        select MAX(VERSION_) 
-        from ${prefix}ACT_RE_CASE_DEF 
-        where KEY_ = #{key} 
+        select MAX(VERSION_)
+        from ${prefix}ACT_RE_CASE_DEF
+        where KEY_ = #{key}
           <if test="tenantId != null">
             AND TENANT_ID_ = #{tenantId}
           </if>
@@ -191,7 +191,7 @@
   <select id="selectCaseDefinitionsByQueryCriteria_mysql" parameterType="org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionQueryImpl" resultMap="caseDefinitionResultMap">
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
     ${limitBefore}
-    select ${distinct} RES.* 
+    select ${distinct} RES.*
     ${limitBetween}
     <include refid="selectCaseDefinitionsByQueryCriteriaSql"/>
     ${orderBy}
@@ -262,8 +262,8 @@
         and RES.DEPLOYMENT_ID_ = #{deploymentId}
       </if>
       <if test="latest">
-       and RES.VERSION_ = VER.MAX_VERSION and 
-          (RES.TENANT_ID_ = VER.TENANT_ID_ or (RES.TENANT_ID_ is null and VER.TENANT_ID_ is null)) 
+       and RES.VERSION_ = VER.MAX_VERSION and
+          (RES.TENANT_ID_ = VER.TENANT_ID_ or (RES.TENANT_ID_ is null and VER.TENANT_ID_ is null))
       </if>
       <if test="isTenantIdSet">
         <if test="tenantIds != null &amp;&amp; tenantIds.length > 0">
@@ -273,7 +273,7 @@
             #{tenantId}
           </foreach>
           <if test="includeDefinitionsWithoutTenantId">
-            or RES.TENANT_ID_ is null 
+            or RES.TENANT_ID_ is null
           </if>
           )
         </if>

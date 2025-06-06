@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * A {@link Serializable} variable.
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -29,11 +29,11 @@ public class SerializableVariable implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private String value;
-  
+
   public String getValue() {
     return value;
   }
-  
+
   public void setValue(String value) {
     this.value = value;
   }

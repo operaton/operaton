@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,10 +17,10 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity">
-  
+
   <!-- RESOURCE INSERT -->
 
   <insert id="insertResource" parameterType="org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity">
@@ -45,7 +45,7 @@
         #{createTime, jdbcType=TIMESTAMP},
         1)
   </insert>
-  
+
   <!-- RESOURCE UPDATE -->
 
   <!-- RESOURCE DELETE -->
@@ -59,9 +59,9 @@
   </delete>
 
   <delete id="purgeTable" parameterType="string">
-    delete from ${prefix}ACT_GE_BYTEARRAY 
+    delete from ${prefix}ACT_GE_BYTEARRAY
   </delete>
-  
+
   <!-- RESOURCE RESULTMAP -->
 
   <resultMap id="resourceResultMap" type="org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity">
@@ -74,13 +74,13 @@
     <result property="type" column="TYPE_" jdbcType="INTEGER"/>
     <result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
   </resultMap>
-  
+
   <!-- RESOURCE SELECT -->
 
   <select id="selectResourceNamesByDeploymentId" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultType="string">
     select NAME_ from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ = #{parameter} order by NAME_ asc
   </select>
-  
+
   <select id="selectResourceByDeploymentIdAndResourceName" parameterType="map" resultMap="resourceResultMap">
     select
           *
@@ -175,18 +175,18 @@
           )
         </if>
       <if test="parameter.resourcesToFind != null &amp;&amp; parameter.resourcesToFind.size > 0">
-        and B.NAME_ in 
+        and B.NAME_ in
         <foreach item="resourceName" index="index" collection="parameter.resourcesToFind"
                  open="(" separator="," close=")">
           #{resourceName}
         </foreach>
       </if>
       group by B.NAME_) LAST_RESOURCE
-      
+
     on B.NAME_ = LAST_RESOURCE.NAME_
     inner join ${prefix}ACT_RE_DEPLOYMENT D
     on B.DEPLOYMENT_ID_ = D.ID_
-    and D.DEPLOY_TIME_ = LAST_RESOURCE.DEPLOY_TIME_ 
+    and D.DEPLOY_TIME_ = LAST_RESOURCE.DEPLOY_TIME_
     and D.NAME_ = #{parameter.deploymentName, jdbcType=VARCHAR}
     and
     <if test="processApplicationSource.equals(parameter.source)">
@@ -216,10 +216,10 @@
     <result property="type" column="TYPE_" jdbcType="INTEGER"/>
     <result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
   </resultMap>
-    
+
   <!-- postgresql specific -->
   <select id="selectResourceByDeploymentIdAndResourceName_postgres" parameterType="map" resultMap="resourceResultMap_postgres">
-    select * from ${prefix}ACT_GE_BYTEARRAY 
+    select * from ${prefix}ACT_GE_BYTEARRAY
     where DEPLOYMENT_ID_ = #{deploymentId}
           AND NAME_ = #{resourceName}
   </select>
@@ -252,7 +252,7 @@
 
   <!-- postgresql specific -->
   <select id="selectResourceByDeploymentIdAndResourceId_postgres" parameterType="map" resultMap="resourceResultMap_postgres">
-    select * from ${prefix}ACT_GE_BYTEARRAY 
+    select * from ${prefix}ACT_GE_BYTEARRAY
     where DEPLOYMENT_ID_ = #{deploymentId}
           AND ID_ = #{resourceId}
   </select>
@@ -287,7 +287,7 @@
   <select id="selectResourcesByDeploymentId_postgres" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="resourceResultMap_postgres">
     select * from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ = #{parameter} order by NAME_ asc
   </select>
-  
+
   <select id="selectLatestResourcesByDeploymentName_postgres" parameterType="map" resultMap="resourceResultMap_postgres">
     <include refid="resourcesFromLastDeploymentWithName"/>
   </select>

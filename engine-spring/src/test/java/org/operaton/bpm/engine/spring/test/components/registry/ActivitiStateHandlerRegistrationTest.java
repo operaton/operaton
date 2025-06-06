@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,7 +42,7 @@ class ActivitiStateHandlerRegistrationTest {
     int processVariablesIndex = 4;
     int processIdIndex = 2;
     String processName = "testProcess";
-    ActivitiStateHandlerRegistration registration = new ActivitiStateHandlerRegistration(processVariablesExpected, 
+    ActivitiStateHandlerRegistration registration = new ActivitiStateHandlerRegistration(processVariablesExpected,
         handlerMethod, handler, stateName, beanName,
         processVariablesIndex, processIdIndex, processName);
     assertThat(registration).hasToString("org.operaton.bpm.engine.spring.components.registry"
@@ -67,7 +67,7 @@ class ActivitiStateHandlerRegistrationTest {
     int processVariablesIndex = 4;
     int processIdIndex = 2;
     String processName = "testProcess";
-    ActivitiStateHandlerRegistration registration = new ActivitiStateHandlerRegistration(processVariablesExpected, 
+    ActivitiStateHandlerRegistration registration = new ActivitiStateHandlerRegistration(processVariablesExpected,
         handlerMethod, handler, stateName, beanName,
         processVariablesIndex, processIdIndex, processName);
     assertThat(registration).hasToString("org.operaton.bpm.engine.spring.components.registry"

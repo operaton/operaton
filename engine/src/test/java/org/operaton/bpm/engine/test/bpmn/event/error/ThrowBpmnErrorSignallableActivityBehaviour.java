@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,7 +25,7 @@ public class ThrowBpmnErrorSignallableActivityBehaviour extends AbstractBpmnActi
   @Override
   public void execute(ActivityExecution execution) throws Exception {
   }
-  
+
   @Override
   public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
     throw new BpmnError("23", "Testing bpmn error in SignallableActivityBehaviour#signal");

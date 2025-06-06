@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,9 +31,9 @@ public class UserProfileDto {
   protected String firstName;
   protected String lastName;
   protected String email;
-    
+
   // transformers ////////////////////////////////////////
-  
+
   public static UserProfileDto fromUser(User user) {
     UserProfileDto result = new UserProfileDto();
     result.id = user.getId();
@@ -42,16 +42,16 @@ public class UserProfileDto {
     result.email = user.getEmail();
     return result;
   }
-  
+
   public static List<UserProfileDto> fromUserList(List<User> sourceList) {
-    List<UserProfileDto> resultList = new ArrayList<>(); 
+    List<UserProfileDto> resultList = new ArrayList<>();
     for (User user : sourceList) {
       resultList.add(fromUser(user));
     }
     return resultList;
   }
-  
-  public void update(User dbUser) {  
+
+  public void update(User dbUser) {
     dbUser.setId(getId());
     dbUser.setFirstName(getFirstName());
     dbUser.setLastName(getLastName());
@@ -59,7 +59,7 @@ public class UserProfileDto {
   }
 
   // getter / setters ////////////////////////////////////
-  
+
   public String getId() {
     return id;
   }

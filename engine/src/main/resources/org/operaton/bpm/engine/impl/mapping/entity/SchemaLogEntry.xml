@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,12 +17,12 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity">
 
   <!-- SCHEMALOGENTRY INSERT -->
-  
+
   <insert id="insertSchemaLogEntry" parameterType="org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity">
       insert into ${prefix}ACT_GE_SCHEMA_LOG (
         ID_,
@@ -36,14 +36,14 @@
   </insert>
 
   <!-- SCHEMALOGENTRY DELETE -->
-  
+
   <delete id="deleteSchemaLogEntry" parameterType="org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity">
       delete from ${prefix}ACT_GE_SCHEMA_LOG
       where ID_ = #{id}
   </delete>
 
   <!-- SCHEMALOGENTRY SELECT -->
-  
+
   <resultMap id="schemaLogEntryResultMap" type="org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity">
     <id property="id" column="ID_" jdbcType="VARCHAR" />
     <result property="timestamp" column="TIMESTAMP_" jdbcType="TIMESTAMP" />
@@ -66,7 +66,7 @@
     ${orderBy}
     ${limitAfter}
   </select>
-  
+
   <sql id="selectSchemaLogEntrySql">
     from ${prefix}ACT_GE_SCHEMA_LOG RES
     <if test="version != null">

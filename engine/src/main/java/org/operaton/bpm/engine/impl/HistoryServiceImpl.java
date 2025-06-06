@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -267,12 +267,12 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
   public Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, HistoricDecisionInstanceQuery query, String deleteReason) {
     return commandExecutor.execute(new DeleteHistoricDecisionInstancesBatchCmd(decisionInstanceIds, query, deleteReason));
   }
-  
+
   @Override
   public void deleteHistoricVariableInstance(String variableInstanceId) {
     commandExecutor.execute(new DeleteHistoricVariableInstanceCmd(variableInstanceId));
   }
-  
+
   @Override
   public void deleteHistoricVariableInstancesByProcessInstanceId(String processInstanceId) {
     commandExecutor.execute(new DeleteHistoricVariableInstancesByProcessInstanceIdCmd(processInstanceId));

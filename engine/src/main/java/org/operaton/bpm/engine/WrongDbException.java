@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,11 +18,11 @@ package org.operaton.bpm.engine;
 
 
 /**
- * Exception that is thrown when the Activiti engine discovers a mismatch between the 
+ * Exception that is thrown when the Activiti engine discovers a mismatch between the
  * database schema version and the engine version.
- * 
+ *
  * The check is done when the engine is created in {@link ProcessEngineBuilder#buildProcessEngine()}.
- * 
+ *
  * @author Tom Baeyens
  */
 public class WrongDbException extends ProcessEngineException {
@@ -50,7 +50,7 @@ public class WrongDbException extends ProcessEngineException {
   public String getLibraryVersion() {
     return libraryVersion;
   }
-  
+
   /**
    * The version of the Activiti library that was used to create the database schema.
    */

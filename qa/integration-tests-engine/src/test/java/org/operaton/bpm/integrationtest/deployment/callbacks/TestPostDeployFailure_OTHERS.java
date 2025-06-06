@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,29 +34,29 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Ignore
 public class TestPostDeployFailure_OTHERS extends AbstractFoxPlatformIntegrationTest {
-  
+
   @Deployment(name="fail")
-  public static WebArchive createDeployment1() {    
-   return TestPostDeployFailure_JBOSS.createDeployment1();    
+  public static WebArchive createDeployment1() {
+   return TestPostDeployFailure_JBOSS.createDeployment1();
   }
-  
+
   @Deployment(name="checker")
-  public static WebArchive createDeployment2() {    
+  public static WebArchive createDeployment2() {
     return initWebArchiveDeployment("checker.war");
   }
-  
+
   @Test
   @OperateOnDeployment("checker")
   public void test() {
-    
+
     // make sure the deployment of the first app was rolled back
-    
+
     long count = processEngine.getRepositoryService()
       .createDeploymentQuery()
       .count();
-    
+
     Assert.assertEquals(1, count);
-       
+
   }
-  
+
 }

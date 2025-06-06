@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,31 +33,31 @@ import org.junit.runner.RunWith;
 /**
  * In this test we make sure that if a user deploys a WAR file with a broken
  * .bpmn-XML file, the deployment fails.
- * 
+ *
  * @author Daniel Meyer
- * 
+ *
  */
 @RunWith(Arquillian.class)
 public class TestWarDeploymentWithBrokenBpmnXml {
-  
+
   private static final String DEPLOYMENT = "deployment";
 
   @ArquillianResource
   private Deployer deployer;
-  
+
   @Deployment(managed=false, name=DEPLOYMENT)
-  public static WebArchive processArchive() {    
-    
+  public static WebArchive processArchive() {
+
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "test.war")
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
       .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
       .addAsResource("org/operaton/bpm/integrationtest/deployment/war/TestWarDeploymentWithBrokenBpmnXml.testXmlInvalid.bpmn20.xml");
-    
+
     TestContainer.addContainerSpecificResources(deployment);
-    
+
     return deployment;
   }
-  
+
   @Test
   public void testXmlInvalid() {
     try {
@@ -65,7 +65,7 @@ public class TestWarDeploymentWithBrokenBpmnXml {
       fail("exception expected");
     }catch (Exception e) {
       // expected
-    } 
+    }
   }
 
 }

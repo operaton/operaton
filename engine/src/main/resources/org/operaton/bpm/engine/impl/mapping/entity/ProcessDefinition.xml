@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -318,7 +318,7 @@
       <if test="authorizationUserId != null">
         AND (exists (select ID_ from ${prefix} ACT_RU_IDENTITYLINK IDN where IDN.PROC_DEF_ID_ = RES.ID_ and IDN.USER_ID_ = #{authorizationUserId})
           <if test="candidateGroups != null &amp;&amp; candidateGroups.size > 0">
-              OR exists (select IDN.ID_ from ${prefix} ACT_RU_IDENTITYLINK IDN where IDN.PROC_DEF_ID_ = RES.ID_ and IDN.GROUP_ID_ in 
+              OR exists (select IDN.ID_ from ${prefix} ACT_RU_IDENTITYLINK IDN where IDN.PROC_DEF_ID_ = RES.ID_ and IDN.GROUP_ID_ in
               <foreach item="group" index="index" collection="candidateGroups" open="(" separator="," close=")">#{group, jdbcType=VARCHAR}</foreach>)
           </if>
        )

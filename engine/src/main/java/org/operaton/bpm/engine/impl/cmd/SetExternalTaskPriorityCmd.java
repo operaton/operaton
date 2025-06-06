@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,11 +25,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
 /**
  * Represents the command to set the priority of an existing external task.
- * 
+ *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class SetExternalTaskPriorityCmd extends ExternalTaskCmd {
-  
+
   /**
    * The priority that should set on the external task.
    */
@@ -42,18 +42,18 @@ public class SetExternalTaskPriorityCmd extends ExternalTaskCmd {
 
   @Override
   protected void execute(ExternalTaskEntity externalTask) {
-    externalTask.setPriority(priority);    
+    externalTask.setPriority(priority);
   }
 
   @Override
   protected void validateInput() {
   }
-  
+
   @Override
   protected String getUserOperationLogOperationType() {
     return UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY;
   }
-  
+
   @Override
   protected List<PropertyChange> getUserOperationLogPropertyChanges(ExternalTaskEntity externalTask) {
     return Collections.singletonList(new PropertyChange("priority", externalTask.getPriority(), priority));

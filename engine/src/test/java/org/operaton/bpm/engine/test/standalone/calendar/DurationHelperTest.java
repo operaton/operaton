@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +33,7 @@ public class DurationHelperTest {
   public void tearDown() {
     ClockUtil.reset();
   }
-  
+
   @Test
   public void shouldNotExceedNumber() throws Exception {
     ClockUtil.setCurrentTime(new Date(0));
@@ -73,7 +73,7 @@ public class DurationHelperTest {
 
     assertEquals(parse("19700101-00:00:40"), dh.getDateAfter());
   }
-  
+
   @Test
   public void shouldNotExceedNumberWithStartDate() throws Exception {
     DurationHelper dh = new DurationHelper("R2/PT10S", new Date(0));
@@ -97,7 +97,7 @@ public class DurationHelperTest {
 
     assertEquals(parse("19700101-00:00:40"), dh.getDateAfter(parse("19700101-00:00:35")));
   }
-  
+
   @Test
   public void shouldParseAllSupportedISO8601DurationPatterns() throws Exception {
     // given

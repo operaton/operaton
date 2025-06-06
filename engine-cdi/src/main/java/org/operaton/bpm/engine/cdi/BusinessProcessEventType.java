@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,17 +23,17 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  * The type of a business process event. Indicates what is happening/has
  * happened, i.e. whether a transition is taken, an activity is entered or left,
  * a task is created, assigned, completed or deleted.
- * 
+ *
  * @author Daniel Meyer
  */
 public interface BusinessProcessEventType {
 
   /** Signifies that a transition is being taken / was taken **/
   BusinessProcessEventType TAKE = new DefaultBusinessProcessEventType(ExecutionListener.EVENTNAME_TAKE);
-  
+
   /** Signifies that an activity is being entered / war entered **/
   BusinessProcessEventType START_ACTIVITY = new DefaultBusinessProcessEventType(ExecutionListener.EVENTNAME_START);
-  
+
   /** Signifies that an activity is being left / was left **/
   BusinessProcessEventType END_ACTIVITY = new DefaultBusinessProcessEventType(ExecutionListener.EVENTNAME_END);
 
@@ -64,12 +64,12 @@ public interface BusinessProcessEventType {
     public String getTypeName() {
       return typeName;
     }
-    
+
     @Override
     public String toString() {
       return typeName;
     }
-    
+
   }
 
   String getTypeName();

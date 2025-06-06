@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,28 +20,28 @@ package org.operaton.bpm.engine.management;
 
 /**
  * Allows programmatic querying of {@link TablePage}s.
- * 
+ *
  * @author Joram Barrez
  */
 public interface TablePageQuery {
-  
-  /** 
-   * The name of the table of which a page must be fetched. 
+
+  /**
+   * The name of the table of which a page must be fetched.
    */
   TablePageQuery tableName(String tableName);
-  
+
   /**
-   * Orders the resulting table page rows by the given column in ascending order. 
+   * Orders the resulting table page rows by the given column in ascending order.
    */
   TablePageQuery orderAsc(String column);
-  
+
   /**
-   * Orders the resulting table page rows by the given column in descending order. 
+   * Orders the resulting table page rows by the given column in descending order.
    */
   TablePageQuery orderDesc(String column);
-  
+
   /**
-   * Executes the query and returns the {@link TablePage}. 
+   * Executes the query and returns the {@link TablePage}.
    */
   TablePage listPage(int firstResult, int maxResults);
 }

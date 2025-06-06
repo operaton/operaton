@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
  * Describes basic methods for doing native queries
- * 
+ *
  * @author Bernd Ruecker (Camunda)
  */
 public interface NativeQuery<T extends NativeQuery< ? , ? >, U extends Object> {
@@ -30,12 +30,12 @@ public interface NativeQuery<T extends NativeQuery< ? , ? >, U extends Object> {
   /**
    * Hand in the SQL statement you want to execute. BEWARE: if you need a count you have to hand in a count() statement
    * yourself, otherwise the result will be treated as lost of Activiti entities.
-   * 
+   *
    * If you need paging you have to insert the pagination code yourself. We skipped doing this for you
    * as this is done really different on some databases (especially MS-SQL / DB2)
    */
   T sql(String selectClause);
-  
+
   /**
    * Add parameter to be replaced in query for index, e.g. :param1, :myParam, ...
    */

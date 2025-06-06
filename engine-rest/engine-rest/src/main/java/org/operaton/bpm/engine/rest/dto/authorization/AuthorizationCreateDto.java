@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,26 +27,26 @@ import org.operaton.bpm.engine.impl.util.PermissionConverter;
 public class AuthorizationCreateDto {
 
   protected Integer type;
-  protected String[] permissions;  
+  protected String[] permissions;
   protected String userId;
   protected String groupId;
   protected Integer resourceType;
   protected String resourceId;
-  
+
   // transformers ///////////////////////////////////////
-    
+
   public static void update(AuthorizationCreateDto dto, Authorization dbAuthorization, ProcessEngineConfiguration engineConfiguration) {
-    
+
     dbAuthorization.setGroupId(dto.getGroupId());
     dbAuthorization.setUserId(dto.getUserId());
     dbAuthorization.setResourceType(dto.getResourceType());
     dbAuthorization.setResourceId(dto.getResourceId());
     dbAuthorization.setPermissions(PermissionConverter.getPermissionsForNames(dto.getPermissions(), dto.getResourceType(), engineConfiguration));
-    
+
   }
-    
+
   //////////////////////////////////////////////////////
-  
+
   public int getType() {
     return type;
   }

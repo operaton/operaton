@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,12 +46,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * Test timer recalculation
- * 
+ *
  * @author Tobias Metzke
  */
 
 class TimerRecalculationTest {
-	
+
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
@@ -61,7 +61,7 @@ class TimerRecalculationTest {
   ManagementService managementService;
   RuntimeService runtimeService;
   HistoryService historyService;
-  
+
   private Set<String> jobIds = new HashSet<>();
 
   @AfterEach
@@ -72,7 +72,7 @@ class TimerRecalculationTest {
       clearJobLog(jobId);
       clearJob(jobId);
     }
-    
+
     jobIds = new HashSet<>();
   }
 
@@ -132,7 +132,7 @@ class TimerRecalculationTest {
     managementService.executeJob(jobId);
     assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
-    
+
     try {
       // when
       managementService.recalculateJobDuedate(jobId, false);
@@ -148,7 +148,7 @@ class TimerRecalculationTest {
     // given
     Job job = historyService.cleanUpHistoryAsync(true);
     jobIds.add(job.getId());
-    
+
     // when & then
     tryRecalculateUnsupported(job, HistoryCleanupJobHandler.TYPE);
   }
@@ -160,14 +160,14 @@ class TimerRecalculationTest {
     runtimeService.startProcessInstanceByKey("asyncService");
     Job job = managementService.createJobQuery().singleResult();
     jobIds.add(job.getId());
-    
+
     // when & then
     tryRecalculateUnsupported(job, AsyncContinuationJobHandler.TYPE);
   }
-  
+
 
   // helper /////////////////////////////////////////////////////////////////
-  
+
   protected void tryRecalculateUnsupported(Job job, String type) {
     // given
     String jobId = job.getId();
@@ -181,7 +181,7 @@ class TimerRecalculationTest {
     }
   }
 
-  
+
   protected void clearMeterLog() {
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(commandContext -> {
@@ -190,7 +190,7 @@ class TimerRecalculationTest {
       return null;
     });
   }
-  
+
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(commandContext -> {
@@ -198,7 +198,7 @@ class TimerRecalculationTest {
       return null;
     });
   }
-  
+
   protected void clearJob(final String jobId) {
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(commandContext -> {

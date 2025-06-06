@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,30 +23,30 @@ import org.operaton.bpm.engine.rest.util.ResourceUtil;
  *
  */
 public class AuthorizationCheckResultDto {
-  
+
   protected String permissionName;
   protected String resourceName;
   protected String resourceId;
-  
+
   protected Boolean isAuthorized;
-  
+
   public AuthorizationCheckResultDto() {
   }
-  
+
   public AuthorizationCheckResultDto(boolean userAuthorized, String permissionName, ResourceUtil resource, String resourceId) {
     isAuthorized = userAuthorized;
     this.permissionName = permissionName;
     resourceName = resource.resourceName();
     this.resourceId = resourceId;
   }
-  
+
   public String getPermissionName() {
     return permissionName;
   }
   public void setPermissionName(String permissionName) {
     this.permissionName = permissionName;
   }
-      
+
   public Boolean isAuthorized() {
     return isAuthorized;
   }
@@ -61,11 +61,11 @@ public class AuthorizationCheckResultDto {
   public void setResourceName(String resourceName) {
     this.resourceName = resourceName;
   }
-  
+
   public String getResourceId() {
     return resourceId;
   }
-  
+
   public void setResourceId(String resourceId) {
     this.resourceId = resourceId;
   }

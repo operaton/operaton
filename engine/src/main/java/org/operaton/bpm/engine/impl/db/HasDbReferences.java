@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ public interface HasDbReferences {
 
   /**
    * <p>Scope: IN-MEMORY references
-   * 
+   *
    * @return the ids of the entities that this entity references. Should
    *   only return ids for entities of the same type
    */
@@ -36,7 +36,7 @@ public interface HasDbReferences {
 
   /**
    * <p>Scope: IN-MEMORY references
-   * 
+   *
    * @return a map of the ids and the entities' classes that this
    * entity references. It's used when trying to determine if there
    * was an Optimistic Locking occurrence on an INSERT or UPDATE of

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -49,7 +49,7 @@ class EndEventTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskWithDelay");
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();
-    
+
     // We will now start two threads that both complete the task.
     // In the process, the task is followed by a delay of three seconds
     // This will cause both threads to call the taskService.complete method with enough time,
@@ -60,12 +60,12 @@ class EndEventTest {
 
     assertThat(taskCompleter1.isSucceeded()).isFalse();
     assertThat(taskCompleter2.isSucceeded()).isFalse();
-    
+
     taskCompleter1.start();
     taskCompleter2.start();
     taskCompleter1.join();
     taskCompleter2.join();
-    
+
     int successCount = 0;
     if (taskCompleter1.isSucceeded()) {
       successCount++;
@@ -77,7 +77,7 @@ class EndEventTest {
     assertThat(successCount).as("(Only) one thread should have been able to successfully end the process").isEqualTo(1);
     testRule.assertProcessEnded(processInstance.getId());
   }
-  
+
   /** Helper class for concurrent testing */
   class TaskCompleter extends Thread {
 
@@ -87,7 +87,7 @@ class EndEventTest {
     public TaskCompleter(String taskId) {
       this.taskId = taskId;
     }
-    
+
     public boolean isSucceeded() {
       return succeeded;
     }

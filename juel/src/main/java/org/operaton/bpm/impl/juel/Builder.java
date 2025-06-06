@@ -5,14 +5,14 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 package org.operaton.bpm.impl.juel;
 
 import java.io.PrintWriter;
@@ -27,7 +27,7 @@ import org.operaton.bpm.impl.juel.Parser.ParseException;
 
 /**
  * Tree builder.
- * 
+ *
  * @author Christoph Beck
  */
 public class Builder implements TreeBuilder {
@@ -57,7 +57,7 @@ public class Builder implements TreeBuilder {
 		 */
 		VARARGS
 	}
-	
+
 	protected final EnumSet<Feature> features;
 
 	public Builder() {
@@ -77,7 +77,7 @@ public class Builder implements TreeBuilder {
 			this.features = EnumSet.of(features[0], rest);
 		}
 	}
-	
+
 	/**
 	 * @return <code>true</code> iff the specified feature is supported.
 	 */
@@ -101,8 +101,8 @@ public class Builder implements TreeBuilder {
 
 	protected Parser createParser(String expression) {
 		return new Parser(this, expression);
-	}	
-	
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || obj.getClass() != getClass()) {
@@ -110,7 +110,7 @@ public class Builder implements TreeBuilder {
 		}
 		return features.equals(((Builder)obj).features);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return getClass().hashCode();
@@ -118,7 +118,7 @@ public class Builder implements TreeBuilder {
 
 	/**
 	 * Dump out abstract syntax tree for a given expression
-	 * 
+	 *
 	 * @param args array with one element, containing the expression string
 	 */
 	public static void main(String[] args) {

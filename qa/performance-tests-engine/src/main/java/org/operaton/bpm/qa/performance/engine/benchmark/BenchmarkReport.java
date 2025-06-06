@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,7 +35,7 @@ public class BenchmarkReport {
 
     final String resultsFolder = "target"+File.separatorChar+"results";
     final String reportsFolder = "target"+File.separatorChar+"reports";
-    
+
     String longTermBenchmarkResultFilename = System.getProperty("longTermBenchmarkResultFile");
     if (longTermBenchmarkResultFilename != null) {
       File longTermBenchmarkResultFile = new File(longTermBenchmarkResultFilename);
@@ -50,14 +50,14 @@ public class BenchmarkReport {
             + "platform;"
             + "number of threads;"
             + "duration;"
-            + "throughput", 
+            + "throughput",
             longTermBenchmarkResultFilename);
       }
-      TabularResultSet longTermResultTable = 
+      TabularResultSet longTermResultTable =
           new BenchmarkLongtermAggregator(resultsFolder)
               .execute();
       FileUtil.appendStringToFile(
-          CsvUtil.resultSetAsCsv(longTermResultTable), 
+          CsvUtil.resultSetAsCsv(longTermResultTable),
           longTermBenchmarkResultFilename);
     }
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,9 +26,9 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 /**
  * A {@link HistoryEventHandler} implementation which delegates to a list of
  * {@link HistoryEventHandler}.
- * 
+ *
  * @author Alexander Tyatenkov
- * 
+ *
  */
 public class CompositeHistoryEventHandler implements HistoryEventHandler {
 
@@ -46,7 +46,7 @@ public class CompositeHistoryEventHandler implements HistoryEventHandler {
   /**
    * Constructor that takes a varargs parameter {@link HistoryEventHandler} that
    * consume the event.
-   * 
+   *
    * @param historyEventHandlers
    *          the list of {@link HistoryEventHandler} that consume the event.
    */
@@ -57,7 +57,7 @@ public class CompositeHistoryEventHandler implements HistoryEventHandler {
   /**
    * Constructor that takes a list of {@link HistoryEventHandler} that consume
    * the event.
-   * 
+   *
    * @param historyEventHandlers
    *          the list of {@link HistoryEventHandler} that consume the event.
    */
@@ -67,7 +67,7 @@ public class CompositeHistoryEventHandler implements HistoryEventHandler {
 
   /**
    * Initialize {@link #historyEventHandlers} with data transfered from constructor
-   * 
+   *
    * @param historyEventHandlers
    */
   private void initializeHistoryEventHandlers(final List<HistoryEventHandler> historyEventHandlers) {
@@ -81,7 +81,7 @@ public class CompositeHistoryEventHandler implements HistoryEventHandler {
   /**
    * Adds the {@link HistoryEventHandler} to the list of
    * {@link HistoryEventHandler} that consume the event.
-   * 
+   *
    * @param historyEventHandler
    *          the {@link HistoryEventHandler} that consume the event.
    */

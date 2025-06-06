@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -202,7 +202,7 @@ class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getProcessDefinitionKey()).as(job.getProcessDefinitionKey()).isNull();
     assertThat(userOperationLogEntry.getDeploymentId()).as(job.getDeploymentId()).isNull();
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
-    
+
     // check 'async' entry
     userOperationLogEntry = query.property("async").singleResult();
     assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.JOB);
@@ -222,7 +222,7 @@ class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getProcessDefinitionKey()).as(job.getProcessDefinitionKey()).isNull();
     assertThat(userOperationLogEntry.getDeploymentId()).as(job.getDeploymentId()).isNull();
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
-    
+
     managementService.deleteBatch(batch.getId(), true);
   }
 
@@ -281,7 +281,7 @@ class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getProcessDefinitionKey()).as(job.getProcessDefinitionKey()).isNull();
     assertThat(userOperationLogEntry.getDeploymentId()).as(job.getDeploymentId()).isNull();
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
-    
+
     // check 'async' entry
     userOperationLogEntry = query.property("async").singleResult();
     assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.JOB);
@@ -301,7 +301,7 @@ class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getProcessDefinitionKey()).as(job.getProcessDefinitionKey()).isNull();
     assertThat(userOperationLogEntry.getDeploymentId()).as(job.getDeploymentId()).isNull();
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
-    
+
     managementService.deleteBatch(batch.getId(), true);
   }
 
@@ -360,7 +360,7 @@ class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(entry.getProperty()).isEqualTo("duedate");
     assertThat(DateUtils.truncatedEquals(duedate, new Date(Long.parseLong(entry.getOrgValue())), Calendar.SECOND)).isTrue();
     assertThat(DateUtils.truncatedEquals(duedate, new Date(Long.parseLong(entry.getNewValue())), Calendar.SECOND)).isTrue();
-    
+
     entry = query.property("creationDateBased").singleResult();
     assertThat(entry.getJobId()).isEqualTo(job.getId());
     assertThat(entry.getDeploymentId()).isEqualTo(job.getDeploymentId());

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,7 +35,7 @@ public class DbEntityOperation extends DbOperation {
   protected DbEntity entity;
 
   protected Set<String> flushRelevantEntityReferences;
-  
+
   protected DbOperation dependentOperation;
 
   @Override
@@ -65,11 +65,11 @@ public class DbEntityOperation extends DbOperation {
   public String toString() {
     return operationType + " " + ClassNameUtil.getClassNameWithoutPackage(entity)+"["+entity.getId()+"]";
   }
-  
+
   public void setDependency(DbOperation owner) {
     dependentOperation = owner;
   }
-  
+
   public DbOperation getDependentOperation() {
     return dependentOperation;
   }

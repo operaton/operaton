@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -113,7 +113,7 @@ class ProcessApplicationEventListenerTest {
     // Start process instance.
     runtimeService.startProcessInstanceByKey("startToEnd");
 
-    // Start and end of the process 
+    // Start and end of the process
     assertThat(processDefinitionEventCount.get()).isEqualTo(2);
   }
 
@@ -146,7 +146,7 @@ class ProcessApplicationEventListenerTest {
   @Deployment
   void testExecutionListener() {
     final AtomicInteger eventCount = new AtomicInteger();
-    
+
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
       @Override
       public ExecutionListener getExecutionListener() {
@@ -169,7 +169,7 @@ class ProcessApplicationEventListenerTest {
   @Deployment
   void testExecutionListenerWithErrorBoundaryEvent() {
     final AtomicInteger eventCount = new AtomicInteger();
-    
+
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
       @Override
       public ExecutionListener getExecutionListener() {
@@ -186,10 +186,10 @@ class ProcessApplicationEventListenerTest {
     runtimeService.startProcessInstanceByKey("executionListener");
 
     assertThat(eventCount.get()).isEqualTo(10);
-    
+
     // reset counter
     eventCount.set(0);
-    
+
     // 2. (start)startEvent(end) -(take)-> (start)serviceTask(end)/(start)errorBoundaryEvent(end) -(take)-> (start)endEvent(end) (10 Events)
 
     // start process instance
@@ -202,7 +202,7 @@ class ProcessApplicationEventListenerTest {
   @Deployment
   void testExecutionListenerWithTimerBoundaryEvent() {
     final AtomicInteger eventCount = new AtomicInteger();
-    
+
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
       @Override
       public ExecutionListener getExecutionListener() {
@@ -223,10 +223,10 @@ class ProcessApplicationEventListenerTest {
     taskService.complete(task.getId());
 
     assertThat(eventCount.get()).isEqualTo(10);
-    
+
     // reset counter
     eventCount.set(0);
-    
+
     // 2. (start)startEvent(end) -(take)-> (start)userTask(end)/(start)timerBoundaryEvent(end) -(take)-> (start)endEvent(end) (10 Events)
 
     // start process instance
@@ -243,7 +243,7 @@ class ProcessApplicationEventListenerTest {
   @Deployment
   void testExecutionListenerWithSignalBoundaryEvent() {
     final AtomicInteger eventCount = new AtomicInteger();
-    
+
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
       @Override
       public ExecutionListener getExecutionListener() {
@@ -264,10 +264,10 @@ class ProcessApplicationEventListenerTest {
     taskService.complete(task.getId());
 
     assertThat(eventCount.get()).isEqualTo(10);
-    
+
     // reset counter
     eventCount.set(0);
-    
+
     // 2. (start)startEvent(end) -(take)-> (start)userTask(end)/(start)signalBoundaryEvent(end) -(take)-> (start)endEvent(end) (10 Events)
 
     // start process instance

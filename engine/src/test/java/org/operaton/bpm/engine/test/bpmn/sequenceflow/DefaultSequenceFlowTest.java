@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,12 +28,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * See {@link org.operaton.bpm.engine.test.bpmn.gateway.ExclusiveGatewayTest} for a default sequence flow test on an exclusive gateway.
- * 
+ *
  * @author Joram Barrez
  */
 @ExtendWith(ProcessEngineExtension.class)
 class DefaultSequenceFlowTest {
-  
+
   RuntimeService runtimeService;
 
   @Deployment
@@ -42,11 +42,11 @@ class DefaultSequenceFlowTest {
     String procId = runtimeService.startProcessInstanceByKey("defaultSeqFlow",
             CollectionUtil.singletonMap("input", 2)).getId();
     assertThat(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task2").singleResult()).isNotNull();
-    
+
     procId = runtimeService.startProcessInstanceByKey("defaultSeqFlow",
             CollectionUtil.singletonMap("input", 3)).getId();
     assertThat(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task3").singleResult()).isNotNull();
-    
+
     procId = runtimeService.startProcessInstanceByKey("defaultSeqFlow",
             CollectionUtil.singletonMap("input", 123)).getId();
     assertThat(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task1").singleResult()).isNotNull();

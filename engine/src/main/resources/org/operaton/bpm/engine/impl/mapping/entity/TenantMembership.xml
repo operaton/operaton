@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,10 +17,10 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.TenantMembershipEntity">
-  
+
   <!-- INSERT -->
 
   <insert id="insertTenantMembership" parameterType="map">
@@ -32,11 +32,11 @@
       #{groupId ,jdbcType=VARCHAR}
     )
   </insert>
-  
+
   <!-- DELETE -->
 
   <delete id="deleteTenantMembership" parameterType="map">
-    delete from ${prefix}ACT_ID_TENANT_MEMBER 
+    delete from ${prefix}ACT_ID_TENANT_MEMBER
     where TENANT_ID_ = #{tenantId}
       <if test="userId != null">
         and USER_ID_ = #{userId}
@@ -45,33 +45,33 @@
         and GROUP_ID_ = #{groupId}
       </if>
   </delete>
-  
+
   <delete id="deleteTenantMembershipsOfUser" parameterType="string">
-    delete from ${prefix}ACT_ID_TENANT_MEMBER 
+    delete from ${prefix}ACT_ID_TENANT_MEMBER
     where USER_ID_ = #{parameter}
   </delete>
-  
+
   <delete id="deleteTenantMembershipsOfGroup" parameterType="string">
-    delete from ${prefix}ACT_ID_TENANT_MEMBER 
+    delete from ${prefix}ACT_ID_TENANT_MEMBER
     where GROUP_ID_ = #{parameter}
   </delete>
-  
+
   <delete id="deleteTenantMembershipsOfTenant" parameterType="string">
-    delete from ${prefix}ACT_ID_TENANT_MEMBER 
+    delete from ${prefix}ACT_ID_TENANT_MEMBER
     where TENANT_ID_ = #{parameter}
   </delete>
-  
+
   <!-- SELECT -->
   <select id="selectTenantMembershipCount" parameterType="map" resultType="long">
     select count(TENANT_ID_)
     from ${prefix}ACT_ID_TENANT_MEMBER
     where TENANT_ID_ = #{tenantId}
     <if test="groupId != null">
-      and GROUP_ID_ = #{groupId} 
+      and GROUP_ID_ = #{groupId}
     </if>
     <if test="userId != null">
-      and USER_ID_ = #{userId} 
+      and USER_ID_ = #{userId}
     </if>
   </select>
-  
+
 </mapper>

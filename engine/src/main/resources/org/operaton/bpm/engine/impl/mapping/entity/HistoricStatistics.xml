@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.operaton.bpm.engine.history.HistoricActivityStatistics">
 
@@ -46,7 +46,7 @@
 
   <!-- HistoricActivity statistics -->
 
-  <select id ="selectHistoricActivityStatistics" resultMap="historicActivityStatisticsResultMap" 
+  <select id ="selectHistoricActivityStatistics" resultMap="historicActivityStatisticsResultMap"
     parameterType="org.operaton.bpm.engine.impl.HistoricActivityStatisticsQueryImpl">
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
     ${limitBefore}
@@ -57,7 +57,7 @@
     ${limitAfter}
   </select>
 
-  <select id ="selectHistoricActivityStatisticsCount" resultType="long" 
+  <select id ="selectHistoricActivityStatisticsCount" resultType="long"
     parameterType="org.operaton.bpm.engine.impl.HistoricActivityStatisticsQueryImpl">
     ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
     <include refid="selectHistoricActivityStatisticsByQueryCriteriaSql"/>
@@ -199,7 +199,7 @@
 
   <!-- HistoricCaseActivity statistics -->
 
-  <select id ="selectHistoricCaseActivityStatistics" resultMap="historicCaseActivityStatisticsResultMap" 
+  <select id ="selectHistoricCaseActivityStatistics" resultMap="historicCaseActivityStatisticsResultMap"
     parameterType="org.operaton.bpm.engine.impl.HistoricCaseActivityStatisticsQueryImpl">
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
     ${limitBefore}
@@ -210,7 +210,7 @@
     ${limitAfter}
   </select>
 
-  <select id ="selectHistoricCaseActivityStatisticsCount" resultType="long" 
+  <select id ="selectHistoricCaseActivityStatisticsCount" resultType="long"
     parameterType="org.operaton.bpm.engine.impl.HistoricCaseActivityStatisticsQueryImpl">
     ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
     <include refid="selectHistoricCaseActivityStatisticsByQueryCriteriaSql"/>

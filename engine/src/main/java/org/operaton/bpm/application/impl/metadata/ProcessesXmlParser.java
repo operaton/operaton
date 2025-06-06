@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,17 +22,17 @@ import org.operaton.bpm.engine.impl.util.xml.Parser;
 
 /**
  * <p>A SAX Parser for the processes.xml file</p>
- * 
+ *
  * @author Daniel Meyer
  *
  */
 public class ProcessesXmlParser extends Parser {
-  
+
   /**
    * The process application namespace
    */
   public static final String PROCESS_APP_NS = "http://www.operaton.org/schema/1.0/ProcessApplication";
-  
+
   /**
    * The location of the XSD file in the classpath.
    */

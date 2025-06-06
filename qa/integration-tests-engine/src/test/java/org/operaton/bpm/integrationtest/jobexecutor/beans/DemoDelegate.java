@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,13 +32,13 @@ public class DemoDelegate implements JavaDelegate {
   Logger log = Logger.getLogger(DemoDelegate.class.getName());
   Expression fail;
   DelegateExecution execution;
-  
+
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     this.execution = execution;
-    
+
     log.info("Do Something.");
-    
+
     insertVariable("stringVar", "Demo-Value");
     insertVariable("longVar", 1L);
     insertVariable("longObjectVar", Long.valueOf(1));
@@ -59,12 +59,12 @@ public class DemoDelegate implements JavaDelegate {
     insertVariable("dateObjectVar", new Date());
     insertVariable("nullable", null);
     insertVariable("random", Double.valueOf(Math.random() * 100).intValue());
-    
+
     char[] charArray = {'a','b','c','D'};
     insertVariable("charArrayVar", charArray);
     Character[] characterObjectArray = { Character.valueOf('a'), Character.valueOf('b'), Character.valueOf('c'), Character.valueOf('D') };
     insertVariable("characterObjectArray", characterObjectArray);
-    
+
     String byteString = "mycooltextcontentasbyteyesyes!!!";
     insertVariable("byteArrayVar", byteString.getBytes(UTF_8));
     Byte[] ByteArray = new Byte[byteString.length()];
@@ -75,9 +75,9 @@ public class DemoDelegate implements JavaDelegate {
       ByteArray[i] = Byte.valueOf(b);
     }
     insertVariable("ByteArrayVariable", ByteArray);
-    
+
     DemoVariableClass demoVariableClass = new DemoVariableClass();
-    
+
     demoVariableClass.setBooleanObjectProperty(Boolean.valueOf(true));
     demoVariableClass.setBooleanProperty(false);
     demoVariableClass.setByteObjectProperty(Byte.valueOf(Byte.MAX_VALUE));
@@ -91,18 +91,18 @@ public class DemoDelegate implements JavaDelegate {
     demoVariableClass.setIntProperty(-10);
     demoVariableClass.setLongObjectProperty(Long.valueOf(Long.MIN_VALUE));
     demoVariableClass.setLongProperty(Long.MAX_VALUE);
-    
+
     HashMap<Object,Object> demoHashMap= new HashMap<>();
     demoHashMap.put("key1", "value1");
     demoHashMap.put("key2", "value2");
     demoVariableClass.setMapProperty(demoHashMap);
-    
+
     demoVariableClass.setShortObjectProperty(Short.valueOf(Short.MAX_VALUE));
     demoVariableClass.setShortProperty(Short.MIN_VALUE);
     demoVariableClass.setStringProperty("cockpit rulez");
-    
+
     insertVariable("demoVariableClass", demoVariableClass);
-    
+
     if (null != fail) {
       String failString = (String) fail.getValue(execution);
       if (null != failString && failString.equals("true")) {
@@ -111,7 +111,7 @@ public class DemoDelegate implements JavaDelegate {
       }
     }
   }
-  
+
   private void insertVariable(String varName, Object value) {
     execution.setVariable(varName + Double.valueOf(Math.random() * 10).intValue(), value);
   }

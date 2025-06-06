@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Stefan Hentschel
  */
 class ExclusiveStartEventTest {
-  
+
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
@@ -44,7 +44,7 @@ class ExclusiveStartEventTest {
   @Deployment
   @Test
   void testNonExclusiveStartEvent() {
-    // start process 
+    // start process
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 non-exclusive job in the database:
     Job job = managementService.createJobQuery().singleResult();
@@ -60,7 +60,7 @@ class ExclusiveStartEventTest {
   @Deployment
   @Test
   void testExclusiveStartEvent() {
-    // start process 
+    // start process
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 exclusive job in the database:
     Job job = managementService.createJobQuery().singleResult();

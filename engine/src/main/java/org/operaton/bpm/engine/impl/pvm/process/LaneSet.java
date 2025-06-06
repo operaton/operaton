@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * A BPMN 2.0 LaneSet, containg {@link Lane}s, currently only used for
  * rendering the DI info.
- * 
+ *
  * @author Frederik Heremans
  */
 public class LaneSet {
@@ -31,36 +31,36 @@ public class LaneSet {
   protected String id;
   protected List<Lane> lanes;
   protected String name;
-    
+
   public void setId(String id) {
     this.id = id;
   }
-  
+
   public String getId() {
     return id;
   }
-  
-  
+
+
   public String getName() {
     return name;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }
 
-  
+
   public List<Lane> getLanes() {
     if(lanes == null) {
       lanes = new ArrayList<>();
     }
     return lanes;
   }
-  
+
   public void addLane(Lane laneToAdd) {
     getLanes().add(laneToAdd);
   }
-  
+
   public Lane getLaneForId(String id) {
     if(lanes != null && !lanes.isEmpty()) {
       for(Lane lane : lanes) {

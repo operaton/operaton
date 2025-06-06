@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,7 +26,7 @@ import javax.script.ScriptEngineFactory;
 
 /**
  * Factory to create {@link JuelScriptEngine}s.
- * 
+ *
  * @author Frederik Heremans
  */
 public class JuelScriptEngineFactory implements ScriptEngineFactory {
@@ -86,7 +86,7 @@ public class JuelScriptEngineFactory implements ScriptEngineFactory {
     // We will use out:print function to output statements
     StringBuilder stringBuffer = new StringBuilder();
     stringBuffer.append("out:print(\"");
-    
+
     int length = toDisplay.length();
     for (int i = 0; i < length; i++) {
       char c = toDisplay.charAt(i);

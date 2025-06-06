@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,119 +35,119 @@ import org.junit.runner.RunWith;
 
 
 /**
- * 
+ *
  * <pre>
  *   |-- My-Application.war
  *       |-- WEB-INF
  *           |-- classes
- *               |-- META-INF/processes.xml 
+ *               |-- META-INF/processes.xml
  *                      defines pa1 using classpath:directory/
  *                      defines pa2 using classpath:alternateDirectory/
  *               |-- process0.bpmn
- *                   
+ *
  *           |-- lib/
- *               |-- pa2.jar 
- *                   |-- process0.bpmn    
+ *               |-- pa2.jar
+ *                   |-- process0.bpmn
  *                   |-- directory/process1.bpmn
- *                       
- *               |-- pa3.jar 
- *                   |-- process0.bpmn 
- *                   |-- alternateDirectory/process2.bpmn                   
- * </pre> 
- * 
+ *
+ *               |-- pa3.jar
+ *                   |-- process0.bpmn
+ *                   |-- alternateDirectory/process2.bpmn
+ * </pre>
+ *
  * @author Daniel Meyer
  *
  */
 @RunWith(Arquillian.class)
 public class TestWarDeploymentWithMultiplePasAsSubdeployment4 extends AbstractFoxPlatformIntegrationTest {
-  
-  public static final String PROCESSES_XML = 
+
+  public static final String PROCESSES_XML =
     "<process-application xmlns=\"http://www.operaton.org/schema/1.0/ProcessApplication\">" +
-          
+
       "<process-archive name=\"pa1\">" +
-        "<properties>" +        
+        "<properties>" +
           "<property name=\"isDeleteUponUndeploy\">true</property>" +
           "<property name=\"resourceRootPath\">classpath:directory/</property>" +
-        "</properties>" +  
+        "</properties>" +
       "</process-archive>" +
-        
+
       "<process-archive name=\"pa2\">" +
-      "<properties>" +        
+      "<properties>" +
         "<property name=\"isDeleteUponUndeploy\">true</property>" +
         "<property name=\"resourceRootPath\">classpath:alternateDirectory/</property>" +
-      "</properties>" +  
+      "</properties>" +
     "</process-archive>" +
-  
-    "</process-application>";  
-    
+
+    "</process-application>";
+
   @Deployment
-  public static WebArchive processArchive() {    
+  public static WebArchive processArchive() {
 
     Asset pa2ProcessesXml = TestHelper.getStringAsAssetWithReplacements(
-            PROCESSES_XML, 
+            PROCESSES_XML,
             new String[][]{});
-    
-    
+
+
     Asset[] processAssets = TestHelper.generateProcessAssets(9);
-        
-    JavaArchive pa2 = ShrinkWrap.create(JavaArchive.class, "pa2.jar")            
+
+    JavaArchive pa2 = ShrinkWrap.create(JavaArchive.class, "pa2.jar")
             .addAsResource(processAssets[0], "process0.bpmn")
             .addAsResource(processAssets[1], "directory/process1.bpmn");
-            
-    
+
+
     JavaArchive pa3 = ShrinkWrap.create(JavaArchive.class, "pa3.jar")
             .addAsResource(processAssets[0], "process0.bpmn")
             .addAsResource(processAssets[2], "alternateDirectory/process2.bpmn");
-       
+
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "test.war")
             .addAsResource(pa2ProcessesXml, "META-INF/processes.xml")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addAsLibraries(DeploymentHelper.getEngineCdi())
-            
+
             .addAsLibraries(pa2)
             .addAsLibraries(pa3)
 
-            .addClass(AbstractFoxPlatformIntegrationTest.class);    
-    
+            .addClass(AbstractFoxPlatformIntegrationTest.class);
+
     TestContainer.addContainerSpecificResources(deployment);
-    
+
     return deployment;
   }
-  
+
   @Test
   public void testDeployProcessArchive() {
-    
+
     assertProcessNotDeployed("process-0");
     assertProcessDeployed   ("process-1", "pa1");
     assertProcessDeployed   ("process-2", "pa2");
-    
+
   }
-  
+
   protected void assertProcessNotDeployed(String processKey) {
-    
+
     long count = repositoryService
         .createProcessDefinitionQuery()
         .latestVersion()
         .processDefinitionKey(processKey)
         .count();
-    
+
     Assert.assertEquals("Process with key "+processKey+ " should not be deployed", 0, count);
   }
 
   protected void assertProcessDeployed(String processKey, String expectedDeploymentName) {
-    
+
     ProcessDefinition processDefinition = repositoryService
         .createProcessDefinitionQuery()
         .latestVersion()
         .processDefinitionKey(processKey)
-        .singleResult();    
-    
+        .singleResult();
+
     DeploymentQuery deploymentQuery = repositoryService
         .createDeploymentQuery()
         .deploymentId(processDefinition.getDeploymentId());
-    
+
     Assert.assertEquals(expectedDeploymentName, deploymentQuery.singleResult().getName());
-    
+
   }
 
 }

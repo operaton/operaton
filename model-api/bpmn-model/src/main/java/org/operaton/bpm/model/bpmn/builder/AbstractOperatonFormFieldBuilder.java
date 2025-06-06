@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,7 +24,7 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonFormField;
  * @author Kristin Polenz
  *
  */
-public class AbstractOperatonFormFieldBuilder<P, B extends AbstractOperatonFormFieldBuilder<P, B>> 
+public class AbstractOperatonFormFieldBuilder<P, B extends AbstractOperatonFormFieldBuilder<P, B>>
   extends AbstractBpmnModelElementBuilder<B, OperatonFormField> {
 
   protected BaseElement parent;
@@ -33,7 +33,7 @@ public class AbstractOperatonFormFieldBuilder<P, B extends AbstractOperatonFormF
     super(modelInstance, element, selfType);
     this.parent = parent;
   }
-  
+
 
   /**
    * Sets the form field id.

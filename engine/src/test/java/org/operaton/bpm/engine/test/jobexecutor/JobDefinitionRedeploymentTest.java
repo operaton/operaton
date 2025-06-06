@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -43,7 +43,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Redeploy process definition and assert that no new job definitions were created.
- * 
+ *
  * @author Philipp Ossler
  *
  */
@@ -52,7 +52,7 @@ public class JobDefinitionRedeploymentTest {
 
   @Parameters(name = "{index}: process definition = {0}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] { 
+    return Arrays.asList(new Object[][] {
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testTimerStartEvent.bpmn20.xml" },
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testTimerBoundaryEvent.bpmn20.xml" },
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testMultipleTimerBoundaryEvents.bpmn20.xml" },
@@ -60,7 +60,7 @@ public class JobDefinitionRedeploymentTest {
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testTimerIntermediateEvent.bpmn20.xml" },
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testAsyncContinuation.bpmn20.xml" },
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testAsyncContinuationOfMultiInstance.bpmn20.xml" },
-        { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testAsyncContinuationOfActivityWrappedInMultiInstance.bpmn20.xml" } 
+        { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testAsyncContinuationOfActivityWrappedInMultiInstance.bpmn20.xml" }
     });
   }
 
@@ -76,7 +76,7 @@ public class JobDefinitionRedeploymentTest {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Before
-  public void initServices() {    
+  public void initServices() {
     managementService = rule.getManagementService();
     repositoryService = rule.getRepositoryService();
     runtimeService = rule.getRuntimeService();

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * 
+ *
  * @author Deivarayan Azhagappan
  *
  */
@@ -34,7 +34,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testSimpleVariableOnPart.cmmn"})
   @Test
   void testVariableCreate() {
-    
+
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("HumanTask_1");
@@ -48,7 +48,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testSimpleVariableOnPart.cmmn"})
   @Test
   void testUnknownVariableCreate() {
-    
+
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
     caseService.setVariable(caseInstanceId, "unknown", "aVariable");
@@ -59,14 +59,14 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testVariableUpdate.cmmn"})
   @Test
   void testVariableUpdate() {
-    
+
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
     caseService.setVariable(caseInstanceId, "variable_1", "aVariable");
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("HumanTask_1");
     // HumanTask not enabled on variable create
     assertThat(firstHumanTask.isEnabled()).isFalse();
-    
+
     caseService.setVariable(caseInstanceId, "variable_1", "bVariable");
     firstHumanTask = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(firstHumanTask.isEnabled()).isTrue();
@@ -75,7 +75,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testVariableDelete.cmmn"})
   @Test
   void testVariableDelete() {
-    
+
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
     caseService.removeVariable(caseInstanceId, "variable_1");
@@ -86,7 +86,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     caseService.setVariable(caseInstanceId, "variable_1", "aVariable");
     firstHumanTask = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(firstHumanTask.isEnabled()).isFalse();
-    
+
     caseService.removeVariable(caseInstanceId, "variable_1");
     firstHumanTask = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(firstHumanTask.isEnabled()).isTrue();
@@ -97,7 +97,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Test
   void testDifferentVariableName() {
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
-    
+
     CaseExecution firstHumanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     CaseExecution firstHumanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
 
@@ -107,9 +107,9 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     caseService.setVariable(caseInstanceId, "variable_1", "aVariable");
     firstHumanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(firstHumanTask1.isEnabled()).isTrue();
-    
+
     firstHumanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
-    // variable_2 is not set 
+    // variable_2 is not set
     assertThat(firstHumanTask2.isEnabled()).isFalse();
 
     caseService.setVariable(caseInstanceId, "variable_2", "aVariable");
@@ -121,7 +121,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Test
   void testDifferentVariableEventsButSameName() {
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
-    
+
     CaseExecution firstHumanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     CaseExecution firstHumanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
 
@@ -131,9 +131,9 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     caseService.setVariable(caseInstanceId, "variable_1", "aVariable");
     firstHumanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(firstHumanTask1.isEnabled()).isTrue();
-    
+
     firstHumanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
-    // variable_1 is not updated 
+    // variable_1 is not updated
     assertThat(firstHumanTask2.isEnabled()).isFalse();
 
     caseService.setVariable(caseInstanceId, "variable_1", "bVariable");
@@ -145,7 +145,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testMoreVariableOnPart.cmmn"})
   @Test
   void testMultipleVariableOnParts() {
-    
+
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
     caseService.setVariable(caseInstanceId, "variable_1", "aVariable");
@@ -166,7 +166,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testMultipleSentryMultipleVariableOnPart.cmmn"})
   @Test
   void testMultipleSentryMultipleVariableOnParts() {
-    
+
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
 
     caseService.setVariable(caseInstanceId, "value", 99);
@@ -178,7 +178,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
 
     manualStart(firstHumanTask.getId());
     complete(firstHumanTask.getId());
-    
+
     secondHumanTask = queryCaseExecutionByActivityId("HumanTask_2");
     // Sentry1 would not be satisfied as the value has to be > 100
     // But, Sentry 2 would be satisfied and enables HumanTask2
@@ -190,9 +190,9 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testOnPartIfPartAndVariableOnPart.cmmn"})
   @Test
   void testOnPartIfPartAndVariableOnPart() {
-    
+
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
-    
+
     String firstHumanTaskId = queryCaseExecutionByActivityId("HumanTask_1").getId();
 
     complete(firstHumanTaskId);
@@ -209,7 +209,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     caseService.setVariable(caseInstanceId, "variable_1", "aVariable");
     secondHumanTask = queryCaseExecutionByActivityId("HumanTask_2");
     assertThat(secondHumanTask.isEnabled()).isTrue();
-    
+
   }
 
 
@@ -217,15 +217,15 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testSimpleVariableScope.cmmn"})
   @Test
   void testVariableCreateScope() {
-    
+
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
-    
+
     String firstHumanTaskId = queryCaseExecutionByActivityId("HumanTask_1").getId();
-    
+
     manualStart(firstHumanTaskId);
-    
+
     caseService.setVariableLocal(firstHumanTaskId, "variable_1", "aVariable");
-    
+
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("HumanTask_2");
     // Sentry would not be triggered as the scope of the sentry and humanTask1 is different
     assertThat(secondHumanTask.isEnabled()).isFalse();
@@ -243,7 +243,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testStageScope.cmmn"})
   @Test
   void testStageScope() {
-    
+
     caseService.createCaseInstanceByKey("Case_1");
 
     CaseExecution caseModelHumanTask = queryCaseExecutionByActivityId("CaseModel_HumanTask");
@@ -252,7 +252,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     String stageExecutionId = queryCaseExecutionByActivityId("Stage_1").getId();
     // set the variable in the scope of stage such that sentry in the scope of case model does not gets evaluated.
     caseService.setVariableLocal(stageExecutionId, "variable_1", "aVariable");
-    
+
     CaseExecution stageHumanTask = queryCaseExecutionByActivityId("Stage_HumanTask");
     caseModelHumanTask = queryCaseExecutionByActivityId("CaseModel_HumanTask");
     assertThat(caseModelHumanTask.isEnabled()).isFalse();
@@ -291,7 +291,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     caseService.createCaseInstanceByKey("Case_1").getId();
 
     String stageExecution1_Id = queryCaseExecutionByActivityId("Stage_1").getId();
-    
+
     String stageExecution2_Id = queryCaseExecutionByActivityId("Stage_2").getId();
 
     // variable set to stage 1 scope, so that sentries in stage 2 and in case model should not be triggered
@@ -319,7 +319,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
   @Test
   void testMultipleOnPartsInStages() {
     String caseInstanceId = caseService.createCaseInstanceByKey("Case_1").getId();
-    
+
     caseService.setVariable(caseInstanceId, "variable_1", 101);
 
     CaseExecution humanTask3 = queryCaseExecutionByActivityId("HumanTask_3");
@@ -332,7 +332,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     manualStart(humanTask1.getId());
     complete(humanTask1.getId());
-    
+
     humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
     assertThat(humanTask2.isEnabled()).isTrue();
   }
@@ -352,7 +352,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     caseService.setVariableLocal(stageExecution.getId(), "variable_1", "aVariable");
 
     manualStart(stageExecution.getId());
-    
+
     humanTask = queryCaseExecutionByActivityId("HumanTask_1");
     // variable event occurred before sentry creation
     assertThat(humanTask.isAvailable()).isTrue();
@@ -411,7 +411,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
 
     humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
     assertThat(humanTask2.isEnabled()).isTrue();
-    
+
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/variableonpart/SentryVariableOnPartEntryCriteriaTest.testSameVariableNameInDifferentScopes.cmmn"})
@@ -423,13 +423,13 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
 
     // inner stage
     String stageExecution2_Id = queryCaseExecutionByActivityId("Stage_2").getId();
-    
+
     // set the same variable 'value' in the scope of case model
     caseService.setVariable(caseInstanceId, "value", 102);
 
     // set the variable 'value' in the scope of stage 1
     caseService.setVariableLocal(stageExecution1_Id, "value", 99);
-    
+
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isAvailable()).isTrue();
     CaseExecution humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
@@ -459,7 +459,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
 
     // set the variable 'value' in the scope of the case model
     caseService.setVariable(stageExecution1_Id, "value", 99);
-    
+
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isAvailable()).isTrue();
     CaseExecution humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
@@ -488,7 +488,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
 
     // set the variable 'value' in the scope of the stage 1 with null value
     caseService.setVariableLocal(stageExecution1_Id, "value", null);
-    
+
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isAvailable()).isTrue();
     CaseExecution humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
@@ -501,7 +501,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isEnabled()).isTrue();
     humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
-    // Sentry attached to HumanTask 2 is not evaluated because a variable 'value' exists in stage 2 even if the value is null 
+    // Sentry attached to HumanTask 2 is not evaluated because a variable 'value' exists in stage 2 even if the value is null
     assertThat(humanTask2.isEnabled()).isFalse();
 
   }
@@ -515,7 +515,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
 
     // inner stage
     String stageExecution2_Id = queryCaseExecutionByActivityId("Stage_2").getId();
-    
+
     // set the variable 'value_1' in the scope of the case model
     caseService.setVariable(caseInstanceId, "value_1", 99);
     // set the variable 'value_1' in the scope of the stage 1
@@ -531,7 +531,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     // update the variable 'value_1' in the case model scope and stage scope
     caseService.setVariable(caseInstanceId, "value_1", 102);
     caseService.setVariableLocal(stageExecution1_Id, "value_1", 102);
-    
+
     // then sentry of HumanTask 1 gets evaluated and sentry of HumanTask 2 does not gets evaluated.
     humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isEnabled()).isTrue();
@@ -557,7 +557,7 @@ class SentryVariableOnPartEntryCriteriaTest extends CmmnTest {
     // exit criteria not satisfied due to the variable 'value' must be greater than 100
     assertThat(humanTask.isEnabled()).isTrue();
     manualStart(humanTask.getId());
-    
+
     caseService.setVariable(stageExecution.getId(), "value", 101);
     stageExecution = queryCaseExecutionByActivityId("Stage_1");
     assertThat(stageExecution).isNull();

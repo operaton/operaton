@@ -5,14 +5,14 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 package org.operaton.bpm.impl.juel;
 
 import jakarta.el.ELContext;
@@ -28,7 +28,7 @@ import java.io.PrintWriter;
  * A value expression is ready to be evaluated (by calling either
  * {@link #getType(ELContext)}, {@link #getValue(ELContext)}, {@link #isReadOnly(ELContext)}
  * or {@link #setValue(ELContext, Object)}.
- * 
+ *
  * Instances of this class are usually created using an {@link ExpressionFactoryImpl}.
  *
  * @author Christoph Beck
@@ -65,7 +65,7 @@ public final class TreeValueExpression extends jakarta.el.ValueExpression {
 		this.type = type;
 		this.node = tree.getRoot();
 		this.deferred = tree.isDeferred();
-		
+
 		if (type == null) {
 			throw new NullPointerException(LocalMessages.get("error.value.notype"));
 		}
@@ -77,7 +77,7 @@ public final class TreeValueExpression extends jakarta.el.ValueExpression {
 		}
 		return structure;
 	}
-	
+
 	@Override
 	public Class<?> getExpectedType() {
 		return type;
@@ -133,7 +133,7 @@ public final class TreeValueExpression extends jakarta.el.ValueExpression {
 	 */
 	@Override
 	public void setValue(ELContext context, Object value) throws ELException {
-		node.setValue(bindings, context, value); 
+		node.setValue(bindings, context, value);
 	}
 
 	/**
@@ -157,7 +157,7 @@ public final class TreeValueExpression extends jakarta.el.ValueExpression {
 	public boolean isLeftValue() {
 		return node.isLeftValue();
 	}
-	
+
 	/**
 	 * Answer <code>true</code> if this is a deferred expression (containing
 	 * sub-expressions starting with <code>#{</code>)
@@ -165,7 +165,7 @@ public final class TreeValueExpression extends jakarta.el.ValueExpression {
 	public boolean isDeferred() {
 		return deferred;
 	}
-	
+
 	/**
 	 * Expressions are compared using the concept of a <em>structural id</em>:
    * variable and function names are anonymized such that two expressions with
@@ -217,5 +217,5 @@ public final class TreeValueExpression extends jakarta.el.ValueExpression {
 		} catch (ELException e) {
 			throw new IOException(e.getMessage());
 		}
-	}	
+	}
 }

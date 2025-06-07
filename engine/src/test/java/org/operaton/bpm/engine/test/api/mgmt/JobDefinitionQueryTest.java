@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -327,22 +328,6 @@ class JobDefinitionQueryTest {
 
     // and
     assertThat(managementService.createJobDefinitionQuery().withOverridingJobPriority().count()).isEqualTo(1);
-  }
-
-  // Test Helpers ////////////////////////////////////////////////////////
-
-  private void verifyQueryResults(JobDefinitionQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1) {
-      assertThatThrownBy(query::singleResult).isInstanceOf(ProcessEngineException.class)
-        .hasMessage("Query return %s results instead of max 1", countExpected);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
   }
 
 }

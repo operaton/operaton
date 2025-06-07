@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.mgmt;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -930,28 +931,6 @@ public class JobQueryTest {
     assertThat(failedJob.getProcessInstanceId()).isEqualTo(processInstance.getId());
     assertThat(failedJob.getExceptionMessage()).isNotNull();
     assertThat(failedJob.getExceptionMessage()).contains(EXCEPTION_MESSAGE);
-  }
-
-  private void verifyQueryResults(JobQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
-  private void verifySingleResultFails(JobQuery query) {
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
   }
 
   private void createJobWithoutExceptionMsg() {

@@ -595,30 +595,6 @@ public abstract class AuthorizationTest {
         .singleResult());
   }
 
-  // verify query results ////////////////////////////////////////////////////////
-
-  protected void verifyQueryResults(Query<?, ?> query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1) {
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
-  protected void verifySingleResultFails(Query<?, ?> query) {
-    try {
-      query.singleResult();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
-  }
-
   public Permission getDefaultTaskPermissionForUser() {
     // get the default task assignee permission
     ProcessEngineConfigurationImpl processEngineConfiguration =

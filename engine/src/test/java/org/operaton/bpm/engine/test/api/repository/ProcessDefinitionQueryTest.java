@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processDefinitionByDeployTime;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

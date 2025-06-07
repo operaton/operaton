@@ -62,6 +62,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+
 /**
  * @author Roman Smirnov
  *

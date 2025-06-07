@@ -17,29 +17,29 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.HistoricIdentityLinkLogEntity">
 
   <!-- INSERT HISTORIC IDENTITY LINK -->
-  
+
   <insert id="insertHistoricIdentityLinkLogEvent" parameterType="org.operaton.bpm.engine.impl.history.event.HistoricIdentityLinkLogEventEntity">
     insert into ${prefix}ACT_HI_IDENTITYLINK (
     		ID_,
     		TIMESTAMP_,
     		TYPE_,
-    		USER_ID_, 
-    		GROUP_ID_, 
+    		USER_ID_,
+    		GROUP_ID_,
     		TASK_ID_,
     		ROOT_PROC_INST_ID_,
-    		PROC_DEF_ID_, 
+    		PROC_DEF_ID_,
     		OPERATION_TYPE_,
             ASSIGNER_ID_,
             PROC_DEF_KEY_,
             TENANT_ID_,
             REMOVAL_TIME_)
     values (#{id, jdbcType=VARCHAR},
-            #{time, jdbcType=TIMESTAMP},  
+            #{time, jdbcType=TIMESTAMP},
             #{type, jdbcType=VARCHAR},
             #{userId, jdbcType=VARCHAR},
             #{groupId, jdbcType=VARCHAR},
@@ -206,13 +206,13 @@
             TIMESTAMP_ = TIMESTAMP_
       </if>
   </update>
-  
+
   <!-- HISTORIC IDENTITY LINK DELETE -->
 
   <delete id="deleteHistoricIdentityLinksByProcessDefinitionId">
     delete from ${prefix}ACT_HI_IDENTITYLINK where PROC_DEF_ID_ = #{processDefinitionId}
   </delete>
-  
+
   <delete id="deleteHistoricIdentityLinksByTaskId">
     delete from ${prefix}ACT_HI_IDENTITYLINK where TASK_ID_ = #{taskId}
   </delete>
@@ -325,7 +325,7 @@
     <result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR" />
     <result property="removalTime" column="REMOVAL_TIME_" jdbcType="TIMESTAMP"/>
   </resultMap>
-  
+
   <select id="selectHistoricIdentityLinkByQueryCriteria" parameterType="org.operaton.bpm.engine.impl.HistoricIdentityLinkLogQueryImpl" resultMap="historicIdentityLinkResultMap">
   	<include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
     ${limitBefore}
@@ -362,7 +362,7 @@
         )
       </if>
     </if>
-    
+
     <where>
       <if test="type != null">
         and RES.TYPE_ = #{type}
@@ -422,53 +422,11 @@
           </otherwise>
         </choose>
       </if>
-      
+
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />
-      
+
     </where>
   </sql>
 
-  <resultMap id="optimizeHistoricIdentityLinkResultMap" type="org.operaton.bpm.engine.impl.persistence.entity.optimize.OptimizeHistoricIdentityLinkLogEntity">
-    <id property="id" column="ID_" jdbcType="VARCHAR" />
-    <result property="type" column="TYPE_" jdbcType="VARCHAR" />
-    <result property="time" column="TIMESTAMP_" jdbcType="TIMESTAMP" />
-    <result property="userId" column="USER_ID_" jdbcType="VARCHAR" />
-    <result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR" />
-    <result property="taskId" column="TASK_ID_" jdbcType="VARCHAR" />
-    <result property="rootProcessInstanceId" column="ROOT_PROC_INST_ID_" jdbcType="VARCHAR" />
-    <result property="processDefinitionId" column="PROC_DEF_ID_" jdbcType="VARCHAR" />
-    <result property="operationType" column="OPERATION_TYPE_" jdbcType="VARCHAR"/>
-    <result property="assignerId" column="ASSIGNER_ID_" jdbcType="VARCHAR" />
-    <result property="processDefinitionKey" column="PROC_DEF_KEY_" jdbcType="VARCHAR" />
-    <result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR" />
-    <result property="removalTime" column="REMOVAL_TIME_" jdbcType="TIMESTAMP"/>
-    <result property="processInstanceId" column="PROC_INST_ID_" jdbcType="VARCHAR" />
-  </resultMap>
-
-  <select id="selectHistoricIdentityLinkPage" resultMap="optimizeHistoricIdentityLinkResultMap" parameterType="java.util.Map" >
-    <bind name="maxResults" value="parameter.maxResults" />
-
-    select RES.*, HTI.PROC_INST_ID_ FROM  (
-      ${optimizeLimitBeforeWithoutOffset}
-      select ${limitBeforeWithoutOffset} * from ${prefix}ACT_HI_IDENTITYLINK HIL
-
-      <where>
-        <if test="parameter.occurredAfter != null">
-          and HIL.TIMESTAMP_ &gt; #{parameter.occurredAfter}
-        </if>
-        <if test="parameter.occurredAt != null">
-          and HIL.TIMESTAMP_ = #{parameter.occurredAt}
-        </if>
-        <if test="parameter.occurredAfter == null and parameter.occurredAt == null">
-          and HIL.TIMESTAMP_ is not null
-        </if>
-      </where>
-
-      ORDER BY HIL.TIMESTAMP_ ASC
-      ${optimizeLimitAfterWithoutOffset}) RES
-    inner join ${prefix}ACT_HI_TASKINST HTI
-      on RES.TASK_ID_ = HTI.ID_
-    ORDER BY RES.TIMESTAMP_ ASC
-  </select>
 
 </mapper>

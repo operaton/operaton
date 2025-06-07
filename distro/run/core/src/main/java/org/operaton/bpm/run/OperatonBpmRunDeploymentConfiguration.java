@@ -18,6 +18,8 @@ package org.operaton.bpm.run;
 
 import org.apache.commons.lang3.StringUtils;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultDeploymentConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
@@ -35,6 +37,8 @@ public class OperatonBpmRunDeploymentConfiguration extends DefaultDeploymentConf
 
   private final String deploymentDir;
 
+  private static final Logger log = LoggerFactory.getLogger(OperatonBpmRunDeploymentConfiguration.class);
+
   public OperatonBpmRunDeploymentConfiguration(String deploymentDir) {
     this.deploymentDir = deploymentDir;
   }
@@ -47,7 +51,7 @@ public class OperatonBpmRunDeploymentConfiguration extends DefaultDeploymentConf
       try (Stream<Path> stream = Files.walk(resourceDir)) {
         return stream.filter(file -> !Files.isDirectory(file)).map(FileSystemResource::new).collect(Collectors.toSet());
       } catch (IOException e) {
-        e.printStackTrace();
+        log.warn("An error occurred while retrieving deployment resources from the dir {}", resourceDir, e);
       }
     }
     return Collections.emptySet();

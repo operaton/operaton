@@ -7,7 +7,7 @@ DATABASE="h2"
 DISTRO="tomcat"
 VALID_TEST_SUITES=("engine" "webapps")
 VALID_DISTROS=("operaton" "tomcat" "wildfly")
-VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb", "oracle" "db2" "sqlserver")
+VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb" "oracle" "db2" "sqlserver")
 
 ##########################################################################
 check_valid_values() {

@@ -146,6 +146,9 @@
                     <driver name="sqlserver" module="com.microsoft.sqlserver.mssql-jdbc">
                         <xa-datasource-class>com.microsoft.sqlserver.jdbc.SQLServerXADataSource</xa-datasource-class>
                     </driver>
+                    <driver name="mariadb" module="org.mariadb.jdbc.mariadb-java-client">
+                        <xa-datasource-class>org.mariadb.jdbc.MariaDbDataSource</xa-datasource-class>
+                    </driver>
                 </drivers>
             </datasources>
         </subsystem>

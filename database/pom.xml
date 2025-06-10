@@ -234,9 +234,11 @@
       <properties>
         <database.type>mariadb</database.type>
         <database.driver>org.mariadb.jdbc.Driver</database.driver>
+        <hibernate.dialect>org.hibernate.dialect.MariaDBDialect</hibernate.dialect>
         <database.datasource.class>org.mariadb.jdbc.MySQLDataSource</database.datasource.class>
         <database.tc.url>operatonmariadb:10.6</database.tc.url>
-        <database.tc.params>/${database.name}?user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
+        <jboss.datasource.filename>mariadb-ds.xml</jboss.datasource.filename>
+        <database.tc.params>/${database.name}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 

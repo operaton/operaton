@@ -16,35 +16,32 @@
  */
 package org.operaton.bpm.engine.test.history.dmn;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricDecisionInstanceReturnBlankTableOutputAsNullTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule =
-      new ProcessEngineBootstrapRule(config -> config.setDmnReturnBlankTableOutputAsNull(true));
-
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setDmnReturnBlankTableOutputAsNull(true))
+    .build();
 
   public static final String RESULT_TEST_DMN = "org/operaton/bpm/engine/test/history/ReturnBlankTableOutputAsNull.dmn";
 
   @Test
   @Deployment(resources = RESULT_TEST_DMN)
-  public void shouldReturnNullWhenExpressionIsNull() {
+  void shouldReturnNullWhenExpressionIsNull() {
     // given
 
     // when
@@ -66,7 +63,7 @@ public class HistoricDecisionInstanceReturnBlankTableOutputAsNullTest {
 
   @Test
   @Deployment(resources = RESULT_TEST_DMN)
-  public void shouldReturnNullWhenTextTagEmpty() {
+  void shouldReturnNullWhenTextTagEmpty() {
     // given
 
     // when
@@ -88,7 +85,7 @@ public class HistoricDecisionInstanceReturnBlankTableOutputAsNullTest {
 
   @Test
   @Deployment(resources = RESULT_TEST_DMN)
-  public void shouldReturnEmpty() {
+  void shouldReturnEmpty() {
     // given
 
     // when
@@ -110,7 +107,7 @@ public class HistoricDecisionInstanceReturnBlankTableOutputAsNullTest {
 
   @Test
   @Deployment(resources = RESULT_TEST_DMN)
-  public void shouldReturnNullWhenOutputEntryEmpty() {
+  void shouldReturnNullWhenOutputEntryEmpty() {
     // given
 
     // when

@@ -27,6 +27,9 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -38,45 +41,33 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricExternalTaskLogTest {
+class HistoricExternalTaskLogTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final String ERROR_MESSAGE = "This is an error!";
   protected static final String ERROR_DETAILS = "These are the error details!";
   protected static final long LOCK_DURATION = 5 * 60L * 1000L;
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
-  protected ProcessInstance processInstance;
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected ExternalTaskService externalTaskService;
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    externalTaskService = engineRule.getExternalTaskService();
-  }
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  ExternalTaskService externalTaskService;
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     List<ExternalTask> list = externalTaskService.createExternalTaskQuery().workerId(WORKER_ID).list();
     for (ExternalTask externalTask : list) {
       externalTaskService.unlock(externalTask.getId());
@@ -84,7 +75,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testHistoricExternalTaskLogCreateProperties() {
+  void testHistoricExternalTaskLogCreateProperties() {
 
     // given
     ExternalTask task = startExternalTaskProcess();
@@ -103,7 +94,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testHistoricExternalTaskLogFailedProperties() {
+  void testHistoricExternalTaskLogFailedProperties() {
 
     // given
     ExternalTask task = startExternalTaskProcess();
@@ -124,7 +115,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testHistoricExternalTaskLogSuccessfulProperties() {
+  void testHistoricExternalTaskLogSuccessfulProperties() {
 
     // given
     ExternalTask task = startExternalTaskProcess();
@@ -144,7 +135,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testHistoricExternalTaskLogDeletedProperties() {
+  void testHistoricExternalTaskLogDeletedProperties() {
 
     // given
     ExternalTask task = startExternalTaskProcess();
@@ -164,7 +155,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testRetriesAndWorkerIdWhenFirstFailureAndThenComplete() {
+  void testRetriesAndWorkerIdWhenFirstFailureAndThenComplete() {
 
     // given
     ExternalTask task = startExternalTaskProcess();
@@ -184,7 +175,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testErrorDetails() {
+  void testErrorDetails() {
     // given
     ExternalTask task = startExternalTaskProcess();
     reportExternalTaskFailure(task.getId());
@@ -203,7 +194,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testErrorDetailsWithTwoDifferentErrorsThrown() {
+  void testErrorDetailsWithTwoDifferentErrorsThrown() {
     // given
     ExternalTask task = startExternalTaskProcess();
     String firstErrorDetails = "Dummy error details!";
@@ -234,7 +225,7 @@ public class HistoricExternalTaskLogTest {
 
 
   @Test
-  public void testGetExceptionStacktraceForNonexistentExternalTaskId() {
+  void testGetExceptionStacktraceForNonexistentExternalTaskId() {
     try {
       historyService.getHistoricExternalTaskLogErrorDetails("foo");
       fail("ProcessEngineException expected");
@@ -245,7 +236,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testGetExceptionStacktraceForNullExternalTaskId() {
+  void testGetExceptionStacktraceForNullExternalTaskId() {
     try {
       historyService.getHistoricExternalTaskLogErrorDetails(null);
       fail("ProcessEngineException expected");
@@ -256,7 +247,7 @@ public class HistoricExternalTaskLogTest {
   }
 
   @Test
-  public void testErrorMessageTruncation() {
+  void testErrorMessageTruncation() {
     // given
     String exceptionMessage = createStringOfLength(1000);
     ExternalTask task = startExternalTaskProcess();

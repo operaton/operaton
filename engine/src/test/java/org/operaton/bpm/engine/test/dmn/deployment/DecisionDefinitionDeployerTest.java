@@ -16,11 +16,15 @@
  */
 package org.operaton.bpm.engine.test.dmn.deployment;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.io.InputStream;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -32,9 +36,8 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.bpm.model.dmn.HitPolicy;
@@ -46,12 +49,8 @@ import org.operaton.bpm.model.dmn.instance.Input;
 import org.operaton.bpm.model.dmn.instance.InputExpression;
 import org.operaton.bpm.model.dmn.instance.Output;
 import org.operaton.bpm.model.dmn.instance.Text;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class DecisionDefinitionDeployerTest {
+class DecisionDefinitionDeployerTest {
 
   protected static final String DMN_CHECK_ORDER_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDmnDeployment.dmn11.xml";
   protected static final String DMN_CHECK_ORDER_RESOURCE_DMN_SUFFIX = "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDmnDeployment.dmn";
@@ -65,21 +64,15 @@ public class DecisionDefinitionDeployerTest {
   protected static final String DRD_SCORE_V2_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdScore_v2.dmn11.xml";
   protected static final String DRD_DISH_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RepositoryService repositoryService;
-
-  @Before
-  public void initServices() {
-    repositoryService = engineRule.getRepositoryService();
-  }
+  RepositoryService repositoryService;
 
   @Test
-  public void dmnDeployment() {
+  void dmnDeployment() {
     String deploymentId = testRule.deploy(DMN_CHECK_ORDER_RESOURCE).getId();
 
     // there should be decision deployment
@@ -104,7 +97,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void dmnDeploymentWithDmnSuffix() {
+  void dmnDeploymentWithDmnSuffix() {
     String deploymentId = testRule.deploy(DMN_CHECK_ORDER_RESOURCE_DMN_SUFFIX).getId();
 
     // there should be one deployment
@@ -129,7 +122,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void dmnDeploymentWithDecisionLiteralExpression() {
+  void dmnDeploymentWithDecisionLiteralExpression() {
     String deploymentId = testRule.deploy(DMN_DECISION_LITERAL_EXPRESSION).getId();
 
     // there should be decision deployment
@@ -153,7 +146,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void dmnDeploymentWithLegacyDmnDefinition() {
+  void dmnDeploymentWithLegacyDmnDefinition() {
     String deploymentId = testRule.deploy(DMN_DECISION_LEGACY).getId();
 
     assertThat(deploymentId).isNotNull();
@@ -161,7 +154,7 @@ public class DecisionDefinitionDeployerTest {
 
   @Deployment
   @Test
-  public void longDecisionDefinitionKey() {
+  void longDecisionDefinitionKey() {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
     assertThat(decisionDefinition.getId()).doesNotStartWith("o123456789");
@@ -169,7 +162,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void duplicateIdInDeployment() {
+  void duplicateIdInDeployment() {
     String resourceName1 = "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDuplicateIdInDeployment.dmn11.xml";
     String resourceName2 = "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDuplicateIdInDeployment2.dmn11.xml";
 
@@ -184,11 +177,11 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDiagramResource.dmn11.xml",
-    "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDiagramResource.png"
+      "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDiagramResource.dmn11.xml",
+      "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDiagramResource.png"
   })
   @Test
-  public void getDecisionDiagramResource() {
+  void getDecisionDiagramResource() {
     String resourcePrefix = "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDiagramResource";
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
@@ -205,13 +198,13 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.dmn11.xml",
-    "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.decision1.png",
-    "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.decision2.png",
-    "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.decision3.png"
+      "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.dmn11.xml",
+      "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.decision1.png",
+      "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.decision2.png",
+      "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.decision3.png"
   })
   @Test
-  public void multipleDiagramResourcesProvided() {
+  void multipleDiagramResourcesProvided() {
     String resourcePrefix = "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testMultipleDecisionDiagramResource.";
 
     DecisionDefinitionQuery decisionDefinitionQuery = repositoryService.createDecisionDefinitionQuery();
@@ -223,7 +216,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void drdDeployment() {
+  void drdDeployment() {
     String deploymentId = testRule.deploy(DRD_SCORE_RESOURCE).getId();
 
     // there should be one decision requirements definition
@@ -256,9 +249,9 @@ public class DecisionDefinitionDeployerTest {
     assertThat(secondDecision.getDecisionRequirementsDefinitionKey()).isEqualTo("score");
   }
 
-  @Deployment( resources = DMN_CHECK_ORDER_RESOURCE )
+  @Deployment(resources = DMN_CHECK_ORDER_RESOURCE)
   @Test
-  public void noDrdForSingleDecisionDeployment() {
+  void noDrdForSingleDecisionDeployment() {
     // when the DMN file contains only a single decision definition
     assertThat(repositoryService.createDecisionDefinitionQuery().count()).isEqualTo(1);
 
@@ -270,9 +263,9 @@ public class DecisionDefinitionDeployerTest {
     assertThat(decisionDefinition.getDecisionRequirementsDefinitionKey()).isNull();
   }
 
-  @Deployment( resources = { DRD_SCORE_RESOURCE, DRD_DISH_RESOURCE })
+  @Deployment(resources = {DRD_SCORE_RESOURCE, DRD_DISH_RESOURCE})
   @Test
-  public void multipleDrdDeployment() {
+  void multipleDrdDeployment() {
     // there should be two decision requirements definitions
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService
         .createDecisionRequirementsDefinitionQuery()
@@ -295,7 +288,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void duplicateDrdIdInDeployment() {
+  void duplicateDrdIdInDeployment() {
 
     // when/then
     var deploymentBuilder = repositoryService.createDeployment()
@@ -308,7 +301,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void deployMultipleDecisionsWithSameDrdId() {
+  void deployMultipleDecisionsWithSameDrdId() {
     // when deploying two decision with the same drd id `definitions`
     testRule.deploy(DMN_SCORE_RESOURCE, DMN_CHECK_ORDER_RESOURCE);
 
@@ -319,7 +312,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void deployDecisionIndependentFromDrd() {
+  void deployDecisionIndependentFromDrd() {
     String deploymentIdDecision = testRule.deploy(DMN_SCORE_RESOURCE).getId();
     String deploymentIdDrd = testRule.deploy(DRD_SCORE_RESOURCE).getId();
 
@@ -350,7 +343,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployDmnModelInstance() {
+  void testDeployDmnModelInstance() {
     // given
     DmnModelInstance dmnModelInstance = createDmnModelInstance();
 
@@ -363,7 +356,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployDmnModelInstanceNegativeHistoryTimeToLive() {
+  void testDeployDmnModelInstanceNegativeHistoryTimeToLive() {
     // given
     DmnModelInstance dmnModelInstance = createDmnModelInstanceNegativeHistoryTimeToLive();
     var deploymentBuilder = repositoryService.createDeployment().addModelInstance("foo.dmn", dmnModelInstance);
@@ -437,7 +430,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployAndGetDecisionDefinition() {
+  void testDeployAndGetDecisionDefinition() {
 
     // given decision model
     DmnModelInstance dmnModelInstance = createDmnModelInstance();
@@ -460,7 +453,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployEmptyDecisionDefinition() {
+  void testDeployEmptyDecisionDefinition() {
 
     // given empty decision model
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
@@ -485,7 +478,7 @@ public class DecisionDefinitionDeployerTest {
 
 
   @Test
-  public void testDeployAndGetDRDDefinition() {
+  void testDeployAndGetDRDDefinition() {
 
     // when decision requirement graph is deployed
     DeploymentWithDefinitions deployment = testRule.deploy(DRD_SCORE_RESOURCE);
@@ -510,7 +503,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployDecisionDefinitionWithIntegerHistoryTimeToLive() {
+  void testDeployDecisionDefinitionWithIntegerHistoryTimeToLive() {
     // when
     DeploymentWithDefinitions deployment = testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithIntegerHistoryTimeToLive.dmn11.xml");
 
@@ -523,7 +516,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployDecisionDefinitionWithStringHistoryTimeToLive() {
+  void testDeployDecisionDefinitionWithStringHistoryTimeToLive() {
     // when
     DeploymentWithDefinitions deployment = testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithStringHistoryTimeToLive.dmn11.xml");
 
@@ -536,7 +529,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployDecisionDefinitionWithMalformedStringHistoryTimeToLive() {
+  void testDeployDecisionDefinitionWithMalformedStringHistoryTimeToLive() {
     try {
       testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithMalformedHistoryTimeToLive.dmn11.xml");
       fail("Exception expected");
@@ -546,7 +539,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployDecisionDefinitionWithEmptyHistoryTimeToLive() {
+  void testDeployDecisionDefinitionWithEmptyHistoryTimeToLive() {
       DeploymentWithDefinitions deployment = testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithEmptyHistoryTimeToLive.dmn11.xml");
 
       // then

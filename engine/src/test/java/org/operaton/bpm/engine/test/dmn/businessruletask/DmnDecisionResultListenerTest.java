@@ -20,43 +20,47 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.IntegerValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
-
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * Tests the decision result that is retrieved by an execution listener.
  *
  * @author Philipp Ossler
  */
-public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class DmnDecisionResultListenerTest {
 
   protected static final String TEST_PROCESS = "org/operaton/bpm/engine/test/dmn/result/DmnDecisionResultTest.bpmn20.xml";
   protected static final String TEST_DECISION = "org/operaton/bpm/engine/test/dmn/result/DmnDecisionResultTest.dmn11.xml";
   protected static final String TEST_DECISION_COLLECT_SUM = "org/operaton/bpm/engine/test/dmn/result/DmnDecisionResultCollectSumHitPolicyTest.dmn11.xml";
   protected static final String TEST_DECISION_COLLECT_COUNT = "org/operaton/bpm/engine/test/dmn/result/DmnDecisionResultCollectCountHitPolicyTest.dmn11.xml";
 
-  protected DmnDecisionResult results;
+  DmnDecisionResult results;
+  
+  RuntimeService runtimeService;
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION})
   @Test
-  public void testNoOutput() {
+  void testNoOutput() {
     startTestProcess("no output");
 
     assertThat(results).as("The decision result 'ruleResult' should be empty").isEmpty();
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION})
   @Test
-  public void testEmptyOutput() {
+  void testEmptyOutput() {
     startTestProcess("empty output");
 
     assertThat(results).as("The decision result 'ruleResult' should not be empty").isNotEmpty();
@@ -65,9 +69,9 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(decisionOutput.<Object>getFirstEntry()).isNull();
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION})
   @Test
-  public void testEmptyMap() {
+  void testEmptyMap() {
     startTestProcess("empty map");
 
     assertThat(results).hasSize(2);
@@ -77,9 +81,9 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION})
   @Test
-  public void testSingleEntry() {
+  void testSingleEntry() {
     startTestProcess("single entry");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
@@ -87,9 +91,9 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(firstOutput.<StringValue>getFirstEntryTyped()).isEqualTo(Variables.stringValue("foo"));
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION})
   @Test
-  public void testMultipleEntries() {
+  void testMultipleEntries() {
     startTestProcess("multiple entries");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
@@ -101,9 +105,9 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(firstOutput.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION})
   @Test
-  public void testSingleEntryList() {
+  void testSingleEntryList() {
     startTestProcess("single entry list");
 
     assertThat(results).hasSize(2);
@@ -114,9 +118,9 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION})
   @Test
-  public void testMultipleEntriesList() {
+  void testMultipleEntriesList() {
     startTestProcess("multiple entries list");
 
     assertThat(results).hasSize(2);
@@ -132,9 +136,9 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION_COLLECT_COUNT })
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION_COLLECT_COUNT})
   @Test
-  public void testCollectCountHitPolicyNoOutput() {
+  void testCollectCountHitPolicyNoOutput() {
     startTestProcess("no output");
 
     assertThat(results).hasSize(1);
@@ -144,17 +148,17 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(firstOutput.<IntegerValue>getFirstEntryTyped()).isEqualTo(Variables.integerValue(0));
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION_COLLECT_SUM })
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION_COLLECT_SUM})
   @Test
-  public void testCollectSumHitPolicyNoOutput() {
+  void testCollectSumHitPolicyNoOutput() {
     startTestProcess("no output");
 
     assertThat(results).as("The decision result 'ruleResult' should be empty").isEmpty();
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION_COLLECT_SUM })
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION_COLLECT_SUM})
   @Test
-  public void testCollectSumHitPolicySingleEntry() {
+  void testCollectSumHitPolicySingleEntry() {
     startTestProcess("single entry");
 
     assertThat(results).hasSize(1);
@@ -164,9 +168,9 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(firstOutput.<IntegerValue>getFirstEntryTyped()).isEqualTo(Variables.integerValue(12));
   }
 
-  @Deployment(resources = { TEST_PROCESS, TEST_DECISION_COLLECT_SUM })
+  @Deployment(resources = {TEST_PROCESS, TEST_DECISION_COLLECT_SUM})
   @Test
-  public void testCollectSumHitPolicySingleEntryList() {
+  void testCollectSumHitPolicySingleEntryList() {
     startTestProcess("single entry list");
 
     assertThat(results).hasSize(1);
@@ -186,8 +190,8 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     return processInstance;
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     // reset the invoked execution listener
     DecisionResultTestListener.reset();
   }

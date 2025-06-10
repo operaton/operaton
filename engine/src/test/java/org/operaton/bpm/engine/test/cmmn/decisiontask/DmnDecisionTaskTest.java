@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class DmnDecisionTaskTest extends CmmnTest {
+class DmnDecisionTaskTest extends CmmnTest {
 
   static final String CMMN_CALL_DECISION_CONSTANT = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstant.cmmn";
   static final String CMMN_CALL_DECISION_CONSTANT_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstantWithManualActiovation.cmmn";

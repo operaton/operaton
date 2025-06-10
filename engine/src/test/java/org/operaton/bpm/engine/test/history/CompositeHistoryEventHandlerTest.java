@@ -22,22 +22,22 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.history.handler.CompositeHistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.handler.DbHistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Test;
 
 /**
  * @author Alexander Tyatenkov
  *
  */
-public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEventHandlerTest {
+class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEventHandlerTest {
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml" })
-  public void shouldUseCompositeHistoryEventHandlerNonArgumentConstructor() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
+  void shouldUseCompositeHistoryEventHandlerNonArgumentConstructor() {
     processEngineConfiguration.setHistoryEventHandler(new CompositeHistoryEventHandler());
 
     startProcessAndCompleteUserTask();
@@ -47,8 +47,8 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml" })
-  public void shouldUseDefaultHistoryEventHandler() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
+  void shouldUseDefaultHistoryEventHandler() {
     // use default DbHistoryEventHandler
     processEngineConfiguration.setHistoryEventHandler(new DbHistoryEventHandler());
 
@@ -59,7 +59,7 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  public void shouldUseCompositeHistoryEventHandlerNonArgumentConstructorAddNullEvent() {
+  void shouldUseCompositeHistoryEventHandlerNonArgumentConstructorAddNullEvent() {
     CompositeHistoryEventHandler compositeHistoryEventHandler = new CompositeHistoryEventHandler();
     try {
       compositeHistoryEventHandler.add(null);
@@ -70,8 +70,8 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml" })
-  public void shouldUseCompositeHistoryEventHandlerNonArgumentConstructorAddNotNullEvent() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
+  void shouldUseCompositeHistoryEventHandlerNonArgumentConstructorAddNotNullEvent() {
     CompositeHistoryEventHandler compositeHistoryEventHandler = new CompositeHistoryEventHandler();
     compositeHistoryEventHandler.add(new CustomDbHistoryEventHandler());
     processEngineConfiguration.setHistoryEventHandler(compositeHistoryEventHandler);
@@ -83,8 +83,8 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml" })
-  public void shouldUseCompositeHistoryEventHandlerNonArgumentConstructorAddNotNullTwoEvents() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
+  void shouldUseCompositeHistoryEventHandlerNonArgumentConstructorAddNotNullTwoEvents() {
     CompositeHistoryEventHandler compositeHistoryEventHandler = new CompositeHistoryEventHandler();
     compositeHistoryEventHandler.add(new CustomDbHistoryEventHandler());
     compositeHistoryEventHandler.add(new DbHistoryEventHandler());
@@ -97,7 +97,7 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  public void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNullVarargs() {
+  void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNullVarargs() {
     HistoryEventHandler historyEventHandler = null;
     try {
       new CompositeHistoryEventHandler(historyEventHandler);
@@ -108,7 +108,7 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  public void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNullTwoVarargs() {
+  void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNullTwoVarargs() {
     try {
       new CompositeHistoryEventHandler(null, null);
       fail("NullValueException expected");
@@ -118,8 +118,8 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml" })
-  public void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotNullVarargsOneEvent() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
+  void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotNullVarargsOneEvent() {
     CompositeHistoryEventHandler compositeHistoryEventHandler = new CompositeHistoryEventHandler(new CustomDbHistoryEventHandler());
     processEngineConfiguration.setHistoryEventHandler(compositeHistoryEventHandler);
 
@@ -130,8 +130,8 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml" })
-  public void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotNullVarargsTwoEvents() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
+  void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotNullVarargsTwoEvents() {
     CompositeHistoryEventHandler compositeHistoryEventHandler = new CompositeHistoryEventHandler(new CustomDbHistoryEventHandler(), new DbHistoryEventHandler());
     processEngineConfiguration.setHistoryEventHandler(compositeHistoryEventHandler);
 
@@ -142,8 +142,8 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml" })
-  public void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithEmptyList() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
+  void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithEmptyList() {
     CompositeHistoryEventHandler compositeHistoryEventHandler = new CompositeHistoryEventHandler(new ArrayList<HistoryEventHandler>());
     processEngineConfiguration.setHistoryEventHandler(compositeHistoryEventHandler);
 
@@ -154,7 +154,7 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  public void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotEmptyListNullTwoEvents() {
+  void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotEmptyListNullTwoEvents() {
     // prepare the list with two null events
     List<HistoryEventHandler> historyEventHandlers = new ArrayList<>();
     historyEventHandlers.add(null);
@@ -169,8 +169,8 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml" })
-  public void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotEmptyListNotNullTwoEvents() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
+  void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotEmptyListNotNullTwoEvents() {
     // prepare the list with two events
     List<HistoryEventHandler> historyEventHandlers = new ArrayList<>();
     historyEventHandlers.add(new CustomDbHistoryEventHandler());

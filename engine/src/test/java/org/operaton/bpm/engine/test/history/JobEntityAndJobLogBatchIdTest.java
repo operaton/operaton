@@ -21,6 +21,9 @@ import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_
 
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
@@ -40,49 +43,33 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeRule;
+import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.batch.BatchExtension;
 import org.operaton.bpm.engine.test.util.BatchRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class JobEntityAndJobLogBatchIdTest {
+class JobEntityAndJobLogBatchIdTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected BatchRule batchRule = new BatchRule(engineRule, testRule);
-  protected BatchSetRemovalTimeRule batchRemovalTimeRule = new BatchSetRemovalTimeRule(engineRule, testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  BatchExtension batchRule = new BatchExtension(engineRule, testRule);
+  @RegisterExtension
+  BatchSetRemovalTimeExtension batchRemovalTimeRule = new BatchSetRemovalTimeExtension(engineRule, testRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain
-      .outerRule(engineRule)
-      .around(testRule)
-      .around(batchRule)
-      .around(batchRemovalTimeRule);
-
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-  protected DecisionService decisionService;
-  protected ExternalTaskService externalTaskService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-    decisionService = engineRule.getDecisionService();
-    externalTaskService = engineRule.getExternalTaskService();
-  }
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  ManagementService managementService;
+  DecisionService decisionService;
+  ExternalTaskService externalTaskService;
 
   private BpmnModelInstance getTwoUserTasksProcess() {
     return Bpmn.createExecutableProcess("process")
@@ -102,7 +89,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_SetHistoricBatchRemovalTime() {
+  void shouldSetBatchIdOnJobAndJobLog_SetHistoricBatchRemovalTime() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -150,7 +137,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_SetVariables() {
+  void shouldSetBatchIdOnJobAndJobLog_SetVariables() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     ProcessInstance process = runtimeService.startProcessInstanceByKey("process");
@@ -169,7 +156,7 @@ public class JobEntityAndJobLogBatchIdTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetBatchIdOnJobAndJobLog_DecisionSetRemovalTime() {
+  void shouldSetBatchIdOnJobAndJobLog_DecisionSetRemovalTime() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
         .variables(
@@ -196,7 +183,7 @@ public class JobEntityAndJobLogBatchIdTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml"
   })
-  public void shouldSetBatchIdOnJobAndJobLog_DeleteHistoricDecisionInstances() {
+  void shouldSetBatchIdOnJobAndJobLog_DeleteHistoricDecisionInstances() {
     // given
     decisionService.evaluateDecisionByKey("dish-decision")
         .variables(
@@ -219,7 +206,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_DeleteHistoricProcessInstances() {
+  void shouldSetBatchIdOnJobAndJobLog_DeleteHistoricProcessInstances() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -241,7 +228,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_DeleteProcessInstances() {
+  void shouldSetBatchIdOnJobAndJobLog_DeleteProcessInstances() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     ProcessInstance process = runtimeService.startProcessInstanceByKey("process");
@@ -257,7 +244,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_MessageCorrelation() {
+  void shouldSetBatchIdOnJobAndJobLog_MessageCorrelation() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -280,7 +267,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_Migration() {
+  void shouldSetBatchIdOnJobAndJobLog_Migration() {
     // given
     ProcessDefinition sourceProcessDefinition = testRule.deployAndGetDefinition(USER_TASK_PROCESS);
     ProcessInstance process = runtimeService.startProcessInstanceByKey("process");
@@ -301,7 +288,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_Modification() {
+  void shouldSetBatchIdOnJobAndJobLog_Modification() {
     // given
     testRule.deploy(getTwoUserTasksProcess());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -323,7 +310,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_ProcessSetRemovalTime() {
+  void shouldSetBatchIdOnJobAndJobLog_ProcessSetRemovalTime() {
     // given
     testRule.deploy(getTwoUserTasksProcess());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -342,7 +329,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_RestartProcessInstance() {
+  void shouldSetBatchIdOnJobAndJobLog_RestartProcessInstance() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -362,7 +349,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_SetExternalTaskRetries() {
+  void shouldSetBatchIdOnJobAndJobLog_SetExternalTaskRetries() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -384,7 +371,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_SetJobRetries() {
+  void shouldSetBatchIdOnJobAndJobLog_SetJobRetries() {
     // given
     testRule.deploy(getTimerProcess());
     runtimeService.startProcessInstanceByKey("process");
@@ -402,7 +389,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldSetBatchIdOnJobAndJobLog_UpdateProcessInstancesSuspendState() {
+  void shouldSetBatchIdOnJobAndJobLog_UpdateProcessInstancesSuspendState() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -420,7 +407,7 @@ public class JobEntityAndJobLogBatchIdTest {
   }
 
   @Test
-  public void shouldNotSetBatchIdOnJobOrJobLog_nonBatchJob() {
+  void shouldNotSetBatchIdOnJobOrJobLog_nonBatchJob() {
     // given
     testRule.deploy(getTimerProcess());
     runtimeService.startProcessInstanceByKey("process");

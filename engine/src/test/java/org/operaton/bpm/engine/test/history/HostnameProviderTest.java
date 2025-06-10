@@ -22,6 +22,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -34,13 +37,11 @@ import org.operaton.bpm.engine.impl.metrics.MetricsReporterIdProvider;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.management.MetricIntervalValue;
 import org.operaton.bpm.engine.runtime.Job;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class HostnameProviderTest {
 
   public static final String ENGINE_NAME = "TEST_ENGINE";
@@ -48,7 +49,7 @@ public class HostnameProviderTest {
   public static final String CUSTOM_HOSTNAME = "CUSTOM_HOST";
   public static final String CUSTOM_REPORTER = "CUSTOM_REPORTER";
 
-  @Parameterized.Parameters(name = "Expected hostname: {3}, reporter: {4}")
+  @Parameters(name = "Expected hostname: {3}, reporter: {4}")
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][]{
         {null, null, null, ENGINE_NAME, ENGINE_NAME},
@@ -62,23 +63,23 @@ public class HostnameProviderTest {
     });
   }
 
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public String hostname;
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public HostnameProvider hostnameProvider;
-  @Parameterized.Parameter(2)
+  @Parameter(2)
   public MetricsReporterIdProvider reporterProvider;
-  @Parameterized.Parameter(3)
+  @Parameter(3)
   public String expectedHostname;
-  @Parameterized.Parameter(4)
+  @Parameter(4)
   public String expectedReporter;
 
-  protected ProcessEngineConfigurationImpl configuration;
-  protected ProcessEngine engine;
-  protected ManagementService managementService;
+  ProcessEngineConfigurationImpl configuration;
+  ProcessEngine engine;
+  ManagementService managementService;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     configuration =
         (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
             .createStandaloneInMemProcessEngineConfiguration();
@@ -97,12 +98,12 @@ public class HostnameProviderTest {
     managementService = configuration.getManagementService();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     closeProcessEngine();
   }
 
-  @Test
+  @TestTemplate
   public void shouldUseCustomHostname() {
     // given a Process Engine with specified hostname parameters
 
@@ -113,7 +114,7 @@ public class HostnameProviderTest {
     assertThat(customHostname).containsIgnoringCase(expectedHostname);
   }
 
-  @Test
+  @TestTemplate
   public void shouldUseCustomMetricsReporterId() {
     // given a Process Engine with some specified hostname and metric properties
 

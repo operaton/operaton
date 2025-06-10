@@ -18,34 +18,21 @@ package org.operaton.bpm.engine.test.dmn.feel;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class FeelIntegrationTest {
+@ExtendWith(ProcessEngineExtension.class)
+class FeelIntegrationTest {
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected DecisionService decisionService;
-
-  @Before
-  public void setup() {
-    decisionService = engineRule.getProcessEngine().getDecisionService();
-  }
+  DecisionService decisionService;
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/literal-expression.dmn"})
-  public void shouldEvaluateLiteralExpression() {
+  void shouldEvaluateLiteralExpression() {
     // given
 
     // when
@@ -58,7 +45,7 @@ public class FeelIntegrationTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/input-expression.dmn"})
-  public void shouldEvaluateInputExpression() {
+  void shouldEvaluateInputExpression() {
     // given
 
     // when
@@ -71,7 +58,7 @@ public class FeelIntegrationTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/input-rule.dmn"})
-  public void shouldEvaluateInputRule() {
+  void shouldEvaluateInputRule() {
     // given
 
     // when
@@ -84,7 +71,7 @@ public class FeelIntegrationTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/output-rule.dmn"})
-  public void shouldEvaluateOutputRule() {
+  void shouldEvaluateOutputRule() {
     // given
 
     // when

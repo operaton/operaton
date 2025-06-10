@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.engine.test.errorcode;
 
-import ch.qos.logback.classic.Level;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -36,45 +39,32 @@ import org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
 
-import java.util.List;
+import ch.qos.logback.classic.Level;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+class ExceptionBuiltinCodesTest {
 
-public class ExceptionBuiltinCodesTest {
-
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
       .watch("org.operaton.bpm.engine.cmd")
       .level(Level.WARN);
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule);
+  RuntimeService runtimeService;
+  IdentityService identityService;
+  AuthorizationService authorizationService;
 
-  protected RuntimeService runtimeService;
-  protected IdentityService identityService;
-  protected AuthorizationService authorizationService;
-
-  @Before
-  public void assignServices() {
-    runtimeService = engineRule.getRuntimeService();
-    identityService = engineRule.getIdentityService();
-    authorizationService = engineRule.getAuthorizationService();
-  }
-
-  @After
-  public void clear() {
+  @AfterEach
+  void clear() {
     engineRule.getIdentityService().deleteUser("kermit");
     engineRule.getAuthorizationService().createAuthorizationQuery().list()
         .forEach(authorization -> authorizationService.deleteAuthorization(authorization.getId()));
@@ -83,7 +73,7 @@ public class ExceptionBuiltinCodesTest {
   }
 
   @Test
-  public void shouldHaveColumnSizeTooSmallErrorCode() {
+  void shouldHaveColumnSizeTooSmallErrorCode() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -101,7 +91,7 @@ public class ExceptionBuiltinCodesTest {
   }
 
   @Test
-  public void shouldHaveDefaultErrorCodeUniqueKeyConstraintPersistenceExceptionNotCovered() {
+  void shouldHaveDefaultErrorCodeUniqueKeyConstraintPersistenceExceptionNotCovered() {
     // given
     Authorization authorizationOne = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorizationOne.setGroupId("aUserId");
@@ -125,7 +115,7 @@ public class ExceptionBuiltinCodesTest {
   }
 
   @Test
-  public void shouldHaveOleErrorCode() {
+  void shouldHaveOleErrorCode() {
     // given
     User user = identityService.newUser("kermit");
     identityService.saveUser(user);
@@ -146,7 +136,7 @@ public class ExceptionBuiltinCodesTest {
   }
 
   @Test
-  public void shouldHaveForeignKeyConstraintViolationCode() {
+  void shouldHaveForeignKeyConstraintViolationCode() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("calling")
         .startEvent()
         .callActivity()

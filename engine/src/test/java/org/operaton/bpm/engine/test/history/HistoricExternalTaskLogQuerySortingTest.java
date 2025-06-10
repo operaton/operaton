@@ -36,6 +36,9 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -47,46 +50,33 @@ import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil;
 import org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.NullTolerantComparator;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricExternalTaskLogQuerySortingTest {
+class HistoricExternalTaskLogQuerySortingTest {
 
   private static final String WORKER_ID = "aWorkerId";
   private static final Long LOCK_DURATION = 5 * 60L * 1000L;
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
-
-  protected ProcessInstance processInstance;
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected ExternalTaskService externalTaskService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    externalTaskService = engineRule.getExternalTaskService();
-  }
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  ExternalTaskService externalTaskService;
 
   @Test
-  public void testQuerySortingByTimestampAsc() {
+  void testQuerySortingByTimestampAsc() {
 
     // given
     int taskCount = 10;
@@ -103,7 +93,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByTimestampDsc() {
+  void testQuerySortingByTimestampDsc() {
 
     // given
     int taskCount = 10;
@@ -120,7 +110,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByTaskIdAsc() {
+  void testQuerySortingByTaskIdAsc() {
 
     // given
     int taskCount = 10;
@@ -137,7 +127,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByTaskIdDsc() {
+  void testQuerySortingByTaskIdDsc() {
 
     // given
     int taskCount = 10;
@@ -154,7 +144,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByRetriesAsc() {
+  void testQuerySortingByRetriesAsc() {
 
     // given
     int taskCount = 10;
@@ -173,7 +163,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByRetriesDsc() {
+  void testQuerySortingByRetriesDsc() {
 
     // given
     int taskCount = 10;
@@ -192,7 +182,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByPriorityAsc() {
+  void testQuerySortingByPriorityAsc() {
 
     // given
     int taskCount = 10;
@@ -209,7 +199,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByPriorityDsc() {
+  void testQuerySortingByPriorityDsc() {
 
     // given
     int taskCount = 10;
@@ -226,7 +216,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByTopicNameAsc() {
+  void testQuerySortingByTopicNameAsc() {
 
     // given
     int taskCount = 10;
@@ -243,7 +233,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByTopicNameDsc() {
+  void testQuerySortingByTopicNameDsc() {
 
     // given
     int taskCount = 10;
@@ -260,7 +250,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByWorkerIdAsc() {
+  void testQuerySortingByWorkerIdAsc() {
 
     // given
     int taskCount = 10;
@@ -279,7 +269,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByWorkerIdDsc() {
+  void testQuerySortingByWorkerIdDsc() {
 
     // given
     int taskCount = 10;
@@ -298,7 +288,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByActivityIdAsc() {
+  void testQuerySortingByActivityIdAsc() {
 
     // given
     int taskCount = 10;
@@ -315,7 +305,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByActivityIdDsc() {
+  void testQuerySortingByActivityIdDsc() {
 
     // given
     int taskCount = 10;
@@ -332,7 +322,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByActivityInstanceIdAsc() {
+  void testQuerySortingByActivityInstanceIdAsc() {
 
     // given
     int taskCount = 10;
@@ -349,7 +339,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByActivityInstanceIdDsc() {
+  void testQuerySortingByActivityInstanceIdDsc() {
 
     // given
     int taskCount = 10;
@@ -366,7 +356,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByExecutionIdAsc() {
+  void testQuerySortingByExecutionIdAsc() {
 
     // given
     int taskCount = 10;
@@ -384,7 +374,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
 
 
   @Test
-  public void testQuerySortingByExecutionIdDsc() {
+  void testQuerySortingByExecutionIdDsc() {
 
     // given
     int taskCount = 10;
@@ -401,7 +391,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByProcessInstanceIdAsc() {
+  void testQuerySortingByProcessInstanceIdAsc() {
 
     // given
     int taskCount = 10;
@@ -419,7 +409,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
 
 
   @Test
-  public void testQuerySortingByProcessInstanceIdDsc() {
+  void testQuerySortingByProcessInstanceIdDsc() {
 
     // given
     int taskCount = 10;
@@ -436,7 +426,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByProcessDefinitionIdAsc() {
+  void testQuerySortingByProcessDefinitionIdAsc() {
 
     // given
     int taskCount = 8;
@@ -454,7 +444,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
 
 
   @Test
-  public void testQuerySortingByProcessDefinitionIdDsc() {
+  void testQuerySortingByProcessDefinitionIdDsc() {
 
     // given
     int taskCount = 8;
@@ -471,7 +461,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   @Test
-  public void testQuerySortingByProcessDefinitionKeyAsc() {
+  void testQuerySortingByProcessDefinitionKeyAsc() {
 
     // given
     int taskCount = 10;
@@ -489,7 +479,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
 
 
   @Test
-  public void testQuerySortingByProcessDefinitionKeyDsc() {
+  void testQuerySortingByProcessDefinitionKeyDsc() {
 
     // given
     int taskCount = 10;

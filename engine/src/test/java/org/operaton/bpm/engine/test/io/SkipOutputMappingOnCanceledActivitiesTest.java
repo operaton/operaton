@@ -21,28 +21,39 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class SkipOutputMappingOnCanceledActivitiesTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class SkipOutputMappingOnCanceledActivitiesTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final long LOCK_TIME = 10000L;
   protected static final String TOPIC_NAME = "externalTaskTopic";
 
-  @After
-  public void tearDown() {
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  ExternalTaskService externalTaskService;
+  TaskService taskService;
+
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(false);
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActivitiesTest.oneExternalTaskWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
-  public void shouldSkipOutputMappingOnBpmnErrorAtExternalTask() {
+  void shouldSkipOutputMappingOnBpmnErrorAtExternalTask() {
     // given a process with one external task which has output mapping configured
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(true);
     runtimeService.startProcessInstanceByKey("externalTaskProcess");
@@ -64,7 +75,7 @@ public class SkipOutputMappingOnCanceledActivitiesTest extends PluggableProcessE
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActivitiesTest.oneExternalTaskWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
-  public void shouldNotSkipOutputMappingOnBpmnErrorAtExternalTask() {
+  void shouldNotSkipOutputMappingOnBpmnErrorAtExternalTask() {
     // given a process with one external task which has output mapping configured
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(false);
     runtimeService.startProcessInstanceByKey("externalTaskProcess");
@@ -82,7 +93,7 @@ public class SkipOutputMappingOnCanceledActivitiesTest extends PluggableProcessE
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActivitiesTest.oneSubprocessWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
-  public void shouldSkipOutputMappingOnBpmnErrorInSubprocess() {
+  void shouldSkipOutputMappingOnBpmnErrorInSubprocess() {
     // given a process with one external task which has output mapping configured
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(true);
     runtimeService.startProcessInstanceByKey("subProcess");
@@ -104,7 +115,7 @@ public class SkipOutputMappingOnCanceledActivitiesTest extends PluggableProcessE
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActivitiesTest.oneSubprocessWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
-  public void shouldNotSkipOutputMappingOnBpmnErrorInSubprocess() {
+  void shouldNotSkipOutputMappingOnBpmnErrorInSubprocess() {
     // given a process with one external task which has output mapping configured
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(false);
     runtimeService.startProcessInstanceByKey("subProcess");

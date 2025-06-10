@@ -24,6 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
@@ -43,48 +47,37 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class CustomHistoryEventHandlerTest {
+class CustomHistoryEventHandlerTest {
 
   protected static RecorderHistoryEventHandler recorderHandler = new RecorderHistoryEventHandler();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(c -> {
-    c.setHistoryEventHandler(recorderHandler);
-  });
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(c -> c.setHistoryEventHandler(recorderHandler))
+    .build();
 
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  RuntimeService runtimeService;
+  TaskService taskService;
 
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-
-  @After
-  public void clearHistoryEvents() {
+  @AfterEach
+  void clearHistoryEvents() {
     recorderHandler.clear();
   }
 
-  @Before
-  public void initServices() {
+  @BeforeEach
+  void initServices() {
     recorderHandler.clear();
-
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldReceiveMigrateEvents() {
+  void shouldReceiveMigrateEvents() {
     // given
     VariableMap variables = Variables.createVariables().putValue("foo", "bar");
 
@@ -124,7 +117,7 @@ public class CustomHistoryEventHandlerTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldReceiveMigrateEventForIncident() {
+  void shouldReceiveMigrateEventForIncident() {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -147,7 +140,7 @@ public class CustomHistoryEventHandlerTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldReceiveHistoricProcessInstanceEventFirstOnFormSubmit() {
+  void shouldReceiveHistoricProcessInstanceEventFirstOnFormSubmit() {
     // given
     FormService formService = engineRule.getFormService();
     RepositoryService repositoryService = engineRule.getRepositoryService();

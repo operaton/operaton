@@ -25,8 +25,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -42,8 +49,8 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Tom Baeyens
@@ -51,11 +58,23 @@ import org.junit.Test;
  * @author Marcel Wieczorek
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
+class HistoricActivityInstanceTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  TaskService taskService;
+  ManagementService managementService;
+  CaseService caseService;
 
   @Deployment
   @Test
-  public void testHistoricActivityInstanceNoop() {
+  void testHistoricActivityInstanceNoop() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("noopProcess");
 
     HistoricActivityInstance historicActivityInstance = historyService.createHistoricActivityInstanceQuery().activityId("noop").singleResult();
@@ -72,7 +91,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testHistoricActivityInstanceReceive() {
+  void testHistoricActivityInstanceReceive() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("receiveProcess");
 
     HistoricActivityInstance historicActivityInstance = historyService.createHistoricActivityInstanceQuery().activityId("receive").singleResult();
@@ -105,9 +124,9 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(((HistoricActivityInstanceEventEntity) historicActivityInstance).getDurationRaw()).isGreaterThanOrEqualTo(1000);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testHistoricActivityInstanceReceive.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testHistoricActivityInstanceReceive.bpmn20.xml"})
   @Test
-  public void testLongRunningHistoricActivityInstanceReceive() {
+  void testLongRunningHistoricActivityInstanceReceive() {
     final long ONE_YEAR = 1000 * 60 * 60 * 24 * 365;
 
     Calendar cal = Calendar.getInstance();
@@ -150,7 +169,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testHistoricActivityInstanceQuery() {
+  void testHistoricActivityInstanceQuery() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("noopProcess");
 
     assertThat(historyService.createHistoricActivityInstanceQuery().activityId("nonExistingActivityId").list()).isEmpty();
@@ -208,7 +227,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testHistoricActivityInstanceForEventsQuery() {
+  void testHistoricActivityInstanceForEventsQuery() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("eventProcess");
     assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
     runtimeService.signalEventReceived("signal");
@@ -237,7 +256,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testHistoricActivityInstanceProperties() {
+  void testHistoricActivityInstanceProperties() {
     // Start process instance
     runtimeService.startProcessInstanceByKey("taskAssigneeProcess");
 
@@ -256,10 +275,10 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicActivityInstance.getAssignee()).isEqualTo("gonzo");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/calledProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testCallSimpleSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/calledProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testCallSimpleSubProcess.bpmn20.xml"})
   @Test
-  public void testHistoricActivityInstanceCalledProcessId() {
+  void testHistoricActivityInstanceCalledProcessId() {
     runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     HistoricActivityInstance historicActivityInstance = historyService.createHistoricActivityInstanceQuery().activityId("callSubProcess").singleResult();
@@ -269,10 +288,10 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicActivityInstance.getCalledProcessInstanceId()).isEqualTo(oldInstance.getId());
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/history/calledProcessWaiting.bpmn20.xml",
-  "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testCallSimpleSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/calledProcessWaiting.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testCallSimpleSubProcess.bpmn20.xml"})
   @Test
-  public void testHistoricActivityInstanceCalledProcessIdWithWaitState() {
+  void testHistoricActivityInstanceCalledProcessIdWithWaitState() {
     // given
     runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
     ProcessInstance calledInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("calledProcess").singleResult();
@@ -290,7 +309,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSorting() {
+  void testSorting() {
     runtimeService.startProcessInstanceByKey("process");
 
     int expectedActivityInstances = -1;
@@ -334,7 +353,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testInvalidSorting() {
+  void testInvalidSorting() {
     var historicActivityInstanceQuery = historyService.createHistoricActivityInstanceQuery().orderByHistoricActivityInstanceDuration();
     try {
       historicActivityInstanceQuery.list();
@@ -357,9 +376,10 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
       // expected
     }
   }
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testHistoricActivityInstanceQueryStartFinishAfterBefore() {
+  void testHistoricActivityInstanceQueryStartFinishAfterBefore() {
     Calendar startTime = Calendar.getInstance();
 
     ClockUtil.setCurrentTime(startTime.getTime());
@@ -393,7 +413,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testHistoricActivityInstanceQueryByCompleteScope() {
+  void testHistoricActivityInstanceQueryByCompleteScope() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     List<Task> tasks = taskService.createTaskQuery().list();
@@ -419,7 +439,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testHistoricActivityInstanceQueryByCompleteScope.bpmn")
   @Test
-  public void testHistoricActivityInstanceQueryByCanceled() {
+  void testHistoricActivityInstanceQueryByCanceled() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
@@ -440,7 +460,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testHistoricActivityInstanceQueryByCompleteScopeAndCanceled() {
+  void testHistoricActivityInstanceQueryByCompleteScopeAndCanceled() {
     var historicActivityInstanceQuery = historyService
           .createHistoricActivityInstanceQuery()
           .completeScope();
@@ -457,7 +477,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testHistoricActivityInstanceGatewayEndTimes() {
+  void testHistoricActivityInstanceGatewayEndTimes() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("gatewayEndTimes");
 
     TaskQuery query = taskService.createTaskQuery().orderByTaskName().asc();
@@ -481,7 +501,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testHistoricActivityInstanceTimerEvent() {
+  void testHistoricActivityInstanceTimerEvent() {
     runtimeService.startProcessInstanceByKey("catchSignal");
 
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
@@ -509,7 +529,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testHistoricActivityInstanceTimerEvent.bpmn20.xml"})
   @Test
-  public void testHistoricActivityInstanceMessageEvent() {
+  void testHistoricActivityInstanceMessageEvent() {
     runtimeService.startProcessInstanceByKey("catchSignal");
 
     JobQuery jobQuery = managementService.createJobQuery();
@@ -537,7 +557,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUserTaskStillRunning() {
+  void testUserTaskStillRunning() {
     runtimeService.startProcessInstanceByKey("nonInterruptingEvent");
 
     JobQuery jobQuery = managementService.createJobQuery();
@@ -563,7 +583,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInterruptingBoundaryMessageEvent() {
+  void testInterruptingBoundaryMessageEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     Execution execution = runtimeService.createExecutionQuery().messageEventSubscriptionName("newMessage").singleResult();
@@ -585,7 +605,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingBoundaryMessageEvent() {
+  void testNonInterruptingBoundaryMessageEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     Execution execution = runtimeService.createExecutionQuery().messageEventSubscriptionName("newMessage").singleResult();
@@ -609,7 +629,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInterruptingBoundarySignalEvent() {
+  void testInterruptingBoundarySignalEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     Execution execution = runtimeService.createExecutionQuery().signalEventSubscriptionName("newSignal").singleResult();
@@ -631,7 +651,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingBoundarySignalEvent() {
+  void testNonInterruptingBoundarySignalEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     Execution execution = runtimeService.createExecutionQuery().signalEventSubscriptionName("newSignal").singleResult();
@@ -655,7 +675,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInterruptingBoundaryTimerEvent() {
+  void testInterruptingBoundaryTimerEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -678,7 +698,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingBoundaryTimerEvent() {
+  void testNonInterruptingBoundaryTimerEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -703,7 +723,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryErrorEvent() {
+  void testBoundaryErrorEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstanceQuery query = historyService.createHistoricActivityInstanceQuery();
@@ -721,7 +741,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryCancelEvent() {
+  void testBoundaryCancelEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstanceQuery query = historyService.createHistoricActivityInstanceQuery();
@@ -739,7 +759,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryCompensateEvent() {
+  void testBoundaryCompensateEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstanceQuery query = historyService.createHistoricActivityInstanceQuery();
@@ -751,9 +771,9 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testBoundaryCompensateEvent.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testBoundaryCompensateEvent.bpmn20.xml")
   @Test
-  public void testCompensationServiceTaskHasEndTime() {
+  void testCompensationServiceTaskHasEndTime() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstanceQuery query = historyService.createHistoricActivityInstanceQuery();
@@ -765,9 +785,9 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testBoundaryCancelEvent.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testBoundaryCancelEvent.bpmn20.xml")
   @Test
-  public void testTransaction() {
+  void testTransaction() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstanceQuery query = historyService.createHistoricActivityInstanceQuery();
@@ -784,7 +804,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testScopeActivity() {
+  void testScopeActivity() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstanceQuery query = historyService.createHistoricActivityInstanceQuery();
@@ -804,7 +824,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultiInstanceScopeActivity() {
+  void testMultiInstanceScopeActivity() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstanceQuery query = historyService.createHistoricActivityInstanceQuery();
@@ -831,7 +851,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultiInstanceReceiveActivity() {
+  void testMultiInstanceReceiveActivity() {
     runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstanceQuery query = historyService.createHistoricActivityInstanceQuery();
@@ -848,9 +868,9 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testEvents.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testEvents.bpmn")
   @Test
-  public void testIntermediateCatchEventTypes() {
+  void testIntermediateCatchEventTypes() {
     HistoricActivityInstanceQuery query = startEventTestProcess("");
 
     query.activityId("intermediateSignalCatchEvent");
@@ -866,9 +886,9 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(query.singleResult().getActivityType()).isEqualTo("intermediateTimer");
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testEvents.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testEvents.bpmn")
   @Test
-  public void testIntermediateThrowEventTypes() {
+  void testIntermediateThrowEventTypes() {
     HistoricActivityInstanceQuery query = startEventTestProcess("");
 
     query.activityId("intermediateSignalThrowEvent");
@@ -888,9 +908,9 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(query.singleResult().getActivityType()).isEqualTo("intermediateCompensationThrowEvent");
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testEvents.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testEvents.bpmn")
   @Test
-  public void testStartEventTypes() {
+  void testStartEventTypes() {
     HistoricActivityInstanceQuery query = startEventTestProcess("");
 
     query.activityId("timerStartEvent");
@@ -907,9 +927,9 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(query.singleResult().getActivityType()).isEqualTo("messageStartEvent");
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testEvents.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testEvents.bpmn")
   @Test
-  public void testEndEventTypes() {
+  void testEndEventTypes() {
     HistoricActivityInstanceQuery query = startEventTestProcess("");
 
     query.activityId("cancellationEndEvent");
@@ -949,7 +969,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.startEventTypesForEventSubprocess.bpmn20.xml")
   @Test
-  public void testMessageEventSubprocess() {
+  void testMessageEventSubprocess() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("shouldThrowError", false);
     runtimeService.startProcessInstanceByKey("process", vars);
@@ -964,7 +984,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.startEventTypesForEventSubprocess.bpmn20.xml")
   @Test
-  public void testSignalEventSubprocess() {
+  void testSignalEventSubprocess() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("shouldThrowError", false);
     runtimeService.startProcessInstanceByKey("process", vars);
@@ -979,7 +999,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.startEventTypesForEventSubprocess.bpmn20.xml")
   @Test
-  public void testTimerEventSubprocess() {
+  void testTimerEventSubprocess() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("shouldThrowError", false);
     runtimeService.startProcessInstanceByKey("process", vars);
@@ -995,7 +1015,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.startEventTypesForEventSubprocess.bpmn20.xml")
   @Test
-  public void testErrorEventSubprocess() {
+  void testErrorEventSubprocess() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("shouldThrowError", true);
     runtimeService.startProcessInstanceByKey("process", vars);
@@ -1011,7 +1031,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
   })
   @Test
-  public void testCaseCallActivity() {
+  void testCaseCallActivity() {
     runtimeService.startProcessInstanceByKey("process");
 
     String subCaseInstanceId = caseService
@@ -1047,7 +1067,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionKeyProperty() {
+  void testProcessDefinitionKeyProperty() {
     // given
     String key = "oneTaskProcess";
     String processInstanceId = runtimeService.startProcessInstanceByKey(key).getId();
@@ -1067,7 +1087,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testEndParallelJoin() {
+  void testEndParallelJoin() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     List<HistoricActivityInstance> activityInstance = historyService
@@ -1082,7 +1102,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testHistoricActivityInstanceProperties.bpmn20.xml"})
   @Test
-  public void testAssigneeSavedWhenTaskSaved() {
+  void testAssigneeSavedWhenTaskSaved() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()

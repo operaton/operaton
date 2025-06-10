@@ -16,10 +16,20 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_EXTERNAL_TASK_NAME;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -30,48 +40,31 @@ import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import static junit.framework.TestCase.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.*;
-
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricExternalTaskLogQueryTest {
+class HistoricExternalTaskLogQueryTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final long LOCK_DURATION = 5 * 60L * 1000L;
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
-
-  protected ProcessInstance processInstance;
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected ExternalTaskService externalTaskService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    externalTaskService = engineRule.getExternalTaskService();
-  }
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  ExternalTaskService externalTaskService;
 
   @Test
-  public void testQuery() {
+  void testQuery() {
 
     // given
     ExternalTask task = startExternalTaskProcess();
@@ -87,7 +80,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryById() {
+  void testQueryById() {
     // given
     startExternalTaskProcesses(2);
     String logId = retrieveFirstHistoricExternalTaskLog().getId();
@@ -104,7 +97,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByInvalidId() {
+  void testQueryFailsByInvalidId() {
 
     // given
     startExternalTaskProcess();
@@ -117,7 +110,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingId() {
+  void testQueryByNonExistingId() {
 
     // given
     startExternalTaskProcess();
@@ -133,7 +126,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByExternalTaskId() {
+  void testQueryByExternalTaskId() {
     // given
     startExternalTaskProcesses(2);
     String logExternalTaskId = retrieveFirstHistoricExternalTaskLog().getExternalTaskId();
@@ -150,7 +143,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByInvalidExternalTaskId() {
+  void testQueryFailsByInvalidExternalTaskId() {
 
     // given
     startExternalTaskProcess();
@@ -163,7 +156,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingExternalTaskId() {
+  void testQueryByNonExistingExternalTaskId() {
 
     // given
     startExternalTaskProcess();
@@ -179,7 +172,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByTopicName() {
+  void testQueryByTopicName() {
 
     // given
     String dummyTopic = "dummy";
@@ -198,7 +191,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByInvalidTopicName() {
+  void testQueryFailsByInvalidTopicName() {
     // given
     startExternalTaskProcess();
     var historicExternalTaskLogQuery = historyService
@@ -211,7 +204,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTopicName() {
+  void testQueryByNonExistingTopicName() {
 
     // given
     startExternalTaskProcess();
@@ -227,7 +220,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByWorkerId() {
+  void testQueryByWorkerId() {
     // given
     List<ExternalTask> taskList = startExternalTaskProcesses(2);
     ExternalTask taskToCheck = taskList.get(1);
@@ -246,7 +239,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByInvalidWorkerId() {
+  void testQueryFailsByInvalidWorkerId() {
     // given
     ExternalTask task = startExternalTaskProcess();
     completeExternalTask(task.getId());
@@ -259,7 +252,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingWorkerId() {
+  void testQueryByNonExistingWorkerId() {
 
     // given
     ExternalTask task = startExternalTaskProcess();
@@ -276,7 +269,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByErrorMessage() {
+  void testQueryByErrorMessage() {
     // given
     List<ExternalTask> taskList = startExternalTaskProcesses(2);
     String errorMessage = "This is an important error!";
@@ -295,7 +288,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByInvalidErrorMessage() {
+  void testQueryFailsByInvalidErrorMessage() {
     // given
     startExternalTaskProcess();
     var historicExternalTaskLogQuery = historyService
@@ -308,7 +301,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingErrorMessage() {
+  void testQueryByNonExistingErrorMessage() {
 
     // given
     startExternalTaskProcess();
@@ -324,7 +317,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
     // given
     startExternalTaskProcessGivenActivityId("dummyName");
     ExternalTask task = startExternalTaskProcess();
@@ -341,7 +334,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByActivityIdsIsNull() {
+  void testQueryFailsByActivityIdsIsNull() {
     // given
     startExternalTaskProcess();
     var historicExternalTaskLogQuery = historyService
@@ -353,7 +346,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByActivityIdsContainNull() {
+  void testQueryFailsByActivityIdsContainNull() {
     // given
     startExternalTaskProcess();
     String[] activityIdsContainNull = {"a", null, "b"};
@@ -366,7 +359,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByActivityIdsContainEmptyString() {
+  void testQueryFailsByActivityIdsContainEmptyString() {
     // given
     startExternalTaskProcess();
     String[] activityIdsContainEmptyString = {"a", "", "b"};
@@ -381,7 +374,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingActivityIds() {
+  void testQueryByNonExistingActivityIds() {
 
     // given
     startExternalTaskProcess();
@@ -397,7 +390,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByActivityInstanceIds() {
+  void testQueryByActivityInstanceIds() {
     // given
     startExternalTaskProcessGivenActivityId("dummyName");
     ExternalTask task = startExternalTaskProcess();
@@ -418,7 +411,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByActivityInstanceIdsIsNull() {
+  void testQueryFailsByActivityInstanceIdsIsNull() {
     // given
     startExternalTaskProcess();
     var historicExternalTaskLogQuery = historyService
@@ -430,7 +423,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByActivityInstanceIdsContainNull() {
+  void testQueryFailsByActivityInstanceIdsContainNull() {
     // given
     startExternalTaskProcess();
     String[] activityIdsContainNull = {"a", null, "b"};
@@ -444,7 +437,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByActivityInstanceIdsContainEmptyString() {
+  void testQueryFailsByActivityInstanceIdsContainEmptyString() {
     // given
     startExternalTaskProcess();
     String[] activityIdsContainEmptyString = {"a", "", "b"};
@@ -458,7 +451,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingActivityInstanceIds() {
+  void testQueryByNonExistingActivityInstanceIds() {
 
     // given
     startExternalTaskProcess();
@@ -474,7 +467,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByExecutionIds() {
+  void testQueryByExecutionIds() {
     // given
     startExternalTaskProcesses(2);
     HistoricExternalTaskLog taskLog = retrieveFirstHistoricExternalTaskLog();
@@ -491,7 +484,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByExecutionIdsIsNull() {
+  void testQueryFailsByExecutionIdsIsNull() {
     // given
     startExternalTaskProcess();
     var historicExternalTaskLogQuery = historyService
@@ -504,7 +497,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByExecutionIdsContainNull() {
+  void testQueryFailsByExecutionIdsContainNull() {
     // given
     startExternalTaskProcess();
     String[] activityIdsContainNull = {"a", null, "b"};
@@ -518,7 +511,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByExecutionIdsContainEmptyString() {
+  void testQueryFailsByExecutionIdsContainEmptyString() {
     // given
     startExternalTaskProcess();
     String[] activityIdsContainEmptyString = {"a", "", "b"};
@@ -532,7 +525,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingExecutionIds() {
+  void testQueryByNonExistingExecutionIds() {
 
     // given
     startExternalTaskProcess();
@@ -548,7 +541,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     // given
     startExternalTaskProcesses(2);
     String processInstanceId = retrieveFirstHistoricExternalTaskLog().getProcessInstanceId();
@@ -565,7 +558,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByInvalidProcessInstanceId() {
+  void testQueryFailsByInvalidProcessInstanceId() {
     // given
     startExternalTaskProcess();
     var historicExternalTaskLogQuery = historyService
@@ -577,7 +570,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingProcessInstanceId() {
+  void testQueryByNonExistingProcessInstanceId() {
 
     // given
     startExternalTaskProcess();
@@ -593,7 +586,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     // given
     startExternalTaskProcesses(2);
     String definitionId = retrieveFirstHistoricExternalTaskLog().getProcessDefinitionId();
@@ -610,7 +603,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByInvalidProcessDefinitionId() {
+  void testQueryFailsByInvalidProcessDefinitionId() {
     // given
     startExternalTaskProcess();
     var historicExternalTaskLogQuery = historyService
@@ -623,7 +616,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingProcessDefinitionId() {
+  void testQueryByNonExistingProcessDefinitionId() {
 
     // given
     startExternalTaskProcess();
@@ -639,7 +632,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     // given
     startExternalTaskProcessGivenProcessDefinitionKey("dummyProcess");
     ExternalTask task = startExternalTaskProcessGivenProcessDefinitionKey("Process");
@@ -656,7 +649,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryFailsByInvalidProcessDefinitionKey() {
+  void testQueryFailsByInvalidProcessDefinitionKey() {
     // given
     startExternalTaskProcess();
     var historicExternalTaskLogQuery = historyService
@@ -669,7 +662,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingProcessDefinitionKey() {
+  void testQueryByNonExistingProcessDefinitionKey() {
 
     // given
     startExternalTaskProcess();
@@ -685,7 +678,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByCreationLog() {
+  void testQueryByCreationLog() {
     // given
     ExternalTask task = startExternalTaskProcess();
     completeExternalTask(task.getId());
@@ -702,7 +695,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByFailureLog() {
+  void testQueryByFailureLog() {
     // given
     ExternalTask task = startExternalTaskProcess();
     reportExternalTaskFailure(task.getId(), "Dummy error message!");
@@ -719,7 +712,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryBySuccessLog() {
+  void testQueryBySuccessLog() {
     // given
     ExternalTask task = startExternalTaskProcess();
     completeExternalTask(task.getId());
@@ -736,7 +729,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByDeletionLog() {
+  void testQueryByDeletionLog() {
     // given
     ExternalTask task = startExternalTaskProcess();
     runtimeService.deleteProcessInstance(task.getProcessInstanceId(), null);
@@ -753,7 +746,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByLowerThanOrEqualAPriority() {
+  void testQueryByLowerThanOrEqualAPriority() {
 
     // given
     startExternalTaskProcesses(5);
@@ -773,7 +766,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByHigherThanOrEqualAPriority() {
+  void testQueryByHigherThanOrEqualAPriority() {
 
     // given
     startExternalTaskProcesses(5);
@@ -793,7 +786,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByPriorityRange() {
+  void testQueryByPriorityRange() {
 
     // given
     startExternalTaskProcesses(5);
@@ -814,7 +807,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   @Test
-  public void testQueryByDisjunctivePriorityStatements() {
+  void testQueryByDisjunctivePriorityStatements() {
 
     // given
     startExternalTaskProcesses(5);

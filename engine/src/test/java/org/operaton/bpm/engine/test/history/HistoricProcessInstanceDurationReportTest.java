@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
@@ -31,7 +30,15 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.data.Offset;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.DurationReportResult;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -41,25 +48,32 @@ import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import org.assertj.core.api.Assertions;
-import org.assertj.core.data.Offset;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class HistoricProcessInstanceDurationReportTest extends PluggableProcessEngineTest {
+class HistoricProcessInstanceDurationReportTest {
 
   private final Random random = new Random();
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  HistoryService historyService;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+
   @Test
-  public void testDurationReportByMonth() {
+  void testDurationReportByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -81,7 +95,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testTwoInstancesInSamePeriodByMonth() {
+  void testTwoInstancesInSamePeriodByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -103,7 +117,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testDurationReportInDifferentPeriodsByMonth() {
+  void testDurationReportInDifferentPeriodsByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -145,7 +159,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testSamePeriodDifferentYearByMonth() {
+  void testSamePeriodDifferentYearByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -166,7 +180,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testDurationReportByQuarter() {
+  void testDurationReportByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -186,7 +200,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testTwoInstancesInSamePeriodDurationReportByQuarter() {
+  void testTwoInstancesInSamePeriodDurationReportByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -207,7 +221,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testDurationReportInDifferentPeriodsByQuarter() {
+  void testDurationReportInDifferentPeriodsByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -237,7 +251,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testSamePeriodDifferentYearByQuarter() {
+  void testSamePeriodDifferentYearByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -258,7 +272,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByInvalidPeriodUnit() {
+  void testReportByInvalidPeriodUnit() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
     try {
@@ -270,7 +284,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByStartedBeforeByMonth() {
+  void testReportByStartedBeforeByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -298,7 +312,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByStartedBeforeByQuarter() {
+  void testReportByStartedBeforeByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -330,7 +344,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByInvalidStartedBefore() {
+  void testReportByInvalidStartedBefore() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
     try {
@@ -342,7 +356,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByStartedAfterByMonth() {
+  void testReportByStartedAfterByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -369,7 +383,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByStartedAfterByQuarter() {
+  void testReportByStartedAfterByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -396,7 +410,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByInvalidStartedAfter() {
+  void testReportByInvalidStartedAfter() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
     try {
@@ -408,7 +422,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByStartedAfterAndStartedBeforeByMonth() {
+  void testReportByStartedAfterAndStartedBeforeByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -440,7 +454,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByStartedAfterAndStartedBeforeByQuarter() {
+  void testReportByStartedAfterAndStartedBeforeByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -472,7 +486,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportWithExcludingConditions() {
+  void testReportWithExcludingConditions() {
     // given
    testRule.deploy(createProcessWithUserTask("process"));
 
@@ -498,7 +512,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByProcessDefinitionIdByMonth() {
+  void testReportByProcessDefinitionIdByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process1"), createProcessWithUserTask("process2"));
 
@@ -528,7 +542,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByProcessDefinitionIdByQuarter() {
+  void testReportByProcessDefinitionIdByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process1"), createProcessWithUserTask("process2"));
 
@@ -558,7 +572,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByMultipleProcessDefinitionIdByMonth() {
+  void testReportByMultipleProcessDefinitionIdByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process1"), createProcessWithUserTask("process2"));
 
@@ -591,7 +605,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByMultipleProcessDefinitionIdByQuarter() {
+  void testReportByMultipleProcessDefinitionIdByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process1"), createProcessWithUserTask("process2"));
 
@@ -624,7 +638,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByInvalidProcessDefinitionId() {
+  void testReportByInvalidProcessDefinitionId() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
     assertThatThrownBy(() -> report.processDefinitionIdIn((String) null))
@@ -635,7 +649,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByProcessDefinitionKeyByMonth() {
+  void testReportByProcessDefinitionKeyByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process1"), createProcessWithUserTask("process2"));
 
@@ -659,7 +673,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByProcessDefinitionKeyByQuarter() {
+  void testReportByProcessDefinitionKeyByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process1"), createProcessWithUserTask("process2"));
 
@@ -683,7 +697,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByMultipleProcessDefinitionKeyByMonth() {
+  void testReportByMultipleProcessDefinitionKeyByMonth() {
     // given
    testRule.deploy(createProcessWithUserTask("process1"), createProcessWithUserTask("process2"));
 
@@ -704,7 +718,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByMultipleProcessDefinitionKeyByQuarter() {
+  void testReportByMultipleProcessDefinitionKeyByQuarter() {
     // given
    testRule.deploy(createProcessWithUserTask("process1"), createProcessWithUserTask("process2"));
 
@@ -725,7 +739,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   }
 
   @Test
-  public void testReportByInvalidProcessDefinitionKey() {
+  void testReportByInvalidProcessDefinitionKey() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
     assertThrows(NotValidException.class, () -> report.processDefinitionIdIn((String) null));

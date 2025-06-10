@@ -24,6 +24,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
@@ -31,18 +36,12 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 @RequiredHistoryLevel(HISTORY_FULL)
-public class UserOperationLogAnnotationTest {
+class UserOperationLogAnnotationTest {
 
   static final String USER_ID = "demo";
   static final String TASK_ID = "aTaskId";
@@ -51,45 +50,38 @@ public class UserOperationLogAnnotationTest {
   static final String OPERATION_ID = "operationId";
   static final Date CREATE_TIME = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule);
+  HistoryService historyService;
+  TaskService taskService;
 
-  protected HistoryService historyService;
-  protected TaskService taskService;
-
-  @Before
-  public void assignServices() {
-    historyService = engineRule.getHistoryService();
-    taskService = engineRule.getTaskService();
-  }
-
-  @After
-  public void clearDatabase() {
+  @AfterEach
+  void clearDatabase() {
     taskService.deleteTask(TASK_ID, true);
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @Before
-  public void setAuthentication() {
+  @BeforeEach
+  void setAuthentication() {
     engineRule.getIdentityService()
         .setAuthenticatedUserId(USER_ID);
   }
 
-  @After
-  public void clearAuthentication() {
+  @AfterEach
+  void clearAuthentication() {
     engineRule.getIdentityService()
         .clearAuthentication();
   }
 
   @Test
-  public void shouldSetAnnotation() {
+  void shouldSetAnnotation() {
     // given
     createTask();
 
@@ -115,7 +107,7 @@ public class UserOperationLogAnnotationTest {
    * See https://app.camunda.com/jira/browse/CAM-10664
    */
   @Test
-  public void shouldSetAnnotation_WithPreservedTimeStamp() {
+  void shouldSetAnnotation_WithPreservedTimeStamp() {
     // given
     ClockUtil.setCurrentTime(CREATE_TIME);
 
@@ -141,7 +133,7 @@ public class UserOperationLogAnnotationTest {
   }
 
   @Test
-  public void shouldSetAnnotationForAllEntries() {
+  void shouldSetAnnotationForAllEntries() {
     // given
     Task task = createTask();
 
@@ -170,7 +162,7 @@ public class UserOperationLogAnnotationTest {
   }
 
   @Test
-  public void shouldClearAnnotation() {
+  void shouldClearAnnotation() {
     // given
     createTask();
 
@@ -200,7 +192,7 @@ public class UserOperationLogAnnotationTest {
   }
 
   @Test
-  public void shouldClearAnnotationForAllEntries() {
+  void shouldClearAnnotationForAllEntries() {
     // given
     Task task = createTask();
 
@@ -238,7 +230,7 @@ public class UserOperationLogAnnotationTest {
   }
 
   @Test
-  public void shouldWriteOperationLogOnClearAnnotation() {
+  void shouldWriteOperationLogOnClearAnnotation() {
     // given
     createTask();
 
@@ -275,7 +267,7 @@ public class UserOperationLogAnnotationTest {
   }
 
   @Test
-  public void shouldWriteOperationLogOnSetAnnotation() {
+  void shouldWriteOperationLogOnSetAnnotation() {
     // given
     createTask();
 
@@ -305,7 +297,7 @@ public class UserOperationLogAnnotationTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenOperationIdNull() {
+  void shouldThrowExceptionWhenOperationIdNull() {
     // given
 
     // when/then
@@ -315,7 +307,7 @@ public class UserOperationLogAnnotationTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenOperationNull() {
+  void shouldThrowExceptionWhenOperationNull() {
     // given
 
     // when/then

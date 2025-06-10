@@ -16,40 +16,49 @@
  */
 package org.operaton.bpm.engine.test.history.dmn;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.Date;
+import java.util.List;
+
 import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.history.NativeHistoricDecisionInstanceQuery;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-
-import java.util.Date;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Philipp Ossler
  * @author Ingo Richtsmeier
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class HistoricDecisionInstanceQueryTest {
 
   protected static final String DECISION_CASE = "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.caseWithDecisionTask.cmmn";
   protected static final String DECISION_PROCESS = "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.processWithBusinessRuleTask.bpmn20.xml";
@@ -64,8 +73,16 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   protected static final String DECISION_DEFINITION_KEY = "testDecision";
   protected static final String DISH_DECISION = "dish-decision";
 
-  @Before
-  public void setUp() {
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  HistoryService historyService;
+  RepositoryService repositoryService;
+  DecisionService decisionService;
+  RuntimeService runtimeService;
+  CaseService caseService;
+  IdentityService identityService;
+
+  @BeforeEach
+  void setUp() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 
@@ -76,8 +93,8 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
 
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 
@@ -88,9 +105,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
 
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryIncludeInputsForNonExistingDecision() {
+  void testQueryIncludeInputsForNonExistingDecision() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().includeInputs();
     assertThat(query.singleResult()).isNull();
 
@@ -99,9 +116,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionInstanceId("nonExisting").singleResult()).isNull();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryIncludeOutputs() {
+  void testQueryIncludeOutputs() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -118,9 +135,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.includeOutputs().singleResult().getOutputs()).hasSize(1);
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryIncludeOutputsForNonExistingDecision() {
+  void testQueryIncludeOutputsForNonExistingDecision() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().includeOutputs();
     assertThat(query.singleResult()).isNull();
 
@@ -129,9 +146,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionInstanceId("nonExisting").singleResult()).isNull();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_NO_INPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_NO_INPUT_DMN})
   @Test
-  public void testQueryIncludeInputsNoInput() {
+  void testQueryIncludeInputsNoInput() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -140,9 +157,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.includeInputs().singleResult().getInputs()).isEmpty();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_NO_INPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_NO_INPUT_DMN})
   @Test
-  public void testQueryIncludeOutputsNoInput() {
+  void testQueryIncludeOutputsNoInput() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -151,9 +168,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.includeOutputs().singleResult().getOutputs()).isEmpty();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryPaging() {
+  void testQueryPaging() {
 
     startProcessInstanceAndEvaluateDecision();
     startProcessInstanceAndEvaluateDecision();
@@ -164,9 +181,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.listPage(1, 1)).hasSize(1);
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQuerySortByEvaluationTime() {
+  void testQuerySortByEvaluationTime() {
 
     startProcessInstanceAndEvaluateDecision();
     waitASignificantAmountOfTime();
@@ -179,9 +196,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(orderDesc.get(0).getEvaluationTime().after(orderDesc.get(1).getEvaluationTime())).isTrue();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByDecisionInstanceId() {
+  void testQueryByDecisionInstanceId() {
     ProcessInstance pi1 = startProcessInstanceAndEvaluateDecision();
     ProcessInstance pi2 = startProcessInstanceAndEvaluateDecision();
 
@@ -195,9 +212,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionInstanceId("unknown").count()).isZero();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByDecisionInstanceIds() {
+  void testQueryByDecisionInstanceIds() {
     ProcessInstance pi1 = startProcessInstanceAndEvaluateDecision();
     ProcessInstance pi2 = startProcessInstanceAndEvaluateDecision();
 
@@ -211,9 +228,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionInstanceIdIn(decisionInstanceId1, decisionInstanceId2).count()).isEqualTo(2L);
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByDecisionDefinitionId() {
+  void testQueryByDecisionDefinitionId() {
     String decisionDefinitionId = repositoryService.createDecisionDefinitionQuery()
         .decisionDefinitionKey(DECISION_DEFINITION_KEY).singleResult().getId();
 
@@ -225,9 +242,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionDefinitionId("other id").count()).isZero();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
   @Test
-  public void testQueryByDecisionDefinitionIdIn() {
+  void testQueryByDecisionDefinitionIdIn() {
     //given
     String decisionDefinitionId = repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey(DECISION_DEFINITION_KEY).singleResult().getId();
     String decisionDefinitionId2 = repositoryService.createDecisionDefinitionQuery()
@@ -248,7 +265,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
   @Test
-  public void testQueryByInvalidDecisionDefinitionIdIn() {
+  void testQueryByInvalidDecisionDefinitionIdIn() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     try {
       query.decisionDefinitionIdIn("aFake", null);
@@ -258,9 +275,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     }
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
   @Test
-  public void testQueryByDecisionDefinitionKeyIn() {
+  void testQueryByDecisionDefinitionKeyIn() {
 
     //when
     startProcessInstanceAndEvaluateDecision();
@@ -277,7 +294,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
   @Test
-  public void testQueryByInvalidDecisionDefinitionKeyIn() {
+  void testQueryByInvalidDecisionDefinitionKeyIn() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     try {
       query.decisionDefinitionKeyIn("aFake", null);
@@ -287,9 +304,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     }
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByDecisionDefinitionKey() {
+  void testQueryByDecisionDefinitionKey() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -299,9 +316,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionDefinitionKey("other key").count()).isZero();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByDecisionDefinitionName() {
+  void testQueryByDecisionDefinitionName() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -311,9 +328,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionDefinitionName("other name").count()).isZero();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_PROCESS_WITH_UNDERSCORE, DECISION_SINGLE_OUTPUT_DMN, DECISION_SINGLE_OUTPUT_DMN_WITH_UNDERSCORE })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_PROCESS_WITH_UNDERSCORE, DECISION_SINGLE_OUTPUT_DMN, DECISION_SINGLE_OUTPUT_DMN_WITH_UNDERSCORE})
   @Test
-  public void testQueryByDecisionDefinitionNameLike() {
+  void testQueryByDecisionDefinitionNameLike() {
 
     startProcessInstanceAndEvaluateDecision();
     startProcessInstanceAndEvaluateDecisionWithUnderscore();
@@ -325,9 +342,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
 
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByInvalidDecisionDefinitionNameLike() {
+  void testQueryByInvalidDecisionDefinitionNameLike() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -343,9 +360,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     }
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     String processDefinitionKey = repositoryService.createProcessDefinitionQuery().singleResult().getKey();
 
     startProcessInstanceAndEvaluateDecision();
@@ -356,9 +373,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.processDefinitionKey("other process").count()).isZero();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     startProcessInstanceAndEvaluateDecision();
@@ -369,9 +386,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.processDefinitionId("other process").count()).isZero();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -383,9 +400,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.processInstanceId("other process").count()).isZero();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -396,9 +413,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.activityIdIn("task", "other activity").count()).isEqualTo(1L);
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByActivityInstanceId() {
+  void testQueryByActivityInstanceId() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -410,9 +427,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.activityInstanceIdIn(activityInstanceId, "other activity").count()).isEqualTo(1L);
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByEvaluatedBefore() {
+  void testQueryByEvaluatedBefore() {
     Date beforeEvaluated = new Date(1441612000);
     Date evaluated = new Date(1441613000);
     Date afterEvaluated = new Date(1441614000);
@@ -428,9 +445,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     ClockUtil.reset();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByEvaluatedAfter() {
+  void testQueryByEvaluatedAfter() {
     Date beforeEvaluated = new Date(1441612000);
     Date evaluated = new Date(1441613000);
     Date afterEvaluated = new Date(1441614000);
@@ -446,9 +463,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     ClockUtil.reset();
   }
 
-  @Deployment(resources = { DECISION_CASE, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_CASE, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByCaseDefinitionKey() {
+  void testQueryByCaseDefinitionKey() {
     createCaseInstanceAndEvaluateDecision();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
@@ -457,7 +474,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   }
 
   @Test
-  public void testQueryByInvalidCaseDefinitionKey() {
+  void testQueryByInvalidCaseDefinitionKey() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
     assertThat(query.caseDefinitionKey("invalid").count()).isZero();
@@ -469,9 +486,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     }
   }
 
-  @Deployment(resources = { DECISION_CASE, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_CASE, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByCaseDefinitionId() {
+  void testQueryByCaseDefinitionId() {
     CaseInstance caseInstance = createCaseInstanceAndEvaluateDecision();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
@@ -480,7 +497,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   }
 
   @Test
-  public void testQueryByInvalidCaseDefinitionId() {
+  void testQueryByInvalidCaseDefinitionId() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
     assertThat(query.caseDefinitionId("invalid").count()).isZero();
@@ -492,9 +509,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     }
   }
 
-  @Deployment(resources = { DECISION_CASE, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_CASE, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByCaseInstanceId() {
+  void testQueryByCaseInstanceId() {
     CaseInstance caseInstance = createCaseInstanceAndEvaluateDecision();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
@@ -503,7 +520,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   }
 
   @Test
-  public void testQueryByInvalidCaseInstanceId() {
+  void testQueryByInvalidCaseInstanceId() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
     assertThat(query.caseInstanceId("invalid").count()).isZero();
@@ -515,9 +532,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     }
   }
 
-  @Deployment(resources = { DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByUserId() {
+  void testQueryByUserId() {
     evaluateDecisionWithAuthenticatedUser("demo");
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
@@ -525,9 +542,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.userId("demo").count()).isEqualTo(1L);
   }
 
-  @Deployment(resources = { DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testQueryByInvalidUserId() {
+  void testQueryByInvalidUserId() {
     evaluateDecisionWithAuthenticatedUser("demo");
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
@@ -541,9 +558,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     }
   }
 
-  @Deployment(resources = { DRG_DMN })
+  @Deployment(resources = {DRG_DMN})
   @Test
-  public void testQueryByRootDecisionInstanceId() {
+  void testQueryByRootDecisionInstanceId() {
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
       .variables(Variables.createVariables().putValue("temperature", 21).putValue("dayType", "Weekend"))
       .evaluate();
@@ -561,9 +578,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.rootDecisionInstanceId(requiredDecisionInstanceId2).count()).isZero();
   }
 
-  @Deployment(resources = { DRG_DMN })
+  @Deployment(resources = {DRG_DMN})
   @Test
-  public void testQueryByRootDecisionInstancesOnly() {
+  void testQueryByRootDecisionInstancesOnly() {
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
       .variables(Variables.createVariables().putValue("temperature", 21).putValue("dayType", "Weekend"))
       .evaluate();
@@ -575,9 +592,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.rootDecisionInstancesOnly().singleResult().getDecisionDefinitionKey()).isEqualTo(DISH_DECISION);
   }
 
-  @Deployment(resources = { DRG_DMN })
+  @Deployment(resources = {DRG_DMN})
   @Test
-  public void testQueryByDecisionRequirementsDefinitionId() {
+  void testQueryByDecisionRequirementsDefinitionId() {
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
       .variables(Variables.createVariables().putValue("temperature", 21).putValue("dayType", "Weekend"))
       .evaluate();
@@ -590,9 +607,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionRequirementsDefinitionId(decisionRequirementsDefinition.getId()).count()).isEqualTo(3L);
   }
 
-  @Deployment(resources = { DRG_DMN })
+  @Deployment(resources = {DRG_DMN})
   @Test
-  public void testQueryByDecisionRequirementsDefinitionKey() {
+  void testQueryByDecisionRequirementsDefinitionKey() {
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
       .variables(Variables.createVariables().putValue("temperature", 21).putValue("dayType", "Weekend"))
       .evaluate();
@@ -603,9 +620,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(query.decisionRequirementsDefinitionKey("dish").count()).isEqualTo(3L);
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testNativeQuery() {
+  void testNativeQuery() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -624,9 +641,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(nativeQueryWithParameter.parameter("decisionDefinitionKey", "other decision").list()).isEmpty();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testNativeCountQuery() {
+  void testNativeCountQuery() {
 
     startProcessInstanceAndEvaluateDecision();
 
@@ -638,9 +655,9 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     assertThat(nativeQuery.count()).isEqualTo(1L);
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
   @Test
-  public void testNativeQueryPaging() {
+  void testNativeQueryPaging() {
 
     startProcessInstanceAndEvaluateDecision();
     startProcessInstanceAndEvaluateDecision();

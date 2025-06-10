@@ -22,6 +22,11 @@ import static org.assertj.core.api.Assertions.fail;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Random;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -52,60 +57,47 @@ import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricJobLogTest {
+class HistoricJobLogTest {
 
   protected static final String CUSTOM_HOSTNAME = "TEST_HOST";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+  HistoryService historyService;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected ManagementService managementService;
-  protected HistoryService historyService;
+  boolean defaultEnsureJobDueDateSet;
+  String defaultHostname;
 
-  private boolean defaultEnsureJobDueDateSet;
-  protected String defaultHostname;
-
-  @Before
-  public void init() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    managementService = engineRule.getManagementService();
-    historyService = engineRule.getHistoryService();
-
+  @BeforeEach
+  void init() {
     defaultEnsureJobDueDateSet = processEngineConfiguration.isEnsureJobDueDateNotNull();
     defaultHostname = processEngineConfiguration.getHostname();
     processEngineConfiguration.setHostname(CUSTOM_HOSTNAME);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
     processEngineConfiguration.setHostname(defaultHostname);
     ClockUtil.reset();
@@ -113,7 +105,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testCreateHistoricJobLogProperties() {
+  void testCreateHistoricJobLogProperties() {
     runtimeService.startProcessInstanceByKey("process");
 
     Job job = managementService
@@ -153,7 +145,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testFailedHistoricJobLogProperties() {
+  void testFailedHistoricJobLogProperties() {
     runtimeService.startProcessInstanceByKey("process");
 
     JobEntity job = (JobEntity) managementService
@@ -203,7 +195,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testSuccessfulHistoricJobLogProperties() {
+  void testSuccessfulHistoricJobLogProperties() {
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", false));
 
     Job job = managementService
@@ -245,7 +237,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testDeletedHistoricJobLogProperties() {
+  void testDeletedHistoricJobLogProperties() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     Job job = managementService
@@ -287,7 +279,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testAsyncBeforeJobHandlerType() {
+  void testAsyncBeforeJobHandlerType() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(false);
 
     runtimeService.startProcessInstanceByKey("process");
@@ -313,7 +305,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testAsyncBeforeJobHandlerTypeDueDateSet() {
+  void testAsyncBeforeJobHandlerTypeDueDateSet() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(true);
     Date testDate = ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -340,7 +332,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testAsyncAfterJobHandlerType() {
+  void testAsyncAfterJobHandlerType() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(false);
 
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", false));
@@ -374,7 +366,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testAsyncAfterJobHandlerTypeDueDateSet() {
+  void testAsyncAfterJobHandlerTypeDueDateSet() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(true);
     Date testDate = ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -409,7 +401,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuationWithLongId.bpmn20.xml"})
   @Test
-  public void testSuccessfulHistoricJobLogEntryStoredForLongActivityId() {
+  void testSuccessfulHistoricJobLogEntryStoredForLongActivityId() {
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", false));
 
     Job job = managementService
@@ -430,7 +422,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testStartTimerEvent.bpmn20.xml"})
   @Test
-  public void testStartTimerEventJobHandlerType() {
+  void testStartTimerEventJobHandlerType() {
     Job job = managementService
         .createJobQuery()
         .singleResult();
@@ -452,7 +444,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testStartTimerEventInsideEventSubProcess.bpmn20.xml"})
   @Test
-  public void testStartTimerEventInsideEventSubProcessJobHandlerType() {
+  void testStartTimerEventInsideEventSubProcessJobHandlerType() {
     runtimeService.startProcessInstanceByKey("process");
 
     Job job = managementService
@@ -476,7 +468,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testIntermediateTimerEvent.bpmn20.xml"})
   @Test
-  public void testIntermediateTimerEventJobHandlerType() {
+  void testIntermediateTimerEventJobHandlerType() {
     runtimeService.startProcessInstanceByKey("process");
 
     Job job = managementService
@@ -500,7 +492,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testBoundaryTimerEvent.bpmn20.xml"})
   @Test
-  public void testBoundaryTimerEventJobHandlerType() {
+  void testBoundaryTimerEventJobHandlerType() {
     runtimeService.startProcessInstanceByKey("process");
 
     Job job = managementService
@@ -527,7 +519,7 @@ public class HistoricJobLogTest {
       "org/operaton/bpm/engine/test/history/HistoricJobLogTest.testThrowingSignalEventAsync.bpmn20.xml"
   })
   @Test
-  public void testCatchingSignalEventJobHandlerType() {
+  void testCatchingSignalEventJobHandlerType() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(false);
 
     runtimeService.startProcessInstanceByKey("catchSignal");
@@ -554,11 +546,11 @@ public class HistoricJobLogTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/history/HistoricJobLogTest.testCatchingSignalEvent.bpmn20.xml",
-    "org/operaton/bpm/engine/test/history/HistoricJobLogTest.testThrowingSignalEventAsync.bpmn20.xml"
+      "org/operaton/bpm/engine/test/history/HistoricJobLogTest.testCatchingSignalEvent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricJobLogTest.testThrowingSignalEventAsync.bpmn20.xml"
   })
   @Test
-  public void testCatchingSignalEventJobHandlerTypeDueDateSet() {
+  void testCatchingSignalEventJobHandlerTypeDueDateSet() {
     processEngineConfiguration.setEnsureJobDueDateNotNull(true);
     Date testDate = ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -590,7 +582,7 @@ public class HistoricJobLogTest {
       "org/operaton/bpm/engine/test/history/HistoricJobLogTest.testThrowingSignalEventAsync.bpmn20.xml"
   })
   @Test
-  public void testCatchingSignalEventActivityId() {
+  void testCatchingSignalEventActivityId() {
     // given + when (1)
     String processInstanceId = runtimeService.startProcessInstanceByKey("catchSignal").getId();
     runtimeService.startProcessInstanceByKey("throwSignal");
@@ -644,7 +636,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testFailedJobEvents() {
+  void testFailedJobEvents() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -756,7 +748,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testFailedJobEventsExecutedByJobExecutor() {
+  void testFailedJobEventsExecutedByJobExecutor() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -822,7 +814,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testSuccessfulJobEvent() {
+  void testSuccessfulJobEvent() {
     // given
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", false));
 
@@ -854,7 +846,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testSuccessfulJobEventExecutedByJobExecutor() {
+  void testSuccessfulJobEventExecutedByJobExecutor() {
     // given
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", false));
 
@@ -886,7 +878,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testSuccessfulAndFailedJobEvents() {
+  void testSuccessfulAndFailedJobEvents() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -971,7 +963,7 @@ public class HistoricJobLogTest {
 
   @Deployment
   @Test
-  public void testTerminateEndEvent() {
+  void testTerminateEndEvent() {
     // given
     runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -1040,7 +1032,7 @@ public class HistoricJobLogTest {
       "org/operaton/bpm/engine/test/history/HistoricJobLogTest.testSubProcessWithErrorEndEvent.bpmn20.xml"
   })
   @Test
-  public void testErrorEndEventInterruptingCallActivity() {
+  void testErrorEndEventInterruptingCallActivity() {
     // given
     runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -1109,7 +1101,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testDeletedJob() {
+  void testDeletedJob() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -1141,7 +1133,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testDeletedProcessInstance() {
+  void testDeletedProcessInstance() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -1173,7 +1165,7 @@ public class HistoricJobLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testExceptionStacktrace() {
+  void testExceptionStacktrace() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -1201,7 +1193,7 @@ public class HistoricJobLogTest {
   }
 
   @Test
-  public void shouldGetJobExceptionStacktraceUnexistingJobId() {
+  void shouldGetJobExceptionStacktraceUnexistingJobId() {
     try {
       historyService.getHistoricJobLogExceptionStacktrace("unexistingjob");
       fail("ProcessEngineException expected");
@@ -1211,7 +1203,7 @@ public class HistoricJobLogTest {
   }
 
   @Test
-  public void shouldGetJobExceptionStacktraceNullJobId() {
+  void shouldGetJobExceptionStacktraceNullJobId() {
     try {
       historyService.getHistoricJobLogExceptionStacktrace(null);
       fail("ProcessEngineException expected");
@@ -1222,7 +1214,7 @@ public class HistoricJobLogTest {
 
   @Deployment
   @Test
-  public void testDifferentExceptions() {
+  void testDifferentExceptions() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -1285,7 +1277,7 @@ public class HistoricJobLogTest {
 
   @Deployment
   @Test
-  public void testThrowExceptionWithoutMessage() {
+  void testThrowExceptionWithoutMessage() {
     // given
     runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -1317,7 +1309,7 @@ public class HistoricJobLogTest {
 
   @Deployment
   @Test
-  public void testThrowExceptionMessageTruncation() {
+  void testThrowExceptionMessageTruncation() {
     // given
     // a random string of size 10000 using characters [0-1]
     String exceptionMessage = new BigInteger(10000, new Random()).toString(2);
@@ -1348,7 +1340,7 @@ public class HistoricJobLogTest {
   }
 
   @Test
-  public void testAsyncAfterJobDefinitionAfterEngineRestart() {
+  void testAsyncAfterJobDefinitionAfterEngineRestart() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
@@ -1392,7 +1384,7 @@ public class HistoricJobLogTest {
   }
 
   @Test
-  public void testDeleteByteArray() {
+  void testDeleteByteArray() {
     final String processDefinitionId = "myProcessDefition";
 
     processEngineConfiguration.getCommandExecutorTxRequiresNew().execute((Command<Void>) commandContext -> {

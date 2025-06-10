@@ -19,22 +19,19 @@ package org.operaton.bpm.engine.test.dmn.businessruletask;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.exception.dmn.DecisionDefinitionNotFoundException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 public class DmnBusinessRuleTaskTest {
 
@@ -68,22 +65,16 @@ public class DmnBusinessRuleTaskTest {
                     .operatonAsyncBefore()
               .done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RuntimeService runtimeService;
 
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-  }
-
-  @Deployment(resources = { DECISION_PROCESS, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN})
   @Test
-  public void decisionRef() {
+  void decisionRef() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
 
@@ -91,21 +82,21 @@ public class DmnBusinessRuleTaskTest {
     assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN12 })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN12})
   @Test
-  public void testDmn12Decision() {
+  void testDmn12Decision() {
     decisionRef();
   }
 
-  @Deployment(resources = { DECISION_PROCESS, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN13 })
+  @Deployment(resources = {DECISION_PROCESS, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN13})
   @Test
-  public void testDmn13Decision() {
+  void testDmn13Decision() {
     decisionRef();
   }
 
   @Deployment(resources = DECISION_PROCESS)
   @Test
-  public void noDecisionFound() {
+  void noDecisionFound() {
 
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
@@ -115,7 +106,7 @@ public class DmnBusinessRuleTaskTest {
 
   @Deployment(resources = DECISION_PROCESS_EXPRESSION)
   @Test
-  public void noDecisionFoundRefByExpression() {
+  void noDecisionFoundRefByExpression() {
 
     // when/then
     assertThatThrownBy(() -> startExpressionProcess("testDecision", 1))
@@ -123,27 +114,27 @@ public class DmnBusinessRuleTaskTest {
       .hasMessageContaining("no decision definition deployed with key = 'testDecision', version = '1' and tenant-id 'null");
   }
 
-  @Deployment(resources = { DECISION_PROCESS_LATEST, DECISION_OKAY_DMN })
+  @Deployment(resources = {DECISION_PROCESS_LATEST, DECISION_OKAY_DMN})
   @Test
-  public void decisionRefLatestBinding() {
+  void decisionRefLatestBinding() {
     testRule.deploy(DECISION_NOT_OKAY_DMN);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     assertThat(getDecisionResult(processInstance)).isEqualTo("not okay");
   }
 
-  @Deployment(resources = { DECISION_PROCESS_DEPLOYMENT, DECISION_OKAY_DMN })
+  @Deployment(resources = {DECISION_PROCESS_DEPLOYMENT, DECISION_OKAY_DMN})
   @Test
-  public void decisionRefDeploymentBinding() {
+  void decisionRefDeploymentBinding() {
     testRule.deploy(DECISION_NOT_OKAY_DMN);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
   }
 
-  @Deployment(resources = { DECISION_PROCESS_VERSION, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN })
+  @Deployment(resources = {DECISION_PROCESS_VERSION, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN})
   @Test
-  public void decisionRefVersionBinding() {
+  void decisionRefVersionBinding() {
     testRule.deploy(DECISION_NOT_OKAY_DMN);
     testRule.deploy(DECISION_OKAY_DMN);
 
@@ -155,7 +146,7 @@ public class DmnBusinessRuleTaskTest {
   }
 
   @Test
-  public void decisionRefVersionTagBinding() {
+  void decisionRefVersionTagBinding() {
     // given
     testRule.deploy(DECISION_VERSION_TAG_OKAY_DMN);
     testRule.deploy(BPMN_VERSION_TAG_BINDING);
@@ -170,7 +161,7 @@ public class DmnBusinessRuleTaskTest {
   }
 
   @Test
-  public void decisionRefVersionTagBindingExpression() {
+  void decisionRefVersionTagBindingExpression() {
     // given
     testRule.deploy(DECISION_VERSION_TAG_OKAY_DMN);
     testRule.deploy(Bpmn.createExecutableProcess("process")
@@ -196,7 +187,7 @@ public class DmnBusinessRuleTaskTest {
   }
 
   @Test
-  public void decisionRefVersionTagBindingWithoutVersionTag() {
+  void decisionRefVersionTagBindingWithoutVersionTag() {
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -216,7 +207,7 @@ public class DmnBusinessRuleTaskTest {
   }
 
   @Test
-  public void decisionRefVersionTagBindingNoneDecisionDefinition() {
+  void decisionRefVersionTagBindingNoneDecisionDefinition() {
     // given
     testRule.deploy(BPMN_VERSION_TAG_BINDING);
 
@@ -227,7 +218,7 @@ public class DmnBusinessRuleTaskTest {
   }
 
   @Test
-  public void decisionRefVersionTagBindingTwoDecisionDefinitions() {
+  void decisionRefVersionTagBindingTwoDecisionDefinitions() {
     // given
     testRule.deploy(DECISION_VERSION_TAG_OKAY_DMN);
     testRule.deploy(DECISION_VERSION_TAG_OKAY_DMN);
@@ -241,7 +232,7 @@ public class DmnBusinessRuleTaskTest {
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_POJO_DMN})
   @Test
-  public void testPojo() {
+  void testPojo() {
     VariableMap variables = Variables.createVariables()
       .putValue("pojo", new TestPojo("okay", 13.37));
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -249,9 +240,9 @@ public class DmnBusinessRuleTaskTest {
     assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
   }
 
-  @Deployment( resources = DECISION_LITERAL_EXPRESSION_DMN )
+  @Deployment(resources = DECISION_LITERAL_EXPRESSION_DMN)
   @Test
-  public void evaluateDecisionWithLiteralExpression() {
+  void evaluateDecisionWithLiteralExpression() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
         .businessRuleTask()
@@ -269,9 +260,9 @@ public class DmnBusinessRuleTaskTest {
     assertThat(getDecisionResult(processInstance)).isEqualTo(5);
   }
 
-  @Deployment( resources = DRD_DISH_RESOURCE )
+  @Deployment(resources = DRD_DISH_RESOURCE)
   @Test
-  public void evaluateDecisionWithRequiredDecisions() {
+  void evaluateDecisionWithRequiredDecisions() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
         .businessRuleTask()
@@ -289,9 +280,9 @@ public class DmnBusinessRuleTaskTest {
     assertThat(getDecisionResult(processInstance)).isEqualTo("Light salad");
   }
 
-  @Deployment(resources = { DECISION_PROCESS_COMPOSITEEXPRESSION, DECISION_OKAY_DMN})
+  @Deployment(resources = {DECISION_PROCESS_COMPOSITEEXPRESSION, DECISION_OKAY_DMN})
   @Test
-  public void decisionRefWithCompositeExpression() {
+  void decisionRefWithCompositeExpression() {
     VariableMap variables = Variables.createVariables()
       .putValue("version", 1);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcessCompositeExpression", variables);

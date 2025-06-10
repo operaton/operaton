@@ -21,50 +21,39 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.writeTempFormFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.io.TempDir;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TemporaryFolder;
+import org.operaton.bpm.engine.repository.OperatonFormDefinition;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class OperatonFormDefinitionDeploymentTest {
+@ExtendWith(ProcessEngineExtension.class)
+class OperatonFormDefinitionDeploymentTest {
 
   protected static final String SIMPLE_FORM = "org/operaton/bpm/engine/test/form/deployment/OperatonFormDefinitionDeploymentTest.simple_form.form";
   protected static final String SIMPLE_FORM_DUPLICATE = "org/operaton/bpm/engine/test/form/deployment/OperatonFormDefinitionDeploymentTest.simple_form_duplicate.form";
   protected static final String COMPLEX_FORM = "org/operaton/bpm/engine/test/form/deployment/OperatonFormDefinitionDeploymentTest.complex_form.form";
   protected static final String SIMPLE_BPMN = "org/operaton/bpm/engine/test/form/deployment/OperatonFormDefinitionDeploymentTest.simpleBPMN.bpmn";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected TemporaryFolder tempFolder = new TemporaryFolder();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule).around(tempFolder);
+  @TempDir
+  File tempFolder;
 
   RepositoryService repositoryService;
   ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
-  public void init() {
-    repositoryService = engineRule.getRepositoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     for (Deployment deployment : deployments) {
       repositoryService.deleteDeployment(deployment.getId());
@@ -72,7 +61,7 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldDeployTheSameFormTwiceWithoutDuplicateFiltering() {
+  void shouldDeployTheSameFormTwiceWithoutDuplicateFiltering() {
     // when
     createDeploymentBuilder(false).addClasspathResource(SIMPLE_FORM).deploy();
     createDeploymentBuilder(false).addClasspathResource(SIMPLE_FORM).deploy();
@@ -89,7 +78,7 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldNotDeployTheSameFormTwiceWithDuplicateFiltering() {
+  void shouldNotDeployTheSameFormTwiceWithDuplicateFiltering() {
     // when
     createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).deploy();
     createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).deploy();
@@ -107,7 +96,7 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldNotDeployTheSameFormTwiceWithDuplicateFilteringAndAdditionalResources() {
+  void shouldNotDeployTheSameFormTwiceWithDuplicateFilteringAndAdditionalResources() {
     // when
     Deployment firstDeployment = createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).deploy();
     createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM)
@@ -126,7 +115,7 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldDeployDifferentFormsFromDifferentDeployments() {
+  void shouldDeployDifferentFormsFromDifferentDeployments() {
     // when
     createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).deploy();
     createDeploymentBuilder(true).addClasspathResource(COMPLEX_FORM).deploy();
@@ -143,7 +132,7 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldDeployDifferentFormsFromOneDeployment() {
+  void shouldDeployDifferentFormsFromOneDeployment() {
     // when
     createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).addClasspathResource(COMPLEX_FORM).deploy();
 
@@ -160,7 +149,7 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldFailDeploymentWithMultipleFormsDuplicateId() {
+  void shouldFailDeploymentWithMultipleFormsDuplicateId() {
     // given
     var deploymentBuilder = createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).addClasspathResource(SIMPLE_FORM_DUPLICATE);
     // when
@@ -170,7 +159,7 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldDeleteFormDefinitionWhenDeletingDeployment() {
+  void shouldDeleteFormDefinitionWhenDeletingDeployment() {
     // given
     Deployment deployment = createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).addClasspathResource(COMPLEX_FORM).deploy();
     List<OperatonFormDefinition> formDefinitions = findAllOperatonFormDefinitionEntities(processEngineConfiguration);
@@ -190,17 +179,19 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldUpdateVersionForChangedFormResource() throws IOException {
+  void shouldUpdateVersionForChangedFormResource() throws IOException {
     // given
     String fileName = "myForm.form";
     String formContent1 = "{\"id\"=\"myForm\",\"type\": \"default\",\"components\":[{\"key\": \"button3\",\"label\": \"Button\",\"type\": \"button\"}]}";
     String formContent2 = "{\"id\"=\"myForm\",\"type\": \"default\",\"components\": []}";
 
-    createDeploymentBuilder(true).addInputStream(fileName, writeTempFormFile(fileName, formContent1, tempFolder)).deploy();
-
+    try (FileInputStream input = writeTempFormFile(fileName, formContent1, tempFolder)) {
+      createDeploymentBuilder(true).addInputStream(fileName, input).deploy();
+    }
     // when deploy changed file
-    createDeploymentBuilder(true).addInputStream(fileName, writeTempFormFile(fileName, formContent2, tempFolder)).deploy();
-
+    try (FileInputStream input = writeTempFormFile(fileName, formContent2, tempFolder)) {
+      createDeploymentBuilder(true).addInputStream(fileName, input).deploy();
+    }
     // then
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     assertThat(deployments).hasSize(2);
@@ -213,17 +204,19 @@ public class OperatonFormDefinitionDeploymentTest {
   }
 
   @Test
-  public void shouldUpdateVersionForChangedFormResourceWithTenant() throws IOException {
+  void shouldUpdateVersionForChangedFormResourceWithTenant() throws IOException {
     // given
     String fileName = "myForm.form";
     String formContent1 = "{\"id\"=\"myForm\",\"type\": \"default\",\"components\":[{\"key\": \"button3\",\"label\": \"Button\",\"type\": \"button\"}]}";
     String formContent2 = "{\"id\"=\"myForm\",\"type\": \"default\",\"components\": []}";
 
-    createDeploymentBuilder(true).tenantId("tenant1").addInputStream(fileName, writeTempFormFile(fileName, formContent1, tempFolder)).deploy();
-
+    try (FileInputStream input = writeTempFormFile(fileName, formContent1, tempFolder)) {
+      createDeploymentBuilder(true).tenantId("tenant1").addInputStream(fileName, input).deploy();
+    }
     // when deploy changed file
-    createDeploymentBuilder(true).tenantId("tenant1").addInputStream(fileName, writeTempFormFile(fileName, formContent2, tempFolder)).deploy();
-
+    try (FileInputStream input = writeTempFormFile(fileName, formContent2, tempFolder)) {
+      createDeploymentBuilder(true).tenantId("tenant1").addInputStream(fileName, input).deploy();
+    }
     // then
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     assertThat(deployments).hasSize(2);

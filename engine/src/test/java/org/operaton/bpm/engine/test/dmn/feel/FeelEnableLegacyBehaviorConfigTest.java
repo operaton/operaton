@@ -16,43 +16,33 @@
  */
 package org.operaton.bpm.engine.test.dmn.feel;
 
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.dmn.feel.impl.juel.FeelSyntaxException;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.bpm.engine.variable.Variables;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class FeelEnableLegacyBehaviorConfigTest {
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.dmn.feel.impl.juel.FeelSyntaxException;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.variable.Variables;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setDmnFeelEnableLegacyBehavior(true));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+class FeelEnableLegacyBehaviorConfigTest {
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setDmnFeelEnableLegacyBehavior(true))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
 
-  protected DecisionService decisionService;
-
-  @Before
-  public void setup() {
-    decisionService = engineRule.getProcessEngine().getDecisionService();
-  }
+  DecisionService decisionService;
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/literal-expression.dmn"})
-  public void shouldEvaluateLiteralExpression() {
+  void shouldEvaluateLiteralExpression() {
     // given
 
     // when
@@ -65,7 +55,7 @@ public class FeelEnableLegacyBehaviorConfigTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/input-expression.dmn"})
-  public void shouldEvaluateInputExpression() {
+  void shouldEvaluateInputExpression() {
     // given
 
     // when
@@ -78,7 +68,7 @@ public class FeelEnableLegacyBehaviorConfigTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/input-rule.dmn"})
-  public void shouldEvaluateInputRule() {
+  void shouldEvaluateInputRule() {
     // given
 
     // when/then
@@ -91,7 +81,7 @@ public class FeelEnableLegacyBehaviorConfigTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/output-rule.dmn"})
-  public void shouldEvaluateOutputRule() {
+  void shouldEvaluateOutputRule() {
     // given
 
     // when

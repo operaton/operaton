@@ -22,23 +22,19 @@ import java.util.Collection;
 import java.util.List;
 
 import org.assertj.core.util.Arrays;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.OperatonFormDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.OperatonFormUtils;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class OperatonFormDefinitionDeployerTest {
 
   protected static final String BPMN_USER_TASK_FORM_REF_DEPLOYMENT = "org/operaton/bpm/engine/test/form/deployment/OperatonFormDefinitionDeployerTest.shouldDeployProcessWithOperatonFormDefinitionBindingDeployment.bpmn";
@@ -46,11 +42,10 @@ public class OperatonFormDefinitionDeployerTest {
   protected static final String BPMN_USER_TASK_FORM_REF_VERSION = "org/operaton/bpm/engine/test/form/deployment/OperatonFormDefinitionDeployerTest.shouldDeployProcessWithOperatonFormDefinitionBindingVersion.bpmn";
   protected static final String SIMPLE_FORM = "org/operaton/bpm/engine/test/form/deployment/OperatonFormDefinitionDeployerTest.simple_form.form";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   RepositoryService repositoryService;
   ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -58,7 +53,7 @@ public class OperatonFormDefinitionDeployerTest {
   @Parameter(0)
   public String bpmnResource;
 
-  @Parameters(name = "{0}")
+  @Parameters
   public static Collection<Object> params() {
     return Arrays.asList(new String[] {
         BPMN_USER_TASK_FORM_REF_DEPLOYMENT,
@@ -66,13 +61,7 @@ public class OperatonFormDefinitionDeployerTest {
         BPMN_USER_TASK_FORM_REF_VERSION });
   }
 
-  @Before
-  public void init() {
-    repositoryService = engineRule.getRepositoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @Test
+  @TestTemplate
   public void shouldDeployProcessWithOperatonFormDefinition() {
     String deploymentId = testRule.deploy(bpmnResource, SIMPLE_FORM).getId();
 

@@ -23,35 +23,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
-public class DmnExpressionLanguageTest {
+@ExtendWith(ProcessEngineExtension.class)
+class DmnExpressionLanguageTest {
 
   private static final String JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN =
       "org/operaton/bpm/engine/test/dmn/el/DmnExpressionLanguageTest.dmn";
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  private DecisionService decisionService;
-
-  @Before
-  public void setUp() {
-    decisionService = engineRule.getDecisionService();
-  }
+  DecisionService decisionService;
 
   @Test
   @Deployment(resources = JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN)
-  public void testJuelDoesNotShadowInnerProperty() {
+  void testJuelDoesNotShadowInnerProperty() {
     VariableMap inputs = Variables.createVariables();
     inputs.putValue("testExpr", "TestProperty");
 
@@ -67,7 +58,7 @@ public class DmnExpressionLanguageTest {
 
   @Test
   @Deployment(resources = JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN)
-  public void testJuelResolvesListIndex() {
+  void testJuelResolvesListIndex() {
     VariableMap inputs = Variables.createVariables();
     inputs.putValue("testExpr", "TestListIndex");
 

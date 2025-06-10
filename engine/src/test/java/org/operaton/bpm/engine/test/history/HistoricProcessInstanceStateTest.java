@@ -16,28 +16,26 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static junit.framework.TestCase.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.EndEvent;
 import org.operaton.bpm.model.bpmn.instance.TerminateEventDefinition;
-
-import java.util.List;
-
-import static junit.framework.TestCase.fail;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Askar Akhmerov
@@ -49,16 +47,13 @@ public class HistoricProcessInstanceStateTest {
   public static final String PROCESS_ID = "process1";
   public static final String REASON = "very important reason";
 
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule processEngineTestRule = new ProcessEngineTestRule(processEngineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain
-      .outerRule(processEngineTestRule)
-      .around(processEngineRule);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension processEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
 
   @Test
-  public void testTerminatedInternalWithGateway() {
+  void testTerminatedInternalWithGateway() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .parallelGateway()
@@ -74,7 +69,7 @@ public class HistoricProcessInstanceStateTest {
   }
 
   @Test
-  public void testCompletedOnEndEvent() {
+  void testCompletedOnEndEvent() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .endEvent()
@@ -89,7 +84,7 @@ public class HistoricProcessInstanceStateTest {
 
 
   @Test
-  public void testCompletionWithSuspension() {
+  void testCompletionWithSuspension() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .userTask()
@@ -125,7 +120,7 @@ public class HistoricProcessInstanceStateTest {
   }
 
   @Test
-  public void testSuspensionByProcessDefinition() {
+  void testSuspensionByProcessDefinition() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .userTask()
@@ -169,7 +164,7 @@ public class HistoricProcessInstanceStateTest {
 
 
   @Test
-  public void testCancellationState() {
+  void testCancellationState() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .userTask()
@@ -189,7 +184,7 @@ public class HistoricProcessInstanceStateTest {
   }
 
   @Test
-  public void testSateOfScriptTaskProcessWithTransactionCommitAndException() {
+  void testSateOfScriptTaskProcessWithTransactionCommitAndException() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         //add wait state
@@ -219,7 +214,7 @@ public class HistoricProcessInstanceStateTest {
   }
 
   @Test
-  public void testErrorEndEvent() {
+  void testErrorEndEvent() {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .endEvent()
@@ -235,7 +230,7 @@ public class HistoricProcessInstanceStateTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricProcessInstanceStateTest.testWithCallActivity.bpmn"})
-  public void testWithCallActivity() {
+  void testWithCallActivity() {
     processEngineRule.getRuntimeService().startProcessInstanceByKey("Main_Process");
     assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list()).isEmpty();
 
@@ -255,7 +250,7 @@ public class HistoricProcessInstanceStateTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/CAM-9934.bpmn"})
-  public void shouldSetCorrectInstanceStateOnInterruption() {
+  void shouldSetCorrectInstanceStateOnInterruption() {
     // given
     processEngineRule.getRuntimeService().startProcessInstanceByKey("Process_1");
 
@@ -274,7 +269,7 @@ public class HistoricProcessInstanceStateTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/CAM-9934.bpmn"})
-  public void shouldSetRemovalTimeOnHistoricActivityInstances() {
+  void shouldSetRemovalTimeOnHistoricActivityInstances() {
     // given
     processEngineRule.getProcessEngineConfiguration()
         .setHistoryRemovalTimeStrategy("start");

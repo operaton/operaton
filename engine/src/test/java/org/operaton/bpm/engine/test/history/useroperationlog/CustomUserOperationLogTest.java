@@ -16,45 +16,45 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Arrays;
+import java.util.UUID;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.oplog.UserOperationLogContext;
 import org.operaton.bpm.engine.impl.oplog.UserOperationLogContextEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-
-import java.util.Arrays;
-import java.util.UUID;
-
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 public class CustomUserOperationLogTest  {
 
     public static final String USER_ID = "demo";
 
-    @ClassRule
-    public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-            "org/operaton/bpm/engine/test/history/useroperationlog/enable.legacy.user.operation.log.operaton.cfg.xml");
-
+    @RegisterExtension
+    static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .configurationResource("org/operaton/bpm/engine/test/history/useroperationlog/enable.legacy.user.operation.log.operaton.cfg.xml")
+      .build();
 
     private static final String TASK_ID = UUID.randomUUID().toString();
 
-    private CommandExecutor commandExecutor;
-    private HistoryService historyService;
+    HistoryService historyService;
 
-    @Before
-    public void setUp() {
-        commandExecutor = ((ProcessEngineConfigurationImpl)bootstrapRule.getProcessEngine().getProcessEngineConfiguration()).getCommandExecutorTxRequired();
-        historyService = bootstrapRule.getProcessEngine().getHistoryService();
+    CommandExecutor commandExecutor;
+
+  @BeforeEach
+  void setUp() {
+        commandExecutor = ((ProcessEngineConfigurationImpl)engineRule.getProcessEngine().getProcessEngineConfiguration()).getCommandExecutorTxRequired();
     }
 
-    @Test
-    public void testDoNotOverwriteUserId() {
+  @Test
+  void testDoNotOverwriteUserId() {
         commandExecutor.execute(commandContext -> {
           final UserOperationLogContext userOperationLogContext = new UserOperationLogContext();
           userOperationLogContext.setUserId("kermit");

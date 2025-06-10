@@ -20,42 +20,41 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class UserOperationLogProcessInstanceTest {
+@ExtendWith(ProcessEngineExtension.class)
+class UserOperationLogProcessInstanceTest {
 
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
+  IdentityService identityService;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  FormService formService;
+  HistoryService historyService;
 
-  protected RuntimeService runtimeService;
-  protected FormService formService;
-  protected HistoryService historyService;
-
-  @Before
-  public void setup() {
-    runtimeService = rule.getRuntimeService();
-    formService = rule.getFormService();
-    historyService = rule.getHistoryService();
-    rule.getIdentityService().setAuthenticatedUserId("testUser");
+  @BeforeEach
+  void setup() {
+    identityService.setAuthenticatedUserId("testUser");
   }
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void shouldProduceUserOperationLogStartProcessInstanceByKey() {
+  void shouldProduceUserOperationLogStartProcessInstanceByKey() {
     // when
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -67,9 +66,9 @@ public class UserOperationLogProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void shouldProduceUserOperationLogStartProcessInstanceById() {
+  void shouldProduceUserOperationLogStartProcessInstanceById() {
     // given
-    ProcessDefinition processDefinition = rule.getRepositoryService().createProcessDefinitionQuery().singleResult();
+    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     // when
     ProcessInstance instance = runtimeService.startProcessInstanceById(processDefinition.getId());
@@ -83,9 +82,9 @@ public class UserOperationLogProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void shouldProduceUserOperationLogStartProcessInstanceAtActivity() {
+  void shouldProduceUserOperationLogStartProcessInstanceAtActivity() {
     // given
-    ProcessDefinition processDefinition = rule.getRepositoryService().createProcessDefinitionQuery().singleResult();
+    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     // when
     ProcessInstance instance = runtimeService.createProcessInstanceById(processDefinition.getId()).startBeforeActivity("theTask").execute();
@@ -99,9 +98,9 @@ public class UserOperationLogProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcessWithStartForm.bpmn20.xml"})
-  public void shouldProduceUserOperationLogStartProcessInstanceBySubmitStartForm() {
+  void shouldProduceUserOperationLogStartProcessInstanceBySubmitStartForm() {
     // given
-    ProcessDefinition processDefinition = rule.getRepositoryService().createProcessDefinitionQuery().singleResult();
+    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     Map<String, Object> properties = new HashMap<>();
     properties.put("itemName", "apple");
     properties.put("amount", 5);

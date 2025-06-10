@@ -16,12 +16,17 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -34,17 +39,12 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.IncidentQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  *
@@ -63,26 +63,18 @@ public class HistoricIncidentQueryTest {
     .endEvent("end")
     .done();
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testHelper);
-
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected HistoryService historyService;
-
-  @Before
-  public void initServices() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    historyService = engineRule.getHistoryService();
-  }
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  HistoryService historyService;
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testHistoricIncidentQueryCreateEndAfterBefore() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testHistoricIncidentQueryCreateEndAfterBefore() {
 
     // given
     // 1 failed instance of "oneFailingServiceTaskProcess"
@@ -117,8 +109,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByIncidentId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByIncidentId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     String incidentId = historyService.createHistoricIncidentQuery().singleResult().getId();
@@ -131,8 +123,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByInvalidIncidentId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByInvalidIncidentId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
@@ -147,8 +139,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByIncidentType() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByIncidentType() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
@@ -159,7 +151,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentType() {
+  void testQueryByInvalidIncidentType() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.incidentType("invalid").list()).isEmpty();
@@ -172,8 +164,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByIncidentMessage() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByIncidentMessage() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
@@ -184,7 +176,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentMessage() {
+  void testQueryByInvalidIncidentMessage() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.incidentMessage("invalid").list()).isEmpty();
@@ -197,8 +189,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByIncidentMessageLike() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByIncidentMessageLike() {
 
     startProcessInstance(PROCESS_DEFINITION_KEY);
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
@@ -210,8 +202,8 @@ public class HistoricIncidentQueryTest {
 
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByProcessDefinitionId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByProcessDefinitionId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     ProcessInstance pi = runtimeService.createProcessInstanceQuery().singleResult();
@@ -224,7 +216,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessDefinitionId() {
+  void testQueryByInvalidProcessDefinitionId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.processDefinitionId("invalid").list()).isEmpty();
@@ -237,8 +229,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByProcessDefinitionKey() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByProcessDefinitionKey() {
     // given
     // 1 failed instance of "oneFailingServiceTaskProcess"
     startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -270,7 +262,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessDefinitionKeys() {
+  void testQueryByInvalidProcessDefinitionKeys() {
     // given
     IncidentQuery incidentQuery = runtimeService.createIncidentQuery();
 
@@ -280,7 +272,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByOneInvalidProcessDefinitionKey() {
+  void testQueryByOneInvalidProcessDefinitionKey() {
     // given
     IncidentQuery incidentQuery = runtimeService.createIncidentQuery();
 
@@ -290,8 +282,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByProcessInstanceId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByProcessInstanceId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     ProcessInstance pi = runtimeService.createProcessInstanceQuery().singleResult();
@@ -304,7 +296,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessInstanceId() {
+  void testQueryByInvalidProcessInstanceId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.processInstanceId("invalid").list()).isEmpty();
@@ -317,8 +309,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByExecutionId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByExecutionId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     ProcessInstance pi = runtimeService.createProcessInstanceQuery().singleResult();
@@ -331,7 +323,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidExecutionId() {
+  void testQueryByInvalidExecutionId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.executionId("invalid").list()).isEmpty();
@@ -344,8 +336,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByActivityId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByActivityId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
@@ -356,8 +348,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByInvalidActivityId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByInvalidActivityId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
@@ -372,8 +364,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByFailedActivityId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByFailedActivityId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
@@ -384,8 +376,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByFailedInvalidActivityId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByFailedInvalidActivityId() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
@@ -400,9 +392,9 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByCauseIncidentId() {
+  void testQueryByCauseIncidentId() {
     startProcessInstance("process");
 
     String processInstanceId = runtimeService.createProcessInstanceQuery()
@@ -422,7 +414,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidCauseIncidentId() {
+  void testQueryByInvalidCauseIncidentId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.causeIncidentId("invalid").list()).isEmpty();
@@ -435,9 +427,9 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByRootCauseIncidentId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByRootCauseIncidentId() {
     startProcessInstance("process");
 
     String processInstanceId = runtimeService.createProcessInstanceQuery()
@@ -457,7 +449,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidRootCauseIncidentId() {
+  void testQueryByInvalidRootCauseIncidentId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.rootCauseIncidentId("invalid").list()).isEmpty();
@@ -470,8 +462,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByConfiguration() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByConfiguration() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     String configuration = managementService.createJobQuery().singleResult().getId();
@@ -484,7 +476,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidConfigurationId() {
+  void testQueryByInvalidConfigurationId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.configuration("invalid").list()).isEmpty();
@@ -497,8 +489,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByHistoryConfiguration() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByHistoryConfiguration() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     // get the latest historic job log id
@@ -516,8 +508,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByNotExistingHistoryConfiguration() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByNotExistingHistoryConfiguration() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
@@ -528,7 +520,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidHistoryConfigurationId() {
+  void testQueryByInvalidHistoryConfigurationId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.historyConfiguration("invalid").list()).isEmpty();
@@ -541,8 +533,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByOpen() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByOpen() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
@@ -553,7 +545,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidOpen() {
+  void testQueryByInvalidOpen() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.open();
 
@@ -564,8 +556,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByResolved() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByResolved() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     String jobId = managementService.createJobQuery().singleResult().getId();
@@ -579,7 +571,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidResolved() {
+  void testQueryByInvalidResolved() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.resolved();
 
@@ -590,8 +582,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryByDeleted() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryByDeleted() {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     String processInstanceId = runtimeService.createProcessInstanceQuery().singleResult().getId();
@@ -605,7 +597,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidDeleted() {
+  void testQueryByInvalidDeleted() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
     var historicIncidentQuery = query.deleted();
 
@@ -616,7 +608,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByJobDefinitionId() {
+  void testQueryByJobDefinitionId() {
     String processDefinitionId1 = testHelper.deployAndGetDefinition(FAILING_SERVICE_TASK_MODEL).getId();
     String processDefinitionId2 = testHelper.deployAndGetDefinition(FAILING_SERVICE_TASK_MODEL).getId();
 
@@ -651,7 +643,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByUnknownJobDefinitionId() {
+  void testQueryByUnknownJobDefinitionId() {
     String processDefinitionId = testHelper.deployAndGetDefinition(FAILING_SERVICE_TASK_MODEL).getId();
 
     runtimeService.startProcessInstanceById(processDefinitionId);
@@ -665,7 +657,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByNullJobDefinitionId() {
+  void testQueryByNullJobDefinitionId() {
     var historicIncidentQuery = historyService.createHistoricIncidentQuery();
     try {
       historicIncidentQuery.jobDefinitionIdIn((String) null);
@@ -677,7 +669,7 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  public void testQueryByNullJobDefinitionIds() {
+  void testQueryByNullJobDefinitionIds() {
     var historicIncidentQuery = historyService.createHistoricIncidentQuery();
     try {
       historicIncidentQuery.jobDefinitionIdIn((String[]) null);
@@ -689,8 +681,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQueryPaging() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQueryPaging() {
     startProcessInstances(PROCESS_DEFINITION_KEY, 4);
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
@@ -702,8 +694,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQuerySorting() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQuerySorting() {
     startProcessInstances(PROCESS_DEFINITION_KEY, 4);
 
     assertThat(historyService.createHistoricIncidentQuery().orderByIncidentId().asc().list()).hasSize(4);
@@ -736,8 +728,8 @@ public class HistoricIncidentQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
-  public void testQuerySortingByIncidentMessage()
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
+  void testQuerySortingByIncidentMessage()
   {
     // given
     startProcessInstances(PROCESS_DEFINITION_KEY, 4);

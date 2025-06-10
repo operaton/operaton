@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.test.history;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -27,48 +30,37 @@ import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEnt
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+@ExtendWith(ProcessEngineExtension.class)
 public abstract class AbstractCompositeHistoryEventHandlerTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-
-  protected HistoryEventHandler originalHistoryEventHandler;
+  HistoryEventHandler originalHistoryEventHandler;
 
   /**
    * The counter used to check the amount of triggered events.
    */
-  protected int countCustomHistoryEventHandler;
+  int countCustomHistoryEventHandler;
 
   /**
    * Perform common setup.
    */
-  @Before
+  @BeforeEach
   public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
-
     // save current history event handler
     originalHistoryEventHandler = processEngineConfiguration.getHistoryEventHandler();
     // clear the event counter
     countCustomHistoryEventHandler = 0;
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     // reset original history event handler
     processEngineConfiguration.setHistoryEventHandler(originalHistoryEventHandler);

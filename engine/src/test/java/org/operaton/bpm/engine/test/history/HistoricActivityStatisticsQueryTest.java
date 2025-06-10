@@ -23,7 +23,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricActivityStatistics;
 import org.operaton.bpm.engine.history.HistoricActivityStatisticsQuery;
@@ -36,8 +43,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  *
@@ -45,13 +52,24 @@ import org.junit.Test;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineTest {
+class HistoricActivityStatisticsQueryTest {
 
   private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  HistoryService historyService;
+  TaskService taskService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  RepositoryService repositoryService;
+
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testNoRunningProcessInstances() {
+  void testNoRunningProcessInstances() {
     String processDefinitionId = getProcessDefinitionId();
 
     HistoricActivityStatisticsQuery query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId);
@@ -63,7 +81,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
   @Deployment
   @Test
-  public void testSingleTask() {
+  void testSingleTask() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -84,7 +102,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testFinishedProcessInstances() {
+  void testFinishedProcessInstances() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -100,7 +118,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
   @Deployment
   @Test
-  public void testMultipleRunningTasks() {
+  void testMultipleRunningTasks() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -143,9 +161,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testWithCallActivity.bpmn20.xml",
-      "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.calledProcess.bpmn20.xml" })
+      "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.calledProcess.bpmn20.xml"})
   @Test
-  public void testMultipleProcessDefinitions() {
+  void testMultipleProcessDefinitions() {
     String processId = getProcessDefinitionId();
     String calledProcessId = getProcessDefinitionIdByKey("calledProcess");
 
@@ -194,9 +212,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     completeProcessInstances();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByFinished() {
+  void testQueryByFinished() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -226,9 +244,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(task.getFinished()).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByFinishedAfterFinishingSomeInstances() {
+  void testQueryByFinishedAfterFinishingSomeInstances() {
     String processDefinitionId = getProcessDefinitionId();
 
     // start five instances
@@ -275,9 +293,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     completeProcessInstances();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testMultipleRunningTasks.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testMultipleRunningTasks.bpmn20.xml")
   @Test
-  public void testQueryByFinishedMultipleRunningTasks() {
+  void testQueryByFinishedMultipleRunningTasks() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -364,9 +382,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     completeProcessInstances();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByCompleteScope() {
+  void testQueryByCompleteScope() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -389,9 +407,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(end.getCompleteScope()).isEqualTo(5);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByCompleteScopeAfterFinishingSomeInstances() {
+  void testQueryByCompleteScopeAfterFinishingSomeInstances() {
     String processDefinitionId = getProcessDefinitionId();
 
     // start five instances
@@ -431,9 +449,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     completeProcessInstances();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testMultipleRunningTasks.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testMultipleRunningTasks.bpmn20.xml")
   @Test
-  public void testQueryByCompleteScopeMultipleRunningTasks() {
+  void testQueryByCompleteScopeMultipleRunningTasks() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -485,9 +503,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     completeProcessInstances();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByCanceled() {
+  void testQueryByCanceled() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -511,9 +529,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(task.getCanceled()).isEqualTo(5);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByCanceledAfterCancelingSomeInstances() {
+  void testQueryByCanceledAfterCancelingSomeInstances() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(3);
@@ -545,9 +563,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     completeProcessInstances();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByCanceledAndFinished() {
+  void testQueryByCanceledAndFinished() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(2);
@@ -604,9 +622,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(task.getFinished()).isEqualTo(4);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByCanceledAndFinishedByPeriods() throws ParseException {
+  void testQueryByCanceledAndFinishedByPeriods() throws ParseException {
     try {
 
       //start two process instances
@@ -747,9 +765,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(activity.getFinished()).isEqualTo(finished);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByCanceledAndCompleteScope() {
+  void testQueryByCanceledAndCompleteScope() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(2);
@@ -798,9 +816,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(task.getCompleteScope()).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByFinishedAndCompleteScope() {
+  void testQueryByFinishedAndCompleteScope() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(2);
@@ -857,9 +875,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(task.getCompleteScope()).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByFinishedAndCompleteScopeAndCanceled() {
+  void testQueryByFinishedAndCompleteScopeAndCanceled() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(2);
@@ -920,9 +938,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(task.getCompleteScope()).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryByProcessInstanceIds() {
+  void testQueryByProcessInstanceIds() {
     // given
     String processDefinitionId = getProcessDefinitionId();
 
@@ -976,7 +994,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @Test
-  public void testCheckProcessInstanceIdsForNull() {
+  void testCheckProcessInstanceIdsForNull() {
     // given
     HistoricActivityStatisticsQuery query = historyService
     .createHistoricActivityStatisticsQuery("foo");
@@ -1000,9 +1018,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     }
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testSorting() {
+  void testSorting() {
     String processDefinitionId = getProcessDefinitionId();
 
     startProcesses(5);
@@ -1017,10 +1035,10 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertThat(query.orderByActivityId().desc().count()).isEqualTo(1);
   }
 
-  @Deployment(resources= {"org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml",
       "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testAnotherSingleTask.bpmn20.xml"})
   @Test
-  public void testDifferentProcessesWithSameActivityId() {
+  void testDifferentProcessesWithSameActivityId() {
     String processDefinitionId = getProcessDefinitionId();
     String anotherProcessDefinitionId = getProcessDefinitionIdByKey("anotherProcess");
 
@@ -1055,9 +1073,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryIncludeIncidents() {
+  void testQueryIncludeIncidents() {
     // given
     String processDefinitionId = getProcessDefinitionId();
 
@@ -1098,9 +1116,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryIncludeIncidentsDeletedOnlyAndProcessInstanceIds() {
+  void testQueryIncludeIncidentsDeletedOnlyAndProcessInstanceIds() {
     // given
     String processDefinitionId = getProcessDefinitionId();
 
@@ -1138,9 +1156,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     assertActivityStatistics(statistics.get(1), "task", 0, 1, 1, 0, 0, 3);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryIncludeIncidentsWhenNoIncidents() {
+  void testQueryIncludeIncidentsWhenNoIncidents() {
     // given
     String processDefinitionId = getProcessDefinitionId();
 
@@ -1171,9 +1189,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testMultipleRunningTasks.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testMultipleRunningTasks.bpmn20.xml")
   @Test
-  public void testQueryIncludeIncidentsMultipleRunningTasksDeletedOnly() {
+  void testQueryIncludeIncidentsMultipleRunningTasksDeletedOnly() {
     // given
     String processDefinitionId = getProcessDefinitionId();
 
@@ -1212,9 +1230,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testMultipleRunningTasks.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testMultipleRunningTasks.bpmn20.xml")
   @Test
-  public void testQueryIncludeIncidentsMultipleRunningTasksOpenOnly() {
+  void testQueryIncludeIncidentsMultipleRunningTasksOpenOnly() {
     // given
     String processDefinitionId = getProcessDefinitionId();
 
@@ -1252,9 +1270,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryCancelledIncludeIncidentsDeletedOnly() throws ParseException {
+  void testQueryCancelledIncludeIncidentsDeletedOnly() throws ParseException {
     try {
       // given
       String processDefinitionId = getProcessDefinitionId();
@@ -1300,9 +1318,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
   @Test
-  public void testQueryCompletedIncludeIncidentsDeletedOnly() throws ParseException {
+  void testQueryCompletedIncludeIncidentsDeletedOnly() throws ParseException {
     try {
       // given
       String processDefinitionId = getProcessDefinitionId();
@@ -1347,9 +1365,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources="org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml")
   @Test
-  public void testQueryIncludeIncidentsWhenNoHistoricActivityInstanceDeletedOnly() {
+  void testQueryIncludeIncidentsWhenNoHistoricActivityInstanceDeletedOnly() {
     // given
     startProcessesByKey(3, "failingProcess");
 
@@ -1382,9 +1400,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources="org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml")
   @Test
-  public void testQueryIncludeIncidentsWhenNoHistoricActivityInstanceWithoutFilters() {
+  void testQueryIncludeIncidentsWhenNoHistoricActivityInstanceWithoutFilters() {
     // given
     startProcessesByKey(3, "failingProcess");
 

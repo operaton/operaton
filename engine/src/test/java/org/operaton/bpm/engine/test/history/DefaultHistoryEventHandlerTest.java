@@ -58,7 +58,7 @@ public class DefaultHistoryEventHandlerTest {
   }
 
   @TestTemplate
-  public void shouldUseInstanceOfCompositeHistoryEventHandler() {
+  void shouldUseInstanceOfCompositeHistoryEventHandler() {
     // when
     boolean useDefaultDbHandler = engineRule.getProcessEngineConfiguration()
         .isEnableDefaultDbHistoryEventHandler();
@@ -74,7 +74,7 @@ public class DefaultHistoryEventHandlerTest {
   }
 
   @TestTemplate
-  public void shouldProvideCustomHistoryEventHandlers() {
+  void shouldProvideCustomHistoryEventHandlers() {
     // when
     List<HistoryEventHandler> eventHandlers = engineRule.getProcessEngineConfiguration().getCustomHistoryEventHandlers();
 

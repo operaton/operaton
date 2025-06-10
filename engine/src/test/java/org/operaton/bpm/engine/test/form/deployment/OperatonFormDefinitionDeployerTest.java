@@ -62,7 +62,7 @@ public class OperatonFormDefinitionDeployerTest {
   }
 
   @TestTemplate
-  public void shouldDeployProcessWithOperatonFormDefinition() {
+  void shouldDeployProcessWithOperatonFormDefinition() {
     String deploymentId = testRule.deploy(bpmnResource, SIMPLE_FORM).getId();
 
     // there should only be one deployment

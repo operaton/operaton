@@ -93,7 +93,7 @@ public class HistoricBatchManagerBatchesForCleanupTest {
 
   @SuppressWarnings("unchecked")
   @TestTemplate
-  public void testFindHistoricBatchIdsForCleanup() {
+  void testFindHistoricBatchIdsForCleanup() {
     // given
     String batchType = prepareHistoricBatches(2);
     final Map<String, Integer> batchOperationsMap = new HashedMap();

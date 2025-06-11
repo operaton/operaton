@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,27 +16,27 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Before;
-import org.junit.Test;
 
-public class JobExecutorAcquireJobsByDueDateNotPriorityTest extends AbstractJobExecutorAcquireJobsTest {
+class JobExecutorAcquireJobsByDueDateNotPriorityTest extends AbstractJobExecutorAcquireJobsTest {
 
-  @Before
-  public void prepareProcessEngineConfiguration() {
+  @BeforeEach
+  void prepareProcessEngineConfiguration() {
     configuration.setJobExecutorAcquireByDueDate(true);
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/jobPrioProcess.bpmn20.xml")
-  public void testJobPriorityIsNotConsidered() {
+  void testJobPriorityIsNotConsidered() {
     // prio 5
     String instance1 = startProcess("jobPrioProcess", "task2");
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,26 +20,26 @@ package org.operaton.bpm.engine.impl.bpmn.parser;
 
 /**
  * Represents a field declaration in object form:
- * 
+ *
  * &lt;field name='someField&gt; &lt;string ...
- * 
+ *
  * @author Joram Barrez
  * @author Frederik Heremans
  */
 public class FieldDeclaration {
-  
+
   protected String name;
   protected String type;
   protected Object value;
-  
+
   public FieldDeclaration(String name, String type, Object value) {
     this.name = name;
     this.type = type;
     this.value = value;
   }
-  
+
   public FieldDeclaration() {
-    
+
   }
 
   public String getName() {
@@ -60,6 +60,5 @@ public class FieldDeclaration {
   public void setValue(Object value) {
     this.value = value;
   }
-  
+
 }
- 

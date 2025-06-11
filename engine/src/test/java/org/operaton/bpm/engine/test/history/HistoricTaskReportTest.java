@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,6 +22,10 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -29,50 +33,38 @@ import org.operaton.bpm.engine.history.HistoricTaskInstanceReportResult;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Stefan Hentschel.
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricTaskReportTest {
+class HistoricTaskReportTest {
 
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule processEngineTestRule = new ProcessEngineTestRule(processEngineRule);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension processEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain
-    .outerRule(processEngineTestRule)
-    .around(processEngineRule);
-
-  protected ProcessEngineConfiguration processEngineConfiguration;
-  protected HistoryService historyService;
+  ProcessEngineConfiguration processEngineConfiguration;
+  HistoryService historyService;
 
   protected static final String PROCESS_DEFINITION_KEY = "HISTORIC_TASK_INST_REPORT";
   protected static final String ANOTHER_PROCESS_DEFINITION_KEY = "ANOTHER_HISTORIC_TASK_INST_REPORT";
 
 
-  @Before
-  public void setUp() {
-    historyService = processEngineRule.getHistoryService();
-    processEngineConfiguration = processEngineRule.getProcessEngineConfiguration();
-
+  @BeforeEach
+  void setUp() {
     processEngineTestRule.deploy(createProcessWithUserTask(PROCESS_DEFINITION_KEY));
     processEngineTestRule.deploy(createProcessWithUserTask(ANOTHER_PROCESS_DEFINITION_KEY));
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     List<Task> list = processEngineRule.getTaskService().createTaskQuery().list();
     for( Task task : list ) {
       processEngineRule.getTaskService().deleteTask(task.getId(), true);
@@ -80,7 +72,7 @@ public class HistoricTaskReportTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceReportQuery() {
+  void testHistoricTaskInstanceReportQuery() {
     // given
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 7, 14, 12, 1);
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 7, 14, 12, 1);
@@ -106,7 +98,7 @@ public class HistoricTaskReportTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceReportGroupedByProcessDefinitionKey() {
+  void testHistoricTaskInstanceReportGroupedByProcessDefinitionKey() {
     // given
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 7, 14, 12, 1);
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 7, 14, 12, 1);
@@ -130,7 +122,7 @@ public class HistoricTaskReportTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceReportWithCompletedAfterDate() {
+  void testHistoricTaskInstanceReportWithCompletedAfterDate() {
     // given
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 7, 14, 12, 1);
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 8, 14, 12, 1);
@@ -151,7 +143,7 @@ public class HistoricTaskReportTest {
   }
 
   @Test
-  public void testHistoricTaskInstanceReportWithCompletedBeforeDate() {
+  void testHistoricTaskInstanceReportWithCompletedBeforeDate() {
     // given
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 7, 14, 12, 1);
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 8, 14, 12, 1);
@@ -172,7 +164,7 @@ public class HistoricTaskReportTest {
   }
 
   @Test
-  public void testCompletedAfterWithNullValue() {
+  void testCompletedAfterWithNullValue() {
     var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
     try {
       historicTaskInstanceReport.completedAfter(null);
@@ -184,7 +176,7 @@ public class HistoricTaskReportTest {
   }
 
   @Test
-  public void testCompletedBeforeWithNullValue() {
+  void testCompletedBeforeWithNullValue() {
     var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
     try {
       historicTaskInstanceReport.completedBefore(null);
@@ -196,7 +188,7 @@ public class HistoricTaskReportTest {
   }
 
   @Test
-  public void testReportWithNullTaskName() {
+  void testReportWithNullTaskName() {
     // given
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 7, 14, 12, 1);
 
@@ -225,7 +217,7 @@ public class HistoricTaskReportTest {
   }
 
   @Test
-  public void testReportWithEmptyTaskName() {
+  void testReportWithEmptyTaskName() {
     // given
     startAndCompleteProcessInstance(PROCESS_DEFINITION_KEY, 2016, 7, 14, 12, 1);
 

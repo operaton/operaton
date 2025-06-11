@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
@@ -27,14 +28,13 @@ import org.operaton.bpm.engine.test.standalone.pvm.activities.EmbeddedSubProcess
 import org.operaton.bpm.engine.test.standalone.pvm.activities.End;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.ParallelGateway;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
-import org.junit.Test;
 
 /**
  *
  * @author roman.smirnov
  *
  */
-public class PvmActivityInstanceCompleteTest {
+class PvmActivityInstanceCompleteTest {
 
 
   /**
@@ -43,7 +43,7 @@ public class PvmActivityInstanceCompleteTest {
    * +-------+   +-----+
    */
   @Test
-  public void testSingleEnd() {
+  void testSingleEnd() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
@@ -81,7 +81,7 @@ public class PvmActivityInstanceCompleteTest {
    *                   +----+
    */
   @Test
-  public void testTwoEnds() {
+  void testTwoEnds() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
@@ -131,7 +131,7 @@ public class PvmActivityInstanceCompleteTest {
    *                   +----+
    */
   @Test
-  public void testSingleEndAfterParallelJoin() {
+  void testSingleEndAfterParallelJoin() {
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
@@ -191,7 +191,7 @@ public class PvmActivityInstanceCompleteTest {
    *           +-------------------------------+
    */
   @Test
-  public void testSimpleSubProcess() {
+  void testSimpleSubProcess() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
@@ -247,7 +247,7 @@ public class PvmActivityInstanceCompleteTest {
    *                           +------+
    */
   @Test
-  public void testBoundaryEvent() {
+  void testBoundaryEvent() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 

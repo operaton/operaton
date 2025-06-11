@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,14 +23,14 @@ import org.operaton.bpm.ProcessApplicationService;
 
 /**
  * <p>Object holding information about a deployed Process Application</p>
- * 
+ *
  * @author Daniel Meyer
- * 
+ *
  * @see ProcessApplicationService#getProcessApplicationInfo(String)
  *
  */
 public interface ProcessApplicationInfo {
-  
+
   /** constant for the servlet context path property */
   String PROP_SERVLET_CONTEXT_PATH = "servletContextPath";
 
@@ -45,15 +45,15 @@ public interface ProcessApplicationInfo {
    *         application to the process engine(s).
    */
   List<ProcessApplicationDeploymentInfo> getDeploymentInfo();
-  
+
   /**
    * <p>Provides access to a list of process application-provided properties.</p>
-   * 
+   *
    * <p>This class provides a set of constants for commonly-used properties</p>
-   * 
+   *
    * @see ProcessApplicationInfo#PROP_SERVLET_CONTEXT_PATH
    */
   Map<String, String> getProperties();
-  
+
 
 }

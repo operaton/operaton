@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -48,6 +48,7 @@ import static org.operaton.bpm.engine.impl.cmd.AbstractSetBatchStateCmd.SUSPENSI
 import static org.operaton.bpm.engine.impl.cmd.AbstractSetProcessDefinitionStateCmd.INCLUDE_PROCESS_INSTANCES_PROPERTY;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1704,28 +1705,6 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     try {
       query.deploymentId(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
-  }
-
-  private void verifyQueryResults(UserOperationLogQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
-  private void verifySingleResultFails(UserOperationLogQuery query) {
-    try {
-      query.singleResult();
       fail("");
     } catch (ProcessEngineException e) {
       // expected

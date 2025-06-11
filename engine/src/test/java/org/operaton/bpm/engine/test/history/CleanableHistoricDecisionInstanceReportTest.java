@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
@@ -33,43 +37,33 @@ import org.operaton.bpm.engine.history.CleanableHistoricDecisionInstanceReportRe
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class CleanableHistoricDecisionInstanceReportTest {
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+class CleanableHistoricDecisionInstanceReportTest {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(testRule).around(engineRule);
-
-  protected HistoryService historyService;
-  protected RepositoryService repositoryService;
+  HistoryService historyService;
+  RepositoryService repositoryService;
 
   protected static final String DECISION_DEFINITION_KEY = "one";
   protected static final String SECOND_DECISION_DEFINITION_KEY = "two";
   protected static final String THIRD_DECISION_DEFINITION_KEY = "anotherDecision";
   protected static final String FOURTH_DECISION_DEFINITION_KEY = "decision";
 
-  @Before
-  public void setUp() {
-    historyService = engineRule.getHistoryService();
-    repositoryService = engineRule.getRepositoryService();
-
+  @BeforeEach
+  void setUp() {
     testRule.deploy("org/operaton/bpm/engine/test/repository/one.dmn");
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
 
     List<HistoricDecisionInstance> historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
     for (HistoricDecisionInstance historicDecisionInstance : historicDecisionInstances) {
@@ -94,7 +88,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportComplex() {
+  void testReportComplex() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/repository/two.dmn", "org/operaton/bpm/engine/test/api/dmn/Another_Example.dmn",
         "org/operaton/bpm/engine/test/api/dmn/Example.dmn");
@@ -133,7 +127,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportWithAllCleanableInstances() {
+  void testReportWithAllCleanableInstances() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, 5, 10);
 
@@ -149,7 +143,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportWithPartiallyCleanableInstances() {
+  void testReportWithPartiallyCleanableInstances() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, 5, 5);
     prepareDecisionInstances(DECISION_DEFINITION_KEY, 0, 5, 5);
@@ -163,7 +157,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportWithZeroHistoryTTL() {
+  void testReportWithZeroHistoryTTL() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, 0, 5);
     prepareDecisionInstances(DECISION_DEFINITION_KEY, 0, 0, 5);
@@ -177,7 +171,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportWithNullHistoryTTL() {
+  void testReportWithNullHistoryTTL() {
     // given
     prepareDecisionInstances(DECISION_DEFINITION_KEY, -6, null, 5);
     prepareDecisionInstances(DECISION_DEFINITION_KEY, 0, null, 5);
@@ -191,7 +185,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportByInvalidDecisionDefinitionId() {
+  void testReportByInvalidDecisionDefinitionId() {
     CleanableHistoricDecisionInstanceReport report = historyService.createCleanableHistoricDecisionInstanceReport();
 
     try {
@@ -210,7 +204,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportByInvalidDecisionDefinitionKey() {
+  void testReportByInvalidDecisionDefinitionKey() {
     CleanableHistoricDecisionInstanceReport report = historyService.createCleanableHistoricDecisionInstanceReport();
 
     try {
@@ -229,7 +223,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportCompact() {
+  void testReportCompact() {
     // given
     List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey(DECISION_DEFINITION_KEY).list();
     assertThat(decisionDefinitions).hasSize(1);
@@ -247,7 +241,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportOrderByFinishedAsc() {
+  void testReportOrderByFinishedAsc() {
     // give
     testRule.deploy("org/operaton/bpm/engine/test/repository/two.dmn", "org/operaton/bpm/engine/test/api/dmn/Another_Example.dmn");
     prepareDecisionInstances(SECOND_DECISION_DEFINITION_KEY, -6, 5, 6);
@@ -269,7 +263,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
   }
 
   @Test
-  public void testReportOrderByFinishedDesc() {
+  void testReportOrderByFinishedDesc() {
     // give
     testRule.deploy("org/operaton/bpm/engine/test/repository/two.dmn", "org/operaton/bpm/engine/test/api/dmn/Another_Example.dmn");
     prepareDecisionInstances(SECOND_DECISION_DEFINITION_KEY, -6, 5, 6);

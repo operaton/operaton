@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,29 +20,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper.ThreadControl;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class JobExecutorShutdownTest {
+class JobExecutorShutdownTest {
 
   protected static final BpmnModelInstance TWO_ASYNC_TASKS = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -66,19 +64,22 @@ public class JobExecutorShutdownTest {
       .endEvent()
       .done();
 
-  protected ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJobExecutor(buildControllableJobExecutor()));
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule).around(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterEachTest()
+    .configurator(configuration -> {
+      configuration.setJobExecutor(buildControllableJobExecutor());
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ControllableJobExecutor jobExecutor;
   protected ThreadControl acquisitionThread;
   protected static ThreadControl executionThread;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     jobExecutor = (ControllableJobExecutor)
         ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration()).getJobExecutor();
     jobExecutor.setMaxJobsPerAcquisition(2);
@@ -86,13 +87,13 @@ public class JobExecutorShutdownTest {
     executionThread = jobExecutor.getExecutionThreadControl();
   }
 
-  @After
-  public void shutdownJobExecutor() {
+  @AfterEach
+  void shutdownJobExecutor() {
     jobExecutor.shutdown();
   }
 
   @Test
-  public void testConcurrentShutdownAndExclusiveFollowUpJob() {
+  void testConcurrentShutdownAndExclusiveFollowUpJob() {
     // given
     Deployment deployment = engineRule.getRepositoryService()
         .createDeployment()
@@ -134,7 +135,7 @@ public class JobExecutorShutdownTest {
   }
 
   @Test
-  public void testShutdownAndMultipleLockedJobs() {
+  void testShutdownAndMultipleLockedJobs() {
     // given
     Deployment deployment = engineRule.getRepositoryService()
         .createDeployment()

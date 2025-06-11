@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,26 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
@@ -32,29 +51,17 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
 
-import java.util.*;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.junit.*;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-@RunWith(Parameterized.class)
+@Parameterized
 public class CustomHistoryLevelIncidentTest {
 
   @Parameters
@@ -71,30 +78,31 @@ public class CustomHistoryLevelIncidentTest {
 
   static CustomHistoryLevelIncident customHistoryLevelIncident = new CustomHistoryLevelIncident(eventTypes);
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(cfg -> {
-    cfg.setJdbcUrl("jdbc:h2:mem:" + CustomHistoryLevelIncident.class.getSimpleName());
-    List<HistoryLevel> levels = new ArrayList<>();
-    levels.add(customHistoryLevelIncident);
-    cfg.setCustomHistoryLevels(levels);
-    cfg.setHistory("aCustomHistoryLevelIncident");
-    cfg.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
-    cfg.setProcessEngineName("someRandomProcessEngineName");
-  });
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected MigrationTestRule migrationRule = new MigrationTestRule(engineRule);
-  protected BatchMigrationHelper migrationHelper = new BatchMigrationHelper(engineRule, migrationRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(cfg -> {
+      cfg.setJdbcUrl("jdbc:h2:mem:" + CustomHistoryLevelIncident.class.getSimpleName());
+      List<HistoryLevel> levels = new ArrayList<>();
+      levels.add(customHistoryLevelIncident);
+      cfg.setCustomHistoryLevels(levels);
+      cfg.setHistory("aCustomHistoryLevelIncident");
+      cfg.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
+      cfg.setProcessEngineName("someRandomProcessEngineName");
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper migrationHelper = new BatchMigrationHelper(engineRule, migrationRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule).around(migrationRule);
-
-  protected HistoryService historyService;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected RepositoryService repositoryService;
-  protected TaskService taskService;
-  protected ProcessEngineConfigurationImpl configuration;
+  HistoryService historyService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+  ProcessEngineConfigurationImpl configuration;
 
   DeploymentWithDefinitions deployment;
 
@@ -107,21 +115,14 @@ public class CustomHistoryLevelIncidentTest {
     .endEvent("end")
     .done();
 
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-    repositoryService = engineRule.getRepositoryService();
-    taskService = engineRule.getTaskService();
-    configuration = engineRule.getProcessEngineConfiguration();
-
+  @BeforeEach
+  void setUp() {
     customHistoryLevelIncident.setEventTypes(eventTypes);
     configuration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     customHistoryLevelIncident.setEventTypes(null);
     if (deployment != null) {
       repositoryService.deleteDeployment(deployment.getId(), true);
@@ -147,8 +148,8 @@ public class CustomHistoryLevelIncidentTest {
     });
   }
 
-  @Test
-  public void testDeleteHistoricIncidentByProcDefId() {
+  @TestTemplate
+  void testDeleteHistoricIncidentByProcDefId() {
     // given
     deployment = repositoryService.createDeployment().addModelInstance("process.bpmn", FAILING_SERVICE_TASK_MODEL).deployWithResult();
     String processDefinitionId = deployment.getDeployedProcessDefinitions().get(0).getId();
@@ -173,8 +174,8 @@ public class CustomHistoryLevelIncidentTest {
     assertThat(incidents).isEmpty();
   }
 
-  @Test
-  public void testDeleteHistoricIncidentByBatchId() {
+  @TestTemplate
+  void testDeleteHistoricIncidentByBatchId() {
     // given
     initBatchOperationHistoryTimeToLive();
     ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), -11));
@@ -212,8 +213,8 @@ public class CustomHistoryLevelIncidentTest {
     assertThat(incidents).isEmpty();
   }
 
-  @Test
-  public void testDeleteHistoricIncidentByJobDefinitionId() {
+  @TestTemplate
+  void testDeleteHistoricIncidentByJobDefinitionId() {
     // given
     BatchEntity batch = (BatchEntity) createFailingMigrationBatch();
 

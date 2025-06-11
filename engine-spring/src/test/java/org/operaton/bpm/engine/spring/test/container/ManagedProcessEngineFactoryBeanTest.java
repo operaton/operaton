@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Testcase for {@link ManagedProcessEngineFactoryBean}</p>
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -39,21 +39,21 @@ class ManagedProcessEngineFactoryBeanTest {
     // initially, no process engine is registered:
     assertThat(BpmPlatform.getDefaultProcessEngine()).isNull();
     assertThat(BpmPlatform.getProcessEngineService().getProcessEngines()).isEmpty();
-    
+
     // start spring application context
     AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext("org/operaton/bpm/engine/spring/test/container/ManagedProcessEngineFactoryBean-context.xml");
     applicationContext.start();
 
     // assert that now the process engine is registered:
-    assertThat(BpmPlatform.getDefaultProcessEngine()).isNotNull();      
-    
+    assertThat(BpmPlatform.getDefaultProcessEngine()).isNotNull();
+
     // close the spring application context
     applicationContext.close();
 
     // after closing the application context, the process engine is gone
     assertThat(BpmPlatform.getDefaultProcessEngine()).isNull();
     assertThat(BpmPlatform.getProcessEngineService().getProcessEngines()).isEmpty();
-    
+
   }
-    
+
 }

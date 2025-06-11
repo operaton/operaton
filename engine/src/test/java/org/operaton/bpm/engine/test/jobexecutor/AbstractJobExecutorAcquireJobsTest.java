@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.Page;
@@ -23,20 +28,13 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 
 public abstract class AbstractJobExecutorAcquireJobsTest {
 
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
 
   protected ManagementService managementService;
   protected RuntimeService runtimeService;
@@ -50,15 +48,8 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
   private Long jobExecutorPriorityRangeMin;
   private Long jobExecutorPriorityRangeMax;
 
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-    managementService = rule.getManagementService();
-  }
-
-  @Before
+  @BeforeEach
   public void saveProcessEngineConfiguration() {
-    configuration = (ProcessEngineConfigurationImpl) rule.getProcessEngine().getProcessEngineConfiguration();
     jobExecutorAcquireByDueDate = configuration.isJobExecutorAcquireByDueDate();
     jobExecutorAcquireByPriority = configuration.isJobExecutorAcquireByPriority();
     jobExecutorPreferTimerJobs = configuration.isJobExecutorPreferTimerJobs();
@@ -67,12 +58,12 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
     jobExecutorPriorityRangeMax = configuration.getJobExecutorPriorityRangeMax();
   }
 
-  @Before
+  @BeforeEach
   public void setClock() {
     ClockTestUtil.setClockToDateWithoutMilliseconds();
   }
 
-  @After
+  @AfterEach
   public void restoreProcessEngineConfiguration() {
     configuration.setJobExecutorAcquireByDueDate(jobExecutorAcquireByDueDate);
     configuration.setJobExecutorAcquireByPriority(jobExecutorAcquireByPriority);
@@ -82,7 +73,7 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
     configuration.setJobExecutorPriorityRangeMax(jobExecutorPriorityRangeMax);
   }
 
-  @After
+  @AfterEach
   public void resetClock() {
     ClockUtil.reset();
   }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,14 +21,14 @@ import org.operaton.bpm.engine.impl.el.Expression;
 
 /**
  * Implementation of the BPMN 2.0 'message'
- * 
+ *
  * @author Esteban Robles Luna
  */
 public class MessageDefinition {
 
   protected String id;
   protected Expression name;
-  
+
   public MessageDefinition(String id, Expression name) {
     this.id = id;
     this.name = name;

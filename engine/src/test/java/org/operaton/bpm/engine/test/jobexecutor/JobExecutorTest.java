@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,25 +16,30 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
 
-import java.util.*;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author Tom Baeyens
  */
-public class JobExecutorTest extends JobExecutorTestCase {
+class JobExecutorTest extends JobExecutorTestCase {
 
   @Test
-  public void testBasicJobExecutorOperation() {
+  void testBasicJobExecutorOperation() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(commandContext -> {
       JobManager jobManager = commandContext.getJobManager();
@@ -79,7 +84,7 @@ public class JobExecutorTest extends JobExecutorTestCase {
   }
 
   @Test
-  public void testJobExecutorHintConfiguration() {
+  void testJobExecutorHintConfiguration() {
     ProcessEngineConfiguration engineConfig1 =
         ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
 
@@ -97,7 +102,7 @@ public class JobExecutorTest extends JobExecutorTestCase {
   }
 
   @Test
-  public void testAcquiredJobs() {
+  void testAcquiredJobs() {
     List<String> firstBatch = new ArrayList<>(Arrays.asList("a", "b", "c"));
     List<String> secondBatch = new ArrayList<>(Arrays.asList("d", "e", "f"));
     List<String> thirdBatch = new ArrayList<>(Arrays.asList("g"));

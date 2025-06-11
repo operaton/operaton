@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,19 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.HistoricJobLogQueryImpl;
@@ -29,52 +41,34 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEn
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class PartitioningTest {
+class PartitioningTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  ManagementService managementService;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  CommandExecutor commandExecutor;
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-
-  protected CommandExecutor commandExecutor;
-
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
   }
 
   private static final BpmnModelInstance PROCESS_WITH_USERTASK = Bpmn.createExecutableProcess("process")
@@ -83,7 +77,7 @@ public class PartitioningTest {
     .endEvent().done();
 
   @Test
-  public void shouldUpdateHistoricProcessInstance() {
+  void shouldUpdateHistoricProcessInstance() {
     // given
     final String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
@@ -112,7 +106,7 @@ public class PartitioningTest {
   }
 
   @Test
-  public void shouldUpdateHistoricTaskInstance() {
+  void shouldUpdateHistoricTaskInstance() {
     // given
     deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
@@ -142,7 +136,7 @@ public class PartitioningTest {
   }
 
   @Test
-  public void shouldUpdateHistoricActivityInstance() {
+  void shouldUpdateHistoricActivityInstance() {
     // given
     final String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
@@ -169,7 +163,7 @@ public class PartitioningTest {
   }
 
   @Test
-  public void shouldUpdateHistoricIncident() {
+  void shouldUpdateHistoricIncident() {
     // given
     final String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
@@ -199,7 +193,7 @@ public class PartitioningTest {
   }
 
   @Test
-  public void shouldUpdateHistoricBatch() {
+  void shouldUpdateHistoricBatch() {
     // given
     String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 

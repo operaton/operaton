@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -72,12 +72,12 @@ class HistoryCleanupHistoricBatchTest {
       configuration.setHistoryCleanupDegreeOfParallelism(3);
     }).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
-  protected static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
 
-  protected BatchMigrationHelper migrationHelper = new BatchMigrationHelper(engineRule, migrationRule);
-  protected BatchModificationHelper modificationHelper = new BatchModificationHelper(engineRule);
+  BatchMigrationHelper migrationHelper = new BatchMigrationHelper(engineRule, migrationRule);
+  BatchModificationHelper modificationHelper = new BatchModificationHelper(engineRule);
 
   private static final String DEFAULT_TTL_DAYS = "P5D";
 

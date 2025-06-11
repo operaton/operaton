@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +19,7 @@ package org.operaton.bpm.example.invoice;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
+import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
 import org.operaton.bpm.application.impl.ServletProcessApplication;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
@@ -30,7 +31,7 @@ import jakarta.servlet.annotation.WebListener;
  */
 @ProcessApplication(name = "InvoiceProcessApplication")
 @WebListener
-public class InvoiceProcessApplication extends ServletProcessApplication {
+public class InvoiceProcessApplication extends JakartaServletProcessApplication {
 
   /**
    * In a @PostDeploy hook you can interact with the process engine and access

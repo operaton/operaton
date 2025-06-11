@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,6 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -36,48 +40,36 @@ import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class CleanableHistoricCaseInstanceReportTest {
+class CleanableHistoricCaseInstanceReportTest {
   private static final String FORTH_CASE_DEFINITION_KEY = "case";
   private static final String THIRD_CASE_DEFINITION_KEY = "oneTaskCase";
   private static final String SECOND_CASE_DEFINITION_KEY = "oneCaseTaskCase";
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(testRule).around(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected HistoryService historyService;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected CaseService caseService;
-  protected TaskService taskService;
+  HistoryService historyService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  CaseService caseService;
+  TaskService taskService;
 
-  protected static final String CASE_DEFINITION_KEY = "one";
+  static final String CASE_DEFINITION_KEY = "one";
 
-  @Before
-  public void setUp() {
-    historyService = engineRule.getHistoryService();
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    caseService = engineRule.getCaseService();
-    taskService = engineRule.getTaskService();
-
+  @BeforeEach
+  void setUp() {
     testRule.deploy("org/operaton/bpm/engine/test/repository/one.cmmn");
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     List<HistoricCaseInstance> instanceList = historyService.createHistoricCaseInstanceQuery().active().list();
     if (!instanceList.isEmpty()) {
       for (HistoricCaseInstance instance : instanceList) {
@@ -116,7 +108,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportWithAllCleanableInstances() {
+  void testReportWithAllCleanableInstances() {
     // given
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 5, 10);
 
@@ -131,7 +123,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportWithPartiallyCleanableInstances() {
+  void testReportWithPartiallyCleanableInstances() {
     // given
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 5, 5);
     prepareCaseInstances(CASE_DEFINITION_KEY, 0, 5, 5);
@@ -145,7 +137,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportWithZeroHistoryTTL() {
+  void testReportWithZeroHistoryTTL() {
     // given
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 0, 5);
     prepareCaseInstances(CASE_DEFINITION_KEY, 0, 0, 5);
@@ -159,7 +151,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportWithNullHistoryTTL() {
+  void testReportWithNullHistoryTTL() {
     // given
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, null, 5);
     prepareCaseInstances(CASE_DEFINITION_KEY, 0, null, 5);
@@ -173,7 +165,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportComplex() {
+  void testReportComplex() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn", "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
         "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithHistoryTimeToLive.cmmn");
@@ -212,7 +204,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportByInvalidCaseDefinitionId() {
+  void testReportByInvalidCaseDefinitionId() {
     CleanableHistoricCaseInstanceReport report = historyService.createCleanableHistoricCaseInstanceReport();
 
     try {
@@ -231,7 +223,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportByInvalidCaseDefinitionKey() {
+  void testReportByInvalidCaseDefinitionKey() {
     CleanableHistoricCaseInstanceReport report = historyService.createCleanableHistoricCaseInstanceReport();
 
     try {
@@ -250,7 +242,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportCompact() {
+  void testReportCompact() {
     // given
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey(CASE_DEFINITION_KEY).list();
     assertThat(caseDefinitions).hasSize(1);
@@ -267,7 +259,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportOrderByFinishedAsc() {
+  void testReportOrderByFinishedAsc() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn", "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
     prepareCaseInstances(THIRD_CASE_DEFINITION_KEY, -6, 5, 8);
@@ -289,7 +281,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   @Test
-  public void testReportOrderByFinishedDesc() {
+  void testReportOrderByFinishedDesc() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn", "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
     prepareCaseInstances(THIRD_CASE_DEFINITION_KEY, -6, 5, 8);

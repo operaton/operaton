@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,56 +16,52 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
 
-import java.util.List;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class JobExceptionLoggingTest {
+class JobExceptionLoggingTest {
 
   private static final String JOBEXECUTOR_LOGGER = "org.operaton.bpm.engine.jobexecutor";
   private static final String CONTEXT_LOGGER = "org.operaton.bpm.engine.context";
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch(CONTEXT_LOGGER, JOBEXECUTOR_LOGGER).level(Level.DEBUG);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule).around(loggingRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch(CONTEXT_LOGGER, JOBEXECUTOR_LOGGER).level(Level.DEBUG);
 
-  private RuntimeService runtimeService;
-  private ManagementService managementService;
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Before
-  public void init() {
-    runtimeService = engineRule.getProcessEngine().getRuntimeService();
-    managementService = engineRule.getProcessEngine().getManagementService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-
+  @BeforeEach
+  void init() {
     processEngineConfiguration.setDefaultNumberOfRetries(1);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setDefaultNumberOfRetries(3);
     processEngineConfiguration.setEnableCmdExceptionLogging(true);
     List<Job> jobs = managementService.createJobQuery().list();
@@ -76,7 +72,7 @@ public class JobExceptionLoggingTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/delegateThrowsException.bpmn20.xml")
-  public void shouldLogFailingJobOnlyOnceReducedLogging() {
+  void shouldLogFailingJobOnlyOnceReducedLogging() {
     // given a job that always throws an Exception
     processEngineConfiguration.setEnableCmdExceptionLogging(false);
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -97,11 +93,11 @@ public class JobExceptionLoggingTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/delegateThrowsException.bpmn20.xml")
-  public void shouldLogFailingJobTwiceDefaultLogging() {
+  void shouldLogFailingJobTwiceDefaultLogging() {
     // given a job that always throws an Exception
     processEngineConfiguration.setEnableCmdExceptionLogging(true);
     runtimeService.startProcessInstanceByKey("testProcess");
-    
+
     // when executing the job and wait
     JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
     jobExecutor.start();
@@ -110,14 +106,14 @@ public class JobExceptionLoggingTest {
 
     List<ILoggingEvent> jobLog = loggingRule.getFilteredLog(JOBEXECUTOR_LOGGER, "Exception while executing job");
     List<ILoggingEvent> ctxLog = loggingRule.getFilteredLog(CONTEXT_LOGGER, "Exception while closing command context");
-    
+
     // then
     assertThat(jobLog).hasSize(1);
     assertThat(ctxLog).hasSize(1);
   }
 
   @Test
-  public void shouldNotLogExceptionWhenApiCallReducedLogging() {
+  void shouldNotLogExceptionWhenApiCallReducedLogging() {
     // given
     processEngineConfiguration.setEnableCmdExceptionLogging(false);
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("failingDelegate")
@@ -151,7 +147,7 @@ public class JobExceptionLoggingTest {
   }
 
   @Test
-  public void shouldNotLogExceptionWhenUserApiCallReducedLogging() {
+  void shouldNotLogExceptionWhenUserApiCallReducedLogging() {
     // given
     processEngineConfiguration.setEnableCmdExceptionLogging(false);
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("failingDelegate")

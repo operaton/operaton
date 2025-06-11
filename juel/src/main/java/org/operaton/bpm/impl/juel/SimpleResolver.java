@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ import jakarta.el.ResourceBundleELResolver;
  * Simple resolver implementation. This resolver handles root properties (top-level identifiers).
  * Resolving "real" properties (<code>base != null</code>) is delegated to a resolver specified at
  * construction time.
- * 
+ *
  * @author Christoph Beck
  */
 public class SimpleResolver extends ELResolver {
@@ -90,7 +90,7 @@ public class SimpleResolver extends ELResolver {
 
 	/**
 	 * Answer our root resolver which provides an API to access top-level properties.
-	 * 
+	 *
 	 * @return root property resolver
 	 */
 	public RootPropertyResolver getRootPropertyResolver() {

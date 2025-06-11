@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
@@ -30,35 +31,34 @@ import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.EmbeddedSubProcess;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.EventScopeCreatingSubprocess;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
-import org.junit.Test;
 
 
 /**
- * 
+ *
  * @author Daniel Meyer
  */
-public class PvmEventScopesTest {
-  
-  /** 
-   * 
+class PvmEventScopesTest {
+
+  /**
+   *
    *                       create evt scope --+
-   *                                          |   
-   *                                          v                                        
-   *                                          
+   *                                          |
+   *                                          v
+   *
    *           +------------------------------+
    *           | embedded subprocess          |
    * +-----+   |  +-----------+   +---------+ |   +----+   +---+
    * |start|-->|  |startInside|-->|endInside| |-->|wait|-->|end|
    * +-----+   |  +-----------+   +---------+ |   +----+   +---+
    *           +------------------------------+
-   *           
-   *                                                           ^  
+   *
+   *                                                           ^
    *                                                           |
-   *                                       destroy evt scope --+  
-   *           
+   *                                       destroy evt scope --+
+   *
    */
   @Test
-  public void testActivityEndDestroysEventScopes() {
+  void testActivityEndDestroysEventScopes() {
       PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -74,7 +74,7 @@ public class PvmEventScopesTest {
         .endActivity()
          .createActivity("endInside")
           .behavior(new Automatic())
-        .endActivity()       
+        .endActivity()
       .transition("wait")
       .endActivity()
       .createActivity("wait")
@@ -85,10 +85,10 @@ public class PvmEventScopesTest {
         .behavior(new Automatic())
       .endActivity()
     .buildProcessDefinition();
-    
-    PvmProcessInstance processInstance = processDefinition.createProcessInstance(); 
+
+    PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
-    
+
     boolean eventScopeFound = false;
     List<ExecutionImpl> executions = ((ExecutionImpl)processInstance).getExecutions();
     for (ExecutionImpl executionImpl : executions) {
@@ -99,14 +99,14 @@ public class PvmEventScopesTest {
     }
 
     assertThat(eventScopeFound).isTrue();
-    
+
     processInstance.signal(null, null);
 
     assertThat(processInstance.isEnded()).isTrue();
-         
+
   }
-  
-  
+
+
   /** 
    *           +----------------------------------------------------------------------+
    *           | embedded subprocess                                                  |
@@ -123,13 +123,13 @@ public class PvmEventScopesTest {
    *           |                  +--------------------------------+                  |
    *           |                                                                      |
    *           +----------------------------------------------------------------------+
-   *           
-   *                                                                                  ^  
+   *
+   *                                                                                  ^
    *                                                                                  |
-   *                                                              destroy evt scope --+  
+   *                                                              destroy evt scope --+
    */
   @Test
-  public void testTransitionDestroysEventScope() {
+  void testTransitionDestroysEventScope() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -147,7 +147,7 @@ public class PvmEventScopesTest {
           .scope()
           .behavior(new EventScopeCreatingSubprocess())
             .createActivity("startNestedInside")
-              .behavior(new Automatic())            
+              .behavior(new Automatic())
               .endActivity()
             .transition("wait")
           .endActivity()
@@ -164,20 +164,20 @@ public class PvmEventScopesTest {
         .behavior(new Automatic())
       .endActivity()
     .buildProcessDefinition();
-    
-    PvmProcessInstance processInstance = processDefinition.createProcessInstance(); 
+
+    PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
-    
+
     List<String> expectedActiveActivityIds = new ArrayList<>();
     expectedActiveActivityIds.add("wait");
     assertThat(processInstance.findActiveActivityIds()).isEqualTo(expectedActiveActivityIds);
-    
+
 
     PvmExecution execution = processInstance.findExecution("wait");
     execution.signal(null, null);
 
     assertThat(processInstance.isEnded()).isTrue();
-    
+
   }
 
 }

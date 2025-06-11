@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,12 +27,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * 
+ *
  * @author Daniel Meyer
  */
 @RunWith(Arquillian.class)
 public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
-  
+
   @Test
   @Deployment
   public void testResolution() {
@@ -53,28 +53,28 @@ public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
   @Test
   @Deployment
   public void testChangeProcessScopedBeanProperty() {
-    
+
     // resolve the creditcard bean (@BusinessProcessScoped) and set a value:
     getBeanInstance(CreditCard.class).setCreditcardNumber("123");
     String pid = getBeanInstance(BusinessProcess.class).startProcessByKey("testConversationalBeanStoreFlush").getId();
-    
+
     getBeanInstance(BusinessProcess.class).startTask(taskService.createTaskQuery().singleResult().getId());
-        
+
     // assert that the value of creditCardNumber is '123'
     assertThat(getBeanInstance(CreditCard.class).getCreditcardNumber()).isEqualTo("123");
     // set a different value:
     getBeanInstance(CreditCard.class).setCreditcardNumber("321");
     // complete the task
     getBeanInstance(BusinessProcess.class).completeTask();
-    
+
     getBeanInstance(BusinessProcess.class).associateExecutionById(pid);
 
     // now assert that the value of creditcard is "321":
     assertThat(getBeanInstance(CreditCard.class).getCreditcardNumber()).isEqualTo("321");
-    
+
     // complete the task to allow the process instance to terminate
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
-    
+
   }
-    
+
 }

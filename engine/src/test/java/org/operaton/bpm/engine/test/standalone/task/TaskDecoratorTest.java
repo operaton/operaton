@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,8 +24,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -34,24 +40,25 @@ import org.operaton.bpm.engine.impl.task.TaskDecorator;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.task.IdentityLinkType;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class TaskDecoratorTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class TaskDecoratorTest {
 
   protected TaskEntity task;
   protected TaskDefinition taskDefinition;
   protected TaskDecorator taskDecorator;
   protected ExpressionManager expressionManager;
 
-  @Before
-  public void setUp() {
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  TaskService taskService;
+
+  @BeforeEach
+  void setUp() {
     task = (TaskEntity) taskService.newTask();
     taskService.saveTask(task);
 
@@ -62,8 +69,8 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     taskDecorator = new TaskDecorator(taskDefinition, expressionManager);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     taskService.deleteTask(task.getId(), true);
   }
 
@@ -74,7 +81,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateName() {
+  void testDecorateName() {
     // given
     String aTaskName = "A Task Name";
     Expression nameExpression = expressionManager.createExpression(aTaskName);
@@ -88,7 +95,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateNameFromVariable() {
+  void testDecorateNameFromVariable() {
     // given
     String aTaskName = "A Task Name";
     taskService.setVariable(task.getId(), "taskName", aTaskName);
@@ -104,7 +111,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateDescription() {
+  void testDecorateDescription() {
     // given
     String aDescription = "This is a Task";
     Expression descriptionExpression = expressionManager.createExpression(aDescription);
@@ -118,7 +125,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateDescriptionFromVariable() {
+  void testDecorateDescriptionFromVariable() {
     // given
     String aDescription = "This is a Task";
     taskService.setVariable(task.getId(), "description", aDescription);
@@ -134,7 +141,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateDueDate() {
+  void testDecorateDueDate() {
     // given
     String aDueDate = "2014-06-01";
     Date dueDate = DateTimeUtil.parseDate(aDueDate);
@@ -150,7 +157,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateDueDateFromVariable() {
+  void testDecorateDueDateFromVariable() {
     // given
     String aDueDate = "2014-06-01";
     Date dueDate = DateTimeUtil.parseDate(aDueDate);
@@ -167,7 +174,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateFollowUpDate() {
+  void testDecorateFollowUpDate() {
     // given
     String aFollowUpDate = "2014-06-01";
     Date followUpDate = DateTimeUtil.parseDate(aFollowUpDate);
@@ -183,7 +190,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateFollowUpDateFromVariable() {
+  void testDecorateFollowUpDateFromVariable() {
     // given
     String aFollowUpDateDate = "2014-06-01";
     Date followUpDate = DateTimeUtil.parseDate(aFollowUpDateDate);
@@ -200,7 +207,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecoratePriority() {
+  void testDecoratePriority() {
     // given
     String aPriority = "10";
     Expression priorityExpression = expressionManager.createExpression(aPriority);
@@ -214,7 +221,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecoratePriorityFromVariable() {
+  void testDecoratePriorityFromVariable() {
     // given
     int aPriority = 10;
     taskService.setVariable(task.getId(), "priority", aPriority);
@@ -230,7 +237,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateAssignee() {
+  void testDecorateAssignee() {
     // given
     String aAssignee = "john";
     Expression assigneeExpression = expressionManager.createExpression(aAssignee);
@@ -244,7 +251,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateAssigneeFromVariable() {
+  void testDecorateAssigneeFromVariable() {
     // given
     String aAssignee = "john";
     taskService.setVariable(task.getId(), "assignee", aAssignee);
@@ -260,7 +267,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateCandidateUsers() {
+  void testDecorateCandidateUsers() {
     // given
     List<String> aCandidateUserList = new ArrayList<>();
     aCandidateUserList.add("john");
@@ -300,7 +307,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateCandidateUsersFromVariable() {
+  void testDecorateCandidateUsersFromVariable() {
     // given
     taskService.setVariable(task.getId(), "john", "john");
     taskService.setVariable(task.getId(), "peter", "peter");
@@ -343,7 +350,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateCandidateGroups() {
+  void testDecorateCandidateGroups() {
     // given
     List<String> aCandidateGroupList = new ArrayList<>();
     aCandidateGroupList.add("management");
@@ -383,7 +390,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDecorateCandidateGroupsFromVariable() {
+  void testDecorateCandidateGroupsFromVariable() {
     // given
     taskService.setVariable(task.getId(), "management", "management");
     taskService.setVariable(task.getId(), "accounting", "accounting");

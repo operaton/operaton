@@ -5,7 +5,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -61,7 +61,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * This extension provides many of the utility methods from your former JUnit 4
  * rule. It now has a default no-args constructor that creates a ProcessEngine
  * using the default configuration. This allows you to register it via:
- * 
+ *
  * <pre>
  * &#64;RegisterExtension
  * protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension();
@@ -79,7 +79,7 @@ public class ProcessEngineTestExtension
 
   public ProcessEngineTestExtension() {
   }
-  
+
   public ProcessEngineTestExtension(ProcessEngineExtension processEngineExtension) {
     this.processEngineExtension = processEngineExtension;
   }

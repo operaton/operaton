@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -73,23 +73,4 @@ public abstract class AbstractDefinitionQueryTest {
     repositoryService.deleteDeployment(deploymentTwoId, true);
   }
 
-  protected void verifyQueryResults(Query query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(Long.valueOf(countExpected));
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
-  private void verifySingleResultFails(Query query) {
-
-    // when/then
-    assertThatThrownBy(query::singleResult)
-      .isInstanceOf(ProcessEngineException.class);
-  }
 }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,20 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.CallerRunsRejectedJobsHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -38,30 +25,36 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.jobexecutor.CallerRunsRejectedJobsHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class JobExecutionLoggingTest {
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch(
+class JobExecutionLoggingTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch(
       "org.operaton.bpm.engine.jobexecutor", Level.DEBUG);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule).around(loggingRule);
-
-  protected RuntimeService runtimeService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
+  RuntimeService runtimeService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml" })
-  public void shouldLogJobsQueuedForExecution() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml"})
+  void shouldLogJobsQueuedForExecution() {
     // Replace job executor with one that has custom thread pool executor settings
     JobExecutionLoggingTest.TestJobExecutor testJobExecutor = new JobExecutionLoggingTest.TestJobExecutor();
     testJobExecutor.setMaxJobsPerAcquisition(10);
@@ -88,8 +81,8 @@ public class JobExecutionLoggingTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml" })
-  public void shouldLogJobsInExecution() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml"})
+  void shouldLogJobsInExecution() {
     // Replace job executor with one that has custom thread pool executor settings
     JobExecutionLoggingTest.TestJobExecutor testJobExecutor = new JobExecutionLoggingTest.TestJobExecutor();
     processEngineConfiguration.setJobExecutor(testJobExecutor);
@@ -113,8 +106,8 @@ public class JobExecutionLoggingTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml" })
-  public void shouldLogAvailableJobExecutionThreads() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml"})
+  void shouldLogAvailableJobExecutionThreads() {
     // Replace job executor with one that has custom thread pool executor settings
     JobExecutionLoggingTest.TestJobExecutor testJobExecutor = new JobExecutionLoggingTest.TestJobExecutor();
     processEngineConfiguration.setJobExecutor(testJobExecutor);
@@ -138,8 +131,8 @@ public class JobExecutionLoggingTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/delegateThrowsException.bpmn20.xml" })
-  public void shouldLogJobExecutionRejections() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/jobexecutor/delegateThrowsException.bpmn20.xml"})
+  void shouldLogJobExecutionRejections() {
     // Given three jobs
     for (int i = 0; i < 3; i++) {
       runtimeService.startProcessInstanceByKey("testProcess");

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
- * 
+ *
  * @author Tobias Metzke
  *
  */
@@ -54,7 +54,7 @@ class ExternalTaskUserOperationLogTest {
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
 
   private static final String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
   private static final String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";
@@ -111,7 +111,7 @@ class ExternalTaskUserOperationLogTest {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
     runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
-    
+
     List<ExternalTask> list = externalTaskService.createExternalTaskQuery().list();
     List<String> externalTaskIds = new ArrayList<>();
 
@@ -228,12 +228,12 @@ class ExternalTaskUserOperationLogTest {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY_2, Collections.singletonMap("priority", 14));
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(1).singleResult();
-    
+
     // when
     rule.getIdentityService().setAuthenticatedUserId("userId");
     externalTaskService.setPriority(externalTask.getId(), 78L);
     rule.getIdentityService().clearAuthentication();
-    
+
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
     assertThat(opLogEntries).hasSize(1);
@@ -259,12 +259,12 @@ class ExternalTaskUserOperationLogTest {
     runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().singleResult();
     externalTaskService.fetchAndLock(1, "aWorker").topic(externalTask.getTopicName(), 3000L).execute();
-    
+
     // when
     rule.getIdentityService().setAuthenticatedUserId("userId");
     externalTaskService.unlock(externalTask.getId());
     rule.getIdentityService().clearAuthentication();
-    
+
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
     assertThat(opLogEntries).hasSize(1);

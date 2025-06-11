@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -220,16 +220,16 @@ class BpmPlatformXmlLocationTest {
 
   public static class MockContextFactory implements InitialContextFactory {
 	  private static final ThreadLocal<Context> currentContext = new ThreadLocal<>();
-	  
+
 	  @Override
 	  public Context getInitialContext(Hashtable<?, ?> environment) throws NamingException {
 		  return currentContext.get();
 	  }
-	  
+
 	  public static void setCurrentContext(Context context) {
 		  currentContext.set(context);
 	  }
-	  
+
 	  public static void clearCurrentContext() {
 		  currentContext.remove();
 	  }

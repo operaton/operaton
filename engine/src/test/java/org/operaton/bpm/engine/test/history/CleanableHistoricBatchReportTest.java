@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -37,55 +40,37 @@ import org.operaton.bpm.engine.history.CleanableHistoricBatchReportResult;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.BatchModificationHelper;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class CleanableHistoricBatchReportTest {
+class CleanableHistoricBatchReportTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper migrationHelper = new BatchMigrationHelper(engineRule, migrationRule);
+  BatchModificationHelper modificationHelper = new BatchModificationHelper(engineRule);
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected MigrationTestRule migrationRule = new MigrationTestRule(engineRule);
-  protected BatchMigrationHelper migrationHelper = new BatchMigrationHelper(engineRule, migrationRule);
-  protected BatchModificationHelper modificationHelper = new BatchModificationHelper(engineRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  HistoryService historyService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(testRule).around(engineRule).around(migrationRule);
-
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected HistoryService historyService;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-
-  @Before
-  public void setUp() {
-    historyService = engineRule.getHistoryService();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl)bootstrapRule.getProcessEngine().getProcessEngineConfiguration();
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-  }
-
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     ClockUtil.reset();
     migrationHelper.removeAllRunningAndHistoricBatches();
     processEngineConfiguration.setBatchOperationHistoryTimeToLive(null);
@@ -93,7 +78,7 @@ public class CleanableHistoricBatchReportTest {
   }
 
   @Test
-  public void testReportMixedConfiguration() {
+  void testReportMixedConfiguration() {
     Map<String, String> map = new HashMap<>();
     int modOperationsTTL = 20;
     map.put("instance-modification", "P20D");
@@ -168,7 +153,7 @@ public class CleanableHistoricBatchReportTest {
   }
 
   @Test
-  public void testReportNoDefaultConfiguration() {
+  void testReportNoDefaultConfiguration() {
     Map<String, String> map = new HashMap<>();
     int modOperationsTTL = 5;
     map.put("instance-modification", "P5D");
@@ -244,7 +229,7 @@ public class CleanableHistoricBatchReportTest {
   }
 
   @Test
-  public void testReportNoTTLConfiguration() {
+  void testReportNoTTLConfiguration() {
     processEngineConfiguration.initHistoryCleanup();
     assertThat(processEngineConfiguration.getBatchOperationHistoryTimeToLive()).isNull();
 
@@ -280,7 +265,7 @@ public class CleanableHistoricBatchReportTest {
   }
 
   @Test
-  public void testReportZeroTTL() {
+  void testReportZeroTTL() {
     Map<String, String> map = new HashMap<>();
     int modOperationsTTL = 0;
     map.put("instance-modification", "P0D");
@@ -302,7 +287,7 @@ public class CleanableHistoricBatchReportTest {
   }
 
   @Test
-  public void testReportOrderByFinishedProcessInstance() {
+  void testReportOrderByFinishedProcessInstance() {
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
     assertThat(processEngineConfiguration.getBatchOperationHistoryTimeToLive()).isNotNull();

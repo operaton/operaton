@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,8 +55,8 @@ public class ClassPathScannerTest {
             { "file:src/test/resources/org/operaton/bpm/container/impl/jmx/deployment/util/ClassPathScannerTest.testScanClassPathRecursiveTwoDirectories.jar" },
     });
   }
-  
-  
+
+
   public ClassPathScannerTest(String url) {
     this.url = url;
   }
@@ -65,18 +65,18 @@ public class ClassPathScannerTest {
   static void setup() {
     scanner = new ClassPathProcessApplicationScanner();
   }
-  
+
   /**
    * Test method for {@link org.operaton.bpm.container.impl.deployment.scanning.ClassPathProcessApplicationScanner#scanClassPath(java.lang.ClassLoader)}.
-   * @throws MalformedURLException 
+   * @throws MalformedURLException
    */
   @TestTemplate
   void testScanClassPath() throws MalformedURLException {
-    
+
     URLClassLoader classLoader = getClassloader();
-    
+
     Map<String, byte[]> scanResult = new HashMap<>();
-    
+
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), null, scanResult);
 
     assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
@@ -87,12 +87,12 @@ public class ClassPathScannerTest {
       assertThat(scanResult).hasSize(2);
     }
   }
-  
+
   @TestTemplate
   void testScanClassPathWithNonExistingRootPath_relativeToPa() throws MalformedURLException {
 
     URLClassLoader classLoader = getClassloader();
-    
+
     Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), "pa:nonexisting", scanResult);
 
@@ -100,12 +100,12 @@ public class ClassPathScannerTest {
     assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' found").isFalse();
     assertThat(scanResult).isEmpty();
   }
-  
+
   @TestTemplate
   void testScanClassPathWithNonExistingRootPath_nonRelativeToPa() throws MalformedURLException {
-    
+
     URLClassLoader classLoader = getClassloader();
-    
+
     Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, null, "nonexisting", scanResult);
 
@@ -118,33 +118,33 @@ public class ClassPathScannerTest {
   void testScanClassPathWithExistingRootPath_relativeToPa() throws MalformedURLException {
 
     URLClassLoader classLoader = getClassloader();
-    
+
     Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), "pa:directory/", scanResult);
 
     if(url.contains("Recursive")) {
       assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
       assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' not found").isTrue();
-      assertThat(scanResult).hasSize(2);      
+      assertThat(scanResult).hasSize(2);
     } else {
       assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' found").isFalse();
       assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' found").isFalse();
       assertThat(scanResult).isEmpty();
     }
   }
-  
+
   @TestTemplate
   void testScanClassPathWithExistingRootPath_nonRelativeToPa() throws MalformedURLException {
-    
+
     URLClassLoader classLoader = getClassloader();
-    
+
     Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, null, "directory/", scanResult);
-        
+
     if(url.contains("Recursive")) {
       assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
       assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' not found").isTrue();
-      assertThat(scanResult).hasSize(2);      
+      assertThat(scanResult).hasSize(2);
     } else {
       assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' found").isFalse();
       assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' found").isFalse();
@@ -164,12 +164,12 @@ public class ClassPathScannerTest {
       assertThat(scanResult).hasSize(5);
     }
   }
-  
+
 
   private URLClassLoader getClassloader() throws MalformedURLException {
     return new URLClassLoader(new URL[]{new URL(url)});
   }
-  
+
   private boolean contains(Map<String, byte[]> scanResult, String suffix) {
     for (String string : scanResult.keySet()) {
       if (string.endsWith(suffix)) {

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,12 +16,37 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByActivityId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByDeploymentId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByExecutionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobDueDate;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobPriority;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobRetries;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessDefinitionKey;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByTimestamp;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogPartiallyByOccurence;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.history.HistoricJobLogQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -29,59 +54,48 @@ import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
 import org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil;
-import org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.NullTolerantComparator;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricJobLogQueryTest {
+class HistoricJobLogQueryTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected HistoryService historyService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  HistoryService historyService;
 
   protected String defaultHostname;
 
-  @Before
-  public void init() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    historyService = engineRule.getHistoryService();
-
+  @BeforeEach
+  void init() {
     defaultHostname = processEngineConfiguration.getHostname();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setHostname(defaultHostname);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQuery() {
+  void testQuery() {
     runtimeService.startProcessInstanceByKey("process");
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery();
 
@@ -90,7 +104,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByLogId() {
+  void testQueryByLogId() {
     runtimeService.startProcessInstanceByKey("process");
     String logId = historyService.createHistoricJobLogQuery().singleResult().getId();
 
@@ -100,7 +114,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidLogId() {
+  void testQueryByInvalidLogId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().logId("invalid");
 
     verifyQueryResults(query, 0);
@@ -114,7 +128,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByJobId() {
+  void testQueryByJobId() {
     runtimeService.startProcessInstanceByKey("process");
     String jobId = managementService.createJobQuery().singleResult().getId();
 
@@ -124,7 +138,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidJobId() {
+  void testQueryByInvalidJobId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().jobId("invalid");
 
     verifyQueryResults(query, 0);
@@ -138,7 +152,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByJobExceptionMessage() {
+  void testQueryByJobExceptionMessage() {
     runtimeService.startProcessInstanceByKey("process");
     String jobId = managementService.createJobQuery().singleResult().getId();
     try {
@@ -154,7 +168,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidJobExceptionMessage() {
+  void testQueryByInvalidJobExceptionMessage() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().jobExceptionMessage("invalid");
 
     verifyQueryResults(query, 0);
@@ -168,7 +182,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByFailedActivityId() {
+  void testQueryByFailedActivityId() {
     runtimeService.startProcessInstanceByKey("process");
     String jobId = managementService.createJobQuery().singleResult().getId();
     try {
@@ -184,7 +198,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidFailedActivityId() {
+  void testQueryByInvalidFailedActivityId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().failedActivityIdIn("invalid");
 
     verifyQueryResults(query, 0);
@@ -216,7 +230,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByJobDefinitionId() {
+  void testQueryByJobDefinitionId() {
     runtimeService.startProcessInstanceByKey("process");
     String jobDefinitionId = managementService.createJobQuery().singleResult().getJobDefinitionId();
 
@@ -226,7 +240,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidJobDefinitionId() {
+  void testQueryByInvalidJobDefinitionId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().jobDefinitionId("invalid");
 
     verifyQueryResults(query, 0);
@@ -240,7 +254,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByJobDefinitionType() {
+  void testQueryByJobDefinitionType() {
     runtimeService.startProcessInstanceByKey("process");
 
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().jobDefinitionType(AsyncContinuationJobHandler.TYPE);
@@ -249,7 +263,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidJobDefinitionType() {
+  void testQueryByInvalidJobDefinitionType() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().jobDefinitionType("invalid");
 
     verifyQueryResults(query, 0);
@@ -263,7 +277,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByJobDefinitionConfiguration() {
+  void testQueryByJobDefinitionConfiguration() {
     runtimeService.startProcessInstanceByKey("process");
 
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(MessageJobDeclaration.ASYNC_BEFORE);
@@ -272,7 +286,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidJobDefinitionConfiguration() {
+  void testQueryByInvalidJobDefinitionConfiguration() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().jobDefinitionConfiguration("invalid");
 
     verifyQueryResults(query, 0);
@@ -286,7 +300,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
     runtimeService.startProcessInstanceByKey("process");
 
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().activityIdIn("serviceTask");
@@ -295,7 +309,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidActivityId() {
+  void testQueryByInvalidActivityId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().activityIdIn("invalid");
 
     verifyQueryResults(query, 0);
@@ -327,7 +341,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByExecutionId() {
+  void testQueryByExecutionId() {
     runtimeService.startProcessInstanceByKey("process");
     String executionId = managementService.createJobQuery().singleResult().getExecutionId();
 
@@ -337,7 +351,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidExecutionId() {
+  void testQueryByInvalidExecutionId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().executionIdIn("invalid");
 
     verifyQueryResults(query, 0);
@@ -369,7 +383,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = managementService.createJobQuery().singleResult().getProcessInstanceId();
 
@@ -379,7 +393,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessInstanceId() {
+  void testQueryByInvalidProcessInstanceId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().processInstanceId("invalid");
 
     verifyQueryResults(query, 0);
@@ -393,7 +407,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByProcessDefinitionId() {
+  void testQueryByProcessDefinitionId() {
     runtimeService.startProcessInstanceByKey("process");
     String processDefinitionId = managementService.createJobQuery().singleResult().getProcessDefinitionId();
 
@@ -403,7 +417,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessDefinitionId() {
+  void testQueryByInvalidProcessDefinitionId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().processDefinitionId("invalid");
 
     verifyQueryResults(query, 0);
@@ -417,7 +431,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     runtimeService.startProcessInstanceByKey("process");
     String processDefinitionKey = managementService.createJobQuery().singleResult().getProcessDefinitionKey();
 
@@ -427,7 +441,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessDefinitionKey() {
+  void testQueryByInvalidProcessDefinitionKey() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().processDefinitionKey("invalid");
 
     verifyQueryResults(query, 0);
@@ -441,7 +455,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByDeploymentId() {
+  void testQueryByDeploymentId() {
     runtimeService.startProcessInstanceByKey("process");
     String deploymentId = managementService.createJobQuery().singleResult().getDeploymentId();
 
@@ -452,7 +466,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void shouldQueryCreateLogByHostname() {
+  void shouldQueryCreateLogByHostname() {
     // given
     String testHostname1 = "HOST_1";
     processEngineConfiguration.setHostname(testHostname1);
@@ -479,7 +493,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void shouldQuerySuccessLogByHostname() {
+  void shouldQuerySuccessLogByHostname() {
     // given
     String testHostname1 = "HOST_1";
     processEngineConfiguration.setHostname(testHostname1);
@@ -506,7 +520,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void shouldQueryFailureLogByHostname() {
+  void shouldQueryFailureLogByHostname() {
     // given
     String testHostname1 = "HOST_1";
     processEngineConfiguration.setHostname(testHostname1);
@@ -541,7 +555,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void shouldQueryDeletionLogByHostname() {
+  void shouldQueryDeletionLogByHostname() {
     // given
     String testHostname1 = "HOST_1";
     processEngineConfiguration.setHostname(testHostname1);
@@ -569,7 +583,7 @@ public class HistoricJobLogQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidDeploymentId() {
+  void testQueryByInvalidDeploymentId() {
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().deploymentId("invalid");
 
     verifyQueryResults(query, 0);
@@ -583,7 +597,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment
   @Test
-  public void testQueryByJobPriority() {
+  void testQueryByJobPriority() {
     // given 5 process instances with 5 jobs
     List<ProcessInstance> processInstances = new ArrayList<>();
 
@@ -642,7 +656,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByCreationLog() {
+  void testQueryByCreationLog() {
     runtimeService.startProcessInstanceByKey("process");
 
     HistoricJobLogQuery query = historyService.createHistoricJobLogQuery().creationLog();
@@ -652,7 +666,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByFailureLog() {
+  void testQueryByFailureLog() {
     runtimeService.startProcessInstanceByKey("process");
     String jobId = managementService.createJobQuery().singleResult().getId();
     try {
@@ -669,7 +683,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryBySuccessLog() {
+  void testQueryBySuccessLog() {
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", false));
     String jobId = managementService.createJobQuery().singleResult().getId();
     managementService.executeJob(jobId);
@@ -681,7 +695,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQueryByDeletionLog() {
+  void testQueryByDeletionLog() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
     runtimeService.deleteProcessInstance(processInstanceId, null);
 
@@ -692,7 +706,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     for (int i = 0; i < 10; i++) {
       runtimeService.startProcessInstanceByKey("process");
     }
@@ -871,7 +885,7 @@ public class HistoricJobLogQueryTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
   @Test
-  public void testQuerySortingPartiallyByOccurrence() {
+  void testQuerySortingPartiallyByOccurrence() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
     String jobId = managementService.createJobQuery().singleResult().getId();
 
@@ -944,29 +958,9 @@ public class HistoricJobLogQueryTest {
     managementService.executeJob(jobId);
   }
 
-  protected void verifyQueryResults(HistoricJobLogQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
   protected void verifyQueryWithOrdering(HistoricJobLogQuery query, int countExpected, NullTolerantComparator<HistoricJobLog> expectedOrdering) {
     verifyQueryResults(query, countExpected);
     TestOrderingUtil.verifySorting(query.list(), expectedOrdering);
-  }
-
-  protected void verifySingleResultFails(HistoricJobLogQuery query) {
-    try {
-      query.singleResult();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {}
   }
 
 }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,73 +16,69 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
-import java.util.*;
-
-import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.lang3.time.DateUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricBatchManagerBatchesForCleanupTest {
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public MigrationTestRule migrationRule = new MigrationTestRule(engineRule);
-  public BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(migrationRule);
+  HistoryService historyService;
 
-  protected HistoryService historyService;
-
-  @Before
-  public void init() {
-    historyService = engineRule.getHistoryService();
-  }
-
-  @After
-  public void clearDatabase() {
+  @AfterEach
+  void clearDatabase() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public int historicBatchHistoryTTL;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public int daysInThePast;
 
-  @Parameterized.Parameter(2)
+  @Parameter(2)
   public int batch1EndTime;
 
-  @Parameterized.Parameter(3)
+  @Parameter(3)
   public int batch2EndTime;
 
-  @Parameterized.Parameter(4)
+  @Parameter(4)
   public int batchSize;
 
-  @Parameterized.Parameter(5)
+  @Parameter(5)
   public int resultCount;
 
-  @Parameterized.Parameters
+  @Parameters
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
         // all historic batches are old enough to be cleaned up
@@ -96,8 +92,8 @@ public class HistoricBatchManagerBatchesForCleanupTest {
   }
 
   @SuppressWarnings("unchecked")
-  @Test
-  public void testFindHistoricBatchIdsForCleanup() {
+  @TestTemplate
+  void testFindHistoricBatchIdsForCleanup() {
     // given
     String batchType = prepareHistoricBatches(2);
     final Map<String, Integer> batchOperationsMap = new HashedMap();

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,47 +20,36 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class JobExecutorCleanupTest {
+class JobExecutorCleanupTest {
 
-  ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  ProcessEngineConfigurationImpl configuration;
 
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected ProcessEngineConfigurationImpl configuration;
-
-  @Before
-  public void assignServices() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    configuration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @After
-  public void resetConfig() {
+  @AfterEach
+  void resetConfig() {
     configuration.setHistoryCleanupEnabled(true);
   }
 
   @Test
-  public void shouldNotExecuteCleanupJob() {
+  void shouldNotExecuteCleanupJob() {
     // given
     historyService.cleanUpHistoryAsync(true); // schedule cleanup job
     configuration.setHistoryCleanupEnabled(false);
@@ -69,11 +58,11 @@ public class JobExecutorCleanupTest {
     // then: job cannot be acquired & executed
     assertThatThrownBy(() -> testRule.waitForJobExecutorToProcessAllJobs())
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Time limit of 10000 was exceeded (still 1 jobs available)");
+      .hasMessageContaining("Time limit of 20000 was exceeded (still 1 jobs available)");
   }
 
-  @After
-  public void resetDatabase() {
+  @AfterEach
+  void resetDatabase() {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
       String handlerType = "history-cleanup";
       List<Job> jobsByHandlerType = commandContext.getJobManager()

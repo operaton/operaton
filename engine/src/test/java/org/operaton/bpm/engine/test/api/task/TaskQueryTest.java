@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,6 +35,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByNa
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByPriority;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByProcessInstanceId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -97,7 +98,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Falko Menge
  */
 public class TaskQueryTest {
-  
+
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
@@ -5264,28 +5265,6 @@ public class TaskQueryTest {
 
     for (int i = 0; i < instances.size(); i++) {
       assertThat(actualTasks.get(i).getProcessInstanceId()).isEqualTo(instances.get(i).getId());
-    }
-  }
-
-  private void verifyQueryResults(TaskQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
-  private void verifySingleResultFails(TaskQuery query) {
-    try {
-      query.singleResult();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
     }
   }
 

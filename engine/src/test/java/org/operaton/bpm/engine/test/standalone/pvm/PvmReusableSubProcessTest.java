@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,22 +18,22 @@ package org.operaton.bpm.engine.test.standalone.pvm;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.End;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.ReusableSubProcess;
-import org.junit.Test;
 
 
 /**
  * @author Tom Baeyens
  */
-public class PvmReusableSubProcessTest {
+class PvmReusableSubProcessTest {
 
   @Test
-  public void testReusableSubProcess() {
+  void testReusableSubProcess() {
     PvmProcessDefinition subProcessDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -44,7 +44,7 @@ public class PvmReusableSubProcessTest {
         .behavior(new End())
       .endActivity()
     .buildProcessDefinition();
-  
+
     PvmProcessDefinition superProcessDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -59,8 +59,8 @@ public class PvmReusableSubProcessTest {
         .behavior(new End())
       .endActivity()
     .buildProcessDefinition();
-  
-    PvmProcessInstance processInstance = superProcessDefinition.createProcessInstance(); 
+
+    PvmProcessInstance processInstance = superProcessDefinition.createProcessInstance();
     processInstance.start();
 
     assertThat(processInstance.isEnded()).isTrue();

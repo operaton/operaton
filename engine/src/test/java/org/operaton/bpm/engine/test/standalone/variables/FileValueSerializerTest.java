@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.standalone.variables;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -28,6 +29,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.variable.serializer.FileValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
 import org.operaton.bpm.engine.variable.Variables;
@@ -35,30 +38,28 @@ import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Ronny Bräunlich
  *
  */
-public class FileValueSerializerTest {
+class FileValueSerializerTest {
 
   private static final String SEPARATOR = "#";
   private FileValueSerializer serializer;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     serializer = new FileValueSerializer();
   }
 
   @Test
-  public void testTypeIsFileValueType() {
+  void testTypeIsFileValueType() {
     assertThat(serializer.getType()).isInstanceOf(FileValueTypeImpl.class);
   }
 
   @Test
-  public void testWriteFilenameOnlyValue() {
+  void testWriteFilenameOnlyValue() {
     String filename = "test.txt";
     FileValue fileValue = Variables.fileValue(filename).create();
     ValueFields valueFields = new MockValueFields();
@@ -71,7 +72,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testWriteEmptyFilenameOnlyValue() {
+  void testWriteEmptyFilenameOnlyValue() {
     String filename = "";
     FileValue fileValue = Variables.fileValue(filename).create();
     ValueFields valueFields = new MockValueFields();
@@ -84,7 +85,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testWriteMimetypeAndFilenameValue() {
+  void testWriteMimetypeAndFilenameValue() {
     String filename = "test.txt";
     String mimeType = "text/json";
     FileValue fileValue = Variables.fileValue(filename).mimeType(mimeType).create();
@@ -98,7 +99,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testWriteMimetypeFilenameAndBytesValue() {
+  void testWriteMimetypeFilenameAndBytesValue() {
     String filename = "test.txt";
     String mimeType = "text/json";
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
@@ -113,7 +114,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testWriteMimetypeFilenameBytesValueAndEncoding() {
+  void testWriteMimetypeFilenameBytesValueAndEncoding() {
     String filename = "test.txt";
     String mimeType = "text/json";
     Charset encoding = UTF_8;
@@ -129,7 +130,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testWriteMimetypeFilenameAndBytesValueWithShortcutMethod() throws URISyntaxException {
+  void testWriteMimetypeFilenameAndBytesValueWithShortcutMethod() throws URISyntaxException {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt").toURI());
     FileValue fileValue = Variables.fileValue(file);
     ValueFields valueFields = new MockValueFields();
@@ -141,13 +142,13 @@ public class FileValueSerializerTest {
     assertThat(valueFields.getTextValue2()).isEqualTo("text/plain" + SEPARATOR);
   }
 
-  @Test(expected = UnsupportedOperationException.class)
-  public void testThrowsExceptionWhenConvertingUnknownUntypedValueToTypedValue() {
-    serializer.convertToTypedValue((UntypedValueImpl) Variables.untypedValue(new Object()));
+  @Test
+  void testThrowsExceptionWhenConvertingUnknownUntypedValueToTypedValue() {
+    assertThrows(UnsupportedOperationException.class, () -> serializer.convertToTypedValue((UntypedValueImpl) Variables.untypedValue(new Object())));
   }
 
   @Test
-  public void testReadFileNameMimeTypeAndByteArray() throws IOException {
+  void testReadFileNameMimeTypeAndByteArray() throws IOException {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -168,7 +169,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testReadFileNameEncodingAndByteArray() throws IOException {
+  void testReadFileNameEncodingAndByteArray() throws IOException {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -190,7 +191,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testReadFullValue() throws IOException {
+  void testReadFullValue() throws IOException {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -214,7 +215,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testReadFilenameAndByteArrayValue() throws IOException {
+  void testReadFilenameAndByteArrayValue() throws IOException {
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     byte[] data = new byte[is.available()];
     DataInputStream dataInputStream = new DataInputStream(is);
@@ -233,7 +234,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testReadFilenameValue() {
+  void testReadFilenameValue() {
     MockValueFields valueFields = new MockValueFields();
     String filename = "file.txt";
     valueFields.setTextValue(filename);
@@ -246,7 +247,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testReadEmptyFilenameValue() {
+  void testReadEmptyFilenameValue() {
     MockValueFields valueFields = new MockValueFields();
     String filename = "";
     valueFields.setTextValue(filename);
@@ -259,7 +260,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testReadNullFilenameValue() {
+  void testReadNullFilenameValue() {
     MockValueFields valueFields = new MockValueFields();
     String filename = null;
     valueFields.setTextValue(filename);
@@ -272,12 +273,12 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testNameIsFile() {
+  void testNameIsFile() {
     assertThat(serializer.getName()).isEqualTo("file");
   }
 
   @Test
-  public void testWriteFilenameAndEncodingValue() {
+  void testWriteFilenameAndEncodingValue() {
     String filename = "test.txt";
     String encoding = UTF_8.name();
     FileValue fileValue = Variables.fileValue(filename).encoding(encoding).create();
@@ -290,9 +291,9 @@ public class FileValueSerializerTest {
     assertThat(valueFields.getTextValue2()).isEqualTo(SEPARATOR + encoding);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testSerializeFileValueWithoutName() {
-    Variables.fileValue((String) null).file("abc".getBytes()).create();
+  @Test
+  void testSerializeFileValueWithoutName() {
+    assertThrows(IllegalArgumentException.class, () -> Variables.fileValue((String) null).file("abc".getBytes()).create());
   }
 
   private void checkStreamFromValue(TypedValue value, String expected) {

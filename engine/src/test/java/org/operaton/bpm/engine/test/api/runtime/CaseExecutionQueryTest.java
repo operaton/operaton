@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,6 +23,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExec
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExecutionByDefinitionKey;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExecutionById;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,7 +57,7 @@ class CaseExecutionQueryTest {
 
   private static final String CASE_DEFINITION_KEY = "oneTaskCase";
   private static final String CASE_DEFINITION_KEY_2 = "twoTaskCase";
-  
+
   ProcessEngine processEngine;
   RepositoryService repositoryService;
   CaseService caseService;
@@ -93,28 +94,9 @@ class CaseExecutionQueryTest {
 
   }
 
-  private void verifyQueryResults(CaseExecutionQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
   protected void verifyQueryWithOrdering(CaseExecutionQuery query, int countExpected, NullTolerantComparator<CaseExecution> expectedOrdering) {
     verifyQueryResults(query, countExpected);
     TestOrderingUtil.verifySorting(query.list(), expectedOrdering);
-  }
-
-  private void verifySingleResultFails(CaseExecutionQuery query) {
-    assertThatThrownBy(query::singleResult)
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageMatching("Query return \\d+ results instead of max 1");
   }
 
   @Test

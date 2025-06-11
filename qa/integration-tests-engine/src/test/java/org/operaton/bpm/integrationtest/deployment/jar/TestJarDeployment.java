@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,13 +33,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test only runs on WildFly, as for all other servers, Arquillian wraps the jar in a war file
  * to pack the test runtime. However, we want to deploy a plain jar. This is supported by JBoss-exclusive
  * protocol 'jmx-as7'.
- * 
+ *
  * @author Thorben Lindhauer
  *
  */
 @RunWith(Arquillian.class)
 public class TestJarDeployment extends AbstractFoxPlatformIntegrationTest {
-  
+
   @Deployment
   @OverProtocol("jmx-as7")
   public static JavaArchive processArchive() {
@@ -50,7 +50,7 @@ public class TestJarDeployment extends AbstractFoxPlatformIntegrationTest {
       .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml")
       .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml");
   }
-  
+
   @Test
   public void testDeployProcessArchive() {
     assertThat(processEngine).isNotNull();

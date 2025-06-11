@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,43 +22,43 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.handler.CompositeDbHistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.handler.CompositeHistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class DefaultHistoryEventHandlerTest {
 
-  @Parameterized.Parameters
+  @Parameters
   public static Iterable<Object> parameters() {
     return Arrays.asList(new Object[]{
         true, false
     });
   }
 
-  @Parameterized.Parameter
+  @Parameter
   public boolean isDefaultHandlerEnabled;
 
-  @Rule
-  public ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    // given
-    configuration.setEnableDefaultDbHistoryEventHandler(isDefaultHandlerEnabled);
-    configuration.setCustomHistoryEventHandlers(Collections.singletonList(new CustomHistoryEventHandler()));
-  });
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests().build();
+  
+  @BeforeEach
+  void setup() {
+    engineRule.getProcessEngineConfiguration().setCustomHistoryEventHandlers(Collections.singletonList(new CustomHistoryEventHandler()));
+    engineRule.getProcessEngineConfiguration().setEnableDefaultDbHistoryEventHandler(isDefaultHandlerEnabled);
+  }
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-
-  @Test
-  public void shouldUseInstanceOfCompositeHistoryEventHandler() {
+  @TestTemplate
+  void shouldUseInstanceOfCompositeHistoryEventHandler() {
     // when
     boolean useDefaultDbHandler = engineRule.getProcessEngineConfiguration()
         .isEnableDefaultDbHistoryEventHandler();
@@ -73,8 +73,8 @@ public class DefaultHistoryEventHandlerTest {
     }
   }
 
-  @Test
-  public void shouldProvideCustomHistoryEventHandlers() {
+  @TestTemplate
+  void shouldProvideCustomHistoryEventHandlers() {
     // when
     List<HistoryEventHandler> eventHandlers = engineRule.getProcessEngineConfiguration().getCustomHistoryEventHandlers();
 

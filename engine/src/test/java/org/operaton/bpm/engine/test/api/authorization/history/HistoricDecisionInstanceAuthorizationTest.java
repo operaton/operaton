@@ -22,6 +22,7 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.util.Date;
 import java.util.HashMap;

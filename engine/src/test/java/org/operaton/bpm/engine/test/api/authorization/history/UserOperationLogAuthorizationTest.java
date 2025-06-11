@@ -33,6 +33,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
+
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
@@ -46,6 +47,7 @@ import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPerm
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_ADMIN;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_TASK_WORKER;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.util.Date;
 import java.util.List;

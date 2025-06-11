@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.util.List;
 
@@ -330,28 +331,6 @@ class UserQueryTest {
 
     User result = query.singleResult();
     assertThat(result.getId()).isEqualTo("kermit");
-  }
-
-  private void verifyQueryResults(UserQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
-  private void verifySingleResultFails(UserQuery query) {
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
   }
 
   @Test

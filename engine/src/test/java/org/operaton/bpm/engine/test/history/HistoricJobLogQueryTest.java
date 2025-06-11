@@ -62,6 +62,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+
 /**
  * @author Roman Smirnov
  *
@@ -956,29 +958,9 @@ class HistoricJobLogQueryTest {
     managementService.executeJob(jobId);
   }
 
-  protected void verifyQueryResults(HistoricJobLogQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
   protected void verifyQueryWithOrdering(HistoricJobLogQuery query, int countExpected, NullTolerantComparator<HistoricJobLog> expectedOrdering) {
     verifyQueryResults(query, countExpected);
     TestOrderingUtil.verifySorting(query.list(), expectedOrdering);
-  }
-
-  protected void verifySingleResultFails(HistoricJobLogQuery query) {
-    try {
-      query.singleResult();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {}
   }
 
 }

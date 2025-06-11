@@ -22,6 +22,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.util.List;
 

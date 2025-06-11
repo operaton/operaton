@@ -75,10 +75,10 @@ class BatchSetRemovalTimeTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
-  protected static BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
-  protected BatchHelper helper = new BatchHelper(engineRule);
+  BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
+  BatchHelper helper = new BatchHelper(engineRule);
 
   protected final Date currentDate = testRule.CURRENT_DATE;
   protected final Date removalTime = testRule.REMOVAL_TIME;

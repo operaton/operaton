@@ -51,10 +51,10 @@ class HistoricInstanceForCleanupQueryTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
-  protected static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
-  protected static BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
 
   private HistoryService historyService;
   private ManagementService managementService;

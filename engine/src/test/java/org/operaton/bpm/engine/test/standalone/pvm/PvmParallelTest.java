@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.standalone.pvm;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
@@ -29,16 +30,15 @@ import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.End;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.ParallelGateway;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
-import org.junit.Test;
 
 
 /**
  * @author Tom Baeyens
  */
-public class PvmParallelTest {
+class PvmParallelTest {
 
   @Test
-  public void testSimpleAutmaticConcurrency() {
+  void testSimpleAutmaticConcurrency() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -74,7 +74,7 @@ public class PvmParallelTest {
   }
 
   @Test
-  public void testSimpleWaitStateConcurrency() {
+  void testSimpleWaitStateConcurrency() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -123,7 +123,7 @@ public class PvmParallelTest {
   }
 
   @Test
-  public void testUnstructuredConcurrencyTwoJoins() {
+  void testUnstructuredConcurrencyTwoJoins() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -172,7 +172,7 @@ public class PvmParallelTest {
   }
 
   @Test
-  public void testUnstructuredConcurrencyTwoForks() {
+  void testUnstructuredConcurrencyTwoForks() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -222,7 +222,7 @@ public class PvmParallelTest {
   }
 
   @Test
-  public void testJoinForkCombinedInOneParallelGateway() {
+  void testJoinForkCombinedInOneParallelGateway() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()

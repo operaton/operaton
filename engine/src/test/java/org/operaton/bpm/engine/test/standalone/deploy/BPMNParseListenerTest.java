@@ -20,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -44,50 +47,34 @@ import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Frederik Heremans
  */
-public class BPMNParseListenerTest {
+class BPMNParseListenerTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/standalone/deploy/bpmn.parse.listener.operaton.cfg.xml");
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .closeEngineAfterAllTests()
+    .configurationResource("org/operaton/bpm/engine/test/standalone/deploy/bpmn.parse.listener.operaton.cfg.xml")
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule);
-
-  protected RuntimeService runtimeService;
-  protected RepositoryService repositoryService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    repositoryService = engineRule.getRepositoryService();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     DelegatingBpmnParseListener.delegate = null;
   }
 
   @Test
-  public void testAlterProcessDefinitionKeyWhenDeploying() {
+  void testAlterProcessDefinitionKeyWhenDeploying() {
     // given
     DelegatingBpmnParseListener.delegate = new TestBPMNParseListener();
 
@@ -102,7 +89,7 @@ public class BPMNParseListenerTest {
   }
 
   @Test
-  public void testAlterActivityBehaviors() {
+  void testAlterActivityBehaviors() {
 
     // given
     DelegatingBpmnParseListener.delegate = new TestBPMNParseListener();
@@ -126,7 +113,7 @@ public class BPMNParseListenerTest {
   }
 
   @Test
-  public void shouldModifyFormKeyViaTaskDefinition() {
+  void shouldModifyFormKeyViaTaskDefinition() {
     // given
     String originalFormKey = "some-form-key";
     String modifiedFormKey = "another-form-key";
@@ -167,7 +154,7 @@ public class BPMNParseListenerTest {
   }
 
   @Test
-  public void shouldModifyFormRefViaTaskDefinition() {
+  void shouldModifyFormRefViaTaskDefinition() {
     // given
     String originalFormRef = "some-form-ref";
     String originalFormRefBinding = "deployment";
@@ -219,7 +206,7 @@ public class BPMNParseListenerTest {
   }
 
   @Test
-  public void shouldCheckWithoutTenant() {
+  void shouldCheckWithoutTenant() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process-tenantId")
         .startEvent()
@@ -238,7 +225,7 @@ public class BPMNParseListenerTest {
   }
 
   @Test
-  public void shouldCheckWithTenant() {
+  void shouldCheckWithTenant() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process-tenantId")
         .startEvent()
@@ -257,7 +244,7 @@ public class BPMNParseListenerTest {
   }
 
   @Test
-  public void shouldInvokeParseIoMapping() {
+  void shouldInvokeParseIoMapping() {
     // given
     AtomicInteger invokeTimes = new AtomicInteger();
     DelegatingBpmnParseListener.delegate = new AbstractBpmnParseListener() {

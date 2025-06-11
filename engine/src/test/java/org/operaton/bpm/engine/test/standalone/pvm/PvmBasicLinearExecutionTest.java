@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
@@ -28,13 +29,12 @@ import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.End;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.While;
-import org.junit.Test;
 
 
 /**
  * @author Tom Baeyens
  */
-public class PvmBasicLinearExecutionTest {
+class PvmBasicLinearExecutionTest {
 
   /**
    * +-------+   +-----+
@@ -42,7 +42,7 @@ public class PvmBasicLinearExecutionTest {
    * +-------+   +-----+
    */
   @Test
-  public void testStartEnd() {
+  void testStartEnd() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -67,7 +67,7 @@ public class PvmBasicLinearExecutionTest {
    * +-----+   +-----+   +-------+
    */
   @Test
-  public void testSingleAutomatic() {
+  void testSingleAutomatic() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("one")
         .initial()
@@ -96,7 +96,7 @@ public class PvmBasicLinearExecutionTest {
    * +-----+   +-----+   +-------+
    */
   @Test
-  public void testSingleWaitState() {
+  void testSingleWaitState() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("one")
         .initial()
@@ -130,7 +130,7 @@ public class PvmBasicLinearExecutionTest {
    * +-----+   +-----+   +-------+   +------+    +------+
    */
   @Test
-  public void testCombinationOfWaitStatesAndAutomatics() {
+  void testCombinationOfWaitStatesAndAutomatics() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -185,7 +185,7 @@ public class PvmBasicLinearExecutionTest {
    *                      +-----+
    */
   @Test
-  public void testWhileLoop() {
+  void testWhileLoop() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()

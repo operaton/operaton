@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -27,34 +29,30 @@ import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 import org.slf4j.Logger;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class JobDefinitionFunctionalTest {
+class JobDefinitionFunctionalTest {
 
   static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  protected static final BpmnModelInstance SIMPLE_ASYNC_PROCESS = Bpmn.createExecutableProcess("simpleAsyncProcess")
+  static final BpmnModelInstance SIMPLE_ASYNC_PROCESS = Bpmn.createExecutableProcess("simpleAsyncProcess")
       .startEvent()
       .serviceTask()
         .operatonExpression("${true}")
@@ -62,15 +60,8 @@ public class JobDefinitionFunctionalTest {
       .endEvent()
       .done();
 
-  @Before
-  public void initServices() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
   @Test
-  public void testCreateJobInstanceSuspended() {
+  void testCreateJobInstanceSuspended() {
     testRule.deploy(SIMPLE_ASYNC_PROCESS);
 
     // given suspended job definition:
@@ -85,7 +76,7 @@ public class JobDefinitionFunctionalTest {
   }
 
   @Test
-  public void testCreateJobInstanceActive() {
+  void testCreateJobInstanceActive() {
     testRule.deploy(SIMPLE_ASYNC_PROCESS);
 
     // given that the job definition is not suspended:
@@ -99,7 +90,7 @@ public class JobDefinitionFunctionalTest {
   }
 
   @Test
-  public void testJobExecutorOnlyAcquiresActiveJobs() {
+  void testJobExecutorOnlyAcquiresActiveJobs() {
     testRule.deploy(SIMPLE_ASYNC_PROCESS);
 
     // given suspended job definition:
@@ -123,7 +114,7 @@ public class JobDefinitionFunctionalTest {
   }
 
   @Test
-  public void testExclusiveJobs() {
+  void testExclusiveJobs() {
     testRule.deploy(Bpmn.createExecutableProcess("testProcess")
         .startEvent()
         .serviceTask("task1")

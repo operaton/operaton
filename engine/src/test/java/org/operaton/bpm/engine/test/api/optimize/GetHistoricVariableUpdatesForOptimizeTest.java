@@ -72,7 +72,7 @@ class GetHistoricVariableUpdatesForOptimizeTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   OptimizeService optimizeService;
   IdentityService identityService;

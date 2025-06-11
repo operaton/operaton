@@ -50,7 +50,7 @@ class ProcessInstanceModificationSubProcessTest {
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(rule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(rule);
 
   RuntimeService runtimeService;
   RepositoryService repositoryService;

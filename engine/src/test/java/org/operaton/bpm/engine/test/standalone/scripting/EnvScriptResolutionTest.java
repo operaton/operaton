@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.Test;
-import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
-import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
-import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
+import static org.assertj.core.api.Assertions.as;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.as;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
+import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
+import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 
-public class EnvScriptResolutionTest extends AbstractScriptEnvironmentTest {
+class EnvScriptResolutionTest extends AbstractScriptEnvironmentTest {
 
   protected static final String SCRIPT_LANGUAGE = "graal.js";
   protected static final String ECMASCRIPT_LANGUAGE = "ecmascript";
@@ -47,7 +47,7 @@ public class EnvScriptResolutionTest extends AbstractScriptEnvironmentTest {
   }
 
   @Test
-  public void shouldFindEnvScriptForLanguage() {
+  void shouldFindEnvScriptForLanguage() {
     // given
     ProcessApplicationDeployment deployment = repositoryService.createDeployment(processApplication.getReference())
         .addClasspathResource(processPath)
@@ -68,7 +68,7 @@ public class EnvScriptResolutionTest extends AbstractScriptEnvironmentTest {
   }
 
   @Test
-  public void shouldFindEnvScriptForScriptEngineLanguageIfLanguageNotFound() {
+  void shouldFindEnvScriptForScriptEngineLanguageIfLanguageNotFound() {
     // given
     ProcessApplicationDeployment deployment = repositoryService.createDeployment(processApplication.getReference())
         .addClasspathResource(processPath)

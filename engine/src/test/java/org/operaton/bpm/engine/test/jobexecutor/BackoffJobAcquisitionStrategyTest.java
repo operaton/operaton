@@ -20,18 +20,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.BackoffJobAcquisitionStrategy;
 import org.operaton.bpm.engine.impl.jobexecutor.JobAcquisitionContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobAcquisitionStrategy;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class BackoffJobAcquisitionStrategyTest {
+class BackoffJobAcquisitionStrategyTest {
 
   // strategy configuration
   protected static final long BASE_IDLE_WAIT_TIME = 50;
@@ -50,8 +50,8 @@ public class BackoffJobAcquisitionStrategyTest {
 
   protected JobAcquisitionStrategy strategy;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     strategy = new BackoffJobAcquisitionStrategy(
         BASE_IDLE_WAIT_TIME,
         IDLE_INCREASE_FACTOR,
@@ -64,7 +64,7 @@ public class BackoffJobAcquisitionStrategyTest {
   }
 
   @Test
-  public void testIdleWaitTime() {
+  void testIdleWaitTime() {
 
     // given a job acquisition strategy and a job acquisition context
     // with no acquired jobs
@@ -96,7 +96,7 @@ public class BackoffJobAcquisitionStrategyTest {
   }
 
   @Test
-  public void testAcquisitionAfterIdleWait() {
+  void testAcquisitionAfterIdleWait() {
 
     // given a job acquisition strategy and a job acquisition context
     // with no acquired jobs
@@ -117,7 +117,7 @@ public class BackoffJobAcquisitionStrategyTest {
   }
 
   @Test
-  public void testAcquireLessJobsOnRejection() {
+  void testAcquireLessJobsOnRejection() {
     // given a job acquisition strategy and a job acquisition context
     // with acquired jobs, some of which have been rejected for execution
     JobAcquisitionContext context = new JobAcquisitionContext();
@@ -141,7 +141,7 @@ public class BackoffJobAcquisitionStrategyTest {
   }
 
   @Test
-  public void testWaitTimeOnFullRejection() {
+  void testWaitTimeOnFullRejection() {
     // given a job acquisition strategy and a job acquisition context
     // with acquired jobs all of which have been rejected for execution
     JobAcquisitionContext context = new JobAcquisitionContext();

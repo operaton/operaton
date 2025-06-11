@@ -59,7 +59,7 @@ class MultiTenancyHistoricBatchQueryTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(engineRule);
 

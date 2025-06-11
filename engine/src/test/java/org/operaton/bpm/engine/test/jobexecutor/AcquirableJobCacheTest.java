@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -28,44 +35,25 @@ import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.List;
+class AcquirableJobCacheTest {
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-public class AcquirableJobCacheTest {
-
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected ManagementService managementService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void setup() {
-    managementService = engineRule.getManagementService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-  }
+  ManagementService managementService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
-  public void testFetchJobEntityWhenAcquirableJobIsCached() {
+  void testFetchJobEntityWhenAcquirableJobIsCached() {
     // given
     runtimeService.startProcessInstanceByKey("asyncServiceTaskProcess");
 
@@ -84,7 +72,7 @@ public class AcquirableJobCacheTest {
   }
 
   @Test
-  public void testFetchTimerEntityWhenAcquirableJobIsCached() {
+  void testFetchTimerEntityWhenAcquirableJobIsCached() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("startTimer")
         .startEvent()
@@ -113,7 +101,7 @@ public class AcquirableJobCacheTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
-  public void testFetchAcquirableJobWhenJobEntityIsCached() {
+  void testFetchAcquirableJobWhenJobEntityIsCached() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncServiceTaskProcess");
 
@@ -126,7 +114,7 @@ public class AcquirableJobCacheTest {
   }
 
   @Test
-  public void testFetchAcquirableJobWhenTimerEntityIsCached() {
+  void testFetchAcquirableJobWhenTimerEntityIsCached() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("timer")
       .startEvent()

@@ -22,20 +22,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.calendar.DurationHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.junit.After;
-import org.junit.Test;
 
-public class DurationHelperTest {
+class DurationHelperTest {
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
   }
 
   @Test
-  public void shouldNotExceedNumber() throws Exception {
+  void shouldNotExceedNumber() throws Exception {
     ClockUtil.setCurrentTime(new Date(0));
     DurationHelper dh = new DurationHelper("R2/PT10S");
 
@@ -48,7 +48,7 @@ public class DurationHelperTest {
   }
 
   @Test
-  public void shouldNotExceedNumberPeriods() throws Exception {
+  void shouldNotExceedNumberPeriods() throws Exception {
     ClockUtil.setCurrentTime(parse("19700101-00:00:00"));
     DurationHelper dh = new DurationHelper("R2/1970-01-01T00:00:00/1970-01-01T00:00:10");
 
@@ -61,7 +61,7 @@ public class DurationHelperTest {
   }
 
   @Test
-  public void shouldNotExceedNumberNegative() throws Exception {
+  void shouldNotExceedNumberNegative() throws Exception {
     ClockUtil.setCurrentTime(parse("19700101-00:00:00"));
     DurationHelper dh = new DurationHelper("R2/PT10S/1970-01-01T00:00:50");
 
@@ -75,14 +75,14 @@ public class DurationHelperTest {
   }
 
   @Test
-  public void shouldNotExceedNumberWithStartDate() throws Exception {
+  void shouldNotExceedNumberWithStartDate() throws Exception {
     DurationHelper dh = new DurationHelper("R2/PT10S", new Date(0));
     assertEquals(20000, dh.getDateAfter(new Date(15000)).getTime());
     assertThat(dh.getDateAfter(new Date(30000))).isNull();
   }
 
   @Test
-  public void shouldNotExceedNumberPeriodsWithStartDate() throws Exception {
+  void shouldNotExceedNumberPeriodsWithStartDate() throws Exception {
     DurationHelper dh = new DurationHelper("R2/1970-01-01T00:00:00/1970-01-01T00:00:10", parse("19700101-00:00:00"));
 
     assertEquals(parse("19700101-00:00:20"), dh.getDateAfter(parse("19700101-00:00:15")));
@@ -90,7 +90,7 @@ public class DurationHelperTest {
   }
 
   @Test
-  public void shouldNotExceedNumberNegativeWithStartDate() throws Exception {
+  void shouldNotExceedNumberNegativeWithStartDate() throws Exception {
     DurationHelper dh = new DurationHelper("R2/PT10S/1970-01-01T00:00:50", parse("19700101-00:00:00"));
 
     assertEquals(parse("19700101-00:00:30"), dh.getDateAfter(parse("19700101-00:00:20")));
@@ -99,7 +99,7 @@ public class DurationHelperTest {
   }
 
   @Test
-  public void shouldParseAllSupportedISO8601DurationPatterns() throws Exception {
+  void shouldParseAllSupportedISO8601DurationPatterns() throws Exception {
     // given
     // when
     DurationHelper PnYnMnDTnHnMnS = new DurationHelper("P1Y5M21DT19H47M55S", parse("19700101-00:00:00"));
@@ -110,7 +110,7 @@ public class DurationHelperTest {
   }
 
   @Test
-  public void shouldParseP4W() throws Exception {
+  void shouldParseP4W() throws Exception {
     // given
 
     // when
@@ -121,7 +121,7 @@ public class DurationHelperTest {
   }
 
   @Test
-  public void shouldParseP5W() throws Exception {
+  void shouldParseP5W() throws Exception {
     // given
 
     // when
@@ -132,7 +132,7 @@ public class DurationHelperTest {
   }
 
   @Test
-  public void shouldParseP22W() throws Exception {
+  void shouldParseP22W() throws Exception {
     // given
 
     // when

@@ -53,7 +53,7 @@ public class SelfCancellationTest {
   @RegisterExtension
   static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(processEngineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(processEngineRule);
 
   //========================================================================================================================
   //=======================================================MODELS===========================================================

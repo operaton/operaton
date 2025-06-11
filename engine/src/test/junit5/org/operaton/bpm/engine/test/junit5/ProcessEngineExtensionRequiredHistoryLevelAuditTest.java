@@ -29,6 +29,7 @@ class ProcessEngineExtensionRequiredHistoryLevelAuditTest {
 
   @RegisterExtension
   static ProcessEngineExtension extension = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
       .configurationResource("audithistory.operaton.cfg.xml")
       .build();
 

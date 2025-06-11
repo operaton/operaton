@@ -16,20 +16,23 @@
  */
 package org.operaton.bpm.engine.test.standalone.db;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
-import java.io.IOException;
-import java.util.*;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 /**
  * @author Miklas Boskamp
@@ -43,18 +46,16 @@ public class SchemaLogTestCase {
   protected static final List<String> SCRIPT_FOLDERS = Arrays.asList(CREATE_SCRIPT_FOLDER, UPGRADE_SCRIPT_FOLDER);
   protected static final String[] DATABASES = DbSqlSessionFactory.SUPPORTED_DATABASES;
 
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
 
   public ProcessEngine processEngine;
 
   protected String folderPath;
   protected Map<String, List<String>> folderContents;
 
-  @Before
-  public void init() {
-    processEngine = rule.getProcessEngine();
-
+  @BeforeEach
+  void init() {
     folderContents = new HashMap<>();
     for (String folder : SCRIPT_FOLDERS) {
       folderContents.put(folder, readFolderContent(folder));

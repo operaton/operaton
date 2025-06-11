@@ -16,36 +16,45 @@
  */
 package org.operaton.bpm.engine.test.standalone.variablescope;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Roman Smirnov
  * @author Christian Lipphardt
  *
  */
-public class VariableScopeTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class VariableScopeTest {
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   /**
    * A testcase to produce and fix issue ACT-862.
    */
   @Deployment
   @Test
-  public void testVariableNamesScope() {
+  void testVariableNamesScope() {
 
     // After starting the process, the task in the subprocess should be active
     Map<String, Object> varMap = new HashMap<>();

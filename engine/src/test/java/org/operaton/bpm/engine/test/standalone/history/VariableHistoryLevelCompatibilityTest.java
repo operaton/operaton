@@ -18,13 +18,11 @@ package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 
 /**
@@ -34,23 +32,18 @@ import org.junit.Test;
  *
  * @author Daniel Meyer
  */
-public class VariableHistoryLevelCompatibilityTest {
+class VariableHistoryLevelCompatibilityTest {
 
-  @Rule
-  public ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/standalone/history/variablehistory.operaton.cfg.xml");
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .closeEngineAfterAllTests()
+    .configurationResource("org/operaton/bpm/engine/test/standalone/history/variablehistory.operaton.cfg.xml")
+    .build();
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Before
-  public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  public void testCompatibilty() {
+  void testCompatibilty() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     assertThat(historyLevel).isEqualTo(ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY);
   }

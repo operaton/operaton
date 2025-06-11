@@ -16,25 +16,25 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Before;
-import org.junit.Test;
 
-public class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcquireJobsTest {
+class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcquireJobsTest {
 
-  @Before
-  public void prepareProcessEngineConfiguration() {
+  @BeforeEach
+  void prepareProcessEngineConfiguration() {
     configuration.setJobExecutorAcquireByPriority(true);
   }
 
   @Test
-  public void testProcessEngineConfiguration() {
+  void testProcessEngineConfiguration() {
     assertThat(configuration.isJobExecutorPreferTimerJobs()).isFalse();
     assertThat(configuration.isJobExecutorAcquireByDueDate()).isFalse();
     assertThat(configuration.isJobExecutorAcquireByPriority()).isTrue();
@@ -45,7 +45,7 @@ public class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcq
     "org/operaton/bpm/engine/test/jobexecutor/jobPrioProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/jobexecutor/timerJobPrioProcess.bpmn20.xml"
   })
-  public void testAcquisitionByPriority() {
+  void testAcquisitionByPriority() {
     // jobs with priority 10
     startProcess("jobPrioProcess", "task1", 5);
 
@@ -82,7 +82,7 @@ public class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcq
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/jobPrioProcess.bpmn20.xml")
-  public void testMixedPriorityAcquisition() {
+  void testMixedPriorityAcquisition() {
     // jobs with priority 10
     startProcess("jobPrioProcess", "task1", 5);
 

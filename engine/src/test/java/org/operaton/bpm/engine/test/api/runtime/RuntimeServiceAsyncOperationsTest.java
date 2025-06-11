@@ -56,7 +56,7 @@ class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
   protected MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
 

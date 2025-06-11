@@ -16,29 +16,29 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Before;
-import org.junit.Test;
 
-public class JobExecutorAcquireJobsByTypeAndDueDateTest extends AbstractJobExecutorAcquireJobsTest {
+class JobExecutorAcquireJobsByTypeAndDueDateTest extends AbstractJobExecutorAcquireJobsTest {
 
-  @Before
-  public void prepareProcessEngineConfiguration() {
+  @BeforeEach
+  void prepareProcessEngineConfiguration() {
     configuration.setJobExecutorPreferTimerJobs(true);
     configuration.setJobExecutorAcquireByDueDate(true);
   }
 
   @Test
-  public void testProcessEngineConfiguration() {
+  void testProcessEngineConfiguration() {
     assertThat(configuration.isJobExecutorPreferTimerJobs()).isTrue();
     assertThat(configuration.isJobExecutorAcquireByDueDate()).isTrue();
     assertThat(configuration.isJobExecutorAcquireByPriority()).isFalse();
@@ -46,7 +46,7 @@ public class JobExecutorAcquireJobsByTypeAndDueDateTest extends AbstractJobExecu
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
-  public void testMessageJobHasDueDateSet() {
+  void testMessageJobHasDueDateSet() {
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -59,7 +59,7 @@ public class JobExecutorAcquireJobsByTypeAndDueDateTest extends AbstractJobExecu
     "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/jobexecutor/processWithTimerCatch.bpmn20.xml"
   })
-  public void testTimerAndOldJobsArePreferred() {
+  void testTimerAndOldJobsArePreferred() {
     // first start process with timer job
     ProcessInstance timerProcess1 = runtimeService.startProcessInstanceByKey("testProcess");
     // then start process with async task

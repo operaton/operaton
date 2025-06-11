@@ -53,7 +53,7 @@ class BulkHistoryDeleteCmmnDisabledTest {
     .configurator(configuration -> configuration.setCmmnEnabled(false))
     .build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private RuntimeService runtimeService;
   private HistoryService historyService;

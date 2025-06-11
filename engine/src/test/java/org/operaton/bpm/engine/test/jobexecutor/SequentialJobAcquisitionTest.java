@@ -16,15 +16,19 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutionRunnablesToFinish;
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.DateFormat.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
@@ -32,13 +36,11 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  */
-public class SequentialJobAcquisitionTest {
+class SequentialJobAcquisitionTest {
 
   private static final String RESOURCE_BASE = SequentialJobAcquisitionTest.class.getPackage()
       .getName()
@@ -47,21 +49,26 @@ public class SequentialJobAcquisitionTest {
   private static final String PROCESS_RESOURCE =
       RESOURCE_BASE + "/IntermediateTimerEventTest.testCatchingTimerEvent.bpmn20.xml";
 
-  private final JobExecutor jobExecutor = new DefaultJobExecutor();
+  private JobExecutor jobExecutor = new DefaultJobExecutor();
   private final List<ProcessEngine> createdProcessEngines = new ArrayList<>();
 
-  @After
-  public void stopJobExecutor() {
+  @BeforeEach
+  void startJobExecutor() {
+    jobExecutor = new DefaultJobExecutor();
+  }
+  
+  @AfterEach
+  void stopJobExecutor() {
     jobExecutor.shutdown();
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @After
-  public void closeProcessEngines() {
+  @AfterEach
+  void closeProcessEngines() {
     Iterator<ProcessEngine> iterator = createdProcessEngines.iterator();
     while (iterator.hasNext()) {
       ProcessEngine processEngine = iterator.next();
@@ -72,7 +79,7 @@ public class SequentialJobAcquisitionTest {
   }
 
   @Test
-  public void testExecuteJobsForSingleEngine() {
+  void testExecuteJobsForSingleEngine() {
     // configure and build a process engine
     StandaloneProcessEngineConfiguration standaloneProcessEngineConfiguration = new StandaloneInMemProcessEngineConfiguration();
     standaloneProcessEngineConfiguration.setProcessEngineName(getClass().getName() + "-engine1");
@@ -103,7 +110,7 @@ public class SequentialJobAcquisitionTest {
   }
 
   @Test
-  public void testExecuteJobsForTwoEnginesSameAcquisition() {
+  void testExecuteJobsForTwoEnginesSameAcquisition() {
     // configure and build a process engine
     StandaloneProcessEngineConfiguration engineConfiguration1 = new StandaloneInMemProcessEngineConfiguration();
     engineConfiguration1.setProcessEngineName(getClass().getName() + "-engine1");
@@ -162,7 +169,7 @@ public class SequentialJobAcquisitionTest {
   }
 
   @Test
-  public void testJobAddedGuardForTwoEnginesSameAcquisition() throws InterruptedException {
+  void testJobAddedGuardForTwoEnginesSameAcquisition() throws InterruptedException {
     // configure and build a process engine
     StandaloneProcessEngineConfiguration engineConfiguration1 = new StandaloneInMemProcessEngineConfiguration();
     engineConfiguration1.setProcessEngineName(getClass().getName() + "-engine1");

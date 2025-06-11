@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -28,14 +29,12 @@ import org.operaton.bpm.engine.task.DelegationState;
 import java.io.*;
 import java.util.Date;
 
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EntitySerializationTest {
+class EntitySerializationTest {
 
   @Test
-  public void testTaskEntitySerialization() throws Exception {
+  void testTaskEntitySerialization() throws Exception {
     TaskEntity task = new TaskEntity();
     task.setDelegationState(DelegationState.RESOLVED);
     task.setExecution(new ExecutionEntity());
@@ -60,7 +59,7 @@ public class EntitySerializationTest {
   }
 
   @Test
-  public void testExecutionEntitySerialization() throws Exception {
+  void testExecutionEntitySerialization() throws Exception {
    ExecutionEntity execution = new ExecutionEntity();
 
    ActivityImpl activityImpl = new ActivityImpl("test", null);

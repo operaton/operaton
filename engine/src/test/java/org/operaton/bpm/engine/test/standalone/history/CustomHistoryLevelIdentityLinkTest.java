@@ -16,14 +16,18 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -34,21 +38,13 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class CustomHistoryLevelIdentityLinkTest {
 
   @Parameters
@@ -64,47 +60,41 @@ public class CustomHistoryLevelIdentityLinkTest {
 
   static CustomHistoryLevelIdentityLink customHisstoryLevelIL = new CustomHistoryLevelIdentityLink();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    configuration.setJdbcUrl("jdbc:h2:mem:" + CustomHistoryLevelIdentityLinkTest.class.getSimpleName());
-    List<HistoryLevel> levels = new ArrayList<>();
-    levels.add(customHisstoryLevelIL);
-    configuration.setCustomHistoryLevels(levels);
-    configuration.setHistory("aCustomHistoryLevelIL");
-    configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
-    configuration.setProcessEngineName("randomProcessEngineName");
-  });
-  ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(configuration -> {
+      configuration.setJdbcUrl("jdbc:h2:mem:" + CustomHistoryLevelIdentityLinkTest.class.getSimpleName());
+      List<HistoryLevel> levels = new ArrayList<>();
+      levels.add(customHisstoryLevelIL);
+      configuration.setCustomHistoryLevels(levels);
+      configuration.setHistory("aCustomHistoryLevelIL");
+      configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
+      configuration.setProcessEngineName("randomProcessEngineName");
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  HistoryService historyService;
+  RuntimeService runtimeService;
+  IdentityService identityService;
+  RepositoryService repositoryService;
+  TaskService taskService;
 
-  protected HistoryService historyService;
-  protected RuntimeService runtimeService;
-  protected IdentityService identityService;
-  protected RepositoryService repositoryService;
-  protected TaskService taskService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    identityService = engineRule.getIdentityService();
-    repositoryService = engineRule.getRepositoryService();
-    taskService = engineRule.getTaskService();
-
+  @BeforeEach
+  void setUp() {
     customHisstoryLevelIL.setEventTypes(eventTypes);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     customHisstoryLevelIL.setEventTypes(null);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testDeletingIdentityLinkByProcDefId() {
+  void testDeletingIdentityLinkByProcDefId() {
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();
@@ -132,8 +122,8 @@ public class CustomHistoryLevelIdentityLinkTest {
     assertThat(historicIdentityLinks).isEmpty();
   }
 
-  @Test
-  public void testDeletingIdentityLinkByTaskId() {
+  @TestTemplate
+  void testDeletingIdentityLinkByTaskId() {
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();

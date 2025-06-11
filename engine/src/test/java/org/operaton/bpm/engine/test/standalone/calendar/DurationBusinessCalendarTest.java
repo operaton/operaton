@@ -21,23 +21,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.calendar.DurationBusinessCalendar;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Tom Baeyens
  */
-public class DurationBusinessCalendarTest {
+class DurationBusinessCalendarTest {
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
   }
 
   @Test
-  public void testSimpleDuration() throws Exception {
+  void testSimpleDuration() throws Exception {
     DurationBusinessCalendar businessCalendar = new DurationBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");
@@ -52,7 +52,7 @@ public class DurationBusinessCalendarTest {
   }
 
   @Test
-  public void testSimpleDurationWithStartDate() throws Exception {
+  void testSimpleDurationWithStartDate() throws Exception {
     DurationBusinessCalendar businessCalendar = new DurationBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");

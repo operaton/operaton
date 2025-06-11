@@ -20,25 +20,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.script.ScriptEngine;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ScriptEngineCachingTest {
 
   protected static final String PROCESS_PATH = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
   protected static final String SCRIPT_LANGUAGE = "groovy";
 
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+
   @Test
-  public void testGlobalCachingOfScriptEngine() {
+  void testGlobalCachingOfScriptEngine() {
     // when
     ScriptEngine engine = getScriptEngine(SCRIPT_LANGUAGE);
 
@@ -48,7 +55,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGlobalDisableCachingOfScriptEngine() {
+  void testGlobalDisableCachingOfScriptEngine() {
     // then
     processEngineConfiguration.setEnableScriptEngineCaching(false);
     getScriptingEngines().setEnableScriptEngineCaching(false);
@@ -65,7 +72,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCachingOfScriptEngineInProcessApplication() {
+  void testCachingOfScriptEngineInProcessApplication() {
     // given
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 
@@ -78,7 +85,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDisableCachingOfScriptEngineInProcessApplication() {
+  void testDisableCachingOfScriptEngineInProcessApplication() {
     // given
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 
@@ -91,7 +98,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFetchScriptEngineFromPaEnableCaching() {
+  void testFetchScriptEngineFromPaEnableCaching() {
     // then
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 
@@ -113,7 +120,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFetchScriptEngineFromPaDisableCaching() {
+  void testFetchScriptEngineFromPaDisableCaching() {
     // then
     processEngineConfiguration.setEnableScriptEngineCaching(false);
     getScriptingEngines().setEnableScriptEngineCaching(false);
@@ -141,7 +148,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDisableFetchScriptEngineFromProcessApplication() {
+  void testDisableFetchScriptEngineFromProcessApplication() {
     // when
     processEngineConfiguration.setEnableFetchScriptEngineFromProcessApplication(false);
 

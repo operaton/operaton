@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
@@ -33,13 +34,12 @@ import org.operaton.bpm.engine.test.standalone.pvm.activities.ParallelGateway;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.While;
 import org.operaton.bpm.engine.test.standalone.pvm.verification.TransitionInstanceVerifyer;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class PvmActivityInstanceTest {
+class PvmActivityInstanceTest {
 
   /**
    * +-----+   +-----+   +-------+
@@ -47,7 +47,7 @@ public class PvmActivityInstanceTest {
    * +-----+   +-----+   +-------+
    */
   @Test
-  public void testSequence() {
+  void testSequence() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
@@ -93,7 +93,7 @@ public class PvmActivityInstanceTest {
    *                      +-----+
    */
   @Test
-  public void testWhileLoop() {
+  void testWhileLoop() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
     TransitionInstanceVerifyer transitionVerifier = new TransitionInstanceVerifyer();
@@ -186,7 +186,7 @@ public class PvmActivityInstanceTest {
    *           +-------------------------------------------------+
    */
   @Test
-  public void testMultipleConcurrentEndsInsideEmbeddedSubProcessWithWaitState() {
+  void testMultipleConcurrentEndsInsideEmbeddedSubProcessWithWaitState() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
@@ -298,7 +298,7 @@ public class PvmActivityInstanceTest {
    *           +-------------------------------------------------------+
    */
   @Test
-  public void testNestedSubProcessNoEnd() {
+  void testNestedSubProcessNoEnd() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
@@ -380,7 +380,7 @@ public class PvmActivityInstanceTest {
    *           +-------------------------------------------------------+
    */
   @Test
-  public void testNestedSubProcessBothNoEnd() {
+  void testNestedSubProcessBothNoEnd() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
@@ -436,7 +436,7 @@ public class PvmActivityInstanceTest {
   }
 
   @Test
-  public void testSubProcessNoEnd() {
+  void testSubProcessNoEnd() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 
@@ -484,7 +484,7 @@ public class PvmActivityInstanceTest {
    * +-----+   +-----+   +-------+
    */
   @Test
-  public void testScopeActivity() {
+  void testScopeActivity() {
 
     ActivityInstanceVerification verifier = new ActivityInstanceVerification();
 

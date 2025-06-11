@@ -20,27 +20,41 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.standalone.entity.ExecutionOrderListener.ActivitySequenceCounterMap;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
+class ExecutionSequenceCounterTest {
 
-  @Before
-  public void setUp() {
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
+  
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
+
+  @BeforeEach
+  void setUp() {
     ExecutionOrderListener.clearActivityExecutionOrder();
   }
 
   @Deployment
   @Test
-  public void testSequence() {
+  void testSequence() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -55,7 +69,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkSameSequenceLengthWithoutWaitStates() {
+  void testForkSameSequenceLengthWithoutWaitStates() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -70,7 +84,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkSameSequenceLengthWithAsyncEndEvent() {
+  void testForkSameSequenceLengthWithAsyncEndEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -136,7 +150,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkDifferentSequenceLengthWithoutWaitStates() {
+  void testForkDifferentSequenceLengthWithoutWaitStates() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -152,7 +166,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkDifferentSequenceLengthWithAsyncEndEvent() {
+  void testForkDifferentSequenceLengthWithAsyncEndEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -222,7 +236,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkReplaceBy() {
+  void testForkReplaceBy() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -284,7 +298,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testForkReplaceBy.bpmn20.xml"})
   @Test
-  public void testForkReplaceByAnotherExecutionOrder() {
+  void testForkReplaceByAnotherExecutionOrder() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
     JobQuery jobQuery = managementService.createJobQuery();
@@ -345,7 +359,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkReplaceByThreeBranches() {
+  void testForkReplaceByThreeBranches() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
     JobQuery jobQuery = managementService.createJobQuery();
@@ -434,7 +448,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkAndJoinSameSequenceLength() {
+  void testForkAndJoinSameSequenceLength() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -496,7 +510,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkAndJoinDifferentSequenceLength() {
+  void testForkAndJoinDifferentSequenceLength() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -565,7 +579,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkAndJoinThreeBranchesDifferentSequenceLength() {
+  void testForkAndJoinThreeBranchesDifferentSequenceLength() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -599,7 +613,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequenceInsideSubProcess() {
+  void testSequenceInsideSubProcess() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -614,7 +628,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkSameSequenceLengthInsideSubProcess() {
+  void testForkSameSequenceLengthInsideSubProcess() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -641,7 +655,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkDifferentSequenceLengthInsideSubProcess() {
+  void testForkDifferentSequenceLengthInsideSubProcess() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -668,7 +682,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialMultiInstance() {
+  void testSequentialMultiInstance() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -683,7 +697,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelMultiInstance() {
+  void testParallelMultiInstance() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -722,7 +736,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testLoop() {
+  void testLoop() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -737,7 +751,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInterruptingBoundaryEvent() {
+  void testInterruptingBoundaryEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -759,7 +773,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNonInterruptingBoundaryEvent() {
+  void testNonInterruptingBoundaryEvent() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 

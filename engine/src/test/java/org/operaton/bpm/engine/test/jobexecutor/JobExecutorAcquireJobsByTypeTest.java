@@ -16,29 +16,29 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Before;
-import org.junit.Test;
 
-public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquireJobsTest {
+class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquireJobsTest {
 
-  @Before
-  public void prepareProcessEngineConfiguration() {
+  @BeforeEach
+  void prepareProcessEngineConfiguration() {
     configuration.setJobExecutorPreferTimerJobs(true);
   }
 
   @Test
-  public void testProcessEngineConfiguration() {
+  void testProcessEngineConfiguration() {
     assertThat(configuration.isJobExecutorPreferTimerJobs()).isTrue();
     assertThat(configuration.isJobExecutorAcquireByDueDate()).isFalse();
     assertThat(configuration.isJobExecutorAcquireByPriority()).isFalse();
@@ -46,7 +46,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
-  public void testMessageJobHasNoDueDateSet() {
+  void testMessageJobHasNoDueDateSet() {
     configuration.setEnsureJobDueDateNotNull(false);
 
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
@@ -57,7 +57,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
-  public void testMessageJobHasDueDateSet() {
+  void testMessageJobHasDueDateSet() {
     configuration.setEnsureJobDueDateNotNull(true);
 
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
@@ -73,7 +73,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/jobexecutor/processWithTimerCatch.bpmn20.xml"
   })
-  public void testTimerJobsArePreferred() {
+  void testTimerJobsArePreferred() {
     // first start process with timer job
     runtimeService.startProcessInstanceByKey("testProcess");
     // then start process with async task

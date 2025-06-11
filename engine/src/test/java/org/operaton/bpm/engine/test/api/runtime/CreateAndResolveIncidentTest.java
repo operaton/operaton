@@ -79,7 +79,7 @@ public class CreateAndResolveIncidentTest {
       .configurator(configuration -> configuration.setCustomIncidentHandlers(HANDLERS))
       .build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   RuntimeService runtimeService;
   ManagementService managementService;

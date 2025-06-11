@@ -118,7 +118,7 @@ class HistoryCleanupTest {
       configuration.setHistoryCleanupDegreeOfParallelism(NUMBER_OF_THREADS);
     }).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected Removable removable;
 

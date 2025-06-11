@@ -24,6 +24,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -31,56 +36,41 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class ExclusiveJobAcquisitionTest {
+class ExclusiveJobAcquisitionTest {
 
   private static final long MAX_SECONDS_TO_WAIT_ON_JOBS = 60;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJobExecutor(new AssertJobExecutor())
-  );
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(configuration -> configuration.setJobExecutor(new AssertJobExecutor()))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  ProcessEngineConfigurationImpl engineConfig;
+  RuntimeService runtimeService;
+  ManagementService managementService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  AssertJobExecutor jobExecutor;
 
-  private ProcessEngineConfigurationImpl engineConfig;
-  private RuntimeService runtimeService;
-  private ManagementService managementService;
-
-  private AssertJobExecutor jobExecutor;
-
-  @Before
-  public void setup() {
-    this.engineConfig = engineRule.getProcessEngineConfiguration();
-    this.runtimeService = engineRule.getRuntimeService();
-    this.managementService = engineRule.getManagementService();
-
+  @BeforeEach
+  void setup() {
     this.jobExecutor = (AssertJobExecutor) engineConfig.getJobExecutor();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     this.jobExecutor.clear();
     this.jobExecutor.shutdown();
   }
 
   @Test
-  public void shouldNotApplyExclusiveAcquisitionWhenMultipleHierarchiesExclusiveJobsIsDisabled() {
+  void shouldNotApplyExclusiveAcquisitionWhenMultipleHierarchiesExclusiveJobsIsDisabled() {
     // given
     engineConfig.setJobExecutorActivate(false);
     engineConfig.setJobExecutorAcquireExclusiveOverProcessHierarchies(false); // disable the feature
@@ -139,7 +129,7 @@ public class ExclusiveJobAcquisitionTest {
   }
 
   @Test
-  public void shouldApplyExclusiveAcquisitionWhenAcquireExclusiveOverProcessHierarchiesIsEnabled() {
+  void shouldApplyExclusiveAcquisitionWhenAcquireExclusiveOverProcessHierarchiesIsEnabled() {
     // given
     engineConfig.setJobExecutorActivate(false);
     engineConfig.setJobExecutorAcquireExclusiveOverProcessHierarchies(true); // enable the feature
@@ -191,7 +181,7 @@ public class ExclusiveJobAcquisitionTest {
   }
 
   @Test
-  public void shouldApplyExclusiveAcquisitionWhenAcquireExclusiveOverProcessHierarchiesIsEnabledMultiHierarchy() {
+  void shouldApplyExclusiveAcquisitionWhenAcquireExclusiveOverProcessHierarchiesIsEnabledMultiHierarchy() {
     // given
     engineConfig.setJobExecutorActivate(false);
     engineConfig.setJobExecutorAcquireExclusiveOverProcessHierarchies(true); // enable the feature

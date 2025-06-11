@@ -16,22 +16,26 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Kristin Polenz
  */
-public class CaseSentryPartEntityTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class CaseSentryPartEntityTest {
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  public void testSentryWithTenantId() {
+  void testSentryWithTenantId() {
     CaseSentryPartEntity caseSentryPartEntity = new CaseSentryPartEntity();
     caseSentryPartEntity.setTenantId("tenant1");
 

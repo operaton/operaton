@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -25,8 +27,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -34,16 +42,16 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class HistoricTaskInstanceQueryTest {
 
   protected static final String VARIABLE_NAME = "variableName";
   protected static final String VARIABLE_NAME_LC = VARIABLE_NAME.toLowerCase();
@@ -55,10 +63,15 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
   static {
     VARIABLES.put(VARIABLE_NAME, VARIABLE_VALUE);
   }
+  
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  TaskService taskService;
+  IdentityService identityService;
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsNumber() {
+  void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.<String, Object>singletonMap("var", 123L));
@@ -107,7 +120,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLike() {
+  void testProcessVariableValueLike() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requester", "vahid alizadeh"));
 
@@ -133,7 +146,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNotLike() {
+  void testProcessVariableValueNotLike() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requester", "vahid alizadeh"));
 
@@ -155,7 +168,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueGreaterThan() {
+  void testProcessVariableValueGreaterThan() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
@@ -164,7 +177,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueGreaterThanOrEqual() {
+  void testProcessVariableValueGreaterThanOrEqual() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
@@ -174,7 +187,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLessThan() {
+  void testProcessVariableValueLessThan() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
@@ -183,7 +196,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLessThanOrEqual() {
+  void testProcessVariableValueLessThanOrEqual() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
@@ -193,7 +206,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableNameEqualsIgnoreCase() {
+  void testProcessVariableNameEqualsIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
 
@@ -212,7 +225,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableNameNotEqualsIgnoreCase() {
+  void testProcessVariableNameNotEqualsIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
     // when
@@ -230,7 +243,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableValueEqualsIgnoreCase() {
+  void testProcessVariableValueEqualsIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
     // when
@@ -248,7 +261,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableValueNotEqualsIgnoreCase() {
+  void testProcessVariableValueNotEqualsIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
     // when
@@ -266,7 +279,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableValueLikeIgnoreCase() {
+  void testProcessVariableValueLikeIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
     // when
@@ -280,7 +293,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableValueNotLikeIgnoreCase() {
+  void testProcessVariableValueNotLikeIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
     // when
@@ -298,7 +311,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableNameAndValueEqualsIgnoreCase() {
+  void testProcessVariableNameAndValueEqualsIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
     // when
@@ -320,7 +333,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableNameAndValueNotEqualsIgnoreCase() {
+  void testProcessVariableNameAndValueNotEqualsIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
     // when
@@ -342,7 +355,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testTaskVariableValueEqualsNumber() {
+  void testTaskVariableValueEqualsNumber() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -373,7 +386,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testTaskVariableValueEqualsNumberIgnoreCase() {
+  void testTaskVariableValueEqualsNumberIgnoreCase() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().singleResult();
@@ -394,7 +407,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testTaskVariableNameEqualsIgnoreCase() {
+  void testTaskVariableNameEqualsIgnoreCase() {
  // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().singleResult();
@@ -415,7 +428,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testTaskVariableNameAndValueEqualsIgnoreCase() {
+  void testTaskVariableNameAndValueEqualsIgnoreCase() {
  // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().singleResult();
@@ -440,8 +453,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskInvolvedUser() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskInvolvedUser() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -464,8 +477,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskInvolvedUserAsOwner() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskInvolvedUserAsOwner() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -482,8 +495,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskInvolvedGroup() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskInvolvedGroup() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -503,8 +516,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskHadCandidateUser() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskHadCandidateUser() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -526,8 +539,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskHadCandidateGroup() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskHadCandidateGroup() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -544,8 +557,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testWithCandidateGroups() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testWithCandidateGroups() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -563,8 +576,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testWithoutCandidateGroups() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testWithoutCandidateGroups() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -584,8 +597,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testGroupTaskQuery() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testGroupTaskQuery() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -628,8 +641,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskWasAssigned() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskWasAssigned() {
     // given
     Task taskOne = taskService.newTask("taskOne");
     Task taskTwo = taskService.newTask("taskTwo");
@@ -657,8 +670,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskWasUnassigned() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskWasUnassigned() {
     // given
     Task taskOne = taskService.newTask("taskOne");
     Task taskTwo = taskService.newTask("taskTwo");
@@ -686,8 +699,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskReturnedBeforeEndTime() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskReturnedBeforeEndTime() {
     // given
     Task taskOne = taskService.newTask("taskOne");
 
@@ -714,8 +727,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testTaskNotReturnedAfterEndTime() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testTaskNotReturnedAfterEndTime() {
     // given
     Task taskOne = taskService.newTask("taskOne");
 
@@ -743,7 +756,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldQueryForTasksWithoutDueDate() {
+  void shouldQueryForTasksWithoutDueDate() {
     // given
     Task taskOne = taskService.newTask("taskOne");
     taskOne.setDueDate(new Date());

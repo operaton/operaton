@@ -19,27 +19,34 @@ package org.operaton.bpm.engine.test.standalone.scripting;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.SourceExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptingEnvironment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public abstract class AbstractScriptEnvironmentTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public abstract class AbstractScriptEnvironmentTest {
 
   protected final String processPath = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
 
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected RepositoryService repositoryService;
+  
   protected ScriptEnvResolver resolver;
   protected ScriptFactory scriptFactory;
   protected EmbeddedProcessApplication processApplication;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     scriptFactory = processEngineConfiguration.getScriptFactory();
     resolver = getResolver();
@@ -47,7 +54,7 @@ public abstract class AbstractScriptEnvironmentTest extends PluggableProcessEngi
     processApplication = new EmbeddedProcessApplication();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     processEngineConfiguration.getEnvScriptResolvers().remove(resolver);
   }

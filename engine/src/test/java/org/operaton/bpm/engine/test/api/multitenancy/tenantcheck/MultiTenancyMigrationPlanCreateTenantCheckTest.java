@@ -42,7 +42,7 @@ class MultiTenancyMigrationPlanCreateTenantCheckTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
   void canCreateMigrationPlanForDefinitionsOfAuthenticatedTenant() {

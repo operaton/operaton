@@ -49,7 +49,7 @@ class HistoryCleanupSchedulerVariableInstancesTest extends AbstractHistoryCleanu
       configure(configuration, HistoryEventTypes.VARIABLE_INSTANCE_CREATE)
     ).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
   void init() {

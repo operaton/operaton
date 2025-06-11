@@ -47,7 +47,7 @@ class HistoryCleanupSchedulerIdentityLinkLogsTest extends AbstractHistoryCleanup
       configure(configuration, HistoryEventTypes.TASK_INSTANCE_CREATE, HistoryEventTypes.IDENTITY_LINK_ADD)
     ).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;

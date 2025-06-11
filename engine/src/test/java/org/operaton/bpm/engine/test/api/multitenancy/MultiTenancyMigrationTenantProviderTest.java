@@ -52,7 +52,7 @@ class MultiTenancyMigrationTenantProviderTest {
       .configurator(configuration -> configuration.setTenantIdProvider(new VariableBasedTenantIdProvider()))
       .build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
   void cannotMigrateInstanceBetweenDifferentTenants() {

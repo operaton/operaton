@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import org.junit.Test;
 import org.operaton.bpm.engine.impl.history.AbstractHistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AbstractHistoryLevelTest {
+import org.junit.jupiter.api.Test;
+
+class AbstractHistoryLevelTest {
 
 
   public static class MyHistoryLevel extends AbstractHistoryLevel {
@@ -44,7 +45,7 @@ public class AbstractHistoryLevelTest {
   }
 
   @Test
-  public void ensureCorrectToString() {
+  void ensureCorrectToString() {
     assertThat(new MyHistoryLevel()).hasToString("MyHistoryLevel(name=myName, id=4711)");
   }
 }

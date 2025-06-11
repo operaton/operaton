@@ -19,19 +19,19 @@ package org.operaton.bpm.engine.test.standalone.initialization;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.junit.Test;
 
 /**
  * @author Tom Baeyens
  * @author Stefan Hentschel
  * @author Roman Smirnov
  */
-public class ProcessEngineInitializationTest {
+class ProcessEngineInitializationTest {
 
   @Test
-  public void testNoTables() {
+  void testNoTables() {
     var processEngineConfiguration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/notables.operaton.cfg.xml");
     processEngineConfiguration.setProcessEngineName("testProcessEngine");
@@ -48,7 +48,7 @@ public class ProcessEngineInitializationTest {
   }
 
   @Test
-  public void testDefaultRetries() {
+  void testDefaultRetries() {
     ProcessEngineConfiguration configuration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/defaultretries.operaton.cfg.xml");
 
@@ -56,7 +56,7 @@ public class ProcessEngineInitializationTest {
   }
 
   @Test
-  public void testCustomDefaultRetries() {
+  void testCustomDefaultRetries() {
     ProcessEngineConfiguration configuration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/customdefaultretries.operaton.cfg.xml");
 

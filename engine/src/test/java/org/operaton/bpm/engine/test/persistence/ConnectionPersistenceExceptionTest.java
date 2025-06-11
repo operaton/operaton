@@ -21,51 +21,44 @@ import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_CONNECTION_ERROR_CLASS;
 
 import java.sql.SQLException;
+
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.exceptions.PersistenceException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 // This test is excluded on Oracle since the SQL State changed with the new version of the JDBC driver.
-@RequiredDatabase(excludes = { DbSqlSessionFactory.H2, DbSqlSessionFactory.ORACLE })
-public class ConnectionPersistenceExceptionTest {
+@RequiredDatabase(excludes = {DbSqlSessionFactory.H2, DbSqlSessionFactory.ORACLE})
+@ExtendWith(ProcessEngineExtension.class)
+class ConnectionPersistenceExceptionTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected IdentityService identityService;
-
-  protected ProcessEngineConfigurationImpl engineConfig;
+  ProcessEngineConfigurationImpl engineConfig;
+  IdentityService identityService;
 
   protected String resetUrl;
 
-  @Before
-  public void assignServices() {
-    identityService = engineRule.getIdentityService();
-
-    engineConfig = engineRule.getProcessEngineConfiguration();
-
+  @BeforeEach
+  void assignServices() {
     resetUrl = ((PooledDataSource) engineConfig.getDataSource()).getUrl();
   }
 
-  @After
-  public void resetEngine() {
+  @AfterEach
+  void resetEngine() {
     ((PooledDataSource) engineConfig.getDataSource()).setUrl(resetUrl);
-    engineRule.getIdentityService().deleteUser("foo");
+    identityService.deleteUser("foo");
   }
 
   @Test
-  public void shouldFailWithConnectionError() {
+  void shouldFailWithConnectionError() {
     // given
     User user = identityService.newUser("foo");
     identityService.saveUser(user);

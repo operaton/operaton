@@ -54,7 +54,7 @@ class ExternalTaskUserOperationLogTest {
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
 
   private static final String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
   private static final String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";

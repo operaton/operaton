@@ -82,7 +82,7 @@ public class LazyDelegateFilter<T extends Filter> implements Filter {
     return delegateClass.getDeclaredConstructor().newInstance();
   }
 
-  public static interface InitHook<T extends Filter> {
+  public interface InitHook<T extends Filter> {
 
     void init(T filter);
 

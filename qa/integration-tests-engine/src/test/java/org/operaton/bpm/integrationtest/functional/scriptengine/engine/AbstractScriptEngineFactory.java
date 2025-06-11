@@ -131,7 +131,7 @@ public abstract class AbstractScriptEngineFactory implements ScriptEngineFactory
   }
 
 
-  public static interface ScriptEngineBehavior {
-    public Object eval(String script, ScriptContext context);
+  public interface ScriptEngineBehavior {
+    Object eval(String script, ScriptContext context);
   }
 }

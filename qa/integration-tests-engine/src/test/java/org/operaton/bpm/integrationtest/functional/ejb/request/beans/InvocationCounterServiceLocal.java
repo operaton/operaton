@@ -19,6 +19,6 @@ package org.operaton.bpm.integrationtest.functional.ejb.request.beans;
 
 public interface InvocationCounterServiceLocal {
 
-  public int getNumOfInvocations();
+  int getNumOfInvocations();
 
 }

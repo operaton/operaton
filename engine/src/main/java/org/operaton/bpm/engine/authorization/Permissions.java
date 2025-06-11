@@ -118,12 +118,12 @@ public enum Permissions implements Permission {
   private int id;
   private Resource[] resourceTypes;
 
-  private Permissions(String name, int id) {
+  Permissions(String name, int id) {
     this.name = name;
     this.id = id;
   }
 
-  private Permissions(String name, int id, EnumSet<Resources> resourceTypes) {
+  Permissions(String name, int id, EnumSet<Resources> resourceTypes) {
     this.name = name;
     this.id = id;
     this.resourceTypes = resourceTypes.toArray(new Resource[resourceTypes.size()]);

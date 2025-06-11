@@ -19,6 +19,7 @@ package org.operaton.bpm.example.invoice;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
+import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
 import org.operaton.bpm.application.impl.ServletProcessApplication;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
@@ -30,7 +31,7 @@ import jakarta.servlet.annotation.WebListener;
  */
 @ProcessApplication(name = "InvoiceProcessApplication")
 @WebListener
-public class InvoiceProcessApplication extends ServletProcessApplication {
+public class InvoiceProcessApplication extends JakartaServletProcessApplication {
 
   /**
    * In a @PostDeploy hook you can interact with the process engine and access

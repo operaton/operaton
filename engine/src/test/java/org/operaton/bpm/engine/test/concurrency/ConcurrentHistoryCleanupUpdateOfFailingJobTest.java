@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -43,7 +43,7 @@ public class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyT
       configuration.setHistoryCleanupBatchWindowStartTime("00:00"));
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
   protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  
+
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
@@ -116,11 +116,11 @@ public class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyT
     }
 
   }
-  
+
   public class JobUpdateCmd extends ControllableCommand<Void> {
-    
+
     private String jobId;
-    
+
     public JobUpdateCmd(String jobId) {
       this.jobId = jobId;
     }
@@ -131,7 +131,7 @@ public class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyT
       commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTING, cc -> monitor.sync());
       monitor.sync();
       JobEntity job = commandContext.getJobManager().findJobById(jobId);
-      job.setRetries(retries); // for reproducing the problem, it is important that 
+      job.setRetries(retries); // for reproducing the problem, it is important that
                                // this tx does not delete the exception stack trace
       return null;
     }

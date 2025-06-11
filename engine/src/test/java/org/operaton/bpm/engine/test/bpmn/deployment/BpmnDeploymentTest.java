@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -50,13 +50,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
   protected static final String CMD_LOGGER = "org.operaton.bpm.engine.cmd";
-  
+
   @Rule
   public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
 
   protected DeploymentHandlerFactory defaultDeploymentHandlerFactory;
   protected DeploymentHandlerFactory customDeploymentHandlerFactory;
-  
+
   @Before
   public void setUp() {
     defaultDeploymentHandlerFactory = processEngineConfiguration.getDeploymentHandlerFactory();
@@ -165,11 +165,11 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
     // when
     testRule.deploy(deploymentBuilder);
-    
+
     // then
     assertThat(loggingRule.getFilteredLog(CMD_LOGGER, "Deployment name set to null. Filtering duplicates will not work properly.")).hasSize(1);
   }
-  
+
   @Test
   @WatchLogger(loggerNames = CMD_LOGGER, level = "WARN")
   public void shouldLogWarningForDuplicateFilteringWithoutPreviousDeploymentName() {
@@ -178,18 +178,18 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
     DeploymentWithDefinitions deployment = testRule.deploy(repositoryService.createDeployment()
       .addModelInstance("model.bpmn", model));
-    
+
     DeploymentBuilder deploymentBuilder = repositoryService.createDeployment()
         .enableDuplicateFiltering(true)
         .addDeploymentResources(deployment.getId());
 
     // when
     testRule.deploy(deploymentBuilder);
-    
+
     // then
     assertThat(loggingRule.getFilteredLog(CMD_LOGGER, "Deployment name set to null. Filtering duplicates will not work properly.")).hasSize(1);
   }
-  
+
   @Test
   public void testDuplicateFilteringDefaultBehavior() {
     // given

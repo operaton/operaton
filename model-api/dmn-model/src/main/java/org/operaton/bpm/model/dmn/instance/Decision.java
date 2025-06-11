@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,7 +55,7 @@ public interface Decision extends DrgElement {
   void setExpression(Expression expression);
 
   // operaton extensions
-  
+
   @Deprecated(since = "1.0")
   Integer getOperatonHistoryTimeToLive();
 
@@ -63,9 +63,9 @@ public interface Decision extends DrgElement {
   void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
 
   String getOperatonHistoryTimeToLiveString();
-  
+
   void setOperatonHistoryTimeToLiveString(String historyTimeToLive);
-  
+
   String getVersionTag();
 
   void setVersionTag(String inputValue);

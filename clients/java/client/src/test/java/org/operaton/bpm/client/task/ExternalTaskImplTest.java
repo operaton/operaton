@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -68,7 +68,7 @@ class ExternalTaskImplTest {
   void shouldDisplayAttributesFilledInToString() {
     // with basic attributes set, attributes should be displayed and separated by comma
     ExternalTaskImpl task = new ExternalTaskImpl();
-    
+
     Date date = new Date(0L);// January 1,1970, 00:00:00 GMT
     task.setActivityId("ai");
     task.setActivityInstanceId("aii");
@@ -88,7 +88,7 @@ class ExternalTaskImplTest {
     task.setTenantId("ti");
     task.setTopicName("tn");
     task.setWorkerId("wi");
-    
+
     assertEquals("ExternalTaskImpl [activityId=ai, "
         + "activityInstanceId=aii, "
         + "businessKey=bk, "
@@ -108,7 +108,7 @@ class ExternalTaskImplTest {
         + "tenantId=ti, "
         + "topicName=tn, "
         + "variables=null, "
-        + "workerId=wi]", 
+        + "workerId=wi]",
         task.toString());
   }
 
@@ -177,12 +177,12 @@ class ExternalTaskImplTest {
         + "}, "
         + "workerId=wi]", task.toString());
   }
-  
+
   // helper methods and constants
-  
+
   @SuppressWarnings("rawtypes")
   private static final ValueMappers DEFAULT_MAPPERS = new DefaultValueMappers(Variables.SerializationDataFormats.JSON.getName());
-  
+
   @SuppressWarnings("rawtypes")
   private static VariableValue generateVariableValue(String executionId, String variableName,
       final String typeI, final Object valueI, Object... valueInfos) {

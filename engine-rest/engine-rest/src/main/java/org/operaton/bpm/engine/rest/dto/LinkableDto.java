@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,22 +23,22 @@ import java.util.List;
 public abstract class LinkableDto {
 
   protected List<AtomLink> links = new ArrayList<>();
-  
+
   public List<AtomLink> getLinks() {
     return links;
   }
-  
+
   public void addLink(AtomLink link) {
     links.add(link);
   }
-  
+
   public void addReflexiveLink(URI linkUri, String method, String relation) {
     AtomLink link = generateLink(linkUri, method, relation);
     links.add(link);
   }
-  
-  public AtomLink generateLink(URI linkUri, String method, String relation) {   
+
+  public AtomLink generateLink(URI linkUri, String method, String relation) {
     return new AtomLink(relation, linkUri.toString(), method);
   }
-  
+
 }

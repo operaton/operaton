@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -101,7 +101,7 @@ public class JobExceptionLoggingTest {
     // given a job that always throws an Exception
     processEngineConfiguration.setEnableCmdExceptionLogging(true);
     runtimeService.startProcessInstanceByKey("testProcess");
-    
+
     // when executing the job and wait
     JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
     jobExecutor.start();
@@ -110,7 +110,7 @@ public class JobExceptionLoggingTest {
 
     List<ILoggingEvent> jobLog = loggingRule.getFilteredLog(JOBEXECUTOR_LOGGER, "Exception while executing job");
     List<ILoggingEvent> ctxLog = loggingRule.getFilteredLog(CONTEXT_LOGGER, "Exception while closing command context");
-    
+
     // then
     assertThat(jobLog).hasSize(1);
     assertThat(ctxLog).hasSize(1);

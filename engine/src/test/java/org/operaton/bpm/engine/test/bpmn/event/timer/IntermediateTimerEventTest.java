@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -130,7 +130,7 @@ class IntermediateTimerEventTest {
     assertThat(firstDate.after(job.getDuedate())).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusMinutes(15).toDate();
     assertThat(job.getDuedate()).isCloseTo(expectedDate, 1000l);
-    
+
     // After waiting for sixteen minutes the timer should fire
     ClockUtil.setCurrentTime(new Date(firstDate.getTime() + TimeUnit.MINUTES.toMillis(16L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
@@ -164,7 +164,7 @@ class IntermediateTimerEventTest {
     assertThat(firstDate.after(job.getDuedate())).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(job.getCreateTime()).plusMinutes(15).toDate();
     assertThat(job.getDuedate()).isEqualTo(expectedDate);
-    
+
     // After waiting for sixteen minutes the timer should fire
     ClockUtil.setCurrentTime(new Date(firstDate.getTime() + TimeUnit.MINUTES.toMillis(16L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
@@ -252,7 +252,7 @@ class IntermediateTimerEventTest {
 
     testRule.assertProcessEnded(processInstanceId);
   }
-  
+
   private void moveByMinutes(int minutes) {
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + ((minutes * 60 * 1000) + 5000)));
   }

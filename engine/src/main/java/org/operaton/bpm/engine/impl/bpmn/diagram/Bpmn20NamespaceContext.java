@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,21 +31,21 @@ import javax.xml.xpath.XPath;
  * XML {@link NamespaceContext} containing the namespaces used by BPMN 2.0 XML documents.
  *
  * Can be used in {@link XPath#setNamespaceContext(NamespaceContext)}.
- * 
+ *
  * @author Falko Menge
  */
 public class Bpmn20NamespaceContext implements NamespaceContext {
-  
+
   public static final String BPMN = "bpmn";
   public static final String BPMNDI = "bpmndi";
   public static final String OMGDC = "omgdc";
   public static final String OMGDI = "omgdi";
-  
+
   /**
    * This is a protected filed so you can extend that context with your own namespaces if necessary
    */
   protected Map<String, String> namespaceUris = new HashMap<>();
-  
+
   public Bpmn20NamespaceContext() {
     namespaceUris.put(BPMN, "http://www.omg.org/spec/BPMN/20100524/MODEL");
     namespaceUris.put(BPMNDI, "http://www.omg.org/spec/BPMN/20100524/DI");

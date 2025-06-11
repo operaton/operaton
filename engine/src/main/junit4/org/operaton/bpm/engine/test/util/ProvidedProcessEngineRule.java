@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,14 +27,14 @@ public class ProvidedProcessEngineRule extends ProcessEngineRule {
 
   /**
    * The one process engine created from operaton.cfg.xml.
-   * To save the effort of building unnecessary process engines, it should 
+   * To save the effort of building unnecessary process engines, it should
    * be used in any test that does not require extra engine configuration.
    * It should not be reconfigured on the fly (=> violates test isolation).
    * If that cannot be avoided a test must make sure to restore the original
    * configuration.
    */
   protected static ProcessEngine cachedProcessEngine;
-  
+
   protected Callable<ProcessEngine> processEngineProvider;
 
   public ProvidedProcessEngineRule() {
@@ -64,12 +64,12 @@ public class ProvidedProcessEngineRule extends ProcessEngineRule {
       super.initializeProcessEngine();
     }
   }
-  
+
   protected static ProcessEngine getOrInitializeDefaultProcessEngine() {
     if (cachedProcessEngine == null) {
       cachedProcessEngine = ProcessEngines.getDefaultProcessEngine(true);
     }
     return cachedProcessEngine;
   }
-  
+
 }

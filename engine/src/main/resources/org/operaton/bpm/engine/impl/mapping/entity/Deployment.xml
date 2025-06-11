@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity">
 
@@ -91,7 +91,7 @@
 
     from ${prefix}ACT_RE_DEPLOYMENT RES
 
-    <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoin" /> 
+    <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoin" />
 
     <where>
       <if test="deploymentId != null">
@@ -125,7 +125,7 @@
             #{tenantId}
           </foreach>
           <if test="includeDeploymentsWithoutTenantId">
-            or RES.TENANT_ID_ is null 
+            or RES.TENANT_ID_ is null
           </if>
           )
         </if>
@@ -172,6 +172,6 @@
       <bind name="listOfIds" value="parameter" />
       <bind name="fieldName" value="'RES.PROC_INST_ID_'" />
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.applyInForPaginatedCollection" />
-  </select> 
+  </select>
 
 </mapper>

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Test limiting the exposed beans in expressions.
- * 
+ *
  * @author Frederik Heremans
  */
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/expression/expressionLimitedBeans-context.xml")
@@ -41,12 +41,12 @@ class SpringLimitedExpressionsTest extends SpringProcessEngineTestCase {
   void limitedBeansExposed() {
     // Start process, which has a service-task which calls 'bean1', which is exposed
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("limitedExpressionProcess");
-    
+
     String beanOutput = (String) runtimeService.getVariable(processInstance.getId(), "beanOutput");
     assertThat(beanOutput)
         .isNotNull()
         .isEqualTo("Operaton BPMN 2.0 process engine");
-    
+
     // Finish the task, should continue to serviceTask which uses a bean that is present
     // in application-context, but not exposed explicitly in "beans", should throw error!
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();

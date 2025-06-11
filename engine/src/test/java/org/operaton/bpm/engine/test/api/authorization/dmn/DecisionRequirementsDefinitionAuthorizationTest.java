@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
 /**
- * 
+ *
  * @author Deivarayan Azhagappan
  *
  */
@@ -51,9 +51,9 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
 
   protected static final String DMN_FILE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
   protected static final String DRD_FILE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.png";
- 
+
   protected static final String DEFINITION_KEY = "dish";
- 
+
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
@@ -101,7 +101,7 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
       .createDecisionRequirementsDefinitionQuery()
       .decisionRequirementsDefinitionKey(DEFINITION_KEY)
       .singleResult().getId();
-    
+
     // when
     authRule.init(scenario).withUser("userId").bindResource("decisionRequirementsDefinitionKey", DEFINITION_KEY).start();
 

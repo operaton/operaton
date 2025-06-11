@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,7 @@
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.Commons">
 
   <!-- SQL snippets that are reused in different mappers -->
-  
+
   <!-- This snippet is used by all queries that allow filtering by variable values -->
   <sql id="variableValueConditions">
 
@@ -67,19 +67,19 @@
           #{valueCondition.textValue2}
           <if test="queryVariableValue.operatorName.contains('LIKE')">ESCAPE ${escapeChar}</if>
         </if>
-    
+
         <if test="valueCondition.longValue != null">
           and ${varPrefix}LONG_ is not null and ${varPrefix}LONG_
           <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.executionVariableOperator" />
           #{valueCondition.longValue}
         </if>
-    
+
         <if test="valueCondition.doubleValue != null">
           and ${varPrefix}DOUBLE_ is not null and ${varPrefix}DOUBLE_
           <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.executionVariableOperator" />
           #{valueCondition.doubleValue}
         </if>
-  
+
         <!-- Null variable type -->
         <if test="valueCondition.textValue == null &amp;&amp; valueCondition.textValue2 == null &amp;&amp; valueCondition.longValue == null &amp;&amp; valueCondition.doubleValue == null">
           and ${varPrefix}TEXT_ is null and ${varPrefix}TEXT2_ is null and ${varPrefix}LONG_ is null and ${varPrefix}DOUBLE_ is null and ${varPrefix}BYTEARRAY_ID_ is null
@@ -111,9 +111,9 @@
       <when test="queryVariableValue.operatorName.equals('LESS_THAN_OR_EQUAL')">&lt;=</when>
    </choose>
   </sql>
-  
+
   <!-- Ordering -->
-  
+
   <!-- Input: property "orderingProperties", a collection of OrderingProperty objects -->
   <!-- Output: property "orderBy", filled with ordering constraints -->
   <!-- Example Output: V0_TEXT_ asc, RES.ID_ desc, RES.NAME_ asc -->
@@ -137,9 +137,9 @@
     </choose>
 
   </sql>
-  
+
   <!-- Input: property "orderingProperties", a collection of OrderingProperty objects -->
-  <!-- Output: a comma-separated list of the ordering columns with aliases; the aliases avoid 
+  <!-- Output: a comma-separated list of the ordering columns with aliases; the aliases avoid
   name clashes with other columns -->
   <!-- Example Output: V0.TEXT_ as V0_TEXT_, V1.DOUBLE_ as V1_DOUBLE_ -->
   <sql id="orderBySelection">
@@ -153,18 +153,18 @@
       </if>
     </foreach>
   </sql>
-  
-  <!-- Input: "orderingProperty": an OrderingProperty object; 
+
+  <!-- Input: "orderingProperty": an OrderingProperty object;
               "tableAlias": the table alias for which the filtering conditions apply -->
   <!-- Output: a conjunction of filtering conditions based on the conditions specified in the ordering properties -->
   <!-- Example Output: V0.PROC_INST_ID_ = RES.PROC_INST_ID_ and V0.TEXT_ = 'some value' -->
   <sql id="filterOrderByRelations">
     <if test="orderingProperty.relationConditions != null">
       <foreach collection="orderingProperty.relationConditions" item="relationCondition" separator="and">
-        ${tableAlias}.${relationCondition.property.name} 
-        = 
+        ${tableAlias}.${relationCondition.property.name}
+        =
         <if test="relationCondition.propertyComparison">
-          RES.${relationCondition.comparisonProperty.name} 
+          RES.${relationCondition.comparisonProperty.name}
         </if>
         <if test="!relationCondition.propertyComparison">
           #{relationCondition.scalarValue}

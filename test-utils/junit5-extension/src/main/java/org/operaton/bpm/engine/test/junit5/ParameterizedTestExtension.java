@@ -5,7 +5,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,12 +55,12 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
  * the constructor of the test class or by using field injection
  * with @Paramater(0), @Parameter(1). This extension implements the same
  * mechanism for JUnit 5.
- * 
+ *
  * To migrate the tests you can follow the following recipe:
- * 
+ *
  * <ol>
  * <li>Remove the junit 4 imports
- * 
+ *
  * <pre>
  * import org.junit.After;
  * import org.junit.Assert;
@@ -70,29 +70,29 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
  * import org.junit.runners.Parameterized;
  * import org.junit.runners.Parameterized.Parameters;
  * </pre>
- * 
+ *
  * </li>
- * 
+ *
  * <li>Add the imports for junit 5 and this class
- * 
+ *
  * <pre>
  * import org.junit.jupiter.api.*;
  * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
  * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
  * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
  * </pre>
- * 
+ *
  * </li>
  * <li>Replace the class @RunWith(Parameterized.class) annotation
  * with @Parameterized</li>
- * 
+ *
  * <li>Replace @Before with @BeforeEach and @After with @AfterEach</li>
- * 
+ *
  * <li>Replace each @Test with @TestTemplate</li>
- * 
+ *
  * <li>Use assertion methods from Assertions instead from Assert</li>
  * </ol>
- * 
+ *
  */
 public class ParameterizedTestExtension implements TestTemplateInvocationContextProvider {
 
@@ -124,7 +124,7 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
   public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext context) {
     Class<?> testClass = context.getRequiredTestClass();
     // Look for a static method annotated with @Parameters in the class and it's superclasses
-    
+
     Class<?> c = testClass;
     Method parametersMethod = null;
     do {

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,9 +21,9 @@ import java.util.Map;
 
 /**
  * <p>Java API to the JobAcquisition deployment metadata</p>
- * 
+ *
  * @author Daniel Meyer
- * 
+ *
  */
 public interface JobAcquisitionXml {
 
@@ -35,7 +35,7 @@ public interface JobAcquisitionXml {
    * @return the name of the JobExecutor.
    */
   String getName();
-  
+
   /**
    * @return the fully qualified classname of the JobExecutor to be used.
    */
@@ -45,11 +45,11 @@ public interface JobAcquisitionXml {
    * @return a set of properties to configure the Job Executor. The
    *         properties are mapped to bean properties of the JobExecutor
    *         class used.
-   * 
+   *
    * @see #LOCK_TIME_IN_MILLIS
    * @see #WAIT_TIME_IN_MILLIS
    * @see #MAX_JOBS_PER_ACQUISITION
-   * 
+   *
    */
   Map<String, String> getProperties();
 

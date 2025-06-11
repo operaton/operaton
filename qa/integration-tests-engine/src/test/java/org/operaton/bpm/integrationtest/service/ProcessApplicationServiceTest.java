@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,25 +40,25 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegrationTest {
-  
+
   @Deployment(name="test1")
-  public static WebArchive app1() {    
+  public static WebArchive app1() {
     return initWebArchiveDeployment("test1.war")
             .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml");
   }
-  
+
   @Deployment(name="test2")
-  public static WebArchive app2() {    
+  public static WebArchive app2() {
     return initWebArchiveDeployment("test2.war")
             .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchiveWithoutActivitiCdi.bpmn20.xml");
   }
-  
+
   @Test
   @OperateOnDeployment("test1")
   public void testProcessApplicationsDeployed() {
-    
+
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();
-    
+
     Set<String> processApplicationNames = processApplicationService.getProcessApplicationNames();
 
     // check if the new applications are deployed with allowed names
@@ -71,9 +71,9 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
 
       assertThat(processApplicationInfo).isNotNull();
       assertThat(processApplicationInfo.getName()).isNotNull();
-      Assert.assertEquals(1, processApplicationInfo.getDeploymentInfo().size());      
+      Assert.assertEquals(1, processApplicationInfo.getDeploymentInfo().size());
     }
-    
+
   }
 
 

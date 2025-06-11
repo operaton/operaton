@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,16 +33,16 @@ import org.junit.BeforeClass;
 public class BpmPlatformSubsystemWithExpressionsTest extends AbstractSubsystemBaseTest {
 
   private static Map<String, String> PROPERTIES = new HashMap<>();
-  
+
   static {
     PROPERTIES.put("org.operaton.bpm.jboss.process-engine.test.isDefault", "true");
-    PROPERTIES.put("org.operaton.bpm.jboss.job-executor.core-threads", "5");          
-    PROPERTIES.put("org.operaton.bpm.jboss.job-executor.max-threads", "15");          
-    PROPERTIES.put("org.operaton.bpm.jboss.job-executor.queue-length", "15");         
-    PROPERTIES.put("org.operaton.bpm.jboss.job-executor.keepalive-time", "10");       
+    PROPERTIES.put("org.operaton.bpm.jboss.job-executor.core-threads", "5");
+    PROPERTIES.put("org.operaton.bpm.jboss.job-executor.max-threads", "15");
+    PROPERTIES.put("org.operaton.bpm.jboss.job-executor.queue-length", "15");
+    PROPERTIES.put("org.operaton.bpm.jboss.job-executor.keepalive-time", "10");
     PROPERTIES.put("org.operaton.bpm.jboss.job-executor.allow-core-timeout", "false");
   }
-  
+
   public BpmPlatformSubsystemWithExpressionsTest() {
     super(ModelConstants.SUBSYSTEM_NAME, new BpmPlatformExtension());
   }
@@ -51,14 +51,14 @@ public class BpmPlatformSubsystemWithExpressionsTest extends AbstractSubsystemBa
   public static void setUp() {
     System.getProperties().putAll(PROPERTIES);
   }
-  
+
   @AfterClass
   public static void tearDown() {
     for (String key : PROPERTIES.keySet()) {
       System.clearProperty(key);
     }
   }
-  
+
   @Override
   protected String getSubsystemXml() throws IOException {
     try {

@@ -5,14 +5,14 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 package org.operaton.bpm.impl.juel;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ import jakarta.el.VariableMapper;
  * {@link #invoke(ELContext, Object[])} or {@link #getMethodInfo(ELContext)}).
  *
  * Instances of this class are usually created using an {@link ExpressionFactoryImpl}.
- * 
+ *
  * @author Christoph Beck
  */
 public final class TreeMethodExpression extends jakarta.el.MethodExpression {
@@ -95,7 +95,7 @@ public final class TreeMethodExpression extends jakarta.el.MethodExpression {
 		}
 		return structure;
 	}
-	
+
   /**
    * Evaluates the expression and answers information about the method
    * @param context used to resolve properties (<code>base.property</code> and <code>base[property]</code>)
@@ -139,7 +139,7 @@ public final class TreeMethodExpression extends jakarta.el.MethodExpression {
 	public boolean isParametersProvided() {
 		return node.isMethodInvocation();
 	}
-	
+
 	/**
 	 * Answer <code>true</code> if this is a deferred expression (starting with <code>#{</code>)
 	 */
@@ -172,7 +172,7 @@ public final class TreeMethodExpression extends jakarta.el.MethodExpression {
 			}
 			if (!Arrays.equals(types, other.types)) {
 				return false;
-			}			
+			}
 			return getStructuralId().equals(other.getStructuralId()) && bindings.equals(other.bindings);
 		}
 		return false;
@@ -203,5 +203,5 @@ public final class TreeMethodExpression extends jakarta.el.MethodExpression {
 		} catch (ELException e) {
 			throw new IOException(e.getMessage());
 		}
-	}	
+	}
 }

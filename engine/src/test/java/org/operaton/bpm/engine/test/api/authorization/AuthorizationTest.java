@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -89,7 +89,7 @@ public abstract class AuthorizationTest {
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
   protected static final String TASK_ID = "myTask";
-  
+
   protected ProcessEngine processEngine;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;
@@ -171,7 +171,7 @@ public abstract class AuthorizationTest {
     authorization.setUserId(userId);
     authorization.addPermission(Permissions.ALL);
     saveAuthorization(authorization);
-    
+
     return user;
   }
 

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,7 @@ import jakarta.el.ValueReference;
 /**
  * Expression node interface. This interface provides all the methods needed for value expressions
  * and method expressions.
- * 
+ *
  * @see Tree
  * @author Christoph Beck
  */
@@ -45,7 +45,7 @@ public interface ExpressionNode extends Node {
 
 	/**
 	 * Evaluate node.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -58,7 +58,7 @@ public interface ExpressionNode extends Node {
 
 	/**
 	 * Get value reference.
-	 * 
+	 *
 	 * @param bindings
 	 * @param context
 	 * @return value reference
@@ -67,7 +67,7 @@ public interface ExpressionNode extends Node {
 
 	/**
 	 * Get the value type accepted in {@link #setValue(Bindings, ELContext, Object)}.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -79,7 +79,7 @@ public interface ExpressionNode extends Node {
 	/**
 	 * Determine whether {@link #setValue(Bindings, ELContext, Object)} will throw a
 	 * {@link jakarta.el.PropertyNotWritableException}.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -90,7 +90,7 @@ public interface ExpressionNode extends Node {
 
 	/**
 	 * Assign value.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -102,7 +102,7 @@ public interface ExpressionNode extends Node {
 
 	/**
 	 * Get method information. If this is a non-lvalue node, answer <code>null</code>.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -117,7 +117,7 @@ public interface ExpressionNode extends Node {
 
 	/**
 	 * Invoke method.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context

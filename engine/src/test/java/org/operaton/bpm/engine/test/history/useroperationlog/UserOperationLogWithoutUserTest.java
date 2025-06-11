@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -346,7 +346,7 @@ class UserOperationLogWithoutUserTest {
     runtimeService.deleteProcessInstance(id, "none");
     assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
     String historicVariableId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    
+
     // when
     historyService.deleteHistoricVariableInstance(historicVariableId);
 
@@ -364,7 +364,7 @@ class UserOperationLogWithoutUserTest {
     runtimeService.setVariable(id, "aVariable", "aValue");
     runtimeService.deleteProcessInstance(id, "none");
     assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
-    
+
     // when
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(id);
 
@@ -383,7 +383,7 @@ class UserOperationLogWithoutUserTest {
     caseService.setVariable(caseInstance.getId(), "myVariable", 2);
     caseService.setVariable(caseInstance.getId(), "myVariable", 3);
     HistoricVariableInstance variableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
-    
+
     // when
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
 
@@ -400,13 +400,13 @@ class UserOperationLogWithoutUserTest {
     taskService.setVariable(task.getId(), "testVariable", "testValue");
     taskService.setVariable(task.getId(), "testVariable", "testValue2");
     HistoricVariableInstance variableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
-    
+
     // when
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
-    
+
     // then
     verifyNoUserOperationLogged();
-    
+
     taskService.deleteTask(task.getId(), true);
   }
 

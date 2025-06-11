@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -326,7 +326,7 @@ public interface IdentityService {
    * is returned as {@link PasswordPolicyResult} which contains all
    * passed and violated rules as well as a flag indicating if the password is
    * valid.
-   * 
+   *
    * @param password
    *          the password that should be tested
    * @return a {@link PasswordPolicyResult} containing passed and
@@ -354,7 +354,7 @@ public interface IdentityService {
    * is returned as {@link PasswordPolicyResult} which contains all
    * passed and violated rules as well as a flag indicating if the password is
    * valid.
-   * 
+   *
    * @param policy
    *          the {@link PasswordPolicy} against which the password is tested
    * @param password
@@ -386,7 +386,7 @@ public interface IdentityService {
   /**
    * Returns the {@link PasswordPolicy} that is currently configured in the
    * engine.
-   * 
+   *
    * @return the current {@link PasswordPolicy} or <code>null</code> if no
    *         policy is set or the configured policy is disabled.
    */

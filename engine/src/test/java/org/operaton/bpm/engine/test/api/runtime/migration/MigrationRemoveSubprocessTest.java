@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,14 +15,17 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationException;
@@ -30,32 +33,26 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateEvent;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateExecutionListener;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationRemoveSubprocessTest {
+class MigrationRemoveSubprocessTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testRemoveScopeForNonScopeActivity() {
+  void testRemoveScopeForNonScopeActivity() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
@@ -91,7 +88,7 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  public void testRemoveScopeForScopeActivity() {
+  void testRemoveScopeForScopeActivity() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SCOPE_TASK_SUBPROCESS_PROCESS);
@@ -128,7 +125,7 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  public void testRemoveScopeForConcurrentNonScopeActivity() {
+  void testRemoveScopeForConcurrentNonScopeActivity() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
@@ -172,7 +169,7 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  public void testRemoveScopeForConcurrentScopeActivity() {
+  void testRemoveScopeForConcurrentScopeActivity() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SCOPE_TASKS_SUB_PROCESS);
@@ -219,7 +216,7 @@ public class MigrationRemoveSubprocessTest {
 
 
   @Test
-  public void testRemoveConcurrentScope() {
+  void testRemoveConcurrentScope() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SUBPROCESS_PROCESS);
@@ -263,7 +260,7 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  public void testRemoveConcurrentScope2() {
+  void testRemoveConcurrentScope2() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SUBPROCESS_PROCESS);
@@ -310,8 +307,8 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  @Ignore("Missing feature CAM-5407")
-  public void testRemoveScopeAndMoveToConcurrentActivity() {
+  @Disabled("Missing feature CAM-5407")
+  void testRemoveScopeAndMoveToConcurrentActivity() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
@@ -361,7 +358,7 @@ public class MigrationRemoveSubprocessTest {
    * Remove when implementing CAM-5407
    */
   @Test
-  public void testCannotRemoveScopeAndMoveToConcurrentActivity() {
+  void testCannotRemoveScopeAndMoveToConcurrentActivity() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
@@ -386,7 +383,7 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  public void testRemoveMultipleScopes() {
+  void testRemoveMultipleScopes() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -423,7 +420,7 @@ public class MigrationRemoveSubprocessTest {
 
 
   @Test
-  public void testEndListenerInvocationForRemovedScope() {
+  void testEndListenerInvocationForRemovedScope() {
     // given
     DelegateEvent.clearEvents();
 
@@ -455,7 +452,7 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  public void testSkipListenerInvocationForRemovedScope() {
+  void testSkipListenerInvocationForRemovedScope() {
     // given
     DelegateEvent.clearEvents();
 
@@ -488,7 +485,7 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  public void testIoMappingInvocationForRemovedScope() {
+  void testIoMappingInvocationForRemovedScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
       .activityBuilder("subProcess")
@@ -518,7 +515,7 @@ public class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  public void testSkipIoMappingInvocationForRemovedScope() {
+  void testSkipIoMappingInvocationForRemovedScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
       .activityBuilder("subProcess")
@@ -546,7 +543,7 @@ public class MigrationRemoveSubprocessTest {
 
 
   @Test
-  public void testCannotRemoveParentScopeAndMoveOutOfGrandParentScope() {
+  void testCannotRemoveParentScopeAndMoveOutOfGrandParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);

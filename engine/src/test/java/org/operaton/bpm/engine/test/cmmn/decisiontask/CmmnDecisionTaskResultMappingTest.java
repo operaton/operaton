@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,13 +29,13 @@ import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.StringValue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
+class CmmnDecisionTaskResultMappingTest extends CmmnTest {
 
   protected static final String TEST_DECISION = "org/operaton/bpm/engine/test/dmn/result/DmnDecisionResultTest.dmn11.xml";
   protected static final String SINGLE_ENTRY_MAPPING_CMMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTableResultMappingTest.testSingleEntryMapping.cmmn";
@@ -45,9 +45,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
   protected static final String DEFAULT_MAPPING_CMMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTableResultMappingTest.testDefaultResultMapping.cmmn";
   protected static final String OVERRIDE_DECISION_RESULT_CMMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTableResultMappingTest.testFailedToOverrideDecisionResultVariable.cmmn";
 
-  @Deployment(resources = { SINGLE_ENTRY_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {SINGLE_ENTRY_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testSingleEntryMapping() {
+  void testSingleEntryMapping() {
     CaseInstance caseInstance = createTestCase("single entry");
 
     assertThat(caseService.getVariable(caseInstance.getId(), "result")).isEqualTo("foo");
@@ -55,9 +55,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
   }
 
   @SuppressWarnings("unchecked")
-  @Deployment(resources = { SINGLE_RESULT_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {SINGLE_RESULT_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testSingleResultMapping() {
+  void testSingleResultMapping() {
     CaseInstance caseInstance = createTestCase("multiple entries");
 
     Map<String, Object> output = (Map<String, Object>) caseService.getVariable(caseInstance.getId(), "result");
@@ -69,9 +69,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
   }
 
   @SuppressWarnings("unchecked")
-  @Deployment(resources = { COLLECT_ENTRIES_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {COLLECT_ENTRIES_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testCollectEntriesMapping() {
+  void testCollectEntriesMapping() {
     CaseInstance caseInstance = createTestCase("single entry list");
 
     List<String> output = (List<String>) caseService.getVariable(caseInstance.getId(), "result");
@@ -82,9 +82,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
   }
 
   @SuppressWarnings("unchecked")
-  @Deployment(resources = { RESULT_LIST_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {RESULT_LIST_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testResultListMapping() {
+  void testResultListMapping() {
     CaseInstance caseInstance = createTestCase("multiple entries list");
 
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) caseService.getVariable(caseInstance.getId(), "result");
@@ -99,9 +99,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
   }
 
   @SuppressWarnings("unchecked")
-  @Deployment(resources = { DEFAULT_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {DEFAULT_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testDefaultResultMapping() {
+  void testDefaultResultMapping() {
     CaseInstance caseInstance = createTestCase("multiple entries list");
 
     // default mapping is 'resultList'
@@ -116,9 +116,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     }
   }
 
-  @Deployment(resources = { SINGLE_ENTRY_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {SINGLE_ENTRY_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testSingleEntryMappingFailureMultipleOutputs() {
+  void testSingleEntryMappingFailureMultipleOutputs() {
     try {
       createTestCase("single entry list");
 
@@ -128,9 +128,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     }
   }
 
-  @Deployment(resources = { SINGLE_ENTRY_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {SINGLE_ENTRY_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testSingleEntryMappingFailureMultipleValues() {
+  void testSingleEntryMappingFailureMultipleValues() {
     try {
       createTestCase("multiple entries");
 
@@ -140,9 +140,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     }
   }
 
-  @Deployment(resources = { SINGLE_RESULT_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {SINGLE_RESULT_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testSingleResultMappingFailure() {
+  void testSingleResultMappingFailure() {
     try {
       createTestCase("single entry list");
 
@@ -152,9 +152,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     }
   }
 
-  @Deployment(resources = { COLLECT_ENTRIES_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {COLLECT_ENTRIES_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testCollectEntriesMappingFailure() {
+  void testCollectEntriesMappingFailure() {
     try {
       createTestCase("multiple entries");
 
@@ -164,9 +164,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     }
   }
 
-  @Deployment(resources = { DEFAULT_MAPPING_CMMN, TEST_DECISION })
+  @Deployment(resources = {DEFAULT_MAPPING_CMMN, TEST_DECISION})
   @Test
-  public void testTransientDecisionResult() {
+  void testTransientDecisionResult() {
     // when a decision is evaluated and the result is stored in a transient variable "decisionResult"
     CaseInstance caseInstance = createTestCase("single entry");
 
@@ -174,9 +174,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     assertThat(caseService.getVariable(caseInstance.getId(), "decisionResult")).isNull();
   }
 
-  @Deployment(resources = { OVERRIDE_DECISION_RESULT_CMMN, TEST_DECISION })
+  @Deployment(resources = {OVERRIDE_DECISION_RESULT_CMMN, TEST_DECISION})
   @Test
-  public void testFailedToOverrideDecisionResultVariable() {
+  void testFailedToOverrideDecisionResultVariable() {
     try {
       // the transient variable "decisionResult" should not be overridden by the task result variable
       createTestCase("single entry");

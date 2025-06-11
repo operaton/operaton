@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ public class BatchPriorityTest {
   public static final long CUSTOM_PRIORITY = DefaultJobPriorityProvider.DEFAULT_PRIORITY + 10;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
   protected BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
@@ -54,7 +54,7 @@ public class BatchPriorityTest {
   protected long defaultBatchJobPriority;
 
   @BeforeEach
-  public void saveAndReduceBatchConfiguration() {
+  void saveAndReduceBatchConfiguration() {
     ProcessEngineConfigurationImpl configuration = engineRule.getProcessEngineConfiguration();
     defaultBatchJobsPerSeed = configuration.getBatchJobsPerSeed();
     defaultBatchJobPriority = configuration.getBatchJobPriority();
@@ -63,19 +63,19 @@ public class BatchPriorityTest {
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
   @AfterEach
-  public void resetBatchJobsPerSeed() {
+  void resetBatchJobsPerSeed() {
     ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     processEngineConfiguration.setBatchJobPriority(defaultBatchJobPriority);
   }
 
   @Test
-  public void seedJobShouldHaveDefaultPriority() {
+  void seedJobShouldHaveDefaultPriority() {
     // when
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -85,7 +85,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void monitorJobShouldHaveDefaultPriority() {
+  void monitorJobShouldHaveDefaultPriority() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -98,7 +98,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void batchExecutionJobShouldHaveDefaultPriority() {
+  void batchExecutionJobShouldHaveDefaultPriority() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
 
@@ -111,7 +111,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void seedJobShouldGetPriorityFromProcessEngineConfiguration() {
+  void seedJobShouldGetPriorityFromProcessEngineConfiguration() {
     // given
     setBatchJobPriority(CUSTOM_PRIORITY);
 
@@ -124,7 +124,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void monitorJobShouldGetPriorityFromProcessEngineConfiguration() {
+  void monitorJobShouldGetPriorityFromProcessEngineConfiguration() {
     // given
     setBatchJobPriority(CUSTOM_PRIORITY);
     Batch batch = helper.migrateProcessInstancesAsync(1);
@@ -138,7 +138,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void executionJobShouldGetPriorityFromProcessEngineConfiguration() {
+  void executionJobShouldGetPriorityFromProcessEngineConfiguration() {
     // given
     setBatchJobPriority(CUSTOM_PRIORITY);
     Batch batch = helper.migrateProcessInstancesAsync(1);
@@ -152,7 +152,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void seedJobShouldGetPriorityFromOverridingJobDefinitionPriority() {
+  void seedJobShouldGetPriorityFromOverridingJobDefinitionPriority() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(2);
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
@@ -167,7 +167,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void seedJobShouldGetPriorityFromOverridingJobDefinitionPriorityWithCascade() {
+  void seedJobShouldGetPriorityFromOverridingJobDefinitionPriorityWithCascade() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
@@ -181,7 +181,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void monitorJobShouldGetPriorityOverridingJobDefinitionPriority() {
+  void monitorJobShouldGetPriorityOverridingJobDefinitionPriority() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     JobDefinition monitorJobDefinition = helper.getMonitorJobDefinition(batch);
@@ -196,7 +196,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void monitorJobShouldGetPriorityOverridingJobDefinitionPriorityWithCascade() {
+  void monitorJobShouldGetPriorityOverridingJobDefinitionPriorityWithCascade() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     JobDefinition monitorJobDefinition = helper.getMonitorJobDefinition(batch);
@@ -211,7 +211,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void executionJobShouldGetPriorityFromOverridingJobDefinitionPriority() {
+  void executionJobShouldGetPriorityFromOverridingJobDefinitionPriority() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     JobDefinition executionJobDefinition = helper.getExecutionJobDefinition(batch);
@@ -226,7 +226,7 @@ public class BatchPriorityTest {
   }
 
   @Test
-  public void executionJobShouldGetPriorityFromOverridingJobDefinitionPriorityWithCascade() {
+  void executionJobShouldGetPriorityFromOverridingJobDefinitionPriorityWithCascade() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(1);
     JobDefinition executionJobDefinition = helper.getExecutionJobDefinition(batch);

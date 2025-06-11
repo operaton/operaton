@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,10 +26,10 @@ import org.operaton.bpm.engine.runtime.ExecutionQuery;
  */
 public interface ExecutionQueryProperty {
 
-  public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
-  public static final QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
-  public static final QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("ID_");
-  public static final QueryProperty SEQUENCE_COUNTER = new QueryPropertyImpl("SEQUENCE_COUNTER_");
-  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
+  QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
+  QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
+  QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("ID_");
+  QueryProperty SEQUENCE_COUNTER = new QueryPropertyImpl("SEQUENCE_COUNTER_");
+  QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");
 
 }

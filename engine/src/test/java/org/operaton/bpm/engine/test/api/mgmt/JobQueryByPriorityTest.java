@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,14 +41,14 @@ import org.operaton.bpm.engine.variable.Variables;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class JobQueryByPriorityTest {
+class JobQueryByPriorityTest {
 
   protected ManagementService managementService;
   protected RuntimeService runtimeService;
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioExpressionProcess.bpmn20.xml")
   @Test
-  public void testOrderByPriority() {
+  void testOrderByPriority() {
     // given five jobs with priorities from 1 to 5
     List<ProcessInstance> instances = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class JobQueryByPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioExpressionProcess.bpmn20.xml")
   @Test
-  public void testFilterByJobPriorityLowerThanOrEquals() {
+  void testFilterByJobPriorityLowerThanOrEquals() {
     // given five jobs with priorities from 1 to 5
     List<ProcessInstance> instances = new ArrayList<>();
 
@@ -91,7 +91,7 @@ public class JobQueryByPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioExpressionProcess.bpmn20.xml")
   @Test
-  public void testFilterByJobPriorityLowerThanOrEqualsAndHigherThanOrEqual() {
+  void testFilterByJobPriorityLowerThanOrEqualsAndHigherThanOrEqual() {
     // given five jobs with priorities from 1 to 5
     List<ProcessInstance> instances = new ArrayList<>();
 
@@ -107,7 +107,7 @@ public class JobQueryByPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioExpressionProcess.bpmn20.xml")
   @Test
-  public void testFilterByJobPriorityHigherThanOrEquals() {
+  void testFilterByJobPriorityHigherThanOrEquals() {
     // given five jobs with priorities from 1 to 5
     List<ProcessInstance> instances = new ArrayList<>();
 
@@ -134,7 +134,7 @@ public class JobQueryByPriorityTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioExpressionProcess.bpmn20.xml")
   @Test
-  public void testFilterByJobPriorityLowerAndHigher() {
+  void testFilterByJobPriorityLowerAndHigher() {
     // given five jobs with priorities from 1 to 5
     List<ProcessInstance> instances = new ArrayList<>();
 

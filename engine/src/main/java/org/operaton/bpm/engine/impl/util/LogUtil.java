@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,9 +34,9 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 /**
  * @author Tom Baeyens
  *
- * @deprecated since 7.4, use slf4j
+ * @deprecated Use slf4j instead.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0")
 public class LogUtil {
 
 

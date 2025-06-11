@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.resources;
 
-import static org.operaton.bpm.engine.repository.ResourceTypes.REPOSITORY;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.repository.ResourceTypes.REPOSITORY;
 
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -34,48 +37,31 @@ import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.Resource;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class RepositoryByteArrayTest {
+class RepositoryByteArrayTest {
   protected static final String USER_ID = "johndoe";
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProcessEngineConfigurationImpl configuration;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected TaskService taskService;
-  protected RepositoryService repositoryService;
-  protected IdentityService identityService;
+  ProcessEngineConfigurationImpl configuration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+  IdentityService identityService;
 
-
-  @Before
-  public void initServices() {
-    configuration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-    identityService = engineRule.getIdentityService();
-  }
-
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     identityService.deleteUser(USER_ID);
   }
 
   @Test
-  public void testResourceBinary() {
+  void testResourceBinary() {
     Date fixedDate = new Date();
     ClockUtil.setCurrentTime(fixedDate);
 
@@ -89,7 +75,7 @@ public class RepositoryByteArrayTest {
   }
 
   @Test
-  public void testFormsBinaries() {
+  void testFormsBinaries() {
     Date fixedDate = new Date();
     ClockUtil.setCurrentTime(fixedDate);
 
@@ -108,7 +94,7 @@ public class RepositoryByteArrayTest {
   }
 
   @Test
-  public void testUserPictureBinary() {
+  void testUserPictureBinary() {
     // when
     Date fixedDate = new Date();
     ClockUtil.setCurrentTime(fixedDate);

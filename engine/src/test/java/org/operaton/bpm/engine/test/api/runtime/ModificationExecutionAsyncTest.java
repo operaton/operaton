@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,28 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -28,63 +49,54 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateEvent;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateExecutionListener;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
-import java.util.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-@RunWith(Parameterized.class)
+@Parameterized
 public class ModificationExecutionAsyncTest {
 
   protected static final Date START_DATE = new Date(1457326800000L);
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(rule);
-  protected BatchModificationHelper helper = new BatchModificationHelper(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  BatchModificationHelper helper = new BatchModificationHelper(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
+  ProcessEngineConfigurationImpl configuration;
+  RuntimeService runtimeService;
+  HistoryService historyService;
 
-  protected ProcessEngineConfigurationImpl configuration;
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-
-  protected BpmnModelInstance instance;
+  BpmnModelInstance instance;
 
   private int defaultBatchJobsPerSeed;
   private int defaultInvocationsPerBatchJob;
   private boolean defaultEnsureJobDueDateSet;
 
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public boolean ensureJobDueDateSet;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public Date currentTime;
 
-  @Parameterized.Parameters(name = "Job DueDate is set: {0}")
+  @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { false, null },
@@ -92,28 +104,21 @@ public class ModificationExecutionAsyncTest {
     });
   }
 
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-    historyService = rule.getHistoryService();
-  }
-
-  @Before
-  public void setClock() {
+  @BeforeEach
+  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
-  @Before
-  public void storeEngineSettings() {
-    configuration = rule.getProcessEngineConfiguration();
+  @BeforeEach
+  void storeEngineSettings() {
     defaultBatchJobsPerSeed = configuration.getBatchJobsPerSeed();
     defaultInvocationsPerBatchJob = configuration.getInvocationsPerBatchJob();
     defaultEnsureJobDueDateSet = configuration.isEnsureJobDueDateNotNull();
     configuration.setEnsureJobDueDateNotNull(ensureJobDueDateSet);
   }
 
-  @Before
-  public void createBpmnModelInstance() {
+  @BeforeEach
+  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -123,30 +128,30 @@ public class ModificationExecutionAsyncTest {
         .done();
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @After
-  public void restoreEngineSettings() {
+  @AfterEach
+  void restoreEngineSettings() {
     configuration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     configuration.setInvocationsPerBatchJob(defaultInvocationsPerBatchJob);
     configuration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
   }
 
-  @After
-  public void removeInstanceIds() {
+  @AfterEach
+  void removeInstanceIds() {
     helper.currentProcessInstances = new ArrayList<>();
   }
 
-  @After
-  public void removeBatches() {
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
-  @Test
-  public void createBatchModification() {
+  @TestTemplate
+  void createBatchModification() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     List<String> processInstanceIds = helper.startInstances("process1", 2);
 
@@ -155,8 +160,8 @@ public class ModificationExecutionAsyncTest {
     assertBatchCreated(batch, 2);
   }
 
-  @Test
-  public void createModificationWithNullProcessInstanceIdsListAsync() {
+  @TestTemplate
+  void createModificationWithNullProcessInstanceIdsListAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds((List<String>) null);
 
     try {
@@ -167,8 +172,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void createModificationWithNullProcessDefinitionId() {
+  @TestTemplate
+  void createModificationWithNullProcessDefinitionId() {
     try {
       runtimeService.createModification(null);
       fail("Should not succeed");
@@ -178,8 +183,8 @@ public class ModificationExecutionAsyncTest {
   }
 
 
-  @Test
-  public void createModificationUsingProcessInstanceIdsListWithNullValueAsync() {
+  @TestTemplate
+  void createModificationUsingProcessInstanceIdsListWithNullValueAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Arrays.asList("foo", null, "bar"));
 
     try {
@@ -190,8 +195,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void createModificationWithEmptyProcessInstanceIdsListAsync() {
+  @TestTemplate
+  void createModificationWithEmptyProcessInstanceIdsListAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Collections.<String> emptyList());
     try {
       modificationBuilder.executeAsync();
@@ -201,8 +206,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void createModificationWithNullProcessInstanceIdsArrayAsync() {
+  @TestTemplate
+  void createModificationWithNullProcessInstanceIdsArrayAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds((String[]) null);
 
     try {
@@ -213,8 +218,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void createModificationUsingProcessInstanceIdsArrayWithNullValueAsync() {
+  @TestTemplate
+  void createModificationUsingProcessInstanceIdsArrayWithNullValueAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").cancelAllForActivity("user1").processInstanceIds("foo", null, "bar");
 
     try {
@@ -225,8 +230,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void testNullProcessInstanceQueryAsync() {
+  @TestTemplate
+  void testNullProcessInstanceQueryAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceQuery(null);
 
     try {
@@ -237,8 +242,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void testNullHistoricProcessInstanceQueryAsync() {
+  @TestTemplate
+  void testNullHistoricProcessInstanceQueryAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").historicProcessInstanceQuery(null);
 
     try {
@@ -249,8 +254,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void createModificationWithNonExistingProcessDefinitionId() {
+  @TestTemplate
+  void createModificationWithNonExistingProcessDefinitionId() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     deployment.getDeployedProcessDefinitions().get(0);
 
@@ -264,8 +269,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void createSeedJob() {
+  @TestTemplate
+  void createSeedJob() {
     // when
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 3, "user1", processDefinition.getId());
@@ -299,13 +304,13 @@ public class ModificationExecutionAsyncTest {
     assertThat(modificationJobs).isEmpty();
   }
 
-  @Test
-  public void createModificationJobs() {
+  @TestTemplate
+  void createModificationJobs() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     rule.getProcessEngineConfiguration().setBatchJobsPerSeed(10);
     Batch batch = helper.startAfterAsync("process1", 20, "user1", processDefinition.getId());
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    JobDefinition modificationJobDefinition = helper.getExecutionJobDefinition(batch);;
+    JobDefinition modificationJobDefinition = helper.getExecutionJobDefinition(batch);
 
     helper.executeSeedJob(batch);
 
@@ -326,8 +331,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(seedJob).isNotNull();
   }
 
-  @Test
-  public void createMonitorJob() {
+  @TestTemplate
+  void createMonitorJob() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 10, "user1", processDefinition.getId());
 
@@ -349,8 +354,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(monitorJob).isNotNull();
   }
 
-  @Test
-  public void executeModificationJobsForStartAfter() {
+  @TestTemplate
+  void executeModificationJobsForStartAfter() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -384,8 +389,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
-  @Test
-  public void executeModificationJobsForStartBefore() {
+  @TestTemplate
+  void executeModificationJobsForStartBefore() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -419,8 +424,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
-  @Test
-  public void executeModificationJobsForStartTransition() {
+  @TestTemplate
+  void executeModificationJobsForStartTransition() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -454,8 +459,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
-  @Test
-  public void executeModificationJobsForCancelAll() {
+  @TestTemplate
+  void executeModificationJobsForCancelAll() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.cancelAllAsync("process1", 10, "user1", processDefinition.getId());
     helper.completeSeedJobs(batch);
@@ -479,8 +484,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
-  @Test
-  public void executeModificationJobsForStartAfterAndCancelAll() {
+  @TestTemplate
+  void executeModificationJobsForStartAfterAndCancelAll() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
     List<String> instances = helper.startInstances("process1", 10);
@@ -520,8 +525,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
-  @Test
-  public void executeModificationJobsForStartBeforeAndCancelAll() {
+  @TestTemplate
+  void executeModificationJobsForStartBeforeAndCancelAll() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     List<String> instances = helper.startInstances("process1", 10);
 
@@ -553,8 +558,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
-  @Test
-  public void executeModificationJobsForStartTransitionAndCancelAll() {
+  @TestTemplate
+  void executeModificationJobsForStartTransitionAndCancelAll() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -593,8 +598,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
-  @Test
-  public void executeModificationJobsForProcessInstancesWithDifferentStates() {
+  @TestTemplate
+  void executeModificationJobsForProcessInstancesWithDifferentStates() {
 
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
@@ -636,8 +641,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
-  @Test
-  public void testMonitorJobPollingForCompletion() {
+  @TestTemplate
+  void testMonitorJobPollingForCompletion() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 3, "user1", processDefinition.getId());
 
@@ -659,8 +664,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(monitorJob.getDuedate()).isEqualTo(dueDate);
   }
 
-  @Test
-  public void testMonitorJobRemovesBatchAfterCompletion() {
+  @TestTemplate
+  void testMonitorJobRemovesBatchAfterCompletion() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startBeforeAsync("process1", 10, "user2", processDefinition.getId());
     helper.completeSeedJobs(batch);
@@ -676,8 +681,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(rule.getManagementService().createJobQuery().count()).isZero();
   }
 
-  @Test
-  public void testBatchDeletionWithCascade() {
+  @TestTemplate
+  void testBatchDeletionWithCascade() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startTransitionAsync("process1", 10, "seq", processDefinition.getId());
     helper.completeSeedJobs(batch);
@@ -695,8 +700,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(rule.getManagementService().createJobQuery().count()).isZero();
   }
 
-  @Test
-  public void testBatchDeletionWithoutCascade() {
+  @TestTemplate
+  void testBatchDeletionWithoutCascade() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startBeforeAsync("process1", 10, "user2", processDefinition.getId());
     helper.completeSeedJobs(batch);
@@ -714,8 +719,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(rule.getManagementService().createJobQuery().count()).isZero();
   }
 
-  @Test
-  public void testBatchWithFailedSeedJobDeletionWithCascade() {
+  @TestTemplate
+  void testBatchWithFailedSeedJobDeletionWithCascade() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.cancelAllAsync("process1", 2, "user1", processDefinition.getId());
 
@@ -731,8 +736,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(historicIncidents).isZero();
   }
 
-  @Test
-  public void testBatchWithFailedModificationJobDeletionWithCascade() {
+  @TestTemplate
+  void testBatchWithFailedModificationJobDeletionWithCascade() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 2, "user1", processDefinition.getId());
     helper.completeSeedJobs(batch);
@@ -751,8 +756,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(historicIncidents).isZero();
   }
 
-  @Test
-  public void testBatchWithFailedMonitorJobDeletionWithCascade() {
+  @TestTemplate
+  void testBatchWithFailedMonitorJobDeletionWithCascade() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startBeforeAsync("process1", 2, "user2", processDefinition.getId());
     helper.completeSeedJobs(batch);
@@ -769,8 +774,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(historicIncidents).isZero();
   }
 
-  @Test
-  public void testModificationJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
+  @TestTemplate
+  void testModificationJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
     ProcessEngineConfigurationImpl processEngineConfiguration = rule.getProcessEngineConfiguration();
 
     processEngineConfiguration.setAuthorizationEnabled(true);
@@ -802,8 +807,8 @@ public class ModificationExecutionAsyncTest {
 
   }
 
-  @Test
-  public void testBatchExecutionFailureWithMissingProcessInstance() {
+  @TestTemplate
+  void testBatchExecutionFailureWithMissingProcessInstance() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
     Batch batch = helper.startAfterAsync("process1", 2, "user1", processDefinition.getId());
@@ -846,8 +851,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(failedJob.getExceptionMessage()).contains("Process instance '" + deletedProcessInstanceId + "' cannot be modified");
   }
 
-  @Test
-  public void testBatchExecutionFailureWithHistoricQueryThatMatchesDeletedInstance() {
+  @TestTemplate
+  void testBatchExecutionFailureWithHistoricQueryThatMatchesDeletedInstance() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -900,9 +905,9 @@ public class ModificationExecutionAsyncTest {
     assertThat(failedJob.getExceptionMessage()).contains("Process instance '" + deletedProcessInstanceId + "' cannot be modified");
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.syncAfterOneTaskProcess.bpmn20.xml" })
-  public void testBatchExecutionWithHistoricQueryUnfinished() {
+  void testBatchExecutionWithHistoricQueryUnfinished() {
     // given
     List<String> startedInstances = helper.startInstances("oneTaskProcess", 3);
 
@@ -953,8 +958,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(modificationJobs).isEmpty();
   }
 
-  @Test
-  public void testBatchCreationWithProcessInstanceQuery() {
+  @TestTemplate
+  void testBatchCreationWithProcessInstanceQuery() {
     int processInstanceCount = 15;
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
@@ -974,8 +979,8 @@ public class ModificationExecutionAsyncTest {
     assertBatchCreated(batch, processInstanceCount);
   }
 
-  @Test
-  public void testBatchCreationWithHistoricProcessInstanceQuery() {
+  @TestTemplate
+  void testBatchCreationWithHistoricProcessInstanceQuery() {
     int processInstanceCount = 15;
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
@@ -995,9 +1000,9 @@ public class ModificationExecutionAsyncTest {
     assertBatchCreated(batch, processInstanceCount);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.syncAfterOneTaskProcess.bpmn20.xml" })
-  public void testBatchExecutionFailureWithFinishedInstanceId() {
+  void testBatchExecutionFailureWithFinishedInstanceId() {
     // given
     List<String> startedInstances = helper.startInstances("oneTaskProcess", 3);
 
@@ -1051,9 +1056,9 @@ public class ModificationExecutionAsyncTest {
   }
 
 
-  @Test
+  @TestTemplate
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.syncAfterOneTaskProcess.bpmn20.xml" })
-  public void testBatchExecutionFailureWithHistoricQueryThatMatchesFinishedInstance() {
+  void testBatchExecutionFailureWithHistoricQueryThatMatchesFinishedInstance() {
     // given
     List<String> startedInstances = helper.startInstances("oneTaskProcess", 3);
 
@@ -1110,8 +1115,8 @@ public class ModificationExecutionAsyncTest {
   }
 
 
-  @Test
-  public void testBatchCreationWithOverlappingProcessInstanceIdsAndQuery() {
+  @TestTemplate
+  void testBatchCreationWithOverlappingProcessInstanceIdsAndQuery() {
     int processInstanceCount = 15;
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
@@ -1132,8 +1137,8 @@ public class ModificationExecutionAsyncTest {
     assertBatchCreated(batch, processInstanceCount);
   }
 
-  @Test
-  public void testBatchCreationWithOverlappingProcessInstanceIdsAndHistoricQuery() {
+  @TestTemplate
+  void testBatchCreationWithOverlappingProcessInstanceIdsAndHistoricQuery() {
     int processInstanceCount = 15;
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition processDefinition = deployment.getDeployedProcessDefinitions().get(0);
@@ -1154,8 +1159,8 @@ public class ModificationExecutionAsyncTest {
     assertBatchCreated(batch, processInstanceCount);
   }
 
-  @Test
-  public void testBatchCreationWithOverlappingHistoricQueryAndQuery() {
+  @TestTemplate
+  void testBatchCreationWithOverlappingHistoricQueryAndQuery() {
     // given
     int processInstanceCount = 15;
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
@@ -1179,8 +1184,8 @@ public class ModificationExecutionAsyncTest {
     assertBatchCreated(batch, processInstanceCount);
   }
 
-  @Test
-  public void testListenerInvocation() {
+  @TestTemplate
+  void testListenerInvocation() {
     // given
     DelegateEvent.clearEvents();
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(modify(instance)
@@ -1213,8 +1218,8 @@ public class ModificationExecutionAsyncTest {
     DelegateEvent.clearEvents();
   }
 
-  @Test
-  public void testSkipListenerInvocationF() {
+  @TestTemplate
+  void testSkipListenerInvocationF() {
     // given
     DelegateEvent.clearEvents();
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(modify(instance)
@@ -1240,8 +1245,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(DelegateEvent.getEvents()).isEmpty();
   }
 
-  @Test
-  public void testIoMappingInvocation() {
+  @TestTemplate
+  void testIoMappingInvocation() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(modify(instance)
       .activityBuilder("user1")
@@ -1272,8 +1277,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(inputVariable.getActivityInstanceId()).isEqualTo(activityInstance.getActivityInstances("user1")[0].getId());
   }
 
-  @Test
-  public void testSkipIoMappingInvocation() {
+  @TestTemplate
+  void testSkipIoMappingInvocation() {
     // given
 
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(modify(instance)
@@ -1300,8 +1305,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
-  @Test
-  public void testCancelWithoutFlag() {
+  @TestTemplate
+  void testCancelWithoutFlag() {
     // given
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
@@ -1328,8 +1333,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
-  @Test
-  public void testCancelWithoutFlag2() {
+  @TestTemplate
+  void testCancelWithoutFlag2() {
     // given
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
@@ -1356,8 +1361,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
-  @Test
-  public void testCancelWithFlag() {
+  @TestTemplate
+  void testCancelWithFlag() {
     // given
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
@@ -1386,8 +1391,8 @@ public class ModificationExecutionAsyncTest {
     assertThat(execution.getActivityId()).isEqualTo("user");
   }
 
-  @Test
-  public void testCancelWithFlagForManyInstances() {
+  @TestTemplate
+  void testCancelWithFlagForManyInstances() {
     // given
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
@@ -1418,8 +1423,8 @@ public class ModificationExecutionAsyncTest {
     }
   }
 
-  @Test
-  public void shouldSetInvocationsPerBatchType() {
+  @TestTemplate
+  void shouldSetInvocationsPerBatchType() {
     // given
     configuration.getInvocationsPerBatchJobByBatchType()
         .put(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION, 42);
@@ -1440,9 +1445,9 @@ public class ModificationExecutionAsyncTest {
     configuration.setInvocationsPerBatchJobByBatchType(new HashMap<>());
   }
 
-  @Test
+  @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldSetExecutionStartTimeInBatchAndHistory() {
+  void shouldSetExecutionStartTimeInBatchAndHistory() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     Batch batch = helper.startAfterAsync("process1", 20, "user1", processDefinition.getId());

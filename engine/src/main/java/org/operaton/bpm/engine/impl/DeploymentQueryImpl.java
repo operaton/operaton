@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -129,11 +129,6 @@ public class DeploymentQueryImpl extends AbstractQuery<DeploymentQuery, Deployme
   @Override
   public DeploymentQuery orderByDeploymentId() {
     return orderBy(DeploymentQueryProperty.DEPLOYMENT_ID);
-  }
-
-  @Override
-  public DeploymentQuery orderByDeploymenTime() {
-    return orderBy(DeploymentQueryProperty.DEPLOY_TIME);
   }
 
   @Override

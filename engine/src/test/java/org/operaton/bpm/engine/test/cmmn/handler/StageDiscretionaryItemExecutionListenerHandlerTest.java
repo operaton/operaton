@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,23 +16,22 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.cmmn.handler.StageItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.AbstractExecutionListenerSpec;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.model.cmmn.instance.DiscretionaryItem;
 import org.operaton.bpm.model.cmmn.instance.PlanningTable;
 import org.operaton.bpm.model.cmmn.instance.Stage;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class StageDiscretionaryItemExecutionListenerHandlerTest extends CmmnElementHandlerTest {
 
   @Parameters(name = "testListener: {0}")
@@ -51,8 +50,8 @@ public class StageDiscretionaryItemExecutionListenerHandlerTest extends CmmnElem
     this.testSpecification = testSpecification;
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     stage = createElement(casePlanModel, "aStage", Stage.class);
 
     planningTable = createElement(casePlanModel, "aPlanningTable", PlanningTable.class);
@@ -62,8 +61,8 @@ public class StageDiscretionaryItemExecutionListenerHandlerTest extends CmmnElem
 
   }
 
-  @Test
-  public void testCaseExecutionListener() {
+  @TestTemplate
+  void testCaseExecutionListener() {
     // given:
     testSpecification.addListenerToElement(modelInstance, stage);
 

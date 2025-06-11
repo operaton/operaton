@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -120,8 +120,11 @@ class XmlDomCreateTest {
 
   @Test
   void shouldFailForEmptyReader() {
-    assertThrows(SpinDataFormatException.class, () -> XML(stringAsReader(EXAMPLE_EMPTY_STRING)));
-    assertThrows(SpinDataFormatException.class, () -> S(stringAsReader(EXAMPLE_EMPTY_STRING), xmlDataFormat));
-    assertThrows(SpinDataFormatException.class, () -> S(stringAsReader(EXAMPLE_EMPTY_STRING)));
+    var reader1 = stringAsReader(EXAMPLE_EMPTY_STRING);
+    var reader2 = stringAsReader(EXAMPLE_EMPTY_STRING);
+    var reader3 = stringAsReader(EXAMPLE_EMPTY_STRING);
+    assertThrows(SpinDataFormatException.class, () -> XML(reader1));
+    assertThrows(SpinDataFormatException.class, () -> S(reader2, xmlDataFormat));
+    assertThrows(SpinDataFormatException.class, () -> S(reader3));
   }
 }

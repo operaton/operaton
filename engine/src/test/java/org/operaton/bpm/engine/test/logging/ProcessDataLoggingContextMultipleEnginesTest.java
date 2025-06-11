@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,50 +20,49 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
-public class ProcessDataLoggingContextMultipleEnginesTest {
+class ProcessDataLoggingContextMultipleEnginesTest {
 
   private static final String PVM_LOGGER = "org.operaton.bpm.engine.pvm";
   private static final String DELEGATE_LOGGER = LogEngineNameDelegate.class.getName();
 
   private static final String PROCESS = "process";
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch(PVM_LOGGER, DELEGATE_LOGGER).level(Level.DEBUG);
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch(PVM_LOGGER, DELEGATE_LOGGER).level(Level.DEBUG);
 
   protected ProcessEngine engine1;
   protected ProcessEngine engine2;
 
-  @Before
-  public void startEngines() {
-    engine1 = createProcessEngine("engine1");
-    engine2 = createProcessEngine("engine2");
+  private static final String ENGINE1_NAME = "ProcessDataLoggingContextMultipleEnginesTest-engine1";
+  private static final String ENGINE2_NAME = "ProcessDataLoggingContextMultipleEnginesTest-engine2";
+
+  @BeforeEach
+  void startEngines() {
+    engine1 = createProcessEngine(ENGINE1_NAME);
+    engine2 = createProcessEngine(ENGINE2_NAME);
   }
 
-  @After
-  public void closeEngine1() {
+  @AfterEach
+  void closeEngines() {
     try {
       engine1.close();
     }
     finally {
       engine1 = null;
     }
-  }
-
-  @After
-  public void closeEngine2() {
     try {
       engine2.close();
     }
@@ -73,7 +72,7 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
   }
 
   @Test
-  public void shouldHaveProcessEngineNameAvailableInMdc() {
+  void shouldHaveProcessEngineNameAvailableInMdc() {
     // given
     engine1.getRepositoryService().createDeployment().addModelInstance("test.bpmn", modelOneTaskProcess()).deploy();
 
@@ -85,11 +84,11 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
     List<ILoggingEvent> filteredLog = loggingRule.getLog();
     List<String> engineNames = filteredLog.stream().map(log -> log.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNames).hasSize(filteredLog.size());
-    assertThat(engineNames.stream().distinct().toList()).containsExactly("engine1");
+    assertThat(engineNames.stream().distinct().toList()).containsExactly(ENGINE1_NAME);
   }
 
   @Test
-  public void shouldHaveProcessEngineNameAvailableInMdcForAllEngines() {
+  void shouldHaveProcessEngineNameAvailableInMdcForAllEngines() {
     // given
     engine1.getRepositoryService().createDeployment().addModelInstance("test1.bpmn", modelLogDelegateProcess()).deploy();
     engine2.getRepositoryService().createDeployment().addModelInstance("test2.bpmn", modelLogDelegateProcess()).deploy();
@@ -103,17 +102,17 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
     List<String> engineNames = log.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     // make sure all log entries have access to the engineName MDC property
     assertThat(engineNames).hasSize(log.size());
-    assertThat(engineNames.stream().distinct().toList()).containsExactlyInAnyOrder("engine1", "engine2");
+    assertThat(engineNames.stream().distinct().toList()).containsExactlyInAnyOrder(ENGINE1_NAME, ENGINE2_NAME);
 
-    List<ILoggingEvent> filteredLogEngine1 = loggingRule.getFilteredLog("engine1");
+    List<ILoggingEvent> filteredLogEngine1 = loggingRule.getFilteredLog(ENGINE1_NAME);
     List<String> engineNamesEngine1 = filteredLogEngine1.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNamesEngine1).hasSameSizeAs(filteredLogEngine1);
-    assertThat(engineNamesEngine1.stream().distinct().toList()).containsExactly("engine1");
+    assertThat(engineNamesEngine1.stream().distinct().toList()).containsExactly(ENGINE1_NAME);
 
-    List<ILoggingEvent> filteredLogEngine2 = loggingRule.getFilteredLog("engine2");
+    List<ILoggingEvent> filteredLogEngine2 = loggingRule.getFilteredLog(ENGINE2_NAME);
     List<String> engineNamesEngine2 = filteredLogEngine2.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNamesEngine2).hasSameSizeAs(filteredLogEngine2);
-    assertThat(engineNamesEngine2.stream().distinct().toList()).containsExactly("engine2");
+    assertThat(engineNamesEngine2.stream().distinct().toList()).containsExactly(ENGINE2_NAME);
   }
 
   private ProcessEngine createProcessEngine(String name) {

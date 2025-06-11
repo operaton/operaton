@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,20 +35,20 @@ import org.operaton.bpm.model.bpmn.Bpmn;
  * Tests if a {@link DelegateExecution} has the correct tenant-id. The
  * assertions are checked inside the service tasks.
  */
-public class MultiTenancyDelegateExecutionTest {
+class MultiTenancyDelegateExecutionTest {
 
   protected static final String PROCESS_DEFINITION_KEY = "testProcess";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RepositoryService repositoryService;
   protected RuntimeService runtimeService;
 
   @Test
-  public void testSingleExecution() {
+  void testSingleExecution() {
     testRule.deployForTenant("tenant1", Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
       .startEvent()
       .serviceTask()
@@ -62,7 +62,7 @@ public class MultiTenancyDelegateExecutionTest {
   }
 
   @Test
-  public void testConcurrentExecution() {
+  void testConcurrentExecution() {
 
     testRule.deployForTenant("tenant1", Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
       .startEvent()
@@ -83,7 +83,7 @@ public class MultiTenancyDelegateExecutionTest {
   }
 
   @Test
-  public void testEmbeddedSubprocess() {
+  void testEmbeddedSubprocess() {
     testRule.deployForTenant("tenant1", Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
         .subProcess()
@@ -112,7 +112,7 @@ public class MultiTenancyDelegateExecutionTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     AssertingJavaDelegate.clear();
 
   }

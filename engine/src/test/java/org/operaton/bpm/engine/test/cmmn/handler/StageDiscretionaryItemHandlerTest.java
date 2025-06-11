@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,22 +39,22 @@ import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
 import org.operaton.bpm.model.cmmn.instance.PlanningTable;
 import org.operaton.bpm.model.cmmn.instance.RequiredRule;
 import org.operaton.bpm.model.cmmn.instance.Stage;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
+class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
   protected Stage stage;
   protected PlanningTable planningTable;
   protected DiscretionaryItem discretionaryItem;
   protected StageItemHandler handler = new StageItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     stage = createElement(casePlanModel, "aStage", Stage.class);
 
     planningTable = createElement(casePlanModel, "aPlanningTable", PlanningTable.class);
@@ -65,7 +65,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testStageActivityName() {
+  void testStageActivityName() {
     // given:
     // the stage has a name "A Stage"
     String name = "A Stage";
@@ -79,7 +79,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testStageActivityType() {
+  void testStageActivityType() {
     // given
 
     // when
@@ -92,7 +92,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testStageDescription() {
+  void testStageDescription() {
     // given
     String description = "This is a stage";
     stage.setDescription(description);
@@ -106,7 +106,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testDiscretionaryItemDescription() {
+  void testDiscretionaryItemDescription() {
     // given
     String description = "This is a discretionaryItem";
     discretionaryItem.setDescription(description);
@@ -119,7 +119,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a discretionaryItem
 
     // when
@@ -131,7 +131,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a discretionaryItem
 
     // when
@@ -142,7 +142,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -157,7 +157,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRule() {
+  void testManualActivationRule() {
     // given
     ItemControl itemControl = createElement(discretionaryItem, "ItemControl_1", ItemControl.class);
     ManualActivationRule manualActivationRule = createElement(itemControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -171,12 +171,11 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertThat(rule).isNotNull();
     assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
-  public void testManualActivationRuleByDefaultPlanItemControl() {
+  void testManualActivationRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(stage, "ItemControl_1", DefaultControl.class);
     ManualActivationRule manualActivationRule = createElement(defaultControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -190,12 +189,11 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertThat(rule).isNotNull();
     assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(discretionaryItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -209,12 +207,11 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertThat(rule).isNotNull();
     assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(stage, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);
@@ -228,12 +225,11 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertThat(rule).isNotNull();
     assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
-  public void testAutoComplete() {
+  void testAutoComplete() {
     // given
     stage.setAutoComplete(true);
 

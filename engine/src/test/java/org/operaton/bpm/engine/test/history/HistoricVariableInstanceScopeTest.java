@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricDetail;
@@ -36,19 +42,30 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTest {
+class HistoricVariableInstanceScopeTest {
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  CaseService caseService;
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetVariableOnProcessInstanceStart() {
+  void testSetVariableOnProcessInstanceStart() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("testVar", "testValue");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
@@ -66,9 +83,9 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetVariableLocalOnUserTask() {
+  void testSetVariableLocalOnUserTask() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -93,10 +110,10 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   @SuppressWarnings("deprecation")
-  public void testSetVariableOnProcessInstanceStartAndSetVariableLocalOnUserTask() {
+  void testSetVariableOnProcessInstanceStartAndSetVariableLocalOnUserTask() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("testVar", "testValue");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
@@ -129,9 +146,9 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneSubProcess.bpmn20.xml"})
   @Test
-  public void testSetVariableOnUserTaskInsideSubProcess() {
+  void testSetVariableOnUserTaskInsideSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("startSimpleSubProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -152,7 +169,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSetVariableOnServiceTaskInsideSubProcess() {
+  void testSetVariableOnServiceTaskInsideSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
@@ -167,7 +184,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSetVariableLocalOnServiceTaskInsideSubProcess() {
+  void testSetVariableLocalOnServiceTaskInsideSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
@@ -187,7 +204,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSetVariableLocalOnTaskInsideParallelBranch() {
+  void testSetVariableLocalOnTaskInsideParallelBranch() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -211,9 +228,9 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     testRule.assertProcessEnded(pi.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricVariableInstanceScopeTest.testSetVariableLocalOnTaskInsideParallelBranch.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricVariableInstanceScopeTest.testSetVariableLocalOnTaskInsideParallelBranch.bpmn"})
   @Test
-  public void testSetVariableOnTaskInsideParallelBranch() {
+  void testSetVariableOnTaskInsideParallelBranch() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -235,7 +252,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSetVariableOnServiceTaskInsideParallelBranch() {
+  void testSetVariableOnServiceTaskInsideParallelBranch() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
@@ -250,7 +267,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSetVariableLocalOnServiceTaskInsideParallelBranch() {
+  void testSetVariableLocalOnServiceTaskInsideParallelBranch() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricActivityInstance serviceTask = historyService.createHistoricActivityInstanceQuery()
@@ -270,7 +287,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testHistoricCaseVariableInstanceQuery() {
+  void testHistoricCaseVariableInstanceQuery() {
     // start case instance with variables
     Map<String, Object> variables = new HashMap<>();
     variables.put("foo", "bar");
@@ -304,7 +321,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testInputMappings() {
+  void testInputMappings() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -373,7 +390,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCmmnActivityInstanceIdOnCaseInstance() {
+  void testCmmnActivityInstanceIdOnCaseInstance() {
 
     // given
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase");
@@ -412,7 +429,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCmmnActivityInstanceIdOnCaseExecution() {
+  void testCmmnActivityInstanceIdOnCaseExecution() {
 
     // given
     caseService.createCaseInstanceByKey("oneTaskCase");
@@ -451,7 +468,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCmmnActivityInstanceIdOnTask() {
+  void testCmmnActivityInstanceIdOnTask() {
 
     // given
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase");

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,6 +41,9 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
   protected void createInstances(ActivityExecution execution, int nrOfInstances) throws Exception {
     PvmActivity innerActivity = getInnerActivity(execution.getActivity());
 
+    // evaluate the collection to ensure the input of collectionExpression same as before
+    // also reduces the loop count of collectionExpression
+    Collection<?> collection = evaluateCollection(execution);
     // initialize the scope and create the desired number of child executions
     prepareScopeExecution(execution, nrOfInstances);
 
@@ -53,7 +57,7 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
     // actually be started in correct order :) )
     for (int i = (nrOfInstances - 1); i >= 0; i--) {
       ActivityExecution activityExecution = concurrentExecutions.get(i);
-      performInstance(activityExecution, innerActivity, i);
+      performInstance(activityExecution, innerActivity, i, collection);
     }
   }
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.variable.Variables;
  *
  */
 
-public class MultiTenancyFormVariablesCmdsTenantCheckTest {
+class MultiTenancyFormVariablesCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -50,16 +50,16 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   protected static final String VARIABLE_VALUE_2 = "test2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessInstance instance;
 
   protected static final String START_FORM_RESOURCE = "org/operaton/bpm/engine/test/api/form/FormServiceTest.startFormFields.bpmn20.xml";
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     // deploy tenants
     testRule.deployForTenant(TENANT_ONE, START_FORM_RESOURCE);
@@ -70,7 +70,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
 
   // start form variables
   @Test
-  public void testGetStartFormVariablesWithAuthenticatedTenant() {
+  void testGetStartFormVariablesWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -79,7 +79,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetStartFormVariablesWithNoAuthenticatedTenant() {
+  void testGetStartFormVariablesWithNoAuthenticatedTenant() {
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     String processDefinitionId = instance.getProcessDefinitionId();
     var formService = engineRule.getFormService();
@@ -93,7 +93,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetStartFormVariablesWithDisabledTenantCheck() {
+  void testGetStartFormVariablesWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -103,7 +103,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetTaskFormVariablesWithAuthenticatedTenant() {
+  void testGetTaskFormVariablesWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -114,7 +114,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetTaskFormVariablesWithNoAuthenticatedTenant() {
+  void testGetTaskFormVariablesWithNoAuthenticatedTenant() {
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();
     String taskId = task.getId();
@@ -131,7 +131,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   }
 
   @Test
-  public void testGetTaskFormVariablesWithDisabledTenantCheck() {
+  void testGetTaskFormVariablesWithDisabledTenantCheck() {
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.cdi.impl.context;
 
 import java.lang.annotation.Annotation;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import jakarta.enterprise.context.spi.Context;
@@ -71,12 +70,10 @@ public class BusinessProcessContext implements Context {
     Object variable = businessProcess.getVariable(variableName);
     if (variable != null) {
 
-      if (logger.isLoggable(Level.FINE)) {
-        if(businessProcess.isAssociated()) {
-          logger.fine("Getting instance of bean '" + variableName + "' from Execution[" + businessProcess.getExecutionId() + "].");
-        } else {
-          logger.fine("Getting instance of bean '" + variableName + "' from transient bean store");
-        }
+      if(businessProcess.isAssociated()) {
+        logger.fine(() -> String.format("Getting instance of bean '%s' from Execution[%s].", variableName, businessProcess.getExecutionId()));
+      } else {
+        logger.fine(() -> String.format("Getting instance of bean '%s' from transient bean store.", variableName));
       }
 
       return (T) variable;
@@ -100,23 +97,18 @@ public class BusinessProcessContext implements Context {
     Object variable = businessProcess.getVariable(variableName);
     if (variable != null) {
 
-      if (logger.isLoggable(Level.FINE)) {
-        if(businessProcess.isAssociated()) {
-          logger.fine("Getting instance of bean '" + variableName + "' from Execution[" + businessProcess.getExecutionId() + "].");
-        } else {
-          logger.fine("Getting instance of bean '" + variableName + "' from transient bean store");
-        }
+      if(businessProcess.isAssociated()) {
+        logger.fine(() -> String.format("Getting instance of bean '%s' from Execution[%s].", variableName, businessProcess.getExecutionId()));
+      } else {
+        logger.fine(() -> String.format("Getting instance of bean '%s' from transient bean store.", variableName));
       }
 
       return (T) variable;
     } else {
-      if (logger.isLoggable(Level.FINE)) {
-        if(businessProcess.isAssociated()) {
-          logger.fine("Creating instance of bean '" + variableName + "' in business process context representing Execution["
-              + businessProcess.getExecutionId() + "].");
-        } else {
-          logger.fine("Creating instance of bean '" + variableName + "' in transient bean store");
-        }
+      if(businessProcess.isAssociated()) {
+        logger.fine(() -> String.format("Creating instance of bean '%s' in business process context representing Execution[%s].", variableName, businessProcess.getExecutionId()));
+      } else {
+        logger.fine(() -> String.format("Creating instance of bean '%s' in transient bean store.", variableName));
       }
 
       businessProcess.setVariable(variableName, beanInstance);

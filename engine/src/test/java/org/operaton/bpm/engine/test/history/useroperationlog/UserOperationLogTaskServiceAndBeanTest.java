@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_UPDATE;
@@ -30,12 +31,13 @@ import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.NAME;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PARENT_TASK;
 import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PRIORITY;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
@@ -44,18 +46,16 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Danny Gräf
  */
-public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperationLogTest {
+class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperationLogTest {
 
   protected Task task;
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
 
 
     if (task != null) {
@@ -64,7 +64,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testBeanPropertyChanges() {
+  void testBeanPropertyChanges() {
     TaskEntity entity = new TaskEntity();
 
     // assign and validate changes
@@ -90,7 +90,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testNotTrackChangeToTheSameValue() {
+  void testNotTrackChangeToTheSameValue() {
     TaskEntity entity = new TaskEntity();
 
     // get and set a properties
@@ -103,7 +103,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testRemoveChangeWhenSetBackToTheOrgValue() {
+  void testRemoveChangeWhenSetBackToTheOrgValue() {
     TaskEntity entity = new TaskEntity();
 
     // set an owner (default is null)
@@ -120,7 +120,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testAllTrackedProperties() {
+  void testAllTrackedProperties() {
     Date yesterday = new Date(new Date().getTime() - 86400000);
     Date tomorrow = new Date(new Date().getTime() + 86400000);
 
@@ -154,7 +154,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testDeleteTask() {
+  void testDeleteTask() {
     // given: a single task
     task = taskService.newTask();
     taskService.saveTask(task);
@@ -175,7 +175,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testCompositeBeanInteraction() {
+  void testCompositeBeanInteraction() {
     // given: a manually created task
     task = taskService.newTask();
 
@@ -207,7 +207,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testMultipleValueChange() {
+  void testMultipleValueChange() {
     // given: a single task
     task = taskService.newTask();
     taskService.saveTask(task);
@@ -223,7 +223,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testSetDateProperty() {
+  void testSetDateProperty() {
     // given: a single task
     task = taskService.newTask();
     Date now = ClockUtil.getCurrentTime();
@@ -235,7 +235,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testResetChange() {
+  void testResetChange() {
     // given: a single task
     task = taskService.newTask();
     taskService.saveTask(task);
@@ -261,7 +261,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testConcurrentTaskChange() {
+  void testConcurrentTaskChange() {
     // create a task
     task = taskService.newTask();
     taskService.saveTask(task);
@@ -280,7 +280,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   }
 
   @Test
-  public void testCaseInstanceId() {
+  void testCaseInstanceId() {
     // create new task
     task = taskService.newTask();
     taskService.saveTask(task);

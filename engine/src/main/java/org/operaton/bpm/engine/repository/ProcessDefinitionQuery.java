@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -79,10 +79,12 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
 
   /**
    * Only select process definitions with the given keys.
-   * <p><b>Deprecated</b>: use {@link #processDefinitionKeyIn(String...)}</p>
+   * @deprecated Use {@link #processDefinitionKeyIn(String...)} instead.
    */
-  @Deprecated
-  ProcessDefinitionQueryImpl processDefinitionKeysIn(String... processDefinitionKeys);
+  @Deprecated(forRemoval = true, since = "1.0")
+  default ProcessDefinitionQueryImpl processDefinitionKeysIn(String... processDefinitionKeys) {
+    return (ProcessDefinitionQueryImpl) processDefinitionKeyIn(processDefinitionKeys);
+  }
 
   /**
    * Only select process definitions with the given keys.
@@ -186,10 +188,12 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
   // Support for event subscriptions /////////////////////////////////////
 
   /**
-   * @see #messageEventSubscriptionName(String)
+   * @deprecated Use #messageEventSubscriptionName(String) instead.
    */
-  @Deprecated
-  ProcessDefinitionQuery messageEventSubscription(String messageName);
+  @Deprecated(forRemoval = true, since = "1.0")
+  default ProcessDefinitionQuery messageEventSubscription(String messageName) {
+    return messageEventSubscriptionName(messageName);
+  }
 
   /**
    * Selects the single process definition which has a start message event

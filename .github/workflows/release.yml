@@ -15,14 +15,14 @@ on:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
         required: true
-        default: true
+        default: false
 jobs:
   precheck:
     name: Precheck
     runs-on: ubuntu-24.04
     outputs:
       version: ${{steps.version.outputs.version}}
-      database_version: ${{steps.maven-build.outputs.database_version}}
+      database_version: ${{steps.version.outputs.database_version}}
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
         run: |
           RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
-          DATABASE_VERSION=$(grep '<version.operaton.dbscheme>' parent/pom.xml | sed -e 's/.*<version.operaton.dbscheme>\(.*\)<\/version.operaton.dbscheme>.*/\1/')
+          DATABASE_VERSION=$(grep '<version.operaton.dbscheme>' database/pom.xml | sed -e 's/.*<version.operaton.dbscheme>\(.*\)<\/version.operaton.dbscheme>.*/\1/')
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
           if [[ "$RELEASE_VERSION" == *"alpha"* || "$RELEASE_VERSION" == *"beta"* ]]; then
@@ -47,12 +47,10 @@ jobs:
             echo "is_prerelease=false" >> $GITHUB_OUTPUT
           fi
           .github/scripts/set-project-version.sh $RELEASE_VERSION
-          if ! git diff-index --quiet HEAD --; then
-            git config --local user.name "$GITHUB_ACTOR"
-            git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-            git commit -am "[releng] Releasing version $RELEASE_VERSION"
-            git push origin ${{github.event.inputs.release_branch}}
-          fi
+      - name: Commit changes
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
+        with:
+          message: "[releng] Releasing version ${{steps.version.outputs.version}}"
 
   release_build:
     name: Release Build
@@ -184,15 +182,16 @@ jobs:
           distribution: 'temurin'
 
       - name: Set next development version
+        id: set-next-version
         run: |
           NEXT_VERSION=${{github.event.inputs.next_version}}-SNAPSHOT
           .github/scripts/set-project-version.sh $NEXT_VERSION
-          if ! git diff-index --quiet HEAD --; then
-            git config --local user.name "$GITHUB_ACTOR"
-            git config --local user.email "github-actions[bot]@users.noreply.github.com"
-            git commit --allow-empty -am "[releng] Bump version to $NEXT_VERSION"
-            git push origin ${{github.event.inputs.release_branch}}
-          fi
+          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
+        with:
+          message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"
 
       - name: Notify Docker Repository
         run: |

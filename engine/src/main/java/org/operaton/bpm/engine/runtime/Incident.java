@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,12 +45,12 @@ public interface Incident {
   /**
    * Handler type for incidents created on job execution failure
    */
-  static final String FAILED_JOB_HANDLER_TYPE = "failedJob";
+  String FAILED_JOB_HANDLER_TYPE = "failedJob";
 
   /**
    * Handler type for incidents created on external task failure
    */
-  static final String EXTERNAL_TASK_HANDLER_TYPE = "failedExternalTask";
+  String EXTERNAL_TASK_HANDLER_TYPE = "failedExternalTask";
 
   /**
    * Returns the unique identifier for this incident.

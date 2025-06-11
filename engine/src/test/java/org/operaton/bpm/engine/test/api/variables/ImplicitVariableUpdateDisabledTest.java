@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,49 +16,37 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.history.UpdateValueDelegate;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.history.UpdateValueDelegate;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.variable.Variables;
 
-public class ImplicitVariableUpdateDisabledTest {
+class ImplicitVariableUpdateDisabledTest {
 
-  @ClassRule
-  public static final ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      c -> c.setImplicitVariableUpdateDetectionEnabled(false) // turn off implicit variable update detection.
-  );
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setImplicitVariableUpdateDetectionEnabled(false))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  private final ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  private final ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public final RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  private RuntimeService runtimeService;
-
-  @Before
-  public void createProcessEngine() {
-    runtimeService = engineRule.getRuntimeService();
-  }
+  RuntimeService runtimeService;
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
   @Test
   @SuppressWarnings("unchecked")
-  public void testUpdate() {
+  void testUpdate() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("serviceTaskProcess",
         Variables.createVariables()
             .putValue("listVar", new ArrayList<String>())
@@ -76,7 +64,7 @@ public class ImplicitVariableUpdateDisabledTest {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
   @Test
-  public void testSerialization() {
+  void testSerialization() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("serviceTaskProcess",
         Variables.createVariables()
             .putValue("pojo", new Pojo(1))

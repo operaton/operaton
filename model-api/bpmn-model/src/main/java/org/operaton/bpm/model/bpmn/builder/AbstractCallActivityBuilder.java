@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,27 +44,25 @@ public class AbstractCallActivityBuilder<B extends AbstractCallActivityBuilder<B
   /** operaton extensions */
 
   /**
-   * @deprecated use operatonAsyncBefore() instead.
-   *
    * Sets the operaton async attribute to true.
    *
+   * @deprecated Use {@link #operatonAsyncBefore(boolean)} instead.
    * @return the builder object
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public B operatonAsync() {
     element.setOperatonAsyncBefore(true);
     return myself;
   }
 
   /**
-   * @deprecated use operatonAsyncBefore(isOperatonAsyncBefore) instead
-   *
    * Sets the operaton async attribute.
    *
-   * @param isOperatonAsync  the async state of the task
+   * @deprecated Use {@link #operatonAsyncBefore(boolean)} instead.
+   * @param isOperatonAsync the async state of the task
    * @return the builder object
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public B operatonAsync(boolean isOperatonAsync) {
     element.setOperatonAsyncBefore(isOperatonAsync);
     return myself;

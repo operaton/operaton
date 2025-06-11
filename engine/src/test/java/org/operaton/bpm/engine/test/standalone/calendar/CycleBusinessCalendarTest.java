@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,20 +21,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.calendar.CycleBusinessCalendar;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.junit.After;
-import org.junit.Test;
 
-public class CycleBusinessCalendarTest {
-  
-  @After
-  public void tearDown() {
+class CycleBusinessCalendarTest {
+
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
   }
 
   @Test
-  public void testSimpleCron() throws Exception {
+  void testSimpleCron() throws Exception {
     CycleBusinessCalendar businessCalendar = new CycleBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");
@@ -49,7 +49,7 @@ public class CycleBusinessCalendarTest {
   }
 
   @Test
-  public void testSimpleDuration() throws Exception {
+  void testSimpleDuration() throws Exception {
     CycleBusinessCalendar businessCalendar = new CycleBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");
@@ -64,7 +64,7 @@ public class CycleBusinessCalendarTest {
   }
 
   @Test
-  public void testSimpleCronWithStartDate() throws Exception {
+  void testSimpleCronWithStartDate() throws Exception {
     CycleBusinessCalendar businessCalendar = new CycleBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");
@@ -78,7 +78,7 @@ public class CycleBusinessCalendarTest {
   }
 
   @Test
-  public void testSimpleDurationWithStartDate() throws Exception {
+  void testSimpleDurationWithStartDate() throws Exception {
     CycleBusinessCalendar businessCalendar = new CycleBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");

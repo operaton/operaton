@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,7 +29,7 @@ import org.jboss.jandex.AnnotationInstance;
 
 
 /**
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -44,7 +44,7 @@ public class ProcessApplicationAttachments {
 
   /**
    * Attach the parsed ProcessesXml file to a deployment unit.
-   *  
+   *
    */
   public static void addProcessesXml(DeploymentUnit unit, ProcessesXmlWrapper processesXmlWrapper) {
     unit.addToAttachmentList(PROCESSES_XML_LIST, processesXmlWrapper);
@@ -52,30 +52,30 @@ public class ProcessApplicationAttachments {
 
   /**
    * Returns the attached {@link ProcessesXml} marker or null;
-   *  
+   *
    */
   public static List<ProcessesXmlWrapper> getProcessesXmls(DeploymentUnit deploymentUnit) {
     return deploymentUnit.getAttachmentList(PROCESSES_XML_LIST);
   }
 
-  /** 
-   * marks a a {@link DeploymentUnit} as a process application 
+  /**
+   * marks a a {@link DeploymentUnit} as a process application
    */
   public static void mark(DeploymentUnit unit) {
-    unit.putAttachment(MARKER, Boolean.TRUE);    
+    unit.putAttachment(MARKER, Boolean.TRUE);
   }
-  
-  /** 
-   * marks a a {@link DeploymentUnit} as part of a process application 
+
+  /**
+   * marks a a {@link DeploymentUnit} as part of a process application
    */
   public static void markPartOfProcessApplication(DeploymentUnit unit) {
     if(unit.getParent() != null && unit.getParent() != unit) {
       unit.getParent().putAttachment(PART_OF_MARKER, Boolean.TRUE);
-    }      
+    }
   }
-  
+
   /**
-   * return true if the deployment unit is either itself a process 
+   * return true if the deployment unit is either itself a process
    * application or part of a process application.
    */
   public static boolean isPartOfProcessApplication(DeploymentUnit unit) {
@@ -86,58 +86,58 @@ public class ProcessApplicationAttachments {
       return unit.getParent().hasAttachment(PART_OF_MARKER);
     }
     return false;
-  }       
-  
+  }
+
   /**
    * Returns true if the {@link DeploymentUnit} itself is a process application (carries a processes.xml)
-   * 
+   *
    */
   public static boolean isProcessApplication(DeploymentUnit deploymentUnit) {
     return deploymentUnit.hasAttachment(MARKER);
   }
-  
+
   /**
    * Returns the {@link ComponentDescription} for the {@link AbstractProcessApplication} component
    */
   public static ComponentDescription getProcessApplicationComponent(DeploymentUnit deploymentUnit) {
     return deploymentUnit.getAttachment(PA_COMPONENT);
   }
-  
+
   /**
-   * Attach the {@link ComponentDescription} for the {@link AbstractProcessApplication} component   
+   * Attach the {@link ComponentDescription} for the {@link AbstractProcessApplication} component
    */
   public static void attachProcessApplicationComponent(DeploymentUnit deploymentUnit, ComponentDescription componentDescription){
     deploymentUnit.putAttachment(PA_COMPONENT, componentDescription);
   }
-  
+
   /**
    * Attach the {@link AnnotationInstance}s for the PostDeploy methods
    */
   public static void attachPostDeployDescription(DeploymentUnit deploymentUnit, AnnotationInstance annotation){
-    deploymentUnit.putAttachment(POST_DEPLOY_METHOD, annotation);      
+    deploymentUnit.putAttachment(POST_DEPLOY_METHOD, annotation);
   }
-  
+
   /**
    * Attach the {@link AnnotationInstance}s for the PreUndeploy methods
    */
   public static void attachPreUndeployDescription(DeploymentUnit deploymentUnit, AnnotationInstance annotation){
-    deploymentUnit.putAttachment(PRE_UNDEPLOY_METHOD, annotation);      
+    deploymentUnit.putAttachment(PRE_UNDEPLOY_METHOD, annotation);
   }
-  
+
   /**
    * @return the description of the PostDeploy method
    */
   public static AnnotationInstance getPostDeployDescription(DeploymentUnit deploymentUnit) {
     return deploymentUnit.getAttachment(POST_DEPLOY_METHOD);
   }
-  
+
   /**
    * @return the description of the PreUndeploy method
    */
   public static AnnotationInstance getPreUndeployDescription(DeploymentUnit deploymentUnit) {
     return deploymentUnit.getAttachment(PRE_UNDEPLOY_METHOD);
   }
-  
+
   private ProcessApplicationAttachments() {
 
   }

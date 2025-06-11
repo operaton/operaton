@@ -3,7 +3,7 @@
 
   <groupId>org.operaton.bpm</groupId>
   <artifactId>operaton-root</artifactId>
-  <version>1.0.0-beta-4-SNAPSHOT</version>
+  <version>1.0.0-beta-5-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Operaton - Root POM</name>
   <inceptionYear>2024</inceptionYear>
@@ -20,9 +20,9 @@
     <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
     <version.mybatis>3.5.15</version.mybatis>
     <version.joda-time>2.12.5</version.joda-time>
-    <version.uuid-generator>4.3.0</version.uuid-generator>
+    <version.uuid-generator>5.1.0</version.uuid-generator>
     <version.feel-scala>1.19.1</version.feel-scala>
-    <version.quarkus>3.15.0</version.quarkus>
+    <version.quarkus>3.23.0</version.quarkus>
     <version.java>17</version.java>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
@@ -292,7 +292,7 @@
         <plugin>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
-          <version>11.0.24</version>
+          <version>${version.jetty}</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.transformer</groupId>
@@ -317,7 +317,7 @@
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>3.4.2</version>
+          <version>3.5.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -609,7 +609,7 @@
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -174,11 +174,6 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
   }
 
   @Override
-  public ProcessDefinitionQueryImpl processDefinitionKeysIn(String... processDefinitionKeys) {
-    return (ProcessDefinitionQueryImpl) processDefinitionKeyIn(processDefinitionKeys);
-  }
-
-  @Override
   public ProcessDefinitionQuery processDefinitionKeyIn(String... processDefinitionKeys) {
     ensureNotNull("keys", (Object[]) processDefinitionKeys);
     this.keys = processDefinitionKeys;
@@ -230,11 +225,6 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
   public ProcessDefinitionQuery suspended() {
     this.suspensionState = SuspensionState.SUSPENDED;
     return this;
-  }
-
-  @Override
-  public ProcessDefinitionQuery messageEventSubscription(String messageName) {
-    return eventSubscription(EventType.MESSAGE, messageName);
   }
 
   @Override

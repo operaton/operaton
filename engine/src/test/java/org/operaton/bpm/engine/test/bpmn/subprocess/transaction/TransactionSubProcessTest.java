@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,9 +16,24 @@
  */
 package org.operaton.bpm.engine.test.bpmn.subprocess.transaction;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.EventSubscription;
@@ -26,30 +41,31 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 
 /**
  * @author Daniel Meyer
  */
-public class TransactionSubProcessTest extends PluggableProcessEngineTest {
+public class TransactionSubProcessTest {
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testSimpleCase.bpmn20.xml"})
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+  HistoryService historyService;
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testSimpleCase.bpmn20.xml"})
   @Test
-  public void testSimpleCaseTxSuccessful() {
+  void testSimpleCaseTxSuccessful() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
@@ -102,9 +118,9 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testSimpleCase.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testSimpleCase.bpmn20.xml"})
   @Test
-  public void testActivityInstanceTreeAfterSuccessfulCompletion() {
+  void testActivityInstanceTreeAfterSuccessfulCompletion() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
     // the tx task is present
@@ -123,9 +139,9 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
         .done());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testWaitstateCompensationHandler.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testWaitstateCompensationHandler.bpmn20.xml"})
   @Test
-  public void testWaitstateCompensationHandler() {
+  void testWaitstateCompensationHandler() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
@@ -150,8 +166,8 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     assertThat(undoBookFlight).hasSize(1);
 
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(processInstance.getId());
-    List<ActivityInstance> undoBookHotelInstances = getInstancesForActivityId(rootActivityInstance, "undoBookHotel");
-    List<ActivityInstance> undoBookFlightInstances = getInstancesForActivityId(rootActivityInstance, "undoBookFlight");
+    List<ActivityInstance> undoBookHotelInstances = testRule.getInstancesForActivityId(rootActivityInstance, "undoBookHotel");
+    List<ActivityInstance> undoBookFlightInstances = testRule.getInstancesForActivityId(rootActivityInstance, "undoBookFlight");
     assertThat(undoBookHotelInstances).hasSize(5);
     assertThat(undoBookFlightInstances).hasSize(1);
 
@@ -187,9 +203,9 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testSimpleCase.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testSimpleCase.bpmn20.xml"})
   @Test
-  public void testSimpleCaseTxCancelled() {
+  void testSimpleCaseTxCancelled() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
@@ -248,7 +264,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCancelEndConcurrent() {
+  void testCancelEndConcurrent() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
@@ -301,7 +317,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedCancelInner() {
+  void testNestedCancelInner() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
@@ -365,7 +381,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testNestedCancelOuter() {
+  void testNestedCancelOuter() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
@@ -416,7 +432,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testMultiInstanceTx() {
+  void testMultiInstanceTx() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
@@ -445,9 +461,9 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testMultiInstanceTx.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testMultiInstanceTx.bpmn20.xml"})
   @Test
-  public void testMultiInstanceTxSuccessful() {
+  void testMultiInstanceTxSuccessful() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionProcess");
 
@@ -482,7 +498,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCompensateSubprocess() {
+  void testCompensateSubprocess() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("txProcess");
 
@@ -510,7 +526,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCompensateTransactionWithEventSubprocess() {
+  void testCompensateTransactionWithEventSubprocess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("txProcess");
     Task beforeCancelTask = taskService.createTaskQuery().singleResult();
@@ -531,7 +547,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCompensateTransactionWithEventSubprocess.bpmn20.xml")
   @Test
-  public void testCompensateTransactionWithEventSubprocessActivityInstanceTree() {
+  void testCompensateTransactionWithEventSubprocessActivityInstanceTree() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("txProcess");
     Task beforeCancelTask = taskService.createTaskQuery().singleResult();
@@ -554,7 +570,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCompensateSubprocess.bpmn20.xml")
   @Test
-  public void testCompensateSubprocessNotTriggered() {
+  void testCompensateSubprocessNotTriggered() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("txProcess");
 
@@ -578,7 +594,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCompensateSubprocess.bpmn20.xml")
   @Test
-  public void testCompensateSubprocessAfterTxCompletion() {
+  void testCompensateSubprocessAfterTxCompletion() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("txProcess");
 
@@ -627,7 +643,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testMultipleCancelBoundaryFails() {
+  void testMultipleCancelBoundaryFails() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testMultipleCancelBoundaryFails.bpmn20.xml");
     try {
@@ -640,7 +656,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCancelBoundaryNoTransactionFails() {
+  void testCancelBoundaryNoTransactionFails() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelBoundaryNoTransactionFails.bpmn20.xml");
     try {
@@ -653,7 +669,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCancelEndNoTransactionFails() {
+  void testCancelEndNoTransactionFails() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelEndNoTransactionFails.bpmn20.xml");
     try {
@@ -667,7 +683,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParseWithDI() {
+  void testParseWithDI() {
 
     // this test simply makes sure we can parse a transaction subprocess with DI information
     // the actual transaction behavior is tested by other testcases

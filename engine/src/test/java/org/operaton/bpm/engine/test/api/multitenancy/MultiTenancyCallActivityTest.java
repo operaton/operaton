@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyCallActivityTest {
+class MultiTenancyCallActivityTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -48,16 +48,16 @@ public class MultiTenancyCallActivityTest {
       .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
-  
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
   protected CaseService caseService;
 
   @Test
-  public void testStartProcessInstanceWithDeploymentBinding() {
+  void testStartProcessInstanceWithDeploymentBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -79,7 +79,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testStartProcessInstanceWithLatestBindingSameVersion() {
+  void testStartProcessInstanceWithLatestBindingSameVersion() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -101,7 +101,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testStartProcessInstanceWithLatestBindingDifferentVersion() {
+  void testStartProcessInstanceWithLatestBindingDifferentVersion() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -128,7 +128,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testStartProcessInstanceWithVersionBinding() {
+  void testStartProcessInstanceWithVersionBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -151,7 +151,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testStartProcessInstanceWithVersionTagBinding() {
+  void testStartProcessInstanceWithVersionTagBinding() {
     // given
     BpmnModelInstance callingProcess = createCallingProcess("callingProcess", "ver_tag_1");
 
@@ -171,7 +171,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testFailStartProcessInstanceFromOtherTenantWithDeploymentBinding() {
+  void testFailStartProcessInstanceFromOtherTenantWithDeploymentBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -196,7 +196,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testFailStartProcessInstanceFromOtherTenantWithLatestBinding() {
+  void testFailStartProcessInstanceFromOtherTenantWithLatestBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -221,7 +221,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testFailStartProcessInstanceFromOtherTenantWithVersionBinding() {
+  void testFailStartProcessInstanceFromOtherTenantWithVersionBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -249,7 +249,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testFailStartProcessInstanceFromOtherTenantWithVersionTagBinding() {
+  void testFailStartProcessInstanceFromOtherTenantWithVersionTagBinding() {
     // given
     BpmnModelInstance callingProcess = createCallingProcess("callingProcess", "ver_tag_2");
     testRule.deployForTenant(TENANT_ONE, callingProcess);
@@ -268,7 +268,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testStartCaseInstanceWithDeploymentBinding() {
+  void testStartCaseInstanceWithDeploymentBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -290,7 +290,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testStartCaseInstanceWithLatestBindingSameVersion() {
+  void testStartCaseInstanceWithLatestBindingSameVersion() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -312,7 +312,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testStartCaseInstanceWithLatestBindingDifferentVersion() {
+  void testStartCaseInstanceWithLatestBindingDifferentVersion() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
@@ -339,7 +339,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testStartCaseInstanceWithVersionBinding() {
+  void testStartCaseInstanceWithVersionBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -362,7 +362,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testFailStartCaseInstanceFromOtherTenantWithDeploymentBinding() {
+  void testFailStartCaseInstanceFromOtherTenantWithDeploymentBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
@@ -387,7 +387,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testFailStartCaseInstanceFromOtherTenantWithLatestBinding() {
+  void testFailStartCaseInstanceFromOtherTenantWithLatestBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
@@ -412,7 +412,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testFailStartCaseInstanceFromOtherTenantWithVersionBinding() {
+  void testFailStartCaseInstanceFromOtherTenantWithVersionBinding() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
@@ -440,7 +440,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testCalledElementTenantIdConstant() {
+  void testCalledElementTenantIdConstant() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
@@ -460,7 +460,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testCalledElementTenantIdExpression() {
+  void testCalledElementTenantIdExpression() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
@@ -480,7 +480,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testCaseRefTenantIdConstant() {
+  void testCaseRefTenantIdConstant() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -501,7 +501,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testCaseRefTenantIdExpression() {
+  void testCaseRefTenantIdExpression() {
 
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
@@ -521,7 +521,7 @@ public class MultiTenancyCallActivityTest {
   }
 
   @Test
-  public void testCaseRefTenantIdCompositeExpression() {
+  void testCaseRefTenantIdCompositeExpression() {
     // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()

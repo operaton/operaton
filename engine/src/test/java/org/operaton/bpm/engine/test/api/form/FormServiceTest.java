@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,6 +30,7 @@ import static org.operaton.bpm.engine.variable.Variables.stringValue;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -98,13 +99,13 @@ import org.operaton.commons.utils.IoUtil;
 class FormServiceTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-          configuration.setJavaSerializationFormatEnabled(true);
-      }).build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
+      .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private RuntimeService runtimeService;
   private TaskService taskService;
@@ -484,17 +485,17 @@ class FormServiceTest {
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     String stringValue = "some string";
-    String serializedValue = "some value";
+    // Must be BASE64 encoded
+    String serializedValue = Base64.getEncoder().encodeToString("some value".getBytes());
 
     ProcessInstance processInstance = formService.submitStartForm(procDefId,
-        createVariables()
-          .putValueTyped("boolean", booleanValue(null))
-          .putValueTyped("string", stringValue(stringValue))
-          .putValueTyped("serializedObject", serializedObjectValue(serializedValue)
-              .objectTypeName(String.class.getName())
-              .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
-              .create())
-          .putValueTyped("object", objectValue(serializedValue).create()));
+        createVariables().putValueTyped("boolean", booleanValue(null))
+            .putValueTyped("string", stringValue(stringValue))
+            .putValueTyped("serializedObject", Variables.serializedObjectValue(serializedValue)
+                .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
+                .objectTypeName(String.class.getName())
+                .create())
+            .putValueTyped("object", objectValue(serializedValue).create()));
 
     VariableMap variables = runtimeService.getVariablesTyped(processInstance.getId(), false);
     assertThat(variables.<BooleanValue>getValueTyped("boolean")).isEqualTo(booleanValue(null));
@@ -513,7 +514,7 @@ class FormServiceTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     String stringValue = "some string";
-    String serializedValue = "some value";
+    String serializedValue = Base64.getEncoder().encodeToString("some value".getBytes());
 
     formService.submitTaskForm(task.getId(), createVariables()
         .putValueTyped("boolean", booleanValue(null))
@@ -580,7 +581,7 @@ class FormServiceTest {
     String taskId = task.getId();
 
     String stringValue = "some string";
-    String serializedValue = "some value";
+    String serializedValue = Base64.getEncoder().encodeToString("some value".getBytes());
 
     VariableMap variableMap = createVariables()
       .putValueTyped("boolean", booleanValue(null))

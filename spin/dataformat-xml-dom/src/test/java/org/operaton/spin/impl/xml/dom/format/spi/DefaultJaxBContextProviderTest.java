@@ -1,6 +1,5 @@
 package org.operaton.spin.impl.xml.dom.format.spi;
 
-import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import java.util.Iterator;
 import java.util.ServiceLoader;

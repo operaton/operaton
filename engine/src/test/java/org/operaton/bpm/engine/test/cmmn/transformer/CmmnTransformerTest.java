@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.transformer;
 
+import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.handler.DefaultCmmnElementHandlerRegistry;
@@ -36,9 +37,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Roman Smirnov
  *
  */
-public class CmmnTransformerTest {
+class CmmnTransformerTest {
 
   protected CmmnTransform transformer;
   protected CmmnModelInstance modelInstance;
@@ -55,8 +55,8 @@ public class CmmnTransformerTest {
   protected CasePlanModel casePlanModel;
   protected DeploymentEntity deployment;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     CmmnTransformer transformerWrapper = new CmmnTransformer(null, new DefaultCmmnElementHandlerRegistry(), null);
     transformer = new CmmnTransform(transformerWrapper);
 
@@ -77,8 +77,8 @@ public class CmmnTransformerTest {
         .setEnforceHistoryTimeToLive(false));
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     Context.removeProcessEngineConfiguration();
   }
 
@@ -124,7 +124,7 @@ public class CmmnTransformerTest {
   *
   */
   @Test
-  public void testCasePlanModel() {
+  void testCasePlanModel() {
     // given
 
     // when
@@ -160,7 +160,7 @@ public class CmmnTransformerTest {
   *
   */
   @Test
-  public void testActivityTreeWithOneHumanTask() {
+  void testActivityTreeWithOneHumanTask() {
     // given
     HumanTask humanTask = createElement(casePlanModel, "A", HumanTask.class);
     PlanItem planItem = createElement(casePlanModel, "PI_A", PlanItem.class);
@@ -206,7 +206,7 @@ public class CmmnTransformerTest {
   *                                                 +-----------------+     +-----------------+
   */
   @Test
-  public void testActivityTreeWithOneStageAndNestedHumanTasks() {
+  void testActivityTreeWithOneStageAndNestedHumanTasks() {
     // given
     Stage stage = createElement(casePlanModel, "X", Stage.class);
     HumanTask humanTaskA = createElement(casePlanModel, "A", HumanTask.class);
@@ -287,7 +287,7 @@ public class CmmnTransformerTest {
   *
   */
   @Test
-  public void testNestedStages() {
+  void testNestedStages() {
     // given
     Stage stageX = createElement(casePlanModel, "X", Stage.class);
     Stage stageY = createElement(casePlanModel, "Y", Stage.class);

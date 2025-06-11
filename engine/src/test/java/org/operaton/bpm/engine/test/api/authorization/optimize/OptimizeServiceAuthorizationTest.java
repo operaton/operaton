@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -86,11 +86,11 @@ public class OptimizeServiceAuthorizationTest {
     "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.decisionSingleOutput.dmn11.xml";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  public ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Parameters
   public static Collection<Object[]> data() {
@@ -182,7 +182,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void cantGetDataWithoutTenantAuthorization() {
+  void cantGetDataWithoutTenantAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -202,7 +202,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void cantGetDataWithoutProcessDefinitionAuthorization() {
+  void cantGetDataWithoutProcessDefinitionAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ_HISTORY);
@@ -222,7 +222,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void authorizationOnSingleProcessResourceNotEnough() {
+  void authorizationOnSingleProcessResourceNotEnough() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, SIMPLE_PROCESS, userId, READ_HISTORY);
@@ -243,7 +243,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void cantGetDataWithoutDecisionDefinitionAuthorization() {
+  void cantGetDataWithoutDecisionDefinitionAuthorization() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -263,7 +263,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void authorizationOnSingleDecisionResourceNotEnough() {
+  void authorizationOnSingleDecisionResourceNotEnough() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
@@ -284,7 +284,7 @@ public class OptimizeServiceAuthorizationTest {
   }
 
   @TestTemplate
-  public void canGetDataWithAllAuthorizations() {
+  void canGetDataWithAllAuthorizations() {
     // given
     identityService.setAuthentication(userId, null, Collections.singletonList(TENANT_ONE));
     generateTestData();

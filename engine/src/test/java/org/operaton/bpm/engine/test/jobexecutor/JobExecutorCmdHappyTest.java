@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -26,21 +33,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author Tom Baeyens
  */
-public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
+class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
   @Test
-  public void testJobCommandsWithMessage() {
+  void testJobCommandsWithMessage() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
     String jobId = commandExecutor.execute(commandContext -> {
@@ -73,7 +72,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
   static final long SECOND = 1000;
 
   @Test
-  public void testJobCommandsWithTimer() {
+  void testJobCommandsWithTimer() {
     // clock gets automatically reset in LogTestCase.runTest
     ClockUtil.setCurrentTime(new Date(SOME_TIME));
 

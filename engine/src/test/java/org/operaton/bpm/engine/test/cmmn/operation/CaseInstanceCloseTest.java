@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.test.TestHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class CaseInstanceCloseTest {
+class CaseInstanceCloseTest {
 
   /**
    *
@@ -53,7 +53,7 @@ public class CaseInstanceCloseTest {
    *
    */
   @Test
-  public void testCloseCompletedCaseInstance() {
+  void testCloseCompletedCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -110,7 +110,7 @@ public class CaseInstanceCloseTest {
    *
    */
   @Test
-  public void testCloseTerminatedCaseInstance() {
+  void testCloseTerminatedCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -161,7 +161,7 @@ public class CaseInstanceCloseTest {
    *
    */
   @Test
-  public void testCloseSuspendedCaseInstance() {
+  void testCloseSuspendedCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -215,7 +215,7 @@ public class CaseInstanceCloseTest {
    *
    */
   @Test
-  public void testCloseActiveCaseInstance() {
+  void testCloseActiveCaseInstance() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -263,7 +263,7 @@ public class CaseInstanceCloseTest {
    *
    */
   @Test
-  public void testCloseTask() {
+  void testCloseTask() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 
@@ -315,7 +315,7 @@ public class CaseInstanceCloseTest {
    *
    */
   @Test
-  public void testCloseStage() {
+  void testCloseStage() {
 
     CaseExecutionStateTransitionCollector stateTransitionCollector = new CaseExecutionStateTransitionCollector();
 

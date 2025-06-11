@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,9 +58,9 @@ import org.operaton.bpm.engine.variable.Variables;
 public class StandaloneTaskAuthorizationTest {
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;
@@ -127,7 +127,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariable() {
+  void testSetVariable() {
     // given
     createTask(taskId);
 
@@ -147,7 +147,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariableLocal() {
+  void testSetVariableLocal() {
     // given
     createTask(taskId);
 
@@ -167,7 +167,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariables() {
+  void testSetVariables() {
     // given
     createTask(taskId);
 
@@ -187,7 +187,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariablesLocal() {
+  void testSetVariablesLocal() {
     // given
     createTask(taskId);
 
@@ -208,7 +208,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRemoveVariable() {
+  void testRemoveVariable() {
     // given
     createTask(taskId);
 
@@ -231,7 +231,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRemoveVariableLocal() {
+  void testRemoveVariableLocal() {
     // given
     createTask(taskId);
 
@@ -254,7 +254,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRemoveVariables() {
+  void testRemoveVariables() {
     // given
     createTask(taskId);
 
@@ -277,7 +277,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRemoveVariablesLocal() {
+  void testRemoveVariablesLocal() {
     // given
     createTask(taskId);
 
@@ -300,7 +300,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesAdd() {
+  void testUpdateVariablesAdd() {
     // given
     createTask(taskId);
 
@@ -321,7 +321,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesRemove() {
+  void testUpdateVariablesRemove() {
     // given
     createTask(taskId);
     taskService.setVariable(taskId, VARIABLE_NAME, VARIABLE_VALUE);
@@ -343,7 +343,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesAddRemove() {
+  void testUpdateVariablesAddRemove() {
     // given
     createTask(taskId);
 
@@ -364,7 +364,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesLocalAdd() {
+  void testUpdateVariablesLocalAdd() {
     // given
     createTask(taskId);
 
@@ -385,7 +385,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesLocalRemove() {
+  void testUpdateVariablesLocalRemove() {
     // given
     createTask(taskId);
     taskService.setVariableLocal(taskId, VARIABLE_NAME, VARIABLE_VALUE);
@@ -407,7 +407,7 @@ public class StandaloneTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesLocalAddRemove() {
+  void testUpdateVariablesLocalAddRemove() {
     // given
     createTask(taskId);
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.impl.digest;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import java.util.Base64;
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -61,7 +61,7 @@ public abstract class Base64EncodedHashDigest {
   }
 
   protected String encodeHash(byte[] hash) {
-    return new String(Base64.encodeBase64(hash));
+    return Base64.getEncoder().encodeToString(hash);
   }
 
   /** allows subclasses to select the hash algorithm */

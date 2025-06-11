@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  *
  */
 
-public class MultiTenancyTaskServiceCmdsTenantCheckTest {
+class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -53,9 +53,9 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
     .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected TaskService taskService;
   protected IdentityService identityService;
@@ -63,7 +63,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   protected Task task;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
 
@@ -74,7 +74,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   // save test cases
   @Test
-  public void saveTaskWithAuthenticatedTenant() {
+  void saveTaskWithAuthenticatedTenant() {
 
     task = taskService.newTask("newTask");
     task.setTenantId(TENANT_ONE);
@@ -89,7 +89,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void saveTaskWithNoAuthenticatedTenant() {
+  void saveTaskWithNoAuthenticatedTenant() {
 
     task = taskService.newTask("newTask");
     task.setTenantId(TENANT_ONE);
@@ -105,7 +105,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void saveTaskWithDisabledTenantCheck() {
+  void saveTaskWithDisabledTenantCheck() {
 
     task = taskService.newTask("newTask");
     task.setTenantId(TENANT_ONE);
@@ -121,7 +121,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   // update task test
   @Test
-  public void updateTaskWithAuthenticatedTenant() {
+  void updateTaskWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     task.setAssignee("aUser");
@@ -132,7 +132,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateTaskWithNoAuthenticatedTenant() {
+  void updateTaskWithNoAuthenticatedTenant() {
 
     task.setAssignee("aUser");
     identityService.setAuthentication("aUserId", null);
@@ -146,7 +146,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateTaskWithDisabledTenantCheck() {
+  void updateTaskWithDisabledTenantCheck() {
 
     task.setAssignee("aUser");
     identityService.setAuthentication("aUserId", null);
@@ -160,7 +160,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   // claim task test
   @Test
-  public void claimTaskWithAuthenticatedTenant() {
+  void claimTaskWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -170,7 +170,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void claimTaskWithNoAuthenticatedTenant() {
+  void claimTaskWithNoAuthenticatedTenant() {
     // given
     String taskId = task.getId();
     identityService.setAuthentication("aUserId", null);
@@ -184,7 +184,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void claimTaskWithDisableTenantCheck() {
+  void claimTaskWithDisableTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -197,7 +197,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   // complete the task test
   @Test
-  public void completeTaskWithAuthenticatedTenant() {
+  void completeTaskWithAuthenticatedTenant() {
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
@@ -206,7 +206,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void completeTaskWithNoAuthenticatedTenant() {
+  void completeTaskWithNoAuthenticatedTenant() {
     // given
     String taskId = task.getId();
     identityService.setAuthentication("aUserId", null);
@@ -219,7 +219,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void completeWithDisabledTenantCheck() {
+  void completeWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -231,7 +231,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   // delegate task test
   @Test
-  public void delegateTaskWithAuthenticatedTenant() {
+  void delegateTaskWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -241,7 +241,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void delegateTaskWithNoAuthenticatedTenant() {
+  void delegateTaskWithNoAuthenticatedTenant() {
     // given
     String taskId = task.getId();
     identityService.setAuthentication("aUserId", null);
@@ -255,7 +255,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void delegateTaskWithDisabledTenantCheck() {
+  void delegateTaskWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -267,7 +267,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   // resolve task test
   @Test
-  public void resolveTaskWithAuthenticatedTenant() {
+  void resolveTaskWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -277,7 +277,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void resolveTaskWithNoAuthenticatedTenant() {
+  void resolveTaskWithNoAuthenticatedTenant() {
     // given
     String taskId = task.getId();
     identityService.setAuthentication("aUserId", null);
@@ -291,7 +291,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void resolveTaskWithDisableTenantCheck() {
+  void resolveTaskWithDisableTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -303,7 +303,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   // delete task test
   @Test
-  public void deleteTaskWithAuthenticatedTenant() {
+  void deleteTaskWithAuthenticatedTenant() {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     task = createTaskForTenant();
@@ -315,7 +315,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteTaskWithNoAuthenticatedTenant() {
+  void deleteTaskWithNoAuthenticatedTenant() {
 
     try {
       task = createTaskForTenant();
@@ -338,7 +338,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteTaskWithDisabledTenantCheck() {
+  void deleteTaskWithDisabledTenantCheck() {
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);

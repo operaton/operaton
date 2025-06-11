@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,10 +30,10 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.commons.testing.WatchLogger;
 
-public class TelemetryConfigurationTest {
+class TelemetryConfigurationTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
@@ -42,14 +42,14 @@ public class TelemetryConfigurationTest {
   protected IdentityService identityService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.clearAuthentication();
   }
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @SuppressWarnings("deprecation")
-  public void shouldNotRecordUserOperationLog() {
+  void shouldNotRecordUserOperationLog() {
     // given
     configuration.getIdentityService().setAuthenticatedUserId("admin");
 
@@ -62,7 +62,7 @@ public class TelemetryConfigurationTest {
 
   @Test
   @WatchLogger(loggerNames = {"org.operaton.bpm.engine.persistence"}, level = "DEBUG")
-  public void shouldNotLogDefaultTelemetryValue() {
+  void shouldNotLogDefaultTelemetryValue() {
     // given
 
     // then

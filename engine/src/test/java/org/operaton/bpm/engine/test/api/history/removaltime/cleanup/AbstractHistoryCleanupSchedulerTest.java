@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,13 +56,13 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
 
   protected static ProcessEngineConfigurationImpl engineConfiguration;
   private static ProcessEngineExtension engineRule;
-  
+
   protected Set<String> jobIds = new HashSet<>();
 
   protected HistoryService historyService;
   protected ManagementService managementService;
 
-  protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  protected static final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   public void initEngineConfiguration(ProcessEngineExtension engineRule, ProcessEngineConfigurationImpl engineConfiguration) {
     AbstractHistoryCleanupSchedulerTest.engineRule = engineRule;
@@ -106,7 +106,7 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
     engineConfiguration.initHistoryCleanup();
 
     ClockUtil.reset();
-    
+
     engineRule.getProcessEngine().close();
   }
 
@@ -165,6 +165,7 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
   }
 
   public static ProcessEngineConfiguration configure(ProcessEngineConfigurationImpl configuration, HistoryEventTypes... historyEventTypes) {
+    configuration.setProcessEngineName("testProcessEngine");
     configuration.setJdbcUrl("jdbc:h2:mem:" + AbstractHistoryCleanupSchedulerTest.class.getSimpleName());
     configuration.setCustomHistoryLevels(setCustomHistoryLevel(historyEventTypes));
     configuration.setHistory(customHistoryLevel.getName());

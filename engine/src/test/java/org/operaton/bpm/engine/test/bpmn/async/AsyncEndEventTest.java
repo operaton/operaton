@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,23 +20,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Stefan Hentschel
  */
-public class AsyncEndEventTest extends PluggableProcessEngineTest {
+class AsyncEndEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  HistoryService historyService;
 
   @Deployment
   @Test
-  public void testAsyncEndEvent() {
+  void testAsyncEndEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("asyncEndEvent");
     long count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).active().count();
 
@@ -52,7 +67,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncEndEventListeners() {
+  void testAsyncEndEventListeners() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("asyncEndEvent");
     long count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).active().count();
 
@@ -79,7 +94,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleAsyncEndEvents() {
+  void testMultipleAsyncEndEvents() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("multipleAsyncEndEvent");
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
@@ -114,7 +129,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/async/AsyncEndEventTest.testCallActivity-sub.bpmn20.xml"
   })
   @Test
-  public void testCallActivity() {
+  void testCallActivity() {
     runtimeService.startProcessInstanceByKey("super");
 
     ProcessInstance pi = runtimeService

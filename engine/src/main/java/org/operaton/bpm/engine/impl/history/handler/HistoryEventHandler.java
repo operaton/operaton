@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,13 +42,13 @@ public interface HistoryEventHandler {
    *
    * @param historyEvent the {@link HistoryEvent} that is about to be fired.
    */
-  public void handleEvent(HistoryEvent historyEvent);
+  void handleEvent(HistoryEvent historyEvent);
 
   /**
    * Called by the process engine when an history event is fired.
    *
    * @param historyEvents the {@link HistoryEvent} that is about to be fired.
    */
-  public void handleEvents(List<HistoryEvent> historyEvents);
+  void handleEvents(List<HistoryEvent> historyEvents);
 
 }

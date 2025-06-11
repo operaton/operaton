@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyProcessTaskTest {
+class MultiTenancyProcessTaskTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -56,16 +56,16 @@ public class MultiTenancyProcessTaskTest {
       .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
   protected CaseService caseService;
-  
+
   @Test
-  public void testStartProcessInstanceWithDeploymentBinding() {
+  void testStartProcessInstanceWithDeploymentBinding() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS, CMMN_DEPLOYMENT);
     testRule.deployForTenant(TENANT_TWO, PROCESS, CMMN_DEPLOYMENT);
@@ -79,7 +79,7 @@ public class MultiTenancyProcessTaskTest {
   }
 
   @Test
-  public void testStartProcessInstanceWithLatestBindingSameVersion() {
+  void testStartProcessInstanceWithLatestBindingSameVersion() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS, CMMN_LATEST_WITH_MANUAL_ACTIVATION);
     testRule.deployForTenant(TENANT_TWO, PROCESS, CMMN_LATEST_WITH_MANUAL_ACTIVATION);
@@ -93,7 +93,7 @@ public class MultiTenancyProcessTaskTest {
   }
 
   @Test
-  public void testStartProcessInstanceWithLatestBindingDifferentVersion() {
+  void testStartProcessInstanceWithLatestBindingDifferentVersion() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS, CMMN_LATEST_WITH_MANUAL_ACTIVATION);
 
@@ -112,7 +112,7 @@ public class MultiTenancyProcessTaskTest {
   }
 
   @Test
-  public void testStartProcessInstanceWithVersionBinding() {
+  void testStartProcessInstanceWithVersionBinding() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS, CMMN_VERSION);
     testRule.deployForTenant(TENANT_TWO, PROCESS, CMMN_VERSION);
@@ -126,7 +126,7 @@ public class MultiTenancyProcessTaskTest {
   }
 
   @Test
-  public void testFailStartProcessInstanceFromOtherTenantWithDeploymentBinding() {
+  void testFailStartProcessInstanceFromOtherTenantWithDeploymentBinding() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_DEPLOYMENT);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -141,7 +141,7 @@ public class MultiTenancyProcessTaskTest {
   }
 
   @Test
-  public void testFailStartProcessInstanceFromOtherTenantWithLatestBinding() {
+  void testFailStartProcessInstanceFromOtherTenantWithLatestBinding() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -156,7 +156,7 @@ public class MultiTenancyProcessTaskTest {
   }
 
   @Test
-  public void testFailStartProcessInstanceFromOtherTenantWithVersionBinding() {
+  void testFailStartProcessInstanceFromOtherTenantWithVersionBinding() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS, CMMN_VERSION_2);
 
@@ -173,7 +173,7 @@ public class MultiTenancyProcessTaskTest {
   }
 
   @Test
-  public void testProcessRefTenantIdConstant() {
+  void testProcessRefTenantIdConstant() {
    testRule.deploy(CMMN_TENANT_CONST);
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
@@ -184,7 +184,7 @@ public class MultiTenancyProcessTaskTest {
   }
 
   @Test
-  public void testProcessRefTenantIdExpression() {
+  void testProcessRefTenantIdExpression() {
    testRule.deploy(CMMN_TENANT_EXPR);
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 

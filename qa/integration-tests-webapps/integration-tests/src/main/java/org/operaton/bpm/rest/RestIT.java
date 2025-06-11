@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -382,10 +382,8 @@ public class RestIT extends AbstractWebIntegrationTest {
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode tasks = objectMapper.readTree(responseBody);
 
-    // Get the first task from the array (assuming it's an array)
-    JsonNode firstTask = tasks.get(0);  // Get the first element in the array (JsonNode)
-
-    return firstTask;
+    // Return the first task from the array (assuming it's an array)
+    return tasks.get(0);  // Get the first element in the array (JsonNode)
   }
 
   protected JsonNode getFirstHistoricVariableUpdates() throws JsonProcessingException {

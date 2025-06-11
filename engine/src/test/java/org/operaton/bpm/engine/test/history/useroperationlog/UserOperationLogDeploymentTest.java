@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -28,21 +30,19 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
+class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest {
 
   protected static final String DEPLOYMENT_NAME = "my-deployment";
   protected static final String RESOURCE_NAME = "path/to/my/process.bpmn";
   protected static final String PROCESS_KEY = "process";
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
 
 
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
@@ -52,7 +52,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testCreateDeployment() {
+  void testCreateDeployment() {
     // when
     Deployment deployment = repositoryService
         .createDeployment()
@@ -86,7 +86,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testCreateDeploymentPa() {
+  void testCreateDeploymentPa() {
     // given
     EmbeddedProcessApplication application = new EmbeddedProcessApplication();
 
@@ -123,7 +123,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testPropertyDuplicateFiltering() {
+  void testPropertyDuplicateFiltering() {
     // given
     BpmnModelInstance model = createProcessWithServiceTask(PROCESS_KEY);
 
@@ -175,7 +175,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testPropertiesDuplicateFilteringAndDeployChangedOnly() {
+  void testPropertiesDuplicateFilteringAndDeployChangedOnly() {
     // given
     BpmnModelInstance model = createProcessWithServiceTask(PROCESS_KEY);
 
@@ -225,7 +225,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testDeleteDeploymentCascadingShouldKeepCreateUserOperationLog() {
+  void testDeleteDeploymentCascadingShouldKeepCreateUserOperationLog() {
     // given
     Deployment deployment = repositoryService
         .createDeployment()
@@ -247,7 +247,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testDeleteDeploymentWithoutCascadingShouldKeepCreateUserOperationLog() {
+  void testDeleteDeploymentWithoutCascadingShouldKeepCreateUserOperationLog() {
     // given
     Deployment deployment = repositoryService
         .createDeployment()
@@ -269,7 +269,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testDeleteDeployment() {
+  void testDeleteDeployment() {
     // given
     Deployment deployment = repositoryService
         .createDeployment()
@@ -312,7 +312,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testDeleteDeploymentCascading() {
+  void testDeleteDeploymentCascading() {
     // given
     Deployment deployment = repositoryService
         .createDeployment()
@@ -355,7 +355,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testDeleteProcessDefinitionCascadingShouldKeepCreateUserOperationLog() {
+  void testDeleteProcessDefinitionCascadingShouldKeepCreateUserOperationLog() {
     // given
     Deployment deployment = repositoryService
         .createDeployment()
@@ -381,7 +381,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testDeleteProcessDefinitiontWithoutCascadingShouldKeepCreateUserOperationLog() {
+  void testDeleteProcessDefinitiontWithoutCascadingShouldKeepCreateUserOperationLog() {
     // given
     Deployment deployment = repositoryService
         .createDeployment()
@@ -407,7 +407,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testDeleteProcessDefinition() {
+  void testDeleteProcessDefinition() {
     // given
     Deployment deployment = repositoryService
         .createDeployment()
@@ -454,7 +454,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   }
 
   @Test
-  public void testDeleteProcessDefinitionCascading() {
+  void testDeleteProcessDefinitionCascading() {
     // given
     Deployment deployment = repositoryService
         .createDeployment()

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,26 +23,35 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ClassLoadingException;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.servicetask.util.GenderBean;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Joram Barrez
  * @author Frederik Heremans
  */
-public class JavaServiceTaskTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class JavaServiceTaskTest {
+
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testJavaServiceDelegation() {
+  void testJavaServiceDelegation() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("javaServiceDelegation", CollectionUtil.singletonMap("input", "Activiti BPM Engine"));
     Execution execution = runtimeService.createExecutionQuery()
       .processInstanceId(pi.getId())
@@ -53,7 +62,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testFieldInjection() {
+  void testFieldInjection() {
     // Process contains 2 service-tasks using field-injection. One should use the exposed setter,
     // the other is using the private field.
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("fieldInjection");
@@ -68,7 +77,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExpressionFieldInjection() {
+  void testExpressionFieldInjection() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("name", "kermit");
     vars.put("gender", "male");
@@ -86,7 +95,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUnexistingClassDelegation() {
+  void testUnexistingClassDelegation() {
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("unexistingClassDelegation"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Exception while instantiating class 'org.operaton.bpm.engine.test.BogusClass'")
@@ -94,7 +103,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testIllegalUseOfResultVariableName() {
+  void testIllegalUseOfResultVariableName() {
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/servicetask/JavaServiceTaskTest.testIllegalUseOfResultVariableName.bpmn20.xml");
     try {
       deploymentBuilder.deploy();
@@ -106,7 +115,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExceptionHandling() {
+  void testExceptionHandling() {
 
     // If variable value is != 'throw-exception', process goes
     // through service task and ends immediately
@@ -126,7 +135,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testGetBusinessKeyFromDelegateExecution() {
+  void testGetBusinessKeyFromDelegateExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("businessKeyProcess", "1234567890");
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("businessKeyProcess").count()).isEqualTo(1);
 

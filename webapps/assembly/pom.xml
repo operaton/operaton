@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.operaton.bpm.webapp</groupId>
     <artifactId>operaton-webapp-root</artifactId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-webapp</artifactId>
@@ -98,6 +98,12 @@
       <version>${project.version}</version>
       <scope>test</scope>
       <classifier>tests</classifier>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit4</classifier>
     </dependency>
 
     <dependency>

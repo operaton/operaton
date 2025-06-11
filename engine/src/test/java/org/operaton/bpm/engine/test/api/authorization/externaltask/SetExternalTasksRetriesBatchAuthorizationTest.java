@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,11 +52,11 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
 public class SetExternalTasksRetriesBatchAuthorizationTest {
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  public ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;
@@ -122,7 +122,7 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetRetriesAsync() {
+  void testSetRetriesAsync() {
 
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
@@ -159,7 +159,7 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetRetriesWithQueryAsync() {
+  void testSetRetriesWithQueryAsync() {
 
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);

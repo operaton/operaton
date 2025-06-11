@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,20 +34,20 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * Tests if a {@link DelegateTask} has the correct tenant-id. The
  * assertions are checked inside the task listener.
  */
-public class MultiTenancyDelegateTaskTest {
+class MultiTenancyDelegateTaskTest {
 
   protected static final String BPMN = "org/operaton/bpm/engine/test/api/multitenancy/taskListener.bpmn";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
 
   @Test
-  public void testSingleExecutionWithUserTask() {
+  void testSingleExecutionWithUserTask() {
     testRule.deployForTenant("tenant1", BPMN);
 
     AssertingTaskListener.addAsserts(hasTenantId("tenant1"));
@@ -62,7 +62,7 @@ public class MultiTenancyDelegateTaskTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     AssertingTaskListener.clear();
 
   }

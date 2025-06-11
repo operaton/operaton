@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Daniel Meyer
  *
  */
-public class MultiTenancyTaskQueryTest {
+class MultiTenancyTaskQueryTest {
 
   private static final String TENANT_ONE = "tenant1";
   private static final String TENANT_TWO = "tenant2";
@@ -49,16 +49,16 @@ public class MultiTenancyTaskQueryTest {
   private final List<String> taskIds = new ArrayList<>();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected IdentityService identityService;
   protected TaskService taskService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
     createTaskWithoutTenant();
     createTaskForTenant(TENANT_ONE);
@@ -66,14 +66,14 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryNoTenantIdSet() {
+  void testQueryNoTenantIdSet() {
     TaskQuery query = taskService.createTaskQuery();
 
     assertThat(query.count()).isEqualTo(3L);
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     TaskQuery query = taskService.createTaskQuery()
       .tenantIdIn(TENANT_ONE);
 
@@ -86,7 +86,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     TaskQuery query = taskService.createTaskQuery()
       .tenantIdIn(TENANT_ONE, TENANT_TWO);
 
@@ -99,7 +99,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryByTasksWithoutTenantId() {
+  void testQueryByTasksWithoutTenantId() {
     TaskQuery query = taskService.createTaskQuery()
       .withoutTenantId();
 
@@ -107,7 +107,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryWithAndWithoutTenantId() {
+  void testQueryWithAndWithoutTenantId() {
     // when
     TaskQuery query = taskService.createTaskQuery()
         .or()
@@ -120,7 +120,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     TaskQuery query = taskService.createTaskQuery()
       .tenantIdIn(TENANT_NON_EXISTING);
 
@@ -128,7 +128,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIdNullFails() {
+  void testQueryByTenantIdNullFails() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.tenantIdIn((String)null);
@@ -141,7 +141,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     // exclude tasks without tenant id because of database-specific ordering
     List<Task> tasks = taskService.createTaskQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -155,7 +155,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     // exclude tasks without tenant id because of database-specific ordering
     List<Task> tasks = taskService.createTaskQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -169,7 +169,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     TaskQuery query = taskService.createTaskQuery();
@@ -177,7 +177,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     TaskQuery query = taskService.createTaskQuery();
@@ -189,7 +189,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     TaskQuery query = taskService.createTaskQuery();
@@ -201,7 +201,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -227,7 +227,7 @@ public class MultiTenancyTaskQueryTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     identityService.clearAuthentication();
     for (String taskId : taskIds) {
       taskService.deleteTask(taskId, true);

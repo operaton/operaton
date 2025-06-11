@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -126,6 +126,28 @@ public class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
       assertThat(dto.getProcessDefinitionKey()).isEqualTo(compareWith.getKey());
     }
   }
+
+  @Test
+  @Deployment(resources = {
+      "processes/two-parallel-call-activities-calling-different-process.bpmn",
+      "processes/user-task-process.bpmn",
+      "processes/another-user-task-process.bpmn"
+  })
+  public void testGetCalledProcessInstancesByParentProcessInstanceIdContainsBusinessKey() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingDifferentProcess", "myBusinessKey");
+
+    resource = new ProcessInstanceResource(getProcessEngine().getName(), processInstance.getId());
+    executeAvailableJobs();
+
+    CalledProcessInstanceQueryDto queryParameter = new CalledProcessInstanceQueryDto();
+
+    List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
+    assertThat(result).isNotEmpty();
+    assertThat(result).hasSize(2);
+    assertThat(result.get(0).getBusinessKey()).isEqualTo("firstCall:myBusinessKey");
+    assertThat(result.get(1).getBusinessKey()).isEqualTo("secondCall:myBusinessKey");
+  }
+
 
   @Test
   @Deployment(resources = {

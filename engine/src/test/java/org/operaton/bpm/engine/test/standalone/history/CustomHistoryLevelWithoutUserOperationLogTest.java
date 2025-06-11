@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.EntityTypes.JOB;
 import static org.operaton.bpm.engine.EntityTypes.JOB_DEFINITION;
 import static org.operaton.bpm.engine.EntityTypes.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.EntityTypes.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_JOB_RETRIES;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,17 +30,21 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
-import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -50,16 +54,9 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestBaseRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 
 public class CustomHistoryLevelWithoutUserOperationLogTest {
 
@@ -69,55 +66,47 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   static HistoryLevel customHistoryLevelFullWUOL = new CustomHistoryLevelFullWithoutUserOperationLog();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(configuration -> {
       configuration.setJdbcUrl("jdbc:h2:mem:CustomHistoryLevelWithoutUserOperationLogTest");
       configuration.setCustomHistoryLevels(Arrays.asList(customHistoryLevelFullWUOL));
       configuration.setHistory("aCustomHistoryLevelWUOL");
       configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
-  });
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public AuthorizationTestBaseRule authRule = new AuthorizationTestBaseRule(engineRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  HistoryService historyService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  IdentityService identityService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+  CaseService caseService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testRule);
+  ProcessInstance process;
+  Task userTask;
+  String processTaskId;
 
-  protected HistoryService historyService;
-  protected RuntimeService runtimeService;
-  protected ManagementServiceImpl managementService;
-  protected IdentityService identityService;
-  protected RepositoryService repositoryService;
-  protected TaskService taskService;
-  protected CaseService caseService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  protected ProcessInstance process;
-  protected Task userTask;
-  protected String processTaskId;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-    managementService = (ManagementServiceImpl) engineRule.getManagementService();
-    identityService = engineRule.getIdentityService();
-    repositoryService = engineRule.getRepositoryService();
-    taskService = engineRule.getTaskService();
-    caseService = engineRule.getCaseService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void setUp() {
     identityService.setAuthenticatedUserId(USER_ID);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.clearAuthentication();
   }
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryProcessInstanceOperationsByProcessDefinitionKey() {
+  void testQueryProcessInstanceOperationsByProcessDefinitionKey() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -131,7 +120,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryProcessDefinitionOperationsById() {
+  void testQueryProcessDefinitionOperationsById() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -145,7 +134,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
-  public void testQueryJobOperations() {
+  void testQueryJobOperations() {
     // given
     process = runtimeService.startProcessInstanceByKey("process");
 
@@ -161,8 +150,8 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
-  public void testQueryJobRetryOperationsById() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml"})
+  void testQueryJobRetryOperationsById() {
     // given
     process = runtimeService.startProcessInstanceByKey("failedServiceTask");
     Job job = managementService.createJobQuery().processInstanceId(process.getProcessInstanceId()).singleResult();
@@ -176,8 +165,8 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
   // ----- PROCESS INSTANCE MODIFICATION -----
 
   @Test
-  @Deployment(resources = { ONE_TASK_PROCESS })
-  public void testQueryProcessInstanceModificationOperation() {
+  @Deployment(resources = {ONE_TASK_PROCESS})
+  void testQueryProcessInstanceModificationOperation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     processInstance.getId();
 
@@ -199,7 +188,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryAddExecutionVariablesMapOperation() {
+  void testQueryAddExecutionVariablesMapOperation() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -212,7 +201,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryAddTaskVariableOperation() {
+  void testQueryAddTaskVariableOperation() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     processTaskId = taskService.createTaskQuery().singleResult().getId();
@@ -226,8 +215,9 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   // ----- PATCH VARIABLES -----
 
-    @Test  @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryPatchExecutionVariablesOperation() {
+    @Test
+  @Deployment(resources = {ONE_TASK_PROCESS})
+  void testQueryPatchExecutionVariablesOperation() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -241,7 +231,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryPatchTaskVariablesOperation() {
+  void testQueryPatchTaskVariablesOperation() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     processTaskId = taskService.createTaskQuery().singleResult().getId();
@@ -258,7 +248,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryRemoveExecutionVariableOperation() {
+  void testQueryRemoveExecutionVariableOperation() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -271,7 +261,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryByEntityTypes() {
+  void testQueryByEntityTypes() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     processTaskId = taskService.createTaskQuery().singleResult().getId();
@@ -292,7 +282,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryDeleteVariableHistoryOperationOnRunningInstance() {
+  void testQueryDeleteVariableHistoryOperationOnRunningInstance() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.setVariable(process.getId(), "testVariable", "test");
@@ -308,7 +298,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryDeleteVariableHistoryOperationOnHistoryInstance() {
+  void testQueryDeleteVariableHistoryOperationOnHistoryInstance() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.setVariable(process.getId(), "testVariable", "test");
@@ -324,7 +314,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void testQueryDeleteVariableHistoryOperationOnCase() {
+  void testQueryDeleteVariableHistoryOperationOnCase() {
     // given
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase");
     caseService.setVariable(caseInstance.getId(), "myVariable", 1);
@@ -340,7 +330,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
   }
 
   @Test
-  public void testQueryDeleteVariableHistoryOperationOnStandaloneTask() {
+  void testQueryDeleteVariableHistoryOperationOnStandaloneTask() {
     // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
@@ -359,7 +349,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryDeleteVariablesHistoryOperationOnRunningInstance() {
+  void testQueryDeleteVariablesHistoryOperationOnRunningInstance() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.setVariable(process.getId(), "testVariable", "test");
@@ -377,7 +367,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryDeleteVariablesHistoryOperationOnHistoryInstance() {
+  void testQueryDeleteVariablesHistoryOperationOnHistoryInstance() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.setVariable(process.getId(), "testVariable", "test");
@@ -394,7 +384,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryDeleteVariableAndVariablesHistoryOperationOnRunningInstance() {
+  void testQueryDeleteVariableAndVariablesHistoryOperationOnRunningInstance() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.setVariable(process.getId(), "testVariable", "test");
@@ -415,7 +405,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   @Test
   @Deployment(resources = {ONE_TASK_PROCESS})
-  public void testQueryDeleteVariableAndVariablesHistoryOperationOnHistoryInstance() {
+  void testQueryDeleteVariableAndVariablesHistoryOperationOnHistoryInstance() {
     // given
     process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.setVariable(process.getId(), "testVariable", "test");
@@ -435,8 +425,8 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
   // --------------- CMMN --------------------
 
   @Test
-  @Deployment(resources={ONE_TASK_CASE})
-  public void testQueryByCaseDefinitionId() {
+  @Deployment(resources = {ONE_TASK_CASE})
+  void testQueryByCaseDefinitionId() {
     // given:
     // a deployed case definition
     String caseDefinitionId = repositoryService
@@ -468,7 +458,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
   }
 
   @Test
-  public void testQueryByDeploymentId() {
+  void testQueryByDeploymentId() {
     // given
     String deploymentId = repositoryService
         .createDeployment()

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyDecisionTaskTest {
+class MultiTenancyDecisionTaskTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -51,14 +51,14 @@ public class MultiTenancyDecisionTaskTest {
   protected static final String RESULT_OF_VERSION_TWO = "C";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
-  
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
   protected CaseService caseService;
 
   @Test
-  public void testEvaluateDecisionWithDeploymentBinding() {
+  void testEvaluateDecisionWithDeploymentBinding() {
     testRule.deployForTenant(TENANT_ONE, CMMN_DEPLOYMENT, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_DEPLOYMENT, DMN_FILE_VERSION_TWO);
 
@@ -70,7 +70,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithLatestBindingSameVersion() {
+  void testEvaluateDecisionWithLatestBindingSameVersion() {
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_LATEST, DMN_FILE_VERSION_TWO);
 
@@ -82,7 +82,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithLatestBindingDifferentVersions() {
+  void testEvaluateDecisionWithLatestBindingDifferentVersions() {
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST, DMN_FILE);
 
     testRule.deployForTenant(TENANT_TWO, CMMN_LATEST, DMN_FILE);
@@ -96,7 +96,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionWithVersionBinding() {
+  void testEvaluateDecisionWithVersionBinding() {
     testRule.deployForTenant(TENANT_ONE, CMMN_VERSION, DMN_FILE);
     testRule.deployForTenant(TENANT_ONE, DMN_FILE_VERSION_TWO);
 
@@ -111,7 +111,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testFailEvaluateDecisionFromOtherTenantWithDeploymentBinding() {
+  void testFailEvaluateDecisionFromOtherTenantWithDeploymentBinding() {
     testRule.deployForTenant(TENANT_ONE, CMMN_DEPLOYMENT);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
 
@@ -125,7 +125,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testFailEvaluateDecisionFromOtherTenantWithLatestBinding() {
+  void testFailEvaluateDecisionFromOtherTenantWithLatestBinding() {
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
 
@@ -139,7 +139,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testFailEvaluateDecisionFromOtherTenantWithVersionBinding() {
+  void testFailEvaluateDecisionFromOtherTenantWithVersionBinding() {
     testRule.deployForTenant(TENANT_ONE, CMMN_VERSION_2, DMN_FILE);
 
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
@@ -155,7 +155,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionRefTenantIdConstant() {
+  void testEvaluateDecisionRefTenantIdConstant() {
    testRule.deploy(CMMN_CONST);
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE_VERSION_TWO);
@@ -166,7 +166,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionRefWithoutTenantIdConstant() {
+  void testEvaluateDecisionRefWithoutTenantIdConstant() {
     testRule.deployForTenant(TENANT_ONE, CMMN_WITHOUT_TENANT);
    testRule.deploy(DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE_VERSION_TWO);
@@ -177,7 +177,7 @@ public class MultiTenancyDecisionTaskTest {
   }
 
   @Test
-  public void testEvaluateDecisionRefTenantIdExpression() {
+  void testEvaluateDecisionRefTenantIdExpression() {
    testRule.deploy(CMMN_EXPR);
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE_VERSION_TWO);

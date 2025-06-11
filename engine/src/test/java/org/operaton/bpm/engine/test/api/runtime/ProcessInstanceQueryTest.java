@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,29 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import static java.util.Collections.emptySet;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByBusinessKey;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -39,22 +55,12 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.CompensationModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import static java.util.Collections.emptySet;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByBusinessKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 
 /**
  * @author Joram Barrez
@@ -80,29 +86,23 @@ public class ProcessInstanceQueryTest {
     .endEvent()
     .done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   private static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
   private static final String PROCESS_DEFINITION_KEY_2 = "otherOneTaskProcess";
 
-  protected RuntimeService runtimeService;
-  protected RepositoryService repositoryService;
-  protected ManagementService managementService;
-  protected CaseService caseService;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
+  CaseService caseService;
 
-  protected List<String> processInstanceIds;
+  List<String> processInstanceIds;
 
-  @Before
-  public void initServices() {
-    runtimeService = engineRule.getRuntimeService();
-    repositoryService = engineRule.getRepositoryService();
-    managementService = engineRule.getManagementService();
-    caseService = engineRule.getCaseService();
-
+  @BeforeEach
+  void initServices() {
     deployTestProcesses();
   }
 
@@ -128,7 +128,7 @@ public class ProcessInstanceQueryTest {
 
 
   @Test
-  public void testQueryNoSpecificsList() {
+  void testQueryNoSpecificsList() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
     assertThat(query.count()).isEqualTo(5);
     assertThat(query.list()).hasSize(5);
@@ -136,7 +136,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testQueryNoSpecificsDeploymentIdMappings() {
+  void testQueryNoSpecificsDeploymentIdMappings() {
     // given
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     ImmutablePair<String, String>[] expectedMappings = processInstanceIds.stream()
@@ -156,7 +156,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testQueryNoSpecificsDeploymentIdMappingsInDifferentDeployments() {
+  void testQueryNoSpecificsDeploymentIdMappingsInDifferentDeployments() {
     // given
     List<ImmutablePair<String, String>> expectedMappings = new ArrayList<>();
     String deploymentIdOne = repositoryService.createDeploymentQuery().singleResult().getId();
@@ -184,7 +184,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryNoSpecificsSingleResult() {
+  void testQueryNoSpecificsSingleResult() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
     try {
       query.singleResult();
@@ -195,7 +195,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeySingleResult() {
+  void testQueryByProcessDefinitionKeySingleResult() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_DEFINITION_KEY_2);
     ProcessInstance processInstance = query.singleResult();
     assertThat(query.count()).isEqualTo(1);
@@ -206,13 +206,13 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessDefinitionKey() {
+  void testQueryByInvalidProcessDefinitionKey() {
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("invalid").singleResult()).isNull();
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("invalid").list()).isEmpty();
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyMultipleResults() {
+  void testQueryByProcessDefinitionKeyMultipleResults() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_DEFINITION_KEY);
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
@@ -227,7 +227,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testQueryByProcessDefinitionKeyDeploymentIdMappings() {
+  void testQueryByProcessDefinitionKeyDeploymentIdMappings() {
     // given
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     List<String> relevantIds = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(c -> {
@@ -251,7 +251,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyIn() {
+  void testQueryByProcessDefinitionKeyIn() {
     // given (deploy another process)
     ProcessDefinition oneTaskProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -272,7 +272,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingProcessDefinitionKeyIn() {
+  void testQueryByNonExistingProcessDefinitionKeyIn() {
     // when
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()
       .processDefinitionKeyIn("not-existing-key");
@@ -283,7 +283,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByOneInvalidProcessDefinitionKeyIn() {
+  void testQueryByOneInvalidProcessDefinitionKeyIn() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       // when
@@ -295,7 +295,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByMultipleInvalidProcessDefinitionKeyIn() {
+  void testQueryByMultipleInvalidProcessDefinitionKeyIn() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       // when
@@ -307,7 +307,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionKeyNotIn() {
+  void testQueryByProcessDefinitionKeyNotIn() {
     // given (deploy another process)
     ProcessDefinition oneTaskProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -328,7 +328,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingProcessDefinitionKeyNotIn() {
+  void testQueryByNonExistingProcessDefinitionKeyNotIn() {
     // when
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()
       .processDefinitionKeyNotIn("not-existing-key");
@@ -339,7 +339,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByOneInvalidProcessDefinitionKeyNotIn() {
+  void testQueryByOneInvalidProcessDefinitionKeyNotIn() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       // when
@@ -351,7 +351,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByMultipleInvalidProcessDefinitionKeyNotIn() {
+  void testQueryByMultipleInvalidProcessDefinitionKeyNotIn() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       // when
@@ -363,7 +363,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     for (String processInstanceId : processInstanceIds) {
       assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult()).isNotNull();
       assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).list()).hasSize(1);
@@ -371,7 +371,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByBusinessKeyAndProcessDefinitionKey() {
+  void testQueryByBusinessKeyAndProcessDefinitionKey() {
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("0", PROCESS_DEFINITION_KEY).count()).isEqualTo(1);
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("1", PROCESS_DEFINITION_KEY).count()).isEqualTo(1);
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("2", PROCESS_DEFINITION_KEY).count()).isEqualTo(1);
@@ -380,21 +380,21 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByBusinessKey() {
+  void testQueryByBusinessKey() {
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("0").count()).isEqualTo(1);
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("1").count()).isEqualTo(1);
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("businessKey_123").count()).isEqualTo(1);
   }
 
   @Test
-  public void testQueryByBusinessKeyLike(){
+  void testQueryByBusinessKeyLike(){
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKeyLike("business%").count()).isEqualTo(1);
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKeyLike("%sinessKey\\_123").count()).isEqualTo(1);
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKeyLike("%siness%").count()).isEqualTo(1);
   }
 
   @Test
-  public void testQueryByInvalidBusinessKey() {
+  void testQueryByInvalidBusinessKey() {
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("invalid").count()).isZero();
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
@@ -407,15 +407,15 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessInstanceId() {
+  void testQueryByInvalidProcessInstanceId() {
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceId("I do not exist").singleResult()).isNull();
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceId("I do not exist").list()).isEmpty();
   }
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/superProcess.bpmn20.xml",
-                           "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
-  public void testQueryBySuperProcessInstanceId() {
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+  void testQueryBySuperProcessInstanceId() {
     ProcessInstance superProcessInstance = runtimeService.startProcessInstanceByKey("subProcessQueryTest");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().superProcessInstanceId(superProcessInstance.getId());
@@ -426,15 +426,15 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidSuperProcessInstanceId() {
+  void testQueryByInvalidSuperProcessInstanceId() {
     assertThat(runtimeService.createProcessInstanceQuery().superProcessInstanceId("invalid").singleResult()).isNull();
     assertThat(runtimeService.createProcessInstanceQuery().superProcessInstanceId("invalid").list()).isEmpty();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/superProcess.bpmn20.xml",
-                           "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
   @Test
-  public void testQueryBySubProcessInstanceId() {
+  void testQueryBySubProcessInstanceId() {
     ProcessInstance superProcessInstance = runtimeService.startProcessInstanceByKey("subProcessQueryTest");
 
     ProcessInstance subProcessInstance = runtimeService.createProcessInstanceQuery().superProcessInstanceId(superProcessInstance.getId()).singleResult();
@@ -443,7 +443,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidSubProcessInstanceId() {
+  void testQueryByInvalidSubProcessInstanceId() {
     assertThat(runtimeService.createProcessInstanceQuery().subProcessInstanceId("invalid").singleResult()).isNull();
     assertThat(runtimeService.createProcessInstanceQuery().subProcessInstanceId("invalid").list()).isEmpty();
   }
@@ -451,9 +451,9 @@ public class ProcessInstanceQueryTest {
   // Nested subprocess make the query complexer, hence this test
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/superProcessWithNestedSubProcess.bpmn20.xml",
-                           "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
-                           "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
-  public void testQueryBySuperProcessInstanceIdNested() {
+      "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+  void testQueryBySuperProcessInstanceIdNested() {
     ProcessInstance superProcessInstance = runtimeService.startProcessInstanceByKey("nestedSubProcessQueryTest");
 
     ProcessInstance subProcessInstance = runtimeService.createProcessInstanceQuery().superProcessInstanceId(superProcessInstance.getId()).singleResult();
@@ -466,9 +466,9 @@ public class ProcessInstanceQueryTest {
   //Nested subprocess make the query complexer, hence this test
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/superProcessWithNestedSubProcess.bpmn20.xml",
-          "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
-          "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
-  public void testQueryBySubProcessInstanceIdNested() {
+      "org/operaton/bpm/engine/test/api/runtime/nestedSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
+  void testQueryBySubProcessInstanceIdNested() {
     ProcessInstance superProcessInstance = runtimeService.startProcessInstanceByKey("nestedSubProcessQueryTest");
 
     ProcessInstance subProcessInstance = runtimeService.createProcessInstanceQuery().superProcessInstanceId(superProcessInstance.getId()).singleResult();
@@ -479,14 +479,14 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryPaging() {
+  void testQueryPaging() {
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).count()).isEqualTo(4);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).listPage(0, 2)).hasSize(2);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).listPage(1, 3)).hasSize(3);
   }
 
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().orderByProcessInstanceId().asc().list();
     assertThat(processInstances).hasSize(5);
     verifySorting(processInstances, processInstanceByProcessInstanceId());
@@ -511,7 +511,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryInvalidSorting() {
+  void testQueryInvalidSorting() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().orderByProcessDefinitionId();
     try {
       processInstanceQuery.list(); // asc - desc not called -> exception
@@ -522,8 +522,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryStringVariable() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryStringVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -611,8 +611,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryLongVariable() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryLongVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("longVar", 12345L);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -691,8 +691,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryDoubleVariable() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryDoubleVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("doubleVar", 12345.6789);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -771,8 +771,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryIntegerVariable() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryIntegerVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("integerVar", 12345);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -851,8 +851,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryShortVariable() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryShortVariable() {
     Map<String, Object> vars = new HashMap<>();
     short shortVar = 1234;
     vars.put("shortVar", shortVar);
@@ -934,8 +934,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryDateVariable() throws Exception {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryDateVariable() throws Exception {
     Map<String, Object> vars = new HashMap<>();
     Date date1 = Calendar.getInstance().getTime();
     vars.put("dateVar", date1);
@@ -1029,8 +1029,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testBooleanVariable() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testBooleanVariable() {
 
     // TEST EQUALS
     HashMap<String, Object> vars = new HashMap<>();
@@ -1105,8 +1105,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryVariablesUpdatedToNullValue() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryVariablesUpdatedToNullValue() {
     // Start process instance with different types of variables
     Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 928374L);
@@ -1153,8 +1153,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryNullVariable() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryNullVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("nullVar", null);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -1235,8 +1235,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryInvalidTypes() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryInvalidTypes() {
     Map<String, Object> vars = new HashMap<>();
     byte[] testBytes = "test".getBytes();
     vars.put("bytesVar", testBytes);
@@ -1265,7 +1265,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryVariablesNullNameArgument() {
+  void testQueryVariablesNullNameArgument() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       processInstanceQuery.variableValueEquals(null, "value");
@@ -1312,8 +1312,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryAllVariableTypes() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryAllVariableTypes() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("nullVar", null);
     vars.put("stringVar", "string");
@@ -1344,8 +1344,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testClashingValues() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testClashingValues() {
       Map<String, Object> vars = new HashMap<>();
       vars.put("var", 1234L);
 
@@ -1369,7 +1369,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceIds() {
+  void testQueryByProcessInstanceIds() {
     Set<String> ids = new HashSet<>(this.processInstanceIds);
 
     // start an instance that will not be part of the query
@@ -1389,7 +1389,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceIdsEmpty() {
+  void testQueryByProcessInstanceIdsEmpty() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     Set<String> emptyProcessInstanceIds = emptySet();
     try {
@@ -1401,7 +1401,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceIdsNull() {
+  void testQueryByProcessInstanceIdsNull() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       processInstanceQuery.processInstanceIds(null);
@@ -1412,7 +1412,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByActive() {
+  void testQueryByActive() {
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     assertThat(processInstanceQuery.active().count()).isEqualTo(5);
@@ -1427,7 +1427,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryBySuspended() {
+  void testQueryBySuspended() {
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     assertThat(processInstanceQuery.suspended().count()).isZero();
@@ -1442,7 +1442,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testNativeQuery() {
+  void testNativeQuery() {
     String tablePrefix = engineRule.getProcessEngineConfiguration().getDatabaseTablePrefix();
     // just test that the query will be constructed and executed, details are tested in the TaskQueryTest
     assertThat(managementService.getTableName(ProcessInstance.class)).isEqualTo(tablePrefix + "ACT_RU_EXECUTION");
@@ -1454,14 +1454,14 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testNativeQueryPaging() {
+  void testNativeQueryPaging() {
     assertThat(runtimeService.createNativeProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(ProcessInstance.class)).listPage(0, 5)).hasSize(5);
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
-  public void testQueryWithIncident() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryWithIncident() {
     ProcessInstance instanceWithIncident = runtimeService.startProcessInstanceByKey("failingProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -1475,8 +1475,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testHelper.executeAvailableJobs();
@@ -1494,7 +1494,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentId() {
+  void testQueryByInvalidIncidentId() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     assertThat(query.incidentId("invalid").count()).isZero();
@@ -1508,8 +1508,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentType() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentType() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testHelper.executeAvailableJobs();
@@ -1527,7 +1527,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentType() {
+  void testQueryByInvalidIncidentType() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     assertThat(query.incidentType("invalid").count()).isZero();
@@ -1541,8 +1541,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentMessage() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentMessage() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testHelper.executeAvailableJobs();
@@ -1560,7 +1560,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentMessage() {
+  void testQueryByInvalidIncidentMessage() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     assertThat(query.incidentMessage("invalid").count()).isZero();
@@ -1574,8 +1574,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentMessageLike() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentMessageLike() {
     runtimeService.startProcessInstanceByKey("failingProcess");
 
     testHelper.executeAvailableJobs();
@@ -1591,7 +1591,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentMessageLike() {
+  void testQueryByInvalidIncidentMessageLike() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     assertThat(query.incidentMessageLike("invalid").count()).isZero();
@@ -1605,8 +1605,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentIdInSubProcess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentIdInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testHelper.executeAvailableJobs();
@@ -1625,8 +1625,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentTypeInSubProcess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentTypeInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testHelper.executeAvailableJobs();
@@ -1645,8 +1645,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentMessageInSubProcess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentMessageInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testHelper.executeAvailableJobs();
@@ -1665,8 +1665,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentMessageLikeInSubProcess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentMessageLikeInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testHelper.executeAvailableJobs();
@@ -1686,8 +1686,8 @@ public class ProcessInstanceQueryTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
-    })
-  public void testQueryByCaseInstanceId() {
+  })
+  void testQueryByCaseInstanceId() {
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("oneProcessTaskCase")
       .create()
@@ -1707,7 +1707,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseInstanceId() {
+  void testQueryByInvalidCaseInstanceId() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     query.caseInstanceId("invalid");
@@ -1728,8 +1728,8 @@ public class ProcessInstanceQueryTest {
       "org/operaton/bpm/engine/test/api/runtime/superCase.cmmn",
       "org/operaton/bpm/engine/test/api/runtime/superProcessWithCallActivityInsideSubProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"
-    })
-  public void testQueryByCaseInstanceIdHierarchy() {
+  })
+  void testQueryByCaseInstanceIdHierarchy() {
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("oneProcessTaskCase")
       .businessKey("aBusinessKey")
@@ -1754,7 +1754,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableValueEqualsNumber() {
+  void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Map.of("var", 123L));
@@ -1796,7 +1796,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableValueNumberComparison() {
+  void testProcessVariableValueNumberComparison() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Map.of("var", 123L));
@@ -1837,7 +1837,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn"})
-  public void testQueryBySuperCaseInstanceId() {
+  void testQueryBySuperCaseInstanceId() {
     String superCaseInstanceId = caseService.createCaseInstanceByKey("oneProcessTaskCase").getId();
 
     ProcessInstanceQuery query = runtimeService
@@ -1852,7 +1852,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidSuperCaseInstanceId() {
+  void testQueryByInvalidSuperCaseInstanceId() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     assertThat(query.superProcessInstanceId("invalid").singleResult()).isNull();
@@ -1869,8 +1869,8 @@ public class ProcessInstanceQueryTest {
   @Test
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/runtime/superProcessWithCaseCallActivity.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testQueryBySubCaseInstanceId() {
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testQueryBySubCaseInstanceId() {
     String superProcessInstanceId = runtimeService.startProcessInstanceByKey("subProcessQueryTest").getId();
 
     String subCaseInstanceId = caseService
@@ -1894,8 +1894,8 @@ public class ProcessInstanceQueryTest {
   @Test
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/runtime/superProcessWithCaseCallActivityInsideSubProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testQueryBySubCaseInstanceIdNested() {
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testQueryBySubCaseInstanceIdNested() {
     String superProcessInstanceId = runtimeService.startProcessInstanceByKey("subProcessQueryTest").getId();
 
     String subCaseInstanceId = caseService
@@ -1917,7 +1917,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidSubCaseInstanceId() {
+  void testQueryByInvalidSubCaseInstanceId() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     assertThat(query.subProcessInstanceId("invalid").singleResult()).isNull();
@@ -1932,8 +1932,8 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryNullValue() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryNullValue() {
     // typed null
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValueTyped("var", Variables.stringValue(null)));
@@ -1974,7 +1974,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByDeploymentId() {
+  void testQueryByDeploymentId() {
     // given
     String firstDeploymentId = repositoryService
         .createDeploymentQuery()
@@ -2009,7 +2009,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidDeploymentId() {
+  void testQueryByInvalidDeploymentId() {
     assertThat(runtimeService.createProcessInstanceQuery().deploymentId("invalid").count()).isZero();
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
@@ -2022,7 +2022,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByNullActivityId() {
+  void testQueryByNullActivityId() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       processInstanceQuery.activityIdIn((String) null);
@@ -2034,7 +2034,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByNullActivityIds() {
+  void testQueryByNullActivityIds() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       processInstanceQuery.activityIdIn((String[]) null);
@@ -2046,7 +2046,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByUnknownActivityId() {
+  void testQueryByUnknownActivityId() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()
       .activityIdIn("unknown");
 
@@ -2054,7 +2054,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByLeafActivityId() {
+  void testQueryByLeafActivityId() {
     // given
     ProcessDefinition oneTaskDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition gatewaySubProcessDefinition = testHelper.deployAndGetDefinition(FORK_JOIN_SUB_PROCESS_MODEL);
@@ -2089,7 +2089,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByNonLeafActivityId() {
+  void testQueryByNonLeafActivityId() {
     // given
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(FORK_JOIN_SUB_PROCESS_MODEL);
 
@@ -2102,7 +2102,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByAsyncBeforeActivityId() {
+  void testQueryByAsyncBeforeActivityId() {
     // given
     ProcessDefinition testProcess = testHelper.deployAndGetDefinition(ProcessModels.newModel()
       .startEvent("start").operatonAsyncBefore()
@@ -2143,7 +2143,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByAsyncAfterActivityId() {
+  void testQueryByAsyncAfterActivityId() {
     // given
     ProcessDefinition testProcess = testHelper.deployAndGetDefinition(ProcessModels.newModel()
       .startEvent("start").operatonAsyncAfter()
@@ -2184,7 +2184,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByActivityIdBeforeCompensation() {
+  void testQueryByActivityIdBeforeCompensation() {
     // given
     ProcessDefinition testProcess = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
 
@@ -2198,7 +2198,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByActivityIdDuringCompensation() {
+  void testQueryByActivityIdDuringCompensation() {
     // given
     ProcessDefinition testProcess = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
 
@@ -2219,7 +2219,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByRootProcessInstances() {
+  void testQueryByRootProcessInstances() {
     // given
     String superProcess = "calling";
     String subProcess = "called";
@@ -2253,7 +2253,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByRootProcessInstancesAndSuperProcess() {
+  void testQueryByRootProcessInstancesAndSuperProcess() {
     // when
     ProcessInstanceQuery processInstanceQuery1 = runtimeService.createProcessInstanceQuery()
       .rootProcessInstances();

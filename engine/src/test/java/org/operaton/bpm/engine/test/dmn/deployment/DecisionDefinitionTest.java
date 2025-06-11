@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,6 +25,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -34,9 +39,8 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.bpm.model.dmn.HitPolicy;
@@ -48,51 +52,36 @@ import org.operaton.bpm.model.dmn.instance.Input;
 import org.operaton.bpm.model.dmn.instance.InputExpression;
 import org.operaton.bpm.model.dmn.instance.Output;
 import org.operaton.bpm.model.dmn.instance.Text;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class DecisionDefinitionTest {
+class DecisionDefinitionTest {
 
-  @ClassRule
-  public static final ProcessEngineBootstrapRule BOOTSTRAP_RULE = new ProcessEngineBootstrapRule(configuration -> {
-    configuration.setHistoryTimeToLive("P30D");
-  });
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setHistoryTimeToLive("P30D"))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(BOOTSTRAP_RULE);
+  RepositoryService repositoryService;
+  DecisionService decisionService;
+  HistoryService historyService;
 
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule)
-      .around(testRule);
-
-  protected RepositoryService repositoryService;
-  protected DecisionService decisionService;
-  protected HistoryService historyService;
-
-  @Before
-  public void init() throws ParseException {
-    this.repositoryService = engineRule.getRepositoryService();
-    this.decisionService = engineRule.getDecisionService();
-    this.historyService = engineRule.getHistoryService();
-
+  @BeforeEach
+  void init() throws ParseException {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
     Date fixedDate = sdf.parse("01/01/2001 01:01:01.000");
 
     ClockUtil.setCurrentTime(fixedDate);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
   }
 
   @Test
-  public void shouldUseHistoryTTLOnDecisionDefinitions() {
+  void shouldUseHistoryTTLOnDecisionDefinitions() {
     // given
     DmnModelInstance model = createDmnModelInstance(null);
 
@@ -107,7 +96,7 @@ public class DecisionDefinitionTest {
   }
 
   @Test
-  public void shouldNotOverrideWithGlobalConfigOnDecisionHistoryTTLPresence() {
+  void shouldNotOverrideWithGlobalConfigOnDecisionHistoryTTLPresence() {
     // given
     DmnModelInstance model = createDmnModelInstance("P10D");
 
@@ -123,7 +112,7 @@ public class DecisionDefinitionTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void shouldApplyHistoryTTLOnRemovalTimeOfDecisionInstanceLocal() {
+  void shouldApplyHistoryTTLOnRemovalTimeOfDecisionInstanceLocal() {
     // given
     DmnModelInstance model = createDmnModelInstance("P10D");
     DeploymentBuilder builder = repositoryService.createDeployment().addModelInstance("foo.dmn", model);
@@ -151,7 +140,7 @@ public class DecisionDefinitionTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void shouldApplyHistoryTTLOnRemovalTimeOfDecisionInstanceGlobal() {
+  void shouldApplyHistoryTTLOnRemovalTimeOfDecisionInstanceGlobal() {
     // given
     DmnModelInstance model = createDmnModelInstance(null);
     DeploymentBuilder builder = repositoryService.createDeployment().addModelInstance("foo.dmn", model);

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,28 +21,23 @@ import java.util.List;
 import org.operaton.bpm.cockpit.plugin.spi.CockpitPlugin;
 
 /**
- * The holder of registered cockpit plugins.
+ * The registry for cockpit plugins.
  *
- * This class is deprecated, use {@link AppPluginRegistry}
- * 
+ * @deprecated Use {@link AppPluginRegistry} instead.
  * @author nico.rehwaldt
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0")
 public interface PluginRegistry {
 
   /**
-   * Returns all registered plugins
-   *
-   * @return
+   * @return all registered plugins
    */
-  public List<CockpitPlugin> getPlugins();
+  List<CockpitPlugin> getPlugins();
 
   /**
-   * Returns the registered plugin with the given name or
-   * <code>null</code> if the plugin does not exist.
-   *
    * @param id
-   * @return
+   * @return the registered plugin with the given name or
+   * <code>null</code> if the plugin does not exist.
    */
-  public CockpitPlugin getPlugin(String id);
+  CockpitPlugin getPlugin(String id);
 }

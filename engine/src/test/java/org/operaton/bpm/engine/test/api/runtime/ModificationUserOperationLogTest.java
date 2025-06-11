@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,6 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -35,48 +39,35 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class ModificationUserOperationLogTest {
+class ModificationUserOperationLogTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(rule);
-  protected BatchModificationHelper helper = new BatchModificationHelper(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  BatchModificationHelper helper = new BatchModificationHelper(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  IdentityService identityService;
+  BpmnModelInstance instance;
 
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected IdentityService identityService;
-  protected BpmnModelInstance instance;
-  protected static final Date START_DATE = new Date(1457326800000L);
+  static final Date START_DATE = new Date(1457326800000L);
 
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-    historyService = rule.getHistoryService();
-    identityService = rule.getIdentityService();
-  }
-
-  @Before
-  public void setClock() {
+  @BeforeEach
+  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
-  @Before
-  public void createBpmnModelInstance() {
+  @BeforeEach
+  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -86,22 +77,23 @@ public class ModificationUserOperationLogTest {
         .done();
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 
-  @After
-  public void removeInstanceIds() {
+  @AfterEach
+  void removeInstanceIds() {
     helper.currentProcessInstances = new ArrayList<>();
   }
 
-  @After
-  public void removeBatches() {
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
+
   @Test
-  public void testLogCreation() {
+  void testLogCreation() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     identityService.setAuthenticatedUserId("userId");
@@ -146,7 +138,7 @@ public class ModificationUserOperationLogTest {
   }
 
   @Test
-  public void testNoCreationOnSyncBatchJobExecution() {
+  void testNoCreationOnSyncBatchJobExecution() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
 
@@ -169,7 +161,7 @@ public class ModificationUserOperationLogTest {
   }
 
   @Test
-  public void testNoCreationOnJobExecutorBatchJobExecution() {
+  void testNoCreationOnJobExecutorBatchJobExecution() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
 
@@ -188,7 +180,7 @@ public class ModificationUserOperationLogTest {
   }
 
   @Test
-  public void testBatchSyncModificationLogCreationWithAnnotation() {
+  void testBatchSyncModificationLogCreationWithAnnotation() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
@@ -224,7 +216,7 @@ public class ModificationUserOperationLogTest {
   }
 
   @Test
-  public void testBatchAsyncModificationLogCreationWithAnnotation() {
+  void testBatchAsyncModificationLogCreationWithAnnotation() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
@@ -259,7 +251,7 @@ public class ModificationUserOperationLogTest {
   }
 
   @Test
-  public void testSyncModificationLogCreationWithAnnotation() {
+  void testSyncModificationLogCreationWithAnnotation() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
@@ -287,7 +279,7 @@ public class ModificationUserOperationLogTest {
   }
 
   @Test
-  public void testAsyncModificationLogCreationWithAnnotation() {
+  void testAsyncModificationLogCreationWithAnnotation() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
@@ -315,7 +307,7 @@ public class ModificationUserOperationLogTest {
 
 
   @Test
-  public void testModificationLogShouldNotIncludeEntryForTaskDeletion() {
+  void testModificationLogShouldNotIncludeEntryForTaskDeletion() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());

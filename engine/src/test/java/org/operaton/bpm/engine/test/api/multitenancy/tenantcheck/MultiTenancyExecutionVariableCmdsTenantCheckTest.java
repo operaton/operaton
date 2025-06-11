@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,7 +36,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Deivarayan Azhagappan
  *
  */
-public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
+class MultiTenancyExecutionVariableCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -55,14 +55,14 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
       .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected String processInstanceId;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     // deploy tenants
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
@@ -76,7 +76,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getExecutionVariableWithAuthenticatedTenant() {
+  void getExecutionVariableWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -85,7 +85,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getExecutionVariableWithNoAuthenticatedTenant() {
+  void getExecutionVariableWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     var runtimeService = engineRule.getRuntimeService();
@@ -99,7 +99,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getExecutionVariableWithDisabledTenantCheck() {
+  void getExecutionVariableWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -111,7 +111,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
 
   // get typed execution variable
   @Test
-  public void getExecutionVariableTypedWithAuthenticatedTenant() {
+  void getExecutionVariableTypedWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -120,7 +120,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getExecutionVariableTypedWithNoAuthenticatedTenant() {
+  void getExecutionVariableTypedWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     var runtimeService = engineRule.getRuntimeService();
@@ -133,7 +133,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getExecutionVariableTypedWithDisabledTenantCheck() {
+  void getExecutionVariableTypedWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
 
@@ -147,7 +147,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
 
   // get execution variables
   @Test
-  public void getExecutionVariablesWithAuthenticatedTenant() {
+  void getExecutionVariablesWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -156,7 +156,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getExecutionVariablesWithNoAuthenticatedTenant() {
+  void getExecutionVariablesWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     var runtimeService = engineRule.getRuntimeService();
@@ -170,7 +170,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void getExecutionVariablesWithDisabledTenantCheck() {
+  void getExecutionVariablesWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -182,7 +182,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
 
   // set execution variable
   @Test
-  public void setExecutionVariableWithAuthenticatedTenant() {
+  void setExecutionVariableWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -192,7 +192,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void setExecutionVariableWithNoAuthenticatedTenant() {
+  void setExecutionVariableWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     var runtimeService = engineRule.getRuntimeService();
@@ -205,7 +205,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void setExecutionVariableWithDisabledTenantCheck() {
+  void setExecutionVariableWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
 
@@ -216,7 +216,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
 
   // remove execution variable
   @Test
-  public void removeExecutionVariableWithAuthenticatedTenant() {
+  void removeExecutionVariableWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     engineRule.getRuntimeService().removeVariable(processInstanceId, VARIABLE_1);
@@ -226,7 +226,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void removeExecutionVariableWithNoAuthenticatedTenant() {
+  void removeExecutionVariableWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     var runtimeService = engineRule.getRuntimeService();
@@ -240,7 +240,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   }
 
   @Test
-  public void removeExecutionVariableWithDisabledTenantCheck() {
+  void removeExecutionVariableWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);

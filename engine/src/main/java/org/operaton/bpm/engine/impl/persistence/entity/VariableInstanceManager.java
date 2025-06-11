@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,6 +33,10 @@ import org.operaton.bpm.engine.runtime.VariableInstance;
  */
 public class VariableInstanceManager extends AbstractManager {
 
+  private static final String CASE_EXECUTION_ID = "caseExecutionId";
+  private static final String EXECUTION_ID = "executionId";
+  private static final String VARIABLE_NAMES = "variableNames";
+
   public List<VariableInstanceEntity> findVariableInstancesByTaskId(String taskId) {
     return findVariableInstancesByTaskIdAndVariableNames(taskId, null);
   }
@@ -40,8 +44,8 @@ public class VariableInstanceManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<VariableInstanceEntity> findVariableInstancesByTaskIdAndVariableNames(String taskId, Collection<String> variableNames) {
     Map<String, Object> parameter = new HashMap<>();
-    parameter.put("taskId", taskId);
-    parameter.put("variableNames", variableNames);
+    parameter.put(TASK_ID, taskId);
+    parameter.put(VARIABLE_NAMES, variableNames);
     return getDbEntityManager().selectList("selectVariablesByTaskId", parameter);
   }
 
@@ -52,8 +56,8 @@ public class VariableInstanceManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<VariableInstanceEntity> findVariableInstancesByExecutionIdAndVariableNames(String executionId, Collection<String> variableNames) {
     Map<String, Object> parameter = new HashMap<>();
-    parameter.put("executionId", executionId);
-    parameter.put("variableNames", variableNames);
+    parameter.put(EXECUTION_ID, executionId);
+    parameter.put(VARIABLE_NAMES, variableNames);
     return getDbEntityManager().selectList("selectVariablesByExecutionId", parameter);
   }
 
@@ -69,8 +73,8 @@ public class VariableInstanceManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<VariableInstanceEntity> findVariableInstancesByCaseExecutionIdAndVariableNames(String caseExecutionId, Collection<String> variableNames) {
     Map<String, Object> parameter = new HashMap<>();
-    parameter.put("caseExecutionId", caseExecutionId);
-    parameter.put("variableNames", variableNames);
+    parameter.put(CASE_EXECUTION_ID, caseExecutionId);
+    parameter.put(VARIABLE_NAMES, variableNames);
     return getDbEntityManager().selectList("selectVariablesByCaseExecutionId", parameter);
   }
 

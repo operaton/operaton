@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,6 +15,18 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest.openapi.generator.impl;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,23 +42,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.RegexFileFilter;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class TemplateParser {
+
+  private static final String VERSION_DEVELOP = "develop";
+  private static final String VERSION_LATEST = "latest";
+  private static final String DATA_DOCS_VERSION = "docsVersion";
+  private static final String DATA_CAMBPM_VERSION = "cambpmVersion";
 
   public static void main(String[] args) throws IOException, TemplateException {
 
@@ -127,28 +130,28 @@ public class TemplateParser {
    */
   protected static void resolveVersions(Map<String, Object> templateData) {
     String version = TemplateParser.class.getPackage().getImplementationVersion();
-  
+
     if (version != null) {
-      // cambpmVersion = 7.X.Y
-      templateData.put("cambpmVersion", version);
-  
+      // operatonbpmVersion = 7.X.Y
+      templateData.put("operatonbpmVersion", version);
+
       if (version.contains("SNAPSHOT")) {
-        templateData.put("docsVersion", "develop");
+        templateData.put(DATA_DOCS_VERSION, VERSION_DEVELOP);
       } else if (version.contains("alpha")) {
-        templateData.put("docsVersion", "latest");
+        templateData.put(DATA_DOCS_VERSION, VERSION_LATEST);
       } else {
         // docsVersion = 7.X
-        templateData.put("docsVersion", version.substring(0, version.lastIndexOf(".")));
+        templateData.put(DATA_DOCS_VERSION, version.substring(0, version.lastIndexOf(".")));
       }
     } else {
-      // only for debug cases 
-      templateData.put("cambpmVersion", "develop");
-      templateData.put("docsVersion", "develop");
+      // only for debug cases
+      templateData.put("operatonbpmVersion", VERSION_DEVELOP);
+      templateData.put(DATA_DOCS_VERSION, VERSION_DEVELOP);
     }
   }
 
   /**
-   * 
+   *
    * @param sourceDirectory the template directory that stores the models
    * @return a map of model name and file path to it,
    * the map is ordered lexicographically by the model names
@@ -156,10 +159,10 @@ public class TemplateParser {
   protected static Map<String, String> resolveModels(String sourceDirectory) {
     File modelsDir = new File(sourceDirectory + "/models");
     Collection<File> modelFiles = FileUtils.listFiles(
-        modelsDir, 
-        new RegexFileFilter("^(.*?)"), 
+        modelsDir,
+        new RegexFileFilter("^(.*?)"),
         DirectoryFileFilter.DIRECTORY
-        );
+    );
 
     Map<String, String> models = new TreeMap<>();
     for (File file : modelFiles) {
@@ -167,15 +170,15 @@ public class TemplateParser {
       String filePath = file.getAbsolutePath();
       String modelPackage = filePath
           .substring(filePath.lastIndexOf("org"), filePath.lastIndexOf(File.separator));
-      
+
       models.put(modelName, modelPackage);
     }
-    
+
     return models;
   }
 
   /**
-   * 
+   *
    * @param sourceDirectory the template directory that stores the endpoints
    * @return a map of endpoint path and HTTP methods pairs,
    * the map is ordered lexicographically by the endpoint paths
@@ -185,10 +188,10 @@ public class TemplateParser {
     File endpointsDir = new File(sourceDirectory + "/paths");
     int endpointStartAt = endpointsDir.getAbsolutePath().length();
     Collection<File> endpointsFiles = FileUtils.listFiles(
-        endpointsDir, 
-        new RegexFileFilter("^(.*?)"), 
+        endpointsDir,
+        new RegexFileFilter("^(.*?)"),
         DirectoryFileFilter.DIRECTORY
-        );
+    );
 
     Map<String, List<String>> endpoints = new TreeMap<>();
     for (File file : endpointsFiles) {

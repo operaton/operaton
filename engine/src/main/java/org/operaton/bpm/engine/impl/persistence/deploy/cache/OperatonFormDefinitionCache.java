@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,6 +24,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.OperatonFormDefinitionEnt
 
 public class OperatonFormDefinitionCache extends ResourceDefinitionCache<OperatonFormDefinitionEntity> {
 
+  private static final String VAR_OPERATON_FORM_DEFINITION = "operatonFormDefinition";
+  private static final String VAR_OPERATON_FORM_DEFINITION_ID = "operatonFormDefinitionId";
+  private static final String VAR_CACHED_PROCESS_DEFINITION = "cachedProcessDefinition";
+
   public OperatonFormDefinitionCache(CacheFactory factory, int cacheCapacity, CacheDeployer cacheDeployer) {
     super(factory, cacheCapacity, cacheDeployer);
   }
@@ -35,28 +39,31 @@ public class OperatonFormDefinitionCache extends ResourceDefinitionCache<Operato
 
   @Override
   protected void checkInvalidDefinitionId(String definitionId) {
-    ensureNotNull("Invalid operaton form definition id", "operatonFormDefinitionId", definitionId);
+    ensureNotNull("Invalid operaton form definition id", VAR_OPERATON_FORM_DEFINITION_ID, definitionId);
   }
 
   @Override
   protected void checkDefinitionFound(String definitionId, OperatonFormDefinitionEntity definition) {
-    ensureNotNull("no deployed operaton form definition found with id '" + definitionId + "'", "operatonFormDefinition", definition);
+    ensureNotNull("no deployed operaton form definition found with id '" + definitionId + "'",
+      VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKey(String definitionKey, OperatonFormDefinitionEntity definition) {
-    ensureNotNull("no deployed operaton form definition found with key '" + definitionKey + "'", "operatonFormDefinition", definition);
+    ensureNotNull("no deployed operaton form definition found with key '" + definitionKey + "'",
+      VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, OperatonFormDefinitionEntity definition) {
-    ensureNotNull("no deployed operaton form definition found with key '" + definitionKey + "' and tenant-id '" + tenantId + "'", "operatonFormDefinition", definition);
+    ensureNotNull("no deployed operaton form definition found with key '" + definitionKey + "' and tenant-id '" + tenantId + "'",
+      VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, OperatonFormDefinitionEntity definition) {
     ensureNotNull("no deployed operaton form definition found with key '" + definitionKey + "', version '" + definitionVersion
-        + "' and tenant-id '" + tenantId + "'", "operatonFormDefinition", definition);
+        + "' and tenant-id '" + tenantId + "'", VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
@@ -67,12 +74,14 @@ public class OperatonFormDefinitionCache extends ResourceDefinitionCache<Operato
 
   @Override
   protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, OperatonFormDefinitionEntity definition) {
-    ensureNotNull("no deployed operaton form definition found with key '" + definitionKey + "' in deployment '" + deploymentId + "'", "operatonFormDefinition", definition);
+    ensureNotNull("no deployed operaton form definition found with key '" + definitionKey + "' in deployment '" + deploymentId + "'",
+      VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, OperatonFormDefinitionEntity definition) {
-    ensureNotNull("deployment '" + deploymentId + "' didn't put operaton form definition '" + definitionId + "' in the cache", "cachedProcessDefinition", definition);
+    ensureNotNull("deployment '" + deploymentId + "' didn't put operaton form definition '" + definitionId + "' in the cache",
+      VAR_CACHED_PROCESS_DEFINITION, definition);
   }
 
 }

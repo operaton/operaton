@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -27,8 +28,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import java.util.Map;
-
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -51,7 +50,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment
-  public void testFalseCondition() {
+  void testFalseCondition() {
     //given process with intermediate conditional event
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -75,7 +74,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment
-  public void testTrueCondition() {
+  void testTrueCondition() {
     //given process with intermediate conditional event
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -101,7 +100,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment
-  public void testVariableValue() {
+  void testVariableValue() {
     //given process with intermediate conditional event and variable with wrong value
     Map<String, Object> variables = Variables.createVariables();
     variables.put(VARIABLE_NAME, 0);
@@ -134,7 +133,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment
-  public void testParallelVariableValue() {
+  void testParallelVariableValue() {
     //given process with intermediate conditional event and variable with wrong value
     Map<String, Object> variables = Variables.createVariables();
     variables.put(VARIABLE_NAME, 0);
@@ -180,7 +179,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment
-  public void testParallelVariableValueEqualConditions() {
+  void testParallelVariableValueEqualConditions() {
     //given process with intermediate conditional event and variable with wrong value
     Map<String, Object> variables = Variables.createVariables();
     variables.put(VARIABLE_NAME, 0);
@@ -198,7 +197,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/conditional/IntermediateConditionalEventTest.testParallelVariableValue.bpmn20.xml"})
-  public void testParallelVariableSetValueOnParent() {
+  void testParallelVariableSetValueOnParent() {
     //given process with intermediate conditional event and variable with wrong value
     Map<String, Object> variables = Variables.createVariables();
     variables.put(VARIABLE_NAME, 0);
@@ -231,7 +230,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment
-  public void testSubProcessVariableValue() {
+  void testSubProcessVariableValue() {
     //given process with intermediate conditional event and variable with wrong value
     Map<String, Object> variables = Variables.createVariables();
     variables.put(VARIABLE_NAME, 0);
@@ -259,7 +258,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/conditional/IntermediateConditionalEventTest.testSubProcessVariableValue.bpmn20.xml"})
-  public void testSubProcessVariableSetValueOnParent() {
+  void testSubProcessVariableSetValueOnParent() {
     //given process with intermediate conditional event and variable with wrong value
     Map<String, Object> variables = Variables.createVariables();
     variables.put(VARIABLE_NAME, 0);
@@ -277,7 +276,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
   @Test
   @Deployment
-  public void testCleanUpConditionalEventSubscriptions() {
+  void testCleanUpConditionalEventSubscriptions() {
     //given process with intermediate conditional event and variable with wrong value
     Map<String, Object> variables = Variables.createVariables();
     variables.put(VARIABLE_NAME, 0);
@@ -309,7 +308,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
   }
 
   @Test
-  public void testVariableConditionWithVariableName() {
+  void testVariableConditionWithVariableName() {
 
     //given process with boundary conditional event and defined variable name
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -361,7 +360,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
   }
 
   @Test
-  public void testVariableConditionWithVariableEvent() {
+  void testVariableConditionWithVariableEvent() {
 
     //given process with boundary conditional event and defined variable name and event
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -417,7 +416,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
 
   @Test
-  public void testVariableConditionWithVariableNameAndEvent() {
+  void testVariableConditionWithVariableNameAndEvent() {
 
     //given process with boundary conditional event and defined variable name and event
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -470,7 +469,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
   }
 
   @Test
-  public void testSuspendedProcess() {
+  void testSuspendedProcess() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -505,7 +504,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
   }
 
   @Test
-  public void testEventBasedGateway() {
+  void testEventBasedGateway() {
     BpmnModelInstance modelInstance =
       Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
         .startEvent()
@@ -540,7 +539,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
   }
 
   @Test
-  public void testEventBasedGatewayTrueCondition() {
+  void testEventBasedGatewayTrueCondition() {
     BpmnModelInstance modelInstance =
       Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
         .startEvent()
@@ -580,7 +579,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
 
   @Test
-  public void testEventBasedGatewayWith2ConditionsOneIsTrue() {
+  void testEventBasedGatewayWith2ConditionsOneIsTrue() {
     BpmnModelInstance modelInstance =
       Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
         .startEvent()
@@ -628,7 +627,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
   }
 
   @Test
-  public void testEventBasedGatewayWith2VarConditions() {
+  void testEventBasedGatewayWith2VarConditions() {
     BpmnModelInstance modelInstance =
       Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
         .startEvent()
@@ -709,7 +708,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
   }
 
   @Test
-  public void testParallelProcessWithSetVariableBeforeReachingEventBasedGW() {
+  void testParallelProcessWithSetVariableBeforeReachingEventBasedGW() {
     deployParallelProcessWithEventBasedGateway();
     //given
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
@@ -733,7 +732,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
   }
 
   @Test
-  public void testParallelProcessWithSetVariableAfterReachingEventBasedGW() {
+  void testParallelProcessWithSetVariableAfterReachingEventBasedGW() {
     deployParallelProcessWithEventBasedGateway();
     //given
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);

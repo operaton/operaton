@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.sql.test;
 
+import java.io.FileNotFoundException;
+import liquibase.resource.DirectoryResourceAccessor;
 import org.operaton.commons.utils.IoUtil;
 
 import java.io.IOException;
@@ -48,7 +50,6 @@ import liquibase.diff.output.changelog.DiffToChangeLog;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
-import liquibase.resource.FileSystemResourceAccessor;
 import liquibase.snapshot.DatabaseSnapshot;
 import liquibase.snapshot.SnapshotControl;
 import liquibase.snapshot.SnapshotGeneratorFactory;
@@ -222,19 +223,21 @@ class SqlScriptTest {
         null, null, new ClassLoaderResourceAccessor());
   }
 
-  Liquibase getLiquibase() throws URISyntaxException {
+  Liquibase getLiquibase() throws URISyntaxException, FileNotFoundException {
     return getLiquibase("", database);
   }
 
-  static Liquibase getLiquibase(String baseDirectory, Database database) throws URISyntaxException {
+  static Liquibase getLiquibase(String baseDirectory, Database database)
+    throws URISyntaxException, FileNotFoundException {
     return new Liquibase("operaton-changelog.xml", getAccessorForChangelogDirectory(baseDirectory), database);
   }
 
-  static FileSystemResourceAccessor getAccessorForChangelogDirectory(String baseDirectory) throws URISyntaxException {
+  static DirectoryResourceAccessor getAccessorForChangelogDirectory(String baseDirectory)
+    throws URISyntaxException, FileNotFoundException {
     URL resource = SqlScriptTest.class.getClassLoader().getResource(baseDirectory + "sql/liquibase");
     Objects.requireNonNull(resource, "Changelog directory not found");
     URI changelogUri = resource.toURI();
-    return new FileSystemResourceAccessor(Paths.get(changelogUri).toAbsolutePath().toFile());
+    return new DirectoryResourceAccessor(Paths.get(changelogUri));
   }
 
   DatabaseSnapshot createCurrentDatabaseSnapshot() throws Exception {

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -83,7 +83,7 @@ public class ContainerIntegrationLogger extends ProcessEngineLogger {
   public ProcessEngineException cannotOpenFileInputStream(String absolutePath, IOException e) {
     return new ProcessEngineException(exceptionMessage(
         "008",
-        "Cannot not open file for reading: {}.", e.getMessage()), e);
+        "Cannot not open file '{}' for reading: {}.", absolutePath, e.getMessage()), e);
   }
 
   public ProcessEngineException couldNotGetResource(String strippedPaResourceRootPath, ClassLoader cl, Exception e) {
@@ -240,7 +240,7 @@ public class ContainerIntegrationLogger extends ProcessEngineLogger {
   public ProcessEngineException configurationClassHasWrongType(String className, Class<?> expectedType, ClassCastException e) {
     return new ProcessEngineException(exceptionMessage(
         "032",
-        "Class '{}' has wrong type. Must extend {}", expectedType.getName()), e);
+        "Class '{}' has wrong type. Must extend {}", className, expectedType.getName()), e);
   }
 
   public void timeoutDuringShutdownOfThreadPool(int i, TimeUnit seconds) {

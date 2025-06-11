@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,7 +25,15 @@ import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 
 import java.util.List;
 
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.*;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.FAILED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDING_ON_PARENT_SUSPENSION;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDING_ON_SUSPENSION;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATING_ON_EXIT;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATING_ON_PARENT_TERMINATION;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATING_ON_TERMINATION;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_AUTO_COMPLETE;
 import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
@@ -37,6 +45,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
 public class StageActivityBehavior extends StageOrTaskActivityBehavior implements CmmnCompositeActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
+  private static final String TRANSITION_REACTIVATE = "reactivate";
+  private static final String TRANSITION_COMPLETE = "complete";
 
   // start /////////////////////////////////////////////////////////////////////
 
@@ -73,15 +83,15 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     String id = execution.getId();
 
     if (execution.isActive()) {
-      throw LOG.alreadyActiveException("reactivate", id);
+      throw LOG.alreadyActiveException(TRANSITION_REACTIVATE, id);
     }
 
     if (execution.isCaseInstanceExecution()) {
       if (execution.isClosed()) {
-        throw LOG.alreadyClosedCaseException("reactivate", id);
+        throw LOG.alreadyClosedCaseException(TRANSITION_REACTIVATE, id);
       }
     } else {
-      ensureTransitionAllowed(execution, FAILED, ACTIVE, "reactivate");
+      ensureTransitionAllowed(execution, FAILED, ACTIVE, TRANSITION_REACTIVATE);
     }
   }
 
@@ -103,14 +113,14 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   @Override
   public void onCompletion(CmmnActivityExecution execution) {
-    ensureTransitionAllowed(execution, ACTIVE, COMPLETED, "complete");
+    ensureTransitionAllowed(execution, ACTIVE, COMPLETED, TRANSITION_COMPLETE);
     canComplete(execution, true);
     completing(execution);
   }
 
   @Override
   public void onManualCompletion(CmmnActivityExecution execution) {
-    ensureTransitionAllowed(execution, ACTIVE, COMPLETED, "complete");
+    ensureTransitionAllowed(execution, ACTIVE, COMPLETED, TRANSITION_COMPLETE);
     canComplete(execution, true, true);
     completing(execution);
   }
@@ -152,7 +162,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
       if (child.isNew() || child.isActive()) {
 
         if (throwException) {
-          throw LOG.remainingChildException("complete", id, child.getId(), CaseExecutionState.ACTIVE);
+          throw LOG.remainingChildException(TRANSITION_COMPLETE, id, child.getId(), CaseExecutionState.ACTIVE);
         }
 
         return false;
@@ -167,7 +177,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
         if (child.isRequired() && !child.isDisabled() && !child.isCompleted() && !child.isTerminated()) {
 
           if (throwException) {
-            throw LOG.remainingChildException("complete", id, child.getId(), child.getCurrentState());
+            throw LOG.remainingChildException(TRANSITION_COMPLETE, id, child.getId(), child.getCurrentState());
           }
 
           return false;
@@ -181,7 +191,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
         if (!child.isDisabled() && !child.isCompleted() && !child.isTerminated()) {
 
           if (throwException) {
-            throw LOG.wrongChildStateException("complete", id, child.getId(), "[available|enabled|suspended]");
+            throw LOG.wrongChildStateException(TRANSITION_COMPLETE, id, child.getId(), "[available|enabled|suspended]");
           }
 
           return false;

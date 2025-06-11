@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -35,12 +36,12 @@ public class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivi
 
   @Override
   protected void createInstances(ActivityExecution execution, int nrOfInstances) throws Exception {
-
+    Collection<?> collection = evaluateCollection(execution);
     prepareScope(execution, nrOfInstances);
     setLoopVariable(execution, NUMBER_OF_ACTIVE_INSTANCES, 1);
 
     ActivityImpl innerActivity = getInnerActivity(execution.getActivity());
-    performInstance(execution, innerActivity, 0);
+    performInstance(execution, innerActivity, 0, collection);
   }
 
   @Override
@@ -48,15 +49,15 @@ public class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivi
     int loopCounter = getLoopVariable(scopeExecution, LOOP_COUNTER) + 1;
     int nrOfInstances = getLoopVariable(scopeExecution, NUMBER_OF_INSTANCES);
     int nrOfCompletedInstances = getLoopVariable(scopeExecution, NUMBER_OF_COMPLETED_INSTANCES) + 1;
-
     setLoopVariable(scopeExecution, NUMBER_OF_COMPLETED_INSTANCES, nrOfCompletedInstances);
 
     if (loopCounter == nrOfInstances || completionConditionSatisfied(scopeExecution)) {
       leave(scopeExecution);
     }
     else {
+      Collection<?> collection = evaluateCollection(scopeExecution);
       PvmActivity innerActivity = getInnerActivity(scopeExecution.getActivity());
-      performInstance(scopeExecution, innerActivity, loopCounter);
+      performInstance(scopeExecution, innerActivity, loopCounter, collection);
     }
   }
 

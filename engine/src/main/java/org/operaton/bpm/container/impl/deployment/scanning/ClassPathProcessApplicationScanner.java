@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -149,6 +149,11 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     }
     if (urlPath.indexOf('!') > 0) {
       urlPath = urlPath.substring(0, urlPath.indexOf('!'));
+    }
+    // Required for Spring Boot 3.2 Nested Jar Support
+    // https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.2-Release-Notes#nested-jar-support
+    if (urlPath.startsWith("nested:")) {
+      urlPath = urlPath.substring(7);
     }
 
     File file = new File(urlPath);

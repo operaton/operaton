@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,26 +18,30 @@ package org.operaton.bpm.engine.test.standalone.scripting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.SourceExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptingEnvironment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Stefan Hentschel.
  */
-public class ScriptCompilationTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ScriptCompilationTest {
 
   protected static final String SCRIPT_LANGUAGE = "groovy";
   protected static final String EXAMPLE_SCRIPT = "println 'hello world'";
 
-  protected ScriptFactory scriptFactory;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  ScriptFactory scriptFactory;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     scriptFactory = processEngineConfiguration.getScriptFactory();
   }
 
@@ -46,7 +50,7 @@ public class ScriptCompilationTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testScriptShouldBeCompiledByDefault() {
+  void testScriptShouldBeCompiledByDefault() {
     // when a script is created
     SourceExecutableScript script = createScript(SCRIPT_LANGUAGE, EXAMPLE_SCRIPT);
     assertThat(script).isNotNull();
@@ -64,7 +68,7 @@ public class ScriptCompilationTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDisableScriptCompilation() {
+  void testDisableScriptCompilation() {
     // when script compilation is disabled and a script is created
     processEngineConfiguration.setEnableScriptCompilation(false);
     SourceExecutableScript script = createScript(SCRIPT_LANGUAGE, EXAMPLE_SCRIPT);
@@ -86,7 +90,7 @@ public class ScriptCompilationTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDisableScriptCompilationByDisabledScriptEngineCaching() {
+  void testDisableScriptCompilationByDisabledScriptEngineCaching() {
     // when script engine caching is disabled and a script is created
     processEngineConfiguration.setEnableScriptEngineCaching(false);
     SourceExecutableScript script = createScript(SCRIPT_LANGUAGE, EXAMPLE_SCRIPT);
@@ -108,7 +112,7 @@ public class ScriptCompilationTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testOverrideScriptSource() {
+  void testOverrideScriptSource() {
     // when a script is created and executed
     SourceExecutableScript script = createScript(SCRIPT_LANGUAGE, EXAMPLE_SCRIPT);
     assertThat(script).isNotNull();

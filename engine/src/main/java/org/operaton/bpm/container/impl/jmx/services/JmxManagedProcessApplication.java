@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,10 +40,10 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
   protected List<ProcessesXml> processesXmls;
   protected Map<String, DeployedProcessArchive> deploymentMap;
 
-	public JmxManagedProcessApplication(ProcessApplicationInfoImpl processApplicationInfo, ProcessApplicationReference processApplicationReference) {
+  public JmxManagedProcessApplication(ProcessApplicationInfoImpl processApplicationInfo, ProcessApplicationReference processApplicationReference) {
     this.processApplicationInfo = processApplicationInfo;
     this.processApplicationReference = processApplicationReference;
-	}
+  }
 
   @Override
   public String getProcessApplicationName() {
@@ -52,11 +52,13 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
 
   @Override
   public void start(PlatformServiceContainer mBeanServiceContainer) {
-	}
+    // no-op
+  }
 
   @Override
   public void stop(PlatformServiceContainer mBeanServiceContainer) {
-	}
+    // no-op
+  }
 
   @Override
   public JmxManagedProcessApplication getValue() {

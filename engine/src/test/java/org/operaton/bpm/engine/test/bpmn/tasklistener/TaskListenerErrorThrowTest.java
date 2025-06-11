@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.test.bpmn.tasklistener;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -30,8 +32,6 @@ import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
-import org.junit.Before;
-import org.junit.Test;
 
 public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   /*
@@ -40,13 +40,13 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
 
   public static final String ERROR_CODE = "208";
 
-  @Before
-  public void resetListenerCounters() {
+  @BeforeEach
+  void resetListenerCounters() {
     ThrowBPMNErrorListener.reset();
   }
 
   @Test
-  public void testThrowErrorOnCreateAndCatchOnUserTask() {
+  void testThrowErrorOnCreateAndCatchOnUserTask() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnUserTask(TaskListener.EVENTNAME_CREATE);
 
@@ -60,7 +60,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnAssignmentAndCatchOnUserTask() {
+  void testThrowErrorOnAssignmentAndCatchOnUserTask() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnUserTask(TaskListener.EVENTNAME_ASSIGNMENT);
 
@@ -79,7 +79,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnCompleteAndCatchOnUserTask() {
+  void testThrowErrorOnCompleteAndCatchOnUserTask() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnUserTask(TaskListener.EVENTNAME_COMPLETE);
 
@@ -97,7 +97,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnCreateAndCatchOnSubprocess() {
+  void testThrowErrorOnCreateAndCatchOnSubprocess() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnSubprocess(TaskListener.EVENTNAME_CREATE);
 
@@ -111,7 +111,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnAssignmentAndCatchOnSubprocess() {
+  void testThrowErrorOnAssignmentAndCatchOnSubprocess() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnSubprocess(TaskListener.EVENTNAME_ASSIGNMENT);
 
@@ -130,7 +130,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnCompleteAndCatchOnSubprocess() {
+  void testThrowErrorOnCompleteAndCatchOnSubprocess() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnSubprocess(TaskListener.EVENTNAME_COMPLETE);
 
@@ -148,7 +148,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnCreateAndCatchOnEventSubprocess() {
+  void testThrowErrorOnCreateAndCatchOnEventSubprocess() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnEventSubprocess(TaskListener.EVENTNAME_CREATE);
     System.out.println(Bpmn.convertToString(model));
@@ -162,7 +162,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnAssignmentAndCatchOnEventSubprocess() {
+  void testThrowErrorOnAssignmentAndCatchOnEventSubprocess() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnEventSubprocess(TaskListener.EVENTNAME_ASSIGNMENT);
 
@@ -181,7 +181,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnCompleteAndCatchOnEventSubprocess() {
+  void testThrowErrorOnCompleteAndCatchOnEventSubprocess() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnEventSubprocess(TaskListener.EVENTNAME_COMPLETE);
 
@@ -200,7 +200,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
 
   @Test
   @Deployment
-  public void testThrowErrorOnCreateScriptListenerAndCatchOnUserTask() {
+  void testThrowErrorOnCreateScriptListenerAndCatchOnUserTask() {
     // when
     runtimeService.startProcessInstanceByKey("process");
 
@@ -211,7 +211,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnAssignmentExpressionListenerAndCatchOnUserTask() {
+  void testThrowErrorOnAssignmentExpressionListenerAndCatchOnUserTask() {
     // given
     processEngineConfiguration.getBeans().put("myListener", new ThrowBPMNErrorListener());
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
@@ -241,7 +241,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowErrorOnDeleteAndCatchOnUserTaskShouldNotTriggerPropagation() {
+  void testThrowErrorOnDeleteAndCatchOnUserTaskShouldNotTriggerPropagation() {
     // given
     BpmnModelInstance model = createModelThrowErrorInListenerAndCatchOnUserTask(TaskListener.EVENTNAME_DELETE);
 
@@ -263,7 +263,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   }
 
   @Test
-  public void testThrowUncaughtErrorOnCompleteAndCatchOnUserTask() {
+  void testThrowUncaughtErrorOnCompleteAndCatchOnUserTask() {
     // given
     processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")

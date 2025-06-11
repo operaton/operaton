@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,17 +23,17 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class SentryExitCriteriaTest extends CmmnTest {
+class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitTask.cmmn"})
   @Test
-  public void testExitTask() {
+  void testExitTask() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -62,7 +62,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitStage.cmmn"})
   @Test
-  public void testExitStage() {
+  void testExitStage() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -117,7 +117,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testAndJoin.cmmn"})
   @Test
-  public void testAndJoin() {
+  void testAndJoin() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -156,7 +156,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testAndFork.cmmn"})
   @Test
-  public void testAndFork() {
+  void testAndFork() {
     // given
     createCaseInstance();
 
@@ -185,7 +185,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testOrJoin.cmmn"})
   @Test
-  public void testOrJoin() {
+  void testOrJoin() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -222,7 +222,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testOrFork.cmmn"})
   @Test
-  public void testOrFork() {
+  void testOrFork() {
     // given
     createCaseInstance();
 
@@ -256,7 +256,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testCycle.cmmn"})
   @Test
-  public void testCycle() {
+  void testCycle() {
     // given
     createCaseInstance();
 
@@ -288,7 +288,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitTaskWithIfPart.cmmn"})
   @Test
-  public void testExitTaskWithIfPartSatisfied() {
+  void testExitTaskWithIfPartSatisfied() {
     // given
     createCaseInstance();
 
@@ -317,7 +317,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitTaskWithIfPart.cmmn"})
   @Test
-  public void testExitTaskWithIfPartNotSatisfied() {
+  void testExitTaskWithIfPartNotSatisfied() {
     // given
     createCaseInstance();
 
@@ -346,7 +346,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitCriteriaOnCasePlanModel.cmmn"})
   @Test
-  public void testExitCriteriaOnCasePlanModel() {
+  void testExitCriteriaOnCasePlanModel() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -447,7 +447,7 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitActiveTask.cmmn"})
   @Test
-  public void testExitActiveTask() {
+  void testExitActiveTask() {
     // given
     createCaseInstance();
 

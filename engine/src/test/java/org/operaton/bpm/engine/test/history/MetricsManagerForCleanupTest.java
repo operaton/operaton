@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,27 +23,23 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class MetricsManagerForCleanupTest {
 
   private static final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess("process")
@@ -54,49 +50,43 @@ public class MetricsManagerForCleanupTest {
       .endEvent("end")
       .done();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setTaskMetricsEnabled(true));
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(configuration -> {
+      configuration.setProcessEngineName("metricsEngine");
+      configuration.setTaskMetricsEnabled(true);
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  ManagementService managementService;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected ManagementService managementService;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    taskService = engineRule.getTaskService();
-  }
-
-  @After
-  public void clearDatabase() {
+  @AfterEach
+  void clearDatabase() {
     testRule.deleteHistoryCleanupJobs();
     managementService.deleteTaskMetrics(null);
   }
 
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public int taskMetricHistoryTTL;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public int metric1DaysInThePast;
 
-  @Parameterized.Parameter(2)
+  @Parameter(2)
   public int metric2DaysInThePast;
 
-  @Parameterized.Parameter(3)
+  @Parameter(3)
   public int batchSize;
 
-  @Parameterized.Parameter(4)
+  @Parameter(4)
   public int resultCount;
 
-  @Parameterized.Parameters
+  @Parameters
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
         // all historic batches are old enough to be cleaned up
@@ -109,7 +99,7 @@ public class MetricsManagerForCleanupTest {
         { 5, -6, -7, 1, 1 } });
   }
 
-  @Test
+  @TestTemplate
   public void testFindHistoricBatchIdsForCleanup() {
     // given
     prepareTaskMetrics();

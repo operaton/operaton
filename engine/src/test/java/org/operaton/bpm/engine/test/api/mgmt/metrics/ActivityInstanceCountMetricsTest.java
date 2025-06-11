@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,10 +32,10 @@ import org.operaton.bpm.model.bpmn.Bpmn;
  * @author Daniel Meyer
  *
  */
-public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
+class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
 
   @Test
-  public void testBpmnActivityInstances() {
+  void testBpmnActivityInstances() {
     testRule.deploy(Bpmn.createExecutableProcess("testProcess")
         .operatonHistoryTimeToLive(180)
         .startEvent()
@@ -74,7 +74,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
   }
 
   @Test
-  public void testStandaloneTask() {
+  void testStandaloneTask() {
 
     // given
     // that no activity instances have been executed
@@ -112,7 +112,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
 
   @Deployment
   @Test
-  public void testCmmnActivityInstances() {
+  void testCmmnActivityInstances() {
     // given
     // that no activity instances have been executed
     assertThat(managementService.createMetricsQuery()

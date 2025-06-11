@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -106,8 +106,11 @@ class JsonTreeReadPropertyTest {
 
   @Test
   void shouldFailToReadNonObject() {
-    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.prop("order").prop("nonExisting"));
-    assertThrows(SpinJsonPropertyException.class, () -> orderDetails.prop("roundedPrice").prop("nonExisting"));
+    SpinJsonNode orderNode = jsonNode.prop("order");
+    SpinJsonNode roundedPriceNode = orderDetails.prop("roundedPrice");
+
+    assertThrows(SpinJsonPropertyException.class, () -> orderNode.prop("nonExisting"));
+    assertThrows(SpinJsonPropertyException.class, () -> roundedPriceNode.prop("nonExisting"));
   }
 
   @Test
@@ -130,9 +133,10 @@ class JsonTreeReadPropertyTest {
 
   @Test
   void shouldFailToReadNonStringValue() {
+    SpinJsonNode currenciesNode = orderDetails.prop("currencies");
     assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.stringValue());
     assertThrows(SpinJsonDataFormatException.class, () -> dueUntil.stringValue());
-    assertThrows(SpinDataFormatException.class, () -> orderDetails.prop("currencies").stringValue());
+    assertThrows(SpinDataFormatException.class, currenciesNode::stringValue);
   }
 
   @Test

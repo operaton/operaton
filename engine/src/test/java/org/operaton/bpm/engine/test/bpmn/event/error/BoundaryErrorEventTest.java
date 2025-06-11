@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.bpmn.event.error;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
 
@@ -25,8 +26,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -37,38 +47,44 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
 /**
  * @author Joram Barrez
  * @author Falko Menge
  */
-public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
+public class BoundaryErrorEventTest {
 
-  @Before
-  public void setUp() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  IdentityService identityService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+  HistoryService historyService;
 
+  @BeforeEach
+  void setUp() {
     // Normally the UI will do this automatically for us
     identityService.setAuthenticatedUserId("kermit");
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.clearAuthentication();
-
   }
 
   @Deployment
   @Test
-  public void testCatchErrorOnEmbeddedSubprocess() {
+  void testCatchErrorOnEmbeddedSubprocess() {
     runtimeService.startProcessInstanceByKey("boundaryErrorOnEmbeddedSubprocess");
 
     // After process start, usertask in subprocess should exist
@@ -82,7 +98,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testThrowErrorWithoutErrorCode() {
+  void testThrowErrorWithoutErrorCode() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithoutErrorCode.bpmn20.xml");
     try {
@@ -95,7 +111,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testThrowErrorWithEmptyErrorCode() {
+  void testThrowErrorWithEmptyErrorCode() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithEmptyErrorCode.bpmn20.xml");
     try {
@@ -109,19 +125,19 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorOnEmbeddedSubprocessWithEmptyErrorCode() {
+  void testCatchErrorOnEmbeddedSubprocessWithEmptyErrorCode() {
     testCatchErrorOnEmbeddedSubprocess();
   }
 
   @Deployment
   @Test
-  public void testCatchErrorOnEmbeddedSubprocessWithoutErrorCode() {
+  void testCatchErrorOnEmbeddedSubprocessWithoutErrorCode() {
     testCatchErrorOnEmbeddedSubprocess();
   }
 
   @Deployment
   @Test
-  public void testCatchErrorOfInnerSubprocessOnOuterSubprocess() {
+  void testCatchErrorOfInnerSubprocessOnOuterSubprocess() {
     runtimeService.startProcessInstanceByKey("boundaryErrorTest");
 
     List<Task> tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
@@ -138,13 +154,13 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorInConcurrentEmbeddedSubprocesses() {
+  void testCatchErrorInConcurrentEmbeddedSubprocesses() {
     assertErrorCaughtInConcurrentEmbeddedSubprocesses("boundaryEventTestConcurrentSubprocesses");
   }
 
   @Deployment
   @Test
-  public void testCatchErrorInConcurrentEmbeddedSubprocessesThrownByScriptTask() {
+  void testCatchErrorInConcurrentEmbeddedSubprocessesThrownByScriptTask() {
     assertErrorCaughtInConcurrentEmbeddedSubprocesses("catchErrorInConcurrentEmbeddedSubprocessesThrownByScriptTask");
   }
 
@@ -184,7 +200,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDeeplyNestedErrorThrown() {
+  void testDeeplyNestedErrorThrown() {
 
     // Input = 1 -> error1 will be thrown, which will destroy ALL BUT ONE
     // subprocess, which leads to an end event, which ultimately leads to ending the process instance
@@ -208,7 +224,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testDeeplyNestedErrorThrownOnlyAutomaticSteps() {
+  void testDeeplyNestedErrorThrownOnlyAutomaticSteps() {
     // input == 1 -> error2 is thrown -> caught on subprocess2 -> end event in subprocess -> proc inst end 1
     String procId = runtimeService.startProcessInstanceByKey("deeplyNestedErrorThrown",
             CollectionUtil.singletonMap("input", 1)).getId();
@@ -232,11 +248,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorOnCallActivity-parent.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorOnCallActivity-parent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorOnCallActivity() {
+  void testCatchErrorOnCallActivity() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorOnCallActivity").getId();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
@@ -276,10 +292,10 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
-  public void testUncaughtError() {
+  void testUncaughtError() {
     runtimeService.startProcessInstanceByKey("simpleSubProcess");
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
@@ -295,11 +311,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
 
   @Deployment(resources = {
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testUncaughtErrorOnCallActivity-parent.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testUncaughtErrorOnCallActivity-parent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
-  public void testUncaughtErrorOnCallActivity() {
+  void testUncaughtErrorOnCallActivity() {
     runtimeService.startProcessInstanceByKey("uncaughtErrorOnCallActivity");
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
@@ -314,11 +330,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByCallActivityOnSubprocess.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByCallActivityOnSubprocess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByCallActivityOnSubprocess() {
+  void testCatchErrorThrownByCallActivityOnSubprocess() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorOnSubprocess").getId();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
@@ -335,12 +351,12 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByCallActivityOnCallActivity.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess2ndLevel.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByCallActivityOnCallActivity.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess2ndLevel.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByCallActivityOnCallActivity() {
+  void testCatchErrorThrownByCallActivityOnCallActivity() {
       String procId = runtimeService.startProcessInstanceByKey("catchErrorOnCallActivity2ndLevel").getId();
 
       Task task = taskService.createTaskQuery().singleResult();
@@ -358,7 +374,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorOnParallelMultiInstance() {
+  void testCatchErrorOnParallelMultiInstance() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorOnParallelMi").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(5);
@@ -379,7 +395,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorOnSequentialMultiInstance() {
+  void testCatchErrorOnSequentialMultiInstance() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorOnSequentialMi").getId();
 
     // complete one task
@@ -398,7 +414,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownBySignallableActivityBehaviour() {
+  void testCatchErrorThrownBySignallableActivityBehaviour() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownBySignallableActivityBehaviour").getId();
     assertThat(procId).as("Didn't get a process id from runtime service").isNotNull();
     ActivityInstance processActivityInstance = runtimeService.getActivityInstance(procId);
@@ -410,7 +426,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByJavaDelegateOnServiceTask() {
+  void testCatchErrorThrownByJavaDelegateOnServiceTask() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnServiceTask").getId();
     assertThatErrorHasBeenCaught(procId);
 
@@ -422,21 +438,21 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByJavaDelegateOnServiceTaskNotCancelActivity() {
+  void testCatchErrorThrownByJavaDelegateOnServiceTaskNotCancelActivity() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnServiceTaskNotCancelActiviti").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByJavaDelegateOnServiceTaskWithErrorCode() {
+  void testCatchErrorThrownByJavaDelegateOnServiceTaskWithErrorCode() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnServiceTaskWithErrorCode").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByJavaDelegateOnEmbeddedSubProcess() {
+  void testCatchErrorThrownByJavaDelegateOnEmbeddedSubProcess() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnEmbeddedSubProcess").getId();
     assertThatErrorHasBeenCaught(procId);
 
@@ -448,17 +464,17 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByJavaDelegateOnEmbeddedSubProcessInduction() {
+  void testCatchErrorThrownByJavaDelegateOnEmbeddedSubProcessInduction() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnEmbeddedSubProcessInduction").getId();
     assertThatErrorHasBeenCaught(procId);
   }
 
   @Deployment(resources = {
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-parent.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-parent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByJavaDelegateOnCallActivity() {
+  void testCatchErrorThrownByJavaDelegateOnCallActivity() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-parent").getId();
     assertThatErrorHasBeenCaught(procId);
 
@@ -469,10 +485,10 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
   })
   @Test
-  public void testUncaughtErrorThrownByJavaDelegateOnServiceTask() {
+  void testUncaughtErrorThrownByJavaDelegateOnServiceTask() {
     try {
       runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-child");
     } catch (BpmnError e) {
@@ -480,11 +496,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownByExecuteOfAbstractBpmnActivityBehavior() {
+  void testCatchExceptionThrownByExecuteOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -497,11 +513,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByExecuteOfAbstractBpmnActivityBehavior() {
+  void testCatchErrorThrownByExecuteOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -514,11 +530,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownBySignalMethodOfAbstractBpmnActivityBehavior() {
+  void testCatchExceptionThrownBySignalMethodOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -542,7 +558,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchExceptionExpressionThrownByFollowUpTask() {
+  void testCatchExceptionExpressionThrownByFollowUpTask() {
     Map<String, Object> vars = throwException();
     try {
       runtimeService.startProcessInstanceByKey("testProcess", vars);
@@ -556,7 +572,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchExceptionClassDelegateThrownByFollowUpTask() {
+  void testCatchExceptionClassDelegateThrownByFollowUpTask() {
     Map<String, Object> vars = throwException();
     try {
       runtimeService.startProcessInstanceByKey("testProcess", vars);
@@ -570,7 +586,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchExceptionExpressionThrownByFollowUpScopeTask() {
+  void testCatchExceptionExpressionThrownByFollowUpScopeTask() {
     Map<String, Object> vars = throwException();
     try {
       runtimeService.startProcessInstanceByKey("testProcess", vars);
@@ -582,11 +598,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByAbstractBpmnActivityBehavior.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownBySignalOfAbstractBpmnActivityBehavior() {
+  void testCatchErrorThrownBySignalOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
     assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
@@ -608,11 +624,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownByExecuteOfDelegateExpression() {
+  void testCatchExceptionThrownByExecuteOfDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     variables.putAll(throwException());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
@@ -627,11 +643,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByExecuteOfDelegateExpression() {
+  void testCatchErrorThrownByExecuteOfDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     variables.putAll(throwError());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
@@ -646,11 +662,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchExceptionThrownBySignalMethodOfDelegateExpression() {
+  void testCatchExceptionThrownBySignalMethodOfDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
@@ -673,11 +689,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     taskService.complete(userTask.getId());
   }
 
-  @Deployment( resources = {
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByDelegateExpression.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownBySignalOfDelegateExpression() {
+  void testCatchErrorThrownBySignalOfDelegateExpression() {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
@@ -701,11 +717,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testUncaughtErrorThrownByJavaDelegateOnCallActivity-parent.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testUncaughtErrorThrownByJavaDelegateOnCallActivity-parent.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
   })
   @Test
-  public void testUncaughtErrorThrownByJavaDelegateOnCallActivity() {
+  void testUncaughtErrorThrownByJavaDelegateOnCallActivity() {
     try {
       runtimeService.startProcessInstanceByKey("uncaughtErrorThrownByJavaDelegateOnCallActivity-parent");
     } catch (BpmnError e) {
@@ -715,7 +731,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskSequential() {
+  void testCatchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskSequential() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("executionsBeforeError", 2);
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskSequential", variables).getId();
@@ -729,7 +745,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskParallel() {
+  void testCatchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskParallel() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("executionsBeforeError", 2);
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskParallel", variables).getId();
@@ -743,7 +759,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testErrorThrownByJavaDelegateNotCaughtByOtherEventType() {
+  void testErrorThrownByJavaDelegateNotCaughtByOtherEventType() {
     String procId = runtimeService.startProcessInstanceByKey("testErrorThrownByJavaDelegateNotCaughtByOtherEventType").getId();
     assertThatErrorHasBeenCaught(procId);
   }
@@ -774,7 +790,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testConcurrentExecutionsInterruptedOnDestroyScope() {
+  void testConcurrentExecutionsInterruptedOnDestroyScope() {
 
     // this test makes sure that if the first concurrent execution destroys the scope
     // (due to the interrupting boundary catch), the second concurrent execution does not
@@ -787,7 +803,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByExpressionOnServiceTask() {
+  void testCatchErrorThrownByExpressionOnServiceTask() {
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchErrorThrownByExpressionOnServiceTask", variables).getId();
@@ -796,7 +812,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByDelegateExpressionOnServiceTask() {
+  void testCatchErrorThrownByDelegateExpressionOnServiceTask() {
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchErrorThrownByDelegateExpressionOnServiceTask", variables).getId();
@@ -809,7 +825,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorThrownByJavaDelegateProvidedByDelegateExpressionOnServiceTask() {
+  void testCatchErrorThrownByJavaDelegateProvidedByDelegateExpressionOnServiceTask() {
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchErrorThrownByJavaDelegateProvidedByDelegateExpressionOnServiceTask", variables).getId();
@@ -818,7 +834,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchExceptionThrownByExpressionOnServiceTask() {
+  void testCatchExceptionThrownByExpressionOnServiceTask() {
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchExceptionThrownByExpressionOnServiceTask", variables).getId();
@@ -827,7 +843,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchExceptionThrownByScriptTask() {
+  void testCatchExceptionThrownByScriptTask() {
     HashMap<String, Object> variables = new HashMap<>();
     String procId = runtimeService.startProcessInstanceByKey("testCatchExceptionThrownByScriptTask", variables).getId();
     assertThatExceptionHasBeenCaught(procId);
@@ -835,7 +851,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchSpecializedExceptionThrownByDelegate() {
+  void testCatchSpecializedExceptionThrownByDelegate() {
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchSpecializedExceptionThrownByDelegate", variables).getId();
@@ -844,7 +860,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUncaughtRuntimeException() {
+  void testUncaughtRuntimeException() {
     try {
       runtimeService.startProcessInstanceByKey("testUncaughtRuntimeException");
       fail("error should not be caught");
@@ -855,7 +871,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUncaughtBusinessExceptionWrongErrorCode() {
+  void testUncaughtBusinessExceptionWrongErrorCode() {
     try {
       runtimeService.startProcessInstanceByKey("testUncaughtBusinessExceptionWrongErrorCode");
       fail("error should not be caught");
@@ -866,7 +882,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorOnSubprocessThrownByNonInterruptingEventSubprocess() {
+  void testCatchErrorOnSubprocessThrownByNonInterruptingEventSubprocess() {
     runtimeService.startProcessInstanceByKey("testProcess");
     EventSubscription messageSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
     runtimeService.messageEventReceived("message", messageSubscription.getExecutionId());
@@ -880,7 +896,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorOnSubprocessThrownByInterruptingEventSubprocess() {
+  void testCatchErrorOnSubprocessThrownByInterruptingEventSubprocess() {
     runtimeService.startProcessInstanceByKey("testProcess");
     EventSubscription messageSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
     runtimeService.messageEventReceived("message", messageSubscription.getExecutionId());
@@ -894,7 +910,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorOnSubprocessThrownByNestedEventSubprocess() {
+  void testCatchErrorOnSubprocessThrownByNestedEventSubprocess() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     // trigger outer event subprocess
@@ -914,7 +930,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchErrorOnSubprocessSetsErrorVariables(){
+  void testCatchErrorOnSubprocessSetsErrorVariables(){
     runtimeService.startProcessInstanceByKey("Process_1");
     //the name used in "operaton:errorCodeVariable" in the BPMN
     String variableName = "errorVariable";
@@ -923,12 +939,12 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     checkErrorVariable(variableName, errorCode);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/ThrowErrorProcess.bpmn",
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByCallActivityOnSubprocessSetsErrorCodeVariable.bpmn"
   })
   @Test
-  public void testCatchErrorThrownByCallActivityOnSubprocessSetsErrorVariables(){
+  void testCatchErrorThrownByCallActivityOnSubprocessSetsErrorVariables(){
     runtimeService.startProcessInstanceByKey("Process_1");
     //the name used in "operaton:errorCodeVariable" in the BPMN
     String variableName = "errorVariable";
@@ -938,11 +954,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     checkErrorVariable(variableName, errorCode);
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByMultiInstanceSubProcessSetsErrorCodeVariable.bpmn"
   })
   @Test
-  public void testCatchErrorThrownByMultiInstanceSubProcessSetsErrorVariables(){
+  void testCatchErrorThrownByMultiInstanceSubProcessSetsErrorVariables(){
     runtimeService.startProcessInstanceByKey("Process_1");
     //the name used in "operaton:errorCodeVariable" in the BPMN
     String variableName = "errorVariable";
@@ -958,12 +974,12 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     assertThat(errorVariable.getValue()).isEqualTo(expectedValue);
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchBpmnErrorThrownByJavaDelegateInCallActivityOnSubprocessSetsErrorVariables.bpmn",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithThrownError.bpmn"
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchBpmnErrorThrownByJavaDelegateInCallActivityOnSubprocessSetsErrorVariables.bpmn",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithThrownError.bpmn"
   })
   @Test
-  public void testCatchBpmnErrorThrownByJavaDelegateInCallActivityOnSubprocessSetsErrorVariables(){
+  void testCatchBpmnErrorThrownByJavaDelegateInCallActivityOnSubprocessSetsErrorVariables(){
     runtimeService.startProcessInstanceByKey("Process_1");
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
@@ -977,7 +993,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/error/reviewSalesLead.bpmn20.xml"})
   @Test
-  public void testReviewSalesLeadProcess() {
+  void testReviewSalesLeadProcess() {
 
     // After starting the process, a task should be assigned to the 'initiator' (normally set by GUI)
     Map<String, Object> variables = new HashMap<>();

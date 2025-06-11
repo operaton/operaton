@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,9 +56,9 @@ public class MultiTenancySetTaskPropertyTest {
       .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   // populated by data in constructor
   protected final String operationName;
@@ -108,7 +108,7 @@ public class MultiTenancySetTaskPropertyTest {
   }
 
   @BeforeEach
-  public void init() {
+  void init() {
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
 
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
@@ -118,7 +118,7 @@ public class MultiTenancySetTaskPropertyTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationForTaskWithAuthenticatedTenant() {
+  void shouldSetOperationForTaskWithAuthenticatedTenant() {
     // given
     identityService.setAuthentication("aUserId", null, Collections.singletonList(TENANT_ONE));
 
@@ -130,7 +130,7 @@ public class MultiTenancySetTaskPropertyTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationForTaskWithNoAuthenticatedTenant() {
+  void shouldSetOperationForTaskWithNoAuthenticatedTenant() {
     // given
     identityService.setAuthentication("aUserId", null);
 
@@ -143,7 +143,7 @@ public class MultiTenancySetTaskPropertyTest {
   }
 
   @TestTemplate
-  public void shouldSetOperationForTaskWithDisabledTenantCheck() {
+  void shouldSetOperationForTaskWithDisabledTenantCheck() {
     // given
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);

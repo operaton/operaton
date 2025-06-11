@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,30 +21,41 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Joram Barrez
  */
-public class StandaloneTaskTest extends PluggableProcessEngineTest {
+class StandaloneTaskTest {
 
-  @Before
-  public void setUp() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
+  IdentityService identityService;
+  TaskService taskService;
+
+  @BeforeEach
+  void setUp() {
     identityService.saveUser(identityService.newUser("kermit"));
     identityService.saveUser(identityService.newUser("gonzo"));
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("gonzo");
     List<Task> tasks = taskService.createTaskQuery().list();
@@ -54,7 +65,7 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCreateToComplete() {
+  void testCreateToComplete() {
 
     // Create and save task
     Task task = taskService.newTask();
@@ -92,7 +103,7 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testOptimisticLockingThrownOnMultipleUpdates() {
+  void testOptimisticLockingThrownOnMultipleUpdates() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -116,7 +127,7 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
 
   // See http://jira.codehaus.org/browse/ACT-1290
   @Test
-  public void testRevisionUpdatedOnSave() {
+  void testRevisionUpdatedOnSave() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
     assertThat(((TaskEntity) task).getRevision()).isEqualTo(1);
@@ -131,7 +142,7 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testSaveTaskWithGenericResourceId() {
+  void testSaveTaskWithGenericResourceId() {
     Task task = taskService.newTask("*");
     try {
       taskService.saveTask(task);
@@ -142,7 +153,7 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnUpdate() {
+  void shouldSetLastUpdatedOnUpdate() {
     // given
     Task task = taskService.newTask("shouldSetLastUpdatedOnUpdate");
     task.setAssignee("myself");
@@ -161,7 +172,7 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldNotSetLastUpdatedOnCreate() {
+  void shouldNotSetLastUpdatedOnCreate() {
     // given
     Task task = taskService.newTask("shouldNotSetLastUpdatedOnCreate");
     task.setAssignee("myself");

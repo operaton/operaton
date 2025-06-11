@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.resources;
 
-import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +27,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.ibatis.jdbc.RuntimeSqlException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -41,62 +44,45 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class RuntimeByteArrayTest {
+class RuntimeByteArrayTest {
   protected static final String WORKER_ID = "aWorkerId";
   protected static final long LOCK_TIME = 10000L;
   protected static final String TOPIC_NAME = "externalTaskTopic";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected MigrationTestRule migrationRule = new MigrationTestRule(engineRule);
-  protected BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
 
+  ProcessEngineConfigurationImpl configuration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+  ExternalTaskService externalTaskService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(migrationRule).around(testRule);
+  String id;
 
-  protected ProcessEngineConfigurationImpl configuration;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected TaskService taskService;
-  protected RepositoryService repositoryService;
-  protected ExternalTaskService externalTaskService;
-
-  protected String id;
-
-  @Before
-  public void initServices() {
-    configuration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-    externalTaskService = engineRule.getExternalTaskService();
-  }
-
-  @After
-  public void removeBatches() {
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     if (id != null) {
       // delete task
       taskService.deleteTask(id, true);
@@ -105,7 +91,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testVariableBinaryForFileValues() {
+  void testVariableBinaryForFileValues() {
     // given
     BpmnModelInstance instance = createProcess();
 
@@ -124,7 +110,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testVariableBinary() {
+  void testVariableBinary() {
     byte[] binaryContent = "some binary content".getBytes();
 
     // given
@@ -145,7 +131,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testBatchBinary() {
+  void testBatchBinary() {
     // when
     helper.migrateProcessInstancesAsync(15);
 
@@ -158,7 +144,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testExceptionStacktraceBinary() {
+  void testExceptionStacktraceBinary() {
     // given
     BpmnModelInstance instance = createFailingProcess();
     testRule.deploy(instance);
@@ -182,7 +168,7 @@ public class RuntimeByteArrayTest {
   }
 
   @Test
-  public void testExternalTaskStacktraceBinary() {
+  void testExternalTaskStacktraceBinary() {
     // given
     testRule.deploy("org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");

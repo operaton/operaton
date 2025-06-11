@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,12 +25,12 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
 import org.operaton.bpm.engine.test.util.TestconfigProperties;
 
-public class ProcessEngineDetailsTest {
+class ProcessEngineDetailsTest {
 
   // process engine version and edition ////////////////////////////////////////////////////////////
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotTrimSuffix() {
+  void shouldAssertProcessEngineVersionSnapshotTrimSuffix() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0-SNAPSHOT", true);
 
@@ -40,7 +40,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionAlphaTrimSuffix() {
+  void shouldAssertProcessEngineVersionAlphaTrimSuffix() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0-alpha1", true);
 
@@ -50,7 +50,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotAlphaEETrimSuffix() {
+  void shouldAssertProcessEngineVersionSnapshotAlphaEETrimSuffix() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0-alpha1-ee", true);
 
@@ -60,7 +60,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotMinorTrimSuffix() {
+  void shouldAssertProcessEngineVersionSnapshotMinorTrimSuffix() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0", true);
 
@@ -70,7 +70,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotMinorEETrimSuffix() {
+  void shouldAssertProcessEngineVersionSnapshotMinorEETrimSuffix() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0-ee", true);
 
@@ -80,7 +80,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotPatchTrimSuffix() {
+  void shouldAssertProcessEngineVersionSnapshotPatchTrimSuffix() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.1-ee", true);
 
@@ -90,7 +90,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshot() {
+  void shouldAssertProcessEngineVersionSnapshot() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0-SNAPSHOT", false);
 
@@ -100,7 +100,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionAlpha() {
+  void shouldAssertProcessEngineVersionAlpha() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0-alpha1", false);
 
@@ -110,7 +110,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotAlphaEE() {
+  void shouldAssertProcessEngineVersionSnapshotAlphaEE() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0-alpha1-ee", false);
 
@@ -120,7 +120,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotMinor() {
+  void shouldAssertProcessEngineVersionSnapshotMinor() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0", false);
 
@@ -130,7 +130,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotMinorEE() {
+  void shouldAssertProcessEngineVersionSnapshotMinorEE() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.0-ee", false);
 
@@ -140,7 +140,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertProcessEngineVersionSnapshotPatch() {
+  void shouldAssertProcessEngineVersionSnapshotPatch() {
     // when
     ProcessEngineDetails engineInfo = parseProcessEngineVersion("7.14.1-ee", false);
 
@@ -150,7 +150,7 @@ public class ProcessEngineDetailsTest {
   }
 
   @Test
-  public void shouldAssertCurrentProcessEngineVersionFromPropertiesFile() {
+  void shouldAssertCurrentProcessEngineVersionFromPropertiesFile() {
     // when
     // the version is not available from the package
     ProcessEngineDetails engineInfo = parseProcessEngineVersion(false);

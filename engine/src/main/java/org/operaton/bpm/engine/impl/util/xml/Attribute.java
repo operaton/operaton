@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,23 +21,23 @@ package org.operaton.bpm.engine.impl.util.xml;
  * @author Joram Barrez
  */
 public class Attribute {
-  
+
   protected String name;
-  
+
   protected String value;
 
   protected String uri;
-  
+
   public Attribute(String name, String value) {
     this.name = name;
     this.value = value;
   }
-  
+
   public Attribute(String name, String value, String uri) {
     this(name, value);
     this.uri = uri;
   }
-  
+
   public String getName() {
     return name;
   }
@@ -61,5 +61,5 @@ public class Attribute {
   public void setUri(String uri) {
     this.uri = uri;
   }
-  
+
 }

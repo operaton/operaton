@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,7 +18,13 @@ package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
@@ -26,20 +32,28 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
+class CompensateEventHistoryTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testBoundaryCompensationHandlerHistory.bpmn20.xml")
   @Test
-  public void testBoundaryCompensationHandlerHistoryActivityInstance() {
+  void testBoundaryCompensationHandlerHistoryActivityInstance() {
     // given a process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("boundaryHandlerProcess");
 
@@ -68,9 +82,9 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testBoundaryCompensationHandlerHistory.bpmn20.xml")
-  @Ignore("Fix CAM-4351")
+  @Disabled("Fix CAM-4351")
   @Test
-  public void testBoundaryCompensationHandlerHistoryVariableInstance() {
+  void testBoundaryCompensationHandlerHistoryVariableInstance() {
     // given a process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("boundaryHandlerProcess");
 
@@ -99,7 +113,7 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testDefaultCompensationHandlerHistory.bpmn20.xml")
   @Test
-  public void testDefaultCompensationHandlerHistoryActivityInstance() {
+  void testDefaultCompensationHandlerHistoryActivityInstance() {
     // given a process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("defaultHandlerProcess");
 
@@ -132,9 +146,9 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testDefaultCompensationHandlerHistory.bpmn20.xml")
-  @Ignore("Fix CAM-4351")
+  @Disabled("Fix CAM-4351")
   @Test
-  public void testDefaultCompensationHandlerHistoryVariableInstance() {
+  void testDefaultCompensationHandlerHistoryVariableInstance() {
     // given a process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("defaultHandlerProcess");
 

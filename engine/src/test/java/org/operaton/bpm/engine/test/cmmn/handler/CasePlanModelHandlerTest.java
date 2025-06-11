@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,18 +33,18 @@ import org.operaton.bpm.model.cmmn.instance.ConditionExpression;
 import org.operaton.bpm.model.cmmn.instance.ExitCriterion;
 import org.operaton.bpm.model.cmmn.instance.IfPart;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
+class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
 
   protected CasePlanModelHandler handler = new CasePlanModelHandler();
 
   @Test
-  public void testCasePlanModelActivityName() {
+  void testCasePlanModelActivityName() {
     // given:
     // the case plan model has a name "A CasePlanModel"
     String name = "A CasePlanModel";
@@ -58,7 +58,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCasePlanModelActivityType() {
+  void testCasePlanModelActivityType() {
     // given
 
     // when
@@ -70,7 +70,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCasePlanModelDescription() {
+  void testCasePlanModelDescription() {
     // given
     String description = "This is a casePlanModal";
     casePlanModel.setDescription(description);
@@ -83,7 +83,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a case plan model
 
     // when
@@ -95,7 +95,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a casePlanModel
 
     // when
@@ -106,7 +106,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -121,7 +121,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExitCriteria() {
+  void testExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -157,7 +157,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleExitCriteria() {
+  void testMultipleExitCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -207,7 +207,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testAutoComplete() {
+  void testAutoComplete() {
     // given
     casePlanModel.setAutoComplete(true);
 

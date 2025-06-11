@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,63 +22,53 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Tassilo Weidner
  */
-public class RootProcessInstanceTest {
+class RootProcessInstanceTest {
 
-  protected final String CALLED_PROCESS_KEY = "calledProcess";
-  protected final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  FormService formService;
+
+  static final String CALLED_PROCESS_KEY = "calledProcess";
+  static final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
     .startEvent()
       .userTask("userTask")
     .endEvent().done();
 
-  protected final String CALLED_AND_CALLING_PROCESS_KEY = "calledAndCallingProcess";
-  protected final BpmnModelInstance CALLED_AND_CALLING_PROCESS =
+  static final String CALLED_AND_CALLING_PROCESS_KEY = "calledAndCallingProcess";
+  static final BpmnModelInstance CALLED_AND_CALLING_PROCESS =
     Bpmn.createExecutableProcess(CALLED_AND_CALLING_PROCESS_KEY)
     .startEvent()
       .callActivity()
         .calledElement(CALLED_PROCESS_KEY)
     .endEvent().done();
 
-  protected final String CALLING_PROCESS_KEY = "callingProcess";
-  protected final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
+  static final String CALLING_PROCESS_KEY = "callingProcess";
+  static final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
     .startEvent()
       .callActivity()
         .calledElement(CALLED_AND_CALLING_PROCESS_KEY)
     .endEvent().done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RuntimeService runtimeService;
-  protected FormService formService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    formService = engineRule.getFormService();
-  }
-
   @Test
-  public void shouldPointToItself() {
+  void shouldPointToItself() {
     // given
     testRule.deploy(CALLED_PROCESS);
 
@@ -93,7 +83,7 @@ public class RootProcessInstanceTest {
   }
 
   @Test
-  public void shouldPointToItselfBySubmittingStartForm() {
+  void shouldPointToItselfBySubmittingStartForm() {
     // given
     DeploymentWithDefinitions deployment = testRule.deploy(CALLED_PROCESS);
 
@@ -111,7 +101,7 @@ public class RootProcessInstanceTest {
   }
 
   @Test
-  public void shouldPointToItselfByStartingAtActivity() {
+  void shouldPointToItselfByStartingAtActivity() {
     // given
     testRule.deploy(CALLED_PROCESS);
 
@@ -128,7 +118,7 @@ public class RootProcessInstanceTest {
   }
 
   @Test
-  public void shouldPointToRoot() {
+  void shouldPointToRoot() {
     // given
     testRule.deploy(CALLED_PROCESS);
     testRule.deploy(CALLED_AND_CALLING_PROCESS);
@@ -160,7 +150,7 @@ public class RootProcessInstanceTest {
   }
 
   @Test
-  public void shouldPointToRootWithInitialCallAfterParallelGateway() {
+  void shouldPointToRootWithInitialCallAfterParallelGateway() {
     // given
     testRule.deploy(CALLED_PROCESS);
 

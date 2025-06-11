@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,11 +38,12 @@ public class SpinClassloadingTest extends AbstractFoxPlatformIntegrationTest {
   @Deployment(name="pa")
   public static final WebArchive createPaDeployment() {
 
-    return initWebArchiveDeployment()
-      .addAsResource("org/operaton/bpm/integrationtest/functional/spin/SpinClassloadingTest.bpmn")
-      .addClass(XmlSerializable.class)
-      .addClass(SpinVariableDelegate.class)
-      .addClass(SpinJsonPathDelegate.class);
+    var webArchive = initWebArchiveDeployment().addAsResource("org/operaton/bpm/integrationtest/functional/spin/SpinClassloadingTest.bpmn")
+            .addClass(XmlSerializable.class)
+            .addClass(SpinVariableDelegate.class)
+            .addClass(SpinJsonPathDelegate.class);
+    TestContainer.addContainerSpecificResourcesForSpin(webArchive);
+    return webArchive;
   }
 
   @Deployment(name="client-app")

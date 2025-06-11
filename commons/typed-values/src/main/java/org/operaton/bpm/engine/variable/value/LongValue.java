@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,7 +20,6 @@ package org.operaton.bpm.engine.variable.value;
  * <p>A {@link PrimitiveValue} corresponding to the Java type {@link Long}.</p>
  *
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface LongValue extends PrimitiveValue<Long> {
 

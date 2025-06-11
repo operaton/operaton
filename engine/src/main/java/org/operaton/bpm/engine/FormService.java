@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -65,10 +65,12 @@ public interface FormService {
   Object getRenderedStartForm(String processDefinitionId, String formEngineName);
 
   /**
-   * @deprecated use {@link #submitStartForm(String, Map)}
+   * @deprecated Use {@link #submitStartForm(String, Map)} instead.
    * */
-  @Deprecated
-  ProcessInstance submitStartFormData(String processDefinitionId, Map<String, String> properties);
+  @Deprecated(forRemoval = true, since = "1.0")
+  default ProcessInstance submitStartFormData(String processDefinitionId, Map<String, String> properties) {
+    return submitStartForm(processDefinitionId, (Map) properties);
+  }
 
   /**
    * Start a new process instance with the user data that was entered as properties in a start form.
@@ -80,10 +82,13 @@ public interface FormService {
   ProcessInstance submitStartForm(String processDefinitionId, Map<String, Object> properties);
 
   /**
-   * @deprecated use {@link #submitStartForm(String, String, Map)}
+   * @deprecated Use {@link #submitStartForm(String, String, Map)} instead.
    */
-  @Deprecated
-  ProcessInstance submitStartFormData(String processDefinitionId, String businessKey, Map<String, String> properties);
+  @Deprecated(forRemoval = true, since = "1.0")
+  default ProcessInstance submitStartFormData(String processDefinitionId, String businessKey,
+                                         Map<String, String> properties) {
+    return submitStartForm(processDefinitionId, businessKey, (Map) properties);
+  }
 
   /**
    * Start a new process instance with the user data that was entered as properties in a start form.
@@ -163,9 +168,12 @@ public interface FormService {
   Object getRenderedTaskForm(String taskId, String formEngineName);
 
   /**
-   * @deprecated use {@link #submitTaskForm(String, Map)} */
-  @Deprecated
-  void submitTaskFormData(String taskId, Map<String, String> properties);
+   * @deprecated Use {@link #submitTaskForm(String, Map)} instead.
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
+  default void submitTaskFormData(String taskId, Map<String, String> properties) {
+    submitTaskForm(taskId, (Map) properties);
+  }
 
   /**
    * Completes a task with the user data that was entered as properties in a task form.

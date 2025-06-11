@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -85,15 +85,15 @@ import org.operaton.bpm.engine.variable.Variables;
 class BatchSetRemovalTimeNonHierarchicalTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
-  protected static BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
+  BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
 
-  protected final Date REMOVAL_TIME = testRule.REMOVAL_TIME;
+  protected final Date removalTime = testRule.REMOVAL_TIME;
 
-  protected final Date CREATE_TIME = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  protected static final Date CREATE_TIME = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   protected RuntimeService runtimeService;
   protected DecisionService decisionService;
@@ -128,7 +128,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -136,9 +136,9 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // then
-    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -166,7 +166,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricDecisionInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -174,9 +174,9 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // then
-    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -207,7 +207,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -220,8 +220,8 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicDecisionInputInstances = historicDecisionInstance.getInputs();
 
     // then
-    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicDecisionInputInstances.get(1).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicDecisionInputInstances.get(1).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -252,7 +252,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricDecisionInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -265,7 +265,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicDecisionInputInstances = historicDecisionInstance.getInputs();
 
     // then
-    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -295,7 +295,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -308,7 +308,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicDecisionOutputInstances = historicDecisionInstance.getOutputs();
 
     // then
-    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -339,7 +339,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricDecisionInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -352,7 +352,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicDecisionOutputInstances = historicDecisionInstance.getOutputs();
 
     // then
-    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -370,7 +370,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -378,7 +378,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicProcessInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
 
     // then
-    assertThat(historicProcessInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicProcessInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -391,7 +391,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -401,7 +401,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
       .singleResult();
 
     // then
-    assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -414,7 +414,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -422,7 +422,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery().singleResult();
 
     // then
-    assertThat(historicTaskInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicTaskInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -440,7 +440,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -451,7 +451,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
             .singleResult();
 
     // then
-    assertThat(authorization.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(authorization.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -472,7 +472,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -515,7 +515,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
 
     testRule.syncExec(
         historyService.setRemovalTimeToHistoricProcessInstances()
-            .absoluteRemovalTime(REMOVAL_TIME)
+            .absoluteRemovalTime(removalTime)
             .byQuery(query)
             .executeAsync()
     );
@@ -526,7 +526,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
 
     assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
-        .containsExactly(tuple(REMOVAL_TIME, processInstanceId, processInstanceId));
+        .containsExactly(tuple(removalTime, processInstanceId, processInstanceId));
   }
 
   @Test
@@ -558,7 +558,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
         historyService.setRemovalTimeToHistoricProcessInstances()
-            .absoluteRemovalTime(REMOVAL_TIME)
+            .absoluteRemovalTime(removalTime)
             .byQuery(query)
             .executeAsync()
     );
@@ -585,7 +585,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -593,7 +593,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
     // then
-    assertThat(historicVariableInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicVariableInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -609,7 +609,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -617,7 +617,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery().singleResult();
 
     // then
-    assertThat(historicDetail.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDetail.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -635,7 +635,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -643,7 +643,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicExternalTaskLog = historyService.createHistoricExternalTaskLogQuery().singleResult();
 
     // then
-    assertThat(historicExternalTaskLog.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicExternalTaskLog.getRemovalTime()).isEqualTo(removalTime);
   }
 
   /**
@@ -666,7 +666,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -694,7 +694,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -704,7 +704,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
       .singleResult();
 
     // then
-    assertThat(job.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(job.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -726,7 +726,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -734,7 +734,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicIncident = historyService.createHistoricIncidentQuery().singleResult();
 
     // then
-    assertThat(historicIncident.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicIncident.getRemovalTime()).isEqualTo(removalTime);
   }
 
   /**
@@ -761,7 +761,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -791,7 +791,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -799,7 +799,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     userOperationLog = historyService.createUserOperationLogQuery().singleResult();
 
     // then
-    assertThat(userOperationLog.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(userOperationLog.getRemovalTime()).isEqualTo(removalTime);
   }
 
   /**
@@ -826,7 +826,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -852,7 +852,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -860,7 +860,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     identityLinkLog = historyService.createHistoricIdentityLinkLogQuery().singleResult();
 
     // then
-    assertThat(identityLinkLog.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(identityLinkLog.getRemovalTime()).isEqualTo(removalTime);
   }
 
   /**
@@ -883,7 +883,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -907,7 +907,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query.processInstanceId(instance1))
         .executeAsync()
     );
@@ -943,7 +943,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -951,7 +951,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     comment = taskService.getTaskComments(taskId).get(0);
 
     // then
-    assertThat(comment.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(comment.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -971,7 +971,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -979,7 +979,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     comment = taskService.getProcessInstanceComments(processInstanceId).get(0);
 
     // then
-    assertThat(comment.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(comment.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1003,7 +1003,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1011,7 +1011,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     attachment = taskService.getTaskAttachments(taskId).get(0);
 
     // then
-    assertThat(attachment.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(attachment.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1030,7 +1030,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1038,7 +1038,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     attachment = taskService.getProcessInstanceAttachments(processInstanceId).get(0);
 
     // then
-    assertThat(attachment.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(attachment.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1064,7 +1064,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1072,7 +1072,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(attachment.getContentId());
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1095,7 +1095,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1103,7 +1103,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1130,7 +1130,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1138,7 +1138,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1169,7 +1169,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1177,7 +1177,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1210,7 +1210,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1218,7 +1218,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1250,7 +1250,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1258,7 +1258,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1291,7 +1291,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricDecisionInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1299,7 +1299,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1331,7 +1331,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1339,7 +1339,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1372,7 +1372,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricDecisionInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1380,7 +1380,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1400,7 +1400,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricBatches()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1410,7 +1410,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
       .singleResult();
 
     // then
-    assertThat(historicBatch.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicBatch.getRemovalTime()).isEqualTo(removalTime);
 
     // clear database
     managementService.deleteBatch(batch.getId(), true);
@@ -1435,7 +1435,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricBatches()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1445,7 +1445,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
       .singleResult();
 
     // then
-    assertThat(historicJobLog.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicJobLog.getRemovalTime()).isEqualTo(removalTime);
 
     // clear database
     managementService.deleteBatch(batch.getId(), true);
@@ -1479,7 +1479,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricBatches()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1487,7 +1487,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     byteArrayEntity = testRule.findByteArrayById(historicJobLog.getExceptionByteArrayId());
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
 
     // clear database
     managementService.deleteBatch(batch.getId(), true);
@@ -1513,7 +1513,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricBatches()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .executeAsync()
     );
@@ -1521,7 +1521,7 @@ class BatchSetRemovalTimeNonHierarchicalTest {
     historicIncident = historyService.createHistoricIncidentQuery().singleResult();
 
     // then
-    assertThat(historicIncident.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicIncident.getRemovalTime()).isEqualTo(removalTime);
 
     // clear database
     managementService.deleteBatch(batch.getId(), true);

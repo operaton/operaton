@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,22 +26,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.impl.mock.Mocks;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.engine.test.mock.Mocks;
 
 /**
  * @author Tassilo Weidner
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class MocksTest {
+class MocksTest {
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
 
   @Test
-  public void testMethodsOfMocksAPI() {
+  void testMethodsOfMocksAPI() {
     //given
     HashMap<String, Object> map = new HashMap<>();
 
@@ -72,13 +72,13 @@ public class MocksTest {
 
   @Test
   @Deployment
-  public void testMockAvailabilityInScriptTask() {
+  void testMockAvailabilityInScriptTask() {
     testMockAvailability();
   }
 
   @Test
   @Deployment
-  public void testMockAvailabilityInExpressionLanguage() {
+  void testMockAvailabilityInExpressionLanguage() {
     testMockAvailability();
   }
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,10 +45,10 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class BatchQueryTest {
+class BatchQueryTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
   protected BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
@@ -58,13 +58,13 @@ public class BatchQueryTest {
   protected HistoryService historyService;
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
     ClockUtil.reset();
   }
 
   @Test
-  public void testBatchQuery() {
+  void testBatchQuery() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);
@@ -84,7 +84,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryResult() {
+  void testBatchQueryResult() {
     // given
     ClockUtil.setCurrentTime(new Date());
     Batch batch = helper.migrateProcessInstancesAsync(1);
@@ -111,7 +111,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryById() {
+  void testBatchQueryById() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -125,7 +125,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByIdNull() {
+  void testBatchQueryByIdNull() {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.batchId(null);
@@ -137,7 +137,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByType() {
+  void testBatchQueryByType() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -150,7 +150,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByNonExistingType() {
+  void testBatchQueryByNonExistingType() {
     // given
     helper.migrateProcessInstancesAsync(1);
 
@@ -162,7 +162,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByTypeNull() {
+  void testBatchQueryByTypeNull() {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.type(null);
@@ -174,7 +174,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryCount() {
+  void testBatchQueryCount() {
     // given
     helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -187,7 +187,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderByIdAsc() {
+  void testBatchQueryOrderByIdAsc() {
     // given
     helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -200,7 +200,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderByIdDec() {
+  void testBatchQueryOrderByIdDec() {
     // given
     helper.migrateProcessInstancesAsync(1);
     helper.migrateProcessInstancesAsync(1);
@@ -213,7 +213,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderingPropertyWithoutOrder() {
+  void testBatchQueryOrderingPropertyWithoutOrder() {
     var batchQuery = managementService.createBatchQuery().orderById();
     try {
       batchQuery.singleResult();
@@ -226,7 +226,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryOrderWithoutOrderingProperty() {
+  void testBatchQueryOrderWithoutOrderingProperty() {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.asc();
@@ -239,7 +239,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryBySuspendedBatches() {
+  void testBatchQueryBySuspendedBatches() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);
@@ -258,7 +258,7 @@ public class BatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryByActiveBatches() {
+  void testBatchQueryByActiveBatches() {
     // given
     Batch batch1 = helper.migrateProcessInstancesAsync(1);
     Batch batch2 = helper.migrateProcessInstancesAsync(1);

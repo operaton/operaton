@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyCaseTaskTest {
+class MultiTenancyCaseTaskTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -49,15 +49,15 @@ public class MultiTenancyCaseTaskTest {
   protected static final String CASE_TASK_ID = "PI_CaseTask_1";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected CaseService caseService;
   protected RepositoryService repositoryService;
 
   @Test
-  public void testStartCaseInstanceWithDeploymentBinding() {
+  void testStartCaseInstanceWithDeploymentBinding() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_DEPLOYMENT, CMMN_CASE);
     testRule.deployForTenant(TENANT_TWO, CMMN_DEPLOYMENT, CMMN_CASE);
@@ -71,7 +71,7 @@ public class MultiTenancyCaseTaskTest {
   }
 
   @Test
-  public void testStartCaseInstanceWithLatestBindingSameVersion() {
+  void testStartCaseInstanceWithLatestBindingSameVersion() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST_WITH_MANUAL_ACTIVATION, CMMN_CASE);
     testRule.deployForTenant(TENANT_TWO, CMMN_LATEST_WITH_MANUAL_ACTIVATION, CMMN_CASE);
@@ -85,7 +85,7 @@ public class MultiTenancyCaseTaskTest {
   }
 
   @Test
-  public void testStartCaseInstanceWithLatestBindingDifferentVersion() {
+  void testStartCaseInstanceWithLatestBindingDifferentVersion() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST_WITH_MANUAL_ACTIVATION, CMMN_CASE);
 
@@ -105,7 +105,7 @@ public class MultiTenancyCaseTaskTest {
   }
 
   @Test
-  public void testStartCaseInstanceWithVersionBinding() {
+  void testStartCaseInstanceWithVersionBinding() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_VERSION, CMMN_CASE);
     testRule.deployForTenant(TENANT_TWO, CMMN_VERSION, CMMN_CASE);
@@ -119,7 +119,7 @@ public class MultiTenancyCaseTaskTest {
   }
 
   @Test
-  public void testFailStartCaseInstanceFromOtherTenantWithDeploymentBinding() {
+  void testFailStartCaseInstanceFromOtherTenantWithDeploymentBinding() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_DEPLOYMENT);
     testRule.deployForTenant(TENANT_TWO, CMMN_CASE);
@@ -134,7 +134,7 @@ public class MultiTenancyCaseTaskTest {
   }
 
   @Test
-  public void testFailStartCaseInstanceFromOtherTenantWithLatestBinding() {
+  void testFailStartCaseInstanceFromOtherTenantWithLatestBinding() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST);
     testRule.deployForTenant(TENANT_TWO, CMMN_CASE);
@@ -149,7 +149,7 @@ public class MultiTenancyCaseTaskTest {
   }
 
   @Test
-  public void testFailStartCaseInstanceFromOtherTenantWithVersionBinding() {
+  void testFailStartCaseInstanceFromOtherTenantWithVersionBinding() {
 
     testRule.deployForTenant(TENANT_ONE, CMMN_VERSION_2, CMMN_CASE);
 
@@ -166,7 +166,7 @@ public class MultiTenancyCaseTaskTest {
   }
 
   @Test
-  public void testCaseRefTenantIdConstant() {
+  void testCaseRefTenantIdConstant() {
    testRule.deploy(CMMN_TENANT_CONST);
     testRule.deployForTenant(TENANT_ONE, CMMN_CASE);
 
@@ -177,7 +177,7 @@ public class MultiTenancyCaseTaskTest {
   }
 
   @Test
-  public void testCaseRefTenantIdExpression() {
+  void testCaseRefTenantIdExpression() {
    testRule.deploy(CMMN_TENANT_EXPR);
     testRule.deployForTenant(TENANT_ONE, CMMN_CASE);
 

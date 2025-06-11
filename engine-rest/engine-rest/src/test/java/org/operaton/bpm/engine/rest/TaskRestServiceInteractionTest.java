@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -66,6 +66,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -100,7 +101,6 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.form.OperatonFormRefImpl;
 import org.operaton.bpm.engine.impl.form.validator.FormFieldValidationException;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -825,7 +825,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   public void testSubmitTaskFormWithBase64EncodedBytes() {
     Map<String, Object> variables = VariablesBuilder.create()
-        .variable("aVariable", Base64.encodeBase64String("someBytes".getBytes()), "Bytes")
+        .variable("aVariable", Base64.getEncoder().encodeToString("someBytes".getBytes()), "Bytes")
         .getVariables();
 
     Map<String, Object> json = new HashMap<>();
@@ -847,7 +847,8 @@ public class TaskRestServiceInteractionTest extends
   public void testSubmitTaskFormWithFileValue() {
     String variableKey = "aVariable";
     String filename = "test.txt";
-    Map<String, Object> variables = VariablesBuilder.create().variable(variableKey, Base64.encodeBase64String("someBytes".getBytes()), "File")
+    Map<String, Object> variables = VariablesBuilder.create().variable(variableKey,
+        Base64.getEncoder().encodeToString("someBytes".getBytes()), "File")
         .getVariables();
     ((Map<String, Object>)variables.get(variableKey)).put("valueInfo", Collections.<String, Object>singletonMap("filename", filename));
 
@@ -2274,6 +2275,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   public void testGetTaskNonExistingCommentsWithHistoryDisabled() {
     mockHistoryDisabled();
+    when(taskServiceMock.getTaskComments(EXAMPLE_TASK_ID)).thenReturn(Collections.<Comment>emptyList());
 
     given()
       .pathParam("id", EXAMPLE_TASK_ID)

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,15 +33,15 @@ import java.lang.annotation.Target;
  * as an indicator for resource scanning. This also allows all processes.xml
  * configuration features described here:
  * <a href="https://docs.operaton.org/manual/latest/user-guide/process-applications/the-processes-xml-deployment-descriptor/">The processes.xml Deployment Descriptor</a>
- * 
+ *
  * <p>To use it, just add the annotation to your Spring Boot application class:</p>
  * <pre>
  * &#64;SpringBootApplication
  * &#64;EnableProcessApplication("myProcessApplicationName")
  * public class MyApplication {
- * 
+ *
  * ...
- * 
+ *
  * }
  * </pre>
  */

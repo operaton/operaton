@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,7 +44,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class MultiTenancyHistoricVariableInstanceQueryTest {
+class MultiTenancyHistoricVariableInstanceQueryTest {
 
   protected static final String TENANT_NULL = null;
   protected static final String TENANT_ONE = "tenant1";
@@ -55,9 +55,9 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   protected static final String TENANT_TWO_VAR = "tenant2Var";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected HistoryService historyService;
@@ -65,7 +65,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
       .endEvent()
@@ -82,7 +82,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryWithoutTenantId() {
+  void shouldQueryWithoutTenantId() {
     // when
     HistoricVariableInstanceQuery query = historyService
         .createHistoricVariableInstanceQuery();
@@ -92,7 +92,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryFilterWithoutTenantId() {
+  void shouldQueryFilterWithoutTenantId() {
     // when
     HistoricVariableInstanceQuery query = historyService
         .createHistoricVariableInstanceQuery()
@@ -103,7 +103,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantId() {
+  void shouldQueryByTenantId() {
     // when
     HistoricVariableInstanceQuery queryTenantOne = historyService
         .createHistoricVariableInstanceQuery()
@@ -121,7 +121,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByTenantIds() {
+  void shouldQueryByTenantIds() {
     // when
     HistoricVariableInstanceQuery query = historyService
         .createHistoricVariableInstanceQuery()
@@ -132,7 +132,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryByNonExistingTenantId() {
+  void shouldQueryByNonExistingTenantId() {
     // when
     HistoricVariableInstanceQuery query = historyService
         .createHistoricVariableInstanceQuery()
@@ -143,7 +143,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldFailQueryByTenantIdNull() {
+  void shouldFailQueryByTenantIdNull() {
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
     try {
       // when
@@ -158,7 +158,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingAsc() {
+  void shouldQuerySortingAsc() {
     // when
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery()
         .orderByTenantId()
@@ -171,7 +171,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQuerySortingDesc() {
+  void shouldQuerySortingDesc() {
     // when
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery()
         .orderByTenantId()
@@ -184,7 +184,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryNoAuthenticatedTenants() {
+  void shouldQueryNoAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -196,7 +196,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenant() {
+  void shouldQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
@@ -212,7 +212,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryAuthenticatedTenants() {
+  void shouldQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -227,7 +227,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
   }
 
   @Test
-  public void shouldQueryDisabledTenantCheck() {
+  void shouldQueryDisabledTenantCheck() {
     // given
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);

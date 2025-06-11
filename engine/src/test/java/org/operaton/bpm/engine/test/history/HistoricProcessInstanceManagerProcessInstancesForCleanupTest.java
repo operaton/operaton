@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -36,64 +38,53 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Svetlana Dorokhova
  */
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
 
   protected static final String ONE_TASK_PROCESS = "oneTaskProcess";
   protected static final String TWO_TASKS_PROCESS = "twoTasksProcess";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  HistoryService historyService;
+  RuntimeService runtimeService;
 
-  private HistoryService historyService;
-  private RuntimeService runtimeService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-  }
-
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public int processDefiniotion1TTL;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public int processDefiniotion2TTL;
 
-  @Parameterized.Parameter(2)
+  @Parameter(2)
   public int processInstancesOfProcess1Count;
 
-  @Parameterized.Parameter(3)
+  @Parameter(3)
   public int processInstancesOfProcess2Count;
 
-  @Parameterized.Parameter(4)
+  @Parameter(4)
   public int daysPassedAfterProcessEnd;
 
-  @Parameterized.Parameter(5)
+  @Parameter(5)
   public int batchSize;
 
-  @Parameterized.Parameter(6)
+  @Parameter(6)
   public int resultCount;
 
-  @Parameterized.Parameters
+  @Parameters
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
         { 3, 5, 3, 7, 4, 50, 3 },
@@ -106,7 +97,7 @@ public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
     });
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml" })
   public void testFindHistoricProcessInstanceIdsForCleanup() {
 

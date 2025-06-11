@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,37 +16,35 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.EventBasedGatewayModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationEventBasedGatewayTest {
+class MigrationEventBasedGatewayTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testMigrateGatewayExecutionTree() {
+  void testMigrateGatewayExecutionTree() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
@@ -74,7 +72,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithTimerEvent() {
+  void testMigrateGatewayWithTimerEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
@@ -99,7 +97,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithMessageEvent() {
+  void testMigrateGatewayWithMessageEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS);
@@ -123,7 +121,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithSignalEvent() {
+  void testMigrateGatewayWithSignalEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS);
@@ -147,7 +145,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithTimerEventMapEvent() {
+  void testMigrateGatewayWithTimerEventMapEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
@@ -172,7 +170,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithMessageEventMapEvent() {
+  void testMigrateGatewayWithMessageEventMapEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS);
@@ -196,7 +194,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithSignalEventMapEvent() {
+  void testMigrateGatewayWithSignalEventMapEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS);
@@ -220,7 +218,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayAddTimerEvent() {
+  void testMigrateGatewayAddTimerEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS)
@@ -252,7 +250,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayAddMessageEvent() {
+  void testMigrateGatewayAddMessageEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS)
@@ -283,7 +281,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayAddSignalEvent() {
+  void testMigrateGatewayAddSignalEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS)
@@ -314,7 +312,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayRemoveTimerEvent() {
+  void testMigrateGatewayRemoveTimerEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS)
         .flowNodeBuilder("eventBasedGateway")
@@ -339,7 +337,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayRemoveMessageEvent() {
+  void testMigrateGatewayRemoveMessageEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS)
         .flowNodeBuilder("eventBasedGateway")
@@ -364,7 +362,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayRemoveSignalEvent() {
+  void testMigrateGatewayRemoveSignalEvent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS)
         .flowNodeBuilder("eventBasedGateway")
@@ -389,7 +387,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithTimerEventChangeId() {
+  void testMigrateGatewayWithTimerEventChangeId() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS)
@@ -415,7 +413,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithMessageEventChangeId() {
+  void testMigrateGatewayWithMessageEventChangeId() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.MESSAGE_EVENT_BASED_GW_PROCESS)
@@ -440,7 +438,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithSignalEventChangeId() {
+  void testMigrateGatewayWithSignalEventChangeId() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(EventBasedGatewayModels.SIGNAL_EVENT_BASED_GW_PROCESS)
@@ -465,7 +463,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayWithIncident() {
+  void testMigrateGatewayWithIncident() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
@@ -509,7 +507,7 @@ public class MigrationEventBasedGatewayTest {
   }
 
   @Test
-  public void testMigrateGatewayRemoveIncidentOnMigration() {
+  void testMigrateGatewayRemoveIncidentOnMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventBasedGatewayModels.TIMER_EVENT_BASED_GW_PROCESS);

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,7 +36,7 @@ public interface CockpitRuntimeDelegate extends AppRuntimeDelegate<CockpitPlugin
    * @param processEngineName
    * @return a {@link QueryService}
    */
-  public QueryService getQueryService(String processEngineName);
+  QueryService getQueryService(String processEngineName);
 
   /**
    * Returns a configured {@link CommandExecutor} to execute
@@ -44,7 +44,7 @@ public interface CockpitRuntimeDelegate extends AppRuntimeDelegate<CockpitPlugin
    * @param processEngineName
    * @return a {@link CommandExecutor}
    */
-  public CommandExecutor getCommandExecutor(String processEngineName);
+  CommandExecutor getCommandExecutor(String processEngineName);
 
   /**
    * A registry that provides access to the plugins registered
@@ -52,7 +52,7 @@ public interface CockpitRuntimeDelegate extends AppRuntimeDelegate<CockpitPlugin
    *
    * @return
    */
-  @Deprecated
-  public PluginRegistry getPluginRegistry();
+  @Deprecated(since = "1.0")
+  PluginRegistry getPluginRegistry();
 
 }

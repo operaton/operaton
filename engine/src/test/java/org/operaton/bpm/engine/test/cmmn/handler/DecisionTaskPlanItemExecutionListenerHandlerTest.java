@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.cmmn.handler.DecisionTaskItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.test.cmmn.handler.specification.AbstractExecutionListenerSpec;
 import org.operaton.bpm.model.cmmn.instance.DecisionTask;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.BeforeEach;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
 /**
  * @author Roman Smirnov
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class DecisionTaskPlanItemExecutionListenerHandlerTest extends CmmnElementHandlerTest {
 
   @Parameters(name = "testListener: {0}")
@@ -49,8 +48,8 @@ public class DecisionTaskPlanItemExecutionListenerHandlerTest extends CmmnElemen
     this.testSpecification = testSpecification;
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     decisionTask = createElement(casePlanModel, "aDecisionTask", DecisionTask.class);
 
     planItem = createElement(casePlanModel, "PI_aHumanTask", PlanItem.class);
@@ -58,8 +57,8 @@ public class DecisionTaskPlanItemExecutionListenerHandlerTest extends CmmnElemen
 
   }
 
-  @Test
-  public void testCaseExecutionListener() {
+  @TestTemplate
+  void testCaseExecutionListener() {
     // given:
     testSpecification.addListenerToElement(modelInstance, decisionTask);
 

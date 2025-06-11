@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
@@ -24,6 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -42,21 +47,16 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.bpmn.event.conditional.SetVariableDelegate;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.CurrentActivityExecutionListener.CurrentActivity;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonExecutionListener;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import junit.framework.AssertionFailedError;
 
@@ -70,34 +70,24 @@ public class ExecutionListenerTest {
   protected static final String ERROR_CODE = "208";
   protected static final RuntimeException RUNTIME_EXCEPTION = new RuntimeException("Intended exception from delegate");
 
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(processEngineRule);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(processEngineRule).around(testRule);
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  ManagementService managementService;
+  RepositoryService repositoryService;
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-  protected RepositoryService repositoryService;
-
-  @Before
-  public void clearRecorderListener() {
+  @BeforeEach
+  void clearRecorderListener() {
     RecorderExecutionListener.clear();
   }
 
-  @Before
-  public void initServices() {
-    runtimeService = processEngineRule.getRuntimeService();
-    taskService = processEngineRule.getTaskService();
-    historyService = processEngineRule.getHistoryService();
-    managementService = processEngineRule.getManagementService();
-    repositoryService = processEngineRule.getRepositoryService();
-  }
-
-  @Before
-  public void resetListener() {
+  @BeforeEach
+  void resetListener() {
     ThrowBPMNErrorDelegate.reset();
     ThrowRuntimeExceptionDelegate.reset();
   }
@@ -115,7 +105,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenersProcess.bpmn20.xml"})
-  public void testExecutionListenersOnAllPossibleElements() {
+  void testExecutionListenersOnAllPossibleElements() {
 
     // Process start executionListener will have executionListener class that sets 2 variables
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("executionListenersProcess", "businessKey123");
@@ -157,7 +147,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenersStartEndEvent.bpmn20.xml"})
-  public void testExecutionListenersOnStartEndEvents() {
+  void testExecutionListenersOnStartEndEvents() {
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("executionListenersProcess");
@@ -194,7 +184,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenersFieldInjectionProcess.bpmn20.xml"})
-  public void testExecutionListenerFieldInjection() {
+  void testExecutionListenerFieldInjection() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("myVar", "listening!");
 
@@ -209,7 +199,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenersCurrentActivity.bpmn20.xml"})
-  public void testExecutionListenerCurrentActivity() {
+  void testExecutionListenerCurrentActivity() {
 
     CurrentActivityExecutionListener.clear();
 
@@ -231,7 +221,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenerTest.testOnBoundaryEvents.bpmn20.xml"})
-  public void testOnBoundaryEvents() {
+  void testOnBoundaryEvents() {
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -262,7 +252,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment
-  public void testScriptListener() {
+  void testScriptListener() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     assertThat(processInstance.isEnded()).isTrue();
 
@@ -284,10 +274,10 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenerTest.testScriptResourceListener.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/executionlistener/executionListener.groovy"
+      "org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenerTest.testScriptResourceListener.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/executionlistener/executionListener.groovy"
   })
-  public void testScriptResourceListener() {
+  void testScriptResourceListener() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     assertThat(processInstance.isEnded()).isTrue();
 
@@ -308,7 +298,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment
-  public void testExecutionListenerOnTerminateEndEvent() {
+  void testExecutionListenerOnTerminateEndEvent() {
     RecorderExecutionListener.clear();
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -327,7 +317,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenerTest.testOnCancellingBoundaryEvent.bpmn"})
-  public void testOnCancellingBoundaryEvents() {
+  void testOnCancellingBoundaryEvents() {
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -366,7 +356,7 @@ public class ExecutionListenerTest {
           .done();
 
   @Test
-  public void testServiceTaskExecutionListenerCall() {
+  void testServiceTaskExecutionListenerCall() {
     testRule.deploy(PROCESS_SERVICE_TASK_WITH_EXECUTION_START_LISTENER);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
@@ -384,7 +374,7 @@ public class ExecutionListenerTest {
           .done();
 
   @Test
-  public void testServiceTaskTwoExecutionListenerCall() {
+  void testServiceTaskTwoExecutionListenerCall() {
     testRule.deploy(PROCESS_SERVICE_TASK_WITH_TWO_EXECUTION_START_LISTENER);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
@@ -420,7 +410,7 @@ public class ExecutionListenerTest {
           .done();
 
   @Test
-  public void testServiceTaskExecutionListenerCallAndSubProcess() {
+  void testServiceTaskExecutionListenerCallAndSubProcess() {
     testRule.deploy(PROCESS_SERVICE_TASK_WITH_EXECUTION_START_LISTENER_AND_SUB_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask").singleResult();
@@ -446,7 +436,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testEndExecutionListenerIsCalledOnlyOnce() {
+  void testEndExecutionListenerIsCalledOnlyOnce() {
 
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("conditionalProcessKey")
       .startEvent()
@@ -483,7 +473,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenerTest.testMultiInstanceCancelation.bpmn20.xml")
-  public void testMultiInstanceCancelationDoesNotAffectEndListener() {
+  void testMultiInstanceCancelationDoesNotAffectEndListener() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("MultiInstanceCancelation");
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
@@ -508,7 +498,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/executionlistener/ExecutionListenerTest.testMultiInstanceCancelation.bpmn20.xml")
-  public void testProcessInstanceCancelationNoticedInEndListener() {
+  void testProcessInstanceCancelationNoticedInEndListener() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("MultiInstanceCancelation");
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
@@ -532,7 +522,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowExceptionInStartListenerServiceTaskWithCatch() {
+  void testThrowExceptionInStartListenerServiceTaskWithCatch() {
     // given
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_START, true);
     testRule.deploy(model);
@@ -549,7 +539,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowExceptionInEndListenerAndServiceTaskWithCatch() {
+  void testThrowExceptionInEndListenerAndServiceTaskWithCatch() {
     // given
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_END, true);
     testRule.deploy(model);
@@ -566,7 +556,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowExceptionInEndListenerAndServiceTaskWithCatchException() {
+  void testThrowExceptionInEndListenerAndServiceTaskWithCatchException() {
     // given
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_END, true, true);
     testRule.deploy(model);
@@ -582,7 +572,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowExceptionInEndListenerAndSubprocessWithCatchException() {
+  void testThrowExceptionInEndListenerAndSubprocessWithCatchException() {
     // given
     BpmnModelInstance model = createModelWithCatchInSubprocessAndListener(ExecutionListener.EVENTNAME_END, true, true);
     testRule.deploy(model);
@@ -598,7 +588,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowExceptionInEndListenerAndEventSubprocessWithCatchException() {
+  void testThrowExceptionInEndListenerAndEventSubprocessWithCatchException() {
     // given
     BpmnModelInstance model = createModelWithCatchInEventSubprocessAndListener(ExecutionListener.EVENTNAME_END, true, true);
     testRule.deploy(model);
@@ -614,7 +604,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerServiceTaskWithCatch() {
+  void testThrowBpmnErrorInStartListenerServiceTaskWithCatch() {
     // given
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_START);
     testRule.deploy(model);
@@ -630,7 +620,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerAndSubprocessWithCatch() {
+  void testThrowBpmnErrorInStartListenerAndSubprocessWithCatch() {
     // given
     BpmnModelInstance model = createModelWithCatchInSubprocessAndListener(ExecutionListener.EVENTNAME_START);
     testRule.deploy(model);
@@ -646,7 +636,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerAndEventSubprocessWithCatch() {
+  void testThrowBpmnErrorInStartListenerAndEventSubprocessWithCatch() {
     // given
     BpmnModelInstance model = createModelWithCatchInEventSubprocessAndListener(ExecutionListener.EVENTNAME_START);
     testRule.deploy(model);
@@ -662,7 +652,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInEndListenerAndServiceTaskWithCatch() {
+  void testThrowBpmnErrorInEndListenerAndServiceTaskWithCatch() {
     // given
     BpmnModelInstance model = createModelWithCatchInServiceTaskAndListener(ExecutionListener.EVENTNAME_END);
     testRule.deploy(model);
@@ -678,7 +668,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInEndListenerAndSubprocessWithCatch() {
+  void testThrowBpmnErrorInEndListenerAndSubprocessWithCatch() {
     // given
     BpmnModelInstance model = createModelWithCatchInSubprocessAndListener(ExecutionListener.EVENTNAME_END);
     testRule.deploy(model);
@@ -694,7 +684,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInEndListenerAndEventSubprocessWithCatch() {
+  void testThrowBpmnErrorInEndListenerAndEventSubprocessWithCatch() {
     // given
     BpmnModelInstance model = createModelWithCatchInEventSubprocessAndListener(ExecutionListener.EVENTNAME_END);
     testRule.deploy(model);
@@ -710,7 +700,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInTakeListenerAndEventSubprocessWithCatch() {
+  void testThrowBpmnErrorInTakeListenerAndEventSubprocessWithCatch() {
     // given
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess(PROCESS_KEY);
     BpmnModelInstance model = processBuilder
@@ -743,7 +733,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerOfStartEventAndEventSubprocessWithCatch() {
+  void testThrowBpmnErrorInStartListenerOfStartEventAndEventSubprocessWithCatch() {
     // given
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess(PROCESS_KEY);
     BpmnModelInstance model = processBuilder
@@ -767,7 +757,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerOfStartEventAndSubprocessWithCatch() {
+  void testThrowBpmnErrorInStartListenerOfStartEventAndSubprocessWithCatch() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -799,7 +789,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInEndListenerOfLastEventAndEventProcessWithCatch() {
+  void testThrowBpmnErrorInEndListenerOfLastEventAndEventProcessWithCatch() {
     // given
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess(PROCESS_KEY);
     BpmnModelInstance model = processBuilder
@@ -835,7 +825,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInEndListenerOfLastEventAndServiceTaskWithCatch() {
+  void testThrowBpmnErrorInEndListenerOfLastEventAndServiceTaskWithCatch() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -861,7 +851,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerOfLastEventAndServiceTaskWithCatch() {
+  void testThrowBpmnErrorInStartListenerOfLastEventAndServiceTaskWithCatch() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -887,7 +877,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInEndListenerOfLastEventAndSubprocessWithCatch() {
+  void testThrowBpmnErrorInEndListenerOfLastEventAndSubprocessWithCatch() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -919,7 +909,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerOfLastEventAndSubprocessWithCatch() {
+  void testThrowBpmnErrorInStartListenerOfLastEventAndSubprocessWithCatch() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -951,7 +941,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerServiceTaskAndEndListener() {
+  void testThrowBpmnErrorInStartListenerServiceTaskAndEndListener() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -984,7 +974,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerOfStartEventAndCallActivity() {
+  void testThrowBpmnErrorInStartListenerOfStartEventAndCallActivity() {
     // given
     BpmnModelInstance subprocess = Bpmn.createExecutableProcess("subprocess")
         .startEvent()
@@ -1020,7 +1010,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInEndListenerInConcurrentExecutionAndEventSubprocessWithCatch() {
+  void testThrowBpmnErrorInEndListenerInConcurrentExecutionAndEventSubprocessWithCatch() {
     // given
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess(PROCESS_KEY);
     BpmnModelInstance model = processBuilder
@@ -1052,7 +1042,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartExpressionListenerAndEventSubprocessWithCatch() {
+  void testThrowBpmnErrorInStartExpressionListenerAndEventSubprocessWithCatch() {
     // given
     processEngineRule.getProcessEngineConfiguration().getBeans().put("myListener", new ThrowBPMNErrorDelegate());
 
@@ -1085,7 +1075,7 @@ public class ExecutionListenerTest {
 
   @Test
   @Deployment
-  public void testThrowBpmnErrorInEndScriptListenerAndSubprocessWithCatch() {
+  void testThrowBpmnErrorInEndScriptListenerAndSubprocessWithCatch() {
     // when the listeners are invoked
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
 
@@ -1096,7 +1086,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowUncaughtBpmnErrorFromEndListenerShouldNotTriggerListenerAgain() {
+  void testThrowUncaughtBpmnErrorFromEndListenerShouldNotTriggerListenerAgain() {
 
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
@@ -1127,7 +1117,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowUncaughtBpmnErrorFromStartListenerShouldNotTriggerListenerAgain() {
+  void testThrowUncaughtBpmnErrorFromStartListenerShouldNotTriggerListenerAgain() {
 
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
@@ -1158,7 +1148,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInEndListenerMessageCorrelationShouldNotTriggerPropagation() {
+  void testThrowBpmnErrorInEndListenerMessageCorrelationShouldNotTriggerPropagation() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -1201,7 +1191,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInStartListenerOnModificationShouldNotTriggerPropagation() {
+  void testThrowBpmnErrorInStartListenerOnModificationShouldNotTriggerPropagation() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()
@@ -1236,7 +1226,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInProcessStartListenerShouldNotTriggerPropagation() {
+  void testThrowBpmnErrorInProcessStartListenerShouldNotTriggerPropagation() {
     // given
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess(PROCESS_KEY);
     BpmnModelInstance model = processBuilder
@@ -1269,7 +1259,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
-  public void testThrowBpmnErrorInProcessEndListenerShouldNotTriggerPropagation() {
+  void testThrowBpmnErrorInProcessEndListenerShouldNotTriggerPropagation() {
     // given
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess(PROCESS_KEY);
     BpmnModelInstance model = processBuilder

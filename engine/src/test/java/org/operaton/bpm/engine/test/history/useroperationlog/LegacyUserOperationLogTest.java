@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,7 +51,7 @@ public class LegacyUserOperationLogTest {
   public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
       "org/operaton/bpm/engine/test/history/useroperationlog/enable.legacy.user.operation.log.operaton.cfg.xml");
   public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(processEngineRule);
+  ProcessEngineTestRule testHelper = new ProcessEngineTestRule(processEngineRule);
 
   @Rule
   public RuleChain chain = RuleChain.outerRule(processEngineRule).around(testHelper);

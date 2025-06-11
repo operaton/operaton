@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,7 +44,7 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
   protected DecisionService decisionService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration = processEngineConfiguration
         .getDmnEngineConfiguration();
     ResetDmnConfigUtil.reset(dmnEngineConfiguration)
@@ -55,7 +55,7 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
   }
 
   @AfterEach
-  public void restore() {
+  void restore() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration = processEngineConfiguration
         .getDmnEngineConfiguration();
     ResetDmnConfigUtil.reset(dmnEngineConfiguration)
@@ -73,7 +73,7 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
   }
 
   @Test
-  public void testBusinessRuleTask() {
+  void testBusinessRuleTask() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("testProcess")
         .operatonHistoryTimeToLive(180)
         .startEvent()
@@ -113,7 +113,7 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
 
   @Test
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
-  public void shouldCountDecisionLiteralExpression() {
+  void shouldCountDecisionLiteralExpression() {
     // given
 
     // when
@@ -134,7 +134,7 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
 
   @Test
   @Deployment(resources = DRD_DISH_DECISION_TABLE)
-  public void shouldCountDecisionDRG() {
+  void shouldCountDecisionDRG() {
     // given
 
     // when

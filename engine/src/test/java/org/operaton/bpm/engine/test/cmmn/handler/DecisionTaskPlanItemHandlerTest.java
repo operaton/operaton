@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,21 +62,21 @@ import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
 import org.operaton.bpm.model.cmmn.instance.RepetitionRule;
 import org.operaton.bpm.model.cmmn.instance.RequiredRule;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
+class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   protected DecisionTask decisionTask;
   protected PlanItem planItem;
   protected DecisionTaskItemHandler handler = new DecisionTaskItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     decisionTask = createElement(casePlanModel, "aHumanTask", DecisionTask.class);
 
     planItem = createElement(casePlanModel, "PI_aHumanTask", PlanItem.class);
@@ -84,7 +84,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityName() {
+  void testActivityName() {
     // given:
     String name = "A DecisionTask";
     decisionTask.setName(name);
@@ -97,7 +97,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testPlanItemActivityName() {
+  void testPlanItemActivityName() {
     // given:
     String humanTaskName = "A DecisionTask";
     decisionTask.setName(humanTaskName);
@@ -114,7 +114,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityType() {
+  void testActivityType() {
     // given
 
     // when
@@ -127,7 +127,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testDescriptionProperty() {
+  void testDescriptionProperty() {
     // given
     String description = "This is a decisionTask";
     decisionTask.setDescription(description);
@@ -141,7 +141,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testPlanItemDescriptionProperty() {
+  void testPlanItemDescriptionProperty() {
     // given
     String description = "This is a planItem";
     planItem.setDescription(description);
@@ -154,7 +154,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testDocumentation() {
+  void testDocumentation() {
     // given
     String description = "This is a documentation";
     Documentation documentation = createElement(decisionTask, Documentation.class);
@@ -168,7 +168,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testPlanItemDocumentation() {
+  void testPlanItemDocumentation() {
     // given
     String description = "This is a planItem";
     Documentation documentationElem = createElement(planItem, Documentation.class);
@@ -182,7 +182,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a planItem
 
     // when
@@ -194,7 +194,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsTrueProperty() {
+  void testIsBlockingEqualsTrueProperty() {
     // given
 
     // when
@@ -206,7 +206,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsFalseProperty() {
+  void testIsBlockingEqualsFalseProperty() {
     // given:
     decisionTask.setIsBlocking(false);
 
@@ -219,7 +219,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExitCriteria() {
+  void testExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -253,7 +253,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleExitCriteria() {
+  void testMultipleExitCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -300,7 +300,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteria() {
+  void testEntryCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -334,7 +334,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleEntryCriteria() {
+  void testMultipleEntryCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -381,7 +381,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteriaAndExitCriteria() {
+  void testEntryCriteriaAndExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -418,7 +418,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRule() {
+  void testManualActivationRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     ManualActivationRule manualActivationRule = createElement(itemControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -436,7 +436,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRuleByDefaultPlanItemControl() {
+  void testManualActivationRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(decisionTask, "ItemControl_1", DefaultControl.class);
     ManualActivationRule manualActivationRule = createElement(defaultControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -454,7 +454,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -472,7 +472,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(decisionTask, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);
@@ -490,7 +490,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleStandardEvents() {
+  void testRepetitionRuleStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -512,7 +512,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
+  void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(decisionTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
@@ -534,7 +534,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleCustomStandardEvents() {
+  void testRepetitionRuleCustomStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -557,7 +557,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
+  void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(decisionTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
@@ -580,7 +580,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given
 
     // when
@@ -591,7 +591,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
     context.setParent(parent);
@@ -605,7 +605,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCallableElement() {
+  void testCallableElement() {
     // given
 
     // when
@@ -617,7 +617,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testConstantDecisionRef() {
+  void testConstantDecisionRef() {
     // given:
     String decisionRef = "aDecisionToCall";
     decisionTask.setDecision(decisionRef);
@@ -636,7 +636,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExpressionDecisionRef() {
+  void testExpressionDecisionRef() {
     // given:
     String decisionRef = "${aDecisionToCall}";
     decisionTask.setDecision(decisionRef);
@@ -655,7 +655,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testConstantDecisionRefExpression() {
+  void testConstantDecisionRefExpression() {
     // given:
     String decision = "aDecisionToCall";
     DecisionRefExpression decisionRefExpression= createElement(decisionTask, DecisionRefExpression.class);
@@ -675,7 +675,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExpressionDecisionRefExpression() {
+  void testExpressionDecisionRefExpression() {
     // given:
     String decision = "${aDecisionToCall}";
     DecisionRefExpression decisionRefExpression= createElement(decisionTask, DecisionRefExpression.class);
@@ -695,7 +695,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testBinding() {
+  void testBinding() {
     // given:
     CallableElementBinding caseBinding = CallableElementBinding.LATEST;
     decisionTask.setOperatonDecisionBinding(caseBinding.getValue());
@@ -712,7 +712,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testVersionConstant() {
+  void testVersionConstant() {
     // given:
     String caseVersion = "2";
     decisionTask.setOperatonDecisionVersion(caseVersion);
@@ -730,7 +730,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testVersionExpression() {
+  void testVersionExpression() {
     // given:
     String caseVersion = "${aVersion}";
     decisionTask.setOperatonDecisionVersion(caseVersion);
@@ -749,7 +749,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testResultVariable() {
+  void testResultVariable() {
     // given:
     decisionTask.setOperatonResultVariable("aResultVariable");
 
@@ -762,7 +762,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testDefaultMapDecisionResult() {
+  void testDefaultMapDecisionResult() {
     // given:
 
     // when
@@ -775,7 +775,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMapDecisionResult() {
+  void testMapDecisionResult() {
     // given:
     decisionTask.setOperatonMapDecisionResult("singleResult");
 

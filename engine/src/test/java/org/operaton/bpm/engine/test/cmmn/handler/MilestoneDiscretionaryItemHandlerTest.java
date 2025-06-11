@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,6 +22,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_DIS
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.MilestoneActivityBehavior;
@@ -37,22 +38,21 @@ import org.operaton.bpm.model.cmmn.instance.Milestone;
 import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
 import org.operaton.bpm.model.cmmn.instance.PlanningTable;
 import org.operaton.bpm.model.cmmn.instance.RequiredRule;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
+class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
   protected Milestone milestone;
   protected PlanningTable planningTable;
   protected DiscretionaryItem discretionaryItem;
   protected MilestoneItemHandler handler = new MilestoneItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     milestone = createElement(casePlanModel, "aMilestone", Milestone.class);
 
     planningTable = createElement(casePlanModel, "aPlanningTable", PlanningTable.class);
@@ -63,7 +63,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testMilestoneActivityName() {
+  void testMilestoneActivityName() {
     // given:
     // the Milestone has a name "A Milestone"
     String name = "A Milestone";
@@ -77,7 +77,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testMilestoneActivityType() {
+  void testMilestoneActivityType() {
     // given
 
     // when
@@ -90,7 +90,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testMilestoneDescription() {
+  void testMilestoneDescription() {
     // given
     String description = "This is a milestone";
     milestone.setDescription(description);
@@ -104,7 +104,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testDiscretionaryItemDescription() {
+  void testDiscretionaryItemDescription() {
     // given
     String description = "This is a discretionaryItem";
     discretionaryItem.setDescription(description);
@@ -117,7 +117,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a planItem
 
     // when
@@ -129,7 +129,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testIsDiscretionaryProperty() {
+  void testIsDiscretionaryProperty() {
     // given:
     // a discretionary item to handle
 
@@ -142,7 +142,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a planItem
 
     // when
@@ -153,7 +153,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -168,7 +168,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(discretionaryItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -186,7 +186,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(milestone, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);

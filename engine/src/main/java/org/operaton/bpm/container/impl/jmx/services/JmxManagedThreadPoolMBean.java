@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,30 +20,30 @@ package org.operaton.bpm.container.impl.jmx.services;
 /**
  * <p>MBean responsible for controlling a Thread Pool. The thread pool is used by the
  * JobExecutor component.</p>
- * 
+ *
  * @author Daniel Meyer
  *
  */
 public interface JmxManagedThreadPoolMBean {
 
-  public abstract int getQueueCount();
+  int getQueueCount();
 
-  public abstract long getCompletedTaskCount();
+  long getCompletedTaskCount();
 
-  public abstract long getTaskCount();
+  long getTaskCount();
 
-  public abstract int getLargestPoolSize();
+  int getLargestPoolSize();
 
-  public abstract int getActiveCount();
+  int getActiveCount();
 
-  public abstract int getPoolSize();
+  int getPoolSize();
 
-  public abstract void purgeThreadPool();
+  void purgeThreadPool();
 
-  public abstract int getMaximumPoolSize();
+  int getMaximumPoolSize();
 
-  public abstract void setMaximumPoolSize(int maximumPoolSize);
+  void setMaximumPoolSize(int maximumPoolSize);
 
-  public abstract void setCorePoolSize(int corePoolSize);
+  void setCorePoolSize(int corePoolSize);
 
 }

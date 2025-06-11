@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,21 +39,21 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Daniel Meyer
  *
  */
-public class MultiTenancyTaskServiceTest {
+class MultiTenancyTaskServiceTest {
 
   private static final String TENANT_1 = "the-tenant-1";
   private static final String TENANT_2 = "the-tenant-2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
 
   @Test
-  public void testStandaloneTaskCreateWithTenantId() {
+  void testStandaloneTaskCreateWithTenantId() {
 
     // given a transient task with tenant id
     Task task = taskService.newTask();
@@ -73,7 +73,7 @@ public class MultiTenancyTaskServiceTest {
   }
 
   @Test
-  public void testStandaloneTaskCannotChangeTenantIdIfNull() {
+  void testStandaloneTaskCannotChangeTenantIdIfNull() {
 
     // given a persistent task without tenant id
     Task task = taskService.newTask();
@@ -99,7 +99,7 @@ public class MultiTenancyTaskServiceTest {
   }
 
   @Test
-  public void testStandaloneTaskCannotChangeTenantId() {
+  void testStandaloneTaskCannotChangeTenantId() {
 
     // given a persistent task with tenant id
     Task task = taskService.newTask();
@@ -126,7 +126,7 @@ public class MultiTenancyTaskServiceTest {
   }
 
   @Test
-  public void testStandaloneTaskCannotSetDifferentTenantIdOnSubTask() {
+  void testStandaloneTaskCannotSetDifferentTenantIdOnSubTask() {
 
     // given a persistent task with a tenant id
     Task task = taskService.newTask();
@@ -152,7 +152,7 @@ public class MultiTenancyTaskServiceTest {
   }
 
   @Test
-  public void testStandaloneTaskCannotSetDifferentTenantIdOnSubTaskWithNull() {
+  void testStandaloneTaskCannotSetDifferentTenantIdOnSubTaskWithNull() {
 
     // given a persistent task without tenant id
     Task task = taskService.newTask();
@@ -177,7 +177,7 @@ public class MultiTenancyTaskServiceTest {
   }
 
   @Test
-  public void testStandaloneTaskPropagateTenantIdToSubTask() {
+  void testStandaloneTaskPropagateTenantIdToSubTask() {
 
     // given a persistent task with a tenant id
     Task task = taskService.newTask();
@@ -200,7 +200,7 @@ public class MultiTenancyTaskServiceTest {
   }
 
   @Test
-  public void testStandaloneTaskPropagatesTenantIdToVariableInstance() {
+  void testStandaloneTaskPropagatesTenantIdToVariableInstance() {
     // given a task with tenant id
     Task task = taskService.newTask();
     task.setTenantId(TENANT_1);
@@ -218,7 +218,7 @@ public class MultiTenancyTaskServiceTest {
   }
 
   @Test
-  public void testGetIdentityLinkWithTenantIdForCandidateUsers() {
+  void testGetIdentityLinkWithTenantIdForCandidateUsers() {
 
     // given
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
@@ -244,7 +244,7 @@ public class MultiTenancyTaskServiceTest {
   }
 
   @Test
-  public void testGetIdentityLinkWithTenantIdForCandidateGroup() {
+  void testGetIdentityLinkWithTenantIdForCandidateGroup() {
 
     // given
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")

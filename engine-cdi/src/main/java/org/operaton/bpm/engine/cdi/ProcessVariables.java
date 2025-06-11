@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.cdi;
 
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import jakarta.enterprise.inject.Produces;
@@ -69,9 +68,7 @@ public class ProcessVariables {
   protected Object getProcessVariable(InjectionPoint ip) {
     String processVariableName = getVariableName(ip);
 
-    if (logger.isLoggable(Level.FINE)) {
-      logger.fine("Getting process variable '" + processVariableName + "' from ProcessInstance[" + businessProcess.getProcessInstanceId() + "].");
-    }
+    logger.fine(() -> String.format("Getting process variable '%s' from ProcessInstance[%s].", processVariableName, businessProcess.getProcessInstanceId()));
 
     return businessProcess.getVariable(processVariableName);
   }
@@ -84,9 +81,7 @@ public class ProcessVariables {
   protected TypedValue getProcessVariableTyped(InjectionPoint ip) {
     String processVariableName = getVariableTypedName(ip);
 
-    if (logger.isLoggable(Level.FINE)) {
-      logger.fine("Getting typed process variable '" + processVariableName + "' from ProcessInstance[" + businessProcess.getProcessInstanceId() + "].");
-    }
+    logger.fine(() -> String.format("Getting typed process variable '%s' from ProcessInstance[%s].", processVariableName, businessProcess.getProcessInstanceId()));
 
     return businessProcess.getVariableTyped(processVariableName);
   }
@@ -127,9 +122,7 @@ public class ProcessVariables {
   protected Object getProcessVariableLocal(InjectionPoint ip) {
     String processVariableName = getVariableLocalName(ip);
 
-    if (logger.isLoggable(Level.FINE)) {
-      logger.fine("Getting local process variable '" + processVariableName + "' from ProcessInstance[" + businessProcess.getProcessInstanceId() + "].");
-    }
+    logger.fine(() -> String.format("Getting local process variable '%s' from ProcessInstance[%s].", processVariableName, businessProcess.getProcessInstanceId()));
 
     return businessProcess.getVariableLocal(processVariableName);
   }
@@ -142,9 +135,7 @@ public class ProcessVariables {
   protected TypedValue getProcessVariableLocalTyped(InjectionPoint ip) {
     String processVariableName = getVariableLocalTypedName(ip);
 
-    if (logger.isLoggable(Level.FINE)) {
-      logger.fine("Getting local typed process variable '" + processVariableName + "' from ProcessInstance[" + businessProcess.getProcessInstanceId() + "].");
-    }
+    logger.fine(() -> String.format("Getting local typed process variable '%s' from ProcessInstance[%s].", processVariableName, businessProcess.getProcessInstanceId()));
 
     return businessProcess.getVariableLocalTyped(processVariableName);
   }

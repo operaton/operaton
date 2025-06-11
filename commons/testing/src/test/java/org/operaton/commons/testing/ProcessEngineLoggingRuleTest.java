@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -91,7 +91,7 @@ public class ProcessEngineLoggingRuleTest {
     testLogLevel(containerLog, Level.WARN);
     testLogLevel(processAppLogger, Level.INFO);
   }
-  
+
   @Test
   @WatchLogger(loggerNames = {JOB_EXECUTOR_LOGGER}, level = "ERROR")
   public void testAddWatchedLoggerWithAnnotation() {
@@ -111,7 +111,7 @@ public class ProcessEngineLoggingRuleTest {
     testLogLevel(processAppLogger, Level.INFO);
     testLogLevel(jobExecutorLogger, Level.ERROR);
   }
-  
+
   @Test
   @WatchLogger(loggerNames = {CONTAINER_INTEGRATION_LOGGER}, level = "OFF")
   public void testTurnOffWatcherWithAnnotation() {
@@ -120,7 +120,7 @@ public class ProcessEngineLoggingRuleTest {
     // when
     logSomethingOnAllLevels();
 
-    
+
     List<ILoggingEvent> persistenceLog = loggingRule.getLog(PERSISTENCE_LOGGER);
     List<ILoggingEvent> containerLog = loggingRule.getLog(CONTAINER_INTEGRATION_LOGGER);
     List<ILoggingEvent> processAppLogger = loggingRule.getLog(PROCESS_APPLICATION_LOGGER);
@@ -167,31 +167,31 @@ public class ProcessEngineLoggingRuleTest {
     }
     fail("Expected at least one log entry with level " + level + " in log");
   }
-  
+
   private void testAllLoggingEntriesAtLeastLevel(List<ILoggingEvent> log, Level level) {
     for (ILoggingEvent logStatement : log) {
       assertThat(logStatement.getLevel().isGreaterOrEqual(level)).isTrue();
     }
   }
-  
+
   public void logSomethingOnAllLevels() {
-    ExampleProcessEngineLogger.PERSISTENCE_LOGGER.debug(); 
-    ExampleProcessEngineLogger.PERSISTENCE_LOGGER.info(); 
-    ExampleProcessEngineLogger.PERSISTENCE_LOGGER.warn(); 
-    ExampleProcessEngineLogger.PERSISTENCE_LOGGER.error(); 
+    ExampleProcessEngineLogger.PERSISTENCE_LOGGER.debug();
+    ExampleProcessEngineLogger.PERSISTENCE_LOGGER.info();
+    ExampleProcessEngineLogger.PERSISTENCE_LOGGER.warn();
+    ExampleProcessEngineLogger.PERSISTENCE_LOGGER.error();
 
-    ExampleProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER.debug(); 
-    ExampleProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER.info(); 
+    ExampleProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER.debug();
+    ExampleProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER.info();
     ExampleProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER.warn();
-    ExampleProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER.error(); 
+    ExampleProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER.error();
 
-    ExampleProcessEngineLogger.JOB_EXECUTOR_LOGGER.debug(); 
-    ExampleProcessEngineLogger.JOB_EXECUTOR_LOGGER.info(); 
-    ExampleProcessEngineLogger.JOB_EXECUTOR_LOGGER.warn(); 
-    ExampleProcessEngineLogger.JOB_EXECUTOR_LOGGER.error(); 
+    ExampleProcessEngineLogger.JOB_EXECUTOR_LOGGER.debug();
+    ExampleProcessEngineLogger.JOB_EXECUTOR_LOGGER.info();
+    ExampleProcessEngineLogger.JOB_EXECUTOR_LOGGER.warn();
+    ExampleProcessEngineLogger.JOB_EXECUTOR_LOGGER.error();
 
-    ExampleProcessEngineLogger.PROCESS_APPLICATION_LOGGER.debug(); 
-    ExampleProcessEngineLogger.PROCESS_APPLICATION_LOGGER.info(); 
+    ExampleProcessEngineLogger.PROCESS_APPLICATION_LOGGER.debug();
+    ExampleProcessEngineLogger.PROCESS_APPLICATION_LOGGER.info();
     ExampleProcessEngineLogger.PROCESS_APPLICATION_LOGGER.warn();
     ExampleProcessEngineLogger.PROCESS_APPLICATION_LOGGER.error();
   }

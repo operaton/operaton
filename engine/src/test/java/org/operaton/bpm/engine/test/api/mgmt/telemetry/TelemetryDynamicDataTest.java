@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.util.Map;
 
@@ -41,28 +42,22 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class TelemetryDynamicDataTest {
+class TelemetryDynamicDataTest {
 
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
   protected ProcessEngineConfigurationImpl configuration;
   protected RuntimeService runtimeService;
   protected TaskService taskService;
   protected ManagementService managementService;
 
-  protected ProcessEngine processEngineInMem;
-
   @BeforeEach
-  public void init() {
+  void init() {
     clearMetrics();
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     clearMetrics();
-
-    if (processEngineInMem != null) {
-      ProcessEngines.unregister(processEngineInMem);
-      processEngineInMem.close();
-    }
   }
 
   public void clearMetrics() {
@@ -79,10 +74,11 @@ public class TelemetryDynamicDataTest {
   }
 
   @Test
-  public void shouldCountCommandsFromEngineStartAfterTelemetryActivation() {
+  void shouldCountCommandsFromEngineStartAfterTelemetryActivation() {
     // when
-    processEngineInMem =  new StandaloneInMemProcessEngineConfiguration()
+    ProcessEngine processEngineInMem = new StandaloneInMemProcessEngineConfiguration()
         .setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName())
+        .setProcessEngineName(PROCESS_ENGINE_NAME)
         .buildProcessEngine();
 
     // then
@@ -100,11 +96,14 @@ public class TelemetryDynamicDataTest {
     for (String commandName : entries.keySet()) {
       assertThat(entries.get(commandName).get()).isEqualTo(1);
     }
+
+    ProcessEngines.unregister(processEngineInMem);
+    processEngineInMem.close();
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldCountAfterCleaning() {
+  void shouldCountAfterCleaning() {
     // given
     clearCommandCounts();
     Map<String, CommandCounter> entries = configuration.getDiagnosticsRegistry().getCommands();
@@ -128,7 +127,7 @@ public class TelemetryDynamicDataTest {
   }
 
   @Test
-  public void shouldCollectInnerClasses() {
+  void shouldCollectInnerClasses() {
     // given default configuration
 
     // when
@@ -144,7 +143,7 @@ public class TelemetryDynamicDataTest {
   }
 
   @Test
-  public void shouldNotCollectAnonymousClasses() {
+  void shouldNotCollectAnonymousClasses() {
     // given default configuration
 
     // when
@@ -165,7 +164,7 @@ public class TelemetryDynamicDataTest {
   }
 
   @Test
-  public void shouldNotCollectLambdas() {
+  void shouldNotCollectLambdas() {
     // given default configuration
 
     // when

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,19 +20,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.IdentityLink;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class ProcessDefinitionCandidateTest {
+class ProcessDefinitionCandidateTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -42,22 +39,15 @@ public class ProcessDefinitionCandidateTest {
   protected static final String CANDIDATE_STARTER_GROUP = "org/operaton/bpm/engine/test/api/repository/ProcessDefinitionCandidateTest.testCandidateStarterGroup.bpmn20.xml";
   protected static final String CANDIDATE_STARTER_GROUPS = "org/operaton/bpm/engine/test/api/repository/ProcessDefinitionCandidateTest.testCandidateStarterGroups.bpmn20.xml";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RepositoryService repositoryService;
-
-  @Before
-  public void setUp() {
-    repositoryService = engineRule.getRepositoryService();
-  }
+  RepositoryService repositoryService;
 
   @Test
-  public void shouldPropagateTenantIdToCandidateStarterUser() {
+  void shouldPropagateTenantIdToCandidateStarterUser() {
     // when
     DeploymentBuilder builder = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_USER)
@@ -75,7 +65,7 @@ public class ProcessDefinitionCandidateTest {
   }
 
   @Test
-  public void shouldPropagateTenantIdToCandidateStarterUsers() {
+  void shouldPropagateTenantIdToCandidateStarterUsers() {
     // when
     DeploymentBuilder builder = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_USERS)
@@ -94,7 +84,7 @@ public class ProcessDefinitionCandidateTest {
   }
 
   @Test
-  public void shouldPropagateTenantIdToCandidateStarterGroup() {
+  void shouldPropagateTenantIdToCandidateStarterGroup() {
     // when
     DeploymentBuilder builder = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_GROUP)
@@ -112,7 +102,7 @@ public class ProcessDefinitionCandidateTest {
   }
 
   @Test
-  public void shouldPropagateTenantIdToCandidateStarterGroups() {
+  void shouldPropagateTenantIdToCandidateStarterGroups() {
     // when
     DeploymentBuilder builder = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_GROUPS)

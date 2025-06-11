@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,11 +16,24 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -28,55 +41,33 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.api.variables.FailingJavaSerializable;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-
-import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
  * @author Nico Rehwaldt
  */
-public class MessageIntermediateEventTest {
+class MessageIntermediateEventTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJavaSerializationFormatEnabled(true));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setJavaSerializationFormatEnabled(true))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-  private RepositoryService repositoryService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
+  RepositoryService repositoryService;
 
   @Deployment
   @Test
-  public void testSingleIntermediateMessageEvent() {
+  void testSingleIntermediateMessageEvent() {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
@@ -104,7 +95,7 @@ public class MessageIntermediateEventTest {
 
   @Deployment
   @Test
-  public void testConcurrentIntermediateMessageEvent() {
+  void testConcurrentIntermediateMessageEvent() {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
@@ -140,7 +131,7 @@ public class MessageIntermediateEventTest {
   }
 
   @Test
-  public void testIntermediateMessageEventRedeployment() {
+  void testIntermediateMessageEventRedeployment() {
 
     // deploy version 1
     repositoryService.createDeployment()
@@ -180,7 +171,7 @@ public class MessageIntermediateEventTest {
   }
 
   @Test
-  public void testEmptyMessageNameFails() {
+  void testEmptyMessageNameFails() {
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testEmptyMessageNameFails.bpmn20.xml");
@@ -195,7 +186,7 @@ public class MessageIntermediateEventTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testSingleIntermediateMessageEvent.bpmn20.xml")
   @Test
-  public void testSetSerializedVariableValues() throws IOException, ClassNotFoundException {
+  void testSetSerializedVariableValues() throws IOException, ClassNotFoundException {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -207,7 +198,7 @@ public class MessageIntermediateEventTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {
@@ -239,7 +230,7 @@ public class MessageIntermediateEventTest {
 
   @Deployment
   @Test
-  public void testExpressionInSingleIntermediateMessageEvent() {
+  void testExpressionInSingleIntermediateMessageEvent() {
 
     // given
     HashMap<String, Object> variables = new HashMap<>();

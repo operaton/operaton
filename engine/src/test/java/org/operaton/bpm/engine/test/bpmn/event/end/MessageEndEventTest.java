@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,26 +16,35 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Kristin Polenz
  * @author Nico Rehwaldt
  */
-public class MessageEndEventTest extends PluggableProcessEngineTest {
+class MessageEndEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testMessageEndEvent() {
+  void testMessageEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     assertThat(processInstance).isNotNull();
     testRule.assertProcessEnded(processInstance.getId());
@@ -43,7 +52,7 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMessageEndEventServiceTaskBehavior() {
+  void testMessageEndEventServiceTaskBehavior() {
     Map<String, Object> variables = new HashMap<>();
 
     // class

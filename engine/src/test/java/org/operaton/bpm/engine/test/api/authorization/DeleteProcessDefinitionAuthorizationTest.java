@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -57,11 +57,11 @@ public class DeleteProcessDefinitionAuthorizationTest {
   public static final String PROCESS_DEFINITION_KEY = "one";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  public ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
   protected RepositoryService repositoryService;
   protected RuntimeService runtimeService;
   protected HistoryService historyService;
@@ -106,7 +106,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   }
 
   @TestTemplate
-  public void testDeleteProcessDefinition() {
+  void testDeleteProcessDefinition() {
     testHelper.deploy("org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml");
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
@@ -125,7 +125,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
 
 
   @TestTemplate
-  public void testDeleteProcessDefinitionCascade() {
+  void testDeleteProcessDefinitionCascade() {
     // given process definition and a process instance
     BpmnModelInstance bpmnModel = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().userTask().endEvent().done();
     testHelper.deploy(bpmnModel);
@@ -151,7 +151,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   }
 
   @TestTemplate
-  public void testDeleteProcessDefinitionsByKey() {
+  void testDeleteProcessDefinitionsByKey() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinition();
@@ -174,7 +174,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   }
 
   @TestTemplate
-  public void testDeleteProcessDefinitionsByKeyCascade() {
+  void testDeleteProcessDefinitionsByKeyCascade() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinition();
@@ -205,7 +205,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   }
 
   @TestTemplate
-  public void testDeleteProcessDefinitionsByIds() {
+  void testDeleteProcessDefinitionsByIds() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinition();
@@ -229,7 +229,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   }
 
   @TestTemplate
-  public void testDeleteProcessDefinitionsByIdsCascade() {
+  void testDeleteProcessDefinitionsByIdsCascade() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinition();

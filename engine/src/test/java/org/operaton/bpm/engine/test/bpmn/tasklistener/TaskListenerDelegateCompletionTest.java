@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -30,45 +33,33 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Askar Akhmerov
  */
-public class TaskListenerDelegateCompletionTest {
+class TaskListenerDelegateCompletionTest {
 
   protected static final String COMPLETE_LISTENER = "org.operaton.bpm.engine.test.bpmn.tasklistener.util.CompletingTaskListener";
   protected static final String TASK_LISTENER_PROCESS = "taskListenerProcess";
   protected static final String ACTIVITY_ID = "UT";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(authRule).around(testHelper);
+  RuntimeService runtimeService;
+  TaskService taskService;
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-
-  @Before
-  public void setUp() {
-    taskService = engineRule.getTaskService();
-    runtimeService = engineRule.getRuntimeService();
-  }
-
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     if (runtimeService.createProcessInstanceQuery().count() > 0) {
       runtimeService.deleteProcessInstance(runtimeService.createProcessInstanceQuery().singleResult().getId(),null,true);
     }
@@ -85,7 +76,7 @@ public class TaskListenerDelegateCompletionTest {
   }
 
   @Test
-  public void testCompletionIsPossibleOnCreation () {
+  void testCompletionIsPossibleOnCreation() {
     //given
     createProcessWithListener(TaskListener.EVENTNAME_CREATE);
 
@@ -98,7 +89,7 @@ public class TaskListenerDelegateCompletionTest {
   }
 
   @Test
-  public void testCompletionIsPossibleOnAssignment () {
+  void testCompletionIsPossibleOnAssignment() {
     //given
     createProcessWithListener(TaskListener.EVENTNAME_ASSIGNMENT);
 
@@ -113,7 +104,7 @@ public class TaskListenerDelegateCompletionTest {
   }
 
   @Test
-  public void testCompletionIsPossibleAfterAssignmentUpdate () {
+  void testCompletionIsPossibleAfterAssignmentUpdate() {
     //given
     createProcessWithListener(TaskListener.EVENTNAME_UPDATE);
 
@@ -128,7 +119,7 @@ public class TaskListenerDelegateCompletionTest {
   }
 
   @Test
-  public void testCompletionIsPossibleAfterPropertyUpdate () {
+  void testCompletionIsPossibleAfterPropertyUpdate() {
     //given
     createProcessWithListener(TaskListener.EVENTNAME_UPDATE);
 
@@ -144,7 +135,7 @@ public class TaskListenerDelegateCompletionTest {
 
   @Test
   @Deployment
-  public void testCompletionIsPossibleOnTimeout() {
+  void testCompletionIsPossibleOnTimeout() {
     TaskQuery taskQuery = taskService.createTaskQuery();
 
     // given
@@ -162,7 +153,7 @@ public class TaskListenerDelegateCompletionTest {
   }
 
   @Test
-  public void testCompletionIsNotPossibleOnComplete () {
+  void testCompletionIsNotPossibleOnComplete() {
     //given
     createProcessWithListener(TaskListener.EVENTNAME_COMPLETE);
 
@@ -177,7 +168,7 @@ public class TaskListenerDelegateCompletionTest {
   }
 
   @Test
-  public void testCompletionIsNotPossibleOnDelete () {
+  void testCompletionIsNotPossibleOnDelete() {
     //given
     createProcessWithListener(TaskListener.EVENTNAME_DELETE);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(TASK_LISTENER_PROCESS);

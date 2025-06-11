@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,14 +39,14 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 @ExtendWith(ProcessEngineExtension.class)
-public class MetricsUserOperationLogTest {
+class MetricsUserOperationLogTest {
 
   protected ManagementService managementService;
   protected HistoryService historyService;
   protected IdentityService identityService;
 
   @Test
-  public void testDeleteMetrics() {
+  void testDeleteMetrics() {
     // given
     identityService.setAuthenticatedUserId("userId");
 
@@ -65,7 +65,7 @@ public class MetricsUserOperationLogTest {
   }
 
   @Test
-  public void testDeleteMetricsWithTimestamp() {
+  void testDeleteMetricsWithTimestamp() {
     // given
     Date timestamp = ClockUtil.getCurrentTime();
     identityService.setAuthenticatedUserId("userId");
@@ -85,7 +85,7 @@ public class MetricsUserOperationLogTest {
   }
 
   @Test
-  public void testDeleteMetricsWithReporterId() {
+  void testDeleteMetricsWithReporterId() {
     // given
     identityService.setAuthenticatedUserId("userId");
 
@@ -104,7 +104,7 @@ public class MetricsUserOperationLogTest {
   }
 
   @Test
-  public void testDeleteMetricsWithTimestampAndReporterId() {
+  void testDeleteMetricsWithTimestampAndReporterId() {
     // given
     Date timestamp = ClockUtil.getCurrentTime();
     identityService.setAuthenticatedUserId("userId");
@@ -131,7 +131,7 @@ public class MetricsUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogDeletionOfTaskMetricsWithTimestamp() {
+  void shouldLogDeletionOfTaskMetricsWithTimestamp() {
     // given
     Date timestamp = ClockUtil.getCurrentTime();
     identityService.setAuthenticatedUserId("userId");
@@ -151,7 +151,7 @@ public class MetricsUserOperationLogTest {
   }
 
   @Test
-  public void shouldLogDeletionOfTaskMetricsWithoutTimestamp() {
+  void shouldLogDeletionOfTaskMetricsWithoutTimestamp() {
     // given
     identityService.setAuthenticatedUserId("userId");
 

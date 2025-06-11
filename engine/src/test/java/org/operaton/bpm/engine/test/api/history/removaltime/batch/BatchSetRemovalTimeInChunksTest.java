@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -87,17 +87,16 @@ import org.operaton.bpm.engine.variable.Variables;
 class BatchSetRemovalTimeInChunksTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
-  protected static BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
+  BatchSetRemovalTimeExtension testRule = new BatchSetRemovalTimeExtension(engineRule, engineTestRule);
 
-  protected final Date REMOVAL_TIME = testRule.REMOVAL_TIME;
+  protected final Date removalTime = testRule.REMOVAL_TIME;
+  protected final Date currentDate = testRule.CURRENT_DATE;
+  protected static final Date CREATE_TIME = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
-  protected final Date CREATE_TIME = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
-
-  protected final Date CURRENT_DATE = testRule.CURRENT_DATE;
 
   protected ProcessEngineConfigurationImpl engineConfiguration;
   protected RuntimeService runtimeService;
@@ -132,7 +131,7 @@ class BatchSetRemovalTimeInChunksTest {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 
     Batch batch = historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync();
@@ -155,7 +154,7 @@ class BatchSetRemovalTimeInChunksTest {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 
     Batch batch = historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .chunkSize(100) // data updated in one chunk
@@ -179,7 +178,7 @@ class BatchSetRemovalTimeInChunksTest {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 
     Batch batch = historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .chunkSize(100) // most data updated in one chunk
@@ -200,7 +199,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicProcessInstance = query.singleResult();
 
     assertThat(testRule.getExecutionJobs(batch)).isEmpty();
-    assertThat(historicProcessInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicProcessInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -211,7 +210,7 @@ class BatchSetRemovalTimeInChunksTest {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().rootProcessInstances();
 
     Batch batch = historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .hierarchical()
         .updateInChunks()
@@ -234,8 +233,8 @@ class BatchSetRemovalTimeInChunksTest {
     historicProcessInstances = historyService.createHistoricProcessInstanceQuery().list();
 
     assertThat(testRule.getExecutionJobs(batch)).isEmpty();
-    assertThat(historicProcessInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicProcessInstances.get(1).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicProcessInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicProcessInstances.get(1).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -250,7 +249,7 @@ class BatchSetRemovalTimeInChunksTest {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 
     Batch batch = historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync();
@@ -369,7 +368,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -378,9 +377,9 @@ class BatchSetRemovalTimeInChunksTest {
     historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // then
-    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -411,7 +410,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -425,8 +424,8 @@ class BatchSetRemovalTimeInChunksTest {
     historicDecisionInputInstances = historicDecisionInstance.getInputs();
 
     // then
-    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
-    assertThat(historicDecisionInputInstances.get(1).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
+    assertThat(historicDecisionInputInstances.get(1).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -456,7 +455,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -470,7 +469,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicDecisionOutputInstances = historicDecisionInstance.getOutputs();
 
     // then
-    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -488,7 +487,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -497,7 +496,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicProcessInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
 
     // then
-    assertThat(historicProcessInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicProcessInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -510,7 +509,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -521,7 +520,7 @@ class BatchSetRemovalTimeInChunksTest {
       .singleResult();
 
     // then
-    assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -534,7 +533,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -543,7 +542,7 @@ class BatchSetRemovalTimeInChunksTest {
     HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery().singleResult();
 
     // then
-    assertThat(historicTaskInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicTaskInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -561,7 +560,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -573,7 +572,7 @@ class BatchSetRemovalTimeInChunksTest {
             .singleResult();
 
     // then
-    assertThat(authorization.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(authorization.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -594,7 +593,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -638,7 +637,7 @@ class BatchSetRemovalTimeInChunksTest {
 
     testRule.syncExec(
         historyService.setRemovalTimeToHistoricProcessInstances()
-            .absoluteRemovalTime(REMOVAL_TIME)
+            .absoluteRemovalTime(removalTime)
             .byQuery(query)
             .updateInChunks()
             .executeAsync()
@@ -650,7 +649,7 @@ class BatchSetRemovalTimeInChunksTest {
 
     assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
-        .containsExactly(tuple(REMOVAL_TIME, processInstanceId, processInstanceId));
+        .containsExactly(tuple(removalTime, processInstanceId, processInstanceId));
   }
 
   @Test
@@ -682,7 +681,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
         historyService.setRemovalTimeToHistoricProcessInstances()
-            .absoluteRemovalTime(REMOVAL_TIME)
+            .absoluteRemovalTime(removalTime)
             .byQuery(query)
             .updateInChunks()
             .executeAsync()
@@ -710,7 +709,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -719,7 +718,7 @@ class BatchSetRemovalTimeInChunksTest {
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
     // then
-    assertThat(historicVariableInstance.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicVariableInstance.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -735,7 +734,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -744,7 +743,7 @@ class BatchSetRemovalTimeInChunksTest {
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery().singleResult();
 
     // then
-    assertThat(historicDetail.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicDetail.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -762,7 +761,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -771,7 +770,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicExternalTaskLog = historyService.createHistoricExternalTaskLogQuery().singleResult();
 
     // then
-    assertThat(historicExternalTaskLog.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicExternalTaskLog.getRemovalTime()).isEqualTo(removalTime);
   }
 
   /**
@@ -794,7 +793,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -823,7 +822,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -834,7 +833,7 @@ class BatchSetRemovalTimeInChunksTest {
       .singleResult();
 
     // then
-    assertThat(job.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(job.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -856,7 +855,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -865,7 +864,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicIncident = historyService.createHistoricIncidentQuery().singleResult();
 
     // then
-    assertThat(historicIncident.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(historicIncident.getRemovalTime()).isEqualTo(removalTime);
   }
 
   /**
@@ -892,7 +891,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -923,7 +922,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -932,7 +931,7 @@ class BatchSetRemovalTimeInChunksTest {
     userOperationLog = historyService.createUserOperationLogQuery().singleResult();
 
     // then
-    assertThat(userOperationLog.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(userOperationLog.getRemovalTime()).isEqualTo(removalTime);
   }
 
   /**
@@ -959,7 +958,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -986,7 +985,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -995,7 +994,7 @@ class BatchSetRemovalTimeInChunksTest {
     identityLinkLog = historyService.createHistoricIdentityLinkLogQuery().singleResult();
 
     // then
-    assertThat(identityLinkLog.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(identityLinkLog.getRemovalTime()).isEqualTo(removalTime);
   }
 
   /**
@@ -1018,7 +1017,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1043,7 +1042,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query.processInstanceId(instance1))
         .updateInChunks()
         .executeAsync()
@@ -1080,7 +1079,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1089,7 +1088,7 @@ class BatchSetRemovalTimeInChunksTest {
     comment = taskService.getTaskComments(taskId).get(0);
 
     // then
-    assertThat(comment.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(comment.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1109,7 +1108,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1118,7 +1117,7 @@ class BatchSetRemovalTimeInChunksTest {
     comment = taskService.getProcessInstanceComments(processInstanceId).get(0);
 
     // then
-    assertThat(comment.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(comment.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1142,7 +1141,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1151,7 +1150,7 @@ class BatchSetRemovalTimeInChunksTest {
     attachment = taskService.getTaskAttachments(taskId).get(0);
 
     // then
-    assertThat(attachment.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(attachment.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1170,7 +1169,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1179,7 +1178,7 @@ class BatchSetRemovalTimeInChunksTest {
     attachment = taskService.getProcessInstanceAttachments(processInstanceId).get(0);
 
     // then
-    assertThat(attachment.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(attachment.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1205,7 +1204,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1214,7 +1213,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(attachment.getContentId());
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1237,7 +1236,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1246,7 +1245,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1273,7 +1272,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1282,7 +1281,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1313,7 +1312,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1322,7 +1321,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1355,7 +1354,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1364,7 +1363,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1396,7 +1395,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1405,7 +1404,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   @Test
@@ -1437,7 +1436,7 @@ class BatchSetRemovalTimeInChunksTest {
     // when
     testRule.syncExec(
       historyService.setRemovalTimeToHistoricProcessInstances()
-        .absoluteRemovalTime(REMOVAL_TIME)
+        .absoluteRemovalTime(removalTime)
         .byQuery(query)
         .updateInChunks()
         .executeAsync()
@@ -1446,7 +1445,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(REMOVAL_TIME);
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(removalTime);
   }
 
   // HIERARCHICAL TEST CASES
@@ -1493,9 +1492,9 @@ class BatchSetRemovalTimeInChunksTest {
     historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // then
-    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
-    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
-    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
+    assertThat(historicDecisionInstances.get(1).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
+    assertThat(historicDecisionInstances.get(2).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1549,8 +1548,8 @@ class BatchSetRemovalTimeInChunksTest {
     historicDecisionInputInstances = historicDecisionInstance.getInputs();
 
     // then
-    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
-    assertThat(historicDecisionInputInstances.get(1).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionInputInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
+    assertThat(historicDecisionInputInstances.get(1).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1603,7 +1602,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicDecisionOutputInstances = historicDecisionInstance.getOutputs();
 
     // then
-    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDecisionOutputInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1633,8 +1632,8 @@ class BatchSetRemovalTimeInChunksTest {
     historicProcessInstances = historyService.createHistoricProcessInstanceQuery().list();
 
     // then
-    assertThat(historicProcessInstances.get(0).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
-    assertThat(historicProcessInstances.get(1).getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicProcessInstances.get(0).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
+    assertThat(historicProcessInstances.get(1).getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1668,7 +1667,7 @@ class BatchSetRemovalTimeInChunksTest {
       .singleResult();
 
     // then
-    assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicActivityInstance.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1698,7 +1697,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicTaskInstance = historyService.createHistoricTaskInstanceQuery().singleResult();
 
     // then
-    assertThat(historicTaskInstance.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicTaskInstance.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1738,7 +1737,7 @@ class BatchSetRemovalTimeInChunksTest {
             .singleResult();
 
     // then
-    assertThat(authorization.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(authorization.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1827,10 +1826,10 @@ class BatchSetRemovalTimeInChunksTest {
     authQuery = authorizationService.createAuthorizationQuery()
         .resourceType(Resources.HISTORIC_PROCESS_INSTANCE);
 
-    Date removalTime = addDays(CURRENT_DATE, 5);
+    Date exptectedRemovalTime = addDays(currentDate, 5);
     assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
-        .containsExactly(tuple(removalTime, processInstanceId, rootProcessInstanceId));
+        .containsExactly(tuple(exptectedRemovalTime, processInstanceId, rootProcessInstanceId));
   }
 
   @Test
@@ -1917,7 +1916,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
     // then
-    assertThat(historicVariableInstance.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicVariableInstance.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1950,7 +1949,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicDetail = historyService.createHistoricDetailQuery().singleResult();
 
     // then
-    assertThat(historicDetail.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicDetail.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -1980,7 +1979,7 @@ class BatchSetRemovalTimeInChunksTest {
     historicExternalTaskLog = historyService.createHistoricExternalTaskLogQuery().singleResult();
 
     // then
-    assertThat(historicExternalTaskLog.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicExternalTaskLog.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2014,7 +2013,7 @@ class BatchSetRemovalTimeInChunksTest {
       .singleResult();
 
     // then
-    assertThat(job.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(job.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2057,7 +2056,7 @@ class BatchSetRemovalTimeInChunksTest {
       .singleResult();
 
     // then
-    assertThat(historicIncident.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(historicIncident.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2091,7 +2090,7 @@ class BatchSetRemovalTimeInChunksTest {
     userOperationLog = historyService.createUserOperationLogQuery().singleResult();
 
     // then
-    assertThat(userOperationLog.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(userOperationLog.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2121,7 +2120,7 @@ class BatchSetRemovalTimeInChunksTest {
     identityLinkLog = historyService.createHistoricIdentityLinkLogQuery().singleResult();
 
     // then
-    assertThat(identityLinkLog.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(identityLinkLog.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2160,7 +2159,7 @@ class BatchSetRemovalTimeInChunksTest {
     comment = taskService.getTaskComments(taskId).get(0);
 
     // then
-    assertThat(comment.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(comment.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2192,7 +2191,7 @@ class BatchSetRemovalTimeInChunksTest {
     comment = taskService.getProcessInstanceComments(processInstanceId).get(0);
 
     // then
-    assertThat(comment.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(comment.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2228,7 +2227,7 @@ class BatchSetRemovalTimeInChunksTest {
     attachment = taskService.getTaskAttachments(taskId).get(0);
 
     // then
-    assertThat(attachment.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(attachment.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2259,7 +2258,7 @@ class BatchSetRemovalTimeInChunksTest {
     attachment = taskService.getProcessInstanceAttachments(processInstanceId).get(0);
 
     // then
-    assertThat(attachment.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(attachment.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2297,7 +2296,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(attachment.getContentId());
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2332,7 +2331,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2371,7 +2370,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2414,7 +2413,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2459,7 +2458,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2509,7 +2508,7 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 
   @Test
@@ -2559,6 +2558,6 @@ class BatchSetRemovalTimeInChunksTest {
     byteArrayEntity = testRule.findByteArrayById(byteArrayId);
 
     // then
-    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(CURRENT_DATE, 5));
+    assertThat(byteArrayEntity.getRemovalTime()).isEqualTo(addDays(currentDate, 5));
   }
 }

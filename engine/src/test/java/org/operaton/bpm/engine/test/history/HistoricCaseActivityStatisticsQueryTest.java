@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,8 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -31,36 +33,23 @@ import org.operaton.bpm.engine.history.HistoricCaseActivityStatisticsQuery;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class HistoricCaseActivityStatisticsQueryTest {
+@ExtendWith(ProcessEngineExtension.class)
+class HistoricCaseActivityStatisticsQueryTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected HistoryService historyService;
-  protected CaseService caseService;
-  protected RepositoryService repositoryService;
-
-  @Before
-  public void setUp() {
-    historyService = engineRule.getHistoryService();
-    caseService = engineRule.getCaseService();
-    repositoryService = engineRule.getRepositoryService();
-  }
+  HistoryService historyService;
+  CaseService caseService;
+  RepositoryService repositoryService;
 
   @Test
-  public void testCaseDefinitionNull() {
+  void testCaseDefinitionNull() {
     var historicCaseActivityStatisticsQuery = historyService
         .createHistoricCaseActivityStatisticsQuery(null);
     // given
@@ -76,7 +65,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
-  public void testNoCaseActivityInstances() {
+  void testNoCaseActivityInstances() {
     // given
     String caseDefinitionId = getCaseDefinition().getId();
 
@@ -90,7 +79,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
-  public void testSingleTask() {
+  void testSingleTask() {
     // given
     String caseDefinitionId = getCaseDefinition().getId();
 
@@ -109,7 +98,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
 
   @Test
   @Deployment
-  public void testMultipleTasks() {
+  void testMultipleTasks() {
 
     // given
     String caseDefinitionId = getCaseDefinition().getId();
@@ -138,9 +127,9 @@ public class HistoricCaseActivityStatisticsQueryTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/history/HistoricCaseActivityStatisticsQueryTest.testMultipleTasks.cmmn"
+      "org/operaton/bpm/engine/test/history/HistoricCaseActivityStatisticsQueryTest.testMultipleTasks.cmmn"
   })
-  public void testStateCount() {
+  void testStateCount() {
 
     // given
     String caseDefinitionId = getCaseDefinition().getId();
@@ -187,10 +176,10 @@ public class HistoricCaseActivityStatisticsQueryTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
-    "org/operaton/bpm/engine/test/history/HistoricCaseActivityStatisticsQueryTest.testMultipleTasks.cmmn"
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn",
+      "org/operaton/bpm/engine/test/history/HistoricCaseActivityStatisticsQueryTest.testMultipleTasks.cmmn"
   })
-  public void testMultipleCaseDefinitions() {
+  void testMultipleCaseDefinitions() {
 
     // given
     String caseDefinitionId1 = getCaseDefinition("oneTaskCase").getId();
@@ -211,9 +200,9 @@ public class HistoricCaseActivityStatisticsQueryTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/history/HistoricCaseActivityStatisticsQueryTest.testMultipleTasks.cmmn"
+      "org/operaton/bpm/engine/test/history/HistoricCaseActivityStatisticsQueryTest.testMultipleTasks.cmmn"
   })
-  public void testPagination() {
+  void testPagination() {
     // given
     String caseDefinitionId = getCaseDefinition().getId();
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,35 +22,33 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 
 import java.util.Date;
 
+import org.joda.time.DateTime;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.TimerCatchModels;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.joda.time.DateTime;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationTimerCatchEventTest {
+class MigrationTimerCatchEventTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testMigrateJob() {
+  void testMigrateJob() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(TimerCatchModels.ONE_TIMER_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(TimerCatchModels.ONE_TIMER_CATCH_PROCESS);
@@ -88,7 +86,7 @@ public class MigrationTimerCatchEventTest {
   }
 
   @Test
-  public void testMigrateJobChangeActivityId() {
+  void testMigrateJobChangeActivityId() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(TimerCatchModels.ONE_TIMER_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(TimerCatchModels.ONE_TIMER_CATCH_PROCESS)
@@ -115,7 +113,7 @@ public class MigrationTimerCatchEventTest {
   }
 
   @Test
-  public void testMigrateJobPreserveTimerConfiguration() {
+  void testMigrateJobPreserveTimerConfiguration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(TimerCatchModels.ONE_TIMER_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.newModel()
@@ -148,7 +146,7 @@ public class MigrationTimerCatchEventTest {
   }
 
   @Test
-  public void testMigrateJobUpdateTimerConfiguration() {
+  void testMigrateJobUpdateTimerConfiguration() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -186,7 +184,7 @@ public class MigrationTimerCatchEventTest {
   }
 
   @Test
-  public void testMigrateJobChangeProcessKey() {
+  void testMigrateJobChangeProcessKey() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(TimerCatchModels.ONE_TIMER_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(TimerCatchModels.ONE_TIMER_CATCH_PROCESS)
@@ -213,7 +211,7 @@ public class MigrationTimerCatchEventTest {
   }
 
   @Test
-  public void testMigrateJobAddParentScope() {
+  void testMigrateJobAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(TimerCatchModels.ONE_TIMER_CATCH_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(TimerCatchModels.SUBPROCESS_TIMER_CATCH_PROCESS);

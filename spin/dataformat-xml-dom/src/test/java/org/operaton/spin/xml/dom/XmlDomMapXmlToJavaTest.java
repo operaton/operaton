@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@
 package org.operaton.spin.xml.dom;
 
 import org.operaton.spin.xml.SpinXmlDataFormatException;
+import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.mapping.Order;
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
@@ -42,6 +43,7 @@ class XmlDomMapXmlToJavaTest {
 
   @Test
   void shouldFailForMalformedTypeString() {
-    assertThrows(SpinXmlDataFormatException.class, () -> XML(EXAMPLE_VALIDATION_XML).mapTo("rubbish"));
+    SpinXmlElement xmlElement = XML(EXAMPLE_VALIDATION_XML);
+    assertThrows(SpinXmlDataFormatException.class, () -> xmlElement.mapTo("rubbish"));
   }
 }

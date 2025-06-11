@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -48,15 +48,15 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyBatchQueryTest {
+class MultiTenancyBatchQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(engineRule);
 
@@ -68,7 +68,7 @@ public class MultiTenancyBatchQueryTest {
   protected Batch tenant2Batch;
 
   @BeforeEach
-  public void deployProcesses() {
+  void deployProcesses() {
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
@@ -79,12 +79,12 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     batchHelper.removeAllRunningAndHistoricBatches();
   }
 
   @Test
-  public void testBatchQueryNoAuthenticatedTenant() {
+  void testBatchQueryNoAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -99,7 +99,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryAuthenticatedTenant() {
+  void testBatchQueryAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
 
@@ -116,7 +116,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryAuthenticatedTenants() {
+  void testBatchQueryAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -131,7 +131,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsNoAuthenticatedTenant() {
+  void testBatchStatisticsNoAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, null);
 
@@ -148,7 +148,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsAuthenticatedTenant() {
+  void testBatchStatisticsAuthenticatedTenant() {
     // given
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
 
@@ -164,7 +164,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsAuthenticatedTenants() {
+  void testBatchStatisticsAuthenticatedTenants() {
     // given
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
@@ -178,7 +178,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryFilterByTenant() {
+  void testBatchQueryFilterByTenant() {
     // when
     Batch returnedBatch = managementService.createBatchQuery().tenantIdIn(TENANT_ONE).singleResult();
 
@@ -188,7 +188,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryFilterByTenants() {
+  void testBatchQueryFilterByTenants() {
     // when
     List<Batch> returnedBatches = managementService.createBatchQuery()
       .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -203,7 +203,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryFilterWithoutTenantId() {
+  void testBatchQueryFilterWithoutTenantId() {
     // when
     Batch returnedBatch = managementService.createBatchQuery().withoutTenantId().singleResult();
 
@@ -213,7 +213,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryFailOnNullTenantIdCase1() {
+  void testBatchQueryFailOnNullTenantIdCase1() {
 
     String[] tenantIds = null;
     var batchQuery = managementService.createBatchQuery();
@@ -227,7 +227,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchQueryFailOnNullTenantIdCase2() {
+  void testBatchQueryFailOnNullTenantIdCase2() {
 
     String[] tenantIds = new String[]{ null };
     var batchQuery = managementService.createBatchQuery();
@@ -241,7 +241,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testOrderByTenantIdAsc() {
+  void testOrderByTenantIdAsc() {
 
     // when
     List<Batch> orderedBatches = managementService.createBatchQuery().orderByTenantId().asc().list();
@@ -251,7 +251,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testOrderByTenantIdDesc() {
+  void testOrderByTenantIdDesc() {
 
     // when
     List<Batch> orderedBatches = managementService.createBatchQuery().orderByTenantId().desc().list();
@@ -261,7 +261,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsQueryFilterByTenant() {
+  void testBatchStatisticsQueryFilterByTenant() {
     // when
     BatchStatistics returnedBatch = managementService.createBatchStatisticsQuery().tenantIdIn(TENANT_ONE).singleResult();
 
@@ -271,7 +271,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsQueryFilterByTenants() {
+  void testBatchStatisticsQueryFilterByTenants() {
     // when
     List<BatchStatistics> returnedBatches = managementService.createBatchStatisticsQuery()
       .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -286,7 +286,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsQueryFilterWithoutTenantId() {
+  void testBatchStatisticsQueryFilterWithoutTenantId() {
     // when
     BatchStatistics returnedBatch = managementService.createBatchStatisticsQuery().withoutTenantId().singleResult();
 
@@ -296,7 +296,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsQueryFailOnNullTenantIdCase1() {
+  void testBatchStatisticsQueryFailOnNullTenantIdCase1() {
 
     String[] tenantIds = null;
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
@@ -310,7 +310,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsQueryFailOnNullTenantIdCase2() {
+  void testBatchStatisticsQueryFailOnNullTenantIdCase2() {
 
     String[] tenantIds = new String[]{ null };
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
@@ -324,7 +324,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsQueryOrderByTenantIdAsc() {
+  void testBatchStatisticsQueryOrderByTenantIdAsc() {
     // when
     List<BatchStatistics> orderedBatches = managementService.createBatchStatisticsQuery().orderByTenantId().asc().list();
 
@@ -333,7 +333,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   @Test
-  public void testBatchStatisticsQueryOrderByTenantIdDesc() {
+  void testBatchStatisticsQueryOrderByTenantIdDesc() {
     // when
     List<BatchStatistics> orderedBatches = managementService.createBatchStatisticsQuery().orderByTenantId().desc().list();
 

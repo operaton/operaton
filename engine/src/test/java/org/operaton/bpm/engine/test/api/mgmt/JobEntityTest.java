@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,12 +42,12 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 /**
  * @author Tassilo Weidner
  */
-public class JobEntityTest {
+class JobEntityTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected List<String> jobIds = new ArrayList<>();
 
@@ -60,24 +60,24 @@ public class JobEntityTest {
   protected String activityIdLoggingProperty;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     jobIds = new ArrayList<>();
 
     activityIdLoggingProperty = engineRule.getProcessEngineConfiguration().getLoggingContextActivityId();
   }
 
   @BeforeEach
-  public void setClock() {
+  void setClock() {
     ClockUtil.setCurrentTime(CREATE_DATE);
   }
 
   @AfterEach
-  public void resetClock() {
+  void resetClock() {
     ClockUtil.reset();
   }
 
   @AfterEach
-  public void cleanup() {
+  void cleanup() {
     for (String jobId : jobIds) {
       managementService.deleteJob(jobId);
     }
@@ -90,7 +90,7 @@ public class JobEntityTest {
   }
 
   @Test
-  public void shouldCheckCreateTimeOnMessage() {
+  void shouldCheckCreateTimeOnMessage() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -113,7 +113,7 @@ public class JobEntityTest {
   }
 
   @Test
-  public void shouldCheckCreateTimeOnTimer() {
+  void shouldCheckCreateTimeOnTimer() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -136,7 +136,7 @@ public class JobEntityTest {
   }
 
   @Test
-  public void shouldCheckCreateTimeOnEverLivingJob() {
+  void shouldCheckCreateTimeOnEverLivingJob() {
     // given
     historyService.cleanUpHistoryAsync(true);
 
@@ -152,7 +152,7 @@ public class JobEntityTest {
   }
 
   @Test
-  public void shouldShowFailedActivityIdPropertyForFailingAsyncTask() {
+  void shouldShowFailedActivityIdPropertyForFailingAsyncTask() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
@@ -181,7 +181,7 @@ public class JobEntityTest {
   }
 
   @Test
-  public void shouldShowFailedActivityIdIfActivityIdLoggingIsDisabled() {
+  void shouldShowFailedActivityIdIfActivityIdLoggingIsDisabled() {
     // given
     engineRule.getProcessEngineConfiguration().setLoggingContextActivityId(null);
 
@@ -212,7 +212,7 @@ public class JobEntityTest {
   }
 
   @Test
-  public void shouldShowFailedActivityIdPropertyForAsyncTaskWithFailingFollowUp() {
+  void shouldShowFailedActivityIdPropertyForAsyncTaskWithFailingFollowUp() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)

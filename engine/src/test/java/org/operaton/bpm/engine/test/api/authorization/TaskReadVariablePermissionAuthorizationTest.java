@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,9 +62,9 @@ public class TaskReadVariablePermissionAuthorizationTest {
   protected static String userId = "test";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   private ProcessEngineConfigurationImpl processEngineConfiguration;
   private IdentityService identityService;
@@ -123,7 +123,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   // TaskService#saveTask() ///////////////////////////////////
 
   @TestTemplate
-  public void testSaveStandaloneTaskAndCheckAssigneePermissions() {
+  void testSaveStandaloneTaskAndCheckAssigneePermissions() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -146,7 +146,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testSaveProcessTaskAndCheckAssigneePermissions() {
+  void testSaveProcessTaskAndCheckAssigneePermissions() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();
@@ -167,7 +167,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   // TaskService#setOwner() ///////////////////////////////////
 
   @TestTemplate
-  public void testStandaloneTaskSetOwnerAndCheckOwnerPermissions() {
+  void testStandaloneTaskSetOwnerAndCheckOwnerPermissions() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -188,7 +188,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskSetOwnerAndCheckOwnerPermissions() {
+  void testProcessTaskSetOwnerAndCheckOwnerPermissions() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -208,7 +208,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   // TaskService#addUserIdentityLink() ///////////////////////////////////
 
   @TestTemplate
-  public void testStandaloneTaskAddUserIdentityLinkAndUserOwnerPermissions() {
+  void testStandaloneTaskAddUserIdentityLinkAndUserOwnerPermissions() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -239,7 +239,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnTask() {
+  void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -269,7 +269,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
   // TaskService#addGroupIdentityLink() ///////////////////////////////////
 
   @TestTemplate
-  public void testStandaloneTaskAddGroupIdentityLink() {
+  void testStandaloneTaskAddGroupIdentityLink() {
     // given
     String taskId = "myTask";
     createTask(taskId);
@@ -301,7 +301,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnTask() {
+  void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,23 +21,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonExecutionListener;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class TriggerConditionalEventFromDelegationCodeTest extends AbstractConditionalEventTestCase {
 
   private interface ConditionalEventProcessSpecifier {
@@ -48,7 +49,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
   }
 
 
-  @Parameterized.Parameters(name = "{index}: {0}")
+  @Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][]{
       {new ConditionalEventProcessSpecifier() {
@@ -107,11 +108,11 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
       }}});
   }
 
-  @Parameterized.Parameter
+  @Parameter
   public ConditionalEventProcessSpecifier specifier;
 
-  @Test
-  public void testSetVariableInStartListener() {
+  @TestTemplate
+  void testSetVariableInStartListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -139,8 +140,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 
-  @Test
-  public void testNonInterruptingSetVariableInStartListener() {
+  @TestTemplate
+  void testNonInterruptingSetVariableInStartListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -166,8 +167,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 
-  @Test
-  public void testSetVariableInTakeListener() {
+  @TestTemplate
+  void testSetVariableInTakeListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -199,8 +200,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 
-  @Test
-  public void testNonInterruptingSetVariableInTakeListener() {
+  @TestTemplate
+  void testNonInterruptingSetVariableInTakeListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -233,8 +234,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 
-  @Test
-  public void testSetVariableInTakeListenerWithAsyncBefore() {
+  @TestTemplate
+  void testSetVariableInTakeListenerWithAsyncBefore() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -266,8 +267,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 
-  @Test
-  public void testNonInterruptingSetVariableInTakeListenerWithAsyncBefore() {
+  @TestTemplate
+  void testNonInterruptingSetVariableInTakeListenerWithAsyncBefore() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -313,8 +314,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
-  @Test
-  public void testSetVariableInEndListener() {
+  @TestTemplate
+  void testSetVariableInEndListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -340,8 +341,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 
-  @Test
-  public void testNonInterruptingSetVariableInEndListener() {
+  @TestTemplate
+  void testNonInterruptingSetVariableInEndListener() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_BEFORE_CONDITION_ID)
@@ -367,8 +368,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 
-  @Test
-  public void testSetVariableInStartAndEndListener() {
+  @TestTemplate
+  void testSetVariableInStartAndEndListener() {
     //given process with start and end listener on user task
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()

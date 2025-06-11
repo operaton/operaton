@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,15 +16,18 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -32,33 +35,28 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateEvent;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateExecutionListener;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.builder.ParallelGatewayBuilder;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationAddSubprocessTest {
+class MigrationAddSubprocessTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testScopeUserTaskMigration() {
+  void testScopeUserTaskMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SCOPE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SCOPE_TASK_SUBPROCESS_PROCESS);
@@ -96,7 +94,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testConcurrentScopeUserTaskMigration() {
+  void testConcurrentScopeUserTaskMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SCOPE_TASKS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SCOPE_TASKS_SUB_PROCESS);
@@ -144,7 +142,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testUserTaskMigration() {
+  void testUserTaskMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
@@ -181,7 +179,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testConcurrentUserTaskMigration() {
+  void testConcurrentUserTaskMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
@@ -227,7 +225,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testConcurrentThreeUserTaskMigration() {
+  void testConcurrentThreeUserTaskMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.PARALLEL_GATEWAY_PROCESS)
         .getBuilderForElementById("fork", ParallelGatewayBuilder.class)
@@ -284,7 +282,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testNestedScopesMigration1() {
+  void testNestedScopesMigration1() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
@@ -324,7 +322,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testNestedScopesMigration2() {
+  void testNestedScopesMigration2() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
@@ -364,7 +362,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testMultipleInstancesOfScope() {
+  void testMultipleInstancesOfScope() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
 
@@ -423,7 +421,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testChangeActivityId() {
+  void testChangeActivityId() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
 
@@ -464,7 +462,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testChangeScopeActivityId() {
+  void testChangeScopeActivityId() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SCOPE_TASKS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SCOPE_TASKS_SUB_PROCESS);
 
@@ -506,7 +504,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testListenerInvocationForNewlyCreatedScope() {
+  void testListenerInvocationForNewlyCreatedScope() {
     // given
     DelegateEvent.clearEvents();
 
@@ -538,7 +536,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testSkipListenerInvocationForNewlyCreatedScope() {
+  void testSkipListenerInvocationForNewlyCreatedScope() {
     // given
     DelegateEvent.clearEvents();
 
@@ -571,7 +569,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testIoMappingInvocationForNewlyCreatedScope() {
+  void testIoMappingInvocationForNewlyCreatedScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
@@ -605,7 +603,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testSkipIoMappingInvocationForNewlyCreatedScope() {
+  void testSkipIoMappingInvocationForNewlyCreatedScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
@@ -633,7 +631,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testDeleteMigratedInstance() {
+  void testDeleteMigratedInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SCOPE_TASKS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SCOPE_TASKS_SUB_PROCESS);
@@ -657,8 +655,8 @@ public class MigrationAddSubprocessTest {
    * Readd when we implement migration for multi-instance
    */
   @Test
-  @Ignore
-  public void testAddParentScopeToMultiInstance() {
+  @Disabled
+  void testAddParentScopeToMultiInstance() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(
       modify(ProcessModels.ONE_TASK_PROCESS)
@@ -725,7 +723,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testAddTwoScopes() {
+  void testAddTwoScopes() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
@@ -764,7 +762,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testAddTwoConcurrentScopes() {
+  void testAddTwoConcurrentScopes() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_PARALLEL_SUBPROCESS_PROCESS);
@@ -811,7 +809,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testCanMigrateParentScopeWayTooHigh() {
+  void testCanMigrateParentScopeWayTooHigh() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);
@@ -852,7 +850,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testMoveConcurrentActivityIntoSiblingScope() {
+  void testMoveConcurrentActivityIntoSiblingScope() {
 
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_TASK_AND_SUBPROCESS_PROCESS);
@@ -902,7 +900,7 @@ public class MigrationAddSubprocessTest {
   }
 
   @Test
-  public void testAddScopeDoesNotBecomeAsync() {
+  void testAddScopeDoesNotBecomeAsync() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)

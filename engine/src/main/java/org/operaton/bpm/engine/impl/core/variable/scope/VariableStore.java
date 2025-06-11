@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -205,14 +205,14 @@ public class VariableStore<T extends CoreVariableInstance> {
     observers.remove(observer);
   }
 
-  public static interface VariableStoreObserver<T extends CoreVariableInstance> {
+  public interface VariableStoreObserver<T extends CoreVariableInstance> {
 
     void onAdd(T variable);
 
     void onRemove(T variable);
   }
 
-  public static interface VariablesProvider<T extends CoreVariableInstance> {
+  public interface VariablesProvider<T extends CoreVariableInstance> {
 
     Collection<T> provideVariables();
 

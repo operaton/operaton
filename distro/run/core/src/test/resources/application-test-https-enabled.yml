@@ -6,3 +6,4 @@ server:
     key-alias: localhost
     key-password: operaton
   port: 8443
+spring.http.client.factory: simple

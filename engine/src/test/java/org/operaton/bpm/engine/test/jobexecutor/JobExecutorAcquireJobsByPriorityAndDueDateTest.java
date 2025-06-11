@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,26 +16,26 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Before;
-import org.junit.Test;
 
-public class JobExecutorAcquireJobsByPriorityAndDueDateTest extends AbstractJobExecutorAcquireJobsTest {
+class JobExecutorAcquireJobsByPriorityAndDueDateTest extends AbstractJobExecutorAcquireJobsTest {
 
-  @Before
-  public void prepareProcessEngineConfiguration() {
+  @BeforeEach
+  void prepareProcessEngineConfiguration() {
     configuration.setJobExecutorAcquireByPriority(true);
     configuration.setJobExecutorAcquireByDueDate(true);
   }
 
   @Test
-  public void testProcessEngineConfiguration() {
+  void testProcessEngineConfiguration() {
     assertThat(configuration.isJobExecutorPreferTimerJobs()).isFalse();
     assertThat(configuration.isJobExecutorAcquireByDueDate()).isTrue();
     assertThat(configuration.isJobExecutorAcquireByPriority()).isTrue();
@@ -46,7 +46,7 @@ public class JobExecutorAcquireJobsByPriorityAndDueDateTest extends AbstractJobE
     "org/operaton/bpm/engine/test/jobexecutor/jobPrioProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/jobexecutor/timerJobPrioProcess.bpmn20.xml"
   })
-  public void testAcquisitionByPriorityAndDueDate() {
+  void testAcquisitionByPriorityAndDueDate() {
     // job with priority 10
     String instance1 = startProcess("jobPrioProcess", "task1");
 

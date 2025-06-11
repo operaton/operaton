@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,8 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import static java.util.concurrent.Executors.newFixedThreadPool;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.Deployment;
@@ -28,7 +32,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-// TODO https://github.com/operaton/operaton/issues/500
 public class IdGeneratorDataSourceTest {
 
   @ClassRule
@@ -47,26 +50,15 @@ public class IdGeneratorDataSourceTest {
   @Deployment
   @Test
   public void testIdGeneratorDataSource() {
-    List<Thread> threads = new ArrayList<>();
-    for (int i=0; i<20; i++) {
-      Thread thread = new Thread() {
-        @Override
-        public void run() {
-          for (int j = 0; j < 5; j++) {
-            runtimeService.startProcessInstanceByKey("idGeneratorDataSource");
-          }
-        }
-      };
-      thread.start();
-      threads.add(thread);
-    }
+    var threadPool = newFixedThreadPool(20);
+    List<Future<?>> tasks = new ArrayList<>();
 
-    for (Thread thread: threads) {
-      try {
-        thread.join();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+    for (int i = 0; i < 20; i++) {
+      tasks.add(threadPool.submit(() -> {
+        runtimeService.startProcessInstanceByKey("idGeneratorDataSource");
+      }));
     }
+    tasks.forEach(future -> assertThatNoException().isThrownBy(future::get));
+    threadPool.shutdown();
   }
 }

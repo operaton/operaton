@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,10 +28,6 @@ import java.util.Map;
  */
 public class ConditionQueryParameterDto {
 
-  public ConditionQueryParameterDto() {
-
-  }
-
   public static final String EQUALS_OPERATOR_NAME = "eq";
   public static final String NOT_EQUALS_OPERATOR_NAME = "neq";
   public static final String GREATER_THAN_OPERATOR_NAME = "gt";
@@ -52,7 +48,7 @@ public class ConditionQueryParameterDto {
     NAME_OPERATOR_MAP.put(LESS_THAN_OR_EQUALS_OPERATOR_NAME, QueryOperator.LESS_THAN_OR_EQUAL);
     NAME_OPERATOR_MAP.put(LIKE_OPERATOR_NAME, QueryOperator.LIKE);
     NAME_OPERATOR_MAP.put(NOT_LIKE_OPERATOR_NAME, QueryOperator.NOT_LIKE);
-  };
+  }
 
   protected static final Map<QueryOperator, String> OPERATOR_NAME_MAP = new HashMap<>();
 
@@ -65,7 +61,7 @@ public class ConditionQueryParameterDto {
     OPERATOR_NAME_MAP.put(QueryOperator.LESS_THAN_OR_EQUAL, LESS_THAN_OR_EQUALS_OPERATOR_NAME);
     OPERATOR_NAME_MAP.put(QueryOperator.LIKE, LIKE_OPERATOR_NAME);
     OPERATOR_NAME_MAP.put(QueryOperator.NOT_LIKE, NOT_LIKE_OPERATOR_NAME);
-  };
+  }
 
   protected String operator;
   protected Object value;

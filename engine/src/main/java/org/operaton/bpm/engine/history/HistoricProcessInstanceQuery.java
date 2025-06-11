@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -389,34 +389,34 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * Only select historic process instances that were started as of the provided
    * date. (Date will be adjusted to reflect midnight)
    *
-   * @deprecated use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead
+   * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricProcessInstanceQuery startDateBy(Date date);
 
   /**
    * Only select historic process instances that were started on the provided date.
    *
-   * @deprecated use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead
+   * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricProcessInstanceQuery startDateOn(Date date);
 
   /**
    * Only select historic process instances that were finished as of the
    * provided date. (Date will be adjusted to reflect one second before midnight)
    *
-   * @deprecated use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead
+   * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricProcessInstanceQuery finishDateBy(Date date);
 
   /**
    * Only select historic process instances that were finished on provided date.
    *
-   * @deprecated use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead
+   * @deprecated Use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   HistoricProcessInstanceQuery finishDateOn(Date date);
 
   /**

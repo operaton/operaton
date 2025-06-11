@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,12 +38,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * @author Stefan Hentschel.
  */
-public class MultiTenancyTaskCountByCandidateGroupTest {
+class MultiTenancyTaskCountByCandidateGroupTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension procesessEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
+  ProcessEngineTestExtension procesessEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
 
   protected TaskService taskService;
   protected IdentityService identityService;
@@ -58,7 +58,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
   protected List<String> taskIds = new ArrayList<>();
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     createTask(groupId, tenantId);
     createTask(groupId, anotherTenantId);
     createTask(groupId, anotherTenantId);
@@ -67,7 +67,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     processEngineConfiguration.setTenantCheckEnabled(false);
 
     for (String taskId : taskIds) {
@@ -76,7 +76,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
   }
 
   @Test
-  public void shouldOnlyShowTenantSpecificTasks() {
+  void shouldOnlyShowTenantSpecificTasks() {
     // given
 
     identityService.setAuthentication(userId, null, Collections.singletonList(tenantId));

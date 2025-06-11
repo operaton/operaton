@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,34 +17,31 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class VariableInstanceQueryForOracleTest {
+class VariableInstanceQueryForOracleTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-  
   @Test
-  public void testQueryWhen0InstancesActive() {
+  void testQueryWhen0InstancesActive() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
 
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery().list();
@@ -52,9 +49,9 @@ public class VariableInstanceQueryForOracleTest {
   }
 
   @Test
-  public void testQueryWhen1InstanceActive() {
+  void testQueryWhen1InstanceActive() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
 
@@ -70,9 +67,9 @@ public class VariableInstanceQueryForOracleTest {
   }
 
   @Test
-  public void testQueryWhen1000InstancesActive() {
+  void testQueryWhen1000InstancesActive() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     String[] ids = new String[1000];
@@ -92,9 +89,9 @@ public class VariableInstanceQueryForOracleTest {
   }
 
   @Test
-  public void testQueryWhen1001InstancesActive() {
+  void testQueryWhen1001InstancesActive() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     String[] ids = new String[1001];
@@ -114,9 +111,9 @@ public class VariableInstanceQueryForOracleTest {
   }
 
   @Test
-  public void testQueryWhen2001InstancesActive() {
+  void testQueryWhen2001InstancesActive() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     String[] ids = new String[2001];

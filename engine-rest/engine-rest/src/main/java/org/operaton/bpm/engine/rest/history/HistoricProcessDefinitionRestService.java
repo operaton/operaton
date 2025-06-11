@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,23 +40,23 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricActivityStatisticsDto;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricProcessDefinitionRestService {
 
-  public static final String PATH = "/process-definition";
+  String PATH = "/process-definition";
 
   @GET
   @Path("/{id}/statistics")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<HistoricActivityStatisticsDto> getHistoricActivityStatistics(@Context UriInfo uriInfo, @PathParam("id") String processDefinitionId);
+  List<HistoricActivityStatisticsDto> getHistoricActivityStatistics(@Context UriInfo uriInfo, @PathParam("id") String processDefinitionId);
 
   @GET
   @Path("/cleanable-process-instance-report")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<CleanableHistoricProcessInstanceReportResultDto> getCleanableHistoricProcessInstanceReport(@Context UriInfo uriInfo,
-                                                                                                         @QueryParam("firstResult") Integer firstResult,
-                                                                                                         @QueryParam("maxResults") Integer maxResults);
+  List<CleanableHistoricProcessInstanceReportResultDto> getCleanableHistoricProcessInstanceReport(@Context UriInfo uriInfo,
+                                                                                                  @QueryParam("firstResult") Integer firstResult,
+                                                                                                  @QueryParam("maxResults") Integer maxResults);
 
   @GET
   @Path("/cleanable-process-instance-report/count")
   @Produces(MediaType.APPLICATION_JSON)
-  public CountResultDto getCleanableHistoricProcessInstanceReportCount(@Context UriInfo uriInfo);
+  CountResultDto getCleanableHistoricProcessInstanceReportCount(@Context UriInfo uriInfo);
 
 }

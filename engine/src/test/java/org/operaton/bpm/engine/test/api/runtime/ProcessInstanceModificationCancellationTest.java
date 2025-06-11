@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,18 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.operaton.bpm.engine.delegate.ExecutionListener;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.EventSubscription;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
-import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
-import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.operaton.bpm.engine.variable.Variables;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
@@ -37,9 +26,24 @@ import java.util.Collections;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.delegate.ExecutionListener;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.EventSubscription;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.task.TaskQuery;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
+import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.util.ExecutionTree;
+import org.operaton.bpm.engine.variable.Variables;
 
 /**
  * Tests cancellation of four basic patterns of active activities in a scope:
@@ -52,7 +56,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Thorben Lindhauer
  */
-public class ProcessInstanceModificationCancellationTest extends PluggableProcessEngineTest {
+class ProcessInstanceModificationCancellationTest {
 
   // the four patterns as described above
   protected static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml";
@@ -76,12 +80,18 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
   protected static final String TWO_SUBPROCESSES = "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcesses.bpmn20.xml";
   protected static final String NESTED_CALL_ACTIVITY = "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testNestedCallActivity.bpmn20.xml";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-
+  ProcessEngine processEngine;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  public void testCancellationInOneTaskProcess() {
+  void testCancellationInOneTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -97,7 +107,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  public void testCancelAllInOneTaskProcess() {
+  void testCancelAllInOneTaskProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
@@ -118,7 +128,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  public void testCancellationAndCreationInOneTaskProcess() {
+  void testCancellationAndCreationInOneTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -160,7 +170,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  public void testCreationAndCancellationInOneTaskProcess() {
+  void testCreationAndCancellationInOneTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -201,7 +211,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testCancellationInOneScopeTaskProcess() {
+  void testCancellationInOneScopeTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -217,7 +227,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testCancelAllInOneScopeTaskProcess() {
+  void testCancelAllInOneScopeTaskProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
@@ -239,7 +249,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testCancellationAndCreationInOneScopeTaskProcess() {
+  void testCancellationAndCreationInOneScopeTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -281,7 +291,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testCreationAndCancellationInOneScopeTaskProcess() {
+  void testCreationAndCancellationInOneScopeTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -323,7 +333,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = CONCURRENT_PROCESS)
   @Test
-  public void testCancellationInConcurrentProcess() {
+  void testCancellationInConcurrentProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -362,7 +372,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = CONCURRENT_PROCESS)
   @Test
-  public void testCancelAllInConcurrentProcess() {
+  void testCancelAllInConcurrentProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
@@ -406,7 +416,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = CONCURRENT_PROCESS)
   @Test
-  public void testCancellationAndCreationInConcurrentProcess() {
+  void testCancellationAndCreationInConcurrentProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -453,7 +463,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = CONCURRENT_PROCESS)
   @Test
-  public void testCreationAndCancellationInConcurrentProcess() {
+  void testCreationAndCancellationInConcurrentProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -500,7 +510,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = CONCURRENT_SCOPE_TASKS_PROCESS)
   @Test
-  public void testCancellationInConcurrentScopeTasksProcess() {
+  void testCancellationInConcurrentScopeTasksProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -541,7 +551,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = CONCURRENT_SCOPE_TASKS_PROCESS)
   @Test
-  public void testCancelAllInConcurrentScopeTasksProcess() {
+  void testCancelAllInConcurrentScopeTasksProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
@@ -588,7 +598,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = CONCURRENT_SCOPE_TASKS_PROCESS)
   @Test
-  public void testCancellationAndCreationInConcurrentScopeTasksProcess() {
+  void testCancellationAndCreationInConcurrentScopeTasksProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -637,7 +647,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = CONCURRENT_SCOPE_TASKS_PROCESS)
   @Test
-  public void testCreationAndCancellationInConcurrentScopeTasksProcess() {
+  void testCreationAndCancellationInConcurrentScopeTasksProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -686,7 +696,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_ONE_TASK_PROCESS)
   @Test
-  public void testCancellationInNestedOneTaskProcess() {
+  void testCancellationInNestedOneTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -727,7 +737,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_ONE_TASK_PROCESS)
   @Test
-  public void testScopeCancellationInNestedOneTaskProcess() {
+  void testScopeCancellationInNestedOneTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -766,7 +776,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_ONE_TASK_PROCESS)
   @Test
-  public void testCancellationAndCreationInNestedOneTaskProcess() {
+  void testCancellationAndCreationInNestedOneTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -816,7 +826,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_ONE_TASK_PROCESS)
   @Test
-  public void testCreationAndCancellationInNestedOneTaskProcess() {
+  void testCreationAndCancellationInNestedOneTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -866,7 +876,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testCancellationInNestedOneScopeTaskProcess() {
+  void testCancellationInNestedOneScopeTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneScopeTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -905,7 +915,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testScopeCancellationInNestedOneScopeTaskProcess() {
+  void testScopeCancellationInNestedOneScopeTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneScopeTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -944,7 +954,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testCancellationAndCreationInNestedOneScopeTaskProcess() {
+  void testCancellationAndCreationInNestedOneScopeTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneScopeTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -995,7 +1005,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testCreationAndCancellationInNestedOneScopeTaskProcess() {
+  void testCreationAndCancellationInNestedOneScopeTaskProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneScopeTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -1046,7 +1056,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_CONCURRENT_PROCESS)
   @Test
-  public void testCancellationInNestedConcurrentProcess() {
+  void testCancellationInNestedConcurrentProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedParallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -1093,7 +1103,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_CONCURRENT_PROCESS)
   @Test
-  public void testScopeCancellationInNestedConcurrentProcess() {
+  void testScopeCancellationInNestedConcurrentProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedParallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -1133,7 +1143,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_CONCURRENT_PROCESS)
   @Test
-  public void testCancellationAndCreationInNestedConcurrentProcess() {
+  void testCancellationAndCreationInNestedConcurrentProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedParallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -1185,7 +1195,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_CONCURRENT_PROCESS)
   @Test
-  public void testCreationAndCancellationInNestedConcurrentProcess() {
+  void testCreationAndCancellationInNestedConcurrentProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedParallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -1237,7 +1247,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_CONCURRENT_SCOPE_TASKS_PROCESS)
   @Test
-  public void testCancellationInNestedConcurrentScopeTasksProcess() {
+  void testCancellationInNestedConcurrentScopeTasksProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedParallelGatewayScopeTasks");
     String processInstanceId = processInstance.getId();
 
@@ -1285,7 +1295,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_CONCURRENT_SCOPE_TASKS_PROCESS)
   @Test
-  public void testScopeCancellationInNestedConcurrentScopeTasksProcess() {
+  void testScopeCancellationInNestedConcurrentScopeTasksProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedParallelGatewayScopeTasks");
     String processInstanceId = processInstance.getId();
 
@@ -1325,7 +1335,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_CONCURRENT_SCOPE_TASKS_PROCESS)
   @Test
-  public void testCancellationAndCreationInNestedConcurrentScopeTasksProcess() {
+  void testCancellationAndCreationInNestedConcurrentScopeTasksProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedParallelGatewayScopeTasks");
     String processInstanceId = processInstance.getId();
 
@@ -1380,7 +1390,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = NESTED_PARALLEL_CONCURRENT_SCOPE_TASKS_PROCESS)
   @Test
-  public void testCreationAndCancellationInNestedConcurrentScopeTasksProcess() {
+  void testCreationAndCancellationInNestedConcurrentScopeTasksProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedParallelGatewayScopeTasks");
     String processInstanceId = processInstance.getId();
 
@@ -1435,7 +1445,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = LISTENER_PROCESS)
   @Test
-  public void testEndListenerInvocation() {
+  void testEndListenerInvocation() {
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
@@ -1498,7 +1508,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
    */
   @Deployment(resources = FAILING_OUTPUT_MAPPINGS_PROCESS)
   @Test
-  public void testSkipOutputMappingsOnCancellation() {
+  void testSkipOutputMappingsOnCancellation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingOutputMappingProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -1520,7 +1530,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  public void testProcessInstanceEventSubscriptionsPreservedOnIntermediateCancellation() {
+  void testProcessInstanceEventSubscriptionsPreservedOnIntermediateCancellation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     // event subscription for the event subprocess
@@ -1546,7 +1556,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test
-  public void testProcessInstanceVariablesPreservedOnIntermediateCancellation() {
+  void testProcessInstanceVariablesPreservedOnIntermediateCancellation() {
     ProcessInstance processInstance = runtimeService
         .startProcessInstanceByKey("oneTaskProcess", Variables.createVariables().putValue("var", "value"));
 
@@ -1596,11 +1606,11 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
    * </p>
    */
   @Deployment(resources = {
-    SIMPLE_SUBPROCESS,
-    CALL_ACTIVITY_PROCESS
+      SIMPLE_SUBPROCESS,
+      CALL_ACTIVITY_PROCESS
   })
   @Test
-  public void testCancellationInCallActivitySubProcess() {
+  void testCancellationInCallActivitySubProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
     String processInstanceId = processInstance.getId();
@@ -1636,11 +1646,11 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
   }
 
   @Deployment(resources = {
-    SIMPLE_SUBPROCESS,
-    CALL_ACTIVITY_PROCESS
+      SIMPLE_SUBPROCESS,
+      CALL_ACTIVITY_PROCESS
   })
   @Test
-  public void testCancellationAndRestartInCallActivitySubProcess() {
+  void testCancellationAndRestartInCallActivitySubProcess() {
     // given
     runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
@@ -1679,11 +1689,11 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
    * </p>
    */
   @Deployment(resources = {
-    SIMPLE_SUBPROCESS,
-    TWO_SUBPROCESSES
+      SIMPLE_SUBPROCESS,
+      TWO_SUBPROCESSES
   })
   @Test
-  public void testSingleCancellationWithTwoSubProcess() {
+  void testSingleCancellationWithTwoSubProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
@@ -1731,12 +1741,12 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
    * </p>
    */
   @Deployment(resources = {
-    SIMPLE_SUBPROCESS,
-    NESTED_CALL_ACTIVITY,
-    CALL_ACTIVITY_PROCESS
+      SIMPLE_SUBPROCESS,
+      NESTED_CALL_ACTIVITY,
+      CALL_ACTIVITY_PROCESS
   })
   @Test
-  public void testCancellationMultilevelProcessInstanceInCallActivity() {
+  void testCancellationMultilevelProcessInstanceInCallActivity() {
     // given
     runtimeService.startProcessInstanceByKey("nestedCallActivity");
 

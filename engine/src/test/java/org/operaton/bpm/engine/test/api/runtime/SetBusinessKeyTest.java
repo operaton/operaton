@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.operaton.bpm.engine.test.api.runtime.util.SetBusinessKeyListener.BUSINESS_KEY_VARIABLE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.util.SetBusinessKeyListener.BUSINESS_KEY_VARIABLE;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -36,27 +38,21 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.util.SetBusinessKeyListener;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class SetBusinessKeyTest {
+class SetBusinessKeyTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected static final String PROCESS_KEY = "process";
 
@@ -79,21 +75,13 @@ public class SetBusinessKeyTest {
       .endEvent("endEvent")
       .done();
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-    taskService = rule.getTaskService();
-    historyService = rule.getHistoryService();
-    managementService = rule.getManagementService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  ManagementService managementService;
 
   @Test
-  public void testNewKeyInSyncServiceTask() {
+  void testNewKeyInSyncServiceTask() {
     // given
     testRule.deploy(SYNC_SERVICE_TASK_PROCESS);
 
@@ -106,7 +94,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testNewKeyInAsyncServiceTask() {
+  void testNewKeyInAsyncServiceTask() {
     // given
     testRule.deploy(ASYNC_SERVICE_TASK_PROCESS);
 
@@ -121,7 +109,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testNewKeyInStartExecListener() {
+  void testNewKeyInStartExecListener() {
     // given
     String listener = ExecutionListener.EVENTNAME_START;
     BpmnModelInstance process = createModelExecutionListener(listener);
@@ -136,7 +124,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testNewKeyInEndExecListener() {
+  void testNewKeyInEndExecListener() {
     // given
     String listener = ExecutionListener.EVENTNAME_END;
     BpmnModelInstance process = createModelExecutionListener(listener);
@@ -156,7 +144,7 @@ public class SetBusinessKeyTest {
 
 
   @Test
-  public void testNewKeyInStartTaskListener() {
+  void testNewKeyInStartTaskListener() {
     // given
     String listener = TaskListener.EVENTNAME_CREATE;
     BpmnModelInstance process = createModelTaskListener(listener);
@@ -171,7 +159,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testNewKeyInAssignTaskListener() {
+  void testNewKeyInAssignTaskListener() {
     // given
     String listener = TaskListener.EVENTNAME_ASSIGNMENT;
     BpmnModelInstance process = createModelTaskListener(listener);
@@ -188,7 +176,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testNewKeyInEndTaskListener() {
+  void testNewKeyInEndTaskListener() {
     // given
     String listener = TaskListener.EVENTNAME_COMPLETE;
     BpmnModelInstance process = createModelTaskListener(listener);
@@ -208,7 +196,7 @@ public class SetBusinessKeyTest {
 
   @Test
   @Deployment
-  public void testNewKeyInTimeoutTaskListener() {
+  void testNewKeyInTimeoutTaskListener() {
     // given
     String newBusinessKeyValue = "newBusinessKey";
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, Variables.createVariables().putValue(BUSINESS_KEY_VARIABLE, newBusinessKeyValue));
@@ -222,7 +210,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testUpdateKeyInSyncServiceTask() {
+  void testUpdateKeyInSyncServiceTask() {
     // given
     testRule.deploy(SYNC_SERVICE_TASK_PROCESS);
 
@@ -235,7 +223,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testUpdateKeyInAsyncServiceTask() {
+  void testUpdateKeyInAsyncServiceTask() {
     // given
     testRule.deploy(ASYNC_SERVICE_TASK_PROCESS);
 
@@ -250,7 +238,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testUpdateKeyInStartExecListener() {
+  void testUpdateKeyInStartExecListener() {
     // given
     String listener = ExecutionListener.EVENTNAME_START;
     BpmnModelInstance process = createModelExecutionListener(listener);
@@ -265,7 +253,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testUpdateKeyInEndExecListener() {
+  void testUpdateKeyInEndExecListener() {
     // given
     String listener = ExecutionListener.EVENTNAME_END;
     BpmnModelInstance process = createModelExecutionListener(listener);
@@ -284,7 +272,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testUpdateKeyInEndTaskListener() {
+  void testUpdateKeyInEndTaskListener() {
     // given
     String listener = TaskListener.EVENTNAME_COMPLETE;
     BpmnModelInstance process = createModelTaskListener(listener);
@@ -304,7 +292,7 @@ public class SetBusinessKeyTest {
   }
 
   @Test
-  public void testUpdateKeyNullValueInStartTaskListener() {
+  void testUpdateKeyNullValueInStartTaskListener() {
     // given
     String listener = TaskListener.EVENTNAME_CREATE;
     BpmnModelInstance process = createModelTaskListener(listener);

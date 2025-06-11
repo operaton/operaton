@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,12 +37,12 @@ import org.junit.jupiter.api.Test;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
+class MetricsIntervalTest extends AbstractMetricsIntervalTest {
 
   // LIMIT //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryLimit() {
+  void testMeterQueryLimit() {
     //since generating test data of 200 metrics will take a long time we check if the default values are set of the query
     //given metric query
     MetricsQueryImpl query = (MetricsQueryImpl) managementService.createMetricsQuery();
@@ -56,7 +56,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryDecreaseLimit() {
+  void testMeterQueryDecreaseLimit() {
     //given metric data
 
     //when query metric interval data with limit of 10 values
@@ -67,7 +67,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryIncreaseLimit() {
+  void testMeterQueryIncreaseLimit() {
     //given metric data
     var metricsQuery = managementService.createMetricsQuery();
 
@@ -81,7 +81,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // OFFSET //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryOffset() {
+  void testMeterQueryOffset() {
     //given metric data
 
     //when query metric interval data with offset of metrics count
@@ -93,7 +93,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryMaxOffset() {
+  void testMeterQueryMaxOffset() {
     //given metric data
 
     //when query metric interval data with max offset
@@ -106,7 +106,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // INTERVAL //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryDefaultInterval() {
+  void testMeterQueryDefaultInterval() {
     //given metric data
 
     //when query metric interval data with default values
@@ -125,7 +125,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomInterval() {
+  void testMeterQueryCustomInterval() {
     //given metric data
 
     //when query metric interval data with custom time interval
@@ -147,7 +147,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // WHERE REPORTER //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryDefaultIntervalWhereReporter() {
+  void testMeterQueryDefaultIntervalWhereReporter() {
     //given metric data
 
     //when query metric interval data with reporter in where clause
@@ -169,7 +169,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryDefaultIntervalWhereReporterNotExist() {
+  void testMeterQueryDefaultIntervalWhereReporterNotExist() {
     //given metric data
 
     //when query metric interval data with not existing reporter in where clause
@@ -180,7 +180,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomIntervalWhereReporter() {
+  void testMeterQueryCustomIntervalWhereReporter() {
     //given metric data and custom interval
     int interval = 5 * 60;
 
@@ -204,7 +204,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomIntervalWhereReporterNotExist() {
+  void testMeterQueryCustomIntervalWhereReporterNotExist() {
     //given metric data
 
     //when query metric interval data with custom interval and non-existing reporter in where clause
@@ -217,7 +217,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // WHERE NAME //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryDefaultIntervalWhereName() {
+  void testMeterQueryDefaultIntervalWhereName() {
     //given metric data
 
     //when query metric interval data with name in where clause
@@ -240,7 +240,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryDefaultIntervalWhereNameNotExist() {
+  void testMeterQueryDefaultIntervalWhereNameNotExist() {
     //given metric data
 
     //when query metric interval data with non-existing name in where clause
@@ -251,7 +251,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomIntervalWhereName() {
+  void testMeterQueryCustomIntervalWhereName() {
     //given metric data and custom interval
     int interval = 5 * 60;
 
@@ -276,7 +276,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomIntervalWhereNameNotExist() {
+  void testMeterQueryCustomIntervalWhereNameNotExist() {
     //given metric data
 
     //when query metric interval data with custom interval and non-existing name in where clause
@@ -289,7 +289,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // START DATE //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryDefaultIntervalWhereStartDate() {
+  void testMeterQueryDefaultIntervalWhereStartDate() {
     //given metric data created for 14.9  min intervals
 
     //when query metric interval data with second last interval as start date in where clause
@@ -303,7 +303,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomIntervalWhereStartDate() {
+  void testMeterQueryCustomIntervalWhereStartDate() {
     //given metric data created for 15 min intervals
 
     //when query metric interval data with custom interval and second last interval as start date in where clause
@@ -318,7 +318,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // END DATE //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryDefaultIntervalWhereEndDate() {
+  void testMeterQueryDefaultIntervalWhereEndDate() {
     //given metric data created for 15 min intervals
 
     //when query metric interval data with second interval as end date in where clause
@@ -332,7 +332,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomIntervalWhereEndDate() {
+  void testMeterQueryCustomIntervalWhereEndDate() {
     //given metric data created for 15 min intervals
 
     //when query metric interval data with custom interval and second interval as end date in where clause
@@ -347,7 +347,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // START AND END DATE //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryDefaultIntervalWhereStartAndEndDate() {
+  void testMeterQueryDefaultIntervalWhereStartAndEndDate() {
     //given metric data created for 15 min intervals
 
     //when query metric interval data with start and end date in where clause
@@ -361,7 +361,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomIntervalWhereStartAndEndDate() {
+  void testMeterQueryCustomIntervalWhereStartAndEndDate() {
     //given metric data created for 15 min intervals
 
     //when query metric interval data with custom interval, start and end date in where clause
@@ -377,7 +377,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // VALUE //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryDefaultIntervalCalculatedValue() {
+  void testMeterQueryDefaultIntervalCalculatedValue() {
     //given metric data created for 15 min intervals
 
     //when query metric interval data with custom interval, start and end date in where clause
@@ -397,7 +397,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMeterQueryCustomIntervalCalculatedValue() {
+  void testMeterQueryCustomIntervalCalculatedValue() {
     //given metric data created for 15 min intervals
 
     //when query metric interval data with custom interval, start and end date in where clause
@@ -424,7 +424,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // NOT LOGGED METRICS //////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testMeterQueryNotLoggedInterval() {
+  void testMeterQueryNotLoggedInterval() {
     //given metric data
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().name(ACTIVTY_INSTANCE_START).limit(1).interval();
     long value = metrics.get(0).getValue();
@@ -454,7 +454,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
 
   // NEW DATA AFTER SOME TIME ////////////////////////////////////////////////
   @Test
-  public void testIntervallQueryWithGeneratedDataAfterSomeTime() {
+  void testIntervallQueryWithGeneratedDataAfterSomeTime() {
     //given metric data and result of interval query
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().interval();
 
@@ -473,7 +473,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testIntervallQueryWithGeneratedDataAfterSomeTimeForSpecificMetric() {
+  void testIntervallQueryWithGeneratedDataAfterSomeTimeForSpecificMetric() {
     //given metric data and result of interval query
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery()
       .name(ACTIVTY_INSTANCE_START)
@@ -503,7 +503,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   // AGGREGATE BY REPORTER ////////////////////////////////////////////////
 
   @Test
-  public void testMetricQueryAggregatedByReporterSingleReporter() {
+  void testMetricQueryAggregatedByReporterSingleReporter() {
     // given metric data and result of interval query
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().interval();
 
@@ -521,7 +521,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMetricQueryAggregatedByReporterThreeReporters() {
+  void testMetricQueryAggregatedByReporterThreeReporters() {
     // given metric data for default reported
     // generate data for reporter1
     processEngineConfiguration.getDbMetricsReporter().setReporterId("reporter1");
@@ -545,7 +545,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   }
 
   @Test
-  public void testMetricQueryAggregatedByReporterLimitAndTwoReporters() {
+  void testMetricQueryAggregatedByReporterLimitAndTwoReporters() {
     // clean up default recorded metrics
     clearLocalMetrics();
     // given

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,7 +38,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(HISTORY_FULL)
-public class MultiTenancyUserOperationLogTenantCheckTest {
+class MultiTenancyUserOperationLogTenantCheckTest {
 
   protected static final String USER_ONE = "aUserId";
   protected static final String USER_TWO = "user_two";
@@ -53,9 +53,9 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   protected static final BpmnModelInstance MODEL = Bpmn.createExecutableProcess(PROCESS_NAME).startEvent().userTask("aTaskId").done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected TaskService taskService;
   protected HistoryService historyService;
@@ -63,7 +63,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   protected IdentityService identityService;
 
   @Test
-  public void shouldSetAnnotationWithoutTenant() {
+  void shouldSetAnnotationWithoutTenant() {
     // given
     testRule.deploy(MODEL);
     identityService.setAuthentication(USER_ONE, null);
@@ -86,7 +86,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldSetAnnotationWithTenant() {
+  void shouldSetAnnotationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
@@ -109,7 +109,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenSetAnnotationWithDifferentTenant() {
+  void shouldThrowExceptionWhenSetAnnotationWithDifferentTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
@@ -132,7 +132,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenSetAnnotationWithNoAuthenticatedTenant() {
+  void shouldThrowExceptionWhenSetAnnotationWithNoAuthenticatedTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
@@ -155,7 +155,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldClearAnnotationWithoutTenant() {
+  void shouldClearAnnotationWithoutTenant() {
     // given
     testRule.deploy(MODEL);
     identityService.setAuthentication(USER_ONE, null);
@@ -179,7 +179,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldClearAnnotationWithTenant() {
+  void shouldClearAnnotationWithTenant() {
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
 
@@ -203,7 +203,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenClearAnnotationWithDifferentTenant() {
+  void shouldThrowExceptionWhenClearAnnotationWithDifferentTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
@@ -227,7 +227,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenClearAnnotationWithNoAuthenticatedTenant() {
+  void shouldThrowExceptionWhenClearAnnotationWithNoAuthenticatedTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
@@ -251,7 +251,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldDeleteWithoutTenant() {
+  void shouldDeleteWithoutTenant() {
     // given
     testRule.deploy(MODEL);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
@@ -271,7 +271,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldDeleteWithTenant() {
+  void shouldDeleteWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
@@ -294,7 +294,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldThrownExceptionWhenDeleteWithDifferentTenant() {
+  void shouldThrownExceptionWhenDeleteWithDifferentTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
@@ -317,7 +317,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldThrownExceptionWhenDeleteWithNoAuthenticatedTenant() {
+  void shouldThrownExceptionWhenDeleteWithNoAuthenticatedTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
@@ -340,7 +340,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
   }
 
   @Test
-  public void shouldDeleteWhenTenantCheckDisabled() {
+  void shouldDeleteWhenTenantCheckDisabled() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));

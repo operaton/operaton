@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,11 +26,25 @@ import org.operaton.bpm.engine.impl.util.CollectionUtil;
 
 import java.util.List;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.*;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsEmptyString;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class HistoricExternalTaskLogQueryImpl extends AbstractQuery<HistoricExternalTaskLogQuery, HistoricExternalTaskLog> implements HistoricExternalTaskLogQuery {
 
   private static final long serialVersionUID = 1L;
+  private static final String VAR_ACTIVITY_IDS = "activityIds";
+  private static final String VAR_ACTIVITY_INSTANCE_IDS = "activityInstanceIds";
+  private static final String VAR_ERROR_MESSAGE = "errorMessage";
+  private static final String VAR_EXECUTION_IDS = "executionIds";
+  private static final String VAR_EXTERNAL_TASK_ID = "externalTaskId";
+  private static final String VAR_HISTORIC_EXTERNAL_TASK_LOG_ID = "historicExternalTaskLogId";
+  private static final String VAR_PROCESS_INSTANCE_ID = "processInstanceId";
+  private static final String VAR_PROCESS_DEFINITION_ID = "processDefinitionId";
+  private static final String VAR_PROCESS_DEFINITION_KEY = "processDefinitionKey";
+  private static final String VAR_TENANT_IDS = "tenantIds";
+  private static final String VAR_TOPIC_NAME = "topicName";
+  private static final String VAR_WORKER_ID = "workerId";
 
   protected String id;
   protected String externalTaskId;
@@ -57,93 +71,93 @@ public class HistoricExternalTaskLogQueryImpl extends AbstractQuery<HistoricExte
 
   @Override
   public HistoricExternalTaskLogQuery logId(String historicExternalTaskLogId) {
-    ensureNotNull(NotValidException.class, "historicExternalTaskLogId", historicExternalTaskLogId);
+    ensureNotNull(NotValidException.class, VAR_HISTORIC_EXTERNAL_TASK_LOG_ID, historicExternalTaskLogId);
     this.id = historicExternalTaskLogId;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery externalTaskId(String externalTaskId) {
-    ensureNotNull(NotValidException.class, "externalTaskId", externalTaskId);
+    ensureNotNull(NotValidException.class, VAR_EXTERNAL_TASK_ID, externalTaskId);
     this.externalTaskId = externalTaskId;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery topicName(String topicName) {
-    ensureNotNull(NotValidException.class, "topicName", topicName);
+    ensureNotNull(NotValidException.class, VAR_TOPIC_NAME, topicName);
     this.topicName = topicName;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery workerId(String workerId) {
-    ensureNotNull(NotValidException.class, "workerId", workerId);
+    ensureNotNull(NotValidException.class, VAR_WORKER_ID, workerId);
     this.workerId = workerId;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery errorMessage(String errorMessage) {
-    ensureNotNull(NotValidException.class, "errorMessage", errorMessage);
+    ensureNotNull(NotValidException.class, VAR_ERROR_MESSAGE, errorMessage);
     this.errorMessage = errorMessage;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery activityIdIn(String... activityIds) {
-    ensureNotNull(NotValidException.class, "activityIds", (Object[]) activityIds);
+    ensureNotNull(NotValidException.class, VAR_ACTIVITY_IDS, (Object[]) activityIds);
     List<String> activityIdList = CollectionUtil.asArrayList(activityIds);
-    ensureNotContainsNull("activityIds", activityIdList);
-    ensureNotContainsEmptyString("activityIds", activityIdList);
+    ensureNotContainsNull(VAR_ACTIVITY_IDS, activityIdList);
+    ensureNotContainsEmptyString(VAR_ACTIVITY_IDS, activityIdList);
     this.activityIds = activityIds;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery activityInstanceIdIn(String... activityInstanceIds) {
-    ensureNotNull(NotValidException.class, "activityIds", (Object[]) activityInstanceIds);
+    ensureNotNull(NotValidException.class, VAR_ACTIVITY_IDS, (Object[]) activityInstanceIds);
     List<String> activityInstanceIdList = CollectionUtil.asArrayList(activityInstanceIds);
-    ensureNotContainsNull("activityInstanceIds", activityInstanceIdList);
-    ensureNotContainsEmptyString("activityInstanceIds", activityInstanceIdList);
+    ensureNotContainsNull(VAR_ACTIVITY_INSTANCE_IDS, activityInstanceIdList);
+    ensureNotContainsEmptyString(VAR_ACTIVITY_INSTANCE_IDS, activityInstanceIdList);
     this.activityInstanceIds = activityInstanceIds;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery executionIdIn(String... executionIds) {
-    ensureNotNull(NotValidException.class, "activityIds", (Object[]) executionIds);
+    ensureNotNull(NotValidException.class, VAR_ACTIVITY_IDS, (Object[]) executionIds);
     List<String> executionIdList = CollectionUtil.asArrayList(executionIds);
-    ensureNotContainsNull("executionIds", executionIdList);
-    ensureNotContainsEmptyString("executionIds", executionIdList);
+    ensureNotContainsNull(VAR_EXECUTION_IDS, executionIdList);
+    ensureNotContainsEmptyString(VAR_EXECUTION_IDS, executionIdList);
     this.executionIds = executionIds;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery processInstanceId(String processInstanceId) {
-    ensureNotNull(NotValidException.class, "processInstanceId", processInstanceId);
+    ensureNotNull(NotValidException.class, VAR_PROCESS_INSTANCE_ID, processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery processDefinitionId(String processDefinitionId) {
-    ensureNotNull(NotValidException.class, "processDefinitionId", processDefinitionId);
+    ensureNotNull(NotValidException.class, VAR_PROCESS_DEFINITION_ID, processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery processDefinitionKey(String processDefinitionKey) {
-    ensureNotNull(NotValidException.class, "processDefinitionKey", processDefinitionKey);
+    ensureNotNull(NotValidException.class, VAR_PROCESS_DEFINITION_KEY, processDefinitionKey);
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
   @Override
   public HistoricExternalTaskLogQuery tenantIdIn(String... tenantIds) {
-    ensureNotNull("tenantIds", (Object[]) tenantIds);
+    ensureNotNull(VAR_TENANT_IDS, (Object[]) tenantIds);
     this.tenantIds = tenantIds;
     this.isTenantIdSet = true;
     return this;

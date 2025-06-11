@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,17 +36,17 @@ public interface ProcessesXml {
   /**
    * @return A {@link List} of {@link ProcessEngineXml} Metadata Items representing process engine configurations.
    */
-  public List<ProcessEngineXml> getProcessEngines();
+  List<ProcessEngineXml> getProcessEngines();
 
   /**
    * @return A {@link List} of {@link ProcessArchiveXml} Metadata Items representing process archive deployments.
    */
-  public List<ProcessArchiveXml> getProcessArchives();
+  List<ProcessArchiveXml> getProcessArchives();
 
   /**
    * <p>Constant representing the empty processes.xml</p>
    */
-  public static final ProcessesXml EMPTY_PROCESSES_XML = new ProcessesXml() {
+  ProcessesXml EMPTY_PROCESSES_XML = new ProcessesXml() {
 
     @Override
     public List<ProcessEngineXml> getProcessEngines() {

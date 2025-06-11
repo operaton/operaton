@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.cfg;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,8 @@ class DmnEngineConfigurationTest {
 
   protected static final String CONFIGURATION_XML = "org/operaton/bpm/engine/test/api/cfg/custom-dmn-operaton.cfg.xml";
 
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
+
   protected ProcessEngine engine;
 
   @AfterEach
@@ -61,6 +64,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -80,6 +84,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -97,6 +102,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -114,6 +120,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -131,6 +138,7 @@ class DmnEngineConfigurationTest {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     processEngineConfiguration.setDmnEngineConfiguration(dmnEngineConfiguration);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -143,6 +151,7 @@ class DmnEngineConfigurationTest {
   void setProcessEngineElProviderByDefault() {
     // given a default DMN engine configuration without el provider
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -157,6 +166,7 @@ class DmnEngineConfigurationTest {
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
     ElProvider elProvider = mock(ElProvider.class);
     processEngineConfiguration.setDmnElProvider(elProvider);
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -169,6 +179,7 @@ class DmnEngineConfigurationTest {
   void setProcessEngineScriptEnginesByDefault() {
     // given a default DMN engine configuration without script engine resolver
     ProcessEngineConfigurationImpl processEngineConfiguration = createProcessEngineConfiguration();
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();
@@ -188,6 +199,7 @@ class DmnEngineConfigurationTest {
     DefaultDmnEngineConfiguration dmnEngineConfiguration = processEngineConfiguration.getDmnEngineConfiguration();
     assertThat(dmnEngineConfiguration).isNotNull();
     assertThat(dmnEngineConfiguration.getDefaultInputExpressionExpressionLanguage()).isEqualTo("groovy");
+    processEngineConfiguration.setProcessEngineName(PROCESS_ENGINE_NAME);
 
     // when the engine is initialized
     engine = processEngineConfiguration.buildProcessEngine();

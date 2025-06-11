@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,18 +35,18 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyMigrationTest {
+class MultiTenancyMigrationTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void cannotCreateMigrationPlanBetweenDifferentTenants() {
+  void cannotCreateMigrationPlanBetweenDifferentTenants() {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
@@ -65,7 +65,7 @@ public class MultiTenancyMigrationTest {
   }
 
   @Test
-  public void canCreateMigrationPlanFromTenantToNoTenant() {
+  void canCreateMigrationPlanFromTenantToNoTenant() {
     // given
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenantDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -81,7 +81,7 @@ public class MultiTenancyMigrationTest {
   }
 
   @Test
-  public void canCreateMigrationPlanFromNoTenantToTenant() {
+  void canCreateMigrationPlanFromNoTenantToTenant() {
     // given
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenantDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -97,7 +97,7 @@ public class MultiTenancyMigrationTest {
   }
 
   @Test
-  public void canCreateMigrationPlanForNoTenants() {
+  void canCreateMigrationPlanForNoTenants() {
     // given
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -112,7 +112,7 @@ public class MultiTenancyMigrationTest {
   }
 
   @Test
-  public void canMigrateInstanceBetweenSameTenantCase1() {
+  void canMigrateInstanceBetweenSameTenantCase1() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -133,7 +133,7 @@ public class MultiTenancyMigrationTest {
   }
 
   @Test
-  public void cannotMigrateInstanceWithoutTenantIdToDifferentTenant() {
+  void cannotMigrateInstanceWithoutTenantIdToDifferentTenant() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -158,7 +158,7 @@ public class MultiTenancyMigrationTest {
   }
 
   @Test
-  public void canMigrateInstanceWithTenantIdToDefinitionWithoutTenantId() {
+  void canMigrateInstanceWithTenantIdToDefinitionWithoutTenantId() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);

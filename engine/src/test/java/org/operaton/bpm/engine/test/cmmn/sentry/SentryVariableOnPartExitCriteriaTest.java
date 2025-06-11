@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,18 +21,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
- * 
+ *
  * @author Deivarayan Azhagappan
  *
  */
-public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
+class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTaskWithVariableOnPart.cmmn"})
   @Test
-  public void testExitTaskWithVariableOnPartSatisfied() {
+  void testExitTaskWithVariableOnPartSatisfied() {
     // given
     createCaseInstance();
 
@@ -60,7 +60,7 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTaskWithVariableOnPart.cmmn"})
   @Test
-  public void testExitTaskWithVariableOnPartNotSatisfied() {
+  void testExitTaskWithVariableOnPartNotSatisfied() {
     // given
     createCaseInstance();
 
@@ -89,7 +89,7 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTaskWithMultipleOnPart.cmmn"})
   @Test
-  public void testExitTaskWithMultipleOnPartSatisfied() {
+  void testExitTaskWithMultipleOnPartSatisfied() {
     // given
     createCaseInstance();
 
@@ -97,7 +97,7 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
     assertThat(humanTask1.isActive()).isTrue();
-    
+
     CaseExecution humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
     assertThat(humanTask2.isActive()).isTrue();
 
@@ -120,7 +120,7 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTasksOfDifferentScopes.cmmn"})
   @Test
-  public void testExitMultipleTasksOfDifferentScopes() {
+  void testExitMultipleTasksOfDifferentScopes() {
     // given
     createCaseInstance();
 
@@ -133,6 +133,6 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
     CaseExecution stageExecution2 = queryCaseExecutionByActivityId("Stage_2");
     assertThat(stageExecution2).isNull();
-    
+
   }
 }

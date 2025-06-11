@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,33 +16,44 @@
  */
 package org.operaton.bpm.engine.test.bpmn.behavior;
 
-import ch.qos.logback.classic.Level;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class BpmnBehaviorLoggerTest extends PluggableProcessEngineTest {
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-  @After
-  public void tearDown() {
+import ch.qos.logback.classic.Level;
+
+class BpmnBehaviorLoggerTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  ProcessEngineLoggingExtension processEngineLoggingRule = new ProcessEngineLoggingExtension().watch(
+      "org.operaton.bpm.engine.bpmn.behavior", Level.INFO);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
-  @Rule
-  public ProcessEngineLoggingRule processEngineLoggingRule = new ProcessEngineLoggingRule().watch(
-      "org.operaton.bpm.engine.bpmn.behavior", Level.INFO);
-
   @Test
   @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/behavior/BpmnBehaviorLoggerTest.UnhandledBpmnError.bpmn20.xml" })
-  public void shouldIncludeBpmnErrorMessageInUnhandledBpmnError() {
+      "org/operaton/bpm/engine/test/bpmn/behavior/BpmnBehaviorLoggerTest.UnhandledBpmnError.bpmn20.xml"})
+  void shouldIncludeBpmnErrorMessageInUnhandledBpmnError() {
     // given
     processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
     String errorMessage = "Execution with id 'serviceTask' throws an error event with errorCode 'errorCode' and errorMessage 'ouch!', but no error handler was defined";
@@ -54,8 +65,8 @@ public class BpmnBehaviorLoggerTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/behavior/BpmnBehaviorLoggerTest.UnhandledBpmnError.bpmn20.xml" })
-  public void shouldLogBpmnErrorMessageInUnhandledBpmnErrorWithoutException() {
+      "org/operaton/bpm/engine/test/bpmn/behavior/BpmnBehaviorLoggerTest.UnhandledBpmnError.bpmn20.xml"})
+  void shouldLogBpmnErrorMessageInUnhandledBpmnErrorWithoutException() {
     // given
     String logMessage = "Execution with id 'serviceTask' throws an error event with errorCode 'errorCode' and errorMessage 'ouch!'";
     // when

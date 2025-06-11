@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.operaton.bpm.example</groupId>
     <artifactId>operaton-example-root</artifactId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <dependencyManagement>

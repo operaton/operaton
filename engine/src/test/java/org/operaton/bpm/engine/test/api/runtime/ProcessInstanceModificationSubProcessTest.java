@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,11 +22,10 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -36,41 +35,31 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionAssert;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 /**
  * @author Svetlana Dorokhova.
  */
-public class ProcessInstanceModificationSubProcessTest {
+class ProcessInstanceModificationSubProcessTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+  HistoryService historyService;
 
-  private RuntimeService runtimeService;
-  private RepositoryService repositoryService;
-  private TaskService taskService;
-  private HistoryService historyService;
-
-  @Before
-  public void init() {
-    repositoryService = rule.getRepositoryService();
-    runtimeService = rule.getRuntimeService();
-    taskService = rule.getTaskService();
-    historyService = rule.getHistoryService();
-  }
-
-  @Ignore("CAM-9354")
+  @Disabled("CAM-9354")
   @Test
-  public void shouldHaveEqualParentActivityInstanceId() {
+  void shouldHaveEqualParentActivityInstanceId() {
     // given
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -113,7 +102,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldCompleteParentProcess() {
+  void shouldCompleteParentProcess() {
     final BpmnModelInstance parentProcessInstance =
       Bpmn.createExecutableProcess("parentProcess")
         .startEvent()
@@ -150,7 +139,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldContinueParentProcess() {
+  void shouldContinueParentProcess() {
     final BpmnModelInstance parentProcessInstance =
       Bpmn.createExecutableProcess("parentProcess")
         .startEvent()
@@ -191,7 +180,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldCompleteParentProcessWithParallelGateway() {
+  void shouldCompleteParentProcessWithParallelGateway() {
 
     final BpmnModelInstance modelInstance =
       Bpmn.createExecutableProcess("parentProcess").startEvent()
@@ -237,7 +226,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldContinueParentProcessWithParallelGateway() {
+  void shouldContinueParentProcessWithParallelGateway() {
 
     final BpmnModelInstance modelInstance =
       Bpmn.createExecutableProcess("parentProcess").startEvent()
@@ -287,7 +276,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldCompleteParentProcessWithMultiInstance() {
+  void shouldCompleteParentProcessWithMultiInstance() {
 
     final BpmnModelInstance parentProcessInstance =
       Bpmn.createExecutableProcess("parentProcess")
@@ -326,7 +315,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldContinueParentProcessWithMultiInstance() {
+  void shouldContinueParentProcessWithMultiInstance() {
 
     final BpmnModelInstance parentProcessInstance =
       Bpmn.createExecutableProcess("parentProcess")
@@ -369,7 +358,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldCompleteParentProcessWithMultiInstanceInsideEmbeddedSubProcess() {
+  void shouldCompleteParentProcessWithMultiInstanceInsideEmbeddedSubProcess() {
 
     final BpmnModelInstance parentProcessInstance =
         Bpmn.createExecutableProcess("parentProcess")
@@ -415,7 +404,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldContinueParentProcessWithMultiInstanceInsideEmbeddedSubProcess() {
+  void shouldContinueParentProcessWithMultiInstanceInsideEmbeddedSubProcess() {
 
     final BpmnModelInstance parentProcessInstance =
         Bpmn.createExecutableProcess("parentProcess")
@@ -465,7 +454,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldCompleteParentProcessWithMultiInstanceEmbeddedSubProcess() {
+  void shouldCompleteParentProcessWithMultiInstanceEmbeddedSubProcess() {
 
     final BpmnModelInstance parentProcessInstance =
         Bpmn.createExecutableProcess("parentProcess")
@@ -511,7 +500,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldContinueParentProcessWithMultiInstanceEmbeddedSubProcess() {
+  void shouldContinueParentProcessWithMultiInstanceEmbeddedSubProcess() {
 
     final BpmnModelInstance parentProcessInstance =
         Bpmn.createExecutableProcess("parentProcess")
@@ -561,7 +550,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldCancelParentProcessWithMultiInstanceCallActivity() {
+  void shouldCancelParentProcessWithMultiInstanceCallActivity() {
     BpmnModelInstance parentProcess = Bpmn.createExecutableProcess("parentProcess")
       .startEvent()
       .callActivity("callActivity")
@@ -606,7 +595,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldCancelParentProcessWithCallActivityInMultiInstanceEmbeddedSubprocess() {
+  void shouldCancelParentProcessWithCallActivityInMultiInstanceEmbeddedSubprocess() {
     BpmnModelInstance parentProcess = Bpmn.createExecutableProcess("parentProcess")
       .startEvent()
       .subProcess()
@@ -656,7 +645,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldCancelConcurrentExecutionInCallingProcess()
+  void shouldCancelConcurrentExecutionInCallingProcess()
   {
     // given
     final BpmnModelInstance parentProcessInstance =
@@ -705,7 +694,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldContinueParentWithEscalationEndEvent() {
+  void shouldContinueParentWithEscalationEndEvent() {
     BpmnModelInstance parentProcess = Bpmn.createExecutableProcess("parentProcess")
                                           .startEvent()
                                           .callActivity("callActivity")
@@ -752,7 +741,7 @@ public class ProcessInstanceModificationSubProcessTest {
   }
 
   @Test
-  public void shouldContinueParentWithErrorEndEvent() {
+  void shouldContinueParentWithErrorEndEvent() {
     BpmnModelInstance parentProcess = Bpmn.createExecutableProcess("parentProcess")
                                           .startEvent()
                                           .callActivity("callActivity")

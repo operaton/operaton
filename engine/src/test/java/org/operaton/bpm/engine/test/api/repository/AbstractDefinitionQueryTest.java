@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,39 +19,34 @@ package org.operaton.bpm.engine.test.api.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.query.Query;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 public abstract class AbstractDefinitionQueryTest {
 
   protected static final String FIRST_DEPLOYMENT_NAME = "firstDeployment";
   protected static final String SECOND_DEPLOYMENT_NAME = "secondDeployment";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
 
-  protected String deploymentOneId;
-  protected String deploymentTwoId;
+  String deploymentOneId;
+  String deploymentTwoId;
 
-  @Before
+  @BeforeEach
   public void before() {
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-
     deploymentOneId = repositoryService
       .createDeployment()
       .name(FIRST_DEPLOYMENT_NAME)
@@ -72,29 +67,10 @@ public abstract class AbstractDefinitionQueryTest {
 
   protected abstract String getResourceTwoPath();
 
-  @After
+  @AfterEach
   public void after() {
     repositoryService.deleteDeployment(deploymentOneId, true);
     repositoryService.deleteDeployment(deploymentTwoId, true);
   }
 
-  protected void verifyQueryResults(Query query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(Long.valueOf(countExpected));
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
-  private void verifySingleResultFails(Query query) {
-
-    // when/then
-    assertThatThrownBy(query::singleResult)
-      .isInstanceOf(ProcessEngineException.class);
-  }
 }

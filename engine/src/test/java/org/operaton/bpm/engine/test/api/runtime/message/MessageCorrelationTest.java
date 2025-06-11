@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.message;
-import static org.assertj.core.api.Assertions.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.io.ByteArrayInputStream;
@@ -23,9 +26,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
@@ -39,18 +46,23 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
+import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
+import org.operaton.bpm.engine.runtime.MessageCorrelationResultWithVariables;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.variables.FailingJavaSerializable;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
@@ -58,40 +70,28 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  */
-public class MessageCorrelationTest {
+class MessageCorrelationTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJavaSerializationFormatEnabled(true));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
+      .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-  private RepositoryService repositoryService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
+  RepositoryService repositoryService;
 
   @Deployment
   @Test
-  public void testCatchingMessageEventCorrelation() {
+  void testCatchingMessageEventCorrelation() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
@@ -150,7 +150,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testOneMatchingProcessInstanceUsingFluentCorrelateAll() {
+  void testOneMatchingProcessInstanceUsingFluentCorrelateAll() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     runtimeService.startProcessInstanceByKey("process", variables);
@@ -186,7 +186,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testTwoMatchingProcessInstancesCorrelation() {
+  void testTwoMatchingProcessInstancesCorrelation() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     runtimeService.startProcessInstanceByKey("process", variables);
@@ -219,7 +219,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testTwoMatchingProcessInstancesUsingFluentCorrelateAll() {
+  void testTwoMatchingProcessInstancesUsingFluentCorrelateAll() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     runtimeService.startProcessInstanceByKey("process", variables);
@@ -256,7 +256,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testExecutionCorrelationByBusinessKey() {
+  void testExecutionCorrelationByBusinessKey() {
     String businessKey = "aBusinessKey";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", businessKey);
     runtimeService.correlateMessage("newInvoiceMessage", businessKey);
@@ -283,7 +283,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testExecutionCorrelationByBusinessKeyUsingFluentCorrelateAll() {
+  void testExecutionCorrelationByBusinessKeyUsingFluentCorrelateAll() {
     String businessKey = "aBusinessKey";
     runtimeService.startProcessInstanceByKey("process", businessKey);
     runtimeService.startProcessInstanceByKey("process", businessKey);
@@ -301,7 +301,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageCorrelateAllResultListWithResultTypeExecution() {
+  void testMessageCorrelateAllResultListWithResultTypeExecution() {
     //given
     ProcessInstance procInstance1 = runtimeService.startProcessInstanceByKey("process");
     ProcessInstance procInstance2 = runtimeService.startProcessInstanceByKey("process");
@@ -325,7 +325,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageCorrelateAllResultListWithResultTypeProcessDefinition() {
+  void testMessageCorrelateAllResultListWithResultTypeProcessDefinition() {
     //when correlated all with result
     List<MessageCorrelationResult> resultList = runtimeService.createMessageCorrelation("newInvoiceMessage")
                                                               .correlateAllWithResult();
@@ -340,7 +340,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testExecutionCorrelationByBusinessKeyWithVariables() {
+  void testExecutionCorrelationByBusinessKeyWithVariables() {
     String businessKey = "aBusinessKey";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", businessKey);
 
@@ -374,7 +374,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testExecutionCorrelationByBusinessKeyWithVariablesUsingFluentCorrelateAll() {
+  void testExecutionCorrelationByBusinessKeyWithVariablesUsingFluentCorrelateAll() {
     String businessKey = "aBusinessKey";
 
     runtimeService.startProcessInstanceByKey("process", businessKey);
@@ -396,7 +396,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testExecutionCorrelationSetSerializedVariableValue() throws IOException, ClassNotFoundException {
+  void testExecutionCorrelationSetSerializedVariableValue() throws IOException, ClassNotFoundException {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -406,7 +406,8 @@ public class MessageCorrelationTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {
@@ -437,7 +438,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testExecutionCorrelationSetSerializedVariableValues() throws IOException, ClassNotFoundException {
+  void testExecutionCorrelationSetSerializedVariableValues() throws IOException, ClassNotFoundException {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -447,7 +448,8 @@ public class MessageCorrelationTest {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {
@@ -479,7 +481,7 @@ public class MessageCorrelationTest {
 
   @Deployment
   @Test
-  public void testMessageStartEventCorrelation() {
+  void testMessageStartEventCorrelation() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
 
@@ -492,7 +494,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageStartEventCorrelationUsingFluentCorrelateStartMessage() {
+  void testMessageStartEventCorrelationUsingFluentCorrelateStartMessage() {
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariable("aKey", "aValue")
@@ -505,7 +507,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageStartEventCorrelationUsingFluentCorrelateSingle() {
+  void testMessageStartEventCorrelationUsingFluentCorrelateSingle() {
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariable("aKey", "aValue")
@@ -518,7 +520,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageStartEventCorrelationUsingFluentCorrelateAll() {
+  void testMessageStartEventCorrelationUsingFluentCorrelateAll() {
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariable("aKey", "aValue")
@@ -532,9 +534,9 @@ public class MessageCorrelationTest {
     assertThat(instances).isEqualTo(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
   @Test
-  public void testMessageStartEventCorrelationWithBusinessKey() {
+  void testMessageStartEventCorrelationWithBusinessKey() {
     final String businessKey = "aBusinessKey";
 
     runtimeService.correlateMessage("newInvoiceMessage", businessKey);
@@ -544,9 +546,9 @@ public class MessageCorrelationTest {
     assertThat(processInstance.getBusinessKey()).isEqualTo(businessKey);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
   @Test
-  public void testMessageStartEventCorrelationWithBusinessKeyUsingFluentCorrelateStartMessage() {
+  void testMessageStartEventCorrelationWithBusinessKeyUsingFluentCorrelateStartMessage() {
     final String businessKey = "aBusinessKey";
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
@@ -558,9 +560,9 @@ public class MessageCorrelationTest {
     assertThat(processInstance.getBusinessKey()).isEqualTo(businessKey);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
   @Test
-  public void testMessageStartEventCorrelationWithBusinessKeyUsingFluentCorrelateSingle() {
+  void testMessageStartEventCorrelationWithBusinessKeyUsingFluentCorrelateSingle() {
     final String businessKey = "aBusinessKey";
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
@@ -572,9 +574,9 @@ public class MessageCorrelationTest {
     assertThat(processInstance.getBusinessKey()).isEqualTo(businessKey);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
   @Test
-  public void testMessageStartEventCorrelationWithBusinessKeyUsingFluentCorrelateAll() {
+  void testMessageStartEventCorrelationWithBusinessKeyUsingFluentCorrelateAll() {
     final String businessKey = "aBusinessKey";
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
@@ -588,14 +590,15 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageStartEventCorrelationSetSerializedVariableValue() throws IOException, ClassNotFoundException {
+  void testMessageStartEventCorrelationSetSerializedVariableValue() throws IOException, ClassNotFoundException {
 
     // when
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {
@@ -629,14 +632,15 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageStartEventCorrelationSetSerializedVariableValues() throws IOException, ClassNotFoundException {
+  void testMessageStartEventCorrelationSetSerializedVariableValues() throws IOException, ClassNotFoundException {
 
     // when
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
     try {
@@ -671,7 +675,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageStartEventCorrelationWithVariablesUsingFluentCorrelateStartMessage() {
+  void testMessageStartEventCorrelationWithVariablesUsingFluentCorrelateStartMessage() {
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariables(Variables.createVariables()
@@ -687,7 +691,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageStartEventCorrelationWithVariablesUsingFluentCorrelateSingleMessage() {
+  void testMessageStartEventCorrelationWithVariablesUsingFluentCorrelateSingleMessage() {
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariables(Variables.createVariables()
@@ -703,7 +707,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testMessageStartEventCorrelationWithVariablesUsingFluentCorrelateAll() {
+  void testMessageStartEventCorrelationWithVariablesUsingFluentCorrelateAll() {
 
     runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariables(Variables.createVariables()
@@ -722,7 +726,7 @@ public class MessageCorrelationTest {
    */
   @Deployment
   @Test
-  public void testMultipleMessageStartEventsCorrelation() {
+  void testMultipleMessageStartEventsCorrelation() {
 
     runtimeService.correlateMessage("someMessage");
     // verify the right start event was selected:
@@ -739,9 +743,9 @@ public class MessageCorrelationTest {
     taskService.complete(task.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMultipleMessageStartEventsCorrelation.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMultipleMessageStartEventsCorrelation.bpmn20.xml"})
   @Test
-  public void testMultipleMessageStartEventsCorrelationUsingFluentCorrelateStartMessage() {
+  void testMultipleMessageStartEventsCorrelationUsingFluentCorrelateStartMessage() {
 
     runtimeService.createMessageCorrelation("someMessage").correlateStartMessage();
     // verify the right start event was selected:
@@ -758,9 +762,9 @@ public class MessageCorrelationTest {
     taskService.complete(task.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMultipleMessageStartEventsCorrelation.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMultipleMessageStartEventsCorrelation.bpmn20.xml"})
   @Test
-  public void testMultipleMessageStartEventsCorrelationUsingFluentCorrelateSingle() {
+  void testMultipleMessageStartEventsCorrelationUsingFluentCorrelateSingle() {
 
     runtimeService.createMessageCorrelation("someMessage").correlate();
     // verify the right start event was selected:
@@ -780,9 +784,9 @@ public class MessageCorrelationTest {
   /**
    * this test assures the right start event is selected
    */
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMultipleMessageStartEventsCorrelation.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMultipleMessageStartEventsCorrelation.bpmn20.xml"})
   @Test
-  public void testMultipleMessageStartEventsCorrelationUsingFluentCorrelateAll() {
+  void testMultipleMessageStartEventsCorrelationUsingFluentCorrelateAll() {
 
     runtimeService.createMessageCorrelation("someMessage").correlateAll();
     // verify the right start event was selected:
@@ -801,7 +805,7 @@ public class MessageCorrelationTest {
 
   @Deployment
   @Test
-  public void testMatchingStartEventAndExecution() {
+  void testMatchingStartEventAndExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult()).isNotNull();
@@ -825,9 +829,9 @@ public class MessageCorrelationTest {
   }
 
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMatchingStartEventAndExecution.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMatchingStartEventAndExecution.bpmn20.xml"})
   @Test
-  public void testMessageCorrelationResultWithResultTypeProcessDefinition() {
+  void testMessageCorrelationResultWithResultTypeProcessDefinition() {
     //given
     String msgName = "newInvoiceMessage";
 
@@ -848,9 +852,9 @@ public class MessageCorrelationTest {
   }
 
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMatchingStartEventAndExecution.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMatchingStartEventAndExecution.bpmn20.xml"})
   @Test
-  public void testMessageCorrelationResultWithResultTypeExecution() {
+  void testMessageCorrelationResultWithResultTypeExecution() {
     //given
     String msgName = "newInvoiceMessage";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -874,9 +878,9 @@ public class MessageCorrelationTest {
   }
 
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMatchingStartEventAndExecution.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMatchingStartEventAndExecution.bpmn20.xml"})
   @Test
-  public void testMatchingStartEventAndExecutionUsingFluentCorrelateAll() {
+  void testMatchingStartEventAndExecutionUsingFluentCorrelateAll() {
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
 
@@ -889,9 +893,9 @@ public class MessageCorrelationTest {
   }
 
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMatchingStartEventAndExecution.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMatchingStartEventAndExecution.bpmn20.xml"})
   @Test
-  public void testMatchingStartEventAndExecutionCorrelateAllWithResult() {
+  void testMatchingStartEventAndExecutionCorrelateAllWithResult() {
     //given
     ProcessInstance procInstance1 = runtimeService.startProcessInstanceByKey("process");
     ProcessInstance procInstance2 = runtimeService.startProcessInstanceByKey("process");
@@ -924,7 +928,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testMessageStartEventCorrelationWithNonMatchingDefinition() {
+  void testMessageStartEventCorrelationWithNonMatchingDefinition() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("aMessageName");
     try {
       runtimeService.correlateMessage("aMessageName");
@@ -949,7 +953,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByBusinessKeyAndVariables() {
+  void testCorrelationByBusinessKeyAndVariables() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", "aBusinessKey", variables);
@@ -1008,7 +1012,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByBusinessKeyAndVariablesUsingFluentCorrelateAll() {
+  void testCorrelationByBusinessKeyAndVariablesUsingFluentCorrelateAll() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     runtimeService.startProcessInstanceByKey("process", "aBusinessKey", variables);
@@ -1050,7 +1054,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByProcessInstanceId() {
+  void testCorrelationByProcessInstanceId() {
 
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("process");
 
@@ -1087,7 +1091,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByProcessInstanceIdUsingFluentCorrelateAll() {
+  void testCorrelationByProcessInstanceIdUsingFluentCorrelateAll() {
     // correlate by name
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("process");
 
@@ -1128,7 +1132,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByBusinessKeyAndNullVariableUsingFluentCorrelateAll() {
+  void testCorrelationByBusinessKeyAndNullVariableUsingFluentCorrelateAll() {
     runtimeService.startProcessInstanceByKey("process", "aBusinessKey");
 
     String messageName = "newInvoiceMessage";
@@ -1147,7 +1151,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByBusinessKeyAndNullVariableEqualsUsingFluentCorrelateAll() {
+  void testCorrelationByBusinessKeyAndNullVariableEqualsUsingFluentCorrelateAll() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("foo", "bar");
     runtimeService.startProcessInstanceByKey("process", "aBusinessKey", variables);
@@ -1168,7 +1172,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByBusinessKeyAndNullVariablesUsingFluentCorrelateAll() {
+  void testCorrelationByBusinessKeyAndNullVariablesUsingFluentCorrelateAll() {
     runtimeService.startProcessInstanceByKey("process", "aBusinessKey");
 
     String messageName = "newInvoiceMessage";
@@ -1190,7 +1194,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByVariablesOnly() {
+  void testCorrelationByVariablesOnly() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("variable", "value1");
     runtimeService.startProcessInstanceByKey("process", variables);
@@ -1211,7 +1215,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByBusinessKey() {
+  void testCorrelationByBusinessKey() {
     runtimeService.startProcessInstanceByKey("process", "businessKey1");
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process", "businessKey2");
 
@@ -1228,7 +1232,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationByProcessInstanceIdOnly() {
+  void testCorrelationByProcessInstanceIdOnly() {
     runtimeService.startProcessInstanceByKey("process");
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
 
@@ -1248,7 +1252,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationWithoutMessageNameFluent() {
+  void testCorrelationWithoutMessageNameFluent() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("variable", "value1");
     runtimeService.startProcessInstanceByKey("process", variables);
@@ -1272,7 +1276,7 @@ public class MessageCorrelationTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCorrelateAllWithoutMessage.bpmn20.xml"})
   @Test
-  public void testCorrelateAllWithoutMessage() {
+  void testCorrelateAllWithoutMessage() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("variable", "value1");
     runtimeService.startProcessInstanceByKey("process", variables);
@@ -1300,7 +1304,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationWithoutMessageDoesNotMatchStartEvent() {
+  void testCorrelationWithoutMessageDoesNotMatchStartEvent() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null)
         .processInstanceVariableEquals("variable", "value2");
     try {
@@ -1320,7 +1324,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelationWithoutCorrelationPropertiesFails() {
+  void testCorrelationWithoutCorrelationPropertiesFails() {
 
     runtimeService.startProcessInstanceByKey("process");
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null);
@@ -1342,7 +1346,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/twoBoundaryEventSubscriptions.bpmn20.xml")
   @Test
-  public void testCorrelationToExecutionWithMultipleSubscriptionsFails() {
+  void testCorrelationToExecutionWithMultipleSubscriptionsFails() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null)
@@ -1364,7 +1368,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testSuspendedProcessInstance() {
+  void testSuspendedProcessInstance() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     String processInstance = runtimeService.startProcessInstanceByKey("process", variables).getId();
@@ -1386,7 +1390,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testOneMatchingAndOneSuspendedProcessInstance() {
+  void testOneMatchingAndOneSuspendedProcessInstance() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     String firstProcessInstance = runtimeService.startProcessInstanceByKey("process", variables).getId();
@@ -1429,7 +1433,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testSuspendedProcessDefinition() {
+  void testSuspendedProcessDefinition() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
     repositoryService.suspendProcessDefinitionById(processDefinitionId);
@@ -1447,7 +1451,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testCorrelateMessageStartEventWithProcessDefinitionId() {
+  void testCorrelateMessageStartEventWithProcessDefinitionId() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
           .message("a")
@@ -1482,7 +1486,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testFailCorrelateMessageStartEventWithWrongProcessDefinitionId() {
+  void testFailCorrelateMessageStartEventWithWrongProcessDefinitionId() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
           .message("a")
@@ -1511,7 +1515,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testFailCorrelateMessageStartEventWithNonExistingProcessDefinitionId() {
+  void testFailCorrelateMessageStartEventWithNonExistingProcessDefinitionId() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processDefinitionId("not existing");
     try {
@@ -1524,7 +1528,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testFailCorrelateMessageWithProcessDefinitionId() {
+  void testFailCorrelateMessageWithProcessDefinitionId() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processDefinitionId("id");
     try {
@@ -1537,7 +1541,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testFailCorrelateMessagesWithProcessDefinitionId() {
+  void testFailCorrelateMessagesWithProcessDefinitionId() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processDefinitionId("id");
     try {
@@ -1550,7 +1554,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testFailCorrelateMessageStartEventWithCorrelationVariable() {
+  void testFailCorrelateMessageStartEventWithCorrelationVariable() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processInstanceVariableEquals("var", "value");
     try {
@@ -1563,7 +1567,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testFailCorrelateMessageStartEventWithCorrelationVariables() {
+  void testFailCorrelateMessageStartEventWithCorrelationVariables() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processInstanceVariablesEqual(Variables
               .createVariables()
@@ -1579,7 +1583,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testCorrelationWithResultBySettingLocalVariables() {
+  void testCorrelationWithResultBySettingLocalVariables() {
     // given
     String outputVarName = "localVar";
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
@@ -1633,7 +1637,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testCorrelationBySettingLocalVariables() {
+  void testCorrelationBySettingLocalVariables() {
     // given
     String outputVarName = "localVar";
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
@@ -1681,10 +1685,9 @@ public class MessageCorrelationTest {
   }
 
 
-
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testCorrelationWithTransientLocalVariables() {
+  void testCorrelationWithTransientLocalVariables() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -1717,10 +1720,10 @@ public class MessageCorrelationTest {
     assertThat(numHistoricVariables).isZero();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.waitForMessageProcess.bpmn20.xml",
-  "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.sendMessageProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.waitForMessageProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.sendMessageProcess.bpmn20.xml"})
   @Test
-  public void testCorrelateWithResultTwoTimesInSameTransaction() {
+  void testCorrelateWithResultTwoTimesInSameTransaction() {
     // start process that waits for message
     Map<String, Object> variables = new HashMap<>();
     variables.put("correlationKey", "someCorrelationKey");
@@ -1741,10 +1744,10 @@ public class MessageCorrelationTest {
     assertThat(waitingProcess).isNotNull();
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.waitForMessageProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.sendMessageProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.waitForMessageProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.sendMessageProcess.bpmn20.xml"})
   @Test
-  public void testCorrelateAllWithResultTwoTimesInSameTransaction() {
+  void testCorrelateAllWithResultTwoTimesInSameTransaction() {
     // start process that waits for message
     Map<String, Object> variables = new HashMap<>();
     variables.put("correlationKey", "someCorrelationKey");
@@ -1763,7 +1766,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testMessageStartEventCorrelationWithLocalVariables() {
+  void testMessageStartEventCorrelationWithLocalVariables() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -1791,7 +1794,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testMessageStartEventCorrelationWithVariablesInResult() {
+  void testMessageStartEventCorrelationWithVariablesInResult() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -1816,7 +1819,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testCorrelateAllWithResultVariables() {
+  void testCorrelateAllWithResultVariables() {
     //given
     ProcessInstance procInstance1 = runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("var1", "foo"));
     ProcessInstance procInstance2 = runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("var2", "bar"));
@@ -1845,7 +1848,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testCorrelationWithModifiedVariablesInResult() {
+  void testCorrelationWithModifiedVariablesInResult() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -1879,7 +1882,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testCorrelateWithVariablesInReturnShouldDeserializeObjectValue()
+  void testCorrelateWithVariablesInReturnShouldDeserializeObjectValue()
   {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
@@ -1910,7 +1913,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testCorrelateWithVariablesInReturnShouldNotDeserializeObjectValue()
+  void testCorrelateWithVariablesInReturnShouldNotDeserializeObjectValue()
   {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
@@ -1942,7 +1945,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testCorrelateAllWithVariablesInReturnShouldDeserializeObjectValue()
+  void testCorrelateAllWithVariablesInReturnShouldDeserializeObjectValue()
   {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
@@ -1975,7 +1978,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testCorrelateAllWithVariablesInReturnShouldNotDeserializeObjectValue()
+  void testCorrelateAllWithVariablesInReturnShouldNotDeserializeObjectValue()
   {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
@@ -2009,7 +2012,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testStartMessageOnlyFlag() {
+  void testStartMessageOnlyFlag() {
     deployTwoVersionsWithStartMessageEvent();
 
     ProcessDefinition firstProcessDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionVersion(1).singleResult();
@@ -2031,7 +2034,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testStartMessageOnlyFlagAll() {
+  void testStartMessageOnlyFlagAll() {
     deployTwoVersionsWithStartMessageEvent();
 
     ProcessDefinition firstProcessDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionVersion(1).singleResult();
@@ -2054,7 +2057,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testStartMessageOnlyFlagWithResult() {
+  void testStartMessageOnlyFlagWithResult() {
     MessageCorrelationResult result = runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariable("aKey", "aValue")
       .startMessageOnly()
@@ -2068,7 +2071,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testStartMessageOnlyFlagWithVariablesInResult() {
+  void testStartMessageOnlyFlagWithVariablesInResult() {
 
     MessageCorrelationResultWithVariables result = runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariable("aKey", "aValue")
@@ -2084,7 +2087,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testStartMessageOnlyFlagAllWithResult() {
+  void testStartMessageOnlyFlagAllWithResult() {
     List<MessageCorrelationResult> result = runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariable("aKey", "aValue")
       .startMessageOnly()
@@ -2098,7 +2101,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
-  public void testStartMessageOnlyFlagAllWithVariablesInResult() {
+  void testStartMessageOnlyFlagAllWithVariablesInResult() {
 
     List<MessageCorrelationResultWithVariables> results = runtimeService.createMessageCorrelation("newInvoiceMessage")
       .setVariable("aKey", "aValue")
@@ -2114,7 +2117,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testFailStartMessageOnlyFlagWithCorrelationVariable() {
+  void testFailStartMessageOnlyFlagWithCorrelationVariable() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .startMessageOnly()
         .processInstanceVariableEquals("var", "value");
@@ -2128,7 +2131,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void testFailStartMessageOnlyFlagWithCorrelationVariables() {
+  void testFailStartMessageOnlyFlagWithCorrelationVariables() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .startMessageOnly()
         .processInstanceVariablesEqual(Variables
@@ -2145,7 +2148,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateNonInterruptingWithVariablesInNewScope() {
+  void shouldCorrelateNonInterruptingWithVariablesInNewScope() {
     // given
     BpmnModelInstance model = createModelWithBoundaryEvent(false, false);
 
@@ -2179,7 +2182,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateInterruptingWithVariablesInNewScope() {
+  void shouldCorrelateInterruptingWithVariablesInNewScope() {
     // given
     BpmnModelInstance model = createModelWithBoundaryEvent(true, false);
 
@@ -2211,7 +2214,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateEventSubprocessNonInterruptingWithVariablesInNewScope() {
+  void shouldCorrelateEventSubprocessNonInterruptingWithVariablesInNewScope() {
     // given
     BpmnModelInstance targetModel = createModelWithEventSubprocess(false, false);
     testRule.deploy(targetModel);
@@ -2241,7 +2244,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateEventSubprocessInterruptingWithVariablesInNewScope() {
+  void shouldCorrelateEventSubprocessInterruptingWithVariablesInNewScope() {
     // given
     BpmnModelInstance targetModel = createModelWithEventSubprocess(true, false);
     testRule.deploy(targetModel);
@@ -2271,7 +2274,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateStartWithVariablesInNewScope() {
+  void shouldCorrelateStartWithVariablesInNewScope() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -2308,7 +2311,7 @@ public class MessageCorrelationTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldCorrelateIntermediateCatchMessageWithVariablesInNewScope() {
+  void shouldCorrelateIntermediateCatchMessageWithVariablesInNewScope() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()
@@ -2349,7 +2352,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldFailCorrelateWithNullVariableNameInNewScope() {
+  void shouldFailCorrelateWithNullVariableNameInNewScope() {
     // given
     BpmnModelInstance targetModel = createModelWithBoundaryEvent(true, false);
     testRule.deploy(targetModel);
@@ -2366,7 +2369,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateAsyncNonInterruptingWithVariablesInNewScope() {
+  void shouldCorrelateAsyncNonInterruptingWithVariablesInNewScope() {
     // given
     BpmnModelInstance model = createModelWithBoundaryEvent(false, true);
 
@@ -2404,7 +2407,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateAsyncInterruptingWithVariablesInNewScope() {
+  void shouldCorrelateAsyncInterruptingWithVariablesInNewScope() {
     // given
     BpmnModelInstance model = createModelWithBoundaryEvent(true, true);
 
@@ -2439,7 +2442,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateEventSubprocessAsyncNonInterruptingWithVariablesInNewScope() {
+  void shouldCorrelateEventSubprocessAsyncNonInterruptingWithVariablesInNewScope() {
     // given
     BpmnModelInstance targetModel = createModelWithEventSubprocess(false, true);
     testRule.deploy(targetModel);
@@ -2472,7 +2475,7 @@ public class MessageCorrelationTest {
   }
 
   @Test
-  public void shouldCorrelateEventSubprocessAsyncInterruptingWithVariablesInNewScope() {
+  void shouldCorrelateEventSubprocessAsyncInterruptingWithVariablesInNewScope() {
     // given
     BpmnModelInstance targetModel = createModelWithEventSubprocess(true, true);
     testRule.deploy(targetModel);
@@ -2506,7 +2509,7 @@ public class MessageCorrelationTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldCorrelateAsyncIntermediateCatchMessageWithVariablesInNewScope() {
+  void shouldCorrelateAsyncIntermediateCatchMessageWithVariablesInNewScope() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("Process_1")
         .startEvent()

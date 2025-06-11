@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,22 +26,21 @@ import java.util.Date;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.impl.scripting.engine.DefaultScriptEngineResolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptEngineResolver;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
 import com.oracle.truffle.js.scriptengine.GraalJSEngineFactory;
 import com.oracle.truffle.js.scriptengine.GraalJSScriptEngine;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
   private static final String GRAALJS = "graal.js";
@@ -49,8 +48,8 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   protected ScriptEngineResolver defaultScriptEngineResolver;
   protected boolean spinEnabled = false;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     spinEnabled = processEngineConfiguration.getEnvScriptResolvers().stream()
                     .anyMatch(resolver -> resolver.getClass().getSimpleName().equals("SpinScriptEnvResolver"));
     defaultScriptEngineResolver = processEngineConfiguration.getScriptEngineResolver();
@@ -62,8 +61,8 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
         processEngineConfiguration.getScriptEngineResolver().getScriptEngineManager()));
   }
 
-  @After
-  public void resetConfiguration() {
+  @AfterEach
+  void resetConfiguration() {
     processEngineConfiguration.setConfigureScriptEngineHostAccess(true);
     processEngineConfiguration.setEnableScriptEngineNashornCompatibility(false);
     processEngineConfiguration.setEnableScriptEngineLoadExternalResources(false);
@@ -93,8 +92,8 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   @Parameter(2)
   public boolean enableNashornCompat;
 
-  @Test
-  public void testJavascriptProcessVarVisibility() {
+  @TestTemplate
+  void testJavascriptProcessVarVisibility() {
 
     deployProcess(GRAALJS,
 
@@ -147,8 +146,8 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
     }
   }
 
-  @Test
-  public void testJavascriptFunctionInvocation() {
+  @TestTemplate
+  void testJavascriptFunctionInvocation() {
 
     deployProcess(GRAALJS,
 
@@ -187,8 +186,8 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
   }
 
-  @Test
-  public void testJsVariable() {
+  @TestTemplate
+  void testJsVariable() {
 
     String scriptText = "var foo = 1;";
 
@@ -210,8 +209,8 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
   }
 
-  @Test
-  public void testJavascriptVariableSerialization() {
+  @TestTemplate
+  void testJavascriptVariableSerialization() {
     deployProcess(GRAALJS,
         // GIVEN
         // setting Java classes as variables
@@ -238,8 +237,8 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
     }
   }
 
-  @Test
-  public void shouldLoadExternalScript() {
+  @TestTemplate
+  void shouldLoadExternalScript() {
       // GIVEN
       // an external JS file with a function
       deployProcess(GRAALJS,

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,19 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels.USER_TASK_ID;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -23,47 +36,32 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+class SetVariablesMigrationTest {
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels.USER_TASK_ID;
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-public class SetVariablesMigrationTest {
-
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  @After
-  public void clearAuthentication() {
+  @AfterEach
+  void clearAuthentication() {
     rule.getIdentityService().clearAuthentication();
   }
 
-  @After
-  public void resetEngineConfig() {
+  @AfterEach
+  void resetEngineConfig() {
     rule.getProcessEngineConfiguration()
         .setRestrictUserOperationLogToAuthenticatedUsers(true);
   }
 
   @Test
-  public void shouldSetVariable() {
+  void shouldSetVariable() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -90,7 +88,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetVariables() {
+  void shouldSetVariables() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -124,7 +122,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetUntypedVariable() {
+  void shouldSetUntypedVariable() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -151,7 +149,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetUntypedVariables() {
+  void shouldSetUntypedVariables() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -184,7 +182,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetMapOfTypedVariable() {
+  void shouldSetMapOfTypedVariable() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -211,7 +209,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetVariableMapOfTypedVariable() {
+  void shouldSetVariableMapOfTypedVariable() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -240,7 +238,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetTypedAndUntypedVariables() {
+  void shouldSetTypedAndUntypedVariables() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -273,7 +271,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetNullVariables() {
+  void shouldSetNullVariables() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -298,7 +296,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetEmptyVariables() {
+  void shouldSetEmptyVariables() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -323,7 +321,7 @@ public class SetVariablesMigrationTest {
   }
 
   @Test
-  public void shouldSetTransientVariable() {
+  void shouldSetTransientVariable() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(
         modify(ProcessModels.ONE_TASK_PROCESS)
@@ -353,7 +351,7 @@ public class SetVariablesMigrationTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldWriteOperationLog() {
+  void shouldWriteOperationLog() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -394,7 +392,7 @@ public class SetVariablesMigrationTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldWriteOperationLogUnauthenticated() {
+  void shouldWriteOperationLogUnauthenticated() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -435,7 +433,7 @@ public class SetVariablesMigrationTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldWriteOperationLogForEmptyVariables() {
+  void shouldWriteOperationLogForEmptyVariables() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -473,7 +471,7 @@ public class SetVariablesMigrationTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldNotWriteOperationLogForVariablesNull() {
+  void shouldNotWriteOperationLogForVariablesNull() {
     // given
     ProcessDefinition sourceProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);

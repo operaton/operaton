@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,16 +36,16 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Deivarayan Azhagappan
  *
  */
-public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
+class MultiTenancyProcessInstanceCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
   protected static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected String processInstanceId;
 
@@ -56,7 +56,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
    .done();
 
   @BeforeEach
-  public void init() {
+  void init() {
     // deploy tenants
     testRule.deployForTenant(TENANT_ONE, ONE_TASK_PROCESS);
 
@@ -67,7 +67,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteProcessInstanceWithAuthenticatedTenant() {
+  void deleteProcessInstanceWithAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -80,7 +80,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteProcessInstanceWithNoAuthenticatedTenant() {
+  void deleteProcessInstanceWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     RuntimeService runtimeService = engineRule.getRuntimeService();
@@ -94,7 +94,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void deleteProcessInstanceWithDisabledTenantCheck() {
+  void deleteProcessInstanceWithDisabledTenantCheck() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -110,7 +110,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
 
   // modify instances
   @Test
-  public void modifyProcessInstanceWithAuthenticatedTenant() {
+  void modifyProcessInstanceWithAuthenticatedTenant() {
 
     assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNotNull();
 
@@ -126,7 +126,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void modifyProcessInstanceWithNoAuthenticatedTenant() {
+  void modifyProcessInstanceWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     var processInstanceModificationBuilder = engineRule.getRuntimeService()
@@ -142,7 +142,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void modifyProcessInstanceWithDisabledTenantCheck() {
+  void modifyProcessInstanceWithDisabledTenantCheck() {
 
     assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNotNull();
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,20 +20,34 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Joram Barrez
  */
-public class TaskCandidateTest extends PluggableProcessEngineTest {
+class TaskCandidateTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  IdentityService identityService;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   private static final String MANAGEMENT = "management";
 
@@ -41,10 +55,8 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
   private static final String GONZO = "gonzo";
 
-  @Before
-  public void setUp() {
-
-
+  @BeforeEach
+  void setUp() {
     Group accountants = identityService.newGroup("accountancy");
     identityService.saveGroup(accountants);
     Group managers = identityService.newGroup(MANAGEMENT);
@@ -63,20 +75,18 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
     identityService.createMembership(GONZO, "sales");
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.deleteUser(KERMIT);
     identityService.deleteUser(GONZO);
     identityService.deleteGroup("sales");
     identityService.deleteGroup("accountancy");
     identityService.deleteGroup(MANAGEMENT);
-
-
   }
 
   @Deployment
   @Test
-  public void testSingleCandidateGroup() {
+  void testSingleCandidateGroup() {
 
     // Deploy and start process
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("singleCandidateGroup");
@@ -124,7 +134,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleCandidateGroups() {
+  void testMultipleCandidateGroups() {
 
     // Deploy and start process
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("multipleCandidatesGroup");
@@ -179,7 +189,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleCandidateUsers() {
+  void testMultipleCandidateUsers() {
     runtimeService.startProcessInstanceByKey("multipleCandidateUsersExample");
 
     assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).hasSize(1);
@@ -188,7 +198,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMixedCandidateUserAndGroup() {
+  void testMixedCandidateUserAndGroup() {
     runtimeService.startProcessInstanceByKey("mixedCandidateUserAndGroupExample");
 
     assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).hasSize(1);
@@ -197,7 +207,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/usertask/groupTest.bpmn")
   @Test
-  public void testInvolvedUserQuery() {
+  void testInvolvedUserQuery() {
 
     // given
     identityService.createMembership(KERMIT, MANAGEMENT);
@@ -214,7 +224,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testInvolvedUserQueryForAssignee() {
+  void testInvolvedUserQueryForAssignee() {
 
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -233,7 +243,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testInvolvedUserQueryForOwner() {
+  void testInvolvedUserQueryForOwner() {
 
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -252,7 +262,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/usertask/groupTest.bpmn")
   @Test
-  public void testInvolvedUserQueryOr() {
+  void testInvolvedUserQueryOr() {
 
     // given
     identityService.createMembership(KERMIT, MANAGEMENT);

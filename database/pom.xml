@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-database-settings</artifactId>
@@ -27,7 +27,7 @@
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.db2>${version.db2-11.5}</version.db2>
     <version.postgresql>42.5.5</version.postgresql>
-    <version.liquibase>4.31.1</version.liquibase>
+    <version.liquibase>4.32.0</version.liquibase>
     <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
 
     <!-- needed for sql script and backward compatibility checks -->
@@ -95,7 +95,7 @@
           <artifactId>liquibase-maven-plugin</artifactId>
           <configuration>
             <driver>${database.driver}</driver>
-            <url>${database.url}</url> 
+            <url>${database.url}</url>
             <username>${database.username}</username>
             <password>${database.password}</password>
             <hubMode>off</hubMode>
@@ -193,7 +193,7 @@
         <database.username>sa</database.username>
         <database.password>sa</database.password>
         <database.port>18080</database.port>
-        <!-- This url has to consistent for the subprojects: {server}-runtime and webapp-integration-tests -->
+        <!-- This url has to be consistent for the subprojects: {server}-runtime and webapp-integration-tests -->
         <database.url>jdbc:h2:${database.host}${database.name};AUTO_SERVER=TRUE;AUTO_SERVER_PORT=${database.port};LOCK_TIMEOUT=10000</database.url>
 
         <database.type>h2</database.type>
@@ -343,6 +343,8 @@
       <id>postgresql</id>
       <properties>
         <database.type>postgres</database.type>
+        <database.username>test</database.username>
+        <database.password>test</database.password>
         <database.driver>org.postgresql.Driver</database.driver>
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>

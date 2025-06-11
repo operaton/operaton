@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.tuple;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -24,6 +27,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -41,23 +47,17 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.AsyncProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.bpmn.async.AsyncListener;
 import org.operaton.bpm.engine.test.cmmn.decisiontask.TestPojo;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  *
@@ -65,37 +65,25 @@ import org.junit.rules.RuleChain;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricDetailQueryTest {
+class HistoricDetailQueryTest {
 
   protected static final String PROCESS_KEY = "oneTaskProcess";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testHelper);
-
-
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected HistoryService historyService;
-  protected TaskService taskService;
-  protected IdentityService identityService;
-  protected CaseService caseService;
-
-  @Before
-  public void initServices() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    historyService = engineRule.getHistoryService();
-    taskService = engineRule.getTaskService();
-    identityService = engineRule.getIdentityService();
-    caseService = engineRule.getCaseService();
-  }
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  HistoryService historyService;
+  TaskService taskService;
+  IdentityService identityService;
+  CaseService caseService;
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByUserOperationId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByUserOperationId() {
     startProcessInstance(PROCESS_KEY);
 
     identityService.setAuthenticatedUserId("demo");
@@ -116,8 +104,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByUserOperationIdAndVariableUpdates() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByUserOperationIdAndVariableUpdates() {
     startProcessInstance(PROCESS_KEY);
 
     identityService.setAuthenticatedUserId("demo");
@@ -139,8 +127,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByInvalidUserOperationId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByInvalidUserOperationId() {
     startProcessInstance(PROCESS_KEY);
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -162,8 +150,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByExecutionId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByExecutionId() {
     startProcessInstance(PROCESS_KEY);
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -182,8 +170,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByInvalidExecutionId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByInvalidExecutionId() {
     startProcessInstance(PROCESS_KEY);
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -200,8 +188,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByExecutionIdAndProcessInstanceId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByExecutionIdAndProcessInstanceId() {
     // given
     startProcessInstance(PROCESS_KEY);
 
@@ -224,8 +212,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableTypeIn() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableTypeIn() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -250,8 +238,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableTypeInWithCapitalLetter() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableTypeInWithCapitalLetter() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -276,8 +264,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableTypeInWithSeveralTypes() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableTypeInWithSeveralTypes() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -309,8 +297,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByInvalidVariableTypeIn() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByInvalidVariableTypeIn() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -344,8 +332,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLike() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLike() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -363,8 +351,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikeTwoWildcards() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikeTwoWildcards() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -382,8 +370,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikePrefixWildcard() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikePrefixWildcard() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -401,8 +389,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikeInfixWildcard() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikeInfixWildcard() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -420,8 +408,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikeIgnoreCase() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikeIgnoreCase() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -439,8 +427,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikeEqualsNoWildcard() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikeEqualsNoWildcard() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -458,8 +446,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikeEqualsWildcards() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikeEqualsWildcards() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("BarFooBaz", "variableValue");
@@ -477,8 +465,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikeTwoMatches() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikeTwoMatches() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -497,8 +485,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikeTwoProcessInstances() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikeTwoProcessInstances() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -522,8 +510,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableNameLikeNull() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryByVariableNameLikeNull() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("FooBarBaz", "variableValue");
@@ -542,8 +530,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryBySingleProcessInstanceId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryBySingleProcessInstanceId() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -561,8 +549,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryBySeveralProcessInstanceIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryBySeveralProcessInstanceIds() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -585,8 +573,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNonExistingProcessInstanceId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNonExistingProcessInstanceId() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -602,8 +590,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByInvalidProcessInstanceIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByInvalidProcessInstanceIds() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -631,8 +619,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByOccurredBefore() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByOccurredBefore() {
     // given
     Calendar startTime = Calendar.getInstance();
     ClockUtil.setCurrentTime(startTime.getTime());
@@ -657,8 +645,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByOccurredAfter() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByOccurredAfter() {
     // given
     Calendar startTime = Calendar.getInstance();
     ClockUtil.setCurrentTime(startTime.getTime());
@@ -682,8 +670,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByOccurredAfterAndOccurredBefore() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void testQueryByOccurredAfterAndOccurredBefore() {
     // given
     Calendar startTime = Calendar.getInstance();
     ClockUtil.setCurrentTime(startTime.getTime());
@@ -709,8 +697,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByInvalidOccurredBeforeDate() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByInvalidOccurredBeforeDate() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -730,8 +718,8 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByInvalidOccurredAfterDate() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByInvalidOccurredAfterDate() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -752,7 +740,7 @@ public class HistoricDetailQueryTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void testQueryByCaseInstanceIdAndCaseExecutionId() {
+  void testQueryByCaseInstanceIdAndCaseExecutionId() {
     // given
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
     caseService.setVariable(caseInstanceId, "myVariable", 1);
@@ -768,7 +756,7 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  public void testInitialFlagAsyncBeforeUserTask() {
+  void testInitialFlagAsyncBeforeUserTask() {
     //given
     BpmnModelInstance model = AsyncProcessModels.ASYNC_BEFORE_USER_TASK_PROCESS;
 
@@ -802,7 +790,7 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  public void testInitialFlagAsyncBeforeStartEvent() {
+  void testInitialFlagAsyncBeforeStartEvent() {
     //given
     BpmnModelInstance model = AsyncProcessModels.ASYNC_BEFORE_START_EVENT_PROCESS;
 
@@ -838,7 +826,7 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  public void testInitialFlagAsyncBeforeSubprocess() {
+  void testInitialFlagAsyncBeforeSubprocess() {
     //given
     BpmnModelInstance model = AsyncProcessModels.ASYNC_BEFORE_SUBPROCESS_START_EVENT_PROCESS;
 
@@ -875,7 +863,7 @@ public class HistoricDetailQueryTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testAsyncStartEventListeners.bpmn20.xml"})
-  public void testInitialFlagAsyncBeforeStartEventGlobalExecutionListener() {
+  void testInitialFlagAsyncBeforeStartEventGlobalExecutionListener() {
     // given
     String initalValue = "initial";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncStartEvent",
@@ -908,7 +896,7 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  public void testInitialFlagAsyncBeforeStartEventExecutionListener() {
+  void testInitialFlagAsyncBeforeStartEventExecutionListener() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -949,7 +937,7 @@ public class HistoricDetailQueryTest {
   }
 
   @Test
-  public void testInitialFlagAsyncBeforeStartEventEndExecutionListener() {
+  void testInitialFlagAsyncBeforeStartEventEndExecutionListener() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("process")
         .startEvent()

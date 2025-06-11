@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,15 +30,15 @@ import jakarta.ws.rs.core.UriInfo;
  */
 public interface GroupMembersResource {
 
-  public static final String PATH = "/members";
+  String PATH = "/members";
 
   @PUT
   @Path("/{userId}")
-  public void createGroupMember(@PathParam("userId") String userId);
+  void createGroupMember(@PathParam("userId") String userId);
 
   @DELETE
   @Path("/{userId}")
-  public void deleteGroupMember(@PathParam("userId") String userId);
+  void deleteGroupMember(@PathParam("userId") String userId);
 
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)

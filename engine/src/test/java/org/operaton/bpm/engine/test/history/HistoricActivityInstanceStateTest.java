@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,13 +20,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  *
@@ -35,11 +39,19 @@ import org.junit.Test;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTest {
+class HistoricActivityInstanceStateTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  HistoryService historyService;
 
   @Deployment
   @Test
-  public void testSingleEndEvent() {
+  void testSingleEndEvent() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -53,7 +65,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSingleEndActivity() {
+  void testSingleEndActivity() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -67,7 +79,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSingleEndEventAfterParallelJoin() {
+  void testSingleEndEventAfterParallelJoin() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -81,7 +93,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testEndParallelJoin() {
+  void testEndParallelJoin() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -98,7 +110,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testTwoEndEvents() {
+  void testTwoEndEvents() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -115,7 +127,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testTwoEndActivities() {
+  void testTwoEndActivities() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -132,7 +144,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSingleEndEventAndSingleEndActivity() {
+  void testSingleEndEventAndSingleEndActivity() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -149,7 +161,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSimpleSubProcess() {
+  void testSimpleSubProcess() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -166,7 +178,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testParallelMultiInstanceSubProcess() {
+  void testParallelMultiInstanceSubProcess() {
     startProcess();
 
     List<HistoricActivityInstance> activityInstances = getEndActivityInstances();
@@ -190,7 +202,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testSequentialMultiInstanceSubProcess() {
+  void testSequentialMultiInstanceSubProcess() {
     startProcess();
 
     List<HistoricActivityInstance> activityInstances = getEndActivityInstances();
@@ -214,7 +226,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testIntermediateTask() {
+  void testIntermediateTask() {
     startProcess();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
@@ -228,7 +240,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testBoundaryErrorCancel() {
+  void testBoundaryErrorCancel() {
     ProcessInstance processInstance = startProcess();
     runtimeService.correlateMessage("continue");
     testRule.assertProcessEnded(processInstance.getId());
@@ -263,7 +275,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testBoundarySignalCancel() {
+  void testBoundarySignalCancel() {
     ProcessInstance processInstance = startProcess();
 
     // should wait in user task
@@ -289,7 +301,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testEventSubprocessErrorCancel() {
+  void testEventSubprocessErrorCancel() {
     ProcessInstance processInstance = startProcess();
     runtimeService.correlateMessage("continue");
     testRule.assertProcessEnded(processInstance.getId());
@@ -311,7 +323,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testEventSubprocessMessageCancel() {
+  void testEventSubprocessMessageCancel() {
     startProcess();
 
     runtimeService.correlateMessage("message");
@@ -332,7 +344,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testEventSubprocessSignalCancel() {
+  void testEventSubprocessSignalCancel() {
     ProcessInstance processInstance = startProcess();
     runtimeService.correlateMessage("continue");
     testRule.assertProcessEnded(processInstance.getId());
@@ -355,7 +367,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testEndTerminateEventCancel() {
+  void testEndTerminateEventCancel() {
     ProcessInstance processInstance = startProcess();
     runtimeService.correlateMessage("continue");
     testRule.assertProcessEnded(processInstance.getId());
@@ -372,7 +384,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testEndTerminateEventCancelInSubprocess() {
+  void testEndTerminateEventCancelInSubprocess() {
     ProcessInstance processInstance = startProcess();
     runtimeService.correlateMessage("continue");
     testRule.assertProcessEnded(processInstance.getId());
@@ -395,7 +407,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testEndTerminateEventCancelWithSubprocess() {
+  void testEndTerminateEventCancelWithSubprocess() {
     ProcessInstance processInstance = startProcess();
     runtimeService.correlateMessage("continue");
     testRule.assertProcessEnded(processInstance.getId());
@@ -413,10 +425,10 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   }
 
-  @Deployment (resources={ "org/operaton/bpm/engine/test/history/HistoricActivityInstanceStateTest.testCancelProcessInstanceInUserTask.bpmn",
-      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceStateTest.testEndTerminateEventWithCallActivity.bpmn" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricActivityInstanceStateTest.testCancelProcessInstanceInUserTask.bpmn",
+      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceStateTest.testEndTerminateEventWithCallActivity.bpmn"})
   @Test
-  public void testEndTerminateEventCancelWithCallActivity() {
+  void testEndTerminateEventCancelWithCallActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process1");
     runtimeService.correlateMessage("continue");
     testRule.assertProcessEnded(processInstance.getId());
@@ -436,7 +448,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testCancelProcessInstanceInUserTask() {
+  void testCancelProcessInstanceInUserTask() {
     ProcessInstance processInstance = startProcess();
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
@@ -450,7 +462,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testCancelProcessInstanceInSubprocess() {
+  void testCancelProcessInstanceInSubprocess() {
     ProcessInstance processInstance = startProcess();
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
@@ -467,7 +479,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
   @Deployment
   @Test
-  public void testCancelProcessWithParallelGateway() {
+  void testCancelProcessWithParallelGateway() {
     ProcessInstance processInstance = startProcess();
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");

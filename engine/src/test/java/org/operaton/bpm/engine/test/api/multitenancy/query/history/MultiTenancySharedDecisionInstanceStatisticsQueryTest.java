@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Askar Akhmerov
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
+class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String DISH_DRG_DMN = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
@@ -54,15 +54,13 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
   protected static StaticTenantIdTestProvider tenantIdProvider;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-        tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
-        configuration.setTenantIdProvider(tenantIdProvider);
-      })
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setTenantIdProvider(new StaticTenantIdTestProvider(TENANT_ONE)))
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected DecisionService decisionService;
   protected RepositoryService repositoryService;
@@ -71,7 +69,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
 
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deploy(DISH_DRG_DMN);
 
     decisionService.evaluateDecisionByKey(DISH_DECISION)
@@ -80,7 +78,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     DecisionRequirementsDefinition decisionRequirementsDefinition =
         repositoryService.createDecisionRequirementsDefinitionQuery()
             .singleResult();
@@ -94,7 +92,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     DecisionRequirementsDefinition decisionRequirementsDefinition =
         repositoryService.createDecisionRequirementsDefinitionQuery()
             .singleResult();
@@ -108,7 +106,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     DecisionRequirementsDefinition decisionRequirementsDefinition =
         repositoryService.createDecisionRequirementsDefinitionQuery()
             .singleResult();

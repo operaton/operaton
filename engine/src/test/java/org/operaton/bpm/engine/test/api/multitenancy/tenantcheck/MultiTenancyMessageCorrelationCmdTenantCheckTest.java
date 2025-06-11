@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
+class MultiTenancyMessageCorrelationCmdTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -58,16 +58,16 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
       .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
   protected IdentityService identityService;
 
   @Test
-  public void correlateMessageToStartEventNoAuthenticatedTenants() {
+  void correlateMessageToStartEventNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
     testRule.deploy(MESSAGE_START_PROCESS);
@@ -85,7 +85,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageToStartEventWithAuthenticatedTenant() {
+  void correlateMessageToStartEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
@@ -102,7 +102,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageToStartEventDisabledTenantCheck() {
+  void correlateMessageToStartEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
@@ -119,7 +119,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageToIntermediateCatchEventNoAuthenticatedTenants() {
+  void correlateMessageToIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
     testRule.deploy(MESSAGE_CATCH_PROCESS);
@@ -142,7 +142,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageToIntermediateCatchEventWithAuthenticatedTenant() {
+  void correlateMessageToIntermediateCatchEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
 
@@ -162,7 +162,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageToIntermediateCatchEventDisabledTenantCheck() {
+  void correlateMessageToIntermediateCatchEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
 
@@ -184,7 +184,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageToStartAndIntermediateCatchEventWithNoAuthenticatedTenants() {
+  void correlateMessageToStartAndIntermediateCatchEventWithNoAuthenticatedTenants() {
     testRule.deploy(MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
 
@@ -205,7 +205,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageToStartAndIntermediateCatchEventWithAuthenticatedTenant() {
+  void correlateMessageToStartAndIntermediateCatchEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
 
@@ -226,7 +226,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageToStartAndIntermediateCatchEventDisabledTenantCheck() {
+  void correlateMessageToStartAndIntermediateCatchEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS, MESSAGE_CATCH_PROCESS);
 
@@ -246,7 +246,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void failToCorrelateMessageByProcessInstanceIdNoAuthenticatedTenants() {
+  void failToCorrelateMessageByProcessInstanceIdNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceByKey("messageCatch")
@@ -263,7 +263,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageByProcessInstanceIdWithAuthenticatedTenant() {
+  void correlateMessageByProcessInstanceIdWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceByKey("messageCatch").execute();
@@ -282,7 +282,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void failToCorrelateMessageByProcessDefinitionIdNoAuthenticatedTenants() {
+  void failToCorrelateMessageByProcessDefinitionIdNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
 
     ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery().
@@ -300,7 +300,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateMessageByProcessDefinitionIdWithAuthenticatedTenant() {
+  void correlateMessageByProcessDefinitionIdWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
 
     ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery().

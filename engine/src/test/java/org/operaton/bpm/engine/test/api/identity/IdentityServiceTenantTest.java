@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -51,6 +52,7 @@ class IdentityServiceTenantTest {
   protected static final String TENANT_TWO = "tenant2";
 
   private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
 
   protected IdentityService identityService;
   protected ProcessEngine processEngine;
@@ -66,7 +68,7 @@ class IdentityServiceTenantTest {
     identityService.deleteUser(USER_ONE);
     identityService.deleteUser(USER_TWO);
 
-    if (processEngine != null) {
+    if (processEngine != null && ProcessEngines.getDefaultProcessEngine() != processEngine) {
       for (Tenant deleteTenant : processEngine.getIdentityService().createTenantQuery().list()) {
         processEngine.getIdentityService().deleteTenant(deleteTenant.getId());
       }
@@ -159,6 +161,7 @@ class IdentityServiceTenantTest {
   void testCustomCreateTenantWhitelistPattern() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
     processEngine.getProcessEngineConfiguration().setTenantResourceWhitelistPattern("[a-zA-Z]+");
 
@@ -177,6 +180,7 @@ class IdentityServiceTenantTest {
   void testCustomTenantWhitelistPattern() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
     processEngine.getProcessEngineConfiguration().setTenantResourceWhitelistPattern("[a-zA-Z]+");
 
@@ -234,6 +238,7 @@ class IdentityServiceTenantTest {
   void createTenantWithGenericResourceId() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
 
     Tenant tenant = processEngine.getIdentityService().newTenant("*");

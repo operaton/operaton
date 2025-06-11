@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,20 +33,20 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Daniel Meyer
  *
  */
-public class MetricsDisabledTest {
+class MetricsDisabledTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurationResource("org/operaton/bpm/engine/test/api/mgmt/metrics/metricsDisabledTest.cfg.xml").build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;
 
   // (to run, remove "FAILING" from methodname)
   @Test
-  public void testQueryMetricsIfMetricsIsDisabled() {
+  void testQueryMetricsIfMetricsIsDisabled() {
 
     // given
     // that the metrics are disabled (see xml configuration referenced in constructor)
@@ -60,7 +60,7 @@ public class MetricsDisabledTest {
   }
 
   @Test
-  public void testReportNowIfMetricsDisabled() {
+  void testReportNowIfMetricsDisabled() {
 
     // given
     // that the metrics reporter is disabled

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,15 +35,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
-public class ReducedJobExceptionLoggingTest {
+class ReducedJobExceptionLoggingTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
-    .cacheForConfigurationResource(false)
-    .build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
   protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch("org.operaton.bpm.engine.jobexecutor", Level.DEBUG);
 
@@ -52,7 +49,7 @@ public class ReducedJobExceptionLoggingTest {
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.setEnableReducedJobExceptionLogging(false);
     List<Job> jobs = managementService.createJobQuery().processDefinitionKey("failingProcess").list();
     for (Job job : jobs) {
@@ -61,8 +58,8 @@ public class ReducedJobExceptionLoggingTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  public void shouldLogAllFailingJobExceptions() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+  void shouldLogAllFailingJobExceptions() {
     // given
     processEngineConfiguration.setEnableReducedJobExceptionLogging(false);
 
@@ -79,8 +76,8 @@ public class ReducedJobExceptionLoggingTest {
   }
 
   @Test
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })
-  public void shouldLogOnlyOneFailingJobException() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+  void shouldLogOnlyOneFailingJobException() {
     // given
     processEngineConfiguration.setEnableReducedJobExceptionLogging(true);
 

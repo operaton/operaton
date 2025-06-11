@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,12 +25,12 @@ public class VariableValue<T extends TypedValue> {
   protected String executionId;
   protected String variableName;
   protected TypedValueField typedValueField;
-  protected ValueMappers mappers;
+  protected ValueMappers<T> mappers;
 
   protected ValueMapper<T> serializer;
   protected T cachedValue;
 
-  public VariableValue(String executionId, String variableName, TypedValueField typedValueField, ValueMappers mappers) {
+  public VariableValue(String executionId, String variableName, TypedValueField typedValueField, ValueMappers<T> mappers) {
     this.executionId = executionId;
     this.variableName = variableName;
     this.typedValueField = typedValueField;
@@ -67,7 +67,6 @@ public class VariableValue<T extends TypedValue> {
     return cachedValue;
   }
 
-  @SuppressWarnings("unchecked")
   public ValueMapper<T> getSerializer() {
     if (serializer == null) {
       serializer = mappers.findMapperForTypedValueField(typedValueField);
@@ -84,5 +83,5 @@ public class VariableValue<T extends TypedValue> {
         + "typedValueField=" + typedValueField + "]";
   }
 
-  
+
 }

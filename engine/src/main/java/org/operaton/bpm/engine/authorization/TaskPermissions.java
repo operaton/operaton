@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,9 +56,9 @@ public enum TaskPermissions implements Permission {
   /**
    * <p>Indicates that READ_HISTORY interactions are permitted.
    *
-   * @deprecated since the permission is not used by any built-in functionality of Operaton
+   * @deprecated since the permission is not used by any built-in functionality of Operaton.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   READ_HISTORY("READ_HISTORY", 4096),
 
   /** Indicates that TASK_WORK interactions are permitted */
@@ -78,7 +78,7 @@ public enum TaskPermissions implements Permission {
   private final String name;
   private final int id;
 
-  private TaskPermissions(String name, int id) {
+  TaskPermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

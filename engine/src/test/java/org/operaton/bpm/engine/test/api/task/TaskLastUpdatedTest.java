@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Date;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -33,30 +38,18 @@ import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+@ExtendWith(ProcessEngineExtension.class)
 public class TaskLastUpdatedTest {
-
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   TaskService taskService;
   RuntimeService runtimeService;
+  FormService formService;
 
-  @Before
-  public void setUp() {
-    taskService = engineRule.getTaskService();
-    runtimeService = engineRule.getRuntimeService();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     List<Task> tasks = taskService.createTaskQuery().list();
     for (Task task : tasks) {
       // standalone tasks (deployed process are cleaned up by the engine rule)
@@ -77,7 +70,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldNotSetLastUpdatedWithoutTaskUpdate() {
+  void shouldNotSetLastUpdatedWithoutTaskUpdate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -91,7 +84,7 @@ public class TaskLastUpdatedTest {
 
   @Test
   @RequiredDatabase(excludes = {DbSqlSessionFactory.MYSQL})
-  public void shouldSetLastUpdatedToExactlyNow() {
+  void shouldSetLastUpdatedToExactlyNow() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -112,7 +105,7 @@ public class TaskLastUpdatedTest {
 
   @Test
   @RequiredDatabase(includes = {DbSqlSessionFactory.MYSQL})
-  public void shouldSetLastUpdatedToExactlyNowIgnoringMillis() {
+  void shouldSetLastUpdatedToExactlyNowIgnoringMillis() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -132,7 +125,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnDescriptionChange() {
+  void shouldSetLastUpdatedOnDescriptionChange() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -148,7 +141,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnAssigneeChange() {
+  void shouldSetLastUpdatedOnAssigneeChange() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -165,7 +158,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnVariableChange() {
+  void shouldSetLastUpdatedOnVariableChange() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -181,7 +174,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnCreateAttachment() {
+  void shouldSetLastUpdatedOnCreateAttachment() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -197,7 +190,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnChangeAttachment() {
+  void shouldSetLastUpdatedOnChangeAttachment() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -215,7 +208,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnDeleteAttachment() {
+  void shouldSetLastUpdatedOnDeleteAttachment() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -232,7 +225,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnDeleteTaskAttachment() {
+  void shouldSetLastUpdatedOnDeleteTaskAttachment() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -249,7 +242,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnComment() {
+  void shouldSetLastUpdatedOnComment() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -265,7 +258,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnClaimTask() {
+  void shouldSetLastUpdatedOnClaimTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -281,7 +274,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnEveryPropertyChange() {
+  void shouldSetLastUpdatedOnEveryPropertyChange() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -302,7 +295,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnDelegate() {
+  void shouldSetLastUpdatedOnDelegate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -319,7 +312,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnResolve() {
+  void shouldSetLastUpdatedOnResolve() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -335,7 +328,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnAddIdentityLink() {
+  void shouldSetLastUpdatedOnAddIdentityLink() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -351,7 +344,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnDeleteIdentityLink() {
+  void shouldSetLastUpdatedOnDeleteIdentityLink() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -368,7 +361,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnPriorityChange() {
+  void shouldSetLastUpdatedOnPriorityChange() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -385,8 +378,8 @@ public class TaskLastUpdatedTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedOperatonFormSingleTaskProcess.bpmn20.xml",
-        "org/operaton/bpm/engine/test/api/form/task.html"})
-  public void shouldSetLastUpdatedOnSubmitTaskForm() {
+      "org/operaton/bpm/engine/test/api/form/task.html"})
+  void shouldSetLastUpdatedOnSubmitTaskForm() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormsProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -395,7 +388,7 @@ public class TaskLastUpdatedTest {
     Date beforeSubmit = getBeforeCurrentTime();
 
     // when
-    engineRule.getFormService().submitTaskForm(task.getId(), null);
+    formService.submitTaskForm(task.getId(), null);
 
     // then
     Task taskResult = taskService.createTaskQuery().singleResult();
@@ -404,7 +397,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldNotSaveTaskConcurrentlyUpdatedByDependentEntity() {
+  void shouldNotSaveTaskConcurrentlyUpdatedByDependentEntity() {
     // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
@@ -416,7 +409,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnTaskDeleteComment() {
+  void shouldSetLastUpdatedOnTaskDeleteComment() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -434,7 +427,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnTaskDeleteComments() {
+  void shouldSetLastUpdatedOnTaskDeleteComments() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -453,7 +446,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnTaskCommentUpdate() {
+  void shouldSetLastUpdatedOnTaskCommentUpdate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -471,7 +464,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnProcessInstanceDeleteComment() {
+  void shouldSetLastUpdatedOnProcessInstanceDeleteComment() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Comment comment = taskService.createComment(null, processInstance.getId(), "message");
@@ -486,7 +479,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnProcessInstanceDeleteComments() {
+  void shouldSetLastUpdatedOnProcessInstanceDeleteComments() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     taskService.createComment(null, processInstance.getId(), "message");
@@ -502,7 +495,7 @@ public class TaskLastUpdatedTest {
   }
 
   @Test
-  public void shouldSetLastUpdatedOnProcessInstanceCommentUpdate() {
+  void shouldSetLastUpdatedOnProcessInstanceCommentUpdate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Comment comment = taskService.createComment(null, processInstance.getId(), "aMessage");

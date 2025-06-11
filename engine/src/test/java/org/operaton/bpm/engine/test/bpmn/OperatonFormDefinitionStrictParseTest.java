@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,49 +21,38 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 import org.operaton.bpm.engine.repository.Deployment;
+import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 import org.operaton.bpm.engine.repository.Resource;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.form.deployment.FindOperatonFormDefinitionsCmd;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class OperatonFormDefinitionStrictParseTest {
+class OperatonFormDefinitionStrictParseTest {
 
   private static final String FORM = "org/operaton/bpm/engine/test/bpmn/OperatonFormDefinitionStrictParseTest.anyForm.form";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RepositoryService repositoryService;
-
-
-  @Before
-  public void setup() {
-    repositoryService = engineRule.getRepositoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @After
-  public void reset() {
+  @AfterEach
+  void reset() {
     processEngineConfiguration.setDisableStrictOperatonFormParsing(false);
   }
 
   @Test
-  public void shouldParseAnyFormFile_strictParsingDisabled() {
+  void shouldParseAnyFormFile_strictParsingDisabled() {
     // given
     processEngineConfiguration.setDisableStrictOperatonFormParsing(true);
 
@@ -87,7 +76,7 @@ public class OperatonFormDefinitionStrictParseTest {
   }
 
   @Test
-  public void shouldNotParseAnyFormFile_strictParsingEnabled() {
+  void shouldNotParseAnyFormFile_strictParsingEnabled() {
     // given
     processEngineConfiguration.setDisableStrictOperatonFormParsing(false);
 

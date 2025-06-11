@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -43,11 +43,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 public abstract class AbstractMetricsIntervalTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension ENGINE_RULE = ProcessEngineExtension.builder().build();
+  protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension TEST_RULE = new ProcessEngineTestExtension(ENGINE_RULE);
+  ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
 
-  protected final String REPORTER_ID = "REPORTER_ID";
+  protected static final String REPORTER_ID = "REPORTER_ID";
   protected static final int DEFAULT_INTERVAL = 15;
   protected static final int DEFAULT_INTERVAL_MILLIS = 15 * 60 * 1000;
   protected static final int MIN_OCCURENCE = 1;
@@ -111,9 +111,9 @@ public abstract class AbstractMetricsIntervalTest {
 
   @BeforeEach
   public void initMetrics() {
-    runtimeService = ENGINE_RULE.getRuntimeService();
-    processEngineConfiguration = ENGINE_RULE.getProcessEngineConfiguration();
-    managementService = ENGINE_RULE.getManagementService();
+    runtimeService = engineExtension.getRuntimeService();
+    processEngineConfiguration = engineExtension.getProcessEngineConfiguration();
+    managementService = engineExtension.getManagementService();
 
     //clean up before start
     clearMetrics();

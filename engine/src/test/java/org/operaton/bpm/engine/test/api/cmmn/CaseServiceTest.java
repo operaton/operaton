@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -61,8 +61,8 @@ class CaseServiceTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineExtension);
-  
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineExtension);
+
   protected CaseService caseService;
   protected RepositoryService repositoryService;
   protected RuntimeService runtimeService;

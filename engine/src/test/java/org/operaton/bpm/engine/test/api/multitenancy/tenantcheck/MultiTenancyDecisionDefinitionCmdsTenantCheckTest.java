@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,16 +37,16 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
 /**
  * @author kristin.polenz
  */
-public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
+class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
   protected static final String DMN_MODEL = "org/operaton/bpm/engine/test/api/multitenancy/simpleDecisionTable.dmn";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RepositoryService repositoryService;
   protected IdentityService identityService;
@@ -55,7 +55,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   protected String decisionDefinitionId;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deployForTenant(TENANT_ONE, DMN_MODEL);
 
     decisionDefinitionId = repositoryService.createDecisionDefinitionQuery().singleResult().getId();
@@ -63,7 +63,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetDecisionModelNoAuthenticatedTenants() {
+  void failToGetDecisionModelNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -73,7 +73,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionModelWithAuthenticatedTenant() {
+  void getDecisionModelWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getDecisionModel(decisionDefinitionId);
@@ -82,7 +82,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionModelDisabledTenantCheck() {
+  void getDecisionModelDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -92,7 +92,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetDecisionDiagramNoAuthenticatedTenants() {
+  void failToGetDecisionDiagramNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -103,7 +103,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionDiagramWithAuthenticatedTenant() {
+  void getDecisionDiagramWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getDecisionDiagram(decisionDefinitionId);
@@ -114,7 +114,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionDiagramDisabledTenantCheck() {
+  void getDecisionDiagramDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -126,7 +126,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetDecisionDefinitionNoAuthenticatedTenants() {
+  void failToGetDecisionDefinitionNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -136,7 +136,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionDefinitionWithAuthenticatedTenant() {
+  void getDecisionDefinitionWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     DecisionDefinition definition = repositoryService.getDecisionDefinition(decisionDefinitionId);
@@ -145,7 +145,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDecisionDefinitionDisabledTenantCheck() {
+  void getDecisionDefinitionDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -155,7 +155,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetDmnModelInstanceNoAuthenticatedTenants() {
+  void failToGetDmnModelInstanceNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -165,7 +165,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveWithAuthenticatedTenant() {
+  void updateHistoryTimeToLiveWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitionId, 6);
@@ -177,7 +177,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveDisabledTenantCheck() {
+  void updateHistoryTimeToLiveDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -190,7 +190,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveNoAuthenticatedTenants() {
+  void updateHistoryTimeToLiveNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -200,7 +200,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDmnModelInstanceWithAuthenticatedTenant() {
+  void getDmnModelInstanceWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     DmnModelInstance modelInstance = repositoryService.getDmnModelInstance(decisionDefinitionId);
@@ -209,7 +209,7 @@ public class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getDmnModelInstanceDisabledTenantCheck() {
+  void getDmnModelInstanceDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

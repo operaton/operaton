@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,8 +17,8 @@
     limitations under the License.
 
 -->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity">
 
   <!-- INCIDENT DELETE -->
@@ -31,18 +31,18 @@
 
   <insert id="insertIncident" parameterType="org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity">
     insert into ${prefix}ACT_RU_INCIDENT (
-      ID_, 
-      INCIDENT_TIMESTAMP_, 
-      INCIDENT_MSG_, 
-      INCIDENT_TYPE_, 
-      EXECUTION_ID_, 
-      ACTIVITY_ID_, 
-      FAILED_ACTIVITY_ID_, 
-      PROC_INST_ID_, 
-      PROC_DEF_ID_, 
-      CAUSE_INCIDENT_ID_, 
-      ROOT_CAUSE_INCIDENT_ID_, 
-      CONFIGURATION_, 
+      ID_,
+      INCIDENT_TIMESTAMP_,
+      INCIDENT_MSG_,
+      INCIDENT_TYPE_,
+      EXECUTION_ID_,
+      ACTIVITY_ID_,
+      FAILED_ACTIVITY_ID_,
+      PROC_INST_ID_,
+      PROC_DEF_ID_,
+      CAUSE_INCIDENT_ID_,
+      ROOT_CAUSE_INCIDENT_ID_,
+      CONFIGURATION_,
       TENANT_ID_,
       JOB_DEF_ID_,
       ANNOTATION_,
@@ -87,7 +87,7 @@
     <result property="annotation" column="ANNOTATION_" jdbcType="VARCHAR" />
     <result property="revision" column="REV_" jdbcType="INTEGER" />
   </resultMap>
-  
+
   <!-- INCIDENT SELECT -->
 
   <select id="selectIncident" parameterType="string" resultMap="incidentResultMap">
@@ -98,7 +98,7 @@
     from ${prefix}ACT_RU_INCIDENT I
     where I.EXECUTION_ID_ = #{parameter}
   </select>
-  
+
   <select id="selectIncidentsByProcessInstanceId" parameterType="string" resultMap="incidentResultMap">
     select *
     from ${prefix}ACT_RU_INCIDENT I
@@ -189,7 +189,7 @@
       <if test="configuration != null">
         and RES.CONFIGURATION_ = #{configuration}
       </if>
-      
+
       <if test="tenantIds != null &amp;&amp; tenantIds.length > 0">
         and RES.TENANT_ID_ in
         <foreach item="tenantId" index="index" collection="tenantIds"

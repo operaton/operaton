@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.variables.scope;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.ScriptEvaluationException;
@@ -29,9 +34,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessInstanceWithVariab
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -39,33 +43,21 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonExecutionListener;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 /**
  * @author Askar Akhmerov
  * @author Tassilo Weidner
  */
-public class TargetVariableScopeTest {
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  @Rule
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+class TargetVariableScopeTest {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   RuntimeService runtimeService;
 
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-  }
-
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithDelegateProcess.bpmn","org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
-  public void testExecutionWithDelegateProcess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithDelegateProcess.bpmn", "org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
+  void testExecutionWithDelegateProcess() {
     // Given we create a new process instance
     VariableMap variables = Variables.createVariables().putValue("orderIds", List.of(new int[] { 1, 2, 3 }));
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process_MultiInstanceCallActivity",variables);
@@ -76,8 +68,8 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithScriptTargetScope.bpmn","org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
-  public void testExecutionWithScriptTargetScope () {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithScriptTargetScope.bpmn", "org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
+  void testExecutionWithScriptTargetScope() {
     VariableMap variables = Variables.createVariables().putValue("orderIds", List.of(new int[] { 1, 2, 3 }));
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process_MultiInstanceCallActivity",variables);
 
@@ -87,8 +79,8 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithoutProperTargetScope.bpmn","org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
-  public void testExecutionWithoutProperTargetScope () {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithoutProperTargetScope.bpmn", "org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
+  void testExecutionWithoutProperTargetScope() {
     VariableMap variables = Variables.createVariables().putValue("orderIds", List.of(new int[] { 1, 2, 3 }));
     ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("Process_MultiInstanceCallActivity").singleResult();
     RuntimeService runtimeService1 = runtimeService;
@@ -104,7 +96,7 @@ public class TargetVariableScopeTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
-  public void testWithDelegateVariableMapping () {
+  void testWithDelegateVariableMapping() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess("process1")
         .startEvent()
           .subProcess("SubProcess_1")
@@ -136,7 +128,7 @@ public class TargetVariableScopeTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
-  public void testWithDelegateVariableMappingAndChildScope () {
+  void testWithDelegateVariableMappingAndChildScope() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess("process1")
         .startEvent()
           .parallelGateway()
@@ -211,7 +203,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeWithJavaDelegate() {
+  void testSetLocalScopeWithJavaDelegate() {
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .serviceTask()
@@ -224,7 +216,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeWithExecutionListenerStart() {
+  void testSetLocalScopeWithExecutionListenerStart() {
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent().id("activityId")
         .operatonExecutionListenerClass(ExecutionListener.EVENTNAME_START, ExecutionListener.class)
@@ -235,7 +227,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeWithExecutionListenerEnd() {
+  void testSetLocalScopeWithExecutionListenerEnd() {
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .endEvent().id("activityId")
@@ -246,7 +238,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeWithExecutionListenerTake() {
+  void testSetLocalScopeWithExecutionListenerTake() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
       .startEvent().id("activityId")
       .sequenceFlowId("sequenceFlow")
@@ -263,7 +255,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeWithTaskListener() {
+  void testSetLocalScopeWithTaskListener() {
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .userTask().id("activityId")
@@ -275,7 +267,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeInSubprocessWithJavaDelegate() {
+  void testSetLocalScopeInSubprocessWithJavaDelegate() {
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .subProcess().embeddedSubProcess()
@@ -291,7 +283,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeInSubprocessWithStartExecutionListener() {
+  void testSetLocalScopeInSubprocessWithStartExecutionListener() {
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .subProcess().embeddedSubProcess()
@@ -306,7 +298,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeInSubprocessWithEndExecutionListener() {
+  void testSetLocalScopeInSubprocessWithEndExecutionListener() {
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .subProcess().embeddedSubProcess()
@@ -321,7 +313,7 @@ public class TargetVariableScopeTest {
   }
 
   @Test
-  public void testSetLocalScopeInSubprocessWithTaskListener() {
+  void testSetLocalScopeInSubprocessWithTaskListener() {
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .subProcess().embeddedSubProcess()

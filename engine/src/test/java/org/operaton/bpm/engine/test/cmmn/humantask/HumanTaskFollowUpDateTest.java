@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,19 +25,19 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.joda.time.Period;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
+class HumanTaskFollowUpDateTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
   @Test
-  public void testHumanTaskFollowUpDateExtension() throws Exception {
+  void testHumanTaskFollowUpDateExtension() throws Exception {
 
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("01-01-2015 12:10:00");
     Map<String, Object> variables = new HashMap<>();
@@ -53,7 +53,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
   @Test
-  public void testHumanTaskFollowUpDateStringExtension() throws Exception {
+  void testHumanTaskFollowUpDateStringExtension() throws Exception {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "2015-01-01T12:10:00");
@@ -69,7 +69,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
   @Test
-  public void testHumanTaskRelativeFollowUpDate() {
+  void testHumanTaskRelativeFollowUpDate() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "P2DT2H30M");
 

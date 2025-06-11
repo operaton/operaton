@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -49,12 +49,12 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 class HistoricInstanceForCleanupQueryTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
-  protected static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
-  protected static BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
 
   private HistoryService historyService;
   private ManagementService managementService;

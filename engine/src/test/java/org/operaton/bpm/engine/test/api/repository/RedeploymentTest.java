@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,31 +16,35 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.query.Query;
-import org.operaton.bpm.engine.repository.*;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.repository.Deployment;
+import org.operaton.bpm.engine.repository.DeploymentQuery;
+import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
+import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
+import org.operaton.bpm.engine.repository.Resource;
+import org.operaton.bpm.engine.repository.ResumePreviousBy;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -59,28 +63,26 @@ public class RedeploymentTest {
   public static final String RESOURCE_2_NAME = "path/to/my/process2.bpmn";
   public static final String RESOURCE_3_NAME = "path/to/my/process3.bpmn";
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RepositoryService repositoryService;
+  boolean enforceHistoryTimeToLive;
 
-  protected RepositoryService repositoryService;
-  protected boolean enforceHistoryTimeToLive;
-
-  @Before
-  public void setUp() {
-    repositoryService = engineRule.getRepositoryService();
+  @BeforeEach
+  void setUp() {
     enforceHistoryTimeToLive = engineRule.getProcessEngineConfiguration().isEnforceHistoryTimeToLive();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(enforceHistoryTimeToLive);
   }
 
   @Test
-  public void testRedeployInvalidDeployment() {
+  void testRedeployInvalidDeployment() {
     var deploymentBuilder = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME)
@@ -138,7 +140,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testNotValidDeploymentId() {
+  void testNotValidDeploymentId() {
     var deploymentBuilder = repositoryService
         .createDeployment()
         .name(DEPLOYMENT_NAME);
@@ -181,7 +183,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployUnexistingDeploymentResource() {
+  void testRedeployUnexistingDeploymentResource() {
     // given
     BpmnModelInstance model = createProcessWithServiceTask(PROCESS_KEY);
 
@@ -233,7 +235,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testNotValidResource() {
+  void testNotValidResource() {
     var deploymentBuilder = repositoryService
         .createDeployment()
         .name(DEPLOYMENT_NAME);
@@ -298,7 +300,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployNewDeployment() {
+  void testRedeployNewDeployment() {
     // given
     BpmnModelInstance model = createProcessWithServiceTask(PROCESS_KEY);
 
@@ -327,7 +329,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testFailingDeploymentName() {
+  void testFailingDeploymentName() {
     var deploymentBuilder = repositoryService
       .createDeployment()
       .name(DEPLOYMENT_NAME);
@@ -350,7 +352,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployDeploymentName() {
+  void testRedeployDeploymentName() {
     // given
     BpmnModelInstance model = createProcessWithServiceTask(PROCESS_KEY);
 
@@ -373,7 +375,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployDeploymentDifferentName() {
+  void testRedeployDeploymentDifferentName() {
     // given
     BpmnModelInstance model = createProcessWithServiceTask(PROCESS_KEY);
 
@@ -396,7 +398,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployDeploymentSourcePropertyNotSet() {
+  void testRedeployDeploymentSourcePropertyNotSet() {
     // given
     BpmnModelInstance model = createProcessWithServiceTask(PROCESS_KEY);
 
@@ -420,7 +422,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeploySetDeploymentSourceProperty() {
+  void testRedeploySetDeploymentSourceProperty() {
     // given
     BpmnModelInstance model = createProcessWithServiceTask(PROCESS_KEY);
 
@@ -445,7 +447,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployDeploymentResource() {
+  void testRedeployDeploymentResource() {
     // given
 
     // first deployment
@@ -495,7 +497,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployAllDeploymentResources() {
+  void testRedeployAllDeploymentResources() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -534,7 +536,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployOneDeploymentResourcesByName() {
+  void testRedeployOneDeploymentResourcesByName() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -576,7 +578,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployMultipleDeploymentResourcesByName() {
+  void testRedeployMultipleDeploymentResourcesByName() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -637,7 +639,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployOneAndMultipleDeploymentResourcesByName() {
+  void testRedeployOneAndMultipleDeploymentResourcesByName() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -687,7 +689,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testSameDeploymentResourceByName() {
+  void testSameDeploymentResourceByName() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -730,7 +732,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployOneDeploymentResourcesById() {
+  void testRedeployOneDeploymentResourcesById() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -774,7 +776,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployMultipleDeploymentResourcesById() {
+  void testRedeployMultipleDeploymentResourcesById() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -841,7 +843,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployOneAndMultipleDeploymentResourcesById() {
+  void testRedeployOneAndMultipleDeploymentResourcesById() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -895,7 +897,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeploySameDeploymentResourceById() {
+  void testRedeploySameDeploymentResourceById() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -940,7 +942,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployDeploymentResourceByIdAndName() {
+  void testRedeployDeploymentResourceByIdAndName() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -986,7 +988,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployDeploymentResourceByIdAndNameMultiple() {
+  void testRedeployDeploymentResourceByIdAndNameMultiple() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -1031,7 +1033,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployFormDifferentDeployments() {
+  void testRedeployFormDifferentDeployments() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -1074,7 +1076,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployFormDifferentDeploymentsById() {
+  void testRedeployFormDifferentDeploymentsById() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -1119,7 +1121,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployFormDifferentDeploymentsByName() {
+  void testRedeployFormDifferentDeploymentsByName() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -1162,7 +1164,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployFormDifferentDeploymentsByNameAndId() {
+  void testRedeployFormDifferentDeploymentsByNameAndId() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -1206,7 +1208,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployFormDifferentDeploymentsAddsNewSource() {
+  void testRedeployFormDifferentDeploymentsAddsNewSource() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -1252,7 +1254,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployFormDifferentDeploymentsSameResourceName() {
+  void testRedeployFormDifferentDeploymentsSameResourceName() {
     // given
     BpmnModelInstance model1 = createProcessWithServiceTask(PROCESS_1_KEY);
 
@@ -1285,7 +1287,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployAndAddNewResourceWithSameName() {
+  void testRedeployAndAddNewResourceWithSameName() {
     // given
     BpmnModelInstance model1 = createProcessWithServiceTask(PROCESS_1_KEY);
 
@@ -1311,7 +1313,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployEnableDuplcateChecking() {
+  void testRedeployEnableDuplcateChecking() {
     // given
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -1336,7 +1338,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testSimpleProcessApplicationDeployment() {
+  void testSimpleProcessApplicationDeployment() {
     // given
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 
@@ -1367,7 +1369,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testRedeployProcessApplicationDeploymentResumePreviousVersions() {
+  void testRedeployProcessApplicationDeploymentResumePreviousVersions() {
     // given
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 
@@ -1404,7 +1406,7 @@ public class RedeploymentTest {
   }
 
   @Test
-  public void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentName() {
+  void testProcessApplicationDeploymentResumePreviousVersionsByDeploymentName() {
     // given
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 

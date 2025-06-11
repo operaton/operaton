@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
+class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -48,16 +48,16 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
       .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
   protected IdentityService identityService;
 
   @Test
-  public void correlateReceivedMessageToIntermediateCatchEventNoAuthenticatedTenants() {
+  void correlateReceivedMessageToIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deploy(MESSAGE_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("messageCatch").execute();
@@ -80,7 +80,7 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateReceivedMessageToIntermediateCatchEventWithAuthenticatedTenant() {
+  void correlateReceivedMessageToIntermediateCatchEventWithAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("messageCatch").execute();
@@ -102,7 +102,7 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
   }
 
   @Test
-  public void correlateReceivedMessageToIntermediateCatchEventDisabledTenantCheck() {
+  void correlateReceivedMessageToIntermediateCatchEventDisabledTenantCheck() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_CATCH_PROCESS);
 
@@ -127,7 +127,7 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
   }
 
   @Test
-  public void failToCorrelateReceivedMessageToIntermediateCatchEventNoAuthenticatedTenants() {
+  void failToCorrelateReceivedMessageToIntermediateCatchEventNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_CATCH_PROCESS);
 
     runtimeService.createProcessInstanceByKey("messageCatch").processDefinitionTenantId(TENANT_ONE).execute();

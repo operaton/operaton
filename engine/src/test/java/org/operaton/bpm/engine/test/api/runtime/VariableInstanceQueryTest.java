@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.groups.Tuple.tuple;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +30,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -39,27 +48,34 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.api.runtime.util.CustomSerializable;
 import org.operaton.bpm.engine.test.api.runtime.util.FailingSerializable;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.groups.Tuple.tuple;
-
 /**
  * @author roman.smirnov
  */
-public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
+class VariableInstanceQueryTest {
 
   protected static final String PROC_DEF_KEY = "oneTaskProcess";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
+  CaseService caseService;
+  ManagementService managementService;
+
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQuery() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQuery() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("intVar", 123);
@@ -98,7 +114,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByVariableId() {
+  void testQueryByVariableId() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("var1", "test");
@@ -122,8 +138,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableName() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableName() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -137,8 +153,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableNames() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableNames() {
     // given
     String variableValue = "a";
     Map<String, Object> variables = new HashMap<>();
@@ -170,8 +186,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableNameLike() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableNameLike() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("string%Var", "test");
@@ -195,8 +211,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableName_EmptyString() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableName_EmptyString() {
     // given
     String varName = "testVar";
     VariableMap variables = Variables.putValue(varName, "");
@@ -211,8 +227,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableNameLikeWithoutAnyResult() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableNameLikeWithoutAnyResult() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -229,8 +245,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_String() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_String() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -244,8 +260,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_EmptyString() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_EmptyString() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "");
@@ -259,8 +275,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueNotEquals_String() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueNotEquals_String() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -278,8 +294,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueNotEquals_EmptyString() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueNotEquals_EmptyString() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -297,8 +313,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueGreaterThan_String() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueGreaterThan_String() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "a");
@@ -320,8 +336,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueGreaterThanOrEqual_String() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueGreaterThanOrEqual_String() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "a");
@@ -343,8 +359,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueLessThan_String() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueLessThan_String() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "a");
@@ -366,8 +382,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueLessThanOrEqual_String() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueLessThanOrEqual_String() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "a");
@@ -389,8 +405,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueLike_String() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueLike_String() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test123");
@@ -431,8 +447,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
-  public void testQueryByNameAndVariableValueLikeWithEscape_String() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueLikeWithEscape_String() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test_123");
@@ -468,8 +484,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_Integer() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_Integer() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("intValue", 1234);
@@ -493,8 +509,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueNotEquals_Integer() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueNotEquals_Integer() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("intValue", 1234);
@@ -522,8 +538,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableGreaterThan_Integer() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableGreaterThan_Integer() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("intValue", 1234);
@@ -562,8 +578,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableGreaterThanAndEqual_Integer() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableGreaterThanAndEqual_Integer() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("intValue", 1234);
@@ -604,8 +620,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableLessThan_Integer() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableLessThan_Integer() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("intValue", 1234);
@@ -644,8 +660,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableLessThanAndEqual_Integer() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableLessThanAndEqual_Integer() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("intValue", 1234);
@@ -686,8 +702,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_Long() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_Long() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("longValue", 123456L);
@@ -711,8 +727,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueNotEquals_Long() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueNotEquals_Long() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("longValue", 123456L);
@@ -740,8 +756,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableGreaterThan_Long() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableGreaterThan_Long() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("longValue", 123456L);
@@ -780,8 +796,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableGreaterThanAndEqual_Long() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableGreaterThanAndEqual_Long() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("longValue", 123456L);
@@ -822,8 +838,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableLessThan_Long() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableLessThan_Long() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("longValue", 123456L);
@@ -862,8 +878,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableLessThanAndEqual_Long() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableLessThanAndEqual_Long() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("longValue", 123456L);
@@ -904,8 +920,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_Double() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_Double() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("doubleValue", 123.456);
@@ -929,8 +945,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueNotEquals_Double() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueNotEquals_Double() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("doubleValue", 123.456);
@@ -958,8 +974,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableGreaterThan_Double() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableGreaterThan_Double() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("doubleValue", 123.456);
@@ -998,8 +1014,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableGreaterThanAndEqual_Double() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableGreaterThanAndEqual_Double() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("doubleValue", 123.456);
@@ -1040,8 +1056,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableLessThan_Double() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableLessThan_Double() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("doubleValue", 123.456);
@@ -1080,8 +1096,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableLessThanAndEqual_Double() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableLessThanAndEqual_Double() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("doubleValue", 123.456);
@@ -1122,8 +1138,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_Short() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_Short() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("shortValue", (short) 123);
@@ -1147,8 +1163,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableValueNotEquals_Short() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableValueNotEquals_Short() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("shortValue", (short) 123);
@@ -1176,8 +1192,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableGreaterThan_Short() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableGreaterThan_Short() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("shortValue", (short) 123);
@@ -1216,8 +1232,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableGreaterThanAndEqual_Short() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableGreaterThanAndEqual_Short() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("shortValue", (short) 123);
@@ -1258,8 +1274,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableLessThan_Short() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableLessThan_Short() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("shortValue", (short) 123);
@@ -1298,8 +1314,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableLessThanAndEqual_Short() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableLessThanAndEqual_Short() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("shortValue", (short) 123);
@@ -1340,8 +1356,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_Bytes() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_Bytes() {
     // given
     byte[] bytes = "somebytes".getBytes();
     Map<String, Object> variables = new HashMap<>();
@@ -1361,8 +1377,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_Date() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_Date() {
     // given
      Date now = new Date();
 
@@ -1388,8 +1404,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEqualsWithoutAnyResult() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEqualsWithoutAnyResult() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1406,8 +1422,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByNameAndVariableValueEquals_NullValue() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByNameAndVariableValueEquals_NullValue() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("nullValue", null);
@@ -1431,8 +1447,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByVariableValueNotEquals_NullValue() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByVariableValueNotEquals_NullValue() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("value", null);
@@ -1473,8 +1489,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByProcessInstanceId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByProcessInstanceId() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1507,8 +1523,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByProcessInstanceIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByProcessInstanceIds() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1542,8 +1558,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByProcessInstanceIdWithoutAnyResult() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByProcessInstanceIdWithoutAnyResult() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1561,8 +1577,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByExecutionId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByExecutionId() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1595,8 +1611,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByExecutionIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByExecutionIds() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -1633,8 +1649,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByExecutionIdWithoutAnyResult() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByExecutionIdWithoutAnyResult() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1652,8 +1668,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByTaskId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByTaskId() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1681,8 +1697,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByTaskIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByTaskIds() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1723,8 +1739,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByTaskIdWithoutAnyResult() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByTaskIdWithoutAnyResult() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1746,7 +1762,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/VariableInstanceQueryTest.taskInEmbeddedSubProcess.bpmn20.xml"})
-  public void testQueryByVariableScopeId() {
+  void testQueryByVariableScopeId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -1808,8 +1824,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByActivityInstanceId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByActivityInstanceId() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1841,8 +1857,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryByActivityInstanceIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryByActivityInstanceIds() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("stringVar", "test");
@@ -1916,8 +1932,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryOrderByName_Asc() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryOrderByName_Asc() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1941,8 +1957,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryOrderByName_Desc() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryOrderByName_Desc() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "test");
@@ -1968,8 +1984,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryOrderByType_Asc() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryOrderByType_Asc() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("intVar", 123);
@@ -1995,8 +2011,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryOrderByType_Desc() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryOrderByType_Desc() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("intVar", 123);
@@ -2022,8 +2038,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryOrderByActivityInstanceId_Asc() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryOrderByActivityInstanceId_Asc() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("intVar", 123);
@@ -2065,8 +2081,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testQueryOrderByActivityInstanceId_Desc() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testQueryOrderByActivityInstanceId_Desc() {
     // given
     Map<String, Object> variables1 = new HashMap<>();
     variables1.put("intVar", 123);
@@ -2108,8 +2124,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testGetValueOfSerializableVar() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testGetValueOfSerializableVar() {
     // given
     List<String> serializable = new ArrayList<>();
     serializable.add("one");
@@ -2141,7 +2157,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment
-  public void testSubProcessVariablesWithParallelGateway() {
+  void testSubProcessVariablesWithParallelGateway() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("processWithSubProcess");
 
@@ -2224,7 +2240,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment
-  public void testSubProcessVariables() {
+  void testSubProcessVariables() {
     // given
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("processVariable", "aProcessVariable");
@@ -2267,7 +2283,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment
-  public void testParallelGatewayVariables() {
+  void testParallelGatewayVariables() {
     // given
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("processVariable", "aProcessVariable");
@@ -2308,7 +2324,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSimpleSubProcessVariables() {
+  void testSimpleSubProcessVariables() {
     // given
     Map<String, Object> processVariables = new HashMap<>();
     processVariables.put("processVariable", "aProcessVariable");
@@ -2340,7 +2356,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDisableBinaryFetching() {
+  void testDisableBinaryFetching() {
     byte[] binaryContent = "some binary content".getBytes();
 
     // given
@@ -2369,8 +2385,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources= "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml")
-  public void testDisableBinaryFetchingForFileValues() {
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml")
+  void testDisableBinaryFetchingForFileValues() {
     // given
     String fileName = "text.txt";
     String encoding = "crazy-encoding";
@@ -2415,7 +2431,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDisableCustomObjectDeserialization() {
+  void testDisableCustomObjectDeserialization() {
     // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("customSerializable", new CustomSerializable());
@@ -2455,7 +2471,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testSerializableErrorMessage() {
+  void testSerializableErrorMessage() {
 
     // given
     Map<String, Object> variables = new HashMap<>();
@@ -2494,7 +2510,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void testQueryByCaseExecutionId() {
+  void testQueryByCaseExecutionId() {
     CaseInstance instance = caseService
       .withCaseDefinitionByKey("oneTaskCase")
       .setVariable("aVariableName", "abc")
@@ -2522,7 +2538,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void testQueryByCaseExecutionIds() {
+  void testQueryByCaseExecutionIds() {
     CaseInstance instance1 = caseService
       .withCaseDefinitionByKey("oneTaskCase")
       .setVariable("aVariableName", "abc")
@@ -2560,7 +2576,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void testQueryByCaseInstanceId() {
+  void testQueryByCaseInstanceId() {
     CaseInstance instance = caseService
       .withCaseDefinitionByKey("oneTaskCase")
       .setVariable("aVariableName", "abc")
@@ -2588,7 +2604,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void testQueryByCaseInstanceIds() {
+  void testQueryByCaseInstanceIds() {
     CaseInstance instance1 = caseService
       .withCaseDefinitionByKey("oneTaskCase")
       .setVariable("aVariableName", "abc")
@@ -2626,7 +2642,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void testQueryByCaseActivityInstanceId() {
+  void testQueryByCaseActivityInstanceId() {
     CaseInstance instance = caseService
       .withCaseDefinitionByKey("oneTaskCase")
       .setVariable("aVariableName", "abc")
@@ -2654,7 +2670,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  public void testQueryByCaseActivityInstanceIds() {
+  void testQueryByCaseActivityInstanceIds() {
     CaseInstance instance1 = caseService
       .withCaseDefinitionByKey("oneTaskCase")
       .setVariable("aVariableName", "abc")
@@ -2693,7 +2709,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialMultiInstanceSubProcess() {
+  void testSequentialMultiInstanceSubProcess() {
     // given a process instance in sequential MI
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSequentialSubprocess");
 
@@ -2718,7 +2734,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelMultiInstanceSubProcess() {
+  void testParallelMultiInstanceSubProcess() {
     // given a process instance in sequential MI
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSequentialSubprocess");
 
@@ -2751,8 +2767,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void testVariablesProcessDefinitionId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void testVariablesProcessDefinitionId() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROC_DEF_KEY,
         Variables.createVariables().putValue("foo", "bar"));
@@ -2766,8 +2782,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void shouldGetBatchId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void shouldGetBatchId() {
     // given
     String processInstanceId =
         runtimeService.startProcessInstanceByKey(PROC_DEF_KEY).getId();
@@ -2789,8 +2805,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryForBatchId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryForBatchId() {
     // given
     VariableMap variables = Variables.putValue("foo", "bar");
 
@@ -2826,8 +2842,8 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryForBatchIds() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void shouldQueryForBatchIds() {
     // given
     VariableMap variables = Variables.putValue("foo", "bar");
 

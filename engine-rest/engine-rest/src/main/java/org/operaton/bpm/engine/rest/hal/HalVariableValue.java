@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,17 @@
  */
 package org.operaton.bpm.engine.rest.hal;
 
-import org.operaton.bpm.engine.rest.*;
+import jakarta.ws.rs.core.UriBuilder;
+import org.operaton.bpm.engine.rest.CaseExecutionRestService;
+import org.operaton.bpm.engine.rest.CaseInstanceRestService;
+import org.operaton.bpm.engine.rest.ExecutionRestService;
+import org.operaton.bpm.engine.rest.ProcessInstanceRestService;
+import org.operaton.bpm.engine.rest.TaskRestService;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 
-import jakarta.ws.rs.core.UriBuilder;
 import java.util.Map;
 
 /**
@@ -32,6 +36,8 @@ public class HalVariableValue extends HalResource<HalVariableValue> {
 
   // add leading / by hand because otherwise it will be encoded as %2F (see CAM-3091)
   public static final HalRelation REL_SELF = HalRelation.build("self", VariableResource.class, UriBuilder.fromPath("/{scopeResourcePath}").path("{scopeId}").path("{variablesName}").path("{variableName}"));
+  private static final String VARIABLES_PATH_LOCAL_VARIABLES = "localVariables";
+  private static final String VARIABLES_PATH_VARIABLES = "variables";
 
   protected String name;
   protected Object value;
@@ -61,27 +67,27 @@ public class HalVariableValue extends HalResource<HalVariableValue> {
 
   public static HalVariableValue generateTaskVariableValue(VariableInstance variableInstance, String taskId) {
     return fromVariableInstance(variableInstance)
-      .link(REL_SELF, TaskRestService.PATH, taskId, "localVariables");
+      .link(REL_SELF, TaskRestService.PATH, taskId, VARIABLES_PATH_LOCAL_VARIABLES);
   }
 
   public static HalVariableValue generateExecutionVariableValue(VariableInstance variableInstance, String executionId) {
     return fromVariableInstance(variableInstance)
-      .link(REL_SELF, ExecutionRestService.PATH, executionId, "localVariables");
+      .link(REL_SELF, ExecutionRestService.PATH, executionId, VARIABLES_PATH_LOCAL_VARIABLES);
   }
 
   public static HalVariableValue generateProcessInstanceVariableValue(VariableInstance variableInstance, String processInstanceId) {
     return fromVariableInstance(variableInstance)
-      .link(REL_SELF, ProcessInstanceRestService.PATH, processInstanceId, "variables");
+      .link(REL_SELF, ProcessInstanceRestService.PATH, processInstanceId, VARIABLES_PATH_VARIABLES);
   }
 
   public static HalVariableValue generateCaseExecutionVariableValue(VariableInstance variableInstance, String caseExecutionId) {
     return fromVariableInstance(variableInstance)
-      .link(REL_SELF, CaseExecutionRestService.PATH, caseExecutionId, "localVariables");
+      .link(REL_SELF, CaseExecutionRestService.PATH, caseExecutionId, VARIABLES_PATH_LOCAL_VARIABLES);
   }
 
   public static HalVariableValue generateCaseInstanceVariableValue(VariableInstance variableInstance, String caseInstanceId) {
     return fromVariableInstance(variableInstance)
-      .link(REL_SELF, CaseInstanceRestService.PATH, caseInstanceId, "variables");
+      .link(REL_SELF, CaseInstanceRestService.PATH, caseInstanceId, VARIABLES_PATH_VARIABLES);
   }
 
   private HalVariableValue link(HalRelation relation, String resourcePath, String resourceId, String variablesPath) {

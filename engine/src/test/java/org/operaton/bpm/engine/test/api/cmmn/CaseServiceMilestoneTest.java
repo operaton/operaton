@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,8 +40,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 @ExtendWith(ProcessEngineTestExtension.class)
 class CaseServiceMilestoneTest {
 
-  protected final String DEFINITION_KEY = "oneMilestoneCase";
-  protected final String MILESTONE_KEY = "PI_Milestone_1";
+  static final String DEFINITION_KEY = "oneMilestoneCase";
+  static final String MILESTONE_KEY = "PI_Milestone_1";
 
   protected TaskService taskService;
   protected CaseService caseService;
@@ -107,7 +107,7 @@ class CaseServiceMilestoneTest {
   void testTerminate() {
     // given
     createCaseInstance(DEFINITION_KEY).getId();
-   
+
     String caseTaskId = queryCaseExecutionByActivityId(MILESTONE_KEY).getId();
 
     caseService

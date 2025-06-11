@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,7 +31,7 @@ import java.io.InputStream;
  */
 public class ParseCmmnModelRule implements BeforeEachCallback {
 
-  protected CmmnModelInstance CmmnModelInstance;
+  protected CmmnModelInstance cmmnModelInstance;
 
   @Override
   public void beforeEach(ExtensionContext context){
@@ -46,7 +46,7 @@ public class ParseCmmnModelRule implements BeforeEachCallback {
 
       InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(cmmnResourceName);
       try {
-        CmmnModelInstance = Cmmn.readModelFromStream(resourceAsStream);
+        cmmnModelInstance = Cmmn.readModelFromStream(resourceAsStream);
       } finally {
         IoUtil.closeSilently(resourceAsStream);
       }
@@ -54,7 +54,7 @@ public class ParseCmmnModelRule implements BeforeEachCallback {
   }
 
   public CmmnModelInstance getCmmnModel() {
-    return CmmnModelInstance;
+    return cmmnModelInstance;
   }
 
 }

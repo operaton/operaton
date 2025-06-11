@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.operaton.bpm.engine.impl.persistence.AbstractManager;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,13 +25,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.operaton.bpm.engine.impl.persistence.AbstractManager;
-
-
 /**
  * @author Tom Baeyens
  */
 public class IdentityInfoManager extends AbstractManager {
+  private static final String USER_ID = "userId";
+  private static final String KEY = "key";
+  private static final String TYPE = "type";
 
   public void deleteUserInfoByUserIdAndKey(String userId, String key) {
     IdentityInfoEntity identityInfoEntity = findUserInfoByUserIdAndKey(userId, key);
@@ -144,16 +146,16 @@ public class IdentityInfoManager extends AbstractManager {
 
   public IdentityInfoEntity findUserInfoByUserIdAndKey(String userId, String key) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("userId", userId);
-    parameters.put("key", key);
+    parameters.put(USER_ID, userId);
+    parameters.put(KEY, key);
     return (IdentityInfoEntity) getDbEntityManager().selectOne("selectIdentityInfoByUserIdAndKey", parameters);
   }
 
   @SuppressWarnings("unchecked")
   public List<String> findUserInfoKeysByUserIdAndType(String userId, String type) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("userId", userId);
-    parameters.put("type", type);
+    parameters.put(USER_ID, userId);
+    parameters.put(TYPE, type);
     return getDbEntityManager().selectList("selectIdentityInfoKeysByUserIdAndType", parameters);
   }
 

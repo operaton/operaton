@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,16 +23,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.util.CompareUtil;
-import org.junit.Test;
 
 /**
  * @author Filip Hrisafov
  */
-public class CompareUtilTest {
+class CompareUtilTest {
 
   @Test
-  public void testDateNotInAnAscendingOrder() {
+  void testDateNotInAnAscendingOrder() {
     Calendar calendar = Calendar.getInstance();
     calendar.set(2015, Calendar.MARCH, 15);
     Date first = calendar.getTime();
@@ -50,7 +50,7 @@ public class CompareUtilTest {
   }
 
   @Test
-  public void testIsNotContainedIn() {
+  void testIsNotContainedIn() {
     String element = "test";
     String [] values = {"test", "test1", "test2"};
     String [] values2 = {"test1", "test2"};
@@ -71,7 +71,7 @@ public class CompareUtilTest {
   }
 
   @Test
-  public void testIsContainedIn() {
+  void testIsContainedIn() {
     String element = "test";
     String [] values = {"test", "test1", "test2"};
     String [] values2 = {"test1", "test2"};

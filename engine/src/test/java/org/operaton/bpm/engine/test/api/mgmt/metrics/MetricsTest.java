@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -43,12 +42,12 @@ import org.operaton.bpm.model.bpmn.Bpmn;
  * @author Daniel Meyer
  *
  */
-public class MetricsTest {
+class MetricsTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension ENGINE_RULE = ProcessEngineExtension.builder().build();
+  protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension TEST_RULE = new ProcessEngineTestExtension(ENGINE_RULE);
+  ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
 
   protected RuntimeService runtimeService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -64,10 +63,10 @@ public class MetricsTest {
   }
 
   @BeforeEach
-  public void initMetrics() {
+  void initMetrics() {
     //clean up before start
     clearMetrics();
-    TEST_RULE.deploy(Bpmn.createExecutableProcess("testProcess")
+    testExtension.deploy(Bpmn.createExecutableProcess("testProcess")
         .operatonHistoryTimeToLive(180)
         .startEvent()
         .manualTask()
@@ -76,12 +75,12 @@ public class MetricsTest {
   }
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     clearMetrics();
   }
 
   @Test
-  public void testStartAndEndMetricsAreEqual() {
+  void testStartAndEndMetricsAreEqual() {
     // given
 
     //when
@@ -100,9 +99,9 @@ public class MetricsTest {
   }
 
   @Test
-  public void testEndMetricWithWaitState() {
+  void testEndMetricWithWaitState() {
     //given
-    TEST_RULE.deploy(Bpmn.createExecutableProcess("userProcess")
+    testExtension.deploy(Bpmn.createExecutableProcess("userProcess")
         .operatonHistoryTimeToLive(180)
         .startEvent()
         .userTask("Task")
@@ -126,8 +125,8 @@ public class MetricsTest {
     assertEquals(1, end);
 
     //when completing the task
-    String id = ENGINE_RULE.getTaskService().createTaskQuery().processDefinitionKey("userProcess").singleResult().getId();
-    ENGINE_RULE.getTaskService().complete(id);
+    String id = engineExtension.getTaskService().createTaskQuery().processDefinitionKey("userProcess").singleResult().getId();
+    engineExtension.getTaskService().complete(id);
 
     //then start and end is equal
     start = managementService.createMetricsQuery()
@@ -141,7 +140,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testDeleteMetrics() {
+  void testDeleteMetrics() {
 
     // given
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -160,8 +159,9 @@ public class MetricsTest {
     assertEquals(0l, managementService.createMetricsQuery()
             .sum());
   }
+
   @Test
-  public void testDeleteMetricsWithTimestamp() {
+  void testDeleteMetricsWithTimestamp() {
 
     // given
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -183,7 +183,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testDeleteMetricsWithTimestampBefore() {
+  void testDeleteMetricsWithTimestampBefore() {
 
     // given
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -204,7 +204,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testDeleteMetricsWithReporterId() {
+  void testDeleteMetricsWithReporterId() {
     // indicate that db metrics reporter is active (although it is not)
     processEngineConfiguration.setDbMetricsReporterActivate(true);
 
@@ -235,7 +235,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testReportNow() {
+  void testReportNow() {
     // indicate that db metrics reporter is active (although it is not)
     processEngineConfiguration.setDbMetricsReporterActivate(true);
 
@@ -254,7 +254,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testReportNowIfMetricsIsDisabled() {
+  void testReportNowIfMetricsIsDisabled() {
     boolean defaultIsMetricsEnabled = processEngineConfiguration.isMetricsEnabled();
 
     // given
@@ -276,7 +276,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testReportNowIfReporterIsNotActive() {
+  void testReportNowIfReporterIsNotActive() {
     boolean defaultIsMetricsEnabled = processEngineConfiguration.isMetricsEnabled();
     boolean defaultIsMetricsReporterActivate = processEngineConfiguration.isDbMetricsReporterActivate();
 
@@ -299,7 +299,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testQuery() {
+  void testQuery() {
     // given
     runtimeService.startProcessInstanceByKey("testProcess");
     processEngineConfiguration.getDbMetricsReporter().reportNow();
@@ -328,7 +328,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testQueryEndDateExclusive() {
+  void testQueryEndDateExclusive() {
     // given
     // note: dates should be exact seconds due to missing milliseconds precision on
     // older mysql versions
@@ -354,7 +354,7 @@ public class MetricsTest {
   }
 
   @Test
-  public void testReportWithReporterId() {
+  void testReportWithReporterId() {
     // indicate that db metrics reporter is active (although it is not)
     processEngineConfiguration.setDbMetricsReporterActivate(true);
 

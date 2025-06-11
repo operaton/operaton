@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class TaskMetricsTest {
+class TaskMetricsTest {
 
   protected static final String PROCESS_KEY = "process";
   protected static final BpmnModelInstance USER_TASK_PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
@@ -51,11 +51,13 @@ public class TaskMetricsTest {
       .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(config -> config.setTaskMetricsEnabled(true)).build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(config -> config.setTaskMetricsEnabled(true))
+      .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -63,13 +65,13 @@ public class TaskMetricsTest {
   protected TaskService taskService;
 
   @AfterEach
-  public void cleanUp() {
+  void cleanUp() {
     managementService.deleteTaskMetrics(null);
     testRule.deleteAllStandaloneTasks();
   }
 
   @Test
-  public void shouldDeleteTaskMetrics() {
+  void shouldDeleteTaskMetrics() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -82,7 +84,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldDeleteTaskMetricsWithTimestamp() {
+  void shouldDeleteTaskMetricsWithTimestamp() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -95,7 +97,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldNotDeleteTaskMetricsWithTimestampBefore() {
+  void shouldNotDeleteTaskMetricsWithTimestampBefore() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -108,7 +110,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldGetUniqueTaskWorkerCountForSameAssigneeOnDifferentTasksAsOne() {
+  void shouldGetUniqueTaskWorkerCountForSameAssigneeOnDifferentTasksAsOne() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -119,7 +121,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldGetUniqueTaskWorkerCountWithStartDateInclusive() {
+  void shouldGetUniqueTaskWorkerCountWithStartDateInclusive() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     ClockUtil.setCurrentTime(new Date(4000L));
@@ -133,7 +135,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldGetUniqueTaskWorkerCountWithEndDateExclusive() {
+  void shouldGetUniqueTaskWorkerCountWithEndDateExclusive() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     ClockUtil.setCurrentTime(new Date(4000L));
@@ -147,7 +149,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldGetUniqueTaskWorkerCountWithoutStartDate() {
+  void shouldGetUniqueTaskWorkerCountWithoutStartDate() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     // when
@@ -157,7 +159,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldGetUniqueTaskWorkerCountWithoutEndDate() {
+  void shouldGetUniqueTaskWorkerCountWithoutEndDate() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     // when
@@ -167,7 +169,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldGetUniqueTaskWorkerCountWithoutDates() {
+  void shouldGetUniqueTaskWorkerCountWithoutDates() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     // when
@@ -177,7 +179,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricWithAssignmentByTaskListener() {
+  void shouldCreateTaskMetricWithAssignmentByTaskListener() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_KEY)
         .operatonHistoryTimeToLive(180)
@@ -192,7 +194,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricWithAssignmentByOperatonAssigneeExtension() {
+  void shouldCreateTaskMetricWithAssignmentByOperatonAssigneeExtension() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     // when
@@ -203,7 +205,7 @@ public class TaskMetricsTest {
 
   @Test
   @Deployment
-  public void shouldCreateTaskMetricWithAssignmentByHumanPerformer() {
+  void shouldCreateTaskMetricWithAssignmentByHumanPerformer() {
     // given a model with human performer
     // when
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -212,7 +214,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricsWithMultipleAssignments() {
+  void shouldCreateTaskMetricsWithMultipleAssignments() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_KEY)
         .operatonHistoryTimeToLive(180)
@@ -229,7 +231,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricOnDelegation() {
+  void shouldCreateTaskMetricOnDelegation() {
     // given
     testRule.deploy(USER_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -241,7 +243,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricOnClaim() {
+  void shouldCreateTaskMetricOnClaim() {
     // given
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_KEY)
         .operatonHistoryTimeToLive(180)
@@ -258,7 +260,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricsWithinErrorMarginWithHigherLoadOfAssignments() {
+  void shouldCreateTaskMetricsWithinErrorMarginWithHigherLoadOfAssignments() {
     // given
     long taskWorkers = 3500L;
     long lowerErrorBoundary = Math.floorDiv((int)(taskWorkers * 90), 100);// 10% off is acceptable
@@ -281,7 +283,7 @@ public class TaskMetricsTest {
   // Standalone Tasks
 
   @Test
-  public void shouldNotCreateTaskMetricForTransientStandaloneTask() {
+  void shouldNotCreateTaskMetricForTransientStandaloneTask() {
     // given
     Task newTask = taskService.newTask();
     // when
@@ -291,7 +293,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricWhenInsertingStandaloneTask() {
+  void shouldCreateTaskMetricWhenInsertingStandaloneTask() {
     // given
     Task newTask = taskService.newTask();
     newTask.setAssignee("kermit");
@@ -302,7 +304,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricWhenUpdatingStandaloneTask() {
+  void shouldCreateTaskMetricWhenUpdatingStandaloneTask() {
     // given
     Task newTask = taskService.newTask();
     taskService.saveTask(newTask);
@@ -314,7 +316,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricWhenUpdatingStandaloneTaskInCommandContext() {
+  void shouldCreateTaskMetricWhenUpdatingStandaloneTaskInCommandContext() {
     // given
     Task newTask = taskService.newTask();
     taskService.saveTask(newTask);
@@ -330,7 +332,7 @@ public class TaskMetricsTest {
   }
 
   @Test
-  public void shouldCreateTaskMetricForAssignmentOnStandaloneTask() {
+  void shouldCreateTaskMetricForAssignmentOnStandaloneTask() {
     // given
     Task newTask = taskService.newTask();
     taskService.saveTask(newTask);

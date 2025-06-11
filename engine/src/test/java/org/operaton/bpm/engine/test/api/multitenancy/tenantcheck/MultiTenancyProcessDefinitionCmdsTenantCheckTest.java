@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,7 +45,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author kristin.polenz
  */
-public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
+class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
 
@@ -53,9 +53,9 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   protected static final String BPMN_PROCESS_DIAGRAM = "org/operaton/bpm/engine/test/api/multitenancy/testProcess.png";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected HistoryService historyService;
@@ -66,14 +66,14 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   protected String processDefinitionId;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deployForTenant(TENANT_ONE, BPMN_PROCESS_MODEL, BPMN_PROCESS_DIAGRAM);
 
     processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
   }
 
   @Test
-  public void failToGetProcessModelNoAuthenticatedTenants() {
+  void failToGetProcessModelNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -83,7 +83,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getProcessModelWithAuthenticatedTenant() {
+  void getProcessModelWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getProcessModel(processDefinitionId);
@@ -92,7 +92,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getProcessModelDisabledTenantCheck() {
+  void getProcessModelDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -102,7 +102,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetProcessDiagramNoAuthenticatedTenants() {
+  void failToGetProcessDiagramNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -112,7 +112,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getProcessDiagramWithAuthenticatedTenant() {
+  void getProcessDiagramWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getProcessDiagram(processDefinitionId);
@@ -121,7 +121,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getProcessDiagramDisabledTenantCheck() {
+  void getProcessDiagramDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -131,7 +131,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetProcessDiagramLayoutNoAuthenticatedTenants() {
+  void failToGetProcessDiagramLayoutNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -141,7 +141,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getProcessDiagramLayoutWithAuthenticatedTenant() {
+  void getProcessDiagramLayoutWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     DiagramLayout diagramLayout = repositoryService.getProcessDiagramLayout(processDefinitionId);
@@ -150,7 +150,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getProcessDiagramLayoutDisabledTenantCheck() {
+  void getProcessDiagramLayoutDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -160,7 +160,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetProcessDefinitionNoAuthenticatedTenants() {
+  void failToGetProcessDefinitionNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -170,7 +170,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getProcessDefinitionWithAuthenticatedTenant() {
+  void getProcessDefinitionWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     ProcessDefinition definition = repositoryService.getProcessDefinition(processDefinitionId);
@@ -179,7 +179,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getProcessDefinitionDisabledTenantCheck() {
+  void getProcessDefinitionDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -189,7 +189,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToGetBpmnModelInstanceNoAuthenticatedTenants() {
+  void failToGetBpmnModelInstanceNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -199,7 +199,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getBpmnModelInstanceWithAuthenticatedTenant() {
+  void getBpmnModelInstanceWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     BpmnModelInstance modelInstance = repositoryService.getBpmnModelInstance(processDefinitionId);
@@ -208,7 +208,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void getBpmnModelInstanceDisabledTenantCheck() {
+  void getBpmnModelInstanceDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -218,7 +218,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteProcessDefinitionNoAuthenticatedTenant() {
+  void failToDeleteProcessDefinitionNoAuthenticatedTenant() {
     //given deployment with a process definition
     //and user with no tenant authentication
     identityService.setAuthentication("user", null, null);
@@ -231,7 +231,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionWithAuthenticatedTenant() {
+  void testDeleteProcessDefinitionWithAuthenticatedTenant() {
     //given deployment with two process definitions
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml");
     ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId());
@@ -249,7 +249,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteCascadeProcessDefinitionWithAuthenticatedTenant() {
+  void testDeleteCascadeProcessDefinitionWithAuthenticatedTenant() {
     //given deployment with a process definition and process instance
     BpmnModelInstance bpmnModel = Bpmn.createExecutableProcess("process").startEvent().userTask().endEvent().done();
     testRule.deployForTenant(TENANT_ONE, bpmnModel);
@@ -274,7 +274,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionDisabledTenantCheck() {
+  void testDeleteProcessDefinitionDisabledTenantCheck() {
     //given deployment with two process definitions
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/repository/twoProcesses.bpmn20.xml");
     //tenant check disabled
@@ -294,7 +294,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteCascadeProcessDefinitionDisabledTenantCheck() {
+  void testDeleteCascadeProcessDefinitionDisabledTenantCheck() {
     //given deployment with a process definition and process instances
     BpmnModelInstance bpmnModel = Bpmn.createExecutableProcess("process").startEvent().userTask().endEvent().done();
     testRule.deployForTenant(TENANT_ONE, bpmnModel);
@@ -320,7 +320,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteProcessDefinitionsByKeyNoAuthenticatedTenant() {
+  void failToDeleteProcessDefinitionsByKeyNoAuthenticatedTenant() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -338,7 +338,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKeyForAllTenants() {
+  void testDeleteProcessDefinitionsByKeyForAllTenants() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -356,7 +356,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKeyWithAuthenticatedTenant() {
+  void testDeleteProcessDefinitionsByKeyWithAuthenticatedTenant() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -377,7 +377,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteCascadeProcessDefinitionsByKeyWithAuthenticatedTenant() {
+  void testDeleteCascadeProcessDefinitionsByKeyWithAuthenticatedTenant() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -402,7 +402,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByKeyDisabledTenantCheck() {
+  void testDeleteProcessDefinitionsByKeyDisabledTenantCheck() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -424,7 +424,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteCascadeProcessDefinitionsByKeyDisabledTenantCheck() {
+  void testDeleteCascadeProcessDefinitionsByKeyDisabledTenantCheck() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -449,7 +449,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void failToDeleteProcessDefinitionsByIdsNoAuthenticatedTenant() {
+  void failToDeleteProcessDefinitionsByIdsNoAuthenticatedTenant() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -469,7 +469,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByIdsWithAuthenticatedTenant() {
+  void testDeleteProcessDefinitionsByIdsWithAuthenticatedTenant() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -491,7 +491,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteCascadeProcessDefinitionsByIdsWithAuthenticatedTenant() {
+  void testDeleteCascadeProcessDefinitionsByIdsWithAuthenticatedTenant() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -517,7 +517,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteProcessDefinitionsByIdsDisabledTenantCheck() {
+  void testDeleteProcessDefinitionsByIdsDisabledTenantCheck() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -540,7 +540,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void testDeleteCascadeProcessDefinitionsByIdsDisabledTenantCheck() {
+  void testDeleteCascadeProcessDefinitionsByIdsDisabledTenantCheck() {
     // given
     for (int i = 0; i < 3; i++) {
       deployProcessDefinitionWithTenant();
@@ -566,7 +566,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveWithAuthenticatedTenant() {
+  void updateHistoryTimeToLiveWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitionId, 6);
@@ -578,7 +578,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveDisabledTenantCheck() {
+  void updateHistoryTimeToLiveDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -591,7 +591,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
   }
 
   @Test
-  public void updateHistoryTimeToLiveNoAuthenticatedTenants() {
+  void updateHistoryTimeToLiveNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then

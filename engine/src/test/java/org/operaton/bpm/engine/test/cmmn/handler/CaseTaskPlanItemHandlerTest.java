@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -60,21 +60,21 @@ import org.operaton.bpm.model.cmmn.instance.RequiredRule;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonIn;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonOut;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
+class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   protected CaseTask caseTask;
   protected PlanItem planItem;
   protected CaseTaskItemHandler handler = new CaseTaskItemHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     caseTask = createElement(casePlanModel, "aCaseTask", CaseTask.class);
 
     planItem = createElement(casePlanModel, "PI_aCaseTask", PlanItem.class);
@@ -82,7 +82,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCaseTaskActivityName() {
+  void testCaseTaskActivityName() {
     // given:
     // the caseTask has a name "A CaseTask"
     String name = "A CaseTask";
@@ -96,7 +96,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testPlanItemActivityName() {
+  void testPlanItemActivityName() {
     // given:
     // the caseTask has a name "A CaseTask"
     String name = "A CaseTask";
@@ -116,7 +116,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testCaseTaskDescription() {
+  void testCaseTaskDescription() {
     // given
     String description = "This is a caseTask";
     caseTask.setDescription(description);
@@ -130,7 +130,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void testPlanItemDescription() {
+  void testPlanItemDescription() {
     // given
     String description = "This is a planItem";
     planItem.setDescription(description);
@@ -143,7 +143,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCaseTaskActivityType() {
+  void testCaseTaskActivityType() {
     // given
 
     // when
@@ -155,7 +155,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testActivityBehavior() {
+  void testActivityBehavior() {
     // given: a planItem
 
     // when
@@ -167,7 +167,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsTrueProperty() {
+  void testIsBlockingEqualsTrueProperty() {
     // given: a caseTask with isBlocking = true (defaultValue)
 
     // when
@@ -179,7 +179,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testIsBlockingEqualsFalseProperty() {
+  void testIsBlockingEqualsFalseProperty() {
     // given:
     // a caseTask with isBlocking = false
     caseTask.setIsBlocking(false);
@@ -193,7 +193,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithoutParent() {
+  void testWithoutParent() {
     // given: a planItem
 
     // when
@@ -204,7 +204,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testWithParent() {
+  void testWithParent() {
     // given:
     // a new activity as parent
     CmmnCaseDefinition parent = new CmmnCaseDefinition("aParentActivity");
@@ -219,7 +219,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCallableElement() {
+  void testCallableElement() {
     // given: a plan item
 
     // when
@@ -233,7 +233,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCaseRefConstant() {
+  void testCaseRefConstant() {
     // given:
     String caseRef = "aCaseToCall";
     caseTask.setCase(caseRef);
@@ -252,7 +252,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testCaseRefExpression() {
+  void testCaseRefExpression() {
     // given:
     String caseRef = "${aCaseToCall}";
     caseTask.setCase(caseRef);
@@ -271,7 +271,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testBinding() {
+  void testBinding() {
     // given:
     CallableElementBinding caseBinding = CallableElementBinding.LATEST;
     caseTask.setOperatonCaseBinding(caseBinding.getValue());
@@ -288,7 +288,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testVersionConstant() {
+  void testVersionConstant() {
     // given:
     String caseVersion = "2";
     caseTask.setOperatonCaseVersion(caseVersion);
@@ -306,7 +306,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testVersionExpression() {
+  void testVersionExpression() {
     // given:
     String caseVersion = "${aVersion}";
     caseTask.setOperatonCaseVersion(caseVersion);
@@ -325,7 +325,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testBusinessKeyConstant() {
+  void testBusinessKeyConstant() {
     // given:
     String businessKey = "myBusinessKey";
     ExtensionElements extensionElements = addExtensionElements(caseTask);
@@ -345,7 +345,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testBusinessKeyExpression() {
+  void testBusinessKeyExpression() {
     // given:
     String businessKey = "${myBusinessKey}";
     ExtensionElements extensionElements = addExtensionElements(caseTask);
@@ -366,7 +366,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputs() {
+  void testInputs() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(caseTask);
     OperatonIn variablesElement = createElement(extensionElements, null, OperatonIn.class);
@@ -392,7 +392,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputVariables() {
+  void testInputVariables() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(caseTask);
     OperatonIn variablesElement = createElement(extensionElements, null, OperatonIn.class);
@@ -412,7 +412,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputSource() {
+  void testInputSource() {
     // given:
     String source = "a";
     ExtensionElements extensionElements = addExtensionElements(caseTask);
@@ -436,7 +436,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputSourceExpression() {
+  void testInputSourceExpression() {
     // given:
     String source = "${a}";
     ExtensionElements extensionElements = addExtensionElements(caseTask);
@@ -461,7 +461,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testInputTarget() {
+  void testInputTarget() {
     // given:
     String target = "b";
     ExtensionElements extensionElements = addExtensionElements(caseTask);
@@ -483,7 +483,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputs() {
+  void testOutputs() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(caseTask);
     OperatonOut variablesElement = createElement(extensionElements, null, OperatonOut.class);
@@ -509,7 +509,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputVariables() {
+  void testOutputVariables() {
     // given:
     ExtensionElements extensionElements = addExtensionElements(caseTask);
     OperatonOut variablesElement = createElement(extensionElements, null, OperatonOut.class);
@@ -529,7 +529,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputSource() {
+  void testOutputSource() {
     // given:
     String source = "a";
     ExtensionElements extensionElements = addExtensionElements(caseTask);
@@ -553,7 +553,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputSourceExpression() {
+  void testOutputSourceExpression() {
     // given:
     String source = "${a}";
     ExtensionElements extensionElements = addExtensionElements(caseTask);
@@ -578,7 +578,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testOutputTarget() {
+  void testOutputTarget() {
     // given:
     String target = "b";
     ExtensionElements extensionElements = addExtensionElements(caseTask);
@@ -600,7 +600,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testExitCriteria() {
+  void testExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -635,7 +635,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleExitCriteria() {
+  void testMultipleExitCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -683,7 +683,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteria() {
+  void testEntryCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -718,7 +718,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testMultipleEntryCriteria() {
+  void testMultipleEntryCriteria() {
     // given
 
     // create first sentry containing ifPart
@@ -766,7 +766,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testEntryCriteriaAndExitCriteria() {
+  void testEntryCriteriaAndExitCriteria() {
     // given
 
     // create sentry containing ifPart
@@ -804,7 +804,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRule() {
+  void testManualActivationRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     ManualActivationRule manualActivationRule = createElement(itemControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -822,7 +822,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testManualActivationRuleByDefaultPlanItemControl() {
+  void testManualActivationRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(caseTask, "ItemControl_1", DefaultControl.class);
     ManualActivationRule manualActivationRule = createElement(defaultControl, "ManualActivationRule_1", ManualActivationRule.class);
@@ -840,7 +840,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRule() {
+  void testRequiredRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RequiredRule requiredRule = createElement(itemControl, "RequiredRule_1", RequiredRule.class);
@@ -858,7 +858,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRequiredRuleByDefaultPlanItemControl() {
+  void testRequiredRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(caseTask, "ItemControl_1", DefaultControl.class);
     RequiredRule requiredRule = createElement(defaultControl, "RequiredRule_1", RequiredRule.class);
@@ -876,7 +876,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleStandardEvents() {
+  void testRepetitionRuleStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -898,7 +898,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
+  void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(caseTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
@@ -920,7 +920,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleCustomStandardEvents() {
+  void testRepetitionRuleCustomStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
     RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
@@ -943,7 +943,7 @@ public class CaseTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
-  public void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
+  void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(caseTask, "DefaultControl_1", DefaultControl.class);
     RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);

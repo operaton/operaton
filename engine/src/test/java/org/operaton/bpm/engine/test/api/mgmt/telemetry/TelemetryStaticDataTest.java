@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,39 +23,40 @@ import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 
-@RequiredDatabase(includes = DbSqlSessionFactory.H2) // it's h2-specific test
-public class TelemetryStaticDataTest {
+// it's h2-specific test
+@RequiredDatabase(includes = DbSqlSessionFactory.H2)
+class TelemetryStaticDataTest {
 
   @Test
-  public void shouldValidateWildFlyVendor() {
+  void shouldValidateWildFlyVendor() {
     // given
     ApplicationServerImpl server = new ApplicationServerImpl("WildFly Full 19.0.0.Final (WildFly Core 11.0.0.Final) - 2.0.30.Final");
     assertThat(server.getVendor()).isEqualTo("WildFly");
   }
 
   @Test
-  public void shouldValidateJbossVendor() {
+  void shouldValidateJbossVendor() {
     // given
     ApplicationServerImpl server = new ApplicationServerImpl("JBoss EAP 7.2.0.GA (WildFly Core 6.0.11.Final-redhat-00001) - 2.0.15.Final-redhat-00001");
     assertThat(server.getVendor()).isEqualTo("JBoss EAP");
   }
 
   @Test
-  public void shouldValidateTomcatVendor() {
+  void shouldValidateTomcatVendor() {
     // given
     ApplicationServerImpl server = new ApplicationServerImpl("Apache Tomcat/9.0.36");
     assertThat(server.getVendor()).isEqualTo("Apache Tomcat");
   }
 
   @Test
-  public void shouldValidateWebLogicVendor() {
+  void shouldValidateWebLogicVendor() {
     // given
     ApplicationServerImpl server = new ApplicationServerImpl("WebLogic Server 12.2.1.0.0 Tue Oct 6 10:05:47 PDT 2015 1721936 WebLogic JAX-RS 2.0 Portable Server / Jersey 2.x integration module");
     assertThat(server.getVendor()).isEqualTo("WebLogic Server");
   }
 
   @Test
-  public void shouldValidateWebSphereVendor() {
+  void shouldValidateWebSphereVendor() {
     // given
     ApplicationServerImpl server = new ApplicationServerImpl("IBM WebSphere Application Server/8.5");
     assertThat(server.getVendor()).isEqualTo("IBM WebSphere Application Server");

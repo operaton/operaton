@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -98,10 +98,12 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkUpdateProcessDefinitionByKey(String processDefinitionKey) {
+    // nothing to do
   }
 
   @Override
   public void checkUpdateProcessDefinitionSuspensionStateByKey(String processDefinitionKey) {
+    // nothing to do
   }
 
   @Override
@@ -116,9 +118,8 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkDeleteProcessDefinitionByKey(String processDefinitionKey) {
+    // nothing to do
   }
-
-
 
   @Override
   public void checkUpdateProcessInstanceByProcessDefinitionId(String processDefinitionId) {
@@ -166,10 +167,12 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkUpdateProcessInstanceByProcessDefinitionKey(String processDefinitionKey) {
+    // nothing to do
   }
 
   @Override
   public void checkUpdateProcessInstanceSuspensionStateByProcessDefinitionKey(String processDefinitionKey) {
+    // nothing to do
   }
 
   @Override
@@ -277,6 +280,7 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkCreateBatch(Permission permission) {
+    // nothing to do
   }
 
   @Override
@@ -309,10 +313,12 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkReadHistoricBatch() {
+    // nothing to do
   }
 
   @Override
   public void checkCreateDeployment() {
+    // nothing to do
   }
 
   @Override
@@ -358,6 +364,7 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkCreateTask() {
+    // nothing to do
   }
 
   @Override
@@ -520,70 +527,87 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkReadDiagnosticsData() {
+    // nothing to do
   }
 
   @Override
   public void checkReadHistoryLevel() {
+    // nothing to do
   }
 
   @Override
   public void checkReadTableCount() {
+    // nothing to do
   }
 
   @Override
   public void checkReadTableName() {
+    // nothing to do
   }
 
   @Override
   public void checkReadTableMetaData() {
+    // nothing to do
   }
 
   @Override
   public void checkReadProperties() {
+    // nothing to do
   }
 
   @Override
   public void checkSetProperty() {
+    // nothing to do
   }
 
   @Override
   public void checkDeleteProperty() {
+    // nothing to do
   }
 
   @Override
   public void checkRegisterProcessApplication() {
+    // nothing to do
   }
 
   @Override
   public void checkUnregisterProcessApplication() {
+    // nothing to do
   }
 
   @Override
   public void checkReadRegisteredDeployments() {
+    // nothing to do
   }
 
   @Override
   public void checkReadProcessApplicationForDeployment() {
+    // nothing to do
   }
 
   @Override
   public void checkRegisterDeployment() {
+    // nothing to do
   }
 
   @Override
   public void checkUnregisterDeployment() {
+    // nothing to do
   }
 
   @Override
   public void checkDeleteMetrics() {
+    // nothing to do
   }
 
   @Override
   public void checkDeleteTaskMetrics() {
+    // nothing to do
   }
 
   @Override
   public void checkReadSchemaLog() {
+    // nothing to do
   }
 
   // helper //////////////////////////////////////////////////

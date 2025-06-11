@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Deivarayan Azhagappan
  *
  */
-public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
+class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -51,15 +51,16 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   protected static StaticTenantIdTestProvider tenantIdProvider;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator(configuration -> {
         tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
         configuration.setTenantIdProvider(tenantIdProvider);
       })
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected ManagementService managementService;
@@ -79,7 +80,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
     .done();
 
   @Test
-  public void activeProcessInstancesCountWithNoAuthenticatedTenant() {
+  void activeProcessInstancesCountWithNoAuthenticatedTenant() {
 
     testRule.deploy(oneTaskProcess);
 
@@ -99,7 +100,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void activeProcessInstancesCountWithAuthenticatedTenant() {
+  void activeProcessInstancesCountWithAuthenticatedTenant() {
 
     testRule.deploy(oneTaskProcess);
     
@@ -119,7 +120,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void activeProcessInstancesCountWithDisabledTenantCheck() {
+  void activeProcessInstancesCountWithDisabledTenantCheck() {
 
     testRule.deploy(oneTaskProcess);
     
@@ -138,7 +139,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void activeProcessInstancesCountWithMultipleAuthenticatedTenants() {
+  void activeProcessInstancesCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(oneTaskProcess);
 
@@ -158,7 +159,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithWithNoAuthenticatedTenant() {
+  void failedJobsCountWithWithNoAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
     
@@ -181,7 +182,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithWithDisabledTenantCheck() {
+  void failedJobsCountWithWithDisabledTenantCheck() {
 
     testRule.deploy(failingProcess);
     
@@ -205,7 +206,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithAuthenticatedTenant() {
+  void failedJobsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -227,7 +228,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithMultipleAuthenticatedTenants() {
+  void failedJobsCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(failingProcess);
 
@@ -249,7 +250,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithNoAuthenticatedTenant() {
+  void incidentsCountWithNoAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -274,7 +275,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithDisabledTenantCheck() {
+  void incidentsCountWithDisabledTenantCheck() {
 
     testRule.deploy(failingProcess);
 
@@ -300,7 +301,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithAuthenticatedTenant() {
+  void incidentsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -325,7 +326,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithMultipleAuthenticatedTenants() {
+  void incidentsCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(failingProcess);
 
@@ -349,7 +350,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithIncidentTypeAndAuthenticatedTenant() {
+  void incidentsCountWithIncidentTypeAndAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -374,7 +375,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
   }
 
   @Test
-  public void instancesFailedJobsAndIncidentsCountWithAuthenticatedTenant() {
+  void instancesFailedJobsAndIncidentsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 

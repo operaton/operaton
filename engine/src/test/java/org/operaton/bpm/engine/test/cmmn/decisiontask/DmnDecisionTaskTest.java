@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -32,27 +32,27 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class DmnDecisionTaskTest extends CmmnTest {
+class DmnDecisionTaskTest extends CmmnTest {
 
-  public static final String CMMN_CALL_DECISION_CONSTANT = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstant.cmmn";
-  public static final String CMMN_CALL_DECISION_CONSTANT_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstantWithManualActiovation.cmmn";
-  public static final String CMMN_CALL_DECISION_EXPRESSION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithDollar.cmmn";
-  public static final String CMMN_CALL_DECISION_EXPRESSION_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithDollarWithManualActiovation.cmmn";
+  static final String CMMN_CALL_DECISION_CONSTANT = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstant.cmmn";
+  static final String CMMN_CALL_DECISION_CONSTANT_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstantWithManualActiovation.cmmn";
+  static final String CMMN_CALL_DECISION_EXPRESSION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithDollar.cmmn";
+  static final String CMMN_CALL_DECISION_EXPRESSION_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithDollarWithManualActiovation.cmmn";
 
-  public static final String DECISION_OKAY_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testDecisionOkay.dmn11.xml";
-  public static final String DECISION_NOT_OKAY_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testDecisionNotOkay.dmn11.xml";
-  public static final String DECISION_POJO_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testPojo.dmn11.xml";
+  static final String DECISION_OKAY_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testDecisionOkay.dmn11.xml";
+  static final String DECISION_NOT_OKAY_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testDecisionNotOkay.dmn11.xml";
+  static final String DECISION_POJO_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testPojo.dmn11.xml";
 
-  public static final String DECISION_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/engine/test/dmn/deployment/DecisionWithLiteralExpression.dmn";
-  public static final String DRD_DISH_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
+  static final String DECISION_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/engine/test/dmn/deployment/DecisionWithLiteralExpression.dmn";
+  static final String DRD_DISH_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
 
-  protected final String CASE_KEY = "case";
-  protected final String DECISION_TASK = "PI_DecisionTask_1";
-  protected final String DECISION_KEY = "testDecision";
+  static final String CASE_KEY = "case";
+  static final String DECISION_TASK = "PI_DecisionTask_1";
+  static final String DECISION_KEY = "testDecision";
 
-  @Deployment(resources = {CMMN_CALL_DECISION_CONSTANT, DECISION_OKAY_DMN })
+  @Deployment(resources = {CMMN_CALL_DECISION_CONSTANT, DECISION_OKAY_DMN})
   @Test
-  public void testCallDecisionAsConstant() {
+  void testCallDecisionAsConstant() {
     // given
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
 
@@ -64,9 +64,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
   @Deployment(resources = {
       CMMN_CALL_DECISION_EXPRESSION,
       DECISION_OKAY_DMN
-    })
+  })
   @Test
-  public void testCallDecisionAsExpressionStartsWithDollar() {
+  void testCallDecisionAsExpressionStartsWithDollar() {
     // given
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY, Variables.createVariables().putValue("testDecision", "testDecision"));
 
@@ -78,9 +78,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithHash.cmmn",
       DECISION_OKAY_DMN
-    })
+  })
   @Test
-  public void testCallDecisionAsExpressionStartsWithHash() {
+  void testCallDecisionAsExpressionStartsWithHash() {
     // given
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY, Variables.createVariables().putValue("testDecision", "testDecision"));
 
@@ -92,9 +92,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallLatestDecision.cmmn",
       DECISION_OKAY_DMN
-    })
+  })
   @Test
-  public void testCallLatestCase() {
+  void testCallLatestCase() {
     // given
     String deploymentId = repositoryService.createDeployment()
         .addClasspathResource(DECISION_NOT_OKAY_DMN)
@@ -113,9 +113,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionByDeployment.cmmn",
       DECISION_OKAY_DMN
-    })
+  })
   @Test
-  public void testCallDecisionByDeployment() {
+  void testCallDecisionByDeployment() {
     // given
     String deploymentId = repositoryService.createDeployment()
         .addClasspathResource(DECISION_NOT_OKAY_DMN)
@@ -134,9 +134,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionByVersion.cmmn",
       DECISION_OKAY_DMN
-    })
+  })
   @Test
-  public void testCallDecisionByVersion() {
+  void testCallDecisionByVersion() {
     // given
     String deploymentId = repositoryService.createDeployment()
         .addClasspathResource(DECISION_NOT_OKAY_DMN)
@@ -155,9 +155,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionByVersionAsExpressionStartsWithDollar.cmmn",
       DECISION_OKAY_DMN
-    })
+  })
   @Test
-  public void testCallDecisionByVersionAsExpressionStartsWithDollar() {
+  void testCallDecisionByVersionAsExpressionStartsWithDollar() {
     // given
     String deploymentId = repositoryService.createDeployment()
         .addClasspathResource(DECISION_NOT_OKAY_DMN)
@@ -176,9 +176,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionByVersionAsExpressionStartsWithHash.cmmn",
       DECISION_OKAY_DMN
-    })
+  })
   @Test
-  public void testCallDecisionByVersionAsExpressionStartsWithHash() {
+  void testCallDecisionByVersionAsExpressionStartsWithHash() {
     // given
     String deploymentId = repositoryService.createDeployment()
         .addClasspathResource(DECISION_NOT_OKAY_DMN)
@@ -196,7 +196,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
 
   @Deployment(resources = CMMN_CALL_DECISION_CONSTANT_WITH_MANUAL_ACTIVATION)
   @Test
-  public void testDecisionNotFound() {
+  void testDecisionNotFound() {
     // given
     createCaseInstanceByKey(CASE_KEY);
     String decisionTaskId = queryCaseExecutionByActivityId(DECISION_TASK).getId();
@@ -215,9 +215,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
   @Deployment(resources = {
       CMMN_CALL_DECISION_CONSTANT,
       DECISION_POJO_DMN
-    })
+  })
   @Test
-  public void testPojo() {
+  void testPojo() {
     // given
     VariableMap variables = Variables.createVariables()
       .putValue("pojo", new TestPojo("okay", 13.37));
@@ -226,9 +226,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
     assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
   }
 
-  @Deployment(resources = { CMMN_CALL_DECISION_CONSTANT, DECISION_OKAY_DMN })
+  @Deployment(resources = {CMMN_CALL_DECISION_CONSTANT, DECISION_OKAY_DMN})
   @Test
-  public void testIgnoreNonBlockingFlag() {
+  void testIgnoreNonBlockingFlag() {
     // given
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
 
@@ -237,9 +237,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
     assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
   }
 
-  @Deployment( resources = { CMMN_CALL_DECISION_EXPRESSION_WITH_MANUAL_ACTIVATION, DECISION_LITERAL_EXPRESSION_DMN} )
+  @Deployment(resources = {CMMN_CALL_DECISION_EXPRESSION_WITH_MANUAL_ACTIVATION, DECISION_LITERAL_EXPRESSION_DMN})
   @Test
-  public void testCallDecisionWithLiteralExpression() {
+  void testCallDecisionWithLiteralExpression() {
     // given
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY, Variables.createVariables()
         .putValue("testDecision", "decisionLiteralExpression")
@@ -258,9 +258,9 @@ public class DmnDecisionTaskTest extends CmmnTest {
     assertThat(getDecisionResult(caseInstance)).isEqualTo(5);
   }
 
-  @Deployment(resources = { CMMN_CALL_DECISION_EXPRESSION, DRD_DISH_RESOURCE })
+  @Deployment(resources = {CMMN_CALL_DECISION_EXPRESSION, DRD_DISH_RESOURCE})
   @Test
-  public void testCallDecisionWithRequiredDecisions() {
+  void testCallDecisionWithRequiredDecisions() {
     // given
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY, Variables.createVariables()
         .putValue("testDecision", "dish-decision")

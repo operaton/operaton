@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.client.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.util.Timeout;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.UrlResolver;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.mockito.ArgumentCaptor;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 
 class ExternalTaskClientBuilderImplTest {
 
@@ -61,6 +62,43 @@ class ExternalTaskClientBuilderImplTest {
         client.stop();
       }
     }
+  }
+
+  @Test
+ void testCustomBaseUrlResolver() {
+    // given
+    var expectedBaseUrl = "expectedBaseUrl";
+    TestUrlResolver testUrlResolver = new TestUrlResolver(expectedBaseUrl);
+
+    // when
+    var clientBuilder = new ExternalTaskClientBuilderImpl();
+    clientBuilder.urlResolver(testUrlResolver);
+    clientBuilder.build();
+
+    // then
+    assertThat(spy(clientBuilder).engineClient.getBaseUrl()).isEqualTo(expectedBaseUrl);
+  }
+
+  static class TestUrlResolver implements UrlResolver {
+    final String baseUrl;
+
+    public TestUrlResolver(final String baseURl) {
+      this.baseUrl = baseURl;
+    }
+
+    public String getBaseUrl() {
+      return baseUrl;
+    }
+  }
+
+  @Test
+  void testBuilderWithUnsetBaseUrl() {
+    // given unbuilt builder
+    ExternalTaskClientBuilderImpl builder = new ExternalTaskClientBuilderImpl();
+
+    // when getting base url and url resolver, then they are correctly initialized
+    assertThat(builder.getBaseUrl()).isNull();
+    assertThat(builder.urlResolver).isNotNull();
   }
 
 }

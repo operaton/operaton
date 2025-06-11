@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,31 +44,28 @@ import org.operaton.bpm.model.bpmn.Bpmn;
  * @author Tom Baeyens
  * @author Thorben Lindhauer
  */
-public class JobExecutorCmdExceptionTest {
+class JobExecutorCmdExceptionTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
-    .cacheForConfigurationResource(false)
-    .build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected TweetExceptionHandler tweetExceptionHandler = new TweetExceptionHandler();
   protected TweetNestedCommandExceptionHandler nestedCommandExceptionHandler = new TweetNestedCommandExceptionHandler();
-  
+
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;
   protected RuntimeService runtimeService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processEngineConfiguration.getJobHandlers().put(tweetExceptionHandler.getType(), tweetExceptionHandler);
     processEngineConfiguration.getJobHandlers().put(nestedCommandExceptionHandler.getType(), nestedCommandExceptionHandler);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     processEngineConfiguration.getJobHandlers().remove(tweetExceptionHandler.getType());
     processEngineConfiguration.getJobHandlers().remove(nestedCommandExceptionHandler.getType());
     managementService.createJobQuery().active().list().forEach(job -> managementService.deleteJob(job.getId()));
@@ -76,7 +73,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testJobCommandsWith2Exceptions() {
+  void testJobCommandsWith2Exceptions() {
     // create a job
     createJob(TweetExceptionHandler.TYPE);
 
@@ -89,7 +86,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testJobCommandsWith3Exceptions() {
+  void testJobCommandsWith3Exceptions() {
     // set the exceptionsRemaining to 3 so that
     // the created job will fail 3 times and a failed
     // job exists
@@ -108,7 +105,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testMultipleFailingJobs() {
+  void testMultipleFailingJobs() {
     // set the exceptionsRemaining to 600 so that
     // each created job will fail 3 times and 40 failed
     // job exists
@@ -133,7 +130,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testJobCommandsWithNestedFailingCommand() {
+  void testJobCommandsWithNestedFailingCommand() {
     // create a job
     createJob(TweetNestedCommandExceptionHandler.TYPE);
 
@@ -161,9 +158,9 @@ public class JobExecutorCmdExceptionTest {
     assertThat(job.getRetries()).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/jobFailingOnFlush.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/jobFailingOnFlush.bpmn20.xml")
   @Test
-  public void testJobRetriesDecrementedOnFailedFlush() {
+  void testJobRetriesDecrementedOnFailedFlush() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -184,7 +181,7 @@ public class JobExecutorCmdExceptionTest {
   }
 
   @Test
-  public void testFailingTransactionListener() {
+  void testFailingTransactionListener() {
 
    testRule.deploy(Bpmn.createExecutableProcess("testProcess")
         .startEvent()

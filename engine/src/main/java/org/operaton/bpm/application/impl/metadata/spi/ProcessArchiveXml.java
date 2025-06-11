@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,27 +32,27 @@ public interface ProcessArchiveXml {
 
   /** Indicates whether the undeployment of the process archive should trigger deleting the process engine deployment.
    * If the process engine deployment is deleted, all running and historic process instances are removed as well. */
-  public static final String PROP_IS_DELETE_UPON_UNDEPLOY = "isDeleteUponUndeploy";
+  String PROP_IS_DELETE_UPON_UNDEPLOY = "isDeleteUponUndeploy";
 
   /** Indicates whether the classloader should be scanned for process definitions. */
-  public static final String PROP_IS_SCAN_FOR_PROCESS_DEFINITIONS = "isScanForProcessDefinitions";
+  String PROP_IS_SCAN_FOR_PROCESS_DEFINITIONS = "isScanForProcessDefinitions";
 
   /** Indicates whether old versions of the deployment should be resumed.
    * If this property is not set, the default value is used: true. */
-  public static final String PROP_IS_RESUME_PREVIOUS_VERSIONS = "isResumePreviousVersions";
+  String PROP_IS_RESUME_PREVIOUS_VERSIONS = "isResumePreviousVersions";
 
   /**
    * Indicates which previous deployments should be resumed by this deployment.
    * Can be any of the options in {@link ResumePreviousBy}.
    */
-  public static final String PROP_RESUME_PREVIOUS_BY = "resumePreviousBy";
+  String PROP_RESUME_PREVIOUS_BY = "resumePreviousBy";
 
   /**
    * Indicates whether only changed resources should be part of the deployment.
    * This is independent of the setting that if no resources change, no deployment
    * takes place but the previous deployment is resumed.
    */
-  public static final String PROP_IS_DEPLOY_CHANGED_ONLY = "isDeployChangedOnly";
+  String PROP_IS_DEPLOY_CHANGED_ONLY = "isDeployChangedOnly";
 
   /**
    * <p> The resource root of the proccess archive. This property is used when scanning for process definitions
@@ -94,33 +94,33 @@ public interface ProcessArchiveXml {
    * </ul>
    * </p>
    */
-  public static final String PROP_RESOURCE_ROOT_PATH = "resourceRootPath";
+  String PROP_RESOURCE_ROOT_PATH = "resourceRootPath";
 
   /**
    * A semicolon separated list of additional suffixes for resources to scan for.
    */
-  public static final String PROP_ADDITIONAL_RESOURCE_SUFFIXES = "additionalResourceSuffixes";
-  public static final String PROP_ADDITIONAL_RESOURCE_SUFFIXES_SEPARATOR = ",";
+  String PROP_ADDITIONAL_RESOURCE_SUFFIXES = "additionalResourceSuffixes";
+  String PROP_ADDITIONAL_RESOURCE_SUFFIXES_SEPARATOR = ",";
 
   /**
    * @return the name of the process archive. Must not be null.
    */
-  public String getName();
+  String getName();
 
   /**
    * @return the id of the tenant the resources of the process archive should deploy for. Can be <code>null</code>.
    */
-  public String getTenantId();
+  String getTenantId();
 
   /**
    * @return the name of the process engine which the deployment should be made to. If null, the "default engine" is used.
    */
-  public String getProcessEngineName();
+  String getProcessEngineName();
 
   /**
    * @return a list of process definition resource names that make up the deployment.
    */
-  public List<String> getProcessResourceNames();
+  List<String> getProcessResourceNames();
 
   /**
    * @return a list of additional properties. See constant property names defined in this class for a list of available properties.
@@ -130,6 +130,6 @@ public interface ProcessArchiveXml {
    * @see #PROP_RESOURCE_ROOT_PATH
    * @see #PROP_IS_DEPLOY_CHANGED_ONLY
    */
-  public Map<String, String> getProperties();
+  Map<String, String> getProperties();
 
 }

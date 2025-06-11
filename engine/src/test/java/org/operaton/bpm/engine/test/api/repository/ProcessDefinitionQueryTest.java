@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,23 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processDefinitionByDeployTime;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.lang3.time.DateUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.Deployment;
@@ -30,21 +43,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
-
 
 /**
  * @author Joram Barrez
  */
-public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
+class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
 
   private static final String THIRD_DEPLOYMENT_NAME = "thirdDeployment";
 
@@ -64,19 +67,19 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     return "org/operaton/bpm/engine/test/repository/three_.bpmn20.xml";
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     deploymentThreeId = repositoryService.createDeployment().name(THIRD_DEPLOYMENT_NAME).addClasspathResource(getResourceThreePath()).deploy().getId();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
     repositoryService.deleteDeployment(deploymentThreeId, true);
   }
 
   @Test
-  public void testProcessDefinitionProperties() {
+  void testProcessDefinitionProperties() {
     List<ProcessDefinition> processDefinitions = repositoryService
       .createProcessDefinitionQuery()
       .orderByProcessDefinitionName().asc()
@@ -118,13 +121,13 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByDeploymentId() {
+  void testQueryByDeploymentId() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().deploymentId(deploymentOneId);
     verifyQueryResults(query, 2);
   }
 
   @Test
-  public void testQueryByInvalidDeploymentId() {
+  void testQueryByInvalidDeploymentId() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().deploymentId("invalid");
     verifyQueryResults(query, 0);
 
@@ -135,7 +138,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByDeploymentTimeAfter() {
+  void testQueryByDeploymentTimeAfter() {
     // given
     Date startTest = DateUtils.addSeconds(ClockUtil.now(), 5);
     ClockUtil.setCurrentTime(startTest);
@@ -183,7 +186,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByDeploymentTimeAt() throws ParseException {
+  void testQueryByDeploymentTimeAt() throws ParseException {
     // given
     //get rid of the milliseconds because of MySQL datetime precision
     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy - HH:mm:ss");
@@ -226,7 +229,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByName() {
+  void testQueryByName() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionName("Two");
     verifyQueryResults(query, 1);
 
@@ -235,7 +238,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidName() {
+  void testQueryByInvalidName() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionName("invalid");
     verifyQueryResults(query, 0);
 
@@ -246,7 +249,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByNameLike() {
+  void testQueryByNameLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionNameLike("%w%");
     verifyQueryResults(query, 1);
     query = query.processDefinitionNameLike("%z\\_%");
@@ -254,7 +257,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidNameLike() {
+  void testQueryByInvalidNameLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionNameLike("%invalid%");
     verifyQueryResults(query, 0);
   }
@@ -265,14 +268,14 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
    * Verify that search by name like returns results with case-insensitive
    */
   @Test
-  public void testQueryByNameLikeCaseInsensitive() {
+  void testQueryByNameLikeCaseInsensitive() {
     ProcessDefinitionQuery queryCaseInsensitive = repositoryService.createProcessDefinitionQuery()
       .processDefinitionNameLike("%OnE%");
     verifyQueryResults(queryCaseInsensitive, 2);
   }
 
   @Test
-  public void testQueryByKey() {
+  void testQueryByKey() {
     // process one
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionKey("one");
     verifyQueryResults(query, 2);
@@ -283,7 +286,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByKeys() {
+  void testQueryByKeys() {
 
     // empty list
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKeysIn("a", "b").list()).isEmpty();
@@ -311,7 +314,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidKey() {
+  void testQueryByInvalidKey() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionKey("invalid");
     verifyQueryResults(query, 0);
 
@@ -322,7 +325,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByKeyLike() {
+  void testQueryByKeyLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionKeyLike("%o%");
     verifyQueryResults(query, 3);
     query = query.processDefinitionKeyLike("%z\\_%");
@@ -330,7 +333,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidKeyLike() {
+  void testQueryByInvalidKeyLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionKeyLike("%invalid%");
     verifyQueryResults(query, 0);
 
@@ -341,13 +344,13 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByResourceNameLike() {
+  void testQueryByResourceNameLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionResourceNameLike("%ee\\_%");
     verifyQueryResults(query, 1);
   }
 
   @Test
-  public void testQueryByInvalidResourceNameLike() {
+  void testQueryByInvalidResourceNameLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionResourceNameLike("%invalid%");
     verifyQueryResults(query, 0);
 
@@ -358,13 +361,13 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByCategory() {
+  void testQueryByCategory() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionCategory("Examples");
     verifyQueryResults(query, 2);
   }
 
   @Test
-  public void testQueryByCategoryLike() {
+  void testQueryByCategoryLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionCategoryLike("%Example%");
     verifyQueryResults(query, 3);
 
@@ -376,7 +379,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByVersion() {
+  void testQueryByVersion() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionVersion(2);
     verifyQueryResults(query, 1);
 
@@ -385,7 +388,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidVersion() {
+  void testQueryByInvalidVersion() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionVersion(3);
     verifyQueryResults(query, 0);
 
@@ -401,7 +404,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByKeyAndVersion() {
+  void testQueryByKeyAndVersion() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionKey("one").processDefinitionVersion(1);
     verifyQueryResults(query, 1);
 
@@ -413,7 +416,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByLatest() {
+  void testQueryByLatest() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().latestVersion();
     verifyQueryResults(query, 3);
 
@@ -425,7 +428,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testInvalidUsageOfLatest() {
+  void testInvalidUsageOfLatest() {
 
     // when/then
     var query1 = repositoryService.createProcessDefinitionQuery()
@@ -448,7 +451,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
 
     // asc
 
@@ -492,7 +495,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByMessageSubscription() {
+  void testQueryByMessageSubscription() {
     Deployment deployment = repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/processWithNewBookingMessage.bpmn20.xml")
       .addClasspathResource("org/operaton/bpm/engine/test/api/repository/processWithNewInvoiceMessage.bpmn20.xml")
@@ -514,8 +517,8 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  @org.operaton.bpm.engine.test.Deployment(resources={"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentId() {
+  @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentId() {
     assertThat(repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("failingProcess")
         .count()).isEqualTo(1);
@@ -537,7 +540,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentId() {
+  void testQueryByInvalidIncidentId() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     verifyQueryResults(query.incidentId("invalid"), 0);
@@ -548,8 +551,8 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  @org.operaton.bpm.engine.test.Deployment(resources={"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentType() {
+  @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentType() {
     assertThat(repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("failingProcess")
         .count()).isEqualTo(1);
@@ -571,7 +574,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentType() {
+  void testQueryByInvalidIncidentType() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     verifyQueryResults(query.incidentType("invalid"), 0);
@@ -582,8 +585,8 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  @org.operaton.bpm.engine.test.Deployment(resources={"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentMessage() {
+  @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentMessage() {
     assertThat(repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("failingProcess")
         .count()).isEqualTo(1);
@@ -605,7 +608,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentMessage() {
+  void testQueryByInvalidIncidentMessage() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     verifyQueryResults(query.incidentMessage("invalid"), 0);
@@ -616,8 +619,8 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  @org.operaton.bpm.engine.test.Deployment(resources={"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByIncidentMessageLike() {
+  @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByIncidentMessageLike() {
     assertThat(repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("failingProcess")
         .count()).isEqualTo(1);
@@ -643,7 +646,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentMessageLike() {
+  void testQueryByInvalidIncidentMessageLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     verifyQueryResults(query.incidentMessageLike("invalid"), 0);
@@ -654,7 +657,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionIds() {
+  void testQueryByProcessDefinitionIds() {
 
     // empty list
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionIdIn("a", "b").list()).isEmpty();
@@ -682,7 +685,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByLatestAndName() {
+  void testQueryByLatestAndName() {
     String firstDeployment = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/first-process.bpmn20.xml")
@@ -714,7 +717,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByLatestAndName_NotFound() {
+  void testQueryByLatestAndName_NotFound() {
     String firstDeployment = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/first-process.bpmn20.xml")
@@ -741,7 +744,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByLatestAndNameLike() {
+  void testQueryByLatestAndNameLike() {
     String firstDeployment = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/first-process.bpmn20.xml")
@@ -792,7 +795,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByLatestAndNameLike_NotFound() {
+  void testQueryByLatestAndNameLike_NotFound() {
     String firstDeployment = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/first-process.bpmn20.xml")
@@ -818,24 +821,24 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  @org.operaton.bpm.engine.test.Deployment(resources={"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByVersionTag() {
+  @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByVersionTag() {
     assertThat(repositoryService.createProcessDefinitionQuery()
       .versionTag("ver_tag_2")
       .count()).isEqualTo(1);
   }
 
   @Test
-  @org.operaton.bpm.engine.test.Deployment(resources={"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByVersionTagLike() {
+  @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByVersionTagLike() {
     assertThat(repositoryService.createProcessDefinitionQuery()
       .versionTagLike("ver\\_tag\\_%")
       .count()).isEqualTo(1);
   }
 
   @Test
-  @org.operaton.bpm.engine.test.Deployment(resources={"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void testQueryByNoVersionTag() {
+  @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
+  void testQueryByNoVersionTag() {
     // 4 definitions without and 1 definition with version tag are deployed
     assertThat(repositoryService.createProcessDefinitionQuery()
       .withoutVersionTag()
@@ -843,7 +846,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryOrderByDeployTime() {
+  void testQueryOrderByDeployTime() {
     // given a deployment that is guaranteed to be deployed later than the default deployments
     ClockUtil.offset(TimeUnit.MINUTES.toMillis(10));
     Deployment tempDeploymentOne = repositoryService.createDeployment()
@@ -864,11 +867,11 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  @org.operaton.bpm.engine.test.Deployment(resources={
-    "org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/repository/VersionTagTest.testParsingVersionTag.bpmn20.xml"
+  @org.operaton.bpm.engine.test.Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/repository/VersionTagTest.testParsingVersionTag.bpmn20.xml"
   })
-  public void testQueryOrderByVersionTag() {
+  void testQueryOrderByVersionTag() {
     List<ProcessDefinition> processDefinitionList = repositoryService.createProcessDefinitionQuery()
       .versionTagLike("ver%tag%")
       .orderByVersionTag()
@@ -879,7 +882,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByStartableInTasklist() {
+  void testQueryByStartableInTasklist() {
     // given
     // three definitions with startableInTasklist=true
     // one definition with startableInTasklist=false
@@ -896,7 +899,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByStartableInTasklistNestedProcess() {
+  void testQueryByStartableInTasklistNestedProcess() {
     // given
     // startable super process
     // non-startable subprocess
@@ -924,7 +927,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByStartableInTasklistNestedProcessDeployedSecondTime() {
+  void testQueryByStartableInTasklistNestedProcessDeployedSecondTime() {
     // given
     // startable super process & subprocess
     BpmnModelInstance[] nestedProcess = setupNestedProcess(true);

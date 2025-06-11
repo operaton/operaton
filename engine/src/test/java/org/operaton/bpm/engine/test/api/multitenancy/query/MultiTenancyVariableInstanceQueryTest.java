@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,15 +39,15 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyVariableInstanceQueryTest {
+class MultiTenancyVariableInstanceQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RepositoryService repositoryService;
@@ -55,7 +55,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
       .userTask()
@@ -70,7 +70,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQueryWithoutTenantId() {
+  void testQueryWithoutTenantId() {
     VariableInstanceQuery query = runtimeService.
         createVariableInstanceQuery();
 
@@ -78,7 +78,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     VariableInstanceQuery query = runtimeService.
         createVariableInstanceQuery()
         .tenantIdIn(TENANT_ONE);
@@ -93,7 +93,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     VariableInstanceQuery query = runtimeService.
         createVariableInstanceQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -102,7 +102,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     VariableInstanceQuery query = runtimeService.
         createVariableInstanceQuery()
         .tenantIdIn("nonExisting");
@@ -111,18 +111,16 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testFailQueryByTenantIdNull() {
+  void testFailQueryByTenantIdNull() {
     var variableInstanceQuery = runtimeService.createVariableInstanceQuery();
-    try {
-      variableInstanceQuery.tenantIdIn((String) null);
 
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    assertThatThrownBy(() -> variableInstanceQuery.tenantIdIn((String) null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("tenantIds contains null value");
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery()
         .orderByTenantId()
         .asc()
@@ -134,7 +132,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery()
         .orderByTenantId()
         .desc()
@@ -146,7 +144,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery();
@@ -154,7 +152,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery();
@@ -166,7 +164,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery();
@@ -177,7 +175,7 @@ public class MultiTenancyVariableInstanceQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

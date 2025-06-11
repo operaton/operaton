@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,22 +36,22 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyJobDefinitionQueryTest {
+class MultiTenancyJobDefinitionQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
         .timerWithDuration("PT1M")
@@ -68,7 +68,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryNoTenantIdSet() {
+  void testQueryNoTenantIdSet() {
     JobDefinitionQuery query = managementService
         .createJobDefinitionQuery();
 
@@ -76,7 +76,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     JobDefinitionQuery query = managementService
         .createJobDefinitionQuery()
         .tenantIdIn(TENANT_ONE);
@@ -91,7 +91,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     JobDefinitionQuery query = managementService
         .createJobDefinitionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -100,7 +100,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByDefinitionsWithoutTenantIds() {
+  void testQueryByDefinitionsWithoutTenantIds() {
     JobDefinitionQuery query = managementService
         .createJobDefinitionQuery()
         .withoutTenantId();
@@ -109,7 +109,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIdsIncludeDefinitionsWithoutTenantId() {
+  void testQueryByTenantIdsIncludeDefinitionsWithoutTenantId() {
     JobDefinitionQuery query = managementService
         .createJobDefinitionQuery()
         .tenantIdIn(TENANT_ONE)
@@ -133,7 +133,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     JobDefinitionQuery query = managementService
         .createJobDefinitionQuery()
         .tenantIdIn("nonExisting");
@@ -142,18 +142,16 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testFailQueryByTenantIdNull() {
+  void testFailQueryByTenantIdNull() {
     var jobDefinitionQuery = managementService.createJobDefinitionQuery();
-    try {
-      jobDefinitionQuery.tenantIdIn((String) null);
 
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    assertThatThrownBy(() -> jobDefinitionQuery.tenantIdIn((String) null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("tenantIds contains null value");
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     // exclude job definitions without tenant id because of database-specific ordering
     List<JobDefinition> jobDefinitions = managementService.createJobDefinitionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -167,7 +165,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     // exclude job definitions without tenant id because of database-specific ordering
     List<JobDefinition> jobDefinitions = managementService.createJobDefinitionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -181,7 +179,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     JobDefinitionQuery query = managementService.createJobDefinitionQuery();
@@ -189,7 +187,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     JobDefinitionQuery query = managementService.createJobDefinitionQuery();
@@ -201,7 +199,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     JobDefinitionQuery query = managementService.createJobDefinitionQuery();
@@ -213,7 +211,7 @@ public class MultiTenancyJobDefinitionQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

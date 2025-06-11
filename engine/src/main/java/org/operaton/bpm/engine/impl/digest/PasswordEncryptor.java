@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ public interface PasswordEncryptor {
    * @param password
    * @return
    */
-  public String encrypt(String password);
+  String encrypt(String password);
 
   /**
    * Returns true if the given plain text equals to the encrypted password.
@@ -42,7 +42,7 @@ public interface PasswordEncryptor {
    *
    * @return
    */
-  public boolean check(String password, String encrypted);
+  boolean check(String password, String encrypted);
 
   /**
    * In order to distinguish which algorithm was used to hash the
@@ -51,5 +51,5 @@ public interface PasswordEncryptor {
    *
    * @return the name of the algorithm
    */
-  public String hashAlgorithmName();
+  String hashAlgorithmName();
 }

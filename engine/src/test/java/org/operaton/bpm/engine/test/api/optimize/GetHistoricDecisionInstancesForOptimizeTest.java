@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,11 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
@@ -37,18 +41,12 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-
-import java.util.Date;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetHistoricDecisionInstancesForOptimizeTest {
@@ -61,32 +59,28 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected String userId = "test";
-  private OptimizeService optimizeService;
-  private IdentityService identityService;
-  private RuntimeService runtimeService;
-  private AuthorizationService authorizationService;
+  OptimizeService optimizeService;
+  IdentityService identityService;
+  RuntimeService runtimeService;
+  AuthorizationService authorizationService;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
-    identityService = engineRule.getIdentityService();
-    runtimeService = engineRule.getRuntimeService();
-    authorizationService = engineRule.getAuthorizationService();
 
     createUser(userId);
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -99,8 +93,8 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
     ClockUtil.reset();
   }
 
-  @Before
-  public void enableDmnFeelLegacyBehavior() {
+  @BeforeEach
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -110,8 +104,8 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
         .init();
   }
 
-  @After
-  public void disableDmnFeelLegacyBehavior() {
+  @AfterEach
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -124,7 +118,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void getCompletedHistoricDecisionInstances() {
+  void getCompletedHistoricDecisionInstances() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -141,7 +135,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void decisionInputInstanceProperties() {
+  void decisionInputInstanceProperties() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -167,7 +161,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void decisionOutputInstanceProperties() {
+  void decisionOutputInstanceProperties() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -198,7 +192,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void fishedAfterParameterWorks() {
+  void fishedAfterParameterWorks() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -222,7 +216,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void fishedAtParameterWorks() {
+  void fishedAtParameterWorks() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -246,7 +240,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void fishedAfterAndFinishedAtParameterWorks() {
+  void fishedAfterAndFinishedAtParameterWorks() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -271,7 +265,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void maxResultsParameterWorks() {
+  void maxResultsParameterWorks() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);
@@ -289,7 +283,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
 
   @Test
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
-  public void resultIsSortedByEvaluationTime() {
+  void resultIsSortedByEvaluationTime() {
     // given start process and evaluate decision
     VariableMap variables = Variables.createVariables();
     variables.put("input1", null);

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,18 +34,18 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyMigrationPlanCreateTenantCheckTest {
+class MultiTenancyMigrationPlanCreateTenantCheckTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void canCreateMigrationPlanForDefinitionsOfAuthenticatedTenant() {
+  void canCreateMigrationPlanForDefinitionsOfAuthenticatedTenant() {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -62,7 +62,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
   }
 
   @Test
-  public void cannotCreateMigrationPlanForDefinitionsOfNonAuthenticatedTenantsCase1() {
+  void cannotCreateMigrationPlanForDefinitionsOfNonAuthenticatedTenantsCase1() {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -79,7 +79,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
   }
 
   @Test
-  public void cannotCreateMigrationPlanForDefinitionsOfNonAuthenticatedTenantsCase2() {
+  void cannotCreateMigrationPlanForDefinitionsOfNonAuthenticatedTenantsCase2() {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -96,7 +96,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
   }
 
   @Test
-  public void cannotCreateMigrationPlanForDefinitionsOfNonAuthenticatedTenantsCase3() {
+  void cannotCreateMigrationPlanForDefinitionsOfNonAuthenticatedTenantsCase3() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -114,7 +114,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
 
 
   @Test
-  public void canCreateMigrationPlanForSharedDefinitionsWithNoAuthenticatedTenants() {
+  void canCreateMigrationPlanForSharedDefinitionsWithNoAuthenticatedTenants() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -131,7 +131,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
 
 
   @Test
-  public void canCreateMigrationPlanWithDisabledTenantCheck() {
+  void canCreateMigrationPlanWithDisabledTenantCheck() {
 
     // given
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyCreateCaseInstanceTest {
+class MultiTenancyCreateCaseInstanceTest {
 
   protected static final String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
 
@@ -44,9 +44,9 @@ public class MultiTenancyCreateCaseInstanceTest {
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RepositoryService repositoryService;
@@ -54,7 +54,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   protected IdentityService identityService;
 
   @Test
-  public void testFailToCreateCaseInstanceByIdWithoutTenantId() {
+  void testFailToCreateCaseInstanceByIdWithoutTenantId() {
    testRule.deploy(CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
@@ -70,7 +70,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testFailToCreateCaseInstanceByIdWithTenantId() {
+  void testFailToCreateCaseInstanceByIdWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
@@ -86,7 +86,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testFailToCreateCaseInstanceByKeyForNonExistingTenantID() {
+  void testFailToCreateCaseInstanceByKeyForNonExistingTenantID() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
@@ -101,7 +101,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testFailToCreateCaseInstanceByKeyForMultipleTenants() {
+  void testFailToCreateCaseInstanceByKeyForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY);
@@ -115,7 +115,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testCreateCaseInstanceByKeyWithoutTenantId() {
+  void testCreateCaseInstanceByKeyWithoutTenantId() {
    testRule.deploy(CMMN_FILE);
 
     caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
@@ -129,7 +129,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testCreateCaseInstanceByKeyForAnyTenants() {
+  void testCreateCaseInstanceByKeyForAnyTenants() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
 
     caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
@@ -139,7 +139,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testCreateCaseInstanceByKeyAndTenantId() {
+  void testCreateCaseInstanceByKeyAndTenantId() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
 
@@ -151,7 +151,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testCreateCaseInstanceByKeyWithoutTenantIdNoAuthenticatedTenants() {
+  void testCreateCaseInstanceByKeyWithoutTenantIdNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
    testRule.deploy(CMMN_FILE);
@@ -165,7 +165,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testFailToCreateCaseInstanceByKeyNoAuthenticatedTenants() {
+  void testFailToCreateCaseInstanceByKeyNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
@@ -181,7 +181,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testFailToCreateCaseInstanceByKeyWithTenantIdNoAuthenticatedTenants() {
+  void testFailToCreateCaseInstanceByKeyWithTenantIdNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
@@ -198,7 +198,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testFailToCreateCaseInstanceByIdNoAuthenticatedTenants() {
+  void testFailToCreateCaseInstanceByIdNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService
@@ -218,7 +218,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testCreateCaseInstanceByKeyWithTenantIdAuthenticatedTenant() {
+  void testCreateCaseInstanceByKeyWithTenantIdAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
@@ -234,7 +234,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testCreateCaseInstanceByIdAuthenticatedTenant() {
+  void testCreateCaseInstanceByIdAuthenticatedTenant() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService
@@ -251,7 +251,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testCreateCaseInstanceByKeyWithAuthenticatedTenant() {
+  void testCreateCaseInstanceByKeyWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
@@ -265,7 +265,7 @@ public class MultiTenancyCreateCaseInstanceTest {
   }
 
   @Test
-  public void testCreateCaseInstanceByKeyWithTenantIdDisabledTenantCheck() {
+  void testCreateCaseInstanceByKeyWithTenantIdDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

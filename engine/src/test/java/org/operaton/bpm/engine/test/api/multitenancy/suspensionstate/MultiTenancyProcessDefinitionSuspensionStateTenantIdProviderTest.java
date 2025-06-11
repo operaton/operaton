@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProvider;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.api.multitenancy.StaticTenantIdTestProvider;
@@ -30,7 +29,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
+class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String PROCESS_DEFINITION_KEY = "testProcess";
@@ -42,23 +41,21 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
     .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-        TenantIdProvider tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
-        configuration.setTenantIdProvider(tenantIdProvider);
-      })
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setTenantIdProvider(new StaticTenantIdTestProvider(TENANT_ONE)))
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deploy(PROCESS);
   }
 
   @Test
-  public void suspendProcessDefinitionByIdIncludeInstancesFromAllTenants() {
+  void suspendProcessDefinitionByIdIncludeInstancesFromAllTenants() {
     // given active process instances with tenant id of process definition without tenant id
     engineRule.getRuntimeService().createProcessInstanceByKey(PROCESS_DEFINITION_KEY).processDefinitionWithoutTenantId().execute();
 
@@ -85,7 +82,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
   }
 
   @Test
-  public void activateProcessDefinitionByIdIncludeInstancesFromAllTenants() {
+  void activateProcessDefinitionByIdIncludeInstancesFromAllTenants() {
     // given suspended process instances with tenant id of process definition without tenant id
     engineRule.getRuntimeService().createProcessInstanceByKey(PROCESS_DEFINITION_KEY).processDefinitionWithoutTenantId().execute();
 

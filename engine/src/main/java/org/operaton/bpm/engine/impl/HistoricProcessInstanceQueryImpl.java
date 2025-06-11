@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -53,6 +53,7 @@ import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<HistoricProcessInstanceQuery, HistoricProcessInstance> implements HistoricProcessInstanceQuery {
 
   private static final long serialVersionUID = 1L;
+  private static final String MSG_ALREADY_QUERYING = "Already querying for historic process instance with another state";
   protected String processInstanceId;
   protected String processDefinitionId;
   protected String processDefinitionName;
@@ -719,14 +720,14 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected Date finishDateOnBegin;
   protected Date finishDateOnEnd;
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery startDateBy(Date date) {
     this.startDateBy = this.calculateMidnight(date);
     return this;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery startDateOn(Date date) {
     this.startDateOn = date;
@@ -735,14 +736,14 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery finishDateBy(Date date) {
     this.finishDateBy = this.calculateBeforeMidnight(date);
     return this;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery finishDateOn(Date date) {
     this.finishDateOn = date;
@@ -751,7 +752,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   private Date calculateBeforeMidnight(Date date){
     Calendar cal = Calendar.getInstance();
     cal.setTime(date);
@@ -760,7 +761,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return cal.getTime();
   }
 
-  @Deprecated
+  @Deprecated(since = "1.0")
   private Date calculateMidnight(Date date){
     Calendar cal = Calendar.getInstance();
     cal.setTime(date);
@@ -845,35 +846,35 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
 
   @Override
   public HistoricProcessInstanceQuery active() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_ACTIVE;
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery suspended() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_SUSPENDED;
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery completed() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_COMPLETED;
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery externallyTerminated() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED;
     return this;
   }
 
   @Override
   public HistoricProcessInstanceQuery internallyTerminated() {
-    ensureNull(BadUserRequestException.class, "Already querying for historic process instance with another state", state, state);
+    ensureNull(BadUserRequestException.class, MSG_ALREADY_QUERYING, state, state);
     state = HistoricProcessInstance.STATE_INTERNALLY_TERMINATED;
     return this;
   }

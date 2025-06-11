@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,7 @@ import java.io.IOException;
 public class TestWarDeploymentWithDiagram extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive processArchive() {    
+  public static WebArchive processArchive() {
     return initWebArchiveDeployment()
             .addClass(TestHelper.class)
             .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml")
@@ -42,7 +42,7 @@ public class TestWarDeploymentWithDiagram extends AbstractFoxPlatformIntegration
             .addAsResource("org/operaton/bpm/integrationtest/invoice-it.bpmn20.xml")
             .addAsResource("org/operaton/bpm/integrationtest/invoice-it.jpg");
   }
-  
+
   @Test
   public void testDeployProcessArchive() throws IOException {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/testDeployProcessArchive.png";
@@ -56,5 +56,5 @@ public class TestWarDeploymentWithDiagram extends AbstractFoxPlatformIntegration
     String processDefinitionKey = "invoice-it";
     TestHelper.assertDiagramIsDeployed(true, getClass(), expectedDiagramResource, processDefinitionKey);
   }
-  
+
 }

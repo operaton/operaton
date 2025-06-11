@@ -7,11 +7,11 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <properties>
-    <version.json-schema-validator>1.0.76</version.json-schema-validator>
+    <version.json-schema-validator>1.5.6</version.json-schema-validator>
   </properties>
 
   <dependencies>

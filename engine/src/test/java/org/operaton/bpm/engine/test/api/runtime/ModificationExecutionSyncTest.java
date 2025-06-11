@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -37,34 +42,25 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+class ModificationExecutionSyncTest {
 
-public class ModificationExecutionSyncTest {
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  BatchModificationHelper helper = new BatchModificationHelper(rule);
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(rule);
-  protected BatchModificationHelper helper = new BatchModificationHelper(rule);
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  BpmnModelInstance instance;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
-
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-  protected BpmnModelInstance instance;
-
-  @Before
-  public void createBpmnModelInstance() {
+  @BeforeEach
+  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -75,19 +71,13 @@ public class ModificationExecutionSyncTest {
         .done();
   }
 
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-    historyService = rule.getHistoryService();
-  }
-
-  @After
-  public void removeInstanceIds() {
+  @AfterEach
+  void removeInstanceIds() {
     helper.currentProcessInstances = new ArrayList<>();
   }
 
   @Test
-  public void createSimpleModificationPlan() {
+  void createSimpleModificationPlan() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     List<String> instances = helper.startInstances("process1", 2);
     runtimeService.createModification(processDefinition.getId()).startBeforeActivity("user2").cancelAllForActivity("user1").processInstanceIds(instances).execute();
@@ -101,7 +91,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createSimpleModificationPlanWithHistoricQuery() {
+  void createSimpleModificationPlanWithHistoricQuery() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     List<String> instances = helper.startInstances("process1", 2);
     HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
@@ -118,7 +108,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createSimpleModificationPlanWithIdenticalRuntimeAndHistoryQuery() {
+  void createSimpleModificationPlanWithIdenticalRuntimeAndHistoryQuery() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     List<String> instances = helper.startInstances("process1", 2);
     HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
@@ -137,7 +127,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createSimpleModificationPlanWithComplementaryRuntimeAndHistoryQueries() {
+  void createSimpleModificationPlanWithComplementaryRuntimeAndHistoryQueries() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     List<String> instances = helper.startInstances("process1", 2);
     HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
@@ -156,7 +146,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createSimpleModificationPlanWithHistoricQueryUnfinished() {
+  void createSimpleModificationPlanWithHistoricQueryUnfinished() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     List<String> instances = helper.startInstances("process1", 2);
     HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
@@ -173,7 +163,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createModificationWithNullProcessInstanceIdsList() {
+  void createModificationWithNullProcessInstanceIdsList() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1") .processInstanceIds((List<String>) null);
 
     try {
@@ -185,7 +175,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createModificationUsingProcessInstanceIdsListWithNullValue() {
+  void createModificationUsingProcessInstanceIdsListWithNullValue() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Arrays.asList("foo", null, "bar"));
 
     try {
@@ -197,7 +187,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createModificationWithEmptyProcessInstanceIdsList() {
+  void createModificationWithEmptyProcessInstanceIdsList() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Collections.<String> emptyList());
 
     try {
@@ -209,7 +199,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createModificationWithNullProcessDefinitionId() {
+  void createModificationWithNullProcessDefinitionId() {
     try {
       runtimeService.createModification(null);
       fail("Should not succeed");
@@ -219,7 +209,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createModificationWithNullProcessInstanceIdsArray() {
+  void createModificationWithNullProcessInstanceIdsArray() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId")
       .startAfterActivity("user1")
       .processInstanceIds((String[]) null);
@@ -233,7 +223,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createModificationUsingProcessInstanceIdsArrayWithNullValue() {
+  void createModificationUsingProcessInstanceIdsArrayWithNullValue() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").cancelAllForActivity("user1").processInstanceIds("foo", null, "bar");
 
     try {
@@ -245,7 +235,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testNullProcessInstanceQuery() {
+  void testNullProcessInstanceQuery() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceQuery(null);
     try {
       modificationBuilder.execute();
@@ -256,7 +246,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testNullHistoricProcessInstanceQuery() {
+  void testNullHistoricProcessInstanceQuery() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").historicProcessInstanceQuery(null);
     try {
       modificationBuilder.execute();
@@ -267,7 +257,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void createModificationWithNotMatchingProcessDefinitionId() {
+  void createModificationWithNotMatchingProcessDefinitionId() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     deployment.getDeployedProcessDefinitions().get(0);
 
@@ -282,7 +272,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testStartBefore() {
+  void testStartBefore() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition definition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -305,7 +295,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testStartAfter() {
+  void testStartAfter() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition definition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -323,7 +313,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testStartTransition() {
+  void testStartTransition() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition definition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -341,7 +331,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testCancelAll() {
+  void testCancelAll() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     List<String> processInstanceIds = helper.startInstances("process1", 2);
 
@@ -354,7 +344,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testStartBeforeAndCancelAll() {
+  void testStartBeforeAndCancelAll() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition definition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -372,7 +362,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testDifferentStates() {
+  void testDifferentStates() {
     DeploymentWithDefinitions deployment = testRule.deploy(instance);
     ProcessDefinition definition = deployment.getDeployedProcessDefinitions().get(0);
 
@@ -400,7 +390,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testCancelWithoutFlag() {
+  void testCancelWithoutFlag() {
     // given
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
@@ -425,7 +415,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testCancelWithoutFlag2() {
+  void testCancelWithoutFlag2() {
     // given
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
@@ -450,7 +440,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testCancelWithFlag() {
+  void testCancelWithFlag() {
     // given
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
@@ -477,7 +467,7 @@ public class ModificationExecutionSyncTest {
   }
 
   @Test
-  public void testCancelWithFlagForManyInstances() {
+  void testCancelWithFlagForManyInstances() {
     // given
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")

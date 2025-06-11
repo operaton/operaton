@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertNotSame;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.executionByProcessDefinitionId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.executionByProcessDefinitionKey;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.executionByProcessInstanceId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.hierarchical;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotSame;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +36,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.EventSubscription;
@@ -45,27 +54,36 @@ import org.operaton.bpm.engine.runtime.ExecutionQuery;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 
 /**
  * @author Joram Barrez
  * @author Frederik Heremans
  */
-public class ExecutionQueryTest extends PluggableProcessEngineTest {
+class ExecutionQueryTest {
 
   private static final String CONCURRENT_PROCESS_KEY = "concurrent";
   private static final String SEQUENTIAL_PROCESS_KEY = "oneTaskProcess";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+
   private List<String> concurrentProcessInstanceIds;
   private List<String> sequentialProcessInstanceIds;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
 
     repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml")
@@ -81,8 +99,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     sequentialProcessInstanceIds.add(runtimeService.startProcessInstanceByKey(SEQUENTIAL_PROCESS_KEY).getId());
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }
@@ -90,7 +108,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionKey() {
+  void testQueryByProcessDefinitionKey() {
     // Concurrent process with 3 executions for each process instance
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).list()).hasSize(12);
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(SEQUENTIAL_PROCESS_KEY).list()).hasSize(1);
@@ -98,7 +116,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessDefinitionKey() {
+  void testQueryByInvalidProcessDefinitionKey() {
     ExecutionQuery query = runtimeService.createExecutionQuery().processDefinitionKey("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -106,7 +124,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceId() {
+  void testQueryByProcessInstanceId() {
     for (String processInstanceId : concurrentProcessInstanceIds) {
       ExecutionQuery query =  runtimeService.createExecutionQuery().processInstanceId(processInstanceId);
       assertThat(query.list()).hasSize(3);
@@ -116,7 +134,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidProcessInstanceId() {
+  void testQueryByInvalidProcessInstanceId() {
     ExecutionQuery query = runtimeService.createExecutionQuery().processInstanceId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -124,13 +142,13 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryExecutionId() {
+  void testQueryExecutionId() {
     Execution execution = runtimeService.createExecutionQuery().processDefinitionKey(SEQUENTIAL_PROCESS_KEY).singleResult();
     assertThat(runtimeService.createExecutionQuery().executionId(execution.getId())).isNotNull();
   }
 
   @Test
-  public void testQueryByInvalidExecutionId() {
+  void testQueryByInvalidExecutionId() {
     ExecutionQuery query = runtimeService.createExecutionQuery().executionId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -138,7 +156,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
     ExecutionQuery query = runtimeService.createExecutionQuery().activityId("receivePayment");
     assertThat(query.list()).hasSize(4);
     assertThat(query.count()).isEqualTo(4);
@@ -152,7 +170,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidActivityId() {
+  void testQueryByInvalidActivityId() {
     ExecutionQuery query = runtimeService.createExecutionQuery().activityId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -160,7 +178,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryPaging() {
+  void testQueryPaging() {
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(13);
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(0, 4)).hasSize(4);
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(2, 1)).hasSize(1);
@@ -170,7 +188,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
 
     // 13 executions: 3 for each concurrent, 1 for the sequential
     List<Execution> executions = runtimeService.createExecutionQuery().orderByProcessInstanceId().asc().list();
@@ -212,7 +230,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryInvalidSorting() {
+  void testQueryInvalidSorting() {
     var executionQuery = runtimeService.createExecutionQuery().orderByProcessDefinitionKey();
     try {
       executionQuery.list();
@@ -223,16 +241,16 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByBusinessKey() {
+  void testQueryByBusinessKey() {
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(3);
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("BUSINESS-KEY-2").list()).hasSize(3);
     assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("NON-EXISTING").list()).isEmpty();
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryStringVariable() {
+  void testQueryStringVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -319,10 +337,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance3.getId(), "test");
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryLongVariable() {
+  void testQueryLongVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("longVar", 12345L);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -400,10 +418,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance3.getId(), "test");
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryDoubleVariable() {
+  void testQueryDoubleVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("doubleVar", 12345.6789);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -481,10 +499,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance3.getId(), "test");
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryIntegerVariable() {
+  void testQueryIntegerVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("integerVar", 12345);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -562,10 +580,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance3.getId(), "test");
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryShortVariable() {
+  void testQueryShortVariable() {
     Map<String, Object> vars = new HashMap<>();
     short shortVar = 1234;
     vars.put("shortVar", shortVar);
@@ -646,10 +664,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance3.getId(), "test");
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryDateVariable() throws Exception {
+  void testQueryDateVariable() throws Exception {
     Map<String, Object> vars = new HashMap<>();
     Date date1 = Calendar.getInstance().getTime();
     vars.put("dateVar", date1);
@@ -742,10 +760,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance3.getId(), "test");
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testBooleanVariable() {
+  void testBooleanVariable() {
 
     // TEST EQUALS
     HashMap<String, Object> vars = new HashMap<>();
@@ -819,10 +837,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryVariablesUpdatedToNullValue() {
+  void testQueryVariablesUpdatedToNullValue() {
     // Start process instance with different types of variables
     Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 928374L);
@@ -868,10 +886,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     assertThat(notQuery.singleResult()).isNull();
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryNullVariable() {
+  void testQueryNullVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("nullVar", null);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -951,10 +969,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance5.getId(), "test");
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryInvalidTypes() {
+  void testQueryInvalidTypes() {
     Map<String, Object> vars = new HashMap<>();
     byte[] testBytes = "test".getBytes();
     vars.put("bytesVar", testBytes);
@@ -983,7 +1001,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryVariablesNullNameArgument() {
+  void testQueryVariablesNullNameArgument() {
     var executionQuery = runtimeService.createExecutionQuery();
     try {
       executionQuery.variableValueEquals(null, "value");
@@ -1029,10 +1047,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryAllVariableTypes() {
+  void testQueryAllVariableTypes() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("nullVar", null);
     vars.put("stringVar", "string");
@@ -1062,10 +1080,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
   }
 
-  @Deployment(resources={
-  "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testClashingValues() {
+  void testClashingValues() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", 1234L);
 
@@ -1091,7 +1109,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testQueryBySignalSubscriptionName() {
+  void testQueryBySignalSubscriptionName() {
     runtimeService.startProcessInstanceByKey("catchSignal");
 
     // it finds subscribed instances
@@ -1114,7 +1132,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testQueryBySignalSubscriptionNameBoundary() {
+  void testQueryBySignalSubscriptionNameBoundary() {
     runtimeService.startProcessInstanceByKey("signalProces");
 
     // it finds subscribed instances
@@ -1135,7 +1153,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testNativeQuery() {
+  void testNativeQuery() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     // just test that the query will be constructed and executed, details are tested in the TaskQueryTest
     assertThat(managementService.getTableName(Execution.class)).isEqualTo(tablePrefix + "ACT_RU_EXECUTION");
@@ -1147,14 +1165,14 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testNativeQueryPaging() {
+  void testNativeQueryPaging() {
     assertThat(runtimeService.createNativeExecutionQuery().sql("SELECT * FROM " + managementService.getTableName(Execution.class)).listPage(1, 5)).hasSize(5);
     assertThat(runtimeService.createNativeExecutionQuery().sql("SELECT * FROM " + managementService.getTableName(Execution.class)).listPage(2, 1)).hasSize(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
   @Test
-  public void testExecutionQueryWithProcessVariable() {
+  void testExecutionQueryWithProcessVariable() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("x", "parent");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("concurrent", variables);
@@ -1175,9 +1193,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueNotEquals("x", "xxx").count()).isEqualTo(3);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
   @Test
-  public void testExecutionQueryForSuspendedExecutions() {
+  void testExecutionQueryForSuspendedExecutions() {
     List<Execution> suspendedExecutions = runtimeService.createExecutionQuery().suspended().list();
     assertThat(suspendedExecutions).isEmpty();
 
@@ -1196,9 +1214,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
   @Test
-  public void testQueryByIncidentId() {
+  void testQueryByIncidentId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -1216,7 +1234,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentId() {
+  void testQueryByInvalidIncidentId() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     assertThat(query.incidentId("invalid").count()).isZero();
@@ -1229,9 +1247,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
   @Test
-  public void testQueryByIncidentType() {
+  void testQueryByIncidentType() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -1249,7 +1267,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentType() {
+  void testQueryByInvalidIncidentType() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     assertThat(query.incidentType("invalid").count()).isZero();
@@ -1262,9 +1280,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
   @Test
-  public void testQueryByIncidentMessage() {
+  void testQueryByIncidentMessage() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -1282,7 +1300,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentMessage() {
+  void testQueryByInvalidIncidentMessage() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     assertThat(query.incidentMessage("invalid").count()).isZero();
@@ -1295,9 +1313,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
   @Test
-  public void testQueryByIncidentMessageLike() {
+  void testQueryByIncidentMessageLike() {
     runtimeService.startProcessInstanceByKey("failingProcess");
 
     testRule.executeAvailableJobs();
@@ -1313,7 +1331,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidIncidentMessageLike() {
+  void testQueryByInvalidIncidentMessageLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     assertThat(query.incidentMessageLike("invalid").count()).isZero();
@@ -1326,9 +1344,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
   @Test
-  public void testQueryByIncidentIdSubProcess() {
+  void testQueryByIncidentIdSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testRule.executeAvailableJobs();
@@ -1347,9 +1365,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     assertNotSame(processInstance.getId(), executionList.get(0).getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
   @Test
-  public void testQueryByIncidentTypeInSubprocess() {
+  void testQueryByIncidentTypeInSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testRule.executeAvailableJobs();
@@ -1368,9 +1386,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     assertNotSame(processInstance.getId(), executionList.get(0).getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
   @Test
-  public void testQueryByIncidentMessageInSubProcess() {
+  void testQueryByIncidentMessageInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testRule.executeAvailableJobs();
@@ -1389,9 +1407,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     assertNotSame(processInstance.getId(), executionList.get(0).getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
   @Test
-  public void testQueryByIncidentMessageLikeSubProcess() {
+  void testQueryByIncidentMessageLikeSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
     testRule.executeAvailableJobs();
@@ -1410,10 +1428,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     assertNotSame(processInstance.getId(), executionList.get(0).getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml",
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/oneMessageCatchProcess.bpmn20.xml"})
   @Test
-  public void testQueryForExecutionsWithMessageEventSubscriptions() {
+  void testQueryForExecutionsWithMessageEventSubscriptions() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneMessageCatchProcess");
@@ -1433,9 +1451,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/runtime/oneMessageCatchProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/oneMessageCatchProcess.bpmn20.xml")
   @Test
-  public void testQueryForExecutionsWithMessageEventSubscriptionsOverlappingFilters() {
+  void testQueryForExecutionsWithMessageEventSubscriptionsOverlappingFilters() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneMessageCatchProcess");
 
@@ -1460,7 +1478,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/twoBoundaryEventSubscriptions.bpmn20.xml")
   @Test
-  public void testQueryForExecutionsWithMultipleSubscriptions() {
+  void testQueryForExecutionsWithMultipleSubscriptions() {
     // given two message event subscriptions
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
 
@@ -1519,7 +1537,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsNumber() {
+  void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", 123L));
@@ -1568,7 +1586,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNumberComparison() {
+  void testProcessVariableValueNumberComparison() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", 123L));
@@ -1604,7 +1622,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testNullBusinessKeyForChildExecutions() {
+  void testNullBusinessKeyForChildExecutions() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CONCURRENT_PROCESS_KEY, "76545");
     List<Execution> executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).list();
     for (Execution e : executions) {

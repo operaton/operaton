@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,8 +18,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -30,9 +29,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.exception.NotValidException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -43,17 +52,16 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Yana Vasileva
  */
-public class SingleProcessInstanceModificationAsyncTest extends PluggableProcessEngineTest {
+class SingleProcessInstanceModificationAsyncTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
   protected static final String EXCLUSIVE_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGateway.bpmn20.xml";
@@ -66,8 +74,20 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   protected static final String CALL_ACTIVITY_PARENT_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.testCancelCallActivityParentProcess.bpmn";
   protected static final String CALL_ACTIVITY_CHILD_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.testCancelCallActivityChildProcess.bpmn";
 
-  @After
-  public void tearDown() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngine processEngine;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  ManagementService managementService;
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+
+  @AfterEach
+  void tearDown() {
     List<Batch> batches = managementService.createBatchQuery().list();
     for (Batch batch : batches) {
       managementService.deleteBatch(batch.getId(), true);
@@ -81,7 +101,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testTheDeploymentIdIsSet() {
+  void testTheDeploymentIdIsSet() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processDefinitionId = processInstance.getProcessDefinitionId();
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
@@ -110,7 +130,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testCancellation() {
+  void testCancellation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processInstanceId = processInstance.getId();
 
@@ -140,7 +160,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testCancellationThatEndsProcessInstance() {
+  void testCancellationThatEndsProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -157,7 +177,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testCancellationWithWrongProcessInstanceId() {
+  void testCancellationWithWrongProcessInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -179,7 +199,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartBefore() {
+  void testStartBefore() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -219,7 +239,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartBeforeWithAncestorInstanceId() {
+  void testStartBeforeWithAncestorInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -261,7 +281,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = LOOP_PROCESS)
   @Test
-  public void testStartBeforeWithAncestorInstanceIdWithAncestorCancelled() {
+  void testStartBeforeWithAncestorInstanceIdWithAncestorCancelled() {
     // given
     Map<String, Object> vars = new HashMap<>();
     vars.put("ids", new ArrayList<>(Arrays.asList("1")));
@@ -290,7 +310,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartBeforeNonExistingActivity() {
+  void testStartBeforeNonExistingActivity() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     Batch modificationBatch = runtimeService.createProcessInstanceModification(instance.getId()).startBeforeActivity("someNonExistingActivity").executeAsync();
@@ -311,7 +331,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
    */
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testEndProcessInstanceIntermediately() {
+  void testEndProcessInstanceIntermediately() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -343,7 +363,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartTransition() {
+  void testStartTransition() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -383,7 +403,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartTransitionWithAncestorInstanceId() {
+  void testStartTransitionWithAncestorInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -425,7 +445,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartTransitionInvalidTransitionId() {
+  void testStartTransitionInvalidTransitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
     Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstanceId).startTransition("invalidFlowId").executeAsync();
@@ -446,7 +466,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfter() {
+  void testStartAfter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -486,7 +506,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfterWithAncestorInstanceId() {
+  void testStartAfterWithAncestorInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -528,7 +548,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = LOOP_PROCESS)
   @Test
-  public void testStartAfterWithAncestorInstanceIdWithAncestorCancelled() {
+  void testStartAfterWithAncestorInstanceIdWithAncestorCancelled() {
     // given
     Map<String, Object> vars = new HashMap<>();
     vars.put("ids", new ArrayList<>(Arrays.asList("1")));
@@ -557,7 +577,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfterActivityAmbiguousTransitions() {
+  void testStartAfterActivityAmbiguousTransitions() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
     Batch modificationBatch = runtimeService
@@ -577,7 +597,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfterActivityNoOutgoingTransitions() {
+  void testStartAfterActivityNoOutgoingTransitions() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
     Batch modificationBatch = runtimeService
@@ -598,7 +618,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testStartAfterNonExistingActivity() {
+  void testStartAfterNonExistingActivity() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     Batch modificationBatch = runtimeService
@@ -620,7 +640,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testScopeTaskStartBefore() {
+  void testScopeTaskStartBefore() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -663,7 +683,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
   @Test
-  public void testScopeTaskStartAfter() {
+  void testScopeTaskStartAfter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
@@ -725,7 +745,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = TASK_LISTENER_PROCESS)
   @Test
-  public void testSkipTaskListenerInvocation() {
+  void testSkipTaskListenerInvocation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess", "brum",
         Collections.singletonMap("listener", new RecorderTaskListener()));
 
@@ -758,7 +778,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = IO_MAPPING_PROCESS)
   @Test
-  public void testSkipIoMappings() {
+  void testSkipIoMappings() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("ioMappingProcess");
 
     // when I start task2
@@ -787,7 +807,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = TRANSITION_LISTENER_PROCESS)
   @Test
-  public void testStartTransitionListenerInvocation() {
+  void testStartTransitionListenerInvocation() {
     RecorderExecutionListener.clear();
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("transitionListenerProcess",
@@ -833,7 +853,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = TRANSITION_LISTENER_PROCESS)
   @Test
-  public void testStartAfterActivityListenerInvocation() {
+  void testStartAfterActivityListenerInvocation() {
     RecorderExecutionListener.clear();
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("transitionListenerProcess",
@@ -879,7 +899,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testCancellationAndStartBefore() {
+  void testCancellationAndStartBefore() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
@@ -909,7 +929,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testCancelNonExistingActivityInstance() {
+  void testCancelNonExistingActivityInstance() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     Batch modificationBatch = runtimeService
@@ -931,7 +951,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testCancelNonExistingTransitionInstance() {
+  void testCancelNonExistingTransitionInstance() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     Batch modificationBatch = runtimeService
@@ -952,9 +972,9 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   }
 
-  @Deployment(resources = { CALL_ACTIVITY_PARENT_PROCESS, CALL_ACTIVITY_CHILD_PROCESS })
+  @Deployment(resources = {CALL_ACTIVITY_PARENT_PROCESS, CALL_ACTIVITY_CHILD_PROCESS})
   @Test
-  public void testCancelCallActivityInstance() {
+  void testCancelCallActivityInstance() {
     // given
     ProcessInstance parentprocess = runtimeService.startProcessInstanceByKey("parentprocess");
     ProcessInstance subProcess = runtimeService.createProcessInstanceQuery()
@@ -976,7 +996,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   }
 
   @Test
-  public void testModifyNullProcessInstance() {
+  void testModifyNullProcessInstance() {
     try {
       runtimeService.createProcessInstanceModification(null);
       fail("should not succeed");
@@ -987,7 +1007,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
-  public void testSetInvocationsPerBatchType() {
+  void testSetInvocationsPerBatchType() {
     // given
     processEngineConfiguration.getInvocationsPerBatchJobByBatchType().put(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION, 42);
 

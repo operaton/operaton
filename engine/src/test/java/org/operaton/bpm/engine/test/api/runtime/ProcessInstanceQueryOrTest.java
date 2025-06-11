@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,6 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -31,42 +34,28 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
-public class ProcessInstanceQueryOrTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ProcessInstanceQueryOrTest {
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
 
-  protected RuntimeService runtimeService;
-  protected RepositoryService repositoryService;
-  protected ManagementService managementService;
+  List<String> deploymentIds = new ArrayList<>();
 
-  protected List<String> deploymentIds = new ArrayList<>();
-
-  @Before
-  public void init() {
-    runtimeService = processEngineRule.getRuntimeService();
-    repositoryService = processEngineRule.getRepositoryService();
-    managementService = processEngineRule.getManagementService();
-  }
-
-  @After
-  public void deleteDeployments() {
+  @AfterEach
+  void deleteDeployments() {
     for (String deploymentId : deploymentIds) {
       repositoryService.deleteDeployment(deploymentId, true);
     }
   }
 
   @Test
-  public void shouldThrowExceptionByMissingStartOr() {
+  void shouldThrowExceptionByMissingStartOr() {
     // given
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().or().endOr();
 
@@ -77,7 +66,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByNesting() {
+  void shouldThrowExceptionByNesting() {
     // given
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().or();
 
@@ -88,7 +77,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByProcessInstanceId() {
+  void shouldThrowExceptionOnOrderByProcessInstanceId() {
     // given
     var processInstanceQuery = runtimeService.createProcessInstanceQuery()
       .or();
@@ -100,7 +89,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByProcessDefinitionId() {
+  void shouldThrowExceptionOnOrderByProcessDefinitionId() {
     // given
     var processInstanceQuery = runtimeService.createProcessInstanceQuery()
       .or();
@@ -112,7 +101,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByProcessDefinitionKey() {
+  void shouldThrowExceptionOnOrderByProcessDefinitionKey() {
     // given
     var processInstanceQuery = runtimeService.createProcessInstanceQuery()
       .or();
@@ -125,7 +114,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTenantId() {
+  void shouldThrowExceptionOnOrderByTenantId() {
     // given
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().or();
 
@@ -136,7 +125,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByBusinessKey() {
+  void shouldThrowExceptionOnOrderByBusinessKey() {
     // given
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().or();
 
@@ -147,8 +136,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnProcInstWithEmptyOrQuery() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnProcInstWithEmptyOrQuery() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -164,8 +153,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnProcInstWithVarValue1OrVarValue2() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnProcInstWithVarValue1OrVarValue2() {
     // given
     Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
@@ -188,8 +177,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnProcInstWithMultipleOrCriteria() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnProcInstWithMultipleOrCriteria() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -222,8 +211,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnProcInstFilteredByMultipleOrAndCriteria() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnProcInstFilteredByMultipleOrAndCriteria() {
     // given
     Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
@@ -259,8 +248,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnProcInstFilteredByMultipleOrQueries() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnProcInstFilteredByMultipleOrQueries() {
     // given
     Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
@@ -324,8 +313,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnProcInstWhereSameCriterionWasAppliedThreeTimesInOneQuery() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnProcInstWhereSameCriterionWasAppliedThreeTimesInOneQuery() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -345,8 +334,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnProcInstWithVariableValueEqualsOrVariableValueGreaterThan() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnProcInstWithVariableValueEqualsOrVariableValueGreaterThan() {
     // given
     Map<String, Object> vars = new HashMap<>();
     vars.put("longVar", 12345L);
@@ -372,7 +361,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnProcInstWithProcessDefinitionNameOrProcessDefinitionKey() {
+  void shouldReturnProcInstWithProcessDefinitionNameOrProcessDefinitionKey() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
         .name("process1")
@@ -420,7 +409,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnProcInstWithBusinessKeyOrBusinessKeyLike() {
+  void shouldReturnProcInstWithBusinessKeyOrBusinessKeyLike() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
         .startEvent()
@@ -467,7 +456,7 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnProcInstByVariableAndActiveProcesses() {
+  void shouldReturnProcInstByVariableAndActiveProcesses() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("oneTaskProcess")
         .startEvent()
@@ -519,8 +508,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnByProcessDefinitionKeyOrActivityId() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnByProcessDefinitionKeyOrActivityId() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -553,8 +542,8 @@ public class ProcessInstanceQueryOrTest {
   }
 
   @Test
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void shouldReturnByProcessDefinitionIdOrIncidentType() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  void shouldReturnByProcessDefinitionIdOrIncidentType() {
     // given
     String processDefinitionId = runtimeService.startProcessInstanceByKey("oneTaskProcess")
         .getProcessDefinitionId();

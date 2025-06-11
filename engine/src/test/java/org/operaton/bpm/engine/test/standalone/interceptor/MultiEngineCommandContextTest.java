@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,46 +16,45 @@
  */
 package org.operaton.bpm.engine.test.standalone.interceptor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author Daniel Meyer
  *
  */
-public class MultiEngineCommandContextTest {
+class MultiEngineCommandContextTest {
 
   protected ProcessEngine engine1;
   protected ProcessEngine engine2;
 
-  @Before
-  public void startEngines() {
-    engine1 = createProcessEngine("engine1");
-    engine2 = createProcessEngine("engine2");
-    StartProcessInstanceOnEngineDelegate.ENGINES.put("engine1", engine1);
-    StartProcessInstanceOnEngineDelegate.ENGINES.put("engine2", engine2);
+  private static final String ENGINE1_NAME = "MultiEngineCommandContextTest-engine1";
+    private static final String ENGINE2_NAME = "MultiEngineCommandContextTest-engine2";
+
+  @BeforeEach
+  void startEngines() {
+    engine1 = createProcessEngine(ENGINE1_NAME);
+    engine2 = createProcessEngine(ENGINE2_NAME);
+    StartProcessInstanceOnEngineDelegate.ENGINES.put(ENGINE1_NAME, engine1);
+    StartProcessInstanceOnEngineDelegate.ENGINES.put(ENGINE2_NAME, engine2);
   }
 
-  @After
-  public void closeEngine1() {
+  @AfterEach
+  void closeEngines() {
+    StartProcessInstanceOnEngineDelegate.ENGINES.clear();
     try {
       engine1.close();
     }
     finally {
       engine1 = null;
     }
-  }
-
-  @After
-  public void closeEngine2() {
     try {
       engine2.close();
     }
@@ -64,17 +63,12 @@ public class MultiEngineCommandContextTest {
     }
   }
 
-  @After
-  public void removeEngines() {
-    StartProcessInstanceOnEngineDelegate.ENGINES.clear();
-  }
-
   @Test
-  public void shouldOpenNewCommandContextWhenInteractingAcrossEngines() {
+  void shouldOpenNewCommandContextWhenInteractingAcrossEngines() {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine2")
+          .operatonInputParameter("engineName", ENGINE2_NAME)
           .operatonInputParameter("processKey", "process2")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .endEvent()
@@ -100,12 +94,12 @@ public class MultiEngineCommandContextTest {
   }
 
   @Test
-  public void shouldOpenNewCommandContextWhenInteractingWithOtherEngineAndBack() {
+  void shouldOpenNewCommandContextWhenInteractingWithOtherEngineAndBack() {
 
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine2")
+          .operatonInputParameter("engineName", ENGINE2_NAME)
           .operatonInputParameter("processKey", "process2")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .endEvent()
@@ -114,7 +108,7 @@ public class MultiEngineCommandContextTest {
     BpmnModelInstance process2 = Bpmn.createExecutableProcess("process2")
         .startEvent()
         .serviceTask()
-          .operatonInputParameter("engineName", "engine1")
+          .operatonInputParameter("engineName", ENGINE1_NAME)
           .operatonInputParameter("processKey", "process3")
           .operatonClass(StartProcessInstanceOnEngineDelegate.class.getName())
         .done();

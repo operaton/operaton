@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -70,6 +70,11 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
     return new LazyInitRegistration();
   }
 
+  @Bean
+  public FaviconResourceResolver faviconResourceResolver() {
+    return new FaviconResourceResolver();
+  }
+
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     final String classpath = "classpath:" + properties.getWebapp().getWebjarClasspath();
@@ -84,8 +89,10 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
         .addResourceLocations(classpath + "/app/");
     registry.addResourceHandler(applicationPath + "/assets/**")
         .addResourceLocations(classpath + "/assets/");
-    registry.addResourceHandler(applicationPath + "/favicon.ico")
-        .addResourceLocations(classpath);
+     registry.addResourceHandler(applicationPath + "/favicon.ico")
+         .addResourceLocations(classpath + "/") // add slash to get rid of the WARN log
+         .resourceChain(true)
+         .addResolver(faviconResourceResolver());
   }
 
   @Override

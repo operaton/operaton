@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,14 +26,14 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
  *
  */
 public interface ExecutorService {
-  
+
   /**
    * <p>Passes a {@link Runnable} to the runtime container for execution. Some runtime
    * containers (like a Java EE container offer container provided
    * infrastructure for executing background work (such as a JCA WorkManager).
    * This method allows the process engine to take advantage of container
    * infrastructure for doing background work.</p>
-   * 
+   *
    * @param runnable
    *          the {@link Runnable} to be executed.
    * @param isLongRunning
@@ -41,15 +41,15 @@ public interface ExecutorService {
    * @return true if the runnable could be successfully scheduled for execution.
    *         'false' otherwise.
    */
-  public boolean schedule(Runnable runnable, boolean isLongRunning);
-  
+  boolean schedule(Runnable runnable, boolean isLongRunning);
+
   /**
-   * <p>Returns a runnable to be used for executing Jobs. 
-   * 
+   * <p>Returns a runnable to be used for executing Jobs.
+   *
    * @param jobIds
    * @param processEngine
    * @return
    */
-  public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine);
-  
+  Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine);
+
 }

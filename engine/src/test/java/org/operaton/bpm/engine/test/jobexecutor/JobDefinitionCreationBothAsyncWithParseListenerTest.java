@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
@@ -32,12 +34,8 @@ import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.management.JobDefinitionQuery;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * Represents a test class, which uses parse listeners
@@ -47,28 +45,30 @@ import org.junit.Test;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class JobDefinitionCreationBothAsyncWithParseListenerTest {
+class JobDefinitionCreationBothAsyncWithParseListenerTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    List<BpmnParseListener> listeners = new ArrayList<>();
-    listeners.add(new AbstractBpmnParseListener(){
-
-      @Override
-      public void parseServiceTask(Element serviceTaskElement, ScopeImpl scope, ActivityImpl activity) {
-        activity.setAsyncBefore(true);
-        activity.setAsyncAfter(true);
-      }
-    });
-
-    configuration.setCustomPreBPMNParseListeners(listeners);
-  });
-
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(configuration -> {
+      List<BpmnParseListener> listeners = new ArrayList<>();
+      listeners.add(new AbstractBpmnParseListener(){
+        
+        @Override
+        public void parseServiceTask(Element serviceTaskElement, ScopeImpl scope, ActivityImpl activity) {
+          activity.setAsyncBefore(true);
+          activity.setAsyncAfter(true);
+        }
+      });
+      
+      configuration.setCustomPreBPMNParseListeners(listeners);
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void testCreateBothAsyncJobDefinitionWithParseListener() {
+  void testCreateBothAsyncJobDefinitionWithParseListener() {
     //given
     String modelFileName = "jobCreationWithinParseListener.bpmn20.xml";
     InputStream in = JobDefinitionCreationWithParseListenerTest.class.getResourceAsStream(modelFileName);
@@ -97,7 +97,7 @@ public class JobDefinitionCreationBothAsyncWithParseListenerTest {
   }
 
   @Test
-  public void testCreateBothJobDefinitionWithParseListenerAndAsyncBeforeInXml() {
+  void testCreateBothJobDefinitionWithParseListenerAndAsyncBeforeInXml() {
     //given the asyncBefore is set in the xml
     String modelFileName = "jobAsyncBeforeCreationWithinParseListener.bpmn20.xml";
     InputStream in = JobDefinitionCreationWithParseListenerTest.class.getResourceAsStream(modelFileName);
@@ -126,7 +126,7 @@ public class JobDefinitionCreationBothAsyncWithParseListenerTest {
   }
 
   @Test
-  public void testCreateBothJobDefinitionWithParseListenerAndAsynBothInXml() {
+  void testCreateBothJobDefinitionWithParseListenerAndAsynBothInXml() {
     //given the asyncBefore AND asyncAfter is set in the xml
     String modelFileName = "jobAsyncBothCreationWithinParseListener.bpmn20.xml";
     InputStream in = JobDefinitionCreationWithParseListenerTest.class.getResourceAsStream(modelFileName);

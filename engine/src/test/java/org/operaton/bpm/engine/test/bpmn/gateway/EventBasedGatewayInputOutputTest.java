@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,20 +20,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.bpmn.iomapping.VariableLogDelegate;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class EventBasedGatewayInputOutputTest extends PluggableProcessEngineTest {
+class EventBasedGatewayInputOutputTest {
 
   protected static final BpmnModelInstance EVENT_GATEWAY_PROCESS =
     Bpmn.createExecutableProcess("process")
@@ -50,23 +55,32 @@ public class EventBasedGatewayInputOutputTest extends PluggableProcessEngineTest
       .endEvent()
       .done();
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  HistoryService historyService;
+
   protected boolean skipOutputMappingVal;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     skipOutputMappingVal = processEngineConfiguration.isSkipOutputMappingOnCanceledActivities();
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(true);
     VariableLogDelegate.reset();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(skipOutputMappingVal);
     VariableLogDelegate.reset();
   }
 
   @Test
-  public void shouldProcessInputOutputParametersAfterEventGateway() {
+  void shouldProcessInputOutputParametersAfterEventGateway() {
     // given
     testRule.deploy(EVENT_GATEWAY_PROCESS);
 
@@ -89,7 +103,7 @@ public class EventBasedGatewayInputOutputTest extends PluggableProcessEngineTest
   }
 
   @Test
-  public void shouldNotProcessInputOutputParametersAfterEventGatewayDeletion() {
+  void shouldNotProcessInputOutputParametersAfterEventGatewayDeletion() {
     // given
     testRule.deploy(EVENT_GATEWAY_PROCESS);
     String instanceId = runtimeService.startProcessInstanceByKey("process", Variables.putValue("moveOn", false)).getId();

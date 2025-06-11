@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,32 +21,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
 
-public class ModifyVariableInSameTransactionTest {
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  @Rule
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+class ModifyVariableInSameTransactionTest {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testDeleteAndInsertTheSameVariableByteArray() {
+  void testDeleteAndInsertTheSameVariableByteArray() {
     BpmnModelInstance bpmnModel =
         Bpmn.createExecutableProcess("serviceTaskProcess")
         .startEvent()
@@ -73,7 +72,7 @@ public class ModifyVariableInSameTransactionTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testDeleteAndInsertTheSameVariable() {
+  void testDeleteAndInsertTheSameVariable() {
     BpmnModelInstance bpmnModel =
         Bpmn.createExecutableProcess("serviceTaskProcess")
         .startEvent()
@@ -100,7 +99,7 @@ public class ModifyVariableInSameTransactionTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testInsertDeleteInsertTheSameVariable() {
+  void testInsertDeleteInsertTheSameVariable() {
     BpmnModelInstance bpmnModel =
         Bpmn.createExecutableProcess("serviceTaskProcess")
         .startEvent()

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,11 +40,11 @@ import org.operaton.bpm.engine.rest.sub.repository.ProcessDefinitionResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface ProcessDefinitionRestService {
 
-  public static final String APPLICATION_BPMN20_XML = "application/bpmn20+xml";
-  public static final MediaType APPLICATION_BPMN20_XML_TYPE =
+  String APPLICATION_BPMN20_XML = "application/bpmn20+xml";
+  MediaType APPLICATION_BPMN20_XML_TYPE =
       new MediaType("application", "bpmn20+xml");
 
-  public static final String PATH = "/process-definition";
+  String PATH = "/process-definition";
 
   @Path("/{id}")
   ProcessDefinitionResource getProcessDefinitionById(@PathParam("id") String processDefinitionId);

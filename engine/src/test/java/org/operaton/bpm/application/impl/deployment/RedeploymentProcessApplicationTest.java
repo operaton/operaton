@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -119,7 +119,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @TestTemplate
-  public void definitionOnePreviousDeploymentWithPA() {
+  void definitionOnePreviousDeploymentWithPA() {
     // given
 
     MyEmbeddedProcessApplication application = new MyEmbeddedProcessApplication();
@@ -150,7 +150,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @TestTemplate
-  public void redeploymentShouldFailOnNullHTTLAndEnforceHistoryTimeToLiveTrue() {
+  void redeploymentShouldFailOnNullHTTLAndEnforceHistoryTimeToLiveTrue() {
     // given
     Deployment deployment1;
     Deployment deployment2 = null;
@@ -195,7 +195,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @TestTemplate
-  public void definitionTwoPreviousDeploymentWithPA() {
+  void definitionTwoPreviousDeploymentWithPA() {
     // given
 
     // first deployment
@@ -234,7 +234,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @TestTemplate
-  public void definitionTwoPreviousDeploymentFirstDeploymentWithPA() {
+  void definitionTwoPreviousDeploymentFirstDeploymentWithPA() {
     // given
 
     // first deployment
@@ -271,7 +271,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @TestTemplate
-  public void definitionTwoPreviousDeploymentDeleteSecondDeployment() {
+  void definitionTwoPreviousDeploymentDeleteSecondDeployment() {
     // given
 
     // first deployment
@@ -311,7 +311,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @TestTemplate
-  public void definitionTwoPreviousDeploymentUnregisterSecondPA() {
+  void definitionTwoPreviousDeploymentUnregisterSecondPA() {
     // given
 
     // first deployment
@@ -351,7 +351,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @TestTemplate
-  public void definitionTwoDifferentPreviousDeploymentsWithDifferentPA() {
+  void definitionTwoDifferentPreviousDeploymentsWithDifferentPA() {
     // given
 
     // first deployment
@@ -402,7 +402,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @TestTemplate
-  public void definitionTwoPreviousDeploymentsWithDifferentPA() {
+  void definitionTwoPreviousDeploymentsWithDifferentPA() {
     // given
 
     // first deployment

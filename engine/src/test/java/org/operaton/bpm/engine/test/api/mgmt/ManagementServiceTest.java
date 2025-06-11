@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -71,12 +71,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Saeid Mizaei
  * @author Joram Barrez
  */
-public class ManagementServiceTest {
+class ManagementServiceTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngine processEngine;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -87,23 +87,23 @@ public class ManagementServiceTest {
 
   protected boolean tearDownEnsureJobDueDateNotNull;
 
-  protected final Date TEST_DUE_DATE = new Date(1675752840000L);
+  static final Date TEST_DUE_DATE = new Date(1675752840000L);
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if(tearDownEnsureJobDueDateNotNull) {
       processEngineConfiguration.setEnsureJobDueDateNotNull(false);
     }
   }
 
   @Test
-  public void testGetMetaDataForUnexistingTable() {
+  void testGetMetaDataForUnexistingTable() {
     TableMetaData metaData = managementService.getTableMetaData("unexistingtable");
     assertThat(metaData).isNull();
   }
 
   @Test
-  public void testGetMetaDataNullTableName() {
+  void testGetMetaDataNullTableName() {
     try {
       managementService.getTableMetaData(null);
       fail("ProcessEngineException expected");
@@ -113,7 +113,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testExecuteJobNullJobId() {
+  void testExecuteJobNullJobId() {
     try {
       managementService.executeJob(null);
       fail("ProcessEngineException expected");
@@ -123,7 +123,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testExecuteJobUnexistingJob() {
+  void testExecuteJobUnexistingJob() {
     try {
       managementService.executeJob("unexistingjob");
       fail("ProcessEngineException expected");
@@ -135,7 +135,7 @@ public class ManagementServiceTest {
 
   @Deployment
   @Test
-  public void testGetJobExceptionStacktrace() {
+  void testGetJobExceptionStacktrace() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
     // The execution is waiting in the first usertask. This contains a boundry
@@ -170,7 +170,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testgetJobExceptionStacktraceUnexistingJobId() {
+  void testgetJobExceptionStacktraceUnexistingJobId() {
     try {
       managementService.getJobExceptionStacktrace("unexistingjob");
       fail("ProcessEngineException expected");
@@ -180,7 +180,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testgetJobExceptionStacktraceNullJobId() {
+  void testgetJobExceptionStacktraceNullJobId() {
     try {
       managementService.getJobExceptionStacktrace(null);
       fail("ProcessEngineException expected");
@@ -191,7 +191,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void testSetJobRetries() {
+  void testSetJobRetries() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
     // The execution is waiting in the first usertask. This contains a boundary
@@ -213,7 +213,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void testSetMultipleJobRetries() {
+  void testSetMultipleJobRetries() {
     //given
     runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
     runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
@@ -227,14 +227,14 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnSetJobRetriesWithNull() {
+  void shouldThrowExceptionOnSetJobRetriesWithNull() {
     assertThatThrownBy(() -> managementService.setJobRetries((List<String>) null, 5))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("job ids is null");
   }
 
   @Test
-  public void shouldThrowExceptionOnSetJobRetriesWithNoJobReference() {
+  void shouldThrowExceptionOnSetJobRetriesWithNoJobReference() {
     // given
     var setJobRetriesBuilder = managementService.setJobRetries(5);
 
@@ -247,7 +247,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void shouldSetJobRetriesWithDuedateByJobIds() {
+  void shouldSetJobRetriesWithDuedateByJobIds() {
     // given
     runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
@@ -266,7 +266,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void shouldSetJobRetriesWithDuedateByJobId() {
+  void shouldSetJobRetriesWithDuedateByJobId() {
     // given
     runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
@@ -284,7 +284,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void shouldSetJobRetriesWithNullDuedateByJobId() {
+  void shouldSetJobRetriesWithNullDuedateByJobId() {
     // given
     runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
@@ -303,7 +303,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void shouldSetJobRetriesWithDuedateByJobDefinitionId() {
+  void shouldSetJobRetriesWithDuedateByJobDefinitionId() {
     // given
     runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
@@ -322,7 +322,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void shouldSetJobRetriesWithNullDuedateByJobDefinitionId() {
+  void shouldSetJobRetriesWithNullDuedateByJobDefinitionId() {
     // given
     runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
@@ -341,7 +341,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void shouldSetDueDateOnSetJobRetriesWithNullDuedateWhenEnsureDueDateNotNull() {
+  void shouldSetDueDateOnSetJobRetriesWithNullDuedateWhenEnsureDueDateNotNull() {
     // given
     tearDownEnsureJobDueDateNotNull = true;
     processEngineConfiguration.setEnsureJobDueDateNotNull(true);
@@ -361,7 +361,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void shouldSetDueDateNullOnSetJobRetriesWithNullDuedateWhenNotEnsureDueDateNotNull() {
+  void shouldSetDueDateNullOnSetJobRetriesWithNullDuedateWhenNotEnsureDueDateNotNull() {
     // given
     tearDownEnsureJobDueDateNotNull = true;
     processEngineConfiguration.setEnsureJobDueDateNotNull(false);
@@ -380,7 +380,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnSetJobRetriesWithNegativeRetries() {
+  void shouldThrowExceptionOnSetJobRetriesWithNegativeRetries() {
     assertThatThrownBy(() -> managementService.setJobRetries("aFake", -1))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("54")
@@ -389,7 +389,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void testSetJobRetriesWithFake() {
+  void testSetJobRetriesWithFake() {
     //given
     runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
@@ -423,7 +423,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void testSetJobRetriesNullCreatesIncident() {
+  void testSetJobRetriesNullCreatesIncident() {
 
     // initially there is no incident
     assertThat(runtimeService.createIncidentQuery().count()).isZero();
@@ -451,7 +451,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnSetJobRetriesWithUnexistingJobId() {
+  void shouldThrowExceptionOnSetJobRetriesWithUnexistingJobId() {
     assertThatThrownBy(() -> managementService.setJobRetries("unexistingjob", 5))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("053")
@@ -459,7 +459,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnSetJobRetriesWithEmptyJobId() {
+  void shouldThrowExceptionOnSetJobRetriesWithEmptyJobId() {
     assertThatThrownBy(() -> managementService.setJobRetries("", 5))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("052")
@@ -467,7 +467,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetJobRetriesJobIdNull() {
+  void testSetJobRetriesJobIdNull() {
     assertThatThrownBy(() -> managementService.setJobRetries((String) null, 5))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("052")
@@ -476,7 +476,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void testSetJobRetriesByJobDefinitionId() {
+  void testSetJobRetriesByJobDefinitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
     testRule.executeAvailableJobs();
 
@@ -499,7 +499,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetJobRetriesByJobDefinitionIdEmptyJobDefinitionId() {
+  void testSetJobRetriesByJobDefinitionIdEmptyJobDefinitionId() {
       assertThatThrownBy(() -> managementService.setJobRetriesByJobDefinitionId("", 5))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("052")
@@ -507,7 +507,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetJobRetriesByJobDefinitionIdNull() {
+  void testSetJobRetriesByJobDefinitionIdNull() {
     assertThatThrownBy(() -> managementService.setJobRetriesByJobDefinitionId(null, 5))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("052")
@@ -515,7 +515,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetJobRetriesUnlocksInconsistentJob() {
+  void testSetJobRetriesUnlocksInconsistentJob() {
     // case 1
     // given an inconsistent job that is never again picked up by a job executor
     createJob(0, "owner", ClockUtil.getCurrentTime());
@@ -585,7 +585,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void testSetJobRetriesByDefinitionUnlocksInconsistentJobs() {
+  void testSetJobRetriesByDefinitionUnlocksInconsistentJobs() {
     // given a job definition
     final JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
 
@@ -641,7 +641,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testDeleteJobNullJobId() {
+  void testDeleteJobNullJobId() {
     try {
       managementService.deleteJob(null);
       fail("ProcessEngineException expected");
@@ -651,7 +651,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testDeleteJobUnexistingJob() {
+  void testDeleteJobUnexistingJob() {
     try {
       managementService.deleteJob("unexistingjob");
       fail("ProcessEngineException expected");
@@ -662,7 +662,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/timerOnTask.bpmn20.xml"})
   @Test
-  public void testDeleteJobDeletion() {
+  void testDeleteJobDeletion() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerOnTask");
     Job timerJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -675,7 +675,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/timerOnTask.bpmn20.xml"})
   @Test
-  public void testDeleteJobThatWasAlreadyAcquired() {
+  void testDeleteJobThatWasAlreadyAcquired() {
     ClockUtil.setCurrentTime(new Date());
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerOnTask");
@@ -706,7 +706,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void testSetJobDuedate() {
+  void testSetJobDuedate() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
     // The execution is waiting in the first usertask. This contains a boundary
@@ -734,7 +734,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
   @Test
-  public void testSetJobDuedateDateNull() {
+  void testSetJobDuedateDateNull() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
     // The execution is waiting in the first usertask. This contains a boundary
@@ -757,7 +757,7 @@ public class ManagementServiceTest {
 
 
   @Test
-  public void testSetJobDuedateJobIdNull() {
+  void testSetJobDuedateJobIdNull() {
     Date duedate = new Date();
     try {
       managementService.setJobDuedate(null, duedate);
@@ -768,7 +768,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetJobDuedateEmptyJobId() {
+  void testSetJobDuedateEmptyJobId() {
     Date duedate = new Date();
     try {
       managementService.setJobDuedate("", duedate);
@@ -779,7 +779,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetJobDuedateUnexistingJobId() {
+  void testSetJobDuedateUnexistingJobId() {
     Date duedate = new Date();
     try {
       managementService.setJobDuedate("unexistingjob", duedate);
@@ -791,7 +791,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testSetJobDuedateNonTimerJob(){
+  void testSetJobDuedateNonTimerJob(){
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Job job = managementService.createJobQuery().processDefinitionKey("oneTaskProcess").singleResult();
     assertThat(job).isNotNull();
@@ -801,7 +801,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testGetProperties() {
+  void testGetProperties() {
     Map<String, String> properties = managementService.getProperties();
     assertThat(properties)
             .isNotNull()
@@ -809,7 +809,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetProperty() {
+  void testSetProperty() {
     final String name = "testProp";
     final String value = "testValue";
     managementService.setProperty(name, value);
@@ -823,7 +823,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testDeleteProperty() {
+  void testDeleteProperty() {
     final String name = "testProp";
     final String value = "testValue";
     managementService.setProperty(name, value);
@@ -840,20 +840,20 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testDeleteNonexistingProperty() {
+  void testDeleteNonexistingProperty() {
     assertThatCode(() -> managementService.deleteProperty("non existing"))
       .doesNotThrowAnyException();
   }
 
   @Test
-  public void testGetHistoryLevel() {
+  void testGetHistoryLevel() {
     int historyLevel = managementService.getHistoryLevel();
     assertThat(historyLevel).isEqualTo(processEngineConfiguration.getHistoryLevel().getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
   @Test
-  public void testSetJobPriority() {
+  void testSetJobPriority() {
     // given
     runtimeService
         .createProcessInstanceByKey("asyncTaskProcess")
@@ -872,7 +872,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetJobPriorityForNonExistingJob() {
+  void testSetJobPriorityForNonExistingJob() {
     try {
       managementService.setJobPriority("nonExistingJob", 42);
       fail("should not succeed");
@@ -882,7 +882,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testSetJobPriorityForNullJob() {
+  void testSetJobPriorityForNullJob() {
     try {
       managementService.setJobPriority(null, 42);
       fail("should not succeed");
@@ -893,7 +893,7 @@ public class ManagementServiceTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
   @Test
-  public void testSetJobPriorityToExtremeValues() {
+  void testSetJobPriorityToExtremeValues() {
     runtimeService
         .createProcessInstanceByKey("asyncTaskProcess")
         .startBeforeActivity("task")
@@ -913,7 +913,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testGetTableMetaData() {
+  void testGetTableMetaData() {
 
     TableMetaData tableMetaData = managementService.getTableMetaData("ACT_RU_TASK");
     assertThat(tableMetaData.getColumnNames()).hasSize(tableMetaData.getColumnTypes().size());
@@ -933,7 +933,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testGetTablePage() {
+  void testGetTablePage() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     List<String> taskIds = generateDummyTasks(20);
 
@@ -959,7 +959,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void testGetSortedTablePage() {
+  void testGetSortedTablePage() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     List<String> taskIds = generateDummyTasks(15);
 
@@ -983,7 +983,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void shouldAlwaysReturnFalseWhenFetchingIsTelemetryEnabled() {
+  void shouldAlwaysReturnFalseWhenFetchingIsTelemetryEnabled() {
     // given default configuration
 
     // then
@@ -991,7 +991,7 @@ public class ManagementServiceTest {
   }
 
   @Test
-  public void shouldReturnFalseWhenToggleTelemetry() {
+  void shouldReturnFalseWhenToggleTelemetry() {
     // given default configuration
 
     // when

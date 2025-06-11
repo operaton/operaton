@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param variables the variable names to fetch, if null all variables will be fetched
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder variables(String... variables);
+  ExternalTaskQueryTopicBuilder variables(String... variables);
 
   /**
    * Define variables to fetch with all tasks for the current topic. Calling
@@ -41,7 +41,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param variables the variable names to fetch, if null all variables will be fetched
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder variables(List<String> variables);
+  ExternalTaskQueryTopicBuilder variables(List<String> variables);
 
   /**
    * Define a HashMap of variables and their values to filter correlated tasks.
@@ -50,7 +50,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param variables a HashMap of the variable names (keys) and the values to filter by
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder processInstanceVariableEquals(Map<String, Object> variables);
+  ExternalTaskQueryTopicBuilder processInstanceVariableEquals(Map<String, Object> variables);
 
   /**
    * Define a single variable and its name to filter tasks in a topic. Multiple calls to
@@ -60,7 +60,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param value the value of the variable which you want to filter
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder processInstanceVariableEquals(String name, Object value);
+  ExternalTaskQueryTopicBuilder processInstanceVariableEquals(String name, Object value);
 
   /**
    * Define business key value to filter external tasks by (Process Instance) Business Key.
@@ -68,7 +68,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param businessKey the value of the Business Key to filter by
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder businessKey(String businessKey);
+  ExternalTaskQueryTopicBuilder businessKey(String businessKey);
 
   /**
    * Define process definition id to filter external tasks by.
@@ -76,7 +76,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param processDefinitionId the definition id to filter by
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder processDefinitionId(String processDefinitionId);
+  ExternalTaskQueryTopicBuilder processDefinitionId(String processDefinitionId);
 
   /**
    * Define process definition ids to filter external tasksb by.
@@ -84,7 +84,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param processDefinitionIds the definition ids to filter by
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder processDefinitionIdIn(String... processDefinitionIds);
+  ExternalTaskQueryTopicBuilder processDefinitionIdIn(String... processDefinitionIds);
 
   /**
    * Define process definition key to filter external tasks by.
@@ -92,7 +92,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param processDefinitionKey the definition key to filter by
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder processDefinitionKey(String processDefinitionKey);
+  ExternalTaskQueryTopicBuilder processDefinitionKey(String processDefinitionKey);
 
   /**
    * Define process definition keys to filter external tasks by.
@@ -100,23 +100,23 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param processDefinitionKey the definition keys to filter by
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder processDefinitionKeyIn(String... processDefinitionKeys);
+  ExternalTaskQueryTopicBuilder processDefinitionKeyIn(String... processDefinitionKeys);
 
 
   /**
    * Define a process definition version tag to filter external tasks by.
-   * 
+   *
    * @param versionTag the version tag to filter by
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder processDefinitionVersionTag(String versionTag);
+  ExternalTaskQueryTopicBuilder processDefinitionVersionTag(String versionTag);
 
   /**
    * Filter external tasks only with null tenant id.
    *
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder withoutTenantId();
+  ExternalTaskQueryTopicBuilder withoutTenantId();
 
   /**
    * Define tenant ids to filter external tasks by.
@@ -124,7 +124,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * @param tenantIds the tenant ids to filter by
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder tenantIdIn(String... tenantIds);
+  ExternalTaskQueryTopicBuilder tenantIdIn(String... tenantIds);
 
   /**
    * Enable deserialization of variable values that are custom objects. By default, the query
@@ -132,19 +132,19 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    *
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder enableCustomObjectDeserialization();
+  ExternalTaskQueryTopicBuilder enableCustomObjectDeserialization();
 
   /**
    * Define whether only local variables will be fetched with all tasks for the current topic.
    *
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder localVariables();
+  ExternalTaskQueryTopicBuilder localVariables();
 
   /**
    * Configure the query to include custom extension properties, if available, for all fetched tasks.
-   * 
+   *
    * @return this builder
    */
-  public ExternalTaskQueryTopicBuilder includeExtensionProperties();
+  ExternalTaskQueryTopicBuilder includeExtensionProperties();
 }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -40,18 +40,18 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class CaseTaskTest extends CmmnTest {
+class CaseTaskTest extends CmmnTest {
 
-  protected final String CASE_TASK = "PI_CaseTask_1";
-  protected final String ONE_CASE_TASK_CASE = "oneCaseTaskCase";
-  protected final String ONE_TASK_CASE = "oneTaskCase";
+  static final String CASE_TASK = "PI_CaseTask_1";
+  static final String ONE_CASE_TASK_CASE = "oneCaseTaskCase";
+  static final String ONE_TASK_CASE = "oneTaskCase";
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCallCaseAsConstant() {
+  void testCallCaseAsConstant() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -81,9 +81,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testCallCaseAsExpressionStartsWithDollar.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCallCaseAsExpressionStartsWithDollar() {
+  void testCallCaseAsExpressionStartsWithDollar() {
     // given
     // a deployed case definition
     VariableMap vars = new VariableMapImpl();
@@ -116,9 +116,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testCallCaseAsExpressionStartsWithHash.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCallCaseAsExpressionStartsWithHash() {
+  void testCallCaseAsExpressionStartsWithHash() {
     // given
     // a deployed case definition
     VariableMap vars = new VariableMapImpl();
@@ -154,9 +154,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testCallLatestCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCallLatestCase() {
+  void testCallLatestCase() {
     // given
     String cmmnResourceName = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
 
@@ -208,9 +208,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testCallCaseByDeployment.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCallCaseByDeployment() {
+  void testCallCaseByDeployment() {
     // given
 
     String firstDeploymentId = repositoryService
@@ -267,9 +267,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testCallCaseByVersion.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCallCaseByVersion() {
+  void testCallCaseByVersion() {
     // given
 
     String bpmnResourceName = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
@@ -324,9 +324,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testCallCaseByVersionAsExpressionStartsWithDollar.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCallCaseByVersionAsExpressionStartsWithDollar() {
+  void testCallCaseByVersionAsExpressionStartsWithDollar() {
     // given
 
     String bpmnResourceName = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
@@ -384,9 +384,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testCallCaseByVersionAsExpressionStartsWithHash.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCallCaseByVersionAsExpressionStartsWithHash() {
+  void testCallCaseByVersionAsExpressionStartsWithHash() {
     // given
 
     String bpmnResourceName = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
@@ -451,9 +451,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testInputBusinessKey.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testInputBusinessKey() {
+  void testInputBusinessKey() {
     // given
     String businessKey = "myBusinessKey";
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE, businessKey).getId();
@@ -489,9 +489,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testInputDifferentBusinessKey.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testInputDifferentBusinessKey() {
+  void testInputDifferentBusinessKey() {
     // given
     String businessKey = "myBusinessKey";
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE, businessKey).getId();
@@ -533,9 +533,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testInputSourceWithManualActivation.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testInputSource() {
+  void testInputSource() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -593,9 +593,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testInputSourceDifferentTarget.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testInputSourceDifferentTarget() {
+  void testInputSourceDifferentTarget() {
     // given
     VariableMap vars = new VariableMapImpl();
     vars.putValue("aVariable", "abc");
@@ -648,9 +648,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testInputSource.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testInputSourceNullValue() {
+  void testInputSourceNullValue() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -700,9 +700,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testInputSourceExpression.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testInputSourceExpression() {
+  void testInputSourceExpression() {
     // given
     VariableMap vars = new VariableMapImpl();
     vars.putValue("aVariable", "abc");
@@ -751,9 +751,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testInputAll.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testInputAll() {
+  void testInputAll() {
     // given
     VariableMap vars = new VariableMapImpl();
     vars.putValue("aVariable", "abc");
@@ -806,9 +806,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testInputAllLocal.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testInputAllLocal() {
+  void testInputAllLocal() {
     // given
     createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -837,9 +837,9 @@ public class CaseTaskTest extends CmmnTest {
    */
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCaseWithManualActivation.cmmn"
-    })
+  })
   @Test
-  public void testCaseNotFound() {
+  void testCaseNotFound() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -867,9 +867,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCompleteSimpleCase() {
+  void testCompleteSimpleCase() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
 
@@ -902,9 +902,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testOutputSource.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"
-    })
+  })
   @Test
-  public void testOutputSource() {
+  void testOutputSource() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
 
@@ -968,9 +968,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testOutputSourceDifferentTarget.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testOutputSourceDifferentTarget() {
+  void testOutputSourceDifferentTarget() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
 
@@ -1029,9 +1029,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testOutputSource.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testOutputSourceNullValue() {
+  void testOutputSourceNullValue() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
 
@@ -1084,9 +1084,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testOutputSourceExpression.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"
-    })
+  })
   @Test
-  public void testOutputSourceExpression() {
+  void testOutputSourceExpression() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
 
@@ -1150,9 +1150,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testOutputAll.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"
-    })
+  })
   @Test
-  public void testOutputAll() {
+  void testOutputAll() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
 
@@ -1212,9 +1212,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testOutputVariablesShouldNotExistAnymore.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"
-    })
+  })
   @Test
-  public void testOutputVariablesShouldNotExistAnymore() {
+  void testOutputVariablesShouldNotExistAnymore() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -1272,9 +1272,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testVariablesRoundtrip.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"
-    })
+  })
   @Test
-  public void testVariablesRoundtrip() {
+  void testVariablesRoundtrip() {
     // given
 
     VariableMap vars = new VariableMapImpl();
@@ -1342,9 +1342,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testCompleteCaseTask() {
+  void testCompleteCaseTask() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -1377,9 +1377,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testTerminateCaseTask() {
+  void testTerminateCaseTask() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -1411,9 +1411,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testTerminateSubCaseInstance() {
+  void testTerminateSubCaseInstance() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -1449,9 +1449,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testSuspendCaseTask() {
+  void testSuspendCaseTask() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -1485,9 +1485,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"
-    })
+  })
   @Test
-  public void testSuspendSubCaseInstance() {
+  void testSuspendSubCaseInstance() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -1520,9 +1520,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testResumeCaseTask() {
+  void testResumeCaseTask() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -1561,9 +1561,9 @@ public class CaseTaskTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/casetask/CaseTaskTest.testNotBlockingCaseTask.cmmn",
       "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"
-    })
+  })
   @Test
-  public void testNotBlockingCaseTask() {
+  void testNotBlockingCaseTask() {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
 
@@ -1597,7 +1597,7 @@ public class CaseTaskTest extends CmmnTest {
    */
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testActivityType() {
+  void testActivityType() {
     // given
     createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
 

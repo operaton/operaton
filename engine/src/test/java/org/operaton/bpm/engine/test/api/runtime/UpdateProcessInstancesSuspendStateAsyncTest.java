@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,8 +19,15 @@ package org.operaton.bpm.engine.test.api.runtime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -31,47 +38,33 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class UpdateProcessInstancesSuspendStateAsyncTest {
+class UpdateProcessInstancesSuspendStateAsyncTest {
 
   protected static final Date TEST_DATE = new Date(1457326800000L);
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected BatchSuspensionHelper helper = new BatchSuspensionHelper(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  BatchSuspensionHelper helper = new BatchSuspensionHelper(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RuntimeService runtimeService;
+  HistoryService historyService;
 
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    historyService = engineRule.getHistoryService();
-  }
-
-  @After
-  public void removeBatches() {
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
 
-
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testBatchSuspensionById() {
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+  void testBatchSuspensionById() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -91,7 +84,7 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
   }
 
   @Test
-  public void testBatchSuspensionByIdsInDifferentDeployments() {
+  void testBatchSuspensionByIdsInDifferentDeployments() {
     // given
     String deploymentId1 = testRule.deployAndGetDefinition("org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml").getDeploymentId();
     String deploymentId2 = testRule.deployAndGetDefinition("org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml").getDeploymentId();
@@ -129,7 +122,7 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void shouldSetInvocationsPerBatchTypeOnSuspension() {
+  void shouldSetInvocationsPerBatchTypeOnSuspension() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()
@@ -154,7 +147,7 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void shouldSetInvocationsPerBatchTypeOnActivation() {
+  void shouldSetInvocationsPerBatchTypeOnActivation() {
     // given
     engineRule.getProcessEngineConfiguration()
         .getInvocationsPerBatchJobByBatchType()
@@ -178,8 +171,8 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testBatchActivationById() {
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+  void testBatchActivationById() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -202,8 +195,8 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testBatchSuspensionByProcessInstanceQuery() {
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+  void testBatchSuspensionByProcessInstanceQuery() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -224,8 +217,8 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testBatchActivationByProcessInstanceQuery() {
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+  void testBatchActivationByProcessInstanceQuery() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -248,9 +241,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void testBatchSuspensionByHistoricProcessInstanceQuery() {
+  void testBatchSuspensionByHistoricProcessInstanceQuery() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -272,9 +265,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void testBatchActivationByHistoricProcessInstanceQuery() {
+  void testBatchActivationByHistoricProcessInstanceQuery() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -296,7 +289,7 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
   }
 
   @Test
-  public void testEmptyProcessInstanceListSuspendAsync() {
+  void testEmptyProcessInstanceListSuspendAsync() {
     // given
     var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
       .byProcessInstanceIds();
@@ -308,7 +301,7 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
   }
 
   @Test
-  public void testEmptyProcessInstanceListActivateAsync() {
+  void testEmptyProcessInstanceListActivateAsync() {
     // given
     var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
       .byProcessInstanceIds();
@@ -322,8 +315,8 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testNullProcessInstanceListActivateAsync() {
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+  void testNullProcessInstanceListActivateAsync() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -338,8 +331,8 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testNullProcessInstanceListSuspendAsync() {
+      "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
+  void testNullProcessInstanceListSuspendAsync() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -355,7 +348,7 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldSetExecutionStartTimeInBatchAndHistory() {
+  void shouldSetExecutionStartTimeInBatchAndHistory() {
     // given
     ClockUtil.setCurrentTime(TEST_DATE);
     testRule.deployAndGetDefinition("org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")

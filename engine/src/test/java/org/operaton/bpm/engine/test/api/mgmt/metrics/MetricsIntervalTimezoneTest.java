@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,10 +35,10 @@ import org.operaton.bpm.engine.management.MetricIntervalValue;
  * </p>
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
+class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
 
   @Test
-  public void testTimestampIsInCorrectTimezone() {
+  void testTimestampIsInCorrectTimezone() {
     //given generated metric data started at DEFAULT_INTERVAL ends at 3 * DEFAULT_INTERVAL
 
     //when metric query is executed (hint last interval is returned as first)

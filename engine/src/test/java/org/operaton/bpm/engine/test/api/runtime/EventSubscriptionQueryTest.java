@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,8 +23,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.EventSubscriptionQueryImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.runtime.EventSubscription;
@@ -32,16 +36,24 @@ import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Daniel Meyer
  */
-public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
+class EventSubscriptionQueryTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
 
   @Test
-  public void testQueryByEventSubscriptionId() {
+  void testQueryByEventSubscriptionId() {
     createExampleEventSubscriptions();
 
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
@@ -70,7 +82,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByEventName() {
+  void testQueryByEventName() {
 
     createExampleEventSubscriptions();
 
@@ -97,7 +109,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByEventType() {
+  void testQueryByEventType() {
 
     createExampleEventSubscriptions();
 
@@ -124,7 +136,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByActivityId() {
+  void testQueryByActivityId() {
 
     createExampleEventSubscriptions();
 
@@ -153,7 +165,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testQueryByExecutionId() {
+  void testQueryByExecutionId() {
 
     // starting two instances:
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("catchSignal");
@@ -191,7 +203,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     createExampleEventSubscriptions();
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().orderByCreated().asc().list();
     assertThat(eventSubscriptions).hasSize(3);
@@ -204,12 +216,12 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleEventSubscriptions() {
+  void testMultipleEventSubscriptions() {
     String message = "cancelation-requested";
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
-    assertThat(areJobsAvailable()).isTrue();
+    assertThat(testRule.areJobsAvailable()).isTrue();
 
     long eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();
     assertThat(eventSubscriptionCount).isEqualTo(2);

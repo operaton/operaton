@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -160,8 +160,8 @@ module.exports = [
            * observe the task list query
            */
           tasksData.observe('taskListQuery', function(taskListQuery) {
+            var oldQuery = $scope.query;
             if (taskListQuery) {
-              var oldQuery = $scope.query;
               var searchParams = $location.search() || {};
               var forceDisplayTask = searchParams.forceDisplayTask;
               // parse pagination properties from query
@@ -179,7 +179,7 @@ module.exports = [
               if (oldQuery.id && oldQuery.id !== taskListQuery.id) {
                 clearSelectedTask();
               }
-            } else {
+            } else if (!angular.equals(oldQuery, {})) {
               clearSelectedTask();
             }
           });

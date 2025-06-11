@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -116,7 +116,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
     /**
      * In error case the callback will called.
      */
-    public void callback();
+    void callback();
   }
 
   /**
@@ -124,7 +124,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * The value is the error callback, which is called if the activity is not
    * read till the end of parsing.
    */
-  protected final Map<String, BacklogErrorCallback> BACKLOG = new HashMap<>();
+  protected final Map<String, BacklogErrorCallback> backlog = new HashMap<>();
 
   /**
    * Returns the backlog error callback's.
@@ -132,7 +132,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * @return the callback's
    */
   public Collection<BacklogErrorCallback> getBacklogErrorCallbacks() {
-    return BACKLOG.values();
+    return backlog.values();
   }
 
   /**
@@ -141,7 +141,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * @return true if empty, false otherwise
    */
   public boolean isBacklogEmpty() {
-    return BACKLOG.isEmpty();
+    return backlog.isEmpty();
   }
 
   /**
@@ -151,7 +151,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * @param callback the error callback which should called if activity will not be read
    */
   public void addToBacklog(String activityRef, BacklogErrorCallback callback) {
-    BACKLOG.put(activityRef, callback);
+    backlog.put(activityRef, callback);
   }
 
   @Override
@@ -161,8 +161,8 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
       if (processDefinition.findActivity(activityId) != null) {
         throw new PvmException("duplicate activity id '" + activityId + "'");
       }
-      if (BACKLOG.containsKey(activityId)) {
-        BACKLOG.remove(activityId);
+      if (backlog.containsKey(activityId)) {
+        backlog.remove(activityId);
       }
       namedFlowActivities.put(activityId, activity);
     }
@@ -201,35 +201,35 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   // event listeners //////////////////////////////////////////////////////////
 
   /**
-   * @deprecated Use {@link #getListeners(String)} instead
+   * @deprecated Use {@link #getListeners(String)} instead.
    */
   @SuppressWarnings("unchecked")
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public List<ExecutionListener> getExecutionListeners(String eventName) {
     return (List) super.getListeners(eventName);
   }
 
   /**
-   * @deprecated Use {@link #addListener(String, org.operaton.bpm.engine.delegate.DelegateListener)} instead
+   * @deprecated Use {@link #addListener(String, org.operaton.bpm.engine.delegate.DelegateListener)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public void addExecutionListener(String eventName, ExecutionListener executionListener) {
     super.addListener(eventName, executionListener);
   }
 
   /**
-   * @deprecated Use {@link #addListener(String, org.operaton.bpm.engine.delegate.DelegateListener, int)} instead
+   * @deprecated Use {@link #addListener(String, org.operaton.bpm.engine.delegate.DelegateListener, int)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public void addExecutionListener(String eventName, ExecutionListener executionListener, int index) {
     super.addListener(eventName, executionListener, index);
   }
 
   /**
-   * @deprecated Use {@link #getListeners()} instead
+   * @deprecated Use {@link #getListeners()} instead.
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, List<ExecutionListener>> getExecutionListeners() {
     return (Map) super.getListeners();
   }

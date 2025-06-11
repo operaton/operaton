@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,25 +21,41 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * Testcase for the non-spec extensions to the task candidate use case.
- * 
+ *
  * @author Joram Barrez
  */
-public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
+class TaskAssignmentExtensionsTest {
 
-  @Before
-  public void setUp() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  IdentityService identityService;
+  TaskService taskService;
+
+  @BeforeEach
+  void setUp() {
     identityService.saveUser(identityService.newUser("kermit"));
     identityService.saveUser(identityService.newUser("gonzo"));
     identityService.saveUser(identityService.newUser("fozzie"));
@@ -52,8 +68,8 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
     identityService.createMembership("fozzie", "management");
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.deleteGroup("accountancy");
     identityService.deleteGroup("management");
     identityService.deleteUser("fozzie");
@@ -63,7 +79,7 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAssigneeExtension() {
+  void testAssigneeExtension() {
     runtimeService.startProcessInstanceByKey("assigneeExtension");
     List<Task> tasks = taskService
       .createTaskQuery()
@@ -74,7 +90,7 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDuplicateAssigneeDeclaration() {
+  void testDuplicateAssigneeDeclaration() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testDuplicateAssigneeDeclaration");
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource(resource);
     try {
@@ -87,7 +103,7 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCandidateUsersExtension() {
+  void testCandidateUsersExtension() {
     runtimeService.startProcessInstanceByKey("candidateUsersExtension");
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
     assertThat(tasks).hasSize(1);
@@ -97,7 +113,7 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCandidateGroupsExtension() {
+  void testCandidateGroupsExtension() {
     runtimeService.startProcessInstanceByKey("candidateGroupsExtension");
 
     // Bugfix check: potentially the query could return 2 tasks since
@@ -120,7 +136,7 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
   // with the spec way of defining candidate users
   @Deployment
   @Test
-  public void testMixedCandidateUserDefinition() {
+  void testMixedCandidateUserDefinition() {
     runtimeService.startProcessInstanceByKey("mixedCandidateUser");
 
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,7 +37,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyUserOperationLogQueryTest {
+class MultiTenancyUserOperationLogQueryTest {
   protected static final String USER_ONE = "aUserId";
   protected static final String USER_TWO = "aUserId1";
   protected static final String USER_WITHOUT_TENANT = "aUserId1";
@@ -50,9 +50,9 @@ public class MultiTenancyUserOperationLogQueryTest {
       .startEvent().userTask("aTaskId").done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected TaskService taskService;
   protected HistoryService historyService;
@@ -60,7 +60,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   protected IdentityService identityService;
 
   @Test
-  public void shouldReturnNoResultsWithoutTenant() {
+  void shouldReturnNoResultsWithoutTenant() {
     // given logs with assigned tenant
     testRule.deployForTenant(TENANT_ONE, MODEL);
     identityService.setAuthentication(USER_ONE, null, Arrays.asList(TENANT_ONE));
@@ -82,7 +82,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   }
 
   @Test
-  public void shouldReturnResultsWhenMultipleTenants() {
+  void shouldReturnResultsWhenMultipleTenants() {
     // given task with no tenant, with TENANT_ONE, and with TENANT_TWO
     testRule.deploy(MODEL);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
@@ -119,7 +119,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   }
 
   @Test
-  public void shouldReturnResultsWhenTwoTenant() {
+  void shouldReturnResultsWhenTwoTenant() {
     // given logs with assigned tenant
     // and user belonging to two tenants
     testRule.deployForTenant(TENANT_ONE, MODEL);
@@ -141,7 +141,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   }
 
   @Test
-  public void shouldReturnResultsWithoutTenantId() {
+  void shouldReturnResultsWithoutTenantId() {
     // given task with no tenant, with TENANT_ONE, and with TENANT_TWO
     testRule.deploy(MODEL);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
@@ -178,7 +178,7 @@ public class MultiTenancyUserOperationLogQueryTest {
   }
 
   @Test
-  public void shouldReturnResultsTenantIdIn() {
+  void shouldReturnResultsTenantIdIn() {
     // given task with no tenant, with TENANT_ONE, and with TENANT_TWO
     testRule.deploy(MODEL);
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);

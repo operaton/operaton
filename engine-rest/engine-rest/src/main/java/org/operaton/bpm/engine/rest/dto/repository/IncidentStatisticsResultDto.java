@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,12 +22,10 @@ import org.operaton.bpm.engine.management.IncidentStatistics;
  * @author roman.smirnov
  */
 public class IncidentStatisticsResultDto {
-  
+
   protected String incidentType;
   protected Integer incidentCount;
-  
-  public IncidentStatisticsResultDto() {}
-  
+
   public String getIncidentType() {
     return incidentType;
   }
@@ -43,7 +41,7 @@ public class IncidentStatisticsResultDto {
   public void setIncidentCount(Integer incidentCount) {
     this.incidentCount = incidentCount;
   }
-  
+
   public static IncidentStatisticsResultDto fromIncidentStatistics(IncidentStatistics statistics) {
     IncidentStatisticsResultDto dto = new IncidentStatisticsResultDto();
     dto.setIncidentType(statistics.getIncidentType());

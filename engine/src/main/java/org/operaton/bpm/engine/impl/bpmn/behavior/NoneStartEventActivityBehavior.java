@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,10 +20,10 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 
 /**
- * implementation of the 'none start event': a start event that has no 
+ * implementation of the 'none start event': a start event that has no
  * specific trigger but the programmatic one (processService.startProcessInstanceXXX()).
- * 
- * 
+ *
+ *
  * @author Joram Barrez
  */
 public class NoneStartEventActivityBehavior extends FlowNodeActivityBehavior {
@@ -31,5 +31,5 @@ public class NoneStartEventActivityBehavior extends FlowNodeActivityBehavior {
   // Nothing to see here.
   // The default behaviour of the BpmnActivity is exactly what
   // a none start event should be doing.
-  
+
 }

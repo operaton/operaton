@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,9 +55,9 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 public class StandaloneTaskGetVariableAuthorizationTest {
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;
@@ -110,7 +110,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariable() {
+  void testGetVariable() {
     // given
     createTask(taskId);
 
@@ -133,7 +133,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariableLocal() {
+  void testGetVariableLocal() {
     // given
     createTask(taskId);
 
@@ -156,7 +156,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariableTyped() {
+  void testGetVariableTyped() {
     // given
     createTask(taskId);
 
@@ -180,7 +180,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariableLocalTyped() {
+  void testGetVariableLocalTyped() {
     // given
     createTask(taskId);
 
@@ -204,7 +204,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariables() {
+  void testGetVariables() {
     // given
     createTask(taskId);
 
@@ -228,7 +228,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesLocal() {
+  void testGetVariablesLocal() {
     // given
     createTask(taskId);
 
@@ -252,7 +252,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesTyped() {
+  void testGetVariablesTyped() {
     createTask(taskId);
 
     taskService.setVariables(taskId, getVariables());
@@ -275,7 +275,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesLocalTyped() {
+  void testGetVariablesLocalTyped() {
     createTask(taskId);
 
     taskService.setVariablesLocal(taskId, getVariables());
@@ -298,7 +298,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesByName() {
+  void testGetVariablesByName() {
     // given
     createTask(taskId);
 
@@ -322,7 +322,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesLocalByName() {
+  void testGetVariablesLocalByName() {
     // given
     createTask(taskId);
 
@@ -346,7 +346,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesTypedByName() {
+  void testGetVariablesTypedByName() {
     createTask(taskId);
 
     taskService.setVariables(taskId, getVariables());
@@ -369,7 +369,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   @TestTemplate
-  public void testGetVariablesLocalTypedByName() {
+  void testGetVariablesLocalTypedByName() {
     createTask(taskId);
 
     taskService.setVariablesLocal(taskId, getVariables());

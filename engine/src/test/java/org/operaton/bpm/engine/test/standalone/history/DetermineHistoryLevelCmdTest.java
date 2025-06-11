@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -32,10 +34,7 @@ import org.operaton.bpm.engine.impl.cmd.DetermineHistoryLevelCmd;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 
-import org.junit.After;
-import org.junit.Test;
-
-public class DetermineHistoryLevelCmdTest {
+class DetermineHistoryLevelCmdTest {
 
   private ProcessEngineImpl processEngineImpl;
 
@@ -52,7 +51,7 @@ public class DetermineHistoryLevelCmdTest {
 
 
   @Test
-  public void readLevelFullFromDB() {
+  void readLevelFullFromDB() {
     final ProcessEngineConfigurationImpl config = config("true", ProcessEngineConfiguration.HISTORY_FULL);
 
     // init the db with level=full
@@ -65,7 +64,7 @@ public class DetermineHistoryLevelCmdTest {
 
 
   @Test
-  public void useDefaultLevelAudit() {
+  void useDefaultLevelAudit() {
     ProcessEngineConfigurationImpl config = config("true", ProcessEngineConfiguration.HISTORY_AUTO);
 
     // init the db with level=auto -> audit
@@ -80,7 +79,7 @@ public class DetermineHistoryLevelCmdTest {
   }
 
   @Test
-  public void failWhenExistingHistoryLevelIsNotRegistered() {
+  void failWhenExistingHistoryLevelIsNotRegistered() {
     // init the db with custom level
     HistoryLevel customLevel = new HistoryLevel() {
       @Override
@@ -110,8 +109,8 @@ public class DetermineHistoryLevelCmdTest {
       .hasMessageContaining("The configured history level with id='99' is not registered in this config.");
   }
 
-  @After
-  public void after() {
+  @AfterEach
+  void after() {
     processEngineImpl.close();
     processEngineImpl = null;
   }

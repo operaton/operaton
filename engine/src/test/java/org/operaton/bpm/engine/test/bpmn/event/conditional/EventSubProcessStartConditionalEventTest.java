@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -31,8 +32,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 
 import java.util.Map;
 
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -40,11 +39,11 @@ import static org.assertj.core.api.Assertions.fail;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class EventSubProcessStartConditionalEventTest extends AbstractConditionalEventTestCase {
+class EventSubProcessStartConditionalEventTest extends AbstractConditionalEventTestCase {
 
   @Test
   @Deployment
-  public void testTrueCondition() {
+  void testTrueCondition() {
     //given process with event sub process conditional start event
 
     //when process instance is started with true condition
@@ -59,7 +58,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
   @Test
   @Deployment
-  public void testFalseCondition() {
+  void testFalseCondition() {
     //given process with event sub process conditional start event
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -78,7 +77,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
   @Test
   @Deployment
-  public void testVariableCondition() {
+  void testVariableCondition() {
     //given process with event sub process conditional start event
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -96,8 +95,8 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  @Deployment(resources ={ "org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testVariableCondition.bpmn20.xml"})
-  public void testVariableConditionAndStartingWithVar() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testVariableCondition.bpmn20.xml"})
+  void testVariableConditionAndStartingWithVar() {
     //given process with event sub process conditional start event
     Map<String, Object> vars = Variables.createVariables();
     vars.put(VARIABLE_NAME, 1);
@@ -113,8 +112,8 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  @Deployment(resources ={ "org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testVariableCondition.bpmn20.xml"})
-  public void testWrongVariableCondition() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testVariableCondition.bpmn20.xml"})
+  void testWrongVariableCondition() {
     //given process with event sub process conditional start event
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -135,7 +134,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
   @Test
   @Deployment
-  public void testNonInterruptingVariableCondition() {
+  void testNonInterruptingVariableCondition() {
     //given process with event sub process conditional start event
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -156,7 +155,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
   @Test
   @Deployment
-  public void testSubProcessVariableCondition() {
+  void testSubProcessVariableCondition() {
     //given process with event sub process conditional start event and user task in sub process
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -174,8 +173,8 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  @Deployment(resources ={ "org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testSubProcessVariableCondition.bpmn20.xml"})
-  public void testSubProcessSetVariableOnTaskCondition() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testSubProcessVariableCondition.bpmn20.xml"})
+  void testSubProcessSetVariableOnTaskCondition() {
     //given process with event sub process conditional start event and user task in sub process
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -193,8 +192,8 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  @Deployment(resources ={ "org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testSubProcessVariableCondition.bpmn20.xml"})
-  public void testSubProcessSetVariableOnExecutionCondition() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testSubProcessVariableCondition.bpmn20.xml"})
+  void testSubProcessSetVariableOnExecutionCondition() {
     //given process with event sub process conditional start event and user task in sub process
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -237,7 +236,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInDelegate() {
+  void testSetVariableInDelegate() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent().userTask().name(TASK_BEFORE_CONDITION)
                                                   .serviceTask()
@@ -265,7 +264,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInDelegate() {
+  void testNonInterruptingSetVariableInDelegate() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent().userTask().name(TASK_BEFORE_CONDITION)
                                                   .serviceTask()
@@ -295,7 +294,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInDelegateWithSynchronousEvent() {
+  void testSetVariableInDelegateWithSynchronousEvent() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask().name(TASK_BEFORE_CONDITION)
@@ -332,7 +331,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInDelegateWithSynchronousEvent() {
+  void testNonInterruptingSetVariableInDelegateWithSynchronousEvent() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent().userTask().name(TASK_BEFORE_CONDITION)
       .serviceTask()
@@ -374,7 +373,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInInputMapping() {
+  void testSetVariableInInputMapping() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent().userTask().name(TASK_BEFORE_CONDITION)
                                                   .serviceTask(TASK_WITH_CONDITION_ID)
@@ -403,7 +402,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInInputMapping() {
+  void testNonInterruptingSetVariableInInputMapping() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent().userTask().name(TASK_BEFORE_CONDITION)
                                                   .serviceTask(TASK_WITH_CONDITION_ID)
@@ -432,7 +431,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInExpression() {
+  void testSetVariableInExpression() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent().userTask().name(TASK_BEFORE_CONDITION)
                                                   .serviceTask(TASK_WITH_CONDITION_ID)
@@ -459,7 +458,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInExpression() {
+  void testNonInterruptingSetVariableInExpression() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent().userTask().name(TASK_BEFORE_CONDITION)
                                                   .serviceTask(TASK_WITH_CONDITION_ID)
@@ -487,7 +486,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInInputMappingOfSubProcess() {
+  void testSetVariableInInputMappingOfSubProcess() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent().userTask().name(TASK_BEFORE_CONDITION)
                                                   .subProcess(SUB_PROCESS_ID)
@@ -519,7 +518,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInInputMappingOfSubProcess() {
+  void testNonInterruptingSetVariableInInputMappingOfSubProcess() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent().userTask().name(TASK_BEFORE_CONDITION)
                                                   .subProcess(SUB_PROCESS_ID)
@@ -552,7 +551,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInOutputMapping() {
+  void testSetVariableInOutputMapping() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent()
                                                   .userTask(TASK_BEFORE_CONDITION_ID)
@@ -581,7 +580,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInOutputMapping() {
+  void testNonInterruptingSetVariableInOutputMapping() {
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent()
                                                   .userTask(TASK_BEFORE_CONDITION_ID)
@@ -611,7 +610,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInOutputMappingOfCallActivity() {
+  void testSetVariableInOutputMappingOfCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -644,7 +643,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInOutputMappingOfCallActivity() {
+  void testNonInterruptingSetVariableInOutputMappingOfCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -679,7 +678,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInOutMappingOfCallActivity() {
+  void testSetVariableInOutMappingOfCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -712,7 +711,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInOutMappingOfCallActivity() {
+  void testNonInterruptingSetVariableInOutMappingOfCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -748,7 +747,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
 
   @Test
-  public void testSetVariableInInMappingOfCallActivity() {
+  void testSetVariableInInMappingOfCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -781,7 +780,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInInMappingOfCallActivity() {
+  void testNonInterruptingSetVariableInInMappingOfCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -814,7 +813,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInCallActivity() {
+  void testSetVariableInCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -846,7 +845,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInCallActivity() {
+  void testNonInterruptingSetVariableInCallActivity() {
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, DELEGATED_PROCESS).deploy());
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -878,7 +877,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInSubProcessInDelegatedCode() {
+  void testSetVariableInSubProcessInDelegatedCode() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent()
@@ -914,7 +913,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInSubProcessInDelegatedCode() {
+  void testNonInterruptingSetVariableInSubProcessInDelegatedCode() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent()
@@ -951,7 +950,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInSubProcessInDelegatedCodeConditionOnPI() {
+  void testSetVariableInSubProcessInDelegatedCodeConditionOnPI() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent()
@@ -987,7 +986,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetVariableInSubProcessInDelegatedCodeConditionOnPI() {
+  void testNonInterruptingSetVariableInSubProcessInDelegatedCodeConditionOnPI() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
                                                   .startEvent()
@@ -1024,8 +1023,8 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  @Deployment(resources ={ "org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testSubProcessVariableCondition.bpmn20.xml"})
-  public void testSubProcessSetVariableOnProcessInstanceCondition() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testSubProcessVariableCondition.bpmn20.xml"})
+  void testSubProcessSetVariableOnProcessInstanceCondition() {
     //given process with event sub process conditional start event and user task in sub process
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
 
@@ -1043,7 +1042,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSuspendedProcess() {
+  void testSuspendedProcess() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -1076,7 +1075,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingConditionalSuspendedProcess() {
+  void testNonInterruptingConditionalSuspendedProcess() {
 
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -1110,7 +1109,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingSetMultipleVariables() {
+  void testNonInterruptingSetMultipleVariables() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_WITH_CONDITION_ID).name(TASK_WITH_CONDITION)
@@ -1135,7 +1134,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
   @Test
   @Deployment
-  public void testLoop() {
+  void testLoop() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("Task_1").singleResult();
@@ -1154,7 +1153,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testTriggerAnotherEventSubprocess() {
+  void testTriggerAnotherEventSubprocess() {
     //given process with user task
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
@@ -1195,7 +1194,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testNonInterruptingTriggerAnotherEventSubprocess() {
+  void testNonInterruptingTriggerAnotherEventSubprocess() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_WITH_CONDITION_ID).name(TASK_WITH_CONDITION)
@@ -1239,7 +1238,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
   @Test
   @Deployment
-  public void testNonInterruptingSetMultipleVariableInDelegate()
+  void testNonInterruptingSetMultipleVariableInDelegate()
   {
     // when
     runtimeService.startProcessInstanceByKey("process");
@@ -1251,7 +1250,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   }
 
   @Test
-  public void testSetVariableInTriggeredEventSubProcess() {
+  void testSetVariableInTriggeredEventSubProcess() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
       .startEvent()
       .userTask(TASK_WITH_CONDITION_ID).name(TASK_WITH_CONDITION)
@@ -1296,7 +1295,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/conditional/EventSubProcessStartConditionalEventTest.testVariableCondition.bpmn20.xml")
-  public void testVariableConditionWithHistory() {
+  void testVariableConditionWithHistory() {
     // given process with event sub process conditional start event
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY,
         Variables.createVariables()
@@ -1316,7 +1315,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment
-  public void testNonInterruptingVariableConditionWithHistory() {
+  void testNonInterruptingVariableConditionWithHistory() {
     // given process with event sub process conditional start event
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY,
         Variables.createVariables()

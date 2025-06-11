@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,15 +32,15 @@ public interface GroupResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public GroupDto getGroup(@Context UriInfo context);
+  GroupDto getGroup(@Context UriInfo context);
 
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  public void deleteGroup();
+  void deleteGroup();
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateGroup(GroupDto Group);
+  void updateGroup(GroupDto Group);
 
   @Path(GroupMembersResource.PATH)
   GroupMembersResource getGroupMembersResource();

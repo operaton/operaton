@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,21 +19,22 @@ package org.operaton.bpm.engine.test.standalone.initialization;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.junit.Test;
 
 /**
  * @author Tom Baeyens
  * @author Stefan Hentschel
  * @author Roman Smirnov
  */
-public class ProcessEngineInitializationTest {
+class ProcessEngineInitializationTest {
 
   @Test
-  public void testNoTables() {
+  void testNoTables() {
     var processEngineConfiguration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/notables.operaton.cfg.xml");
+    processEngineConfiguration.setProcessEngineName("testProcessEngine");
     try {
       processEngineConfiguration.buildProcessEngine();
       fail("expected exception");
@@ -47,7 +48,7 @@ public class ProcessEngineInitializationTest {
   }
 
   @Test
-  public void testDefaultRetries() {
+  void testDefaultRetries() {
     ProcessEngineConfiguration configuration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/defaultretries.operaton.cfg.xml");
 
@@ -55,7 +56,7 @@ public class ProcessEngineInitializationTest {
   }
 
   @Test
-  public void testCustomDefaultRetries() {
+  void testCustomDefaultRetries() {
     ProcessEngineConfiguration configuration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/customdefaultretries.operaton.cfg.xml");
 

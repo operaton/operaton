@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -118,73 +118,53 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldRejectEngineApi_GET() {
+    authenticatedForEngine("otherEngine", () -> {
+      Authorization authorization =
+        getAuthorization("POST", applicationPath + "/api/engine/engine/default/bar");
 
-    authenticatedForEngine("otherEngine", new Runnable() {
-      @Override
-      public void run() {
-
-        Authorization authorization =
-          getAuthorization("POST", applicationPath + "/api/engine/engine/default/bar");
-
-        assertThat(authorization.isGranted()).isFalse();
-        assertThat(authorization.isAuthenticated()).isFalse();
-      }
+      assertThat(authorization.isGranted()).isFalse();
+      assertThat(authorization.isAuthenticated()).isFalse();
     });
   }
 
   @Test
   public void shouldGrantEngineApi_GET() {
+    authenticatedForEngine("default", () -> {
+      Authorization authorization =
+        getAuthorization("POST", applicationPath + "/api/engine/engine/default/bar");
 
-    authenticatedForEngine("default", new Runnable() {
-      @Override
-      public void run() {
-
-        Authorization authorization =
-          getAuthorization("POST", applicationPath + "/api/engine/engine/default/bar");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isTrue();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isTrue();
     });
   }
 
   @Test
   public void shouldRejectCockpitPluginApi_GET() {
+    authenticatedForEngine("otherEngine", () -> {
+      Authorization authorization = getAuthorization("POST",
+        applicationPath + "/api/cockpit/plugin/" +
+          "reporting-process-count/default/process-instance-count");
 
-    authenticatedForEngine("otherEngine", new Runnable() {
-      @Override
-      public void run() {
-
-        Authorization authorization = getAuthorization("POST",
-          applicationPath + "/api/cockpit/plugin/" +
-            "reporting-process-count/default/process-instance-count");
-
-        assertThat(authorization.isGranted()).isFalse();
-        assertThat(authorization.isAuthenticated()).isFalse();
-      }
+      assertThat(authorization.isGranted()).isFalse();
+      assertThat(authorization.isAuthenticated()).isFalse();
     });
   }
 
   @Test
   public void shouldPassCockpitPluginApi_GET_LOGGED_IN() {
-    authenticatedForEngine("default", new Runnable() {
-      @Override
-      public void run() {
+    authenticatedForEngine("default", () -> {
+      Authorization authorization =
+        getAuthorization("POST",
+          applicationPath + "/api/cockpit/plugin/" +
+            "reporting-process-count/default/process-instance-count");
 
-        Authorization authorization =
-          getAuthorization("POST",
-            applicationPath + "/api/cockpit/plugin/" +
-              "reporting-process-count/default/process-instance-count");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isTrue();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isTrue();
     });
   }
 
   @Test
   public void shouldPassCockpit_GET_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/app/cockpit/non-existing-engine/foo");
 
@@ -194,33 +174,23 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldPassCockpit_GET_LOGGED_IN() {
+  authenticatedForApp("default", "cockpit", () -> {
+      Authorization authorization =
+        getAuthorization("GET", applicationPath + "/app/cockpit/default/");
 
-    authenticatedForApp("default", "cockpit", new Runnable() {
-
-      @Override
-      public void run() {
-        Authorization authorization =
-          getAuthorization("GET", applicationPath + "/app/cockpit/default/");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isTrue();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isTrue();
     });
   }
 
   @Test
   public void shouldPassCockpitNonExistingEngine_GET_LOGGED_IN() {
+    authenticatedForApp("default", "cockpit", () -> {
+      Authorization authorization =
+        getAuthorization("GET", applicationPath + "/app/cockpit/non-existing-engine/");
 
-    authenticatedForApp("default", "cockpit", new Runnable() {
-
-      @Override
-      public void run() {
-        Authorization authorization =
-          getAuthorization("GET", applicationPath + "/app/cockpit/non-existing-engine/");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isFalse();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isFalse();
     });
   }
 
@@ -228,39 +198,30 @@ public class SecurityFilterRulesTest {
   @Test
   public void shouldRejectTasklistApi_GET() {
 
-    authenticatedForEngine("otherEngine", new Runnable() {
-      @Override
-      public void run() {
+    authenticatedForEngine("otherEngine", () -> {
+      Authorization authorization =
+        getAuthorization("POST",
+          applicationPath + "/api/tasklist/plugin/example-plugin/default/example-resource");
 
-        Authorization authorization =
-          getAuthorization("POST",
-            applicationPath + "/api/tasklist/plugin/example-plugin/default/example-resource");
-
-        assertThat(authorization.isGranted()).isFalse();
-        assertThat(authorization.isAuthenticated()).isFalse();
-      }
+      assertThat(authorization.isGranted()).isFalse();
+      assertThat(authorization.isAuthenticated()).isFalse();
     });
   }
 
   @Test
   public void shouldPassTasklistApi_GET_LOGGED_IN() {
-    authenticatedForEngine("default", new Runnable() {
-      @Override
-      public void run() {
+    authenticatedForEngine("default", () -> {
+      Authorization authorization =
+        getAuthorization("POST",
+          applicationPath + "/api/tasklist/plugin/example-plugin/default/example-resource");
 
-        Authorization authorization =
-          getAuthorization("POST",
-            applicationPath + "/api/tasklist/plugin/example-plugin/default/example-resource");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isTrue();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isTrue();
     });
   }
 
   @Test
-  public void shouldRejectTasklistApi_GET_LOGGED_OUT()
-  {
+  public void shouldRejectTasklistApi_GET_LOGGED_OUT() {
     Authorization authorization =
       getAuthorization("POST",
         applicationPath + "/api/tasklist/plugin/example-plugin/default/example-resource");
@@ -271,24 +232,18 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldPassTasklistPluginResource_GET_LOGGED_IN() {
+    authenticatedForEngine("default", () -> {
+      Authorization authorization =
+        getAuthorization("GET",
+          applicationPath + "/api/tasklist/plugin/example-plugin/static/example-resource");
 
-    authenticatedForEngine("default", new Runnable() {
-      @Override
-      public void run() {
-
-        Authorization authorization =
-          getAuthorization("GET",
-            applicationPath + "/api/tasklist/plugin/example-plugin/static/example-resource");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isFalse();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isFalse();
     });
   }
 
   @Test
   public void shouldPassTasklistPluginResource_GET_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET",
         applicationPath + "/api/tasklist/plugin/example-plugin/static/example-resource");
@@ -300,7 +255,6 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldPassTasklist_GET_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/app/tasklist/non-existing-engine");
 
@@ -310,23 +264,17 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldPassTasklist_GET_LOGGED_IN() {
+    authenticatedForApp("default", "tasklist", () -> {
+      Authorization authorization =
+        getAuthorization("GET", applicationPath + "/app/tasklist/default/");
 
-    authenticatedForApp("default", "tasklist", new Runnable() {
-
-      @Override
-      public void run() {
-        Authorization authorization =
-          getAuthorization("GET", applicationPath + "/app/tasklist/default/");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isTrue();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isTrue();
     });
   }
 
   @Test
   public void shouldRejectAdminApi_GET_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/api/admin/auth/user/some-engine/");
 
@@ -342,23 +290,17 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldPassAdminApi_GET_LOGGED_IN() {
+    authenticatedForApp("default", "admin", () -> {
+      Authorization authorization =
+        getAuthorization("GET", applicationPath + "/api/admin/foo/");
 
-    authenticatedForApp("default", "admin", new Runnable() {
-
-      @Override
-      public void run() {
-        Authorization authorization =
-          getAuthorization("GET", applicationPath + "/api/admin/foo/");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isFalse();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isFalse();
     });
   }
 
   @Test
   public void shouldPassAdminApi_AnonymousEndpoints_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/api/admin/auth/user/bar");
 
@@ -387,7 +329,6 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldRejectAdminApiPlugin_GET_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET",
         applicationPath + "/api/admin/plugin/adminPlugins/some-engine/endpoint");
@@ -398,24 +339,18 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldPassAdminApiPlugin_GET_LOGGED_IN() {
+    authenticatedForApp("default", "admin", () -> {
+      Authorization authorization =
+        getAuthorization("GET",
+          applicationPath + "/api/admin/plugin/adminPlugins/some-engine");
 
-    authenticatedForApp("default", "admin", new Runnable() {
-
-      @Override
-      public void run() {
-        Authorization authorization =
-          getAuthorization("GET",
-            applicationPath + "/api/admin/plugin/adminPlugins/some-engine");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isFalse();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isFalse();
     });
   }
 
   @Test
   public void shouldPassAdmin_GET_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/app/admin/default");
 
@@ -425,24 +360,18 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldPassAdmin_GET_LOGGED_IN() {
+    authenticatedForApp("default", "admin", () -> {
+      Authorization authorization =
+        getAuthorization("GET", applicationPath + "/app/admin/default/");
 
-    authenticatedForApp("default", "admin", new Runnable() {
-
-      @Override
-      public void run() {
-        Authorization authorization =
-          getAuthorization("GET", applicationPath + "/app/admin/default/");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isTrue();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isTrue();
     });
   }
 
 
   @Test
   public void shouldPassAdminResources_GET_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/app/admin/scripts");
 
@@ -452,23 +381,17 @@ public class SecurityFilterRulesTest {
 
   @Test
   public void shouldPassAdminResources_GET_LOGGED_IN() {
+  authenticatedForApp("default", "admin", () -> {
+      Authorization authorization =
+        getAuthorization("GET", applicationPath + "/app/admin/scripts");
 
-    authenticatedForApp("default", "admin", new Runnable() {
-
-      @Override
-      public void run() {
-        Authorization authorization =
-          getAuthorization("GET", applicationPath + "/app/admin/scripts");
-
-        assertThat(authorization.isGranted()).isTrue();
-        assertThat(authorization.isAuthenticated()).isFalse();
-      }
+      assertThat(authorization.isGranted()).isTrue();
+      assertThat(authorization.isAuthenticated()).isFalse();
     });
   }
 
   @Test
   public void shouldPassAdminLicenseCheck_GET_LOGGED_OUT() {
-
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/api/admin/plugin/license/default/check-key");
 
@@ -485,7 +408,6 @@ public class SecurityFilterRulesTest {
   }
 
   private static List<SecurityFilterRule> loadFilterRules(String appPath) throws IOException {
-
     try (InputStream is = new FileInputStream(FILTER_RULES_FILE)) {
       return FilterRules.load(is, appPath);
     }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,41 +33,41 @@ import commonj.work.WorkRejectedException;
 
 /**
  * {@link AbstractPlatformJobExecutor} implementation delegating to a CommonJ {@link WorkManager}.
- * 
+ *
  * @author Christian Lipphardt
- * 
+ *
  */
 public class CommonJWorkManagerExecutorService implements ExecutorService {
 
   private static final Logger logger = Logger.getLogger(CommonJWorkManagerExecutorService.class.getName());
-  
+
   protected WorkManager workManager;
 
   protected JcaExecutorServiceConnector ra;
 
   protected String commonJWorkManagerName;
-  
+
   protected WorkManager lookupWorkMananger() {
     try {
       InitialContext initialContext = new InitialContext();
       return (WorkManager) initialContext.lookup(commonJWorkManagerName);
     } catch (Exception e) {
       throw new RuntimeException("Error while starting JobExecutor: could not look up CommonJ WorkManager in Jndi: "+e.getMessage(), e);
-    }   
+    }
   }
-    
+
   public CommonJWorkManagerExecutorService(JcaExecutorServiceConnector ra, String commonJWorkManagerName) {
     this.ra = ra;
     this.commonJWorkManagerName = commonJWorkManagerName;
   }
-  
+
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
     if(isLongRunning) {
       return scheduleLongRunning(runnable);
-      
+
     } else {
       return executeShortRunning(runnable);
-      
+
     }
   }
 
@@ -75,13 +75,13 @@ public class CommonJWorkManagerExecutorService implements ExecutorService {
     try {
       workManager.schedule(new CommonjWorkRunnableAdapter(runnable));
       return true;
-      
+
     } catch (WorkRejectedException e) {
-      logger.log(Level.FINE, "Work rejected", e);      
-      
+      logger.log(Level.FINE, "Work rejected", e);
+
     } catch (WorkException e) {
       logger.log(Level.WARNING, "WorkException while scheduling jobs for execution", e);
-      
+
     }
     return false;
   }
@@ -92,26 +92,26 @@ public class CommonJWorkManagerExecutorService implements ExecutorService {
     if(workManager == null) {
       workManager = lookupWorkMananger();
     }
-      
+
     try {
       workManager.schedule(new CommonjDeamonWorkRunnableAdapter(acquisitionRunnable));
       return true;
-      
+
     } catch (WorkException e) {
       logger.log(Level.WARNING, e, () -> "Could not schedule Job Acquisition Runnable: "+e.getMessage());
       return false;
-      
+
     }
   }
-  
+
   public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
     return new JcaInflowExecuteJobsRunnable(jobIds, processEngine, ra);
   }
-  
+
   // getters / setters ////////////////////////////////////
 
   public WorkManager getWorkManager() {
     return workManager;
   }
- 
+
 }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.variable.value.StringValue;
  * @author kristin.polenz
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
+class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   protected static final String VARIABLE_NAME = "myVar";
   protected static final String VARIABLE_VALUE = "myValue";
@@ -57,9 +57,9 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   protected static final String ACTIVITY_ID = "PI_HumanTask_1";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected IdentityService identityService;
   protected CaseService caseService;
@@ -70,7 +70,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   protected String caseExecutionId;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);
 
     caseInstanceId = createCaseInstance(null);
@@ -79,7 +79,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void manuallyStartCaseExecutionNoAuthenticatedTenants() {
+  void manuallyStartCaseExecutionNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -89,7 +89,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void manuallyStartCaseExecutionWithAuthenticatedTenant() {
+  void manuallyStartCaseExecutionWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     caseService.manuallyStartCaseExecution(caseExecutionId);
@@ -102,7 +102,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void manuallyStartCaseExecutionDisabledTenantCheck() {
+  void manuallyStartCaseExecutionDisabledTenantCheck() {
     identityService.setAuthentication("user", null, null);
     processEngineConfiguration.setTenantCheckEnabled(false);
 
@@ -116,7 +116,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void disableCaseExecutionNoAuthenticatedTenants() {
+  void disableCaseExecutionNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -126,7 +126,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void disableCaseExecutionWithAuthenticatedTenant() {
+  void disableCaseExecutionWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     caseService.disableCaseExecution(caseExecutionId);
@@ -140,7 +140,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void disableCaseExecutionDisabledTenantCheck() {
+  void disableCaseExecutionDisabledTenantCheck() {
     identityService.setAuthentication("user", null, null);
     processEngineConfiguration.setTenantCheckEnabled(false);
 
@@ -155,7 +155,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void reenableCaseExecutionNoAuthenticatedTenants() {
+  void reenableCaseExecutionNoAuthenticatedTenants() {
     caseService.disableCaseExecution(caseExecutionId);
 
     identityService.setAuthentication("user", null, null);
@@ -167,7 +167,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void reenableCaseExecutionWithAuthenticatedTenant() {
+  void reenableCaseExecutionWithAuthenticatedTenant() {
     caseService.disableCaseExecution(caseExecutionId);
 
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
@@ -182,7 +182,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void reenableCaseExecutionDisabledTenantCheck() {
+  void reenableCaseExecutionDisabledTenantCheck() {
     caseService.disableCaseExecution(caseExecutionId);
 
     identityService.setAuthentication("user", null, null);
@@ -198,7 +198,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void completeCaseExecutionNoAuthenticatedTenants() {
+  void completeCaseExecutionNoAuthenticatedTenants() {
     caseService.manuallyStartCaseExecution(caseExecutionId);
 
     identityService.setAuthentication("user", null, null);
@@ -210,7 +210,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void completeCaseExecutionWithAuthenticatedTenant() {
+  void completeCaseExecutionWithAuthenticatedTenant() {
     caseService.manuallyStartCaseExecution(caseExecutionId);
 
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
@@ -226,7 +226,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void completeCaseExecutionDisabledTenantCheck() {
+  void completeCaseExecutionDisabledTenantCheck() {
     caseService.manuallyStartCaseExecution(caseExecutionId);
 
     identityService.setAuthentication("user", null, null);
@@ -243,7 +243,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void closeCaseInstanceNoAuthenticatedTenants() {
+  void closeCaseInstanceNoAuthenticatedTenants() {
     caseService.completeCaseExecution(caseInstanceId);
 
     identityService.setAuthentication("user", null, null);
@@ -255,7 +255,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void closeCaseInstanceWithAuthenticatedTenant() {
+  void closeCaseInstanceWithAuthenticatedTenant() {
     caseService.completeCaseExecution(caseInstanceId);
 
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
@@ -271,7 +271,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void closeCaseInstanceDisabledTenantCheck() {
+  void closeCaseInstanceDisabledTenantCheck() {
     caseService.completeCaseExecution(caseInstanceId);
 
     identityService.setAuthentication("user", null, null);
@@ -288,7 +288,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void terminateCaseInstanceNoAuthenticatedTenants() {
+  void terminateCaseInstanceNoAuthenticatedTenants() {
 
     identityService.setAuthentication("user", null, null);
 
@@ -299,7 +299,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void terminateCaseExecutionWithAuthenticatedTenant() {
+  void terminateCaseExecutionWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     caseService.terminateCaseExecution(caseInstanceId);
@@ -312,7 +312,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void terminateCaseExecutionDisabledTenantCheck() {
+  void terminateCaseExecutionDisabledTenantCheck() {
 
     identityService.setAuthentication("user", null, null);
     processEngineConfiguration.setTenantCheckEnabled(false);
@@ -326,7 +326,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariablesNoAuthenticatedTenants() {
+  void getVariablesNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -336,7 +336,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariablesWithAuthenticatedTenant() {
+  void getVariablesWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     Map<String, Object> variables = caseService.getVariables(caseExecutionId);
@@ -347,7 +347,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariablesDisabledTenantCheck() {
+  void getVariablesDisabledTenantCheck() {
     identityService.setAuthentication("user", null, null);
     processEngineConfiguration.setTenantCheckEnabled(false);
 
@@ -359,7 +359,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariableNoAuthenticatedTenants() {
+  void getVariableNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -369,7 +369,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariableWithAuthenticatedTenant() {
+  void getVariableWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     String variableValue = (String) caseService.getVariable(caseExecutionId, VARIABLE_NAME);
@@ -378,7 +378,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariableDisabledTenantCheck() {
+  void getVariableDisabledTenantCheck() {
     identityService.setAuthentication("user", null, null);
     processEngineConfiguration.setTenantCheckEnabled(false);
 
@@ -388,7 +388,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariableTypedNoAuthenticatedTenants() {
+  void getVariableTypedNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -398,7 +398,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariableTypedWithAuthenticatedTenant() {
+  void getVariableTypedWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     StringValue variable = caseService.getVariableTyped(caseExecutionId, VARIABLE_NAME);
@@ -407,7 +407,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void getVariableTypedDisabledTenantCheck() {
+  void getVariableTypedDisabledTenantCheck() {
     identityService.setAuthentication("user", null, null);
     processEngineConfiguration.setTenantCheckEnabled(false);
 
@@ -417,7 +417,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void removeVariablesNoAuthenticatedTenants() {
+  void removeVariablesNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -427,7 +427,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void removeVariablesWithAuthenticatedTenant() {
+  void removeVariablesWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     caseService.removeVariable(caseExecutionId, VARIABLE_NAME);
@@ -439,7 +439,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void removeVariablesDisabledTenantCheck() {
+  void removeVariablesDisabledTenantCheck() {
     identityService.setAuthentication("user", null, null);
     processEngineConfiguration.setTenantCheckEnabled(false);
 
@@ -452,7 +452,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void setVariableNoAuthenticatedTenants() {
+  void setVariableNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     // when/then
@@ -462,7 +462,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void setVariableWithAuthenticatedTenant() {
+  void setVariableWithAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     caseService.setVariable(caseExecutionId, "newVar", "newValue");
@@ -476,7 +476,7 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   }
 
   @Test
-  public void setVariableDisabledTenantCheck() {
+  void setVariableDisabledTenantCheck() {
     identityService.setAuthentication("user", null, null);
     processEngineConfiguration.setTenantCheckEnabled(false);
 

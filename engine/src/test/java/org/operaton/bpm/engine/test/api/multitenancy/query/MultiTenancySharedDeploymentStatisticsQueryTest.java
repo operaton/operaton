@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,11 +36,11 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 /**
- * 
+ *
  * @author Deivarayan Azhagappan
  *
  */
-public class MultiTenancySharedDeploymentStatisticsQueryTest {
+class MultiTenancySharedDeploymentStatisticsQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -48,19 +48,20 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   protected static final String ONE_TASK_PROCESS_DEFINITION_KEY = "oneTaskProcess";
   protected static final String FAILED_JOBS_PROCESS_DEFINITION_KEY = "ExampleProcess";
   protected static final String ANOTHER_FAILED_JOBS_PROCESS_DEFINITION_KEY = "AnotherExampleProcess";
-  
+
   protected static StaticTenantIdTestProvider tenantIdProvider;
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator(configuration -> {
         tenantIdProvider = new StaticTenantIdTestProvider(TENANT_ONE);
         configuration.setTenantIdProvider(tenantIdProvider);
       })
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected ManagementService managementService;
@@ -86,16 +87,15 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .operatonAsyncBefore()
     .done();
 
-
   @Test
-  public void activeProcessInstancesCountWithNoAuthenticatedTenant() {
+  void activeProcessInstancesCountWithNoAuthenticatedTenant() {
 
     testRule.deploy(oneTaskProcess);
 
     startProcessInstances(ONE_TASK_PROCESS_DEFINITION_KEY);
 
     identityService.setAuthentication("user", null, null);
-    
+
     List<DeploymentStatistics> deploymentStatistics = managementService
       .createDeploymentStatisticsQuery()
       .list();
@@ -104,39 +104,39 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
     assertThat(deploymentStatistics).hasSize(1);
     // user must see only the process instances that belongs to no tenant
     assertThat(deploymentStatistics.get(0).getInstances()).isEqualTo(1);
-    
+
   }
 
   @Test
-  public void activeProcessInstancesCountWithAuthenticatedTenant() {
+  void activeProcessInstancesCountWithAuthenticatedTenant() {
 
     testRule.deploy(oneTaskProcess);
-    
+
     startProcessInstances(ONE_TASK_PROCESS_DEFINITION_KEY);
-    
+
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
-    
+
     List<DeploymentStatistics> deploymentStatistics = managementService
       .createDeploymentStatisticsQuery()
       .list();
 
     // then
     assertThat(deploymentStatistics).hasSize(1);
-    // user can see the process instances that belongs to tenant1 and instances that have no tenant  
+    // user can see the process instances that belongs to tenant1 and instances that have no tenant
     assertThat(deploymentStatistics.get(0).getInstances()).isEqualTo(2);
-    
+
   }
 
   @Test
-  public void activeProcessInstancesCountWithDisabledTenantCheck() {
+  void activeProcessInstancesCountWithDisabledTenantCheck() {
 
     testRule.deploy(oneTaskProcess);
-    
+
     startProcessInstances(ONE_TASK_PROCESS_DEFINITION_KEY);
-    
+
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
-    
+
     List<DeploymentStatistics> deploymentStatistics = managementService
       .createDeploymentStatisticsQuery()
       .list();
@@ -147,30 +147,30 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void activeProcessInstancesCountWithMultipleAuthenticatedTenants() {
+  void activeProcessInstancesCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(oneTaskProcess);
 
     startProcessInstances(ONE_TASK_PROCESS_DEFINITION_KEY);
-    
+
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
-    
+
     List<DeploymentStatistics> deploymentStatistics = managementService
       .createDeploymentStatisticsQuery()
       .list();
 
     // then
     assertThat(deploymentStatistics).hasSize(1);
-    // user can see all the active process instances 
+    // user can see all the active process instances
     assertThat(deploymentStatistics.get(0).getInstances()).isEqualTo(3);
-    
+
   }
 
   @Test
-  public void failedJobsCountWithWithNoAuthenticatedTenant() {
+  void failedJobsCountWithWithNoAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
-    
+
     startProcessInstances(FAILED_JOBS_PROCESS_DEFINITION_KEY);
 
     testRule.executeAvailableJobs();
@@ -185,14 +185,14 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
     // then
     assertThat(deploymentStatistics).hasSize(1);
     assertThat(deploymentStatistics.get(0).getFailedJobs()).isEqualTo(1);
-    
+
   }
 
   @Test
-  public void failedJobsCountWithWithDisabledTenantCheck() {
+  void failedJobsCountWithWithDisabledTenantCheck() {
 
     testRule.deploy(failingProcess);
-    
+
     startProcessInstances(FAILED_JOBS_PROCESS_DEFINITION_KEY);
 
     testRule.executeAvailableJobs();
@@ -208,11 +208,11 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
     // then
     assertThat(deploymentStatistics).hasSize(1);
     assertThat(deploymentStatistics.get(0).getFailedJobs()).isEqualTo(3);
-    
+
   }
 
   @Test
-  public void failedJobsCountWithAuthenticatedTenant() {
+  void failedJobsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -233,7 +233,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void failedJobsCountWithMultipleAuthenticatedTenants() {
+  void failedJobsCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(failingProcess);
 
@@ -254,7 +254,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithNoAuthenticatedTenant() {
+  void incidentsCountWithNoAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -271,14 +271,14 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
 
     // then
     assertThat(deploymentStatistics).hasSize(1);
-    
+
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
     assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(1);
   }
 
   @Test
-  public void incidentsCountWithDisabledTenantCheck() {
+  void incidentsCountWithDisabledTenantCheck() {
 
     testRule.deploy(failingProcess);
 
@@ -296,14 +296,14 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
 
     // then
     assertThat(deploymentStatistics).hasSize(1);
-    
+
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
     assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(3);
   }
 
   @Test
-  public void incidentsCountWithAuthenticatedTenant() {
+  void incidentsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -320,14 +320,14 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
 
     // then
     assertThat(deploymentStatistics).hasSize(1);
-    
+
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
     assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(2);
   }
 
   @Test
-  public void incidentsCountWithMultipleAuthenticatedTenants() {
+  void incidentsCountWithMultipleAuthenticatedTenants() {
 
     testRule.deploy(failingProcess);
 
@@ -350,7 +350,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
   }
 
   @Test
-  public void incidentsCountWithIncidentTypeAndAuthenticatedTenant() {
+  void incidentsCountWithIncidentTypeAndAuthenticatedTenant() {
 
     testRule.deploy(failingProcess);
 
@@ -367,17 +367,17 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
 
     // then
     assertThat(deploymentStatistics).hasSize(1);
-    
+
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
     assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(2);
   }
 
   @Test
-  public void instancesFailedJobsAndIncidentsCountWithAuthenticatedTenant() {
+  void instancesFailedJobsAndIncidentsCountWithAuthenticatedTenant() {
 
     testRule.deploy(failingProcess,anotherFailingProcess);
-    
+
     startProcessInstances(FAILED_JOBS_PROCESS_DEFINITION_KEY);
     startProcessInstances(ANOTHER_FAILED_JOBS_PROCESS_DEFINITION_KEY);
 
@@ -396,7 +396,7 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
     DeploymentStatistics singleDeploymentStatistics = deploymentStatistics.get(0);
     assertThat(singleDeploymentStatistics.getInstances()).isEqualTo(4);
     assertThat(singleDeploymentStatistics.getFailedJobs()).isEqualTo(4);
-    
+
     List<IncidentStatistics> incidentStatistics = singleDeploymentStatistics.getIncidentStatistics();
     assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(4);
@@ -408,9 +408,9 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
 
     setTenantIdProvider(TENANT_ONE);
     runtimeService.startProcessInstanceByKey(key);
-    
+
     setTenantIdProvider(TENANT_TWO);
-    runtimeService.startProcessInstanceByKey(key);  
+    runtimeService.startProcessInstanceByKey(key);
   }
 
   protected void setTenantIdProvider(String tenantId) {

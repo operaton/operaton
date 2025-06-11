@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,6 +25,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.DateTime;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerExecuteNestedActivityJobHandler;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -35,16 +38,12 @@ import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.joda.time.DateTime;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 public class MigrationBoundaryEventsTest {
 
@@ -57,14 +56,13 @@ public class MigrationBoundaryEventsTest {
   protected static final String BOUNDARY_ID = "boundary";
   protected static final String USER_TASK_ID = "userTask";
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testMigrateMultipleBoundaryEvents() {
+  void testMigrateMultipleBoundaryEvents() {
     // given
     BpmnModelInstance testProcess = modify(ProcessModels.SUBPROCESS_PROCESS)
       .activityBuilder("subProcess")
@@ -122,7 +120,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testMigrateBoundaryEventAndEventSubProcess() {
+  void testMigrateBoundaryEventAndEventSubProcess() {
     BpmnModelInstance testProcess = modify(ProcessModels.SUBPROCESS_PROCESS)
       .addSubProcessTo("subProcess")
         .triggerByEvent()
@@ -157,7 +155,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testMigrateIncidentForJob() {
+  void testMigrateIncidentForJob() {
     // given
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .userTaskBuilder(USER_TASK_ID)
@@ -208,7 +206,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testUpdateEventMessage() {
+  void testUpdateEventMessage() {
     // given
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder(USER_TASK_ID)
@@ -247,7 +245,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testUpdateEventSignal() {
+  void testUpdateEventSignal() {
     // given
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder(USER_TASK_ID)
@@ -286,7 +284,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testUpdateEventTimer() {
+  void testUpdateEventTimer() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
@@ -346,7 +344,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testUpdateEventSignalNameWithExpression() {
+  void testUpdateEventSignalNameWithExpression() {
     // given
     String signalNameWithExpression = "new" + SIGNAL_NAME + "-${var}";
     BpmnModelInstance sourceProcess = ProcessModels.ONE_TASK_PROCESS;
@@ -382,7 +380,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testUpdateEventMessageNameWithExpression() {
+  void testUpdateEventMessageNameWithExpression() {
     // given
     String messageNameWithExpression = "new" + MESSAGE_NAME + "-${var}";
     BpmnModelInstance sourceProcess = ProcessModels.ONE_TASK_PROCESS;
@@ -419,7 +417,7 @@ public class MigrationBoundaryEventsTest {
 
 
   @Test
-  public void testUpdateConditionalEventExpression() {
+  void testUpdateConditionalEventExpression() {
     // given
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder(USER_TASK_ID)
@@ -456,7 +454,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testMigrateSignalBoundaryEventKeepTrigger() {
+  void testMigrateSignalBoundaryEventKeepTrigger() {
     // given
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
         .activityBuilder(USER_TASK_ID)
@@ -502,7 +500,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testMigrateMessageBoundaryEventKeepTrigger() {
+  void testMigrateMessageBoundaryEventKeepTrigger() {
     // given
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
         .activityBuilder(USER_TASK_ID)
@@ -549,7 +547,7 @@ public class MigrationBoundaryEventsTest {
 
 
   @Test
-  public void testMigrateTimerBoundaryEventKeepTrigger() {
+  void testMigrateTimerBoundaryEventKeepTrigger() {
     // given
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
         .activityBuilder(USER_TASK_ID)
@@ -593,7 +591,7 @@ public class MigrationBoundaryEventsTest {
   }
 
   @Test
-  public void testMigrateConditionalBoundaryEventKeepTrigger() {
+  void testMigrateConditionalBoundaryEventKeepTrigger() {
     // given
     BpmnModelInstance sourceProcess = modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder(USER_TASK_ID)

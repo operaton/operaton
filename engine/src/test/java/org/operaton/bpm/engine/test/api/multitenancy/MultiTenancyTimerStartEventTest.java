@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,13 +17,14 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.repository.Deployment;
@@ -36,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyTimerStartEventTest {
+class MultiTenancyTimerStartEventTest {
 
   protected static final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess()
       .startEvent()
@@ -49,16 +50,16 @@ public class MultiTenancyTimerStartEventTest {
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ManagementService managementService;
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
 
   @Test
-  public void startProcessInstanceWithTenantId() {
+  void startProcessInstanceWithTenantId() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
@@ -73,7 +74,7 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void startProcessInstanceTwoTenants() {
+  void startProcessInstanceTwoTenants() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -91,29 +92,27 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void deleteJobsWhileUndeployment() {
+  void deleteJobsWhileUndeployment() {
+    Deployment deploymentForTenantOne = testRule.deployForTenant(TENANT_ONE, PROCESS);
+    Deployment deploymentForTenantTwo = testRule.deployForTenant(TENANT_TWO, PROCESS);
 
-     Deployment deploymentForTenantOne = testRule.deployForTenant(TENANT_ONE, PROCESS);
-     Deployment deploymentForTenantTwo = testRule.deployForTenant(TENANT_TWO, PROCESS);
+    JobQuery query = managementService.createJobQuery();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
 
-     JobQuery query = managementService.createJobQuery();
-     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-     assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    repositoryService.deleteDeployment(deploymentForTenantOne.getId(), true);
 
-     repositoryService.deleteDeployment(deploymentForTenantOne.getId(), true);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
 
-     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
-     assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    repositoryService.deleteDeployment(deploymentForTenantTwo.getId(), true);
 
-     repositoryService.deleteDeployment(deploymentForTenantTwo.getId(), true);
-
-     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
-     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
   @Test
-  public void dontCreateNewJobsWhileReDeployment() {
-
+  void dontCreateNewJobsWhileReDeployment() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
     testRule.deployForTenant(TENANT_ONE, PROCESS);
@@ -124,7 +123,7 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void failedJobRetryTimeCycle() {
+  void failedJobRetryTimeCycle() {
 
     testRule.deployForTenant(TENANT_ONE, Bpmn.createExecutableProcess("failingProcess")
       .startEvent()
@@ -155,7 +154,7 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   @Test
-  public void timerStartEventWithTimerCycle() {
+  void timerStartEventWithTimerCycle() {
 
     testRule.deployForTenant(TENANT_ONE, Bpmn.createExecutableProcess()
         .startEvent()
@@ -180,14 +179,12 @@ public class MultiTenancyTimerStartEventTest {
   }
 
   protected void executeFailingJobs(List<Job> jobs) {
-    for (Job job : jobs) {
-
-      try {
-        managementService.executeJob(job.getId());
-
-        fail("expected exception");
-      } catch (Exception e) {}
-    }
+    jobs.forEach(job -> {
+      String jobId = job.getId();
+      assertThatThrownBy(() -> managementService.executeJob(jobId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot resolve identifier 'failing'");
+    });
   }
 
 }

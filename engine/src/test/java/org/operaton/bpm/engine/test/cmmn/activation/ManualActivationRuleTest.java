@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,21 +22,21 @@ import java.util.Collections;
 
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.cmmn.CmmnTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ManualActivationRuleTest extends PluggableProcessEngineTest {
+class ManualActivationRuleTest extends CmmnTest {
 
   /**
    * CAM-3170
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testManualActivationRuleEvaluatesToTrue() {
+  void testManualActivationRuleEvaluatesToTrue() {
     caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("manualActivation", true));
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
@@ -50,7 +50,7 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testVariableBasedRule.cmmn")
   @Test
-  public void testManualActivationRuleEvaluatesToFalse() {
+  void testManualActivationRuleEvaluatesToFalse() {
     caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("manualActivation", false));
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
@@ -61,7 +61,7 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testDefaultVariableBasedRule.cmmn")
   @Test
-  public void testDefaultManualActivationRuleEvaluatesToTrue() {
+  void testDefaultManualActivationRuleEvaluatesToTrue() {
     caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("manualActivation", true));
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
@@ -72,7 +72,7 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testDefaultVariableBasedRule.cmmn")
   @Test
-  public void testDefaultManualActivationRuleEvaluatesToFalse() {
+  void testDefaultManualActivationRuleEvaluatesToFalse() {
     caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("manualActivation", false));
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
@@ -83,7 +83,7 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testActivationWithoutDefinition.cmmn")
   @Test
-  public void testActivationWithoutManualActivationDefined() {
+  void testActivationWithoutManualActivationDefined() {
     caseService.createCaseInstanceByKey("case");
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
@@ -94,7 +94,7 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testActivationWithoutManualActivationExpressionDefined.cmmn")
   @Test
-  public void testActivationWithoutManualActivationExpressionDefined() {
+  void testActivationWithoutManualActivationExpressionDefined() {
     caseService.createCaseInstanceByKey("case");
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
@@ -105,7 +105,7 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testActivationWithoutManualActivationConditionDefined.cmmn")
   @Test
-  public void testActivationWithoutManualActivationConditionDefined() {
+  void testActivationWithoutManualActivationConditionDefined() {
     caseService.createCaseInstanceByKey("case");
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();

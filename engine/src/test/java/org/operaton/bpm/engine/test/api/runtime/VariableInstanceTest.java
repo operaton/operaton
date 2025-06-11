@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,37 +16,51 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
+import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class VariableInstanceTest extends PluggableProcessEngineTest {
+class VariableInstanceTest {
 
     private final List<String> deploymentIds = new ArrayList<>();
 
-    @After
-    public void tearDown() {
+    @RegisterExtension
+    static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+    @RegisterExtension
+    ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+    RepositoryService repositoryService;
+    RuntimeService runtimeService;
+    ManagementService managementService;
+
+  @AfterEach
+  void tearDown() {
         deploymentIds.forEach(deploymentId -> repositoryService.deleteDeployment(deploymentId, true));
     }
 
-    @Test
-    @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-    public void shouldUpdateVariableStateOnVariableTypeChangeObjectToLong() {
+  @Test
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void shouldUpdateVariableStateOnVariableTypeChangeObjectToLong() {
         // given
 
         var processInstance = startProcessInstanceWithObjectVariable("oneTaskProcess",
@@ -83,9 +97,9 @@ public class VariableInstanceTest extends PluggableProcessEngineTest {
         assertThat(variable.getTextValue2()).isNull();
     }
 
-    @Test
-    @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-    public void shouldUpdateVariableStateOnVariableTypeChangeDoubleToObject() {
+  @Test
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void shouldUpdateVariableStateOnVariableTypeChangeDoubleToObject() {
         // given
         var processInstance = startProcessInstanceWithVariable("oneTaskProcess",
                 "variableA", 43.0);
@@ -122,9 +136,9 @@ public class VariableInstanceTest extends PluggableProcessEngineTest {
         assertThat(variable.getTextValue2()).isEqualTo("java.lang.String");
     }
 
-    @Test
-    @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
-    public void shouldUpdateVariableStateOnVariableTypeChangeStringToObject() {
+  @Test
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
+  void shouldUpdateVariableStateOnVariableTypeChangeStringToObject() {
         // given
         var processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
                 "variableA", Map.of("variableA", "This is a string value")
@@ -162,8 +176,8 @@ public class VariableInstanceTest extends PluggableProcessEngineTest {
         assertThat(variable.getTextValue2()).isEqualTo("java.lang.String");
     }
 
-    @Test
-    public void shouldNotDeleteByteArrayWhenTypeDoesNotChange() {
+  @Test
+  void shouldNotDeleteByteArrayWhenTypeDoesNotChange() {
         // given a process with a MySerializable variable type
         deployProcess(Bpmn.createExecutableProcess("testProcess")
                 .startEvent().operatonAsyncAfter()
@@ -213,8 +227,8 @@ public class VariableInstanceTest extends PluggableProcessEngineTest {
                 .isEqualTo(byteArrayIdBeforeUpdate);
     }
 
-    @Test
-    public void shouldDeleteByteArrayOnNullifyOfExistingNonNullVariable() {
+  @Test
+  void shouldDeleteByteArrayOnNullifyOfExistingNonNullVariable() {
         // given a process with a MySerializable variable type with a null value
         deployProcess(Bpmn.createExecutableProcess("testProcess")
                 .startEvent().operatonAsyncAfter()
@@ -264,8 +278,8 @@ public class VariableInstanceTest extends PluggableProcessEngineTest {
                 .isNotEqualTo(byteArrayIdBeforeUpdate);
     }
 
-    @Test
-    public void shouldDeleteByteArrayOnUpdateOfExistingNullVariable() {
+  @Test
+  void shouldDeleteByteArrayOnUpdateOfExistingNullVariable() {
         // given a process with a MySerializable variable type with a null value
         deployProcess(Bpmn.createExecutableProcess("testProcess")
                 .startEvent().operatonAsyncAfter()

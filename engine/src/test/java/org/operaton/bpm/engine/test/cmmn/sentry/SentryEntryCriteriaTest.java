@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,20 +30,20 @@ import org.operaton.bpm.engine.variable.Variables;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class SentryEntryCriteriaTest extends CmmnTest {
+class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceEnableTask.cmmn"})
   @Test
-  public void testSequenceEnableTask() {
+  void testSequenceEnableTask() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -75,7 +75,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceAutoStartTask.cmmn"})
   @Test
-  public void testSequenceAutoStartTask() {
+  void testSequenceAutoStartTask() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -109,7 +109,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceEnableStage.cmmn"})
   @Test
-  public void testSequenceEnableStage() {
+  void testSequenceEnableStage() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -142,7 +142,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceAutoStartStage.cmmn"})
   @Test
-  public void testSequenceAutoStartStage() {
+  void testSequenceAutoStartStage() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -187,7 +187,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceOccurMilestone.cmmn"})
   @Test
-  public void testSequenceOccurMilestone() {
+  void testSequenceOccurMilestone() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -220,7 +220,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequence.cmmn"})
   @Test
-  public void testSequence() {
+  void testSequence() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -285,7 +285,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceWithIfPart.cmmn"})
   @Test
-  public void testSequenceWithIfPartNotSatisfied() {
+  void testSequenceWithIfPartNotSatisfied() {
     // given
     createCaseInstance();
 
@@ -314,7 +314,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceWithIfPart.cmmn"})
   @Test
-  public void testSequenceWithIfPartSatisfied() {
+  void testSequenceWithIfPartSatisfied() {
     // given
     createCaseInstance();
 
@@ -343,7 +343,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testAndFork.cmmn"})
   @Test
-  public void testAndFork() {
+  void testAndFork() {
     // given
     createCaseInstance();
 
@@ -380,7 +380,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testAndJoin.cmmn"})
   @Test
-  public void testAndJoin() {
+  void testAndJoin() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -419,7 +419,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testSequenceCombinedWithAndJoin.cmmn"})
   @Test
-  public void testSequenceCombinedWithAndJoin() {
+  void testSequenceCombinedWithAndJoin() {
     // given
     createCaseInstance();
 
@@ -456,7 +456,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testOrFork.cmmn"})
   @Test
-  public void testOrFork() {
+  void testOrFork() {
     // given
     createCaseInstance();
 
@@ -489,7 +489,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testOrJoin.cmmn"})
   @Test
-  public void testOrJoin() {
+  void testOrJoin() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -526,7 +526,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testCycle.cmmn"})
   @Test
-  public void testCycle() {
+  void testCycle() {
     // given
     createCaseInstance();
 
@@ -542,31 +542,26 @@ public class SentryEntryCriteriaTest extends CmmnTest {
     String thirdHumanTaskId = thirdHumanTask.getId();
     assertThat(thirdHumanTask.isAvailable()).isTrue();
 
-    try {
-      // (1) when
+
+    assertThatThrownBy(() -> {
       manualStart(firstHumanTaskId);
-      fail("It should not be possible to start the first human task manually.");
-    } catch (NotAllowedException e) {
-    }
+    }).withFailMessage("First human task should be available.")
+      .isInstanceOf(NotAllowedException.class);
 
-    try {
-      // (2) when
+    assertThatThrownBy(() -> {
       manualStart(secondHumanTaskId);
-      fail("It should not be possible to start the second human task manually.");
-    } catch (NotAllowedException e) {
-    }
+    }).withFailMessage("It should not be possible to start the second human task manually.")
+      .isInstanceOf(NotAllowedException.class);
 
-    try {
-      // (3) when
+    assertThatThrownBy(() -> {
       manualStart(thirdHumanTaskId);
-      fail("It should not be possible to third the second human task manually.");
-    } catch (NotAllowedException e) {
-    }
+    }).withFailMessage("It should not be possible to third the second human task manually.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testEnableByInstanceCreation.cmmn"})
   @Test
-  public void testEnableByInstanceCreation() {
+  void testEnableByInstanceCreation() {
     // given + when
     createCaseInstance();
 
@@ -719,7 +714,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testFireAlsoNotAffectedSentries.cmmn"})
   @Test
-  public void testFireAlsoNotAffectedSentries() {
+  void testFireAlsoNotAffectedSentries() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -770,7 +765,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testCaseFileItemOnPart() {
+  void testCaseFileItemOnPart() {
     createCaseInstance().getId();
 
     CaseExecution humanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
@@ -781,7 +776,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testReusableStage() {
+  void testReusableStage() {
     // given
     createCaseInstance();
 
@@ -836,7 +831,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
    */
   @Deployment
   @Test
-  public void testSentryShouldNotBeEvaluatedAfterStageComplete() {
+  void testSentryShouldNotBeEvaluatedAfterStageComplete() {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
@@ -869,7 +864,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testIfPartOnCaseInstanceCreate() {
+  void testIfPartOnCaseInstanceCreate() {
 
     // when
     createCaseInstanceByKey("case", Variables.putValue("value", 101));
@@ -882,7 +877,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testIfPartOnCaseInstanceCreateWithSentry() {
+  void testIfPartOnCaseInstanceCreateWithSentry() {
 
     // when
     createCaseInstanceByKey("case", Variables.putValue("myVar", 101));
@@ -898,7 +893,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
       "org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.noop.bpmn20.xml"
   })
   @Test
-  public void testShouldNotTriggerCompletionTwice() {
+  void testShouldNotTriggerCompletionTwice() {
     // when
     CaseInstance ci = caseService.createCaseInstanceByKey("case");
 

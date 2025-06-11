@@ -86,6 +86,9 @@
                 <suffix value=".yyyy-MM-dd"/>
                 <append value="true"/>
             </periodic-rotating-file-handler>
+            <logger category="org.jboss.weld">
+                <level name="INFO"/>
+            </logger>
             <logger category="com.arjuna">
                 <level name="WARN"/>
             </logger>

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,11 +29,11 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameteri
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @Parameterized
-public class SetExternalTaskPriorityAuthorizationTest extends HandleExternalTaskAuthorizationTest {
+class SetExternalTaskPriorityAuthorizationTest extends HandleExternalTaskAuthorizationTest {
 
   @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
-  public void testSetPriority() {
+  void testSetPriority() {
 
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("oneExternalTaskProcess");
@@ -54,5 +54,5 @@ public class SetExternalTaskPriorityAuthorizationTest extends HandleExternalTask
       task = engineRule.getExternalTaskService().createExternalTaskQuery().singleResult();
       assertThat(task.getPriority()).isEqualTo(5);
     }
-  }  
+  }
 }

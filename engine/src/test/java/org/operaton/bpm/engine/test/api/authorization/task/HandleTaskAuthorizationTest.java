@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,9 +55,9 @@ import ch.qos.logback.classic.Level;
 public class HandleTaskAuthorizationTest {
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @RegisterExtension
   public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
@@ -122,7 +122,7 @@ public class HandleTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testHandleTaskBpmnError() {
+  void testHandleTaskBpmnError() {
     // given
     deploymentId = repositoryService.createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
@@ -146,7 +146,7 @@ public class HandleTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testHandleTaskEscalation() {
+  void testHandleTaskEscalation() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)
         .startEvent()

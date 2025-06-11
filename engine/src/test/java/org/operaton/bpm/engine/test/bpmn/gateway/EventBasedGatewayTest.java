@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,13 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Date;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
@@ -29,20 +35,30 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  * @author Daniel Meyer
  */
-public class EventBasedGatewayTest extends PluggableProcessEngineTest {
+class EventBasedGatewayTest {
 
-  @Deployment(resources={
-          "org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testCatchAlertAndTimer.bpmn20.xml",
-          "org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.throwAlertSignal.bpmn20.xml"})
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testCatchAlertAndTimer.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.throwAlertSignal.bpmn20.xml"})
   @Test
-  public void testCatchSignalCancelsTimer() {
+  void testCatchSignalCancelsTimer() {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
@@ -66,11 +82,11 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={
-          "org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testCatchAlertAndTimer.bpmn20.xml"
-          })
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testCatchAlertAndTimer.bpmn20.xml"
+  })
   @Test
-  public void testCatchTimerCancelsSignal() {
+  void testCatchTimerCancelsSignal() {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
@@ -101,7 +117,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchSignalAndMessageAndTimer() {
+  void testCatchSignalAndMessageAndTimer() {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
@@ -142,7 +158,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testConnectedToActitity() {
+  void testConnectedToActitity() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testConnectedToActivity.bpmn20.xml");
 
@@ -157,7 +173,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testInvalidSequenceFlow() {
+  void testInvalidSequenceFlow() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testEventInvalidSequenceFlow.bpmn20.xml");
 
@@ -173,7 +189,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTimeCycle() {
+  void testTimeCycle() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     JobQuery jobQuery = managementService.createJobQuery();

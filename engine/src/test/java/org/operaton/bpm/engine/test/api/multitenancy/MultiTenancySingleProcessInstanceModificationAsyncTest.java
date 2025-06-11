@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,16 +45,16 @@ import org.operaton.bpm.engine.test.util.ExecutionTree;
 
 import junit.framework.AssertionFailedError;
 
-public class MultiTenancySingleProcessInstanceModificationAsyncTest {
+class MultiTenancySingleProcessInstanceModificationAsyncTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
 
   protected static final String TENANT_ONE = "tenant1";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RepositoryService repositoryService;
@@ -63,7 +63,7 @@ public class MultiTenancySingleProcessInstanceModificationAsyncTest {
   protected TaskService taskService;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     List<Batch> batches = managementService.createBatchQuery().list();
     for (Batch batch : batches) {
       managementService.deleteBatch(batch.getId(), true);
@@ -76,7 +76,7 @@ public class MultiTenancySingleProcessInstanceModificationAsyncTest {
   }
 
   @Test
-  public void testModificationSameTenant() {
+  void testModificationSameTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, PARALLEL_GATEWAY_PROCESS);
 

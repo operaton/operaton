@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,8 @@ import java.math.BigInteger;
  */
 public class TypeConverterImpl implements TypeConverter {
   private static final long serialVersionUID = 1L;
+  private static final String ERROR_COERCE_TYPE = "error.coerce.type";
+  private static final String ERROR_COERCE_VALUE = "error.coerce.value";
 
   protected Boolean coerceToBoolean(Object value) {
     if (value == null || "".equals(value)) {
@@ -37,7 +39,7 @@ public class TypeConverterImpl implements TypeConverter {
     if (value instanceof String string) {
       return Boolean.valueOf(string);
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Boolean.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), Boolean.class));
   }
 
   protected Character coerceToCharacter(Object value) {
@@ -53,7 +55,7 @@ public class TypeConverterImpl implements TypeConverter {
     if (value instanceof String string) {
       return string.charAt(0);
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Character.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), Character.class));
   }
 
   protected BigDecimal coerceToBigDecimal(Object value) {
@@ -73,13 +75,13 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return new BigDecimal(string);
       } catch (NumberFormatException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, BigDecimal.class));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, BigDecimal.class));
       }
     }
     if (value instanceof Character character) {
       return new BigDecimal((short) character.charValue());
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), BigDecimal.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), BigDecimal.class));
   }
 
   protected BigInteger coerceToBigInteger(Object value) {
@@ -99,13 +101,13 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return new BigInteger(string);
       } catch (NumberFormatException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, BigInteger.class));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, BigInteger.class));
       }
     }
     if (value instanceof Character character) {
       return BigInteger.valueOf((short) character.charValue());
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), BigInteger.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), BigInteger.class));
   }
 
   protected Double coerceToDouble(Object value) {
@@ -122,13 +124,13 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return Double.valueOf(string);
       } catch (NumberFormatException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, Double.class));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, Double.class));
       }
     }
     if (value instanceof Character character) {
       return (double) (short) character.charValue();
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Double.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), Double.class));
   }
 
   protected Float coerceToFloat(Object value) {
@@ -145,13 +147,13 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return Float.valueOf(string);
       } catch (NumberFormatException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, Float.class));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, Float.class));
       }
     }
     if (value instanceof Character character) {
       return (float) (short) character.charValue();
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Float.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), Float.class));
   }
 
   protected Long coerceToLong(Object value) {
@@ -168,13 +170,13 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return Long.valueOf(string);
       } catch (NumberFormatException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, Long.class));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, Long.class));
       }
     }
     if (value instanceof Character character) {
       return (long) (short) character.charValue();
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Long.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), Long.class));
   }
 
   protected Integer coerceToInteger(Object value) {
@@ -191,13 +193,13 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return Integer.valueOf(string);
       } catch (NumberFormatException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, Integer.class));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, Integer.class));
       }
     }
     if (value instanceof Character character) {
       return (int) (short) character.charValue();
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Integer.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), Integer.class));
   }
 
   protected Short coerceToShort(Object value) {
@@ -214,13 +216,13 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return Short.valueOf(string);
       } catch (NumberFormatException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, Short.class));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, Short.class));
       }
     }
     if (value instanceof Character character) {
       return (short) character.charValue();
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Short.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), Short.class));
   }
 
   protected Byte coerceToByte(Object value) {
@@ -237,13 +239,13 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return Byte.valueOf(string);
       } catch (NumberFormatException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, Byte.class));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, Byte.class));
       }
     }
     if (value instanceof Character character) {
       return Short.valueOf((short) character.charValue()).byteValue();
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Byte.class));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), Byte.class));
   }
 
   protected String coerceToString(Object value) {
@@ -271,10 +273,10 @@ public class TypeConverterImpl implements TypeConverter {
       try {
         return Enum.valueOf(type, string);
       } catch (IllegalArgumentException e) {
-        throw new ELException(LocalMessages.get("error.coerce.value", value, type));
+        throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, type));
       }
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), type));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), type));
   }
 
   protected Object coerceStringToType(String value, Class<?> type) {
@@ -283,7 +285,7 @@ public class TypeConverterImpl implements TypeConverter {
       if ("".equals(value)) {
         return null;
       }
-      throw new ELException(LocalMessages.get("error.coerce.type", String.class, type));
+      throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, String.class, type));
     } else {
       if ("".equals(value)) {
         try {
@@ -295,7 +297,7 @@ public class TypeConverterImpl implements TypeConverter {
         try {
           editor.setAsText(value);
         } catch (IllegalArgumentException e) {
-          throw new ELException(LocalMessages.get("error.coerce.value", value, type));
+          throw new ELException(LocalMessages.get(ERROR_COERCE_VALUE, value, type));
         }
       }
       return editor.getValue();
@@ -346,7 +348,7 @@ public class TypeConverterImpl implements TypeConverter {
     if (value instanceof String string) {
       return coerceStringToType(string, type);
     }
-    throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), type));
+    throw new ELException(LocalMessages.get(ERROR_COERCE_TYPE, value.getClass(), type));
   }
 
   @Override

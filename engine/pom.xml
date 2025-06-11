@@ -9,7 +9,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <dependencyManagement>
@@ -461,7 +461,7 @@
             <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
-      </plugin>
+        </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -490,6 +490,13 @@
             <goals>
               <goal>jar</goal>
             </goals>
+            <configuration>
+              <excludes>
+                <exclude>org/operaton/bpm/comtainer/impl/jmx/deployment/Mock*.class</exclude>
+                <exclude>org/operaton/bpm/engine/impl/test/*TestCase.class</exclude>
+                <exclude>org/operaton/bpm/engine/test/**</exclude>
+              </excludes>
+            </configuration>
           </execution>
           <execution>
             <id>junit4-jar</id>
@@ -518,45 +525,36 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <executions>
           <execution>
+            <id>default-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/java</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/main/junit4</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
+              </compileSourceRoots>
+              </configuration>
+          </execution>
+          <execution>
             <id>default-testCompile</id>
             <phase>test-compile</phase>
             <goals>
               <goal>testCompile</goal>
             </goals>
-          </execution>
-          <!-- Additional execution to compile code needed for JUnit4 (classes also used by JUnit5) -->
-          <execution>
-            <id>junit4-shared-Compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
             <configuration>
-              <!-- Specify the extra test source folder -->
               <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/java</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
-              </compileSourceRoots>
-              <!-- Set its own output directory -->
-              <outputDirectory>${project.build.directory}/classes-junit4</outputDirectory>
+                <compileSourceRoot>${project.basedir}/src/main/junit4</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/test/java</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/test/junit5</compileSourceRoot> </compileSourceRoots>
             </configuration>
           </execution>
-           <!-- Additional execution to compile code needed for JUnit5 (classes also used by JUnit4) -->
-          <execution>
-            <id>junit5-shared-Compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <!-- Specify the extra test source folder -->
-              <compileSourceRoots>
-                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
-              </compileSourceRoots>
-              <!-- Set its own output directory -->
-              <outputDirectory>${project.build.directory}/classes-junit5</outputDirectory>
-            </configuration>
-          </execution>
-          <!-- Additional execution to compile code needed for JUnit4 test only -->
           <execution>
             <id>junit4-Compile</id>
             <phase>compile</phase>
@@ -564,15 +562,13 @@
               <goal>compile</goal>
             </goals>
             <configuration>
-              <!-- Specify the extra test source folder -->
               <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/main/junit4</compileSourceRoot>
               </compileSourceRoots>
-              <!-- Set its own output directory -->
               <outputDirectory>${project.build.directory}/classes-junit4</outputDirectory>
             </configuration>
           </execution>
-          <!-- Additional execution to compile code needed for JUnit5 test only -->
           <execution>
             <id>junit5-compile</id>
             <phase>compile</phase>
@@ -580,11 +576,10 @@
               <goal>compile</goal>
             </goals>
             <configuration>
-              <!-- Specify the extra test source folder -->
               <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
               </compileSourceRoots>
-              <!-- Set its own output directory -->
               <outputDirectory>${project.build.directory}/classes-junit5</outputDirectory>
             </configuration>
           </execution>

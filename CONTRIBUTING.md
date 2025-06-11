@@ -12,7 +12,7 @@
 
 We would love you to contribute to this project. You can do so in various ways.
 
-If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-3343rurw2-x4w5YhLQH_2ZAhaSnM1x9g~7RUPw9I5m00hwAiw).
+If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-36z2hyul3-ygUic6F8l6QKRzpId7mOyw).
 
 ## File bugs or feature requests
 
@@ -176,6 +176,32 @@ tickets, list them in a comma-separated list such as `related to CAM-1234, CAM-4
 
 Optionally, you can reference the number of the GitHub PR from which the commit is merged. The message footer can then 
 look like `related to <ticket>, closes #<pr_number>` such as `related to CAM-1234, closes #567`.
+
+# Copyright
+
+## License Header
+
+For new files it is mandatory to add this license header:
+
+```
+/*
+ * Copyright 2025 the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+```
+
+This is for files with Java-style content. Change the comment format for files with different comment formats.
 
 # Review process
 

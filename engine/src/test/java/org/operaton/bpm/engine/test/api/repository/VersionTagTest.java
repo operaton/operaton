@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,20 +18,25 @@ package org.operaton.bpm.engine.test.api.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Stefan Hentschel.
  */
-public class VersionTagTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class VersionTagTest {
+
+  RepositoryService repositoryService;
 
   @Deployment
   @Test
-  public void testParsingVersionTag() {
+  void testParsingVersionTag() {
     ProcessDefinition process = repositoryService
       .createProcessDefinitionQuery()
       .orderByProcessDefinitionId()
@@ -41,9 +46,9 @@ public class VersionTagTest extends PluggableProcessEngineTest {
     assertThat(process.getVersionTag()).isEqualTo("ver_tag_1");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
   @Test
-  public void testParsingNullVersionTag() {
+  void testParsingNullVersionTag() {
     ProcessDefinition process = repositoryService
       .createProcessDefinitionQuery()
       .orderByProcessDefinitionId()
@@ -53,9 +58,9 @@ public class VersionTagTest extends PluggableProcessEngineTest {
     assertThat(process.getVersionTag()).isNull();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/versionTag.dmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/versionTag.dmn"})
   @Test
-  public void testParsingVersionTagDecisionDefinition() {
+  void testParsingVersionTagDecisionDefinition() {
     DecisionDefinition decision = repositoryService
     .createDecisionDefinitionQuery()
     .orderByDecisionDefinitionVersion()
@@ -65,9 +70,9 @@ public class VersionTagTest extends PluggableProcessEngineTest {
     assertThat(decision.getVersionTag()).isEqualTo("1.0.0");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/noVersionTag.dmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/noVersionTag.dmn"})
   @Test
-  public void testParsingNullVersionTagDecisionDefinition() {
+  void testParsingNullVersionTagDecisionDefinition() {
     DecisionDefinition decision = repositoryService
       .createDecisionDefinitionQuery()
     .orderByDecisionDefinitionVersion()

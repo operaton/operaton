@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,20 +16,16 @@
  */
 package org.operaton.bpm.engine.cdi.impl.event;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
-import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
-import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.impl.util.xml.Element;
-import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 
 /**
  * {@link BpmnParseListener} registering the {@link CdiEventListener} for
@@ -37,7 +33,7 @@ import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
  *
  * @author Daniel Meyer
  */
-public class CdiEventSupportBpmnParseListener implements BpmnParseListener {
+public class CdiEventSupportBpmnParseListener extends AbstractBpmnParseListener {
 
   protected void addEndEventListener(ActivityImpl activity) {
     activity.addListener(ExecutionListener.EVENTNAME_END, new CdiEventListener());
@@ -65,10 +61,6 @@ public class CdiEventSupportBpmnParseListener implements BpmnParseListener {
 
   protected void addTaskDeleteListeners(TaskDefinition taskDefinition) {
     taskDefinition.addTaskListener(TaskListener.EVENTNAME_DELETE, new CdiEventListener());
-  }
-
-  @Override
-  public void parseProcess(Element processElement, ProcessDefinitionEntity processDefinition) {
   }
 
   @Override
@@ -169,10 +161,6 @@ public class CdiEventSupportBpmnParseListener implements BpmnParseListener {
   }
 
   @Override
-  public void parseProperty(Element propertyElement, VariableDeclaration variableDeclaration, ActivityImpl activity) {
-  }
-
-  @Override
   public void parseSequenceFlow(Element sequenceFlowElement, ScopeImpl scopeElement, TransitionImpl transition) {
     transition.addListener(ExecutionListener.EVENTNAME_TAKE, new CdiEventListener());
   }
@@ -187,10 +175,6 @@ public class CdiEventSupportBpmnParseListener implements BpmnParseListener {
   public void parseMultiInstanceLoopCharacteristics(Element activityElement, Element multiInstanceLoopCharacteristicsElement, ActivityImpl activity) {
     addStartEventListener(activity);
     addEndEventListener(activity);
-  }
-
-  @Override
-  public void parseRootElement(Element rootElement, List<ProcessDefinitionEntity> processDefinitions) {
   }
 
   @Override
@@ -230,49 +214,8 @@ public class CdiEventSupportBpmnParseListener implements BpmnParseListener {
   }
 
   @Override
-  public void parseCompensateEventDefinition(Element compensateEventDefinition, ActivityImpl compensationActivity) {
-
-  }
-
-  @Override
   public void parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
     addStartEventListener(activity);
     addEndEventListener(activity);
-  }
-
-  @Override
-  public void parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
-  }
-
-  @Override
-  public void parseBoundaryEvent(Element boundaryEventElement, ScopeImpl scopeElement, ActivityImpl nestedActivity) {
-  }
-
-  @Override
-  public void parseIntermediateMessageCatchEventDefinition(Element messageEventDefinition, ActivityImpl nestedActivity) {
-  }
-
-  @Override
-  public void parseBoundaryMessageEventDefinition(Element element, boolean interrupting, ActivityImpl messageActivity) {
-  }
-
-  @Override
-  public void parseBoundaryEscalationEventDefinition(Element escalationEventDefinition, boolean interrupting, ActivityImpl boundaryEventActivity) {
-  }
-
-  @Override
-  public void parseBoundaryConditionalEventDefinition(Element element, boolean interrupting, ActivityImpl conditionalActivity) {
-  }
-
-  @Override
-  public void parseIntermediateConditionalEventDefinition(Element conditionalEventDefinition, ActivityImpl conditionalActivity) {
-  }
-
-  @Override
-  public void parseConditionalStartEventForEventSubprocess(Element element, ActivityImpl conditionalActivity, boolean interrupting) {
-  }
-
-  @Override
-  public void parseIoMapping(Element extensionElements, ActivityImpl activity, IoMapping inputOutput) {
   }
 }

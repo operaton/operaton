@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,22 +37,22 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyProcessInstanceQueryTest {
+class MultiTenancyProcessInstanceQueryTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;
   protected IdentityService identityService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
       .userTask()
@@ -69,7 +69,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryNoTenantIdSet() {
+  void testQueryNoTenantIdSet() {
     ProcessInstanceQuery query = runtimeService.
         createProcessInstanceQuery();
 
@@ -77,7 +77,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     ProcessInstanceQuery query = runtimeService
         .createProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE);
@@ -92,7 +92,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     ProcessInstanceQuery query = runtimeService
         .createProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -101,7 +101,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByInstancesWithoutTenantId() {
+  void testQueryByInstancesWithoutTenantId() {
     ProcessInstanceQuery query = runtimeService
         .createProcessInstanceQuery()
         .withoutTenantId();
@@ -110,7 +110,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     ProcessInstanceQuery query = runtimeService
         .createProcessInstanceQuery()
         .tenantIdIn("nonExisting");
@@ -119,18 +119,16 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testFailQueryByTenantIdNull() {
+  void testFailQueryByTenantIdNull() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
-    try {
-      processInstanceQuery.tenantIdIn((String) null);
 
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    assertThatThrownBy(() -> processInstanceQuery.tenantIdIn((String) null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("tenantIds contains null value");
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     // exclude instances without tenant id because of database-specific ordering
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -144,7 +142,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     // exclude instances without tenant id because of database-specific ordering
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -158,7 +156,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
@@ -166,7 +164,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
@@ -178,7 +176,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
@@ -190,7 +188,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
@@ -199,7 +197,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionWithoutTenantId() {
+  void testQueryByProcessDefinitionWithoutTenantId() {
     // when
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()
       .processDefinitionWithoutTenantId();
@@ -210,7 +208,7 @@ public class MultiTenancyProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByProcessDefinitionWithoutTenantId_VaryingProcessInstanceTenantId() {
+  void testQueryByProcessDefinitionWithoutTenantId_VaryingProcessInstanceTenantId() {
     // given
     StaticTenantIdTestProvider tenantIdProvider = new StaticTenantIdTestProvider(null);
     processEngineConfiguration.setTenantIdProvider(tenantIdProvider);

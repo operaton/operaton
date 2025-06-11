@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,44 +19,33 @@ package org.operaton.bpm.engine.test.bpmn.event.error;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class UnhandledBpmnErrorTest {
+class UnhandledBpmnErrorTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setEnableExceptionsAfterUnhandledBpmnError(true));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setEnableExceptionsAfterUnhandledBpmnError(true))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Test
-  public void testThrownInJavaDelegate() {
+  void testThrownInJavaDelegate() {
 
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("process")
@@ -73,7 +62,7 @@ public class UnhandledBpmnErrorTest {
 
   @Test
   @Deployment
-  public void testUncaughtErrorSimpleProcess() {
+  void testUncaughtErrorSimpleProcess() {
 
     // given simple process definition
 
@@ -85,7 +74,7 @@ public class UnhandledBpmnErrorTest {
 
   @Test
   @Deployment
-  public void testUnhandledErrorInEmbeddedSubprocess() {
+  void testUnhandledErrorInEmbeddedSubprocess() {
     // given
     runtimeService.startProcessInstanceByKey("boundaryErrorOnEmbeddedSubprocess");
 
@@ -105,8 +94,8 @@ public class UnhandledBpmnErrorTest {
   @Test
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/error/UnhandledBpmnErrorTest.testUncaughtErrorOnCallActivity.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/event/error/UnhandledBpmnErrorTest.subprocess.bpmn20.xml" })
-  public void testUncaughtErrorOnCallActivity() {
+      "org/operaton/bpm/engine/test/bpmn/event/error/UnhandledBpmnErrorTest.subprocess.bpmn20.xml"})
+  void testUncaughtErrorOnCallActivity() {
     // given
     runtimeService.startProcessInstanceByKey("uncaughtErrorOnCallActivity");
 
@@ -125,7 +114,7 @@ public class UnhandledBpmnErrorTest {
 
   @Test
   @Deployment
-  public void testUncaughtErrorOnEventSubprocess() {
+  void testUncaughtErrorOnEventSubprocess() {
 
     // given
     runtimeService.startProcessInstanceByKey("process").getId();

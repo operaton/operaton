@@ -5,7 +5,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,16 +15,13 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.TimerTask;
 
-import org.awaitility.core.ConditionTimeoutException;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -42,7 +39,6 @@ import org.operaton.bpm.engine.impl.cmmn.behavior.CaseControlRuleImpl;
 import org.operaton.bpm.engine.impl.el.FixedValue;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -50,10 +46,12 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
@@ -63,7 +61,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * This extension provides many of the utility methods from your former JUnit 4
  * rule. It now has a default no-args constructor that creates a ProcessEngine
  * using the default configuration. This allows you to register it via:
- * 
+ *
  * <pre>
  * &#64;RegisterExtension
  * protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension();
@@ -75,25 +73,25 @@ public class ProcessEngineTestExtension
 
   public static final String DEFAULT_BPMN_RESOURCE_NAME = "process.bpmn20.xml";
 
-  private ProcessEngineExtension processEngineRule;
+  private ProcessEngineExtension processEngineExtension;
+
   private ProcessEngine processEngine;
 
   public ProcessEngineTestExtension() {
   }
-  
+
   public ProcessEngineTestExtension(ProcessEngineExtension processEngineExtension) {
-    this.processEngineRule = processEngineExtension;
-    this.processEngine = processEngineRule.getProcessEngine();
+    this.processEngineExtension = processEngineExtension;
   }
 
   public ProcessEngine getProcessEngine() {
-    return processEngineRule.getProcessEngine();
+    return processEngine;
   }
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
-    if (processEngineRule != null)
-      this.processEngine = processEngineRule.getProcessEngine();
+    if (processEngineExtension != null)
+      this.processEngine = processEngineExtension.getProcessEngine();
     else
       this.processEngine = (ProcessEngine) context.getStore(ExtensionContext.Namespace.create("Operaton")).get(ProcessEngine.class);
   }
@@ -147,7 +145,7 @@ public class ProcessEngineTestExtension
   public <T extends DeploymentWithDefinitions> T deploy(DeploymentBuilder deploymentBuilder) {
     T deployment = (T) deploymentBuilder.deployWithResult();
 
-    processEngineRule.manageDeployment(deployment);
+    processEngineExtension.manageDeployment(deployment);
 
     return deployment;
   }
@@ -213,29 +211,11 @@ public class ProcessEngineTestExtension
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    waitForJobExecutorToProcessAllJobs(0);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS, 0L);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    jobExecutor.start();
-    long intervalMillis = 1000;
-
-    int jobExecutorWaitTime = jobExecutor.getWaitTimeInMillis() * 2;
-    if(maxMillisToWait < jobExecutorWaitTime) {
-      maxMillisToWait = jobExecutorWaitTime;
-    }
-
-    try {
-      await().pollDelay(intervalMillis, MILLISECONDS)
-              .atMost(maxMillisToWait, MILLISECONDS)
-              .until(() -> !areJobsAvailable());
-    } catch (ConditionTimeoutException e) {
-      throw new AssertionError("time limit of " + maxMillisToWait + " was exceeded. Jobs still running: " + availableJobs());
-    } finally {
-      jobExecutor.shutdown();
-    }
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), maxMillisToWait, JobExecutorWaitUtils.CHECK_INTERVAL_MS);
   }
 
   protected List<Job> availableJobs() {
@@ -244,7 +224,7 @@ public class ProcessEngineTestExtension
             .toList();
   }
 
-  protected boolean areJobsAvailable() {
+  public boolean areJobsAvailable() {
     return !availableJobs().isEmpty();
   }
 
@@ -452,20 +432,15 @@ public class ProcessEngineTestExtension
     authorizationService.saveAuthorization(processInstanceAuthorization);
   }
 
-  protected static class InterruptTask extends TimerTask {
-    protected boolean timeLimitExceeded = false;
-    protected Thread thread;
-    public InterruptTask(Thread thread) {
-      this.thread = thread;
+  public List<ActivityInstance> getInstancesForActivityId(ActivityInstance activityInstance, String activityId) {
+    List<ActivityInstance> result = new ArrayList<>();
+    if(activityInstance.getActivityId().equals(activityId)) {
+      result.add(activityInstance);
     }
-    public boolean isTimeLimitExceeded() {
-      return timeLimitExceeded;
+    for (ActivityInstance childInstance : activityInstance.getChildActivityInstances()) {
+      result.addAll(getInstancesForActivityId(childInstance, activityId));
     }
-    @Override
-    public void run() {
-      timeLimitExceeded = true;
-      thread.interrupt();
-    }
+    return result;
   }
 
 }

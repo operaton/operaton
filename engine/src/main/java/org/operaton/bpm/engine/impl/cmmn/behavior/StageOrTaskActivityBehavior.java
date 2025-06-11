@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,6 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
+import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
+import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
@@ -25,11 +30,6 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUS
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MANUAL_ACTIVATION_RULE;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
-import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
-
 /**
  * @author Roman Smirnov
  *
@@ -37,6 +37,20 @@ import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
+  private static final String TRANSITION_COMPLETE = "complete";
+  private static final String TRANSITION_DISABLE = "disable";
+  private static final String TRANSITION_ENABLE = "enable";
+  private static final String TRANSITION_EXIT = "exit";
+  private static final String TRANSITION_PARENT_RESUME = "parentResume";
+  private static final String TRANSITION_PARENT_SUSPEND = "parentSuspend";
+  private static final String TRANSITION_PARENT_SUSPENSION = "parentSuspension";
+  private static final String TRANSITION_PARENT_TERMINATE = "parentTerminate";
+  private static final String TRANSITION_RESUME = "resume";
+  private static final String TRANSITION_RE_ENABLE = "re-enable";
+  private static final String TRANSITION_START = "start";
+  private static final String TRANSITION_SUSPEND = "suspend";
+  private static final String TRANSITION_TERMINATE = "terminate";
+  private static final String TRANSITION_MANUAL_START = "manualStart";
 
   // creation /////////////////////////////////////////////////////////
 
@@ -56,38 +70,38 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
 
   @Override
   public void onEnable(CmmnActivityExecution execution) {
-    ensureNotCaseInstance(execution, "enable");
-    ensureTransitionAllowed(execution, AVAILABLE, ENABLED, "enable");
+    ensureNotCaseInstance(execution, TRANSITION_ENABLE);
+    ensureTransitionAllowed(execution, AVAILABLE, ENABLED, TRANSITION_ENABLE);
   }
 
   // re-enable /////////////////////////////////////////////////////////
 
   @Override
   public void onReenable(CmmnActivityExecution execution) {
-    ensureNotCaseInstance(execution, "re-enable");
-    ensureTransitionAllowed(execution, DISABLED, ENABLED, "re-enable");
+    ensureNotCaseInstance(execution, TRANSITION_RE_ENABLE);
+    ensureTransitionAllowed(execution, DISABLED, ENABLED, TRANSITION_RE_ENABLE);
   }
 
   // disable ///////////////////////////////////////////////////////////
 
   @Override
   public void onDisable(CmmnActivityExecution execution) {
-    ensureNotCaseInstance(execution, "disable");
-    ensureTransitionAllowed(execution, ENABLED, DISABLED, "disable");
+    ensureNotCaseInstance(execution, TRANSITION_DISABLE);
+    ensureTransitionAllowed(execution, ENABLED, DISABLED, TRANSITION_DISABLE);
   }
 
   // start /////////////////////////////////////////////////////////////
 
   @Override
   public void onStart(CmmnActivityExecution execution) {
-    ensureNotCaseInstance(execution, "start");
-    ensureTransitionAllowed(execution, AVAILABLE, ACTIVE, "start");
+    ensureNotCaseInstance(execution, TRANSITION_START);
+    ensureTransitionAllowed(execution, AVAILABLE, ACTIVE, TRANSITION_START);
   }
 
   @Override
   public void onManualStart(CmmnActivityExecution execution) {
-    ensureNotCaseInstance(execution, "manualStart");
-    ensureTransitionAllowed(execution, ENABLED, ACTIVE, "start");
+    ensureNotCaseInstance(execution, TRANSITION_MANUAL_START);
+    ensureTransitionAllowed(execution, ENABLED, ACTIVE, TRANSITION_START);
   }
 
   @Override
@@ -108,13 +122,13 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
 
   @Override
   public void onCompletion(CmmnActivityExecution execution) {
-    ensureTransitionAllowed(execution, ACTIVE, COMPLETED, "complete");
+    ensureTransitionAllowed(execution, ACTIVE, COMPLETED, TRANSITION_COMPLETE);
     completing(execution);
   }
 
   @Override
   public void onManualCompletion(CmmnActivityExecution execution) {
-    ensureTransitionAllowed(execution, ACTIVE, COMPLETED, "complete");
+    ensureTransitionAllowed(execution, ACTIVE, COMPLETED, TRANSITION_COMPLETE);
     manualCompleting(execution);
   }
 
@@ -122,14 +136,14 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
 
   @Override
   public void onTermination(CmmnActivityExecution execution) {
-    ensureTransitionAllowed(execution, ACTIVE, TERMINATED, "terminate");
+    ensureTransitionAllowed(execution, ACTIVE, TERMINATED, TRANSITION_TERMINATE);
     performTerminate(execution);
   }
 
   @Override
   public void onParentTermination(CmmnActivityExecution execution) {
     String id = execution.getId();
-    throw LOG.illegalStateTransitionException("parentTerminate", id, getTypeName());
+    throw LOG.illegalStateTransitionException(TRANSITION_PARENT_TERMINATE, id, getTypeName());
   }
 
   @Override
@@ -137,11 +151,11 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
     String id = execution.getId();
 
     if (execution.isTerminated()) {
-      throw LOG.alreadyTerminatedException("exit", id);
+      throw LOG.alreadyTerminatedException(TRANSITION_EXIT, id);
     }
 
     if (execution.isCompleted()) {
-      throw LOG.wrongCaseStateException("exit", id, "[available|enabled|disabled|active|failed|suspended]", "completed");
+      throw LOG.wrongCaseStateException(TRANSITION_EXIT, id, "[available|enabled|disabled|active|failed|suspended]", "completed");
     }
 
     performExit(execution);
@@ -151,22 +165,22 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
 
   @Override
   public void onSuspension(CmmnActivityExecution execution) {
-    ensureTransitionAllowed(execution, ACTIVE, SUSPENDED, "suspend");
+    ensureTransitionAllowed(execution, ACTIVE, SUSPENDED, TRANSITION_SUSPEND);
     performSuspension(execution);
   }
 
   @Override
   public void onParentSuspension(CmmnActivityExecution execution) {
-    ensureNotCaseInstance(execution, "parentSuspension");
+    ensureNotCaseInstance(execution, TRANSITION_PARENT_SUSPENSION);
 
     String id = execution.getId();
 
     if (execution.isSuspended()) {
-      throw LOG.alreadySuspendedException("parentSuspend", id);
+      throw LOG.alreadySuspendedException(TRANSITION_PARENT_SUSPEND, id);
     }
 
     if (execution.isCompleted() || execution.isTerminated()) {
-      throw LOG.wrongCaseStateException("parentSuspend", id, "suspend", "[available|enabled|disabled|active]",
+      throw LOG.wrongCaseStateException(TRANSITION_PARENT_SUSPEND, id, TRANSITION_SUSPEND, "[available|enabled|disabled|active]",
         execution.getCurrentState().toString());
     }
 
@@ -177,13 +191,13 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
 
   @Override
   public void onResume(CmmnActivityExecution execution) {
-    ensureNotCaseInstance(execution, "resume");
-    ensureTransitionAllowed(execution, SUSPENDED, ACTIVE, "resume");
+    ensureNotCaseInstance(execution, TRANSITION_RESUME);
+    ensureTransitionAllowed(execution, SUSPENDED, ACTIVE, TRANSITION_RESUME);
 
     CmmnActivityExecution parent = execution.getParent();
     if (parent != null && !parent.isActive()) {
       String id = execution.getId();
-      throw LOG.resumeInactiveCaseException("resume", id);
+      throw LOG.resumeInactiveCaseException(TRANSITION_RESUME, id);
     }
 
     resuming(execution);
@@ -192,16 +206,16 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
 
   @Override
   public void onParentResume(CmmnActivityExecution execution) {
-    ensureNotCaseInstance(execution, "parentResume");
+    ensureNotCaseInstance(execution, TRANSITION_PARENT_RESUME);
     String id = execution.getId();
 
     if (!execution.isSuspended()) {
-      throw LOG.wrongCaseStateException("parentResume", id, "resume", "suspended", execution.getCurrentState().toString());
+      throw LOG.wrongCaseStateException(TRANSITION_PARENT_RESUME, id, TRANSITION_RESUME, "suspended", execution.getCurrentState().toString());
     }
 
     CmmnActivityExecution parent = execution.getParent();
     if (parent != null && !parent.isActive()) {
-      throw LOG.resumeInactiveCaseException("parentResume", id);
+      throw LOG.resumeInactiveCaseException(TRANSITION_PARENT_RESUME, id);
     }
 
     resuming(execution);

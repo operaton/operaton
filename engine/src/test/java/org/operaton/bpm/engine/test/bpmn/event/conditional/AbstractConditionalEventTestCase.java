@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,16 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -31,13 +34,10 @@ import org.operaton.bpm.engine.impl.EventSubscriptionQueryImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 
 /**
  *
@@ -86,8 +86,10 @@ public abstract class AbstractConditionalEventTestCase {
 
   protected List<Task> tasksAfterVariableIsSet;
 
-  @Rule
-  public final ProcessEngineRule engine = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  protected static ProcessEngineExtension engine = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engine);
 
   protected RuntimeService runtimeService;
   protected TaskService taskService;
@@ -96,17 +98,12 @@ public abstract class AbstractConditionalEventTestCase {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected EventSubscriptionQueryImpl conditionEventSubscriptionQuery;
 
-  @Before
+  @BeforeEach
   public void init() {
-    this.runtimeService = engine.getRuntimeService();
-    this.taskService = engine.getTaskService();
-    this.repositoryService = engine.getRepositoryService();
-    this.historyService = engine.getHistoryService();
-    this.processEngineConfiguration = engine.getProcessEngineConfiguration();
     this.conditionEventSubscriptionQuery = new EventSubscriptionQueryImpl(processEngineConfiguration.getCommandExecutorTxRequired()).eventType(EventType.CONDITONAL.name());
   }
 
-  @After
+  @AfterEach
   public void checkIfProcessCanBeFinished() {
     //given tasks after variable was set
     assertThat(tasksAfterVariableIsSet).isNotNull();

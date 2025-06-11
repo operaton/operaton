@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,19 +34,17 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
-public class MultiTenancyJobExecutorTest {
+class MultiTenancyJobExecutorTest {
 
   protected static final String TENANT_ID = "tenant1";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void setAuthenticatedTenantForTimerStartEvent() {
+  void setAuthenticatedTenantForTimerStartEvent() {
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess("process")
         .startEvent()
           .timerWithDuration("PT1M")
@@ -65,7 +63,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @Test
-  public void setAuthenticatedTenantForIntermediateTimerEvent() {
+  void setAuthenticatedTenantForIntermediateTimerEvent() {
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess("process")
         .startEvent()
         .intermediateCatchEvent()
@@ -85,7 +83,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @Test
-  public void setAuthenticatedTenantForAsyncJob() {
+  void setAuthenticatedTenantForAsyncJob() {
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -103,7 +101,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @Test
-  public void dontSetAuthenticatedTenantForJobWithoutTenant() {
+  void dontSetAuthenticatedTenantForJobWithoutTenant() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -121,7 +119,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @Test
-  public void dontSetAuthenticatedTenantWhileManualJobExecution() {
+  void dontSetAuthenticatedTenantWhileManualJobExecution() {
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -165,7 +163,7 @@ public class MultiTenancyJobExecutorTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     AssertingJavaDelegate.clear();
   }
 

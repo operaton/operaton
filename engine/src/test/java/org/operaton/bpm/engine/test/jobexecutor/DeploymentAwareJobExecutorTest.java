@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -49,6 +49,7 @@ import org.junit.Test;
 
 public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
+  private static final String OTHER_PROCESS_ENGINE_NAME = "otherProcessEngineName";
   protected ProcessEngine otherProcessEngine = null;
 
   @Before
@@ -202,11 +203,13 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     try {
       otherProcessEngine = ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("operaton.cfg.xml")
+        .setProcessEngineName(OTHER_PROCESS_ENGINE_NAME)
         .buildProcessEngine();
     } catch (RuntimeException ex) {
       if (ex.getCause() != null && ex.getCause() instanceof FileNotFoundException) {
         otherProcessEngine = ProcessEngineConfiguration
           .createProcessEngineConfigurationFromResource("activiti.cfg.xml")
+          .setProcessEngineName(OTHER_PROCESS_ENGINE_NAME)
           .buildProcessEngine();
       } else {
         throw ex;

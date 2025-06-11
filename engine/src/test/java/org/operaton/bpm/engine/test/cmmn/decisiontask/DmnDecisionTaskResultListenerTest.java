@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
+import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -25,8 +26,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.IntegerValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Roman Smirnov
  *
  */
-public class DmnDecisionTaskResultListenerTest extends CmmnTest {
+class DmnDecisionTaskResultListenerTest extends CmmnTest {
 
   protected static final String TEST_CASE = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskResultListenerTest.cmmn";
   protected static final String TEST_DECISION = "org/operaton/bpm/engine/test/dmn/result/DmnDecisionResultTest.dmn11.xml";
@@ -43,17 +43,17 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
 
   protected DmnDecisionResult results;
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION})
+  @Deployment(resources = {TEST_CASE, TEST_DECISION})
   @Test
-  public void testNoOutput() {
+  void testNoOutput() {
     startTestCase("no output");
 
     assertThat(results).as("The decision result 'ruleResult' should be empty").isEmpty();
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION})
+  @Deployment(resources = {TEST_CASE, TEST_DECISION})
   @Test
-  public void testEmptyOutput() {
+  void testEmptyOutput() {
     startTestCase("empty output");
 
     assertThat(results).as("The decision result 'ruleResult' should not be empty").isNotEmpty();
@@ -62,9 +62,9 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(decisionOutput.<Object>getFirstEntry()).isNull();
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION})
+  @Deployment(resources = {TEST_CASE, TEST_DECISION})
   @Test
-  public void testEmptyMap() {
+  void testEmptyMap() {
     startTestCase("empty map");
 
     assertThat(results).hasSize(2);
@@ -74,9 +74,9 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     }
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION})
+  @Deployment(resources = {TEST_CASE, TEST_DECISION})
   @Test
-  public void testSingleEntry() {
+  void testSingleEntry() {
     startTestCase("single entry");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
@@ -84,9 +84,9 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(firstOutput.<StringValue>getFirstEntryTyped()).isEqualTo(Variables.stringValue("foo"));
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION})
+  @Deployment(resources = {TEST_CASE, TEST_DECISION})
   @Test
-  public void testMultipleEntries() {
+  void testMultipleEntries() {
     startTestCase("multiple entries");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
@@ -98,9 +98,9 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(firstOutput.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION})
+  @Deployment(resources = {TEST_CASE, TEST_DECISION})
   @Test
-  public void testSingleEntryList() {
+  void testSingleEntryList() {
     startTestCase("single entry list");
 
     assertThat(results).hasSize(2);
@@ -111,9 +111,9 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     }
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION})
+  @Deployment(resources = {TEST_CASE, TEST_DECISION})
   @Test
-  public void testMultipleEntriesList() {
+  void testMultipleEntriesList() {
     startTestCase("multiple entries list");
 
     assertThat(results).hasSize(2);
@@ -129,9 +129,9 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     }
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION_COLLECT_COUNT })
+  @Deployment(resources = {TEST_CASE, TEST_DECISION_COLLECT_COUNT})
   @Test
-  public void testCollectCountHitPolicyNoOutput() {
+  void testCollectCountHitPolicyNoOutput() {
     startTestCase("no output");
 
     assertThat(results).hasSize(1);
@@ -141,17 +141,17 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(firstOutput.<IntegerValue>getFirstEntryTyped()).isEqualTo(Variables.integerValue(0));
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION_COLLECT_SUM })
+  @Deployment(resources = {TEST_CASE, TEST_DECISION_COLLECT_SUM})
   @Test
-  public void testCollectSumHitPolicyNoOutput() {
+  void testCollectSumHitPolicyNoOutput() {
     startTestCase("no output");
 
     assertThat(results).as("The decision result 'ruleResult' should be empty").isEmpty();
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION_COLLECT_SUM })
+  @Deployment(resources = {TEST_CASE, TEST_DECISION_COLLECT_SUM})
   @Test
-  public void testCollectSumHitPolicySingleEntry() {
+  void testCollectSumHitPolicySingleEntry() {
     startTestCase("single entry");
 
     assertThat(results).hasSize(1);
@@ -161,9 +161,9 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(firstOutput.<IntegerValue>getFirstEntryTyped()).isEqualTo(Variables.integerValue(12));
   }
 
-  @Deployment(resources = { TEST_CASE, TEST_DECISION_COLLECT_SUM })
+  @Deployment(resources = {TEST_CASE, TEST_DECISION_COLLECT_SUM})
   @Test
-  public void testCollectSumHitPolicySingleEntryList() {
+  void testCollectSumHitPolicySingleEntryList() {
     startTestCase("single entry list");
 
     assertThat(results).hasSize(1);
@@ -180,8 +180,8 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     return caseInstance;
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     // reset the invoked execution listener
     DecisionResultTestListener.reset();
   }

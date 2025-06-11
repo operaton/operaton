@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLog;
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLogQuery;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -33,8 +40,7 @@ import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  *
@@ -42,7 +48,8 @@ import org.junit.Test;
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class HistoricIdentityLinkLogQueryTest {
   private static final String A_USER_ID = "aUserId";
   private static final String A_GROUP_ID = "aGroupId";
   private static final int NUMBER_OF_USERS = 3;
@@ -63,9 +70,15 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   private static final String IDENTITY_LINK_ADD="add";
   private static final String IDENTITY_LINK_DELETE="delete";
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
+  TaskService taskService;
+  HistoryService historyService;
+  IdentityService identityService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryAddTaskCandidateforAddIdentityLink() {
+  void testQueryAddTaskCandidateforAddIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();
@@ -90,9 +103,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     assertThat(historicIdentityLink.getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
+  void testGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();
@@ -117,9 +130,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     assertThat(historicIdentityLink.getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testValidIndividualQueryTaskCandidateForAddAndDeleteIdentityLink() {
+  void testValidIndividualQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();
@@ -160,9 +173,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
 
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testValidGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
+  void testValidGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();
@@ -188,9 +201,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testInvalidIndividualQueryTaskCandidateForAddAndDeleteIdentityLink() {
+  void testInvalidIndividualQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();
@@ -225,9 +238,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
 
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testInvalidGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
+  void testInvalidGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();
@@ -264,9 +277,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
    *
    * Test case: Query the number of added records at different time interval.
    */
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testShouldAddTaskOwnerForAddandDeleteIdentityLinkByTimeStamp() {
+  void testShouldAddTaskOwnerForAddandDeleteIdentityLinkByTimeStamp() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
     assertThat(historicIdentityLinks).isEmpty();
@@ -314,9 +327,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   }
 
   @SuppressWarnings("deprecation")
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testQueryAddAndRemoveIdentityLinksForProcessDefinition() {
+  void testQueryAddAndRemoveIdentityLinksForProcessDefinition() {
 
     ProcessDefinition latestProcessDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).singleResult();
     assertThat(latestProcessDef).isNotNull();
@@ -362,9 +375,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(2);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithMultipleCandidateUser.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithMultipleCandidateUser.bpmn20.xml"})
   @Test
-  public void testHistoricIdentityLinkQueryPaging() {
+  void testHistoricIdentityLinkQueryPaging() {
     startProcessInstance(PROCESS_DEFINITION_KEY_MULTIPLE_CANDIDATE_USER);
 
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
@@ -375,9 +388,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     assertThat(query.listPage(1, 4)).hasSize(3);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithMultipleCandidateUser.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithMultipleCandidateUser.bpmn20.xml"})
   @Test
-  public void testHistoricIdentityLinkQuerySorting() {
+  void testHistoricIdentityLinkQuerySorting() {
 
     // Pre test - Historical identity link is added as part of deployment
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();

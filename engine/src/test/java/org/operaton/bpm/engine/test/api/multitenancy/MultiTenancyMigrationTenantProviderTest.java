@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,24 +40,22 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyMigrationTenantProviderTest {
+class MultiTenancyMigrationTenantProviderTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-        TenantIdProvider tenantIdProvider = new VariableBasedTenantIdProvider();
-        configuration.setTenantIdProvider(tenantIdProvider);
-      })
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setTenantIdProvider(new VariableBasedTenantIdProvider()))
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void cannotMigrateInstanceBetweenDifferentTenants() {
+  void cannotMigrateInstanceBetweenDifferentTenants() {
     // given
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenantDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
@@ -84,7 +82,7 @@ public class MultiTenancyMigrationTenantProviderTest {
   }
 
   @Test
-  public void canMigrateInstanceBetweenSameTenantCase2() {
+  void canMigrateInstanceBetweenSameTenantCase2() {
     // given
     ProcessDefinition sharedDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -105,7 +103,7 @@ public class MultiTenancyMigrationTenantProviderTest {
   }
 
   @Test
-  public void canMigrateWithProcessInstanceQueryAllInstancesOfAuthenticatedTenant() {
+  void canMigrateWithProcessInstanceQueryAllInstancesOfAuthenticatedTenant() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -133,7 +131,7 @@ public class MultiTenancyMigrationTenantProviderTest {
   }
 
   @Test
-  public void canMigrateWithProcessInstanceQueryAllInstancesOfAuthenticatedTenants() {
+  void canMigrateWithProcessInstanceQueryAllInstancesOfAuthenticatedTenants() {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);

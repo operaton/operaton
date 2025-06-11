@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,7 +51,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
-public class MultiTenancyExecutionPropagationTest {
+class MultiTenancyExecutionPropagationTest {
 
   protected static final String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
   protected static final String SET_VARIABLE_CMMN_FILE = "org/operaton/bpm/engine/test/api/multitenancy/HumanTaskSetVariableExecutionListener.cmmn";
@@ -60,9 +60,9 @@ public class MultiTenancyExecutionPropagationTest {
   protected static final String TENANT_ID = "tenant1";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;
@@ -73,7 +73,7 @@ public class MultiTenancyExecutionPropagationTest {
   protected CaseService caseService;
 
   @Test
-  public void testPropagateTenantIdToProcessDefinition() {
+  void testPropagateTenantIdToProcessDefinition() {
 
     testRule.deployForTenant(TENANT_ID,  Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().done());
 
@@ -87,7 +87,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToProcessInstance() {
+  void testPropagateTenantIdToProcessInstance() {
     testRule.deployForTenant(TENANT_ID,  Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
         .userTask()
@@ -103,7 +103,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToConcurrentExecution() {
+  void testPropagateTenantIdToConcurrentExecution() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -127,7 +127,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToEmbeddedSubprocess() {
+  void testPropagateTenantIdToEmbeddedSubprocess() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
       .startEvent()
@@ -150,7 +150,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToTask() {
+  void testPropagateTenantIdToTask() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -167,7 +167,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToVariableInstanceOnStartProcessInstance() {
+  void testPropagateTenantIdToVariableInstanceOnStartProcessInstance() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -187,7 +187,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToVariableInstanceFromExecution() {
+  void testPropagateTenantIdToVariableInstanceFromExecution() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -206,7 +206,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToVariableInstanceFromTask() {
+  void testPropagateTenantIdToVariableInstanceFromTask() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -228,7 +228,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToStartMessageEventSubscription() {
+  void testPropagateTenantIdToStartMessageEventSubscription() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -244,7 +244,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToStartSignalEventSubscription() {
+  void testPropagateTenantIdToStartSignalEventSubscription() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
       .startEvent()
@@ -260,7 +260,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToIntermediateMessageEventSubscription() {
+  void testPropagateTenantIdToIntermediateMessageEventSubscription() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
       .startEvent()
@@ -278,7 +278,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToIntermediateSignalEventSubscription() {
+  void testPropagateTenantIdToIntermediateSignalEventSubscription() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -296,7 +296,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToCompensationEventSubscription() {
+  void testPropagateTenantIdToCompensationEventSubscription() {
 
     testRule.deployForTenant(TENANT_ID, "org/operaton/bpm/engine/test/api/multitenancy/compensationBoundaryEvent.bpmn");
 
@@ -310,7 +310,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToStartTimerJobDefinition() {
+  void testPropagateTenantIdToStartTimerJobDefinition() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -326,7 +326,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToIntermediateTimerJob() {
+  void testPropagateTenantIdToIntermediateTimerJob() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -345,7 +345,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToAsyncJob() {
+  void testPropagateTenantIdToAsyncJob() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -364,7 +364,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToFailedJobIncident() {
+  void testPropagateTenantIdToFailedJobIncident() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -385,7 +385,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToFailedStartTimerIncident() {
+  void testPropagateTenantIdToFailedStartTimerIncident() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -404,7 +404,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToFailedExternalTaskIncident() {
+  void testPropagateTenantIdToFailedExternalTaskIncident() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -427,7 +427,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToExternalTask() {
+  void testPropagateTenantIdToExternalTask() {
 
     testRule.deployForTenant(TENANT_ID, Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -450,7 +450,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToVariableInstanceOnCreateCaseInstance() {
+  void testPropagateTenantIdToVariableInstanceOnCreateCaseInstance() {
 
     testRule.deployForTenant(TENANT_ID, CMMN_FILE);
 
@@ -466,7 +466,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToVariableInstanceFromCaseExecution() {
+  void testPropagateTenantIdToVariableInstanceFromCaseExecution() {
 
     testRule.deployForTenant(TENANT_ID, SET_VARIABLE_CMMN_FILE);
 
@@ -479,7 +479,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToVariableInstanceFromHumanTask() {
+  void testPropagateTenantIdToVariableInstanceFromHumanTask() {
 
     testRule.deployForTenant(TENANT_ID, CMMN_FILE);
 
@@ -496,7 +496,7 @@ public class MultiTenancyExecutionPropagationTest {
   }
 
   @Test
-  public void testPropagateTenantIdToTaskOnCreateCaseInstance() {
+  void testPropagateTenantIdToTaskOnCreateCaseInstance() {
     testRule.deployForTenant(TENANT_ID, CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();

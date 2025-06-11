@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,6 +35,9 @@ import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.XmlValue;
 import org.operaton.spin.plugin.variable.value.builder.XmlValueBuilder;
 import org.operaton.spin.xml.SpinXmlElement;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.spin.DataFormats.xml;
 import static org.operaton.spin.plugin.variable.SpinValues.xmlValue;
 import static org.operaton.spin.plugin.variable.type.SpinValueType.XML;
@@ -43,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -63,6 +65,7 @@ class XmlValueTest {
   protected static final String XML_FORMAT_NAME = DataFormats.XML_DATAFORMAT_NAME;
 
   protected static final String ONE_TASK_PROCESS_KEY = "oneTaskProcess";
+  private static final String SPIN_DOM_XML_01009 = "SPIN/DOM-XML-01009 Unable to parse input into DOM document";
 
   protected String xmlString = "<elementName attrName=\"attrValue\" />";
   protected String brokenXmlString = "<elementName attrName=attrValue\" />";
@@ -125,10 +128,9 @@ class XmlValueTest {
 
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    Assertions.assertDoesNotThrow(() -> {
-      // when
-      runtimeService.setVariable(processInstanceId, variableName, value);
-    }, "no exception expected");
+    // when
+    assertThatCode(() -> runtimeService.setVariable(processInstanceId, variableName, value))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -140,20 +142,13 @@ class XmlValueTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     runtimeService.setVariable(processInstanceId, variableName, value);
 
-    try {
-      // when
-      runtimeService.getVariable(processInstanceId, variableName);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.getVariable(processInstanceId, variableName))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining(SPIN_DOM_XML_01009);
 
-    try {
-      runtimeService.getVariableTyped(processInstanceId, variableName);
-      fail("exception expected");
-    } catch(ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.getVariableTyped(processInstanceId, variableName))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining(SPIN_DOM_XML_01009);
 
     // However, I can access the serialized value
     XmlValue xmlValue = runtimeService.getVariableTyped(processInstanceId, variableName, false);
@@ -161,11 +156,9 @@ class XmlValueTest {
     assertEquals(brokenXmlString, xmlValue.getValueSerialized());
 
     // but not the deserialized properties
-    try {
-      xmlValue.getValue();
-      fail("exception expected");
-    } catch(SpinRuntimeException e) {
-    }
+    assertThatThrownBy(xmlValue::getValue)
+      .isInstanceOf(SpinRuntimeException.class)
+      .hasMessage(SPIN_DOM_XML_01009);
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
@@ -175,25 +168,14 @@ class XmlValueTest {
     XmlValueBuilder builder = xmlValue(xmlString).serializationDataFormat("non existing data format");
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    try {
-      // when (1)
-      runtimeService.setVariable(processInstanceId, variableName, builder);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // then (1)
-      assertThat(e.getMessage()).contains("Cannot find serializer for value");
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, variableName, builder))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find serializer for value");
 
-    try {
-      // when (2)
-      runtimeService.setVariable(processInstanceId, variableName, builder.create());
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // then (2)
-      assertThat(e.getMessage()).contains("Cannot find serializer for value");
-      // happy path
-    }
+    XmlValue value = builder.create();
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, variableName, value))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find serializer for value");
   }
 
   @Deployment(resources = "org/operaton/spin/plugin/xmlConditionProcess.bpmn20.xml")

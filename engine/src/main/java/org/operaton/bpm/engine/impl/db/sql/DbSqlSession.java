@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.db.sql;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -73,6 +72,15 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
   public static final String[] JDBC_METADATA_TABLE_TYPES = { "TABLE" };
   public static final String[] PG_JDBC_METADATA_TABLE_TYPES = { "TABLE", "PARTITIONED TABLE" };
+
+  private static final String COMPONENT_CASE_ENGINE = "case.engine";
+  private static final String COMPONENT_DECISION_ENGINE = "decision.engine";
+  private static final String COMPONENT_ENGINE = "engine";
+  private static final String COMPONENT_HISTORY = "history";
+  private static final String COMPONENT_IDENTITY = "identity";
+
+  private static final String DB_OPERATION_CREATE = "create";
+  private static final String DB_OPERATION_DROP = "drop";
 
   protected SqlSession sqlSession;
   protected DbSqlSessionFactory dbSqlSessionFactory;
@@ -301,6 +309,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     }
   }
 
+  @SuppressWarnings("unused")
   protected void entityInsertPerformed(DbEntityOperation operation,
                                        int rowsAffected,
                                        PersistenceException failure) {
@@ -425,19 +434,19 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
       List<String> missingComponents = new ArrayList<>();
       if (!isEngineTablePresent()) {
-        missingComponents.add("engine");
+        missingComponents.add(COMPONENT_ENGINE);
       }
       if (dbSqlSessionFactory.isDbHistoryUsed() && !isHistoryTablePresent()) {
-        missingComponents.add("history");
+        missingComponents.add(COMPONENT_HISTORY);
       }
       if (dbSqlSessionFactory.isDbIdentityUsed() && !isIdentityTablePresent()) {
-        missingComponents.add("identity");
+        missingComponents.add(COMPONENT_IDENTITY);
       }
       if (dbSqlSessionFactory.isCmmnEnabled() && !isCmmnTablePresent()) {
-        missingComponents.add("case.engine");
+        missingComponents.add(COMPONENT_CASE_ENGINE);
       }
       if (dbSqlSessionFactory.isDmnEnabled() && !isDmnTablePresent()) {
-        missingComponents.add("decision.engine");
+        missingComponents.add(COMPONENT_DECISION_ENGINE);
       }
 
       if (!missingComponents.isEmpty()) {
@@ -465,73 +474,73 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   @Override
   protected void dbSchemaCreateIdentity() {
-    executeMandatorySchemaResource("create", "identity");
+    executeMandatorySchemaResource(DB_OPERATION_CREATE, COMPONENT_IDENTITY);
   }
 
   @Override
   protected void dbSchemaCreateHistory() {
-    executeMandatorySchemaResource("create", "history");
+    executeMandatorySchemaResource(DB_OPERATION_CREATE, COMPONENT_HISTORY);
   }
 
   @Override
   protected void dbSchemaCreateEngine() {
-    executeMandatorySchemaResource("create", "engine");
+    executeMandatorySchemaResource(DB_OPERATION_CREATE, COMPONENT_ENGINE);
   }
 
   @Override
   protected void dbSchemaCreateCmmn() {
-    executeMandatorySchemaResource("create", "case.engine");
+    executeMandatorySchemaResource(DB_OPERATION_CREATE, COMPONENT_CASE_ENGINE);
   }
 
   @Override
   protected void dbSchemaCreateCmmnHistory() {
-    executeMandatorySchemaResource("create", "case.history");
+    executeMandatorySchemaResource(DB_OPERATION_CREATE, "case.history");
   }
 
   @Override
   protected void dbSchemaCreateDmn() {
-    executeMandatorySchemaResource("create", "decision.engine");
+    executeMandatorySchemaResource(DB_OPERATION_CREATE, COMPONENT_DECISION_ENGINE);
   }
 
 
   @Override
   protected void dbSchemaCreateDmnHistory() {
-    executeMandatorySchemaResource("create", "decision.history");
+    executeMandatorySchemaResource(DB_OPERATION_CREATE, "decision.history");
   }
 
   @Override
   protected void dbSchemaDropIdentity() {
-    executeMandatorySchemaResource("drop", "identity");
+    executeMandatorySchemaResource(DB_OPERATION_DROP, COMPONENT_IDENTITY);
   }
 
   @Override
   protected void dbSchemaDropHistory() {
-    executeMandatorySchemaResource("drop", "history");
+    executeMandatorySchemaResource(DB_OPERATION_DROP, COMPONENT_HISTORY);
   }
 
   @Override
   protected void dbSchemaDropEngine() {
-    executeMandatorySchemaResource("drop", "engine");
+    executeMandatorySchemaResource(DB_OPERATION_DROP, COMPONENT_ENGINE);
   }
 
   @Override
   protected void dbSchemaDropCmmn() {
-    executeMandatorySchemaResource("drop", "case.engine");
+    executeMandatorySchemaResource(DB_OPERATION_DROP, COMPONENT_CASE_ENGINE);
   }
 
   @Override
   protected void dbSchemaDropCmmnHistory() {
-    executeMandatorySchemaResource("drop", "case.history");
+    executeMandatorySchemaResource(DB_OPERATION_DROP, "case.history");
   }
 
   @Override
   protected void dbSchemaDropDmn() {
-    executeMandatorySchemaResource("drop", "decision.engine");
+    executeMandatorySchemaResource(DB_OPERATION_DROP, COMPONENT_DECISION_ENGINE);
   }
 
   @Override
   protected void dbSchemaDropDmnHistory() {
-    executeMandatorySchemaResource("drop", "decision.history");
+    executeMandatorySchemaResource(DB_OPERATION_DROP, "decision.history");
   }
 
   public void executeMandatorySchemaResource(String operation, String component) {

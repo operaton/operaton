@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,17 +23,17 @@ import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseExecutionListenerTest extends CmmnTest {
+class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByClass.cmmn"})
   @Test
-  public void testCreateListenerByClass() {
+  void testCreateListenerByClass() {
     // given
 
     // when
@@ -65,7 +65,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByDelegateExpression.cmmn"})
   @Test
-  public void testCreateListenerByDelegateExpression() {
+  void testCreateListenerByDelegateExpression() {
     // given
 
     // when
@@ -98,7 +98,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByExpression.cmmn"})
   @Test
-  public void testCreateListenerByExpression() {
+  void testCreateListenerByExpression() {
     // given
 
     // when
@@ -131,7 +131,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByScript.cmmn"})
   @Test
-  public void testCreateListenerByScript() {
+  void testCreateListenerByScript() {
     // given
 
     // when
@@ -163,7 +163,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByClass.cmmn"})
   @Test
-  public void testEnableListenerByClass() {
+  void testEnableListenerByClass() {
     // given
 
     // when
@@ -195,7 +195,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByDelegateExpression.cmmn"})
   @Test
-  public void testEnableListenerByDelegateExpression() {
+  void testEnableListenerByDelegateExpression() {
     // given
 
     // when
@@ -228,7 +228,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByExpression.cmmn"})
   @Test
-  public void testEnableListenerByExpression() {
+  void testEnableListenerByExpression() {
     // given
 
     // when
@@ -261,7 +261,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByScript.cmmn"})
   @Test
-  public void testEnableListenerByScript() {
+  void testEnableListenerByScript() {
     // given
 
     // when
@@ -293,7 +293,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDisableListenerByClass.cmmn"})
   @Test
-  public void testDisableListenerByClass() {
+  void testDisableListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -328,7 +328,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDisableListenerByDelegateExpression.cmmn"})
   @Test
-  public void testDisableListenerByDelegateExpression() {
+  void testDisableListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -364,7 +364,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDisableListenerByExpression.cmmn"})
   @Test
-  public void testDisableListenerByExpression() {
+  void testDisableListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -400,7 +400,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDisableListenerByScript.cmmn"})
   @Test
-  public void testDisableListenerByScript() {
+  void testDisableListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -435,7 +435,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testReEnableListenerByClass.cmmn"})
   @Test
-  public void testReEnableListenerByClass() {
+  void testReEnableListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -474,7 +474,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testReEnableListenerByDelegateExpression.cmmn"})
   @Test
-  public void testReEnableListenerByDelegateExpression() {
+  void testReEnableListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -514,7 +514,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testReEnableListenerByExpression.cmmn"})
   @Test
-  public void testReEnableListenerByExpression() {
+  void testReEnableListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -554,7 +554,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testReEnableListenerByScript.cmmn"})
   @Test
-  public void testReEnableListenerByScript() {
+  void testReEnableListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -593,7 +593,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByClass.cmmn"})
   @Test
-  public void testStartListenerByClass() {
+  void testStartListenerByClass() {
     // given
 
     // when
@@ -625,7 +625,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByDelegateExpression.cmmn"})
   @Test
-  public void testStartListenerByDelegateExpression() {
+  void testStartListenerByDelegateExpression() {
     // given
 
     // when
@@ -658,7 +658,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByExpression.cmmn"})
   @Test
-  public void testStartListenerByExpression() {
+  void testStartListenerByExpression() {
     // given
 
     // when
@@ -691,7 +691,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByScript.cmmn"})
   @Test
-  public void testStartListenerByScript() {
+  void testStartListenerByScript() {
     // given
 
     // when
@@ -723,7 +723,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testManualStartListenerByClass.cmmn"})
   @Test
-  public void testManualStartListenerByClass() {
+  void testManualStartListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -758,7 +758,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testManualStartListenerByDelegateExpression.cmmn"})
   @Test
-  public void testManualStartListenerByDelegateExpression() {
+  void testManualStartListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -794,7 +794,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testManualStartListenerByExpression.cmmn"})
   @Test
-  public void testManualStartListenerByExpression() {
+  void testManualStartListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -830,7 +830,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testManualStartListenerByScript.cmmn"})
   @Test
-  public void testManualStartListenerByScript() {
+  void testManualStartListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -865,7 +865,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCompleteListenerByClass.cmmn"})
   @Test
-  public void testCompleteListenerByClass() {
+  void testCompleteListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -900,7 +900,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCompleteListenerByDelegateExpression.cmmn"})
   @Test
-  public void testCompleteListenerByDelegateExpression() {
+  void testCompleteListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -936,7 +936,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCompleteListenerByExpression.cmmn"})
   @Test
-  public void testCompleteListenerByExpression() {
+  void testCompleteListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -972,7 +972,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCompleteListenerByScript.cmmn"})
   @Test
-  public void testCompleteListenerByScript() {
+  void testCompleteListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1007,7 +1007,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testTerminateListenerByClass.cmmn"})
   @Test
-  public void testTerminateListenerByClass() {
+  void testTerminateListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1040,7 +1040,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testTerminateListenerByDelegateExpression.cmmn"})
   @Test
-  public void testTerminateListenerByDelegateExpression() {
+  void testTerminateListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1074,7 +1074,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testTerminateListenerByExpression.cmmn"})
   @Test
-  public void testTerminateListenerByExpression() {
+  void testTerminateListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1108,7 +1108,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testTerminateListenerByScript.cmmn"})
   @Test
-  public void testTerminateListenerByScript() {
+  void testTerminateListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1141,7 +1141,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testExitListenerByClass.cmmn"})
   @Test
-  public void testExitListenerByClass() {
+  void testExitListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1174,7 +1174,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testExitListenerByDelegateExpression.cmmn"})
   @Test
-  public void testExitListenerByDelegateExpression() {
+  void testExitListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1208,7 +1208,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testExitListenerByExpression.cmmn"})
   @Test
-  public void testExitListenerByExpression() {
+  void testExitListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1242,7 +1242,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testExitListenerByScript.cmmn"})
   @Test
-  public void testExitListenerByScript() {
+  void testExitListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1275,7 +1275,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentTerminateListenerByClass.cmmn"})
   @Test
-  public void testParentTerminateListenerByClass() {
+  void testParentTerminateListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1308,7 +1308,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentTerminateListenerByDelegateExpression.cmmn"})
   @Test
-  public void testParentTerminateListenerByDelegateExpression() {
+  void testParentTerminateListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1342,7 +1342,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentTerminateListenerByExpression.cmmn"})
   @Test
-  public void testParentTerminateListenerByExpression() {
+  void testParentTerminateListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1376,7 +1376,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentTerminateListenerByScript.cmmn"})
   @Test
-  public void testParentTerminateListenerByScript() {
+  void testParentTerminateListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1409,7 +1409,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testSuspendListenerByClass.cmmn"})
   @Test
-  public void testSuspendListenerByClass() {
+  void testSuspendListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1442,7 +1442,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testSuspendListenerByDelegateExpression.cmmn"})
   @Test
-  public void testSuspendListenerByDelegateExpression() {
+  void testSuspendListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1476,7 +1476,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testSuspendListenerByExpression.cmmn"})
   @Test
-  public void testSuspendListenerByExpression() {
+  void testSuspendListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1510,7 +1510,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testSuspendListenerByScript.cmmn"})
   @Test
-  public void testSuspendListenerByScript() {
+  void testSuspendListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1543,7 +1543,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentSuspendListenerByClass.cmmn"})
   @Test
-  public void testParentSuspendListenerByClass() {
+  void testParentSuspendListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1576,7 +1576,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentSuspendListenerByDelegateExpression.cmmn"})
   @Test
-  public void testParentSuspendListenerByDelegateExpression() {
+  void testParentSuspendListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1610,7 +1610,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentSuspendListenerByExpression.cmmn"})
   @Test
-  public void testParentSuspendListenerByExpression() {
+  void testParentSuspendListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1644,7 +1644,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentSuspendListenerByScript.cmmn"})
   @Test
-  public void testParentSuspendListenerByScript() {
+  void testParentSuspendListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1677,7 +1677,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testResumeListenerByClass.cmmn"})
   @Test
-  public void testResumeListenerByClass() {
+  void testResumeListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1712,7 +1712,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testResumeListenerByDelegateExpression.cmmn"})
   @Test
-  public void testResumeListenerByDelegateExpression() {
+  void testResumeListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1748,7 +1748,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testResumeListenerByExpression.cmmn"})
   @Test
-  public void testResumeListenerByExpression() {
+  void testResumeListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1784,7 +1784,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testResumeListenerByScript.cmmn"})
   @Test
-  public void testResumeListenerByScript() {
+  void testResumeListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1819,7 +1819,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentResumeListenerByClass.cmmn"})
   @Test
-  public void testParentResumeListenerByClass() {
+  void testParentResumeListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1854,7 +1854,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentResumeListenerByDelegateExpression.cmmn"})
   @Test
-  public void testParentResumeListenerByDelegateExpression() {
+  void testParentResumeListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1890,7 +1890,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentResumeListenerByExpression.cmmn"})
   @Test
-  public void testParentResumeListenerByExpression() {
+  void testParentResumeListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1926,7 +1926,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testParentResumeListenerByScript.cmmn"})
   @Test
-  public void testParentResumeListenerByScript() {
+  void testParentResumeListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1961,7 +1961,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testOccurListenerByClass.cmmn"})
   @Test
-  public void testOccurListenerByClass() {
+  void testOccurListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -1994,7 +1994,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testOccurListenerByDelegateExpression.cmmn"})
   @Test
-  public void testOccurListenerByDelegateExpression() {
+  void testOccurListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -2028,7 +2028,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testOccurListenerByExpression.cmmn"})
   @Test
-  public void testOccurListenerByExpression() {
+  void testOccurListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -2062,7 +2062,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testOccurListenerByScript.cmmn"})
   @Test
-  public void testOccurListenerByScript() {
+  void testOccurListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -2095,7 +2095,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByClass.cmmn"})
   @Test
-  public void testAllListenerByClass() {
+  void testAllListenerByClass() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -2175,7 +2175,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByDelegateExpression.cmmn"})
   @Test
-  public void testAllListenerByDelegateExpression() {
+  void testAllListenerByDelegateExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -2256,7 +2256,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByExpression.cmmn"})
   @Test
-  public void testAllListenerByExpression() {
+  void testAllListenerByExpression() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -2337,7 +2337,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByScript.cmmn"})
   @Test
-  public void testAllListenerByScript() {
+  void testAllListenerByScript() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -2417,7 +2417,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testFieldInjectionByClass.cmmn"})
   @Test
-  public void testFieldInjectionByClass() {
+  void testFieldInjectionByClass() {
     // given
 
     // when
@@ -2442,7 +2442,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testFieldInjectionByDelegateExpression.cmmn"})
   @Test
-  public void testFieldInjectionByDelegateExpression() {
+  void testFieldInjectionByDelegateExpression() {
     // given
 
     // when
@@ -2469,9 +2469,9 @@ public class CaseExecutionListenerTest extends CmmnTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testListenerByScriptResource.cmmn",
       "org/operaton/bpm/engine/test/cmmn/listener/caseExecutionListener.groovy"
-      })
+  })
   @Test
-  public void testListenerByScriptResource() {
+  void testListenerByScriptResource() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -2521,7 +2521,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDoesNotImplementCaseExecutionListenerInterfaceByClass.cmmn"})
   @Test
-  public void testDoesNotImplementCaseExecutionListenerInterfaceByClass() {
+  void testDoesNotImplementCaseExecutionListenerInterfaceByClass() {
     // given
 
 
@@ -2540,7 +2540,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDoesNotImplementCaseExecutionListenerInterfaceByDelegateExpression.cmmn"})
   @Test
-  public void testDoesNotImplementCaseExecutionListenerInterfaceByDelegateExpression() {
+  void testDoesNotImplementCaseExecutionListenerInterfaceByDelegateExpression() {
     // given
 
     try {
@@ -2559,7 +2559,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testListenerDoesNotExist.cmmn"})
   @Test
-  public void testListenerDoesNotExist() {
+  void testListenerDoesNotExist() {
     // given
 
     try {
@@ -2578,7 +2578,7 @@ public class CaseExecutionListenerTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testBusinessKeyAsCaseBusinessKey.cmmn"})
   @Test
-  public void testBusinessKeyAsCaseBusinessKey() {
+  void testBusinessKeyAsCaseBusinessKey() {
     // given
 
     // when

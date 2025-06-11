@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
 import org.operaton.bpm.engine.runtime.CaseExecution;
@@ -29,19 +30,18 @@ import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class AutoCompleteTest extends CmmnTest {
+class AutoCompleteTest extends CmmnTest {
 
   protected static final String CASE_DEFINITION_KEY = "case";
 
   @Deployment
   @Test
-  public void testCasePlanModel() {
+  void testCasePlanModel() {
     // given
     // a deployed process
 
@@ -65,7 +65,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testStage() {
+  void testStage() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_DEFINITION_KEY).getId();
 
@@ -100,7 +100,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testManualActivationDisabled() {
+  void testManualActivationDisabled() {
     // given
     // a deployed case definition
 
@@ -138,7 +138,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testManualActivationDisabledInsideStage() {
+  void testManualActivationDisabledInsideStage() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_DEFINITION_KEY).getId();
 
@@ -182,7 +182,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testNested() {
+  void testNested() {
     // given
     // a deployed case definition
 
@@ -208,7 +208,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRequiredEnabled() {
+  void testRequiredEnabled() {
     // given
     // a deployed case definition
 
@@ -256,7 +256,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testRequiredEnabledInsideStage() {
+  void testRequiredEnabledInsideStage() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_DEFINITION_KEY).getId();
 
@@ -298,7 +298,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testEntryCriteriaAndManualActivationDisabled() {
+  void testEntryCriteriaAndManualActivationDisabled() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_DEFINITION_KEY).getId();
 
@@ -337,7 +337,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment
   @Test
-  public void testExitCriteriaAndRequiredEnabled() {
+  void testExitCriteriaAndRequiredEnabled() {
     // given
     String caseInstanceId = createCaseInstanceByKey(CASE_DEFINITION_KEY).getId();
 
@@ -368,7 +368,7 @@ public class AutoCompleteTest extends CmmnTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/stage/AutoCompleteTest.testRequiredEnabled.cmmn"})
   @Test
-  public void testTerminate() {
+  void testTerminate() {
     // given
     // a deployed case definition
 
@@ -393,12 +393,12 @@ public class AutoCompleteTest extends CmmnTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/cmmn/stage/AutoCompleteTest.testProcessTasksOnStage.cmmn",
-    "org/operaton/bpm/engine/test/cmmn/stage/AutoCompleteTest.testProcessTasksOnStage.bpmn"
+      "org/operaton/bpm/engine/test/cmmn/stage/AutoCompleteTest.testProcessTasksOnStage.cmmn",
+      "org/operaton/bpm/engine/test/cmmn/stage/AutoCompleteTest.testProcessTasksOnStage.bpmn"
   })
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test
-  public void testProcessTasksOnStage() {
+  void testProcessTasksOnStage() {
     // given
 
     // when

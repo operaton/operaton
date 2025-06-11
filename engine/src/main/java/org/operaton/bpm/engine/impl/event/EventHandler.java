@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,13 +24,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
  */
 public interface EventHandler {
 
-  public String getEventHandlerType();
+  String getEventHandlerType();
 
-  public void handleEvent(EventSubscriptionEntity eventSubscription,
-                          Object payload,
-                          Object localPayload,
-                          Object payloadToTriggeredScope,
-                          String businessKey,
-                          CommandContext commandContext);
+  void handleEvent(EventSubscriptionEntity eventSubscription,
+                   Object payload,
+                   Object localPayload,
+                   Object payloadToTriggeredScope,
+                   String businessKey,
+                   CommandContext commandContext);
 
 }

@@ -12,11 +12,11 @@
 
 
 [![Forum](https://img.shields.io/badge/forum-Operaton-green)](https://forum.operaton.org/)
-[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-3343rurw2-x4w5YhLQH_2ZAhaSnM1x9g~7RUPw9I5m00hwAiw)
+[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-36z2hyul3-ygUic6F8l6QKRzpId7mOyw)
 
 Operaton is a native BPMN 2.0 process engine that runs inside the Java Virtual Machine. It can be embedded inside any Java application and any Runtime Container. It integrates with Spring, Spring Boot, Quarkus and is a perfect match for Jakarta EE. On top of the process engine, you can choose from a stack of tools for human workflow management, operations and monitoring.
 
-- Web Site: https://www.operaton.org/
+- Web Site: https://operaton.org/
 - Getting Started: https://docs.operaton.org/
 - User Forum: https://forum.operaton.org/
 - Issue Tracker: https://github.com/operaton/operaton/issues
@@ -26,7 +26,7 @@ Operaton is a native BPMN 2.0 process engine that runs inside the Java Virtual M
 We have not removed the old issue links and they still lead to Camunda's JIRA or the GitHub repo.
 
 ### What we plan to do and where we are going
-Take a look at our [Roadmap](https://www.operaton.org/en/#roadmap)
+Take a look at our [Roadmap](https://operaton.org/roadmap)
 
 ### Want to talk to us or other people around Operaton?
 Visit our [Forum](https://forum.operaton.org)

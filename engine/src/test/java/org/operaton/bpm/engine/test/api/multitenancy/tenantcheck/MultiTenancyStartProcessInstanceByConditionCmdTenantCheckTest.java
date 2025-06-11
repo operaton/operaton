@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
+class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
 
@@ -55,16 +55,16 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .done();
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   public IdentityService identityService;
   public RepositoryService repositoryService;
   public RuntimeService runtimeService;
 
   @Test
-  public void testNoAuthenticatedTenants() {
+  void testNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -96,7 +96,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testWithAuthenticatedTenant() {
+  void testWithAuthenticatedTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -128,7 +128,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testWithAuthenticatedTenant2() {
+  void testWithAuthenticatedTenant2() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -159,7 +159,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testDisabledTenantCheck() {
+  void testDisabledTenantCheck() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -183,7 +183,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testFailToEvaluateConditionByProcessDefinitionIdNoAuthenticatedTenants() {
+  void testFailToEvaluateConditionByProcessDefinitionIdNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
@@ -205,7 +205,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testEvaluateConditionByProcessDefinitionIdWithAuthenticatedTenants() {
+  void testEvaluateConditionByProcessDefinitionIdWithAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
@@ -240,7 +240,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
+  void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
     // given
     String processDefId1 = testRule.deployForTenantAndGetDefinition(TENANT_ONE, PROCESS).getId();
     String processDefId2 = testRule.deployForTenantAndGetDefinition(TENANT_ONE, PROCESS).getId();

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,6 +33,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
@@ -54,6 +55,7 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineProvider;
 import org.operaton.bpm.engine.ProcessEngineServices;
+import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -69,6 +71,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
 import org.slf4j.Logger;
 
 /**
@@ -165,7 +168,7 @@ import org.slf4j.Logger;
  * </p>
  */
 public class ProcessEngineExtension implements TestWatcher,
-    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, 
+    TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, BeforeAllCallback,
     AfterAllCallback, ParameterResolver, ProcessEngineServices, ProcessEngineProvider {
 
   protected static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
@@ -189,19 +192,32 @@ public class ProcessEngineExtension implements TestWatcher,
   protected String deploymentId;
   protected boolean ensureCleanAfterTest = false;
   protected List<String> additionalDeployments = new ArrayList<>();
+  private boolean randomName;
+  private boolean closeEngine;
+  private boolean closeEngineEachTest;
 
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 
-  private boolean cacheForConfigurationResource = true;
 
   // SETUP
 
-  protected void initializeProcessEngine() {
-    processEngine = TestHelper.getProcessEngine(configurationResource, processEngineConfigurator, cacheForConfigurationResource);
+  public void initializeProcessEngine() {
+    Consumer<ProcessEngineConfigurationImpl> configurator = processEngineConfigurator;
+    if (randomName) {
+      if (processEngineConfigurator == null) {
+        configurator = config -> config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+      } else {
+        configurator = config -> {
+          config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+          processEngineConfigurator.accept(config);
+        };
+      }
+    }
+    processEngine = TestHelper.getProcessEngine(configurationResource, configurator);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 
-  protected void initializeServices() {
+  public void initializeServices() {
     processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
     repositoryService = processEngine.getRepositoryService();
     runtimeService = processEngine.getRuntimeService();
@@ -240,6 +256,11 @@ public class ProcessEngineExtension implements TestWatcher,
   public void beforeEach(ExtensionContext context) throws Exception {
     LOG.debug("beforeEach: {}", context.getDisplayName());
 
+    if (!ProcessEngines.isRegisteredProcessEngine(processEngine.getName())) {
+      initializeProcessEngine();
+      initializeServices();
+    }
+
     final Method testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set"));
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
@@ -261,7 +282,7 @@ public class ProcessEngineExtension implements TestWatcher,
       processEngineConfiguration.setAuthorizationEnabled(authorizationEnabled);
       processEngineConfiguration.setTenantCheckEnabled(tenantCheckEnabled);
     }
-    
+
   }
 
   @Override
@@ -295,11 +316,43 @@ public class ProcessEngineExtension implements TestWatcher,
    if (ensureCleanAfterTest) {
      TestHelper.assertAndEnsureCleanDbAndCache(processEngine);
    }
+   if (closeEngineEachTest) {
+     processEngine.close();
+   }
+  }
+
+  @Override
+  public void beforeAll(ExtensionContext context) {
+    if (processEngine == null) {
+      initializeProcessEngine();
+      initializeServices();
+    }
   }
 
   @Override
   public void afterAll(ExtensionContext context) {
-    deleteHistoryCleanupJob();
+    try {
+      deleteHistoryCleanupJob();
+      if (closeEngine && processEngine != null) {
+        processEngine.close();
+      }
+    } finally {
+      // null the references after all tests because the instance is hold in static reference
+      processEngine = null;
+      processEngineConfiguration = null;
+      repositoryService = null;
+      runtimeService = null;
+      taskService = null;
+      historyService = null;
+      identityService = null;
+      managementService = null;
+      formService = null;
+      filterService = null;
+      authorizationService = null;
+      caseService = null;
+      externalTaskService = null;
+      decisionService = null;
+    }
   }
 
   private void deleteHistoryCleanupJob() {
@@ -324,9 +377,9 @@ public class ProcessEngineExtension implements TestWatcher,
   public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
     if (processEngine == null) {
       initializeProcessEngine();
-      // allow other extensions to access the engine instance created by this extension
-      context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     }
+    // allow other extensions to access the engine instance created by this extension
+    context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     initializeServices();
     getAllFields(testInstance.getClass())
             .filter(field -> field.getType() == ProcessEngine.class)
@@ -401,16 +454,37 @@ public class ProcessEngineExtension implements TestWatcher,
     return this;
   }
 
-  public ProcessEngineExtension cacheForConfigurationResource(boolean cacheForConfigurationResource) {
-    this.cacheForConfigurationResource = cacheForConfigurationResource;
+  /**
+   * When set then the created ProcessEngine will be closed after all tests in the class have been executed.
+   * <p>
+   * Use this method before calling #{@link #build()}.
+   * </p>
+   */
+  public ProcessEngineExtension closeEngineAfterAllTests() {
+    this.closeEngine = true;
+    return this;
+  }
+
+  /**
+   * When set then the created ProcessEngine will be closed after each test and recreated afterwards.
+   */
+  public ProcessEngineExtension closeEngineAfterEachTest() {
+    this.closeEngineEachTest = true;
+    return this;
+  }
+
+  /**
+   * Sets the process engine name to a random name.
+   * <p>
+   * Use this method before calling #{@link #build()}.
+   * </p>
+   */
+  public ProcessEngineExtension randomEngineName() {
+    this.randomName = true;
     return this;
   }
 
   public ProcessEngineExtension build() {
-    if (processEngine == null) {
-      initializeProcessEngine();
-    }
-    initializeServices();
     return this;
   }
 
@@ -421,9 +495,9 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   /**
-   * @deprecated Use {@link #inject(Object, Field, Object)} instead
+   * @deprecated Use {@link #inject(Object, Field, Object)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   protected void inject(Object instance, Field field) {
     inject(instance, field, processEngine);
   }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
+import org.operaton.bpm.client.UrlResolver;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.backoff.ErrorAwareBackoffStrategy;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
@@ -191,7 +192,7 @@ class ClientIT {
     try {
       // given
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
-      
+
       // when + then
       assertThatThrownBy(() -> client[0] = externalTaskClientBuilder.build())
               .isInstanceOf(ExternalTaskClientException.class);
@@ -233,10 +234,57 @@ class ClientIT {
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
           .baseUrl("http://operaton.com/engine-rest")
           .maxTasks(0);
-      
+
       // when + then
       assertThatThrownBy(() ->
               client.set(externalTaskClientBuilder.build())
+      ).isInstanceOf(ExternalTaskClientException.class);
+    }
+    finally {
+      if (client.get() != null) {
+        client.get().stop();
+      }
+    }
+  }
+
+  @Test
+  public void shouldThrowExceptionDueToBaseUrlResolverIsNull() {
+    AtomicReference<ExternalTaskClient> client = new AtomicReference<>();
+
+    try {
+      // given
+      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
+
+      // when + then
+      assertThatThrownBy(() ->
+              client.set(externalTaskClientBuilder
+                    .urlResolver(null)
+                    .build())
+      ).isInstanceOf(ExternalTaskClientException.class);
+
+    }
+    finally {
+      if (client.get() != null) {
+        client.get().stop();
+      }
+    }
+  }
+
+  @Test
+  public void shouldThrowExceptionDueToBaseUrlAndBaseUrlResolverIsNull() {
+    AtomicReference<ExternalTaskClient> client = new AtomicReference<>();
+
+    try {
+      // given
+      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
+
+      // when + then
+      assertThatThrownBy(() ->
+              client.set(externalTaskClientBuilder
+                      .baseUrl(null)
+                      .urlResolver(null)
+                      .build())
+
       ).isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
@@ -282,7 +330,7 @@ class ClientIT {
       ExternalTaskClientBuilder clientBuilder = ExternalTaskClient.create()
           .baseUrl("http://operaton.com/engine-rest")
           .asyncResponseTimeout(0);
-      
+
       // when
       assertThatThrownBy(() -> client.set(clientBuilder.build()))
               .isInstanceOf(ExternalTaskClientException.class);
@@ -355,7 +403,7 @@ class ClientIT {
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
           .baseUrl("http://operaton.com/engine-rest")
           .lockDuration(0);
-      
+
       // when + then
       assertThatThrownBy(() -> client.set(externalTaskClientBuilder.build()))
               .isInstanceOf(ExternalTaskClientException.class);

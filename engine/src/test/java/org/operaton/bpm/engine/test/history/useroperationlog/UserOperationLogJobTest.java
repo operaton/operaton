@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -31,17 +32,16 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
+class UserOperationLogJobTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetJobPriority() {
+  void testSetJobPriority() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     Job job = managementService.createJobQuery().singleResult();
@@ -74,10 +74,10 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(job.getDeploymentId());
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetRetries() {
+  void testSetRetries() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     Job job = managementService.createJobQuery().singleResult();
@@ -110,10 +110,10 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(job.getDeploymentId());
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetRetriesByJobDefinitionId() {
+  void testSetRetriesByJobDefinitionId() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     Job job = managementService.createJobQuery().singleResult();
@@ -146,10 +146,10 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(job.getDeploymentId());
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetRetriesAsync() {
+  void testSetRetriesAsync() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     Job job = managementService.createJobQuery().singleResult();
@@ -202,7 +202,7 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getProcessDefinitionKey()).as(job.getProcessDefinitionKey()).isNull();
     assertThat(userOperationLogEntry.getDeploymentId()).as(job.getDeploymentId()).isNull();
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
-    
+
     // check 'async' entry
     userOperationLogEntry = query.property("async").singleResult();
     assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.JOB);
@@ -222,13 +222,13 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getProcessDefinitionKey()).as(job.getProcessDefinitionKey()).isNull();
     assertThat(userOperationLogEntry.getDeploymentId()).as(job.getDeploymentId()).isNull();
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
-    
+
     managementService.deleteBatch(batch.getId(), true);
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetRetriesAsyncProcessInstanceId() {
+  void testSetRetriesAsyncProcessInstanceId() {
     // given a job
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     Job job = managementService.createJobQuery().singleResult();
@@ -281,7 +281,7 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getProcessDefinitionKey()).as(job.getProcessDefinitionKey()).isNull();
     assertThat(userOperationLogEntry.getDeploymentId()).as(job.getDeploymentId()).isNull();
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
-    
+
     // check 'async' entry
     userOperationLogEntry = query.property("async").singleResult();
     assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.JOB);
@@ -301,13 +301,13 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getProcessDefinitionKey()).as(job.getProcessDefinitionKey()).isNull();
     assertThat(userOperationLogEntry.getDeploymentId()).as(job.getDeploymentId()).isNull();
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
-    
+
     managementService.deleteBatch(batch.getId(), true);
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetJobDueDate() {
+  void testSetJobDueDate() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     Job job = managementService.createJobQuery().singleResult();
@@ -331,10 +331,10 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(entry.getOrgValue()).isNull();
     assertThat(new Date(Long.parseLong(entry.getNewValue()))).isEqualTo(newDate);
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/timer/TimerRecalculationTest.testFinishedJob.bpmn20.xml"})
   @Test
-  public void testRecalculateJobDueDate() {
+  void testRecalculateJobDueDate() {
     // given a job
     HashMap<String, Object> variables1 = new HashMap<>();
     Date duedate = ClockUtil.getCurrentTime();
@@ -360,7 +360,7 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(entry.getProperty()).isEqualTo("duedate");
     assertThat(DateUtils.truncatedEquals(duedate, new Date(Long.parseLong(entry.getOrgValue())), Calendar.SECOND)).isTrue();
     assertThat(DateUtils.truncatedEquals(duedate, new Date(Long.parseLong(entry.getNewValue())), Calendar.SECOND)).isTrue();
-    
+
     entry = query.property("creationDateBased").singleResult();
     assertThat(entry.getJobId()).isEqualTo(job.getId());
     assertThat(entry.getDeploymentId()).isEqualTo(job.getDeploymentId());
@@ -369,10 +369,10 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(entry.getOrgValue()).isNull();
     assertThat(Boolean.parseBoolean(entry.getNewValue())).isFalse();
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testDelete() {
+  void testDelete() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     Job job = managementService.createJobQuery().singleResult();
@@ -405,10 +405,10 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(job.getDeploymentId());
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testExecute() {
+  void testExecute() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     Job job = managementService.createJobQuery().singleResult();
@@ -441,10 +441,10 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(job.getDeploymentId());
     assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
-  
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testExecuteByJobExecutor() {
+  void testExecuteByJobExecutor() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
     assertThat(managementService.createJobQuery().count()).isEqualTo(1L);

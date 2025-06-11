@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-public class MultiTenancyRepositoryServiceTest {
+class MultiTenancyRepositoryServiceTest {
 
   protected static final String TENANT_TWO = "tenant2";
   protected static final String TENANT_ONE = "tenant1";
@@ -49,15 +49,15 @@ public class MultiTenancyRepositoryServiceTest {
   protected static final String DMN = "org/operaton/bpm/engine/test/api/multitenancy/simpleDecisionTable.dmn";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RepositoryService repositoryService;
 
   @Test
-  public void deploymentWithoutTenantId() {
+  void deploymentWithoutTenantId() {
     createDeploymentBuilder()
       .deploy();
 
@@ -70,7 +70,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithTenantId() {
+  void deploymentWithTenantId() {
     createDeploymentBuilder()
       .tenantId(TENANT_ONE)
       .deploy();
@@ -84,7 +84,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void processDefinitionVersionWithTenantId() {
+  void processDefinitionVersionWithTenantId() {
     createDeploymentBuilder()
       .tenantId(TENANT_ONE)
       .deploy();
@@ -114,7 +114,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringForSameTenant() {
+  void deploymentWithDuplicateFilteringForSameTenant() {
     // given: a deployment with tenant ID
     createDeploymentBuilder()
       .enableDuplicateFiltering(false)
@@ -134,7 +134,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringForDifferentTenants() {
+  void deploymentWithDuplicateFilteringForDifferentTenants() {
     // given: a deployment with tenant ID
     createDeploymentBuilder()
       .enableDuplicateFiltering(false)
@@ -154,7 +154,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringIgnoreDeploymentForNoTenant() {
+  void deploymentWithDuplicateFilteringIgnoreDeploymentForNoTenant() {
     // given: a deployment without tenant ID
     createDeploymentBuilder()
       .enableDuplicateFiltering(false)
@@ -173,7 +173,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void deploymentWithDuplicateFilteringIgnoreDeploymentForTenant() {
+  void deploymentWithDuplicateFilteringIgnoreDeploymentForTenant() {
     // given: a deployment with tenant ID
     createDeploymentBuilder()
       .enableDuplicateFiltering(false)
@@ -192,7 +192,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void getPreviousProcessDefinitionWithTenantId() {
+  void getPreviousProcessDefinitionWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, emptyProcess);
     testRule.deployForTenant(TENANT_ONE, emptyProcess);
     testRule.deployForTenant(TENANT_ONE, emptyProcess);
@@ -217,7 +217,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void getPreviousCaseDefinitionWithTenantId() {
+  void getPreviousCaseDefinitionWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, CMMN);
     testRule.deployForTenant(TENANT_ONE, CMMN);
     testRule.deployForTenant(TENANT_ONE, CMMN);
@@ -242,7 +242,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @Test
-  public void getPreviousDecisionDefinitionWithTenantId() {
+  void getPreviousDecisionDefinitionWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, DMN);
     testRule.deployForTenant(TENANT_ONE, DMN);
     testRule.deployForTenant(TENANT_ONE, DMN);
@@ -277,7 +277,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     for(Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }

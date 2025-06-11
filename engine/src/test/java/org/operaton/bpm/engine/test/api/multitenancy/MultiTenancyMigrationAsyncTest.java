@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class MultiTenancyMigrationAsyncTest {
+class MultiTenancyMigrationAsyncTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
@@ -46,19 +46,19 @@ public class MultiTenancyMigrationAsyncTest {
   @RegisterExtension
   protected static ProcessEngineExtension defaultEngineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension defaultTestRule = new ProcessEngineTestExtension(defaultEngineRule);
+  ProcessEngineTestExtension defaultTestRule = new ProcessEngineTestExtension(defaultEngineRule);
   @RegisterExtension
   protected static MigrationTestExtension migrationRule = new MigrationTestExtension(defaultEngineRule);
 
   protected BatchMigrationHelper batchHelper = new BatchMigrationHelper(defaultEngineRule, migrationRule);
 
   @AfterEach
-  public void removeBatches() {
+  void removeBatches() {
     batchHelper.removeAllRunningAndHistoricBatches();
   }
 
   @Test
-  public void canMigrateInstanceBetweenSameTenantCase1() {
+  void canMigrateInstanceBetweenSameTenantCase1() {
     // given
     ProcessDefinition sourceDefinition = defaultTestRule.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = defaultTestRule.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
@@ -83,7 +83,7 @@ public class MultiTenancyMigrationAsyncTest {
   }
 
   @Test
-  public void cannotMigrateInstanceWithoutTenantIdToDifferentTenant() {
+  void cannotMigrateInstanceWithoutTenantIdToDifferentTenant() {
     // given
     ProcessDefinition sourceDefinition = defaultTestRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = defaultTestRule.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);

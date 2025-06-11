@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,6 +46,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
+  private static final String TRANSITION_CLOSE = "close";
 
   @Override
   public void execute(CmmnActivityExecution execution) throws Exception {
@@ -127,15 +128,15 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
     if (execution.isCaseInstanceExecution()) {
 
       if (execution.isClosed()) {
-        throw LOG.alreadyClosedCaseException("close", id);
+        throw LOG.alreadyClosedCaseException(TRANSITION_CLOSE, id);
       }
 
       if (execution.isActive()) {
-        throw LOG.wrongCaseStateException("close", id, "[completed|terminated|suspended]", "active");
+        throw LOG.wrongCaseStateException(TRANSITION_CLOSE, id, "[completed|terminated|suspended]", "active");
       }
 
     } else {
-      throw LOG.notACaseInstanceException("close", id);
+      throw LOG.notACaseInstanceException(TRANSITION_CLOSE, id);
     }
   }
 

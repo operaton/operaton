@@ -12,7 +12,7 @@
     
     <serviceTask id="javaService" 
                  name="Java service invocation" 
-                 operaton:class="org.operaton.bpm.engine.test.db.IdGeneratorDataSourceDoNothing" />
+                 operaton:class="org.operaton.bpm.engine.test.api.cfg.IdGeneratorDataSourceDoNothing" />
     
     <sequenceFlow id="flow2" sourceRef="javaService" targetRef="theEnd" />
     

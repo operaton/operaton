@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,7 @@ import org.operaton.bpm.webapp.impl.security.auth.Authentication;
  */
 public interface RequestAuthorizer {
 
-  public static final RequestAuthorizer AUTHORIZE_ANNONYMOUS = new AnnonymousAuthorizer();
+  RequestAuthorizer AUTHORIZE_ANNONYMOUS = new AnnonymousAuthorizer();
 
   /**
    * Authorize a request with the given parameters by returning a valid {@link Authentication}.
@@ -37,9 +37,9 @@ public interface RequestAuthorizer {
    * @return a valid {@link Authentication} or <code>null</code> if authorization to this request
    *         has not been granted
    */
-  public Authorization authorize(Map<String, String> parameters);
+  Authorization authorize(Map<String, String> parameters);
 
-  public static class AnnonymousAuthorizer implements RequestAuthorizer {
+  class AnnonymousAuthorizer implements RequestAuthorizer {
 
     @Override
     public Authorization authorize(Map<String, String> parameters) {

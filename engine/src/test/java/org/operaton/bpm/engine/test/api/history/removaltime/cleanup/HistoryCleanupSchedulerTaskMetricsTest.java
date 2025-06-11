@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,13 +40,12 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 class HistoryCleanupSchedulerTaskMetricsTest extends AbstractHistoryCleanupSchedulerTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-    .cacheForConfigurationResource(false)
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurator(configuration ->
       configure(configuration.setTaskMetricsEnabled(true))
     ).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @BeforeEach
   void init() {
@@ -56,13 +55,13 @@ class HistoryCleanupSchedulerTaskMetricsTest extends AbstractHistoryCleanupSched
   protected RuntimeService runtimeService;
   protected TaskService taskService;
 
-  protected final String PROCESS_KEY = "process";
-  protected final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
+  static final String PROCESS_KEY = "process";
+  static final BpmnModelInstance PROCESS = Bpmn.createExecutableProcess(PROCESS_KEY)
     .startEvent()
       .userTask()
     .endEvent().done();
 
-  protected final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  static final Date END_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   @Test
   void shouldScheduleToNow() {

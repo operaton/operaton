@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -64,9 +64,9 @@ public class ProcessTaskAuthorizationTest {
   protected static final String PROCESS_KEY = "oneTaskProcess";
 
   @RegisterExtension
-  public static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  public AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
 
   @Parameter
   public AuthorizationScenario scenario;
@@ -138,7 +138,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariable() {
+  void testSetVariable() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -159,7 +159,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariableLocal() {
+  void testSetVariableLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -180,7 +180,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariables() {
+  void testSetVariables() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -201,7 +201,7 @@ public class ProcessTaskAuthorizationTest {
   }
 
   @TestTemplate
-  public void testSetVariablesLocal() {
+  void testSetVariablesLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -223,7 +223,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRemoveVariable() {
+  void testRemoveVariable() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -245,7 +245,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRemoveVariableLocal() {
+  void testRemoveVariableLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -269,7 +269,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRemoveVariables() {
+  void testRemoveVariables() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY, getVariables());
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -291,7 +291,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRemoveVariablesLocal() {
+  void testRemoveVariablesLocal() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -315,7 +315,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesAdd() {
+  void testUpdateVariablesAdd() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -337,7 +337,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesRemove() {
+  void testUpdateVariablesRemove() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -360,7 +360,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesAddRemove() {
+  void testUpdateVariablesAddRemove() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -382,7 +382,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesLocalAdd() {
+  void testUpdateVariablesLocalAdd() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -404,7 +404,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesLocalRemove() {
+  void testUpdateVariablesLocalRemove() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -427,7 +427,7 @@ public class ProcessTaskAuthorizationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testUpdateVariablesLocalAddRemove() {
+  void testUpdateVariablesLocalAddRemove() {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     String taskId = taskService.createTaskQuery().singleResult().getId();

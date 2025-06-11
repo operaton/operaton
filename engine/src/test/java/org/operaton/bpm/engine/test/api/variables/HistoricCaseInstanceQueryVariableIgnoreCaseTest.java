@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,31 +18,29 @@ package org.operaton.bpm.engine.test.api.variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.impl.HistoricCaseInstanceQueryImpl;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.junit.After;
-import org.junit.Before;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricCaseInstanceQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<HistoricCaseInstanceQueryImpl, HistoricCaseInstance> {
+class HistoricCaseInstanceQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<HistoricCaseInstanceQueryImpl, HistoricCaseInstance> {
 
   RepositoryService repositoryService;
 
-  @Before
-  public void init() {
-    repositoryService = engineRule.getRepositoryService();
-
+  @BeforeEach
+  void init() {
     repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn").deploy();
     engineRule.getCaseService().withCaseDefinitionByKey("oneTaskCase").setVariables(VARIABLES).businessKey("oneTaskCase").create();
     instance = engineRule.getHistoryService().createHistoricCaseInstanceQuery().singleResult();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     for (Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }

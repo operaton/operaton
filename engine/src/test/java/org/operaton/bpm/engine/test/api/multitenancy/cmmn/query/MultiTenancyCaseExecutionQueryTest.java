@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.cmmn.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class MultiTenancyCaseExecutionQueryTest {
+class MultiTenancyCaseExecutionQueryTest {
 
   protected static final String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
 
@@ -45,9 +45,9 @@ public class MultiTenancyCaseExecutionQueryTest {
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RepositoryService repositoryService;
@@ -55,7 +55,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   protected CaseService caseService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     testRule.deploy(CMMN_FILE);
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
@@ -66,14 +66,14 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQueryNoTenantIdSet() {
+  void testQueryNoTenantIdSet() {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     assertThat(query.count()).isEqualTo(6L);
   }
 
   @Test
-  public void testQueryByTenantId() {
+  void testQueryByTenantId() {
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()
         .tenantIdIn(TENANT_ONE);
@@ -88,7 +88,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQueryByTenantIds() {
+  void testQueryByTenantIds() {
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO);
@@ -97,7 +97,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQueryByExecutionsWithoutTenantId() {
+  void testQueryByExecutionsWithoutTenantId() {
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()
         .withoutTenantId();
@@ -106,7 +106,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQueryByNonExistingTenantId() {
+  void testQueryByNonExistingTenantId() {
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()
         .tenantIdIn("nonExisting");
@@ -115,18 +115,15 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testFailQueryByTenantIdNull() {
+  void testFailQueryByTenantIdNull() {
     var caseExecutionQuery = caseService.createCaseExecutionQuery();
-    try {
-      caseExecutionQuery.tenantIdIn((String) null);
-
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    assertThatThrownBy(() -> caseExecutionQuery.tenantIdIn((String) null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("tenantIds contains null value");
   }
 
   @Test
-  public void testQuerySortingAsc() {
+  void testQuerySortingAsc() {
     // exclude case executions without tenant id because of database-specific ordering
     List<CaseExecution> caseExecutions = caseService.createCaseExecutionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -142,7 +139,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQuerySortingDesc() {
+  void testQuerySortingDesc() {
     // exclude case executions without tenant id because of database-specific ordering
     List<CaseExecution> caseExecutions = caseService.createCaseExecutionQuery()
         .tenantIdIn(TENANT_ONE, TENANT_TWO)
@@ -158,7 +155,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQueryNoAuthenticatedTenants() {
+  void testQueryNoAuthenticatedTenants() {
     identityService.setAuthentication("user", null, null);
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
@@ -166,7 +163,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenant() {
+  void testQueryAuthenticatedTenant() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
@@ -178,7 +175,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQueryAuthenticatedTenants() {
+  void testQueryAuthenticatedTenants() {
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
@@ -190,7 +187,7 @@ public class MultiTenancyCaseExecutionQueryTest {
   }
 
   @Test
-  public void testQueryDisabledTenantCheck() {
+  void testQueryDisabledTenantCheck() {
     processEngineConfiguration.setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 

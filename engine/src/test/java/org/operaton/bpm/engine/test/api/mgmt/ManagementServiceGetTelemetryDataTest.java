@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,12 +41,12 @@ import org.operaton.bpm.engine.telemetry.TelemetryData;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class ManagementServiceGetTelemetryDataTest {
+class ManagementServiceGetTelemetryDataTest {
 
   protected static final String IS_TELEMETRY_ENABLED_CMD_NAME = "IsTelemetryEnabledCmd";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
   protected ProcessEngineConfigurationImpl configuration;
   protected ManagementServiceImpl managementService;
@@ -56,7 +56,7 @@ public class ManagementServiceGetTelemetryDataTest {
   protected TelemetryDataImpl defaultTelemetryData;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     managementService = (ManagementServiceImpl) engineRule.getManagementService();
     metricsRegistry = configuration.getMetricsRegistry();
 
@@ -66,7 +66,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     clearTelemetry();
 
     configuration.setTelemetryData(defaultTelemetryData);
@@ -80,7 +80,7 @@ public class ManagementServiceGetTelemetryDataTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void shouldReturnTelemetryData_TelemetryDisabled() {
+  void shouldReturnTelemetryData_TelemetryDisabled() {
     // given
     managementService.toggleTelemetry(false);
 
@@ -93,7 +93,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldReturnProductInfo() {
+  void shouldReturnProductInfo() {
     // given default configuration
 
     // when
@@ -106,7 +106,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldReturnDatabaseInfo() {
+  void shouldReturnDatabaseInfo() {
     // given default configuration
 
     // when
@@ -120,7 +120,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldReturnJDKInfo() {
+  void shouldReturnJDKInfo() {
     // given default configuration
 
     // when
@@ -134,7 +134,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldReturnWebapps() {
+  void shouldReturnWebapps() {
     // given
     managementService.addWebappToTelemetry("cockpit");
     managementService.addWebappToTelemetry("admin");
@@ -147,7 +147,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldReturnApplicationServerInfo() {
+  void shouldReturnApplicationServerInfo() {
     // given
     managementService.addApplicationServerInfoToTelemetry("Apache Tomcat/10.0.1");
 
@@ -161,7 +161,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldStartWithCommandCountZero() {
+  void shouldStartWithCommandCountZero() {
     // given default telemetry data and empty telemetry registry
 
     // when
@@ -173,7 +173,7 @@ public class ManagementServiceGetTelemetryDataTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void shouldNotResetCommandCount() {
+  void shouldNotResetCommandCount() {
     // given default telemetry data and empty telemetry registry
     // create command data
     managementService.isTelemetryEnabled();
@@ -188,7 +188,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldStartWithMetricsCountZero() {
+  void shouldStartWithMetricsCountZero() {
     // given default telemetry data and empty telemetry registry
 
     // when
@@ -206,7 +206,7 @@ public class ManagementServiceGetTelemetryDataTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldNotResetMetricsCount() {
+  void shouldNotResetMetricsCount() {
     // given default telemetry data and empty telemetry registry
     // create metrics data
     engineRule.getRuntimeService().startProcessInstanceByKey("oneTaskProcess");
@@ -222,7 +222,7 @@ public class ManagementServiceGetTelemetryDataTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldCollectMetrics_TelemetryDisabled() {
+  void shouldCollectMetrics_TelemetryDisabled() {
     // given default configuration
 
     engineRule.getRuntimeService().startProcessInstanceByKey("oneTaskProcess");
@@ -238,7 +238,7 @@ public class ManagementServiceGetTelemetryDataTest {
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void shouldCollectCommands_TelemetryDisabled() {
+  void shouldCollectCommands_TelemetryDisabled() {
     // given default configuration
 
     // trigger Command invocation
@@ -253,7 +253,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldSetDataCollectionTimeFrameToEngineStartTimeWhenTelemetryDisabled() {
+  void shouldSetDataCollectionTimeFrameToEngineStartTimeWhenTelemetryDisabled() {
     // given default telemetry data and empty telemetry registry
     // current time after engine startup but before fetching telemetry data
     Date beforeGetTelemetry = ClockUtil.getCurrentTime();
@@ -268,7 +268,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldNotResetCollectionTimeFrameAfterGetTelemetryWhenTelemetryDisabled() {
+  void shouldNotResetCollectionTimeFrameAfterGetTelemetryWhenTelemetryDisabled() {
     // given default telemetry data and empty telemetry registry
     TelemetryData initialTelemetryData = managementService.getTelemetryData();
 
@@ -281,7 +281,7 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  public void shouldNotResetCollectionTimeFrameAfterGetTelemetry() {
+  void shouldNotResetCollectionTimeFrameAfterGetTelemetry() {
     // given default telemetry data and empty telemetry registry
     // and default configuration
 
@@ -297,7 +297,7 @@ public class ManagementServiceGetTelemetryDataTest {
 
   @Test
   @SuppressWarnings("deprecation")
-  public void shouldNotResetCollectionTimeFrameAfterToggleTelemetry() {
+  void shouldNotResetCollectionTimeFrameAfterToggleTelemetry() {
     // given default telemetry data and empty telemetry registry
     // and default configuration
     Date beforeToggleTelemetry = managementService.getTelemetryData().getProduct().getInternals()

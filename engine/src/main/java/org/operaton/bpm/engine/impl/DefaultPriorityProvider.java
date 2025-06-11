@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,13 +25,13 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 
 /**
  * Represents a default priority provider, which contains some functionality to evaluate the priority.
- * Can be used as base class for other priority providers. *  
- * 
+ * Can be used as base class for other priority providers. *
+ *
  * @author Christopher Zell <christopher.zell@camunda.com>
  * @param <T> the type of the param to determine the priority
  */
 public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> {
-  
+
   /**
    * The default priority.
    */
@@ -41,10 +41,10 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
    * The default priority in case of resolution failure.
    */
   public static long DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE = 0;
-  
+
   /**
    * Returns the default priority.
-   * 
+   *
    * @return the default priority
    */
   public long getDefaultPriority() {
@@ -53,18 +53,18 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
 
   /**
    * Returns the default priority in case of resolution failure.
-   * 
+   *
    * @return the default priority
    */
   public long getDefaultPriorityOnResolutionFailure() {
     return DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE;
   }
-  
+
   /**
    * Evaluates a given value provider with the given execution entity to determine
-   * the correct value. The error message heading is used for the error message 
+   * the correct value. The error message heading is used for the error message
    * if the validation fails because the value is no valid priority.
-   * 
+   *
    * @param valueProvider the provider which contains the value
    * @param execution the execution entity
    * @param errorMessageHeading the heading which is used for the error message
@@ -116,10 +116,10 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
     }
     return getDefaultPriority();
   }
-  
+
   /**
    * Returns the priority defined in the specific entity. Like a job definition priority or
-   * an activity priority. The result can also be null in that case the process 
+   * an activity priority. The result can also be null in that case the process
    * priority will be used.
    *
    * @param execution the current execution
@@ -128,22 +128,22 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
    * @return the specific priority
    */
   protected abstract Long getSpecificPriority(ExecutionEntity execution, T param, String jobDefinitionId);
-  
+
   /**
    * Returns the priority defined in the process definition. Can also be null
    * in that case the fallback is the default priority.
-   * 
+   *
    * @param execution the current execution
    * @param param the generic param
    * @return the priority defined in the process definition
    */
   protected abstract Long getProcessDefinitionPriority(ExecutionEntity execution, T param);
-  
+
   /**
    * Returns the priority which is defined in the given process definition.
-   * The priority value is identified with the given propertyKey. 
+   * The priority value is identified with the given propertyKey.
    * Returns null if the process definition is null or no priority was defined.
-   * 
+   *
    * @param processDefinition the process definition that should contains the priority
    * @param propertyKey the key which identifies the property
    * @param execution the current execution
@@ -157,24 +157,25 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
         return evaluateValueProvider(priorityProvider, execution, errorMsgHead);
       }
     }
-    return null;    
+    return null;
   }
   /**
    * Logs the exception which was thrown if the priority can not be determined.
-   * 
+   *
    * @param execution the current execution entity
    * @param value the current value
    * @param e the exception which was catched
    */
   protected abstract void logNotDeterminingPriority(ExecutionEntity execution, Object value, ProcessEngineException e);
-  
-  
+
+
+  @SuppressWarnings("unused")
   protected boolean isSymptomOfContextSwitchFailure(Throwable t, ExecutionEntity contextExecution) {
     // a context switch failure can occur, if the current engine has no PA registration for the deployment
     // subclasses may assert the actual throwable to narrow down the diagnose
     return ProcessApplicationContextUtil.getTargetProcessApplication(contextExecution) == null;
   }
-  
+
   /**
    * Checks if the given number is a valid long value.
    * @param value the number which should be checked

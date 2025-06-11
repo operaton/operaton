@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,13 @@
  */
 package org.operaton.spin.plugin.impl.feel.integration;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import org.camunda.feel.syntaxtree.Val;
+import org.camunda.feel.syntaxtree.ValString;
+import org.camunda.feel.valuemapper.JavaCustomValueMapper;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.xml.SpinXmlAttribute;
+import org.operaton.spin.xml.SpinXmlElement;
+import org.operaton.spin.xml.SpinXmlNode;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,13 +31,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.camunda.feel.syntaxtree.Val;
-import org.camunda.feel.syntaxtree.ValString;
-import org.camunda.feel.valuemapper.JavaCustomValueMapper;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.xml.SpinXmlAttribute;
-import org.operaton.spin.xml.SpinXmlElement;
-import org.operaton.spin.xml.SpinXmlNode;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 
 public class SpinValueMapper extends JavaCustomValueMapper {
@@ -65,7 +65,7 @@ public class SpinValueMapper extends JavaCustomValueMapper {
 
   protected Val spinJsonToVal(SpinJsonNode node, Function<Object, Val> innerValueMapper) {
     if (node.isObject()) {
-      Map pairs = node.fieldNames()
+      Map<String, Val> pairs = node.fieldNames()
           .stream()
           .collect(toMap(field -> field,
                          field -> spinJsonToVal(node.prop(field), innerValueMapper)));
@@ -137,7 +137,7 @@ public class SpinValueMapper extends JavaCustomValueMapper {
     return "@" + nodeName(attribute);
   }
 
-  protected String nodeName(SpinXmlNode n) {
+  protected String nodeName(SpinXmlNode<?> n) {
     String prefix = n.prefix();
     String name = n.name();
     return (prefix != null && !prefix.isEmpty())? prefix + "$" + name : name;

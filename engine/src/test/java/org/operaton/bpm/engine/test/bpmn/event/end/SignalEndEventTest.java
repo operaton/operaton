@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,20 +21,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Kristin Polenz
  */
-public class SignalEndEventTest extends PluggableProcessEngineTest {
+class SignalEndEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testCatchSignalEndEventInEmbeddedSubprocess() {
+  void testCatchSignalEndEventInEmbeddedSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("catchSignalEndEventInEmbeddedSubprocess");
     assertThat(processInstance).isNotNull();
 
@@ -52,12 +64,12 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources={
+  @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/end/SignalEndEventTest.catchSignalEndEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/end/SignalEndEventTest.processWithSignalEndEvent.bpmn20.xml"
-    })
+  })
   @Test
-  public void testCatchSignalEndEventInCallActivity() {
+  void testCatchSignalEndEventInCallActivity() {
     // first, start process to wait of the signal event
     ProcessInstance processInstanceCatchEvent = runtimeService.startProcessInstanceByKey("catchSignalEndEvent");
     assertThat(processInstanceCatchEvent).isNotNull();
@@ -82,10 +94,10 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceCatchEvent.getId());
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/signal/testPropagateOutputVariablesWhileThrowSignal.bpmn20.xml",
-                            "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEndEventTest.parent.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/testPropagateOutputVariablesWhileThrowSignal.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEndEventTest.parent.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileThrowSignal() {
+  void testPropagateOutputVariablesWhileThrowSignal() {
     // given
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
@@ -99,10 +111,10 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
     checkOutput(processInstanceId);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/signal/testPropagateOutputVariablesWhileThrowSignal2.bpmn20.xml",
-                            "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEndEventTest.parent.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/testPropagateOutputVariablesWhileThrowSignal2.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEndEventTest.parent.bpmn20.xml"})
   @Test
-  public void testPropagateOutputVariablesWhileThrowSignal2() {
+  void testPropagateOutputVariablesWhileThrowSignal2() {
     // given
     Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);

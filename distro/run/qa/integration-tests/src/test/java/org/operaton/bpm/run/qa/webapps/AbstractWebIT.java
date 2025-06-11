@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,6 @@ package org.operaton.bpm.run.qa.webapps;
 import java.util.logging.Logger;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +39,7 @@ public abstract class AbstractWebIT {
 
   protected static final String TASKLIST_PATH = "app/tasklist/default/";
   protected static final String HOST_NAME = "localhost";
-  public String APP_BASE_PATH;
+  protected String appBasePath;
 
   protected String appUrl;
   protected TestUtil testUtil;
@@ -68,8 +67,8 @@ public abstract class AbstractWebIT {
     testProperties = new TestProperties();
 
     // Get the application base path
-    APP_BASE_PATH = testProperties.getApplicationPath("/" + ctxPath);
-    LOGGER.info("Connecting to application " + APP_BASE_PATH);
+    appBasePath = testProperties.getApplicationPath("/" + ctxPath);
+    LOGGER.info("Connecting to application " + appBasePath);
 
     // Create ClientConfig and register JacksonFeature for POJO mapping
     ClientConfig clientConfig = new ClientConfig();

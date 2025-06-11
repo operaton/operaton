@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-parent</artifactId>
@@ -17,13 +17,13 @@
   </description>
 
   <properties>
-    <version.spring-boot>3.4.4</version.spring-boot>
+    <version.spring-boot>3.5.0</version.spring-boot>
     <version.resteasy>3.15.6.Final</version.resteasy>
     <version.jersey3>3.1.10</version.jersey3>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
     <version.groovy>4.0.26</version.groovy>
-    <version.jython>2.7.2</version.jython>
+    <version.jython>2.7.4</version.jython>
     <version.graal.js>21.3.12</version.graal.js>
     <version.nashorn>15.6</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
@@ -31,7 +31,7 @@
     <version.json-path>2.9.0</version.json-path>
     <version.json-smart>2.5.2</version.json-smart>
     <version.accessors-smart>2.5.2</version.accessors-smart>
-    <version.commons-codec>1.17.2</version.commons-codec>
+    <version.commons-codec>1.18.0</version.commons-codec>
     <version.gson>2.8.9</version.gson>
     <version.openjpa>2.4.3</version.openjpa>
     <version.hibernate>6.6.10.Final</version.hibernate>
@@ -41,22 +41,22 @@
     <version.httpclient5>5.4.1</version.httpclient5>
 
     <version.assertj>3.27.3</version.assertj>
-    <version.mockito>5.16.1</version.mockito>
+    <version.mockito>5.17.0</version.mockito>
     <version.jna>5.16.0</version.jna>
     <version.testcontainers>1.20.6</version.testcontainers>
 
     <version.commonj>1.1.0</version.commonj>
 
     <!-- application servers -->
-    <version.wildfly>35.0.1.Final</version.wildfly>
-    <version.wildfly.core>27.0.1.Final</version.wildfly.core>
+    <version.wildfly>36.0.1.Final</version.wildfly>
+    <version.wildfly.core>28.0.1.Final</version.wildfly.core>
 
     <version.tomcat>10.1.39</version.tomcat>
 
-    <version.arquillian>1.9.3.Final</version.arquillian>
+    <version.arquillian>1.9.4.Final</version.arquillian>
 
     <version.shrinkwrap.resolvers>3.3.3</version.shrinkwrap.resolvers>
-    <version.selenium>4.10.0</version.selenium>
+    <version.selenium>4.31.0</version.selenium>
     <version.freemarker>2.3.31</version.freemarker>
 
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
@@ -470,7 +470,7 @@
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
 

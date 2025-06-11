@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,14 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -30,19 +34,14 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import junit.framework.AssertionFailedError;
 
-public class MessageStartEventSubscriptionTest {
+class MessageStartEventSubscriptionTest {
 
   private static final String SINGLE_MESSAGE_START_EVENT_XML = "org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testSingleMessageStartEvent.bpmn20.xml";
   private static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
@@ -61,25 +60,17 @@ public class MessageStartEventSubscriptionTest {
       .endEvent()
       .done();
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-
-  @Before
-  public void setUp() {
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-  }
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Test
-  public void testUpdateProcessVersionCancelsSubscriptions() {
+  void testUpdateProcessVersionCancelsSubscriptions() {
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
@@ -113,7 +104,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testEventSubscriptionAfterDeleteLatestProcessVersion() {
+  void testEventSubscriptionAfterDeleteLatestProcessVersion() {
     // given a deployed process
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
     ProcessDefinition processDefinitionV1 = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -135,7 +126,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testStartInstanceAfterDeleteLatestProcessVersionByIds() {
+  void testStartInstanceAfterDeleteLatestProcessVersionByIds() {
     // given a deployed process
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
     // deploy second version of the process
@@ -168,7 +159,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testStartInstanceAfterDeleteLatestProcessVersion() {
+  void testStartInstanceAfterDeleteLatestProcessVersion() {
     // given a deployed process
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
     // deploy second version of the process
@@ -199,7 +190,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testVersionWithoutConditionAfterDeleteLatestProcessVersionWithCondition() {
+  void testVersionWithoutConditionAfterDeleteLatestProcessVersionWithCondition() {
     // given a process
     testRule.deploy(MODEL_WITHOUT_MESSAGE);
 
@@ -220,7 +211,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByKeys() {
+  void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByKeys() {
     // given three versions of the process
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
@@ -236,7 +227,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
+  void testSubscriptionsWhenDeletingGroupsProcessDefinitionsByIds() {
     // given
     String processDefId11 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String processDefId12 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
@@ -271,7 +262,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByIdOrdered() {
+  void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByIdOrdered() {
     // given
     String definitionId1 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String definitionId2 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
@@ -287,7 +278,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByIdReverseOrder() {
+  void testSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionByIdReverseOrder() {
     // given
     String definitionId1 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String definitionId2 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
@@ -303,7 +294,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById1() {
+  void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById1() {
     // given first version without condition
     String definitionId1 = deployModel(MODEL_WITHOUT_MESSAGE);
     String definitionId2 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
@@ -319,7 +310,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById2() {
+  void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById2() {
     // given second version without condition
     String definitionId1 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String definitionId2 = deployModel(MODEL_WITHOUT_MESSAGE);
@@ -335,7 +326,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById3() {
+  void testMixedSubscriptionsWhenDeletingProcessDefinitionsInOneTransactionById3() {
     // given third version without condition
     String definitionId1 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String definitionId2 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
@@ -351,7 +342,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction1() {
+  void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction1() {
     // given first version without condition
     String definitionId1 = deployModel(MODEL_WITHOUT_MESSAGE);
     String definitionId2 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
@@ -368,7 +359,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction2() {
+  void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction2() {
     // given second version without condition
     String definitionId1 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String definitionId2 = deployModel(MODEL_WITHOUT_MESSAGE);
@@ -385,7 +376,7 @@ public class MessageStartEventSubscriptionTest {
   }
 
   @Test
-  public void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction3() {
+  void testMixedSubscriptionsWhenDeletingTwoProcessDefinitionsInOneTransaction3() {
     // given third version without condition
     String definitionId1 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String definitionId2 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
@@ -405,7 +396,7 @@ public class MessageStartEventSubscriptionTest {
    * Tests the case, when no new subscription is needed, as it is not the latest version, that is being deleted.
    */
   @Test
-  public void testDeleteNotLatestVersion() {
+  void testDeleteNotLatestVersion() {
     @SuppressWarnings("unused")
     String definitionId1 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String definitionId2 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
@@ -425,7 +416,7 @@ public class MessageStartEventSubscriptionTest {
    * Tests the case when the previous of the previous version will be needed.
    */
   @Test
-  public void testSubscribePreviousPreviousVersion() {
+  void testSubscribePreviousPreviousVersion() {
 
     String definitionId1 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);
     String definitionId2 = deployProcess(SINGLE_MESSAGE_START_EVENT_XML);

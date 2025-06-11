@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -967,13 +967,13 @@ class CaseServiceStageTest {
     // when
     CaseExecution humanTaskExecution1 = queryCaseExecutionByActivityId("PI_HumanTask_1");
     assertThat(humanTaskExecution1.isActive()).isTrue();
-    
+
     CaseExecution humanTaskExecution2 = queryCaseExecutionByActivityId("PI_HumanTask_2");
     assertThat(humanTaskExecution2.isActive()).isTrue();
-    
+
     caseService.withCaseExecution(stageExecution.getId())
       .terminate();
-    
+
     // then
     stageExecution = queryCaseExecutionByActivityId("PI_Stage_1");
     assertThat(stageExecution).isNull();
@@ -1004,11 +1004,11 @@ class CaseServiceStageTest {
 
     // when
     caseService.terminateCaseExecution(stageExecution.getId());
-      
+
     // then
     stageExecution = queryCaseExecutionByActivityId("PI_Stage_1");
     assertThat(stageExecution).isNull();
-    
+
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneStageCaseWithManualActivation.cmmn"})

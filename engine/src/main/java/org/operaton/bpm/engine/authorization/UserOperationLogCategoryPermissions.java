@@ -55,7 +55,7 @@ public enum UserOperationLogCategoryPermissions implements Permission {
   private final String name;
   private final int id;
 
-  private UserOperationLogCategoryPermissions(String name, int id) {
+  UserOperationLogCategoryPermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

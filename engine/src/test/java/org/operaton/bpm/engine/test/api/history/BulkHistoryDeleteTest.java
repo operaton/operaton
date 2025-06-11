@@ -90,7 +90,7 @@ public class BulkHistoryDeleteTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private HistoryService historyService;
   private TaskService taskService;

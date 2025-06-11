@@ -69,9 +69,9 @@ class CorrelateAllMessageBatchTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
-  static BatchExtension rule = new BatchExtension(engineRule, engineTestRule);
+  BatchExtension rule = new BatchExtension(engineRule, engineTestRule);
   BatchHelper helper = new BatchHelper(engineRule);
 
   RuntimeService runtimeService;

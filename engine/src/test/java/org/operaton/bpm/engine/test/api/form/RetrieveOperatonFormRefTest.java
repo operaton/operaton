@@ -58,7 +58,7 @@ class RetrieveOperatonFormRefTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected static final String TASK_FORM_CONTENT_V1 = "{\"id\"=\"myTaskForm\",\"type\": \"default\",\"components\": []}";
   protected static final String TASK_FORM_CONTENT_V2 = "{\"id\"=\"myTaskForm\",\"type\": \"default\",\"components\":[{\"key\": \"textfield1\",\"label\": \"Text Field\",\"type\": \"textfield\"}]}";

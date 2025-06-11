@@ -43,7 +43,7 @@ class UpdateSuspendStateUserOperationLogTest {
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
   // do an update here
   protected BatchSuspensionHelper helper = new BatchSuspensionHelper(rule);
 

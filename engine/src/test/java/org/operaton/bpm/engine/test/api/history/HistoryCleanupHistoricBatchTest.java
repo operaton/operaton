@@ -72,12 +72,12 @@ class HistoryCleanupHistoricBatchTest {
       configuration.setHistoryCleanupDegreeOfParallelism(3);
     }).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
-  protected static MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
 
-  protected BatchMigrationHelper migrationHelper = new BatchMigrationHelper(engineRule, migrationRule);
-  protected BatchModificationHelper modificationHelper = new BatchModificationHelper(engineRule);
+  BatchMigrationHelper migrationHelper = new BatchMigrationHelper(engineRule, migrationRule);
+  BatchModificationHelper modificationHelper = new BatchModificationHelper(engineRule);
 
   private static final String DEFAULT_TTL_DAYS = "P5D";
 

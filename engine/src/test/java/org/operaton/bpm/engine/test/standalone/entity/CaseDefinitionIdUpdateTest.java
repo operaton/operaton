@@ -16,22 +16,26 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-import java.util.UUID;
+@ExtendWith(ProcessEngineExtension.class)
+class CaseDefinitionIdUpdateTest {
 
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class CaseDefinitionIdUpdateTest extends PluggableProcessEngineTest {
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  public void testUpdateCaseDefinitionIdInTask() {
+  void testUpdateCaseDefinitionIdInTask() {
     // given
     final CaseDefinitionEntity caseDefinitionEntity1 = prepareCaseDefinition(UUID.randomUUID().toString());
     final CaseDefinitionEntity caseDefinitionEntity2 = prepareCaseDefinition(UUID.randomUUID().toString());
@@ -61,7 +65,7 @@ public class CaseDefinitionIdUpdateTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testUpdateCaseDefinitionIdInCaseExecutionEntity() {
+  void testUpdateCaseDefinitionIdInCaseExecutionEntity() {
     // given
     final CaseDefinitionEntity caseDefinitionEntity1 = prepareCaseDefinition(UUID.randomUUID().toString());
     final CaseDefinitionEntity caseDefinitionEntity2 = prepareCaseDefinition(UUID.randomUUID().toString());

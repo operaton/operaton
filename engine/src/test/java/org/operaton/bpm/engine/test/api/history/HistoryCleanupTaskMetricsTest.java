@@ -65,7 +65,7 @@ class HistoryCleanupTaskMetricsTest {
       configuration.setTaskMetricsEnabled(true);
     }).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected HistoryService historyService;
   protected RuntimeService runtimeService;

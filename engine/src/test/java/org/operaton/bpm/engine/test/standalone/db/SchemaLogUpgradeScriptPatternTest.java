@@ -23,16 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Miklas Boskamp
  *
  */
-public class SchemaLogUpgradeScriptPatternTest extends SchemaLogTestCase {
+class SchemaLogUpgradeScriptPatternTest extends SchemaLogTestCase {
 
   @Test
-  public void testOnlyValidUpgradeFilePatterns() {
+  void testOnlyValidUpgradeFilePatterns() {
     /*
      * valid patterns:
      * h2_engine_7.2_to_7.3.sql,

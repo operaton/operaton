@@ -62,7 +62,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected String userId = "test";
   OptimizeService optimizeService;

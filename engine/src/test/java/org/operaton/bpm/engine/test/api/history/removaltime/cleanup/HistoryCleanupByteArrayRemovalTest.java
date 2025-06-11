@@ -76,7 +76,7 @@ class HistoryCleanupByteArrayRemovalTest {
       config.initHistoryCleanup();
     }).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private ManagementService managementService;
   private HistoryService historyService;

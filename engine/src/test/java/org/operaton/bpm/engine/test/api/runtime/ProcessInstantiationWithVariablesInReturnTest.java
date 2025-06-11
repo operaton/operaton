@@ -71,7 +71,7 @@ class ProcessInstantiationWithVariablesInReturnTest {
       .configurator(configuration -> configuration.setJavaSerializationFormatEnabled(true))
       .build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   ProcessEngine processEngine;
   RuntimeService runtimeService;

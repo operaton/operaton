@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
@@ -27,13 +28,12 @@ import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.End;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
-import org.junit.Test;
 
 
 /**
  * @author Tom Baeyens
  */
-public class PvmScopeWaitStateTest {
+class PvmScopeWaitStateTest {
 
   /**
    * +-----+   +----------+   +---+
@@ -41,7 +41,7 @@ public class PvmScopeWaitStateTest {
    * +-----+   +----------+   +---+
    */
   @Test
-  public void testWaitStateScope() {
+  void testWaitStateScope() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()

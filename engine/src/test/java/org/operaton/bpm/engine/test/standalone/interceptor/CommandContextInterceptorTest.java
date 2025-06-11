@@ -19,24 +19,38 @@ package org.operaton.bpm.engine.test.standalone.interceptor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Test;
 
 /**
  * @author Tom Baeyens
  */
-public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
+class CommandContextInterceptorTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  HistoryService historyService;
 
   @Test
-  public void testCommandContextGetCurrentAfterException() {
+  void testCommandContextGetCurrentAfterException() {
     var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     try {
       commandExecutor.execute(commandContext -> {
@@ -52,7 +66,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCommandContextNestedFailingCommands() {
+  void testCommandContextNestedFailingCommands() {
     final ExceptionThrowingCmd innerCommand1 = new ExceptionThrowingCmd(new IdentifiableRuntimeException(1));
     final ExceptionThrowingCmd innerCommand2 = new ExceptionThrowingCmd(new IdentifiableRuntimeException(2));
     var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -75,7 +89,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCommandContextNestedTryCatch() {
+  void testCommandContextNestedTryCatch() {
     final ExceptionThrowingCmd innerCommand = new ExceptionThrowingCmd(new IdentifiableRuntimeException(1));
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
@@ -95,7 +109,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
-  public void testCommandContextNestedFailingCommandsNotExceptions() {
+  void testCommandContextNestedFailingCommandsNotExceptions() {
     final BpmnModelInstance modelInstance =
       Bpmn.createExecutableProcess("processThrowingThrowable")
         .startEvent()

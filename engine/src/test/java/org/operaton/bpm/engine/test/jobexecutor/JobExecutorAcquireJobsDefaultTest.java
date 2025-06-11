@@ -23,24 +23,25 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class JobExecutorAcquireJobsDefaultTest extends AbstractJobExecutorAcquireJobsTest {
 
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public boolean ensureJobDueDateSet;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public Date currentTime;
 
-  @Parameterized.Parameters(name = "Job DueDate is set: {0}")
+  @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { false, null },
@@ -48,21 +49,21 @@ public class JobExecutorAcquireJobsDefaultTest extends AbstractJobExecutorAcquir
     });
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     rule.getProcessEngineConfiguration().setEnsureJobDueDateNotNull(ensureJobDueDateSet);
   }
 
-  @Test
-  public void testProcessEngineConfiguration() {
+  @TestTemplate
+  void testProcessEngineConfiguration() {
     assertThat(configuration.isJobExecutorPreferTimerJobs()).isFalse();
     assertThat(configuration.isJobExecutorAcquireByDueDate()).isFalse();
     assertThat(configuration.isEnsureJobDueDateNotNull()).isEqualTo(ensureJobDueDateSet);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
-  public void testJobDueDateValue() {
+  void testJobDueDateValue() {
     // when
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
     List<AcquirableJobEntity> jobList = findAcquirableJobs();

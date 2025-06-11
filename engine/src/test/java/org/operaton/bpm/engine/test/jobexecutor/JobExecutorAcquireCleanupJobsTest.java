@@ -16,30 +16,23 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class JobExecutorAcquireCleanupJobsTest extends AbstractJobExecutorAcquireJobsTest {
 
-  public HistoryService historyService;
-
-  @Before
-  public void assignServices() {
-    historyService = rule.getHistoryService();
-  }
+  HistoryService historyService;
 
   @Test
-  public void shouldNotAcquireJobsWhenCleanupDisabled() {
+  void shouldNotAcquireJobsWhenCleanupDisabled() {
     // given
     historyService.cleanUpHistoryAsync(true);
     configuration.setHistoryCleanupEnabled(false);
@@ -60,7 +53,7 @@ public class JobExecutorAcquireCleanupJobsTest extends AbstractJobExecutorAcquir
   }
 
   @Test
-  public void shouldAcquireJobsWhenCleanupEnabled() {
+  void shouldAcquireJobsWhenCleanupEnabled() {
     // given
     historyService.cleanUpHistoryAsync(true);
 

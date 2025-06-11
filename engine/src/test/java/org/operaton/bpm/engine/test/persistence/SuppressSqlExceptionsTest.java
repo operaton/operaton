@@ -29,6 +29,10 @@ import java.util.Map;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.assertj.core.api.ThrowableAssert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.IdentityService;
@@ -49,54 +53,39 @@ import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEnt
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class SuppressSqlExceptionsTest {
+class SuppressSqlExceptionsTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule engineTestRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension engineTestRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(engineTestRule);
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  RepositoryService repositoryService;
+  FilterService filterService;
+  IdentityService identityService;
+  AuthorizationService authorizationService;
 
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected RepositoryService repositoryService;
-  protected FilterService filterService;
-  protected IdentityService identityService;
-  protected AuthorizationService authorizationService;
+  ProcessEngineConfigurationImpl engineConfig;
+  boolean batchProcessingEnabled;
 
-  protected ProcessEngineConfigurationImpl engineConfig;
-  protected boolean batchProcessingEnabled;
+  Map<String, String> keptStatementMappings;
 
-  protected Map<String, String> keptStatementMappings;
-
-  @Before
-  public void assignServices() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    repositoryService = engineRule.getRepositoryService();
-    filterService = engineRule.getFilterService();
-    identityService = engineRule.getIdentityService();
-    authorizationService = engineRule.getAuthorizationService();
-
-    engineConfig = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void assignServices() {
     batchProcessingEnabled = engineConfig.isJdbcBatchProcessing();
   }
 
-  @Before
-  public void keepStatementMappings() {
+  @BeforeEach
+  void keepStatementMappings() {
     Map<String, String> statementMappings = engineRule.getProcessEngineConfiguration()
         .getDbSqlSessionFactory()
         .getStatementMappings();
@@ -111,13 +100,13 @@ public class SuppressSqlExceptionsTest {
             new HashMap<>(keptStatementMappings));
   }
 
-  @After
-  public void resetStatementMappings() {
+  @AfterEach
+  void resetStatementMappings() {
     engineConfig.getDbSqlSessionFactory().setStatementMappings(keptStatementMappings);
   }
 
   @Test
-  public void shouldThrowExceptionOnSelectingById() {
+  void shouldThrowExceptionOnSelectingById() {
     // given
     failForSqlStatement("selectJob");
 
@@ -136,7 +125,7 @@ public class SuppressSqlExceptionsTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnSelectionWithListInReturn() {
+  void shouldThrowExceptionOnSelectionWithListInReturn() {
     // given
 
     Iterator<Throwable> exceptionsByHierarchy = catchExceptionHierarchy(() -> {
@@ -156,7 +145,7 @@ public class SuppressSqlExceptionsTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnSingleRowSelection() {
+  void shouldThrowExceptionOnSingleRowSelection() {
     // given
     failForSqlStatement("selectDeploymentCountByQueryCriteria");
 
@@ -177,7 +166,7 @@ public class SuppressSqlExceptionsTest {
   @RequiredHistoryLevel(ProcessEngineConfigurationImpl.HISTORY_ACTIVITY)
   @RequiredDatabase(excludes = DbSqlSessionFactory.MARIADB)
   @Test
-  public void shouldThrowExceptionOnInsert_ColumnSizeExceeded() {
+  void shouldThrowExceptionOnInsert_ColumnSizeExceeded() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -210,7 +199,7 @@ public class SuppressSqlExceptionsTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnInsert_UniqueConstraintViolated() {
+  void shouldThrowExceptionOnInsert_UniqueConstraintViolated() {
     // given
     Authorization authorizationOne = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorizationOne.setGroupId("aUserId");
@@ -251,7 +240,7 @@ public class SuppressSqlExceptionsTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnDelete() {
+  void shouldThrowExceptionOnDelete() {
     // given
     failForSqlStatement("deleteFilter");
 
@@ -285,7 +274,7 @@ public class SuppressSqlExceptionsTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnBulkDelete() {
+  void shouldThrowExceptionOnBulkDelete() {
     // given
     failForSqlStatement("deleteMembershipsByUserId");
 
@@ -321,7 +310,7 @@ public class SuppressSqlExceptionsTest {
 
   @Test
   @RequiredDatabase(excludes = DbSqlSessionFactory.MARIADB)
-  public void shouldThrowExceptionOnUpdate() {
+  void shouldThrowExceptionOnUpdate() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -380,7 +369,7 @@ public class SuppressSqlExceptionsTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnBulkUpdate() {
+  void shouldThrowExceptionOnBulkUpdate() {
     // given
     failForSqlStatement("updateProcessDefinitionSuspensionStateByParameters");
 
@@ -423,7 +412,7 @@ public class SuppressSqlExceptionsTest {
    */
   @Test
   @RequiredDatabase(excludes = DbSqlSessionFactory.H2)
-  public void shouldThrowExceptionOnLock() {
+  void shouldThrowExceptionOnLock() {
     // given
     failForSqlStatement("lockDeploymentLockProperty");
 

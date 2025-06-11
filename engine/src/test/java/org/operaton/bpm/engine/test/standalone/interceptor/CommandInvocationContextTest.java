@@ -18,21 +18,26 @@ package org.operaton.bpm.engine.test.standalone.interceptor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class CommandInvocationContextTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class CommandInvocationContextTest {
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   /**
    * Test that the command invocation context always holds the correct command;
    * in outer commands as well as nested commands.
    */
   @Test
-  public void testGetCurrentCommand() {
+  void testGetCurrentCommand() {
     Command<?> outerCommand = new SelfAssertingCommand(new SelfAssertingCommand(null));
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(outerCommand);

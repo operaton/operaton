@@ -26,44 +26,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
 import org.operaton.bpm.engine.impl.identity.PasswordPolicyUserDataRuleImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+@ExtendWith(ProcessEngineExtension.class)
 public class PasswordPolicyUserDataTest {
 
   public static final String CANDIDATE_PASSWORD = "mypassword";
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule(true);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  IdentityService identityService;
 
-  protected IdentityService identityService;
-
-  @Before
-  public void init() {
-    engineRule.getProcessEngineConfiguration()
+  @BeforeEach
+  void init() {
+    processEngineConfiguration
         .setEnablePasswordPolicy(true)
         .setPasswordPolicy(new DefaultPasswordPolicyImpl());
-
-    identityService = engineRule.getIdentityService();
   }
 
-  @After
-  public void reset() {
-    engineRule.getProcessEngineConfiguration()
+  @AfterEach
+  void reset() {
+    processEngineConfiguration
         .setEnablePasswordPolicy(false)
         .setPasswordPolicy(null);
   }
 
   @Test
-  public void shouldViolateRule() {
+  void shouldViolateRule() {
     // given
     String attributeValue = CANDIDATE_PASSWORD;
 
@@ -75,7 +73,7 @@ public class PasswordPolicyUserDataTest {
   }
 
   @Test
-  public void shouldFulfillRule() {
+  void shouldFulfillRule() {
     // given
     String attributeValue = "another value";
 
@@ -87,7 +85,7 @@ public class PasswordPolicyUserDataTest {
   }
 
   @Test
-  public void shouldViolateRuleOnIgnoreCaseAttributeValue() {
+  void shouldViolateRuleOnIgnoreCaseAttributeValue() {
     // given
     String attributeValue = "MYPASSWORD";
 
@@ -99,7 +97,7 @@ public class PasswordPolicyUserDataTest {
   }
 
   @Test
-  public void shouldFulfillRuleOnEmptyAttributeValue() {
+  void shouldFulfillRuleOnEmptyAttributeValue() {
     // given
     String attributeValue = "";
 
@@ -111,7 +109,7 @@ public class PasswordPolicyUserDataTest {
   }
 
   @Test
-  public void shouldFulfillRuleOnNullAttributeValue() {
+  void shouldFulfillRuleOnNullAttributeValue() {
     // given
     String attributeValue = null;
 

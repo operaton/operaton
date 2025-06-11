@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.engine.test.standalone.interceptor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author Daniel Meyer
  *
  */
-public class MultiEngineCommandContextTest {
+class MultiEngineCommandContextTest {
 
   protected ProcessEngine engine1;
   protected ProcessEngine engine2;
@@ -39,16 +38,16 @@ public class MultiEngineCommandContextTest {
   private static final String ENGINE1_NAME = "MultiEngineCommandContextTest-engine1";
     private static final String ENGINE2_NAME = "MultiEngineCommandContextTest-engine2";
 
-  @Before
-  public void startEngines() {
+  @BeforeEach
+  void startEngines() {
     engine1 = createProcessEngine(ENGINE1_NAME);
     engine2 = createProcessEngine(ENGINE2_NAME);
     StartProcessInstanceOnEngineDelegate.ENGINES.put(ENGINE1_NAME, engine1);
     StartProcessInstanceOnEngineDelegate.ENGINES.put(ENGINE2_NAME, engine2);
   }
 
-  @After
-  public void closeEngines() {
+  @AfterEach
+  void closeEngines() {
     StartProcessInstanceOnEngineDelegate.ENGINES.clear();
     try {
       engine1.close();
@@ -65,7 +64,7 @@ public class MultiEngineCommandContextTest {
   }
 
   @Test
-  public void shouldOpenNewCommandContextWhenInteractingAcrossEngines() {
+  void shouldOpenNewCommandContextWhenInteractingAcrossEngines() {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()
         .serviceTask()
@@ -95,7 +94,7 @@ public class MultiEngineCommandContextTest {
   }
 
   @Test
-  public void shouldOpenNewCommandContextWhenInteractingWithOtherEngineAndBack() {
+  void shouldOpenNewCommandContextWhenInteractingWithOtherEngineAndBack() {
 
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()

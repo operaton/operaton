@@ -30,7 +30,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 public class DatabaseNamingConsistencyTest {
 
@@ -41,7 +42,7 @@ public class DatabaseNamingConsistencyTest {
       "org/operaton/bpm/engine/db/liquibase/baseline" };
 
   @Test
-  public void shouldNotFindLowercaseDbColumnNamesInMappings() {
+  void shouldNotFindLowercaseDbColumnNamesInMappings() {
     // given the rule that all DB column names are created in uppercase
 
     // when scanning all mapping files for lowercase column names
@@ -81,7 +82,7 @@ public class DatabaseNamingConsistencyTest {
   }
 
   @Test
-  public void shouldFindLowercaseDbColumnNamesInTestStrings() {
+  void shouldFindLowercaseDbColumnNamesInTestStrings() {
     // given
     String[] testStringsIncorrect = { "alter table ACT_RU_TASK add column TASK_sTATE_ varchar(64);",
         "${queryType} E.BUSINESS_kEY_ = #{query.processInstanceBusinessKey}", "and RES.AssIGNEE_ is null" };

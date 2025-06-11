@@ -21,22 +21,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.test.util.TestconfigProperties;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Miklas Boskamp
  *
  */
-public class SchemaLogEnsureSqlScriptTest extends SchemaLogTestCase {
+class SchemaLogEnsureSqlScriptTest extends SchemaLogTestCase {
 
   protected String currentSchemaVersion;
   protected String dataBaseType;
 
   @Override
-  @Before
+  @BeforeEach
   public void init() {
     super.init();
 
@@ -47,7 +47,7 @@ public class SchemaLogEnsureSqlScriptTest extends SchemaLogTestCase {
   }
 
   @Test
-  public void ensureUpgradeScriptsUpdateSchemaLogVersion() {
+  void ensureUpgradeScriptsUpdateSchemaLogVersion() {
     List<String> scriptsForDB = new ArrayList<>();
     for (String file : folderContents.get(UPGRADE_SCRIPT_FOLDER)) {
       if (file.startsWith(dataBaseType)) {
@@ -64,7 +64,7 @@ public class SchemaLogEnsureSqlScriptTest extends SchemaLogTestCase {
   }
 
   @Test
-  public void ensureOnlyScriptsForValidDatabaseTypes() {
+  void ensureOnlyScriptsForValidDatabaseTypes() {
     for (String file : folderContents.get(UPGRADE_SCRIPT_FOLDER)) {
       assertThat(file.split("_")[0]).isIn((Object[]) DATABASES);
     }

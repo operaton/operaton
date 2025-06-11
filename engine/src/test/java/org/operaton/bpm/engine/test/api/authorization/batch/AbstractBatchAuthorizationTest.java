@@ -45,7 +45,7 @@ public abstract class AbstractBatchAuthorizationTest {
   @RegisterExtension
   protected AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  protected ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessDefinition sourceDefinition;
   protected ProcessDefinition sourceDefinition2;

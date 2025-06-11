@@ -16,14 +16,18 @@
  */
 package org.operaton.bpm.engine.test.standalone.db.entitymanager;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.impl.test.TestHelper.assertAndEnsureCleanDbAndCache;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -40,45 +44,41 @@ import org.operaton.bpm.engine.impl.management.PurgeReport;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CachePurgeReport;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.identity.TestPermissions;
 import org.operaton.bpm.engine.test.api.identity.TestResource;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class PurgeDatabaseTest {
+class PurgeDatabaseTest {
 
   protected static final String PROCESS_DEF_KEY = "test";
   protected static final String PROCESS_MODEL_NAME = "test.bpmn20.xml";
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
-  private String databaseTablePrefix;
+  
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  String databaseTablePrefix;
 
-  @Before
-  public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void setUp() {
     processEngineConfiguration.setDbMetricsReporterActivate(true);
     databaseTablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     processEngineConfiguration.setDbMetricsReporterActivate(false);
   }
 
   @Test
-  public void testPurge() {
+  void testPurge() {
     // given data
     BpmnModelInstance test = Bpmn.createExecutableProcess(PROCESS_DEF_KEY).startEvent().endEvent().done();
     engineRule.getRepositoryService().createDeployment().addModelInstance(PROCESS_MODEL_NAME, test).deploy();
@@ -93,7 +93,7 @@ public class PurgeDatabaseTest {
   }
 
   @Test
-  public void testPurgeWithExistingProcessInstance() {
+  void testPurgeWithExistingProcessInstance() {
     //given process with variable and staying process instance in second user task
     BpmnModelInstance test = Bpmn.createExecutableProcess(PROCESS_DEF_KEY)
                                  .startEvent()
@@ -118,7 +118,7 @@ public class PurgeDatabaseTest {
   }
 
   @Test
-  public void testPurgeWithAsyncProcessInstance() {
+  void testPurgeWithAsyncProcessInstance() {
     // given process with variable and async process instance
     BpmnModelInstance test = Bpmn.createExecutableProcess(PROCESS_DEF_KEY)
       .startEvent()
@@ -146,7 +146,7 @@ public class PurgeDatabaseTest {
   }
 
   @Test
-  public void testPurgeComplexProcess() {
+  void testPurgeComplexProcess() {
     // given complex process with authentication
     // process is executed two times
     // metrics are reported
@@ -283,7 +283,7 @@ public class PurgeDatabaseTest {
   // CMMN //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testPurgeCmmnProcess() {
+  void testPurgeCmmnProcess() {
     // given cmmn process which is not managed by process engine rule
 
     engineRule.getRepositoryService()
@@ -327,7 +327,7 @@ public class PurgeDatabaseTest {
   // DMN ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @Test
-  public void testPurgeDmnProcess() {
+  void testPurgeDmnProcess() {
     // given dmn process which is not managed by process engine rule
     engineRule.getRepositoryService()
       .createDeployment()

@@ -56,7 +56,7 @@ class HistoryTimeToLiveDeploymentTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
   @RegisterExtension
   static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
       .watch(CONFIG_LOGGER)

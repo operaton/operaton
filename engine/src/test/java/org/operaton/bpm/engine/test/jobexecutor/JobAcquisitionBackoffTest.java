@@ -20,27 +20,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper.ThreadControl;
 import org.operaton.bpm.engine.test.jobexecutor.RecordingAcquireJobsRunnable.RecordedAcquisitionEvent;
 import org.operaton.bpm.engine.test.jobexecutor.RecordingAcquireJobsRunnable.RecordedWaitEvent;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class JobAcquisitionBackoffTest {
+class JobAcquisitionBackoffTest {
 
   protected static final int BASE_BACKOFF_TIME = 1000;
   protected static final int MAX_BACKOFF_TIME = 5000;
@@ -48,14 +45,15 @@ public class JobAcquisitionBackoffTest {
   protected static final int BACKOFF_DECREASE_THRESHOLD = 2;
   protected static final int DEFAULT_NUM_JOBS_TO_ACQUIRE = 3;
 
-  @Rule
-  public ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJobExecutor(new ControllableJobExecutor()));
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterEachTest()
+    .configurator(configuration -> {
+      configuration.setJobExecutor(new ControllableJobExecutor());
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ControllableJobExecutor jobExecutor1;
   protected ControllableJobExecutor jobExecutor2;
@@ -63,8 +61,8 @@ public class JobAcquisitionBackoffTest {
   protected ThreadControl acquisitionThread1;
   protected ThreadControl acquisitionThread2;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     jobExecutor1 = (ControllableJobExecutor)
         ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration())
           .getJobExecutor();
@@ -82,15 +80,15 @@ public class JobAcquisitionBackoffTest {
     acquisitionThread2 = jobExecutor2.getAcquisitionThreadControl();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     jobExecutor1.shutdown();
     jobExecutor2.shutdown();
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
-  public void testBackoffOnOptimisticLocking() {
+  void testBackoffOnOptimisticLocking() {
     // when starting a number of process instances process instance
     for (int i = 0; i < 9; i++) {
       engineRule.getRuntimeService().startProcessInstanceByKey("simpleAsyncProcess").getId();
@@ -166,7 +164,7 @@ public class JobAcquisitionBackoffTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
-  public void testBackoffDecrease() {
+  void testBackoffDecrease() {
     // when starting a number of process instances process instance
     for (int i = 0; i < 15; i++) {
       engineRule.getRuntimeService().startProcessInstanceByKey("simpleAsyncProcess").getId();

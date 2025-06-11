@@ -20,15 +20,16 @@ import org.operaton.bpm.engine.ArtifactFactory;
 import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
-public class DefaultArtifactFactoryTest {
+class DefaultArtifactFactoryTest {
 
   @Test
-  public void testDefaultArtifactService() {
+  void testDefaultArtifactService() {
     ArtifactFactory artifactFactory = new DefaultArtifactFactory();
 
     DummyArtifact artifact = artifactFactory.getArtifact(DummyArtifact.class);

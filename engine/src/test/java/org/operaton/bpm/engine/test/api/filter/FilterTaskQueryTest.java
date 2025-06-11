@@ -79,7 +79,7 @@ class FilterTaskQueryTest {
   @RegisterExtension
   protected static ProcessEngineExtension engine = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engine);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engine);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected FilterService filterService;

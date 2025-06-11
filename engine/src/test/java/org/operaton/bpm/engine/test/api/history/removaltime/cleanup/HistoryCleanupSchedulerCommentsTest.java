@@ -44,7 +44,7 @@ class HistoryCleanupSchedulerCommentsTest extends AbstractHistoryCleanupSchedule
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
       .configurator(AbstractHistoryCleanupSchedulerTest::configure).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   RuntimeService runtimeService;
   TaskService taskService;

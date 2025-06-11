@@ -16,56 +16,58 @@
  */
 package org.operaton.bpm.engine.test.standalone.identity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.identity.PasswordPolicy;
 import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.PasswordPolicyRule;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.identity.*;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
+import org.operaton.bpm.engine.impl.identity.PasswordPolicyDigitRuleImpl;
+import org.operaton.bpm.engine.impl.identity.PasswordPolicyLengthRuleImpl;
+import org.operaton.bpm.engine.impl.identity.PasswordPolicyLowerCaseRuleImpl;
+import org.operaton.bpm.engine.impl.identity.PasswordPolicySpecialCharacterRuleImpl;
+import org.operaton.bpm.engine.impl.identity.PasswordPolicyUpperCaseRuleImpl;
+import org.operaton.bpm.engine.impl.identity.PasswordPolicyUserDataRuleImpl;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Miklas Boskamp
  */
-public class DefaultPasswordPolicyTest {
+@ExtendWith(ProcessEngineExtension.class)
+class DefaultPasswordPolicyTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
-  protected IdentityService identityService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  IdentityService identityService;
 
   // enforces a minimum length of 10 characters, at least one upper, one
   // lower case, one digit and one special character
   protected PasswordPolicy policy = new DefaultPasswordPolicyImpl();
 
-  @Before
-  public void init() {
-    identityService = engineRule.getIdentityService();
-
-    engineRule.getProcessEngineConfiguration()
+  @BeforeEach
+  void init() {
+    processEngineConfiguration
       .setPasswordPolicy(new DefaultPasswordPolicyImpl())
       .setEnablePasswordPolicy(true);
   }
 
-  @After
-  public void resetProcessEngineConfig() {
-    engineRule.getProcessEngineConfiguration()
+  @AfterEach
+  void resetProcessEngineConfig() {
+    processEngineConfiguration
       .setPasswordPolicy(null)
       .setEnablePasswordPolicy(false);
   }
 
   @Test
-  public void testGoodPassword() {
+  void testGoodPassword() {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "LongPas$w0rd");
     assertThat(result.getViolatedRules()).isEmpty();
     assertThat(result.getFulfilledRules()).hasSize(6);
@@ -73,7 +75,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldCheckValidPassword_WithoutPassingPolicy() {
+  void shouldCheckValidPassword_WithoutPassingPolicy() {
     // given
 
     // when
@@ -84,7 +86,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void testPasswordWithoutLowerCase() {
+  void testPasswordWithoutLowerCase() {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "LONGPAS$W0RD");
     checkThatPasswordWasInvalid(result);
 
@@ -94,7 +96,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void testPasswordWithoutUpperCase() {
+  void testPasswordWithoutUpperCase() {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "longpas$w0rd");
     checkThatPasswordWasInvalid(result);
 
@@ -104,7 +106,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void testPasswordWithoutSpecialChar() {
+  void testPasswordWithoutSpecialChar() {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "LongPassw0rd");
     checkThatPasswordWasInvalid(result);
 
@@ -114,7 +116,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void testPasswordWithoutDigit() {
+  void testPasswordWithoutDigit() {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "LongPas$word");
     checkThatPasswordWasInvalid(result);
 
@@ -124,7 +126,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void testShortPassword() {
+  void testShortPassword() {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "Pas$w0rd");
     checkThatPasswordWasInvalid(result);
 
@@ -134,7 +136,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldThrowNullValueException_policyNull() {
+  void shouldThrowNullValueException_policyNull() {
     // given
 
     // when/then
@@ -144,7 +146,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldThrowNullValueException_passwordNull() {
+  void shouldThrowNullValueException_passwordNull() {
     // given
 
     // when/then
@@ -154,7 +156,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldGetPasswordPolicy() {
+  void shouldGetPasswordPolicy() {
     // given
 
     // then
@@ -165,7 +167,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldUpdateUserDetailsWithoutPolicyCheck() {
+  void shouldUpdateUserDetailsWithoutPolicyCheck() {
     // given
     // first, create a new user
     User user = identityService.newUser("johndoe");
@@ -194,7 +196,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldCheckUserRuleWithPolicyPassed() {
+  void shouldCheckUserRuleWithPolicyPassed() {
     // given
     User user = identityService.newUser("myUserId");
     String candidatePassword = "myUserId";
@@ -209,7 +211,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldCheckPasswordNull() {
+  void shouldCheckPasswordNull() {
     // given
     User user = identityService.newUser("myUserId");
     String candidatePassword = null;
@@ -221,7 +223,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldCheckPasswordEmpty() {
+  void shouldCheckPasswordEmpty() {
     // given
     User user = identityService.newUser("myUserId");
     String candidatePassword = "";
@@ -237,7 +239,7 @@ public class DefaultPasswordPolicyTest {
   }
 
   @Test
-  public void shouldCheckUserNull() {
+  void shouldCheckUserNull() {
     // given
     User user = null;
     String candidatePassword = "my-password";

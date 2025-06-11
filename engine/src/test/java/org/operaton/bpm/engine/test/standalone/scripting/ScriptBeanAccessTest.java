@@ -18,37 +18,29 @@ package org.operaton.bpm.engine.test.standalone.scripting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Tom Baeyens
  */
-public class ScriptBeanAccessTest {
+class ScriptBeanAccessTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/standalone/scripting/operaton.cfg.xml");
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .closeEngineAfterAllTests()
+    .configurationResource("org/operaton/bpm/engine/test/standalone/scripting/operaton.cfg.xml")
+    .build();
 
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-  }
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testConfigurationBeanAccess() {
+  void testConfigurationBeanAccess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("ScriptBeanAccess");
     assertThat(runtimeService.getVariable(pi.getId(), "myVariable")).isEqualTo("myValue");
   }

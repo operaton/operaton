@@ -21,20 +21,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.calendar.CycleBusinessCalendar;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.junit.After;
-import org.junit.Test;
 
-public class CycleBusinessCalendarTest {
+class CycleBusinessCalendarTest {
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
   }
 
   @Test
-  public void testSimpleCron() throws Exception {
+  void testSimpleCron() throws Exception {
     CycleBusinessCalendar businessCalendar = new CycleBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");
@@ -49,7 +49,7 @@ public class CycleBusinessCalendarTest {
   }
 
   @Test
-  public void testSimpleDuration() throws Exception {
+  void testSimpleDuration() throws Exception {
     CycleBusinessCalendar businessCalendar = new CycleBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");
@@ -64,7 +64,7 @@ public class CycleBusinessCalendarTest {
   }
 
   @Test
-  public void testSimpleCronWithStartDate() throws Exception {
+  void testSimpleCronWithStartDate() throws Exception {
     CycleBusinessCalendar businessCalendar = new CycleBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");
@@ -78,7 +78,7 @@ public class CycleBusinessCalendarTest {
   }
 
   @Test
-  public void testSimpleDurationWithStartDate() throws Exception {
+  void testSimpleDurationWithStartDate() throws Exception {
     CycleBusinessCalendar businessCalendar = new CycleBusinessCalendar();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy MM dd - HH:mm");

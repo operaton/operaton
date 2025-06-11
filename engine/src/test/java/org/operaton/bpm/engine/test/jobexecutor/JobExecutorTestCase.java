@@ -18,26 +18,35 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import java.util.Date;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Tom Baeyens
  */
-public class JobExecutorTestCase extends PluggableProcessEngineTest {
+public class JobExecutorTestCase {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  
   protected TweetHandler tweetHandler = new TweetHandler();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     processEngineConfiguration.getJobHandlers().put(tweetHandler.getType(), tweetHandler);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.getJobHandlers().remove(tweetHandler.getType());
   }
 

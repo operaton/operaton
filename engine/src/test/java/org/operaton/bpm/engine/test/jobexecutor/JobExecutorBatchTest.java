@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
@@ -31,57 +33,55 @@ import org.operaton.bpm.engine.impl.batch.DeploymentMapping;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 public class JobExecutorBatchTest {
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule migrationRule = new MigrationTestRule(engineRule);
-  protected BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension migrationRule = new MigrationTestExtension(engineRule);
+  BatchMigrationHelper helper = new BatchMigrationHelper(engineRule, migrationRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(migrationRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+
   public CountingJobExecutor jobExecutor;
   protected JobExecutor defaultJobExecutor;
   protected int defaultBatchJobsPerSeed;
 
-  @Before
-  public void replaceJobExecutor() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void replaceJobExecutor() {
     defaultJobExecutor = processEngineConfiguration.getJobExecutor();
     jobExecutor = new CountingJobExecutor();
     processEngineConfiguration.setJobExecutor(jobExecutor);
   }
 
-  @Before
-  public void saveBatchJobsPerSeed() {
+  @BeforeEach
+  void saveBatchJobsPerSeed() {
     defaultBatchJobsPerSeed = engineRule.getProcessEngineConfiguration().getBatchJobsPerSeed();
   }
 
-  @After
-  public void resetJobExecutor() {
+  @AfterEach
+  void resetJobExecutor() {
     engineRule.getProcessEngineConfiguration()
       .setJobExecutor(defaultJobExecutor);
   }
 
-  @After
-  public void resetBatchJobsPerSeed() {
+  @AfterEach
+  void resetBatchJobsPerSeed() {
     engineRule.getProcessEngineConfiguration()
       .setBatchJobsPerSeed(defaultBatchJobsPerSeed);
   }
 
-  @After
-  public void removeBatches() {
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
   @Test
-  public void testJobExecutorHintedOnBatchCreation() {
+  void testJobExecutorHintedOnBatchCreation() {
     // given
     jobExecutor.startRecord();
 
@@ -93,7 +93,7 @@ public class JobExecutorBatchTest {
   }
 
   @Test
-  public void testJobExecutorHintedSeedJobExecution() {
+  void testJobExecutorHintedSeedJobExecution() {
     // reduce number of batch jobs per seed to not have to create a lot of instances
     engineRule.getProcessEngineConfiguration().setBatchJobsPerSeed(10);
 
@@ -109,7 +109,7 @@ public class JobExecutorBatchTest {
   }
 
   @Test
-  public void testJobExecutorHintedSeedJobCompletion() {
+  void testJobExecutorHintedSeedJobCompletion() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(3);
     jobExecutor.startRecord();
@@ -121,9 +121,9 @@ public class JobExecutorBatchTest {
     assertThat(jobExecutor.getJobsAdded()).isEqualTo(4);
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({"unchecked", "rawtypes"})
   @Test
-  public void testMixedJobExecutorVersionSeedJobExecution() {
+  void testMixedJobExecutorVersionSeedJobExecution() {
     // given
     Batch batch = helper.migrateProcessInstancesAsync(4);
     // ... and there are more mappings than ids (simulating an intermediate execution of a SeedJob

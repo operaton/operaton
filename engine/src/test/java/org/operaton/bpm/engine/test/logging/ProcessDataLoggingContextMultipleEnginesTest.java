@@ -20,28 +20,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
-public class ProcessDataLoggingContextMultipleEnginesTest {
+class ProcessDataLoggingContextMultipleEnginesTest {
 
   private static final String PVM_LOGGER = "org.operaton.bpm.engine.pvm";
   private static final String DELEGATE_LOGGER = LogEngineNameDelegate.class.getName();
 
   private static final String PROCESS = "process";
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch(PVM_LOGGER, DELEGATE_LOGGER).level(Level.DEBUG);
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension().watch(PVM_LOGGER, DELEGATE_LOGGER).level(Level.DEBUG);
 
   protected ProcessEngine engine1;
   protected ProcessEngine engine2;
@@ -49,14 +49,14 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
   private static final String ENGINE1_NAME = "ProcessDataLoggingContextMultipleEnginesTest-engine1";
   private static final String ENGINE2_NAME = "ProcessDataLoggingContextMultipleEnginesTest-engine2";
 
-  @Before
-  public void startEngines() {
+  @BeforeEach
+  void startEngines() {
     engine1 = createProcessEngine(ENGINE1_NAME);
     engine2 = createProcessEngine(ENGINE2_NAME);
   }
 
-  @After
-  public void closeEngines() {
+  @AfterEach
+  void closeEngines() {
     try {
       engine1.close();
     }
@@ -72,7 +72,7 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
   }
 
   @Test
-  public void shouldHaveProcessEngineNameAvailableInMdc() {
+  void shouldHaveProcessEngineNameAvailableInMdc() {
     // given
     engine1.getRepositoryService().createDeployment().addModelInstance("test.bpmn", modelOneTaskProcess()).deploy();
 
@@ -88,7 +88,7 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
   }
 
   @Test
-  public void shouldHaveProcessEngineNameAvailableInMdcForAllEngines() {
+  void shouldHaveProcessEngineNameAvailableInMdcForAllEngines() {
     // given
     engine1.getRepositoryService().createDeployment().addModelInstance("test1.bpmn", modelLogDelegateProcess()).deploy();
     engine2.getRepositoryService().createDeployment().addModelInstance("test2.bpmn", modelLogDelegateProcess()).deploy();

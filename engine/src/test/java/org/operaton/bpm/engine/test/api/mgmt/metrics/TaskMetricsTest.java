@@ -57,7 +57,7 @@ class TaskMetricsTest {
       .configurator(config -> config.setTaskMetricsEnabled(true))
       .build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;

@@ -25,6 +25,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -32,35 +36,29 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.scripting.engine.DefaultScriptEngineResolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class ScriptEngineNameJavaScriptTest {
+class ScriptEngineNameJavaScriptTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  protected String defaultJsSciptEngineName;
+  String defaultJsSciptEngineName;
 
-  @Before
-  public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void setUp() {
     defaultJsSciptEngineName = processEngineConfiguration.getScriptEngineNameJavaScript();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setScriptEngineNameJavaScript(defaultJsSciptEngineName);
   }
 
   @Test
-  public void shouldFindDefaultEngineForJavaScript() {
+  void shouldFindDefaultEngineForJavaScript() {
     // when
     ScriptEngine scriptEngine = getScriptEngine(ScriptingEngines.JAVASCRIPT_SCRIPTING_LANGUAGE);
 
@@ -70,7 +68,7 @@ public class ScriptEngineNameJavaScriptTest {
   }
 
   @Test
-  public void shouldFindDefaultEngineForEcmaScript() {
+  void shouldFindDefaultEngineForEcmaScript() {
     // when
     ScriptEngine scriptEngine = getScriptEngine(ScriptingEngines.ECMASCRIPT_SCRIPTING_LANGUAGE);
 
@@ -80,7 +78,7 @@ public class ScriptEngineNameJavaScriptTest {
   }
 
   @Test
-  public void shouldFindDefaultEngineForJavaScriptInPa() {
+  void shouldFindDefaultEngineForJavaScriptInPa() {
     // given
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 
@@ -93,7 +91,7 @@ public class ScriptEngineNameJavaScriptTest {
   }
 
   @Test
-  public void shouldFindDefaultEngineForEcmaScriptInPa() {
+  void shouldFindDefaultEngineForEcmaScriptInPa() {
     // given
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
 
@@ -106,7 +104,7 @@ public class ScriptEngineNameJavaScriptTest {
   }
 
   @Test
-  public void shouldFailIfDefinedEngineCannotBeFound() {
+  void shouldFailIfDefinedEngineCannotBeFound() {
     // given
     processEngineConfiguration.setScriptEngineNameJavaScript("undefined");
 
@@ -117,7 +115,7 @@ public class ScriptEngineNameJavaScriptTest {
   }
 
   @Test
-  public void shouldFailIfDefinedEngineCannotBeFoundInPa() {
+  void shouldFailIfDefinedEngineCannotBeFoundInPa() {
     // given
     processEngineConfiguration.setScriptEngineNameJavaScript("undefined");
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
@@ -128,7 +126,7 @@ public class ScriptEngineNameJavaScriptTest {
   }
 
   @Test
-  public void shouldFallbackToAnyEngineForJavaScriptIfDefaultUnavailable() {
+  void shouldFallbackToAnyEngineForJavaScriptIfDefaultUnavailable() {
     // given
     ScriptEngineManager mockScriptEngineManager = mock(ScriptEngineManager.class);
     ScriptEngine mockScriptEngine = mock(ScriptEngine.class);

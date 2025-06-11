@@ -43,7 +43,7 @@ class MultiTenancyTaskCountByCandidateGroupTest {
   @RegisterExtension
   protected static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension procesessEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
+  ProcessEngineTestExtension procesessEngineTestRule = new ProcessEngineTestExtension(processEngineRule);
 
   protected TaskService taskService;
   protected IdentityService identityService;

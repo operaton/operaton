@@ -79,7 +79,7 @@ public abstract class AuthorizationTest {
   @RegisterExtension
   protected static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineExtension);
+  protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineExtension);
 
   protected String userId = "test";
   protected String groupId = "accounting";

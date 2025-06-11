@@ -64,7 +64,7 @@ class DeploymentCacheCfgTest {
           configuration.setEnableFetchProcessDefinitionDescription(false);
       }).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(cacheFactoryEngineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(cacheFactoryEngineRule);
 
   RepositoryService repositoryService;
   ProcessEngineConfigurationImpl processEngineConfiguration;

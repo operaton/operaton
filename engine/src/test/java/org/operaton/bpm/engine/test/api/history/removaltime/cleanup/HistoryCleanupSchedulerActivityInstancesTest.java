@@ -47,7 +47,7 @@ class HistoryCleanupSchedulerActivityInstancesTest extends AbstractHistoryCleanu
       configuration -> configure(configuration, HistoryEventTypes.ACTIVITY_INSTANCE_START)
     ).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   RuntimeService runtimeService;
   TaskService taskService;

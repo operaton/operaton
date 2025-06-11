@@ -16,34 +16,32 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 
-import java.util.List;
+class HistoryCleanupJobPriorityRangeTest extends AbstractJobExecutorAcquireJobsTest {
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+  HistoryService historyService;
+  long defaultHistoryCleanupJobPriority;
+  boolean defaultIsJobExecutorAcquireByPriority;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class HistoryCleanupJobPriorityRangeTest extends AbstractJobExecutorAcquireJobsTest {
-
-  protected HistoryService historyService;
-  protected long defaultHistoryCleanupJobPriority;
-  protected boolean defaultIsJobExecutorAcquireByPriority;
-
-  @Before
-  public void setup() {
-    historyService = rule.getHistoryService();
+  @BeforeEach
+  void setup() {
     defaultHistoryCleanupJobPriority = configuration.getHistoryCleanupJobPriority();
     defaultIsJobExecutorAcquireByPriority = configuration.isJobExecutorAcquireByPriority();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     configuration.setHistoryCleanupJobPriority(defaultHistoryCleanupJobPriority);
     configuration.setJobExecutorAcquireByPriority(defaultIsJobExecutorAcquireByPriority);
     resetDatabase();
@@ -64,7 +62,7 @@ public class HistoryCleanupJobPriorityRangeTest extends AbstractJobExecutorAcqui
   }
 
   @Test
-  public void shouldSetConfiguredPriorityOnHistoryCleanupJob() {
+  void shouldSetConfiguredPriorityOnHistoryCleanupJob() {
     // given
     configuration.setHistoryCleanupJobPriority(10L);
 
@@ -78,7 +76,7 @@ public class HistoryCleanupJobPriorityRangeTest extends AbstractJobExecutorAcqui
   }
 
   @Test
-  public void shouldAcquireHistoryCleanupJobInPriorityRange() {
+  void shouldAcquireHistoryCleanupJobInPriorityRange() {
     // given
     configuration.setJobExecutorPriorityRangeMin(5L);
     configuration.setJobExecutorPriorityRangeMax(15L);
@@ -94,7 +92,7 @@ public class HistoryCleanupJobPriorityRangeTest extends AbstractJobExecutorAcqui
   }
 
   @Test
-  public void shouldNotAcquireHistoryCleanupJobOutsidePriorityRange() {
+  void shouldNotAcquireHistoryCleanupJobOutsidePriorityRange() {
     // given
     configuration.setJobExecutorAcquireByPriority(true);
     configuration.setJobExecutorPriorityRangeMin(5L);

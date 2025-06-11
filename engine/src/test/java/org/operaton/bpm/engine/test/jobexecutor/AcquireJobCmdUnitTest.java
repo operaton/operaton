@@ -17,13 +17,15 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
@@ -32,10 +34,8 @@ import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.junit.Before;
-import org.junit.Test;
 
-public class AcquireJobCmdUnitTest {
+class AcquireJobCmdUnitTest {
 
   protected static final String PROCESS_INSTANCE_ID_1 = "pi_1";
   protected static final String PROCESS_INSTANCE_ID_2 = "pi_2";
@@ -47,8 +47,8 @@ public class AcquireJobCmdUnitTest {
   protected JobManager jobManager;
   protected CommandContext commandContext;
 
-  @Before
-  public void initCommand() {
+  @BeforeEach
+  void initCommand() {
     JobExecutor jobExecutor = mock(JobExecutor.class);
     when(jobExecutor.getMaxJobsPerAcquisition()).thenReturn(3);
     when(jobExecutor.getLockOwner()).thenReturn("test");
@@ -66,7 +66,7 @@ public class AcquireJobCmdUnitTest {
   }
 
   @Test
-  public void nonExclusiveJobsSameInstance() {
+  void nonExclusiveJobsSameInstance() {
     // given: two non-exclusive jobs for a different process instance
     AcquirableJobEntity job1 = createNonExclusiveJob(JOB_ID_1, PROCESS_INSTANCE_ID_1);
     AcquirableJobEntity job2 = createNonExclusiveJob(JOB_ID_2, PROCESS_INSTANCE_ID_1);
@@ -79,7 +79,7 @@ public class AcquireJobCmdUnitTest {
   }
 
   @Test
-  public void nonExclusiveDifferentInstance() {
+  void nonExclusiveDifferentInstance() {
     // given: two non-exclusive jobs for the same process instance
     AcquirableJobEntity job1 = createNonExclusiveJob(JOB_ID_1, PROCESS_INSTANCE_ID_1);
     AcquirableJobEntity job2 = createNonExclusiveJob(JOB_ID_2, PROCESS_INSTANCE_ID_2);
@@ -92,7 +92,7 @@ public class AcquireJobCmdUnitTest {
   }
 
   @Test
-  public void exclusiveJobsSameInstance() {
+  void exclusiveJobsSameInstance() {
     // given: two exclusive jobs for the same process instance
     AcquirableJobEntity job1 = createExclusiveJob(JOB_ID_1, PROCESS_INSTANCE_ID_1);
     AcquirableJobEntity job2 = createExclusiveJob(JOB_ID_2, PROCESS_INSTANCE_ID_1);
@@ -110,7 +110,7 @@ public class AcquireJobCmdUnitTest {
   }
 
   @Test
-  public void exclusiveJobsDifferentInstance() {
+  void exclusiveJobsDifferentInstance() {
     // given: two exclusive jobs for a different process instance
     AcquirableJobEntity job1 = createExclusiveJob(JOB_ID_1, PROCESS_INSTANCE_ID_1);
     AcquirableJobEntity job2 = createExclusiveJob(JOB_ID_2, PROCESS_INSTANCE_ID_2);

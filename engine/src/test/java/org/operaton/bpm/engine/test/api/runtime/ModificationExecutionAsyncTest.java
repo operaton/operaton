@@ -77,7 +77,7 @@ public class ModificationExecutionAsyncTest {
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
   BatchModificationHelper helper = new BatchModificationHelper(rule);
 
   ProcessEngineConfigurationImpl configuration;

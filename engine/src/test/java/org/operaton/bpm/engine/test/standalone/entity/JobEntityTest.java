@@ -16,23 +16,31 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  *
  * @author Clint Manning
  */
-public class JobEntityTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class JobEntityTest {
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
 
   /**
    * Note: This does not test a message with 4-byte Unicode supplementary
@@ -42,7 +50,7 @@ public class JobEntityTest extends PluggableProcessEngineTest {
    * chars), so essentially the cutoff would be half the actual cutoff for such a string
    */
   @Test
-  public void testInsertJobWithExceptionMessage() {
+  void testInsertJobWithExceptionMessage() {
     String fittingThreeByteMessage = repeatCharacter("\u9faf", StringUtil.DB_MAX_STRING_LENGTH);
 
     JobEntity threeByteJobEntity = new MessageEntity();
@@ -55,7 +63,7 @@ public class JobEntityTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testJobExceptionMessageCutoff() {
+  void testJobExceptionMessageCutoff() {
     JobEntity threeByteJobEntity = new MessageEntity();
 
     String message = repeatCharacter("a", StringUtil.DB_MAX_STRING_LENGTH * 2);
@@ -88,9 +96,9 @@ public class JobEntityTest extends PluggableProcessEngineTest {
   }
 
 
-   @Deployment
+  @Deployment
   @Test
-  public void testLongProcessDefinitionKey() {
+  void testLongProcessDefinitionKey() {
     String key = "myrealrealrealrealrealrealrealrealrealrealreallongprocessdefinitionkeyawesome";
     String processInstanceId = runtimeService.startProcessInstanceByKey(key).getId();
 

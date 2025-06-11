@@ -39,7 +39,7 @@ class MetricsDisabledTest {
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .configurationResource("org/operaton/bpm/engine/test/api/mgmt/metrics/metricsDisabledTest.cfg.xml").build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;

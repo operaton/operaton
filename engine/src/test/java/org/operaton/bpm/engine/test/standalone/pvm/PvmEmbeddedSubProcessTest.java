@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
@@ -30,13 +31,12 @@ import org.operaton.bpm.engine.test.standalone.pvm.activities.EmbeddedSubProcess
 import org.operaton.bpm.engine.test.standalone.pvm.activities.End;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.ParallelGateway;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
-import org.junit.Test;
 
 
 /**
  * @author Tom Baeyens
  */
-public class PvmEmbeddedSubProcessTest {
+class PvmEmbeddedSubProcessTest {
 
   /**
    *           +------------------------------+
@@ -47,7 +47,7 @@ public class PvmEmbeddedSubProcessTest {
    *           +------------------------------+
    */
   @Test
-  public void testEmbeddedSubProcess() {
+  void testEmbeddedSubProcess() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -96,7 +96,7 @@ public class PvmEmbeddedSubProcessTest {
    *           +----------------------------------------+
    */
   @Test
-  public void testMultipleConcurrentEndsInsideEmbeddedSubProcess() {
+  void testMultipleConcurrentEndsInsideEmbeddedSubProcess() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -154,7 +154,7 @@ public class PvmEmbeddedSubProcessTest {
    *           +-------------------------------------------------+
    */
   @Test
-  public void testMultipleConcurrentEndsInsideEmbeddedSubProcessWithWaitState() {
+  void testMultipleConcurrentEndsInsideEmbeddedSubProcessWithWaitState() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -217,7 +217,7 @@ public class PvmEmbeddedSubProcessTest {
    *           +-------------------------------------------------------+
    */
   @Test
-  public void testNestedSubProcessNoEnd() {
+  void testNestedSubProcessNoEnd() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -267,7 +267,7 @@ public class PvmEmbeddedSubProcessTest {
    *           +------------------------------+
    */
   @Test
-  public void testEmbeddedSubProcessWithoutEndEvents() {
+  void testEmbeddedSubProcessWithoutEndEvents() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -302,7 +302,7 @@ public class PvmEmbeddedSubProcessTest {
    *           +-------------------------------------------------------+
    */
   @Test
-  public void testNestedSubProcessBothNoEnd() {
+  void testNestedSubProcessBothNoEnd() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()
@@ -342,7 +342,7 @@ public class PvmEmbeddedSubProcessTest {
    *           +------------------------------+
    */
   @Test
-  public void testEmbeddedSubProcessNoEnd() {
+  void testEmbeddedSubProcessNoEnd() {
     PvmProcessDefinition processDefinition = new ProcessDefinitionBuilder()
       .createActivity("start")
         .initial()

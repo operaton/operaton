@@ -65,7 +65,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
   @RegisterExtension
   protected static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(rule);
 
   protected BatchDeletionHelper helper = new BatchDeletionHelper(rule);
 

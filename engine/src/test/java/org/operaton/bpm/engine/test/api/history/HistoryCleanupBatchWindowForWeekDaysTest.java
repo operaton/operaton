@@ -79,7 +79,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
       configuration.setSundayHistoryCleanupBatchWindowEndTime("20:00");
     }).build();
   @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private HistoryService historyService;
   private ManagementService managementService;

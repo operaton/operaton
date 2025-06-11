@@ -18,34 +18,27 @@ package org.operaton.bpm.engine.test.standalone.scripting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class DisableScriptEngineCachingTest {
+class DisableScriptEngineCachingTest {
 
-  @Rule
-  public ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/standalone/scripting/disable.script.engine.caching.cfg.xml");
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Before
-  public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .closeEngineAfterAllTests()
+    .configurationResource("org/operaton/bpm/engine/test/standalone/scripting/disable.script.engine.caching.cfg.xml")
+    .build();
+  
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Test
-  public void testScriptEnginesConfiguration() {
+  void testScriptEnginesConfiguration() {
     assertThat(processEngineConfiguration.isEnableScriptEngineCaching()).isFalse();
     assertThat(processEngineConfiguration.getScriptingEngines().isEnableScriptEngineCaching()).isFalse();
   }

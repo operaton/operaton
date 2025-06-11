@@ -24,6 +24,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -31,15 +33,10 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * Redeploy process definition and assert that no new job definitions were created.
@@ -47,10 +44,11 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Philipp Ossler
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
+@ExtendWith(ProcessEngineExtension.class)
 public class JobDefinitionRedeploymentTest {
 
-  @Parameters(name = "{index}: process definition = {0}")
+  @Parameters(name = "process definition = {0}")
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testTimerStartEvent.bpmn20.xml" },
@@ -67,24 +65,13 @@ public class JobDefinitionRedeploymentTest {
   @Parameter
   public String processDefinitionResource;
 
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
+  ManagementService managementService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  protected ManagementService managementService;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Before
-  public void initServices() {
-    managementService = rule.getManagementService();
-    repositoryService = rule.getRepositoryService();
-    runtimeService = rule.getRuntimeService();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) rule.getProcessEngine().getProcessEngineConfiguration();
-  }
-
-  @Test
-  public void testJobDefinitionsAfterRedeploment() {
+  @TestTemplate
+  void testJobDefinitionsAfterRedeploment() {
 
     // initially there are no job definitions:
     assertThat(managementService.createJobDefinitionQuery().count()).isZero();

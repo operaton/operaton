@@ -21,16 +21,16 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.sql.SQLException;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.junit.Test;
 
 /**
  * @author Tom Baeyens
  */
-public class NoDbConnectionTest {
+class NoDbConnectionTest {
 
   @Test
-  public void testNoDbConnection() {
+  void testNoDbConnection() {
     var processEngineConfiguration = ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/nodbconnection.operaton.cfg.xml");
     try {

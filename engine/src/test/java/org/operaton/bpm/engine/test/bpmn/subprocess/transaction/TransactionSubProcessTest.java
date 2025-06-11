@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.variable.Variables;
 /**
  * @author Daniel Meyer
  */
-public class TransactionSubProcessTest {
+class TransactionSubProcessTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

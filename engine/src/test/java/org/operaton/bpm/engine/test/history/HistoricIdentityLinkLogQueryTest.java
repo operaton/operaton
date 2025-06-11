@@ -49,7 +49,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 @ExtendWith(ProcessEngineExtension.class)
-public class HistoricIdentityLinkLogQueryTest {
+class HistoricIdentityLinkLogQueryTest {
   private static final String A_USER_ID = "aUserId";
   private static final String A_GROUP_ID = "aGroupId";
   private static final int NUMBER_OF_USERS = 3;

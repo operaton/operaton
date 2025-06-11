@@ -100,7 +100,7 @@ public class MetricsManagerForCleanupTest {
   }
 
   @TestTemplate
-  public void testFindHistoricBatchIdsForCleanup() {
+  void testFindHistoricBatchIdsForCleanup() {
     // given
     prepareTaskMetrics();
 

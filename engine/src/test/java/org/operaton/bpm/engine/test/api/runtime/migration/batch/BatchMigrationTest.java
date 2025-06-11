@@ -917,7 +917,7 @@ public class BatchMigrationTest {
 
   @TestTemplate
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldSetExecutionStartTimeInBatchAndHistory() {
+  void shouldSetExecutionStartTimeInBatchAndHistory() {
     // given
     ClockUtil.setCurrentTime(TEST_DATE);
     Batch batch = helper.migrateProcessInstancesAsync(15);

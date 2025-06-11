@@ -57,7 +57,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Joram Barrez
  * @author Falko Menge
  */
-public class BoundaryErrorEventTest {
+class BoundaryErrorEventTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

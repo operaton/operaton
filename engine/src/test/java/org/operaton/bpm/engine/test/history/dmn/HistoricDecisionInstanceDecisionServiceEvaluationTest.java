@@ -114,7 +114,7 @@ public class HistoricDecisionInstanceDecisionServiceEvaluationTest {
   }
 
   @TestTemplate
-  public void evaluateDecisionWithDecisionService() {
+  void evaluateDecisionWithDecisionService() {
 
     runtimeService.startProcessInstanceByKey("testProcess", Variables.createVariables()
         .putValue("input1", null)

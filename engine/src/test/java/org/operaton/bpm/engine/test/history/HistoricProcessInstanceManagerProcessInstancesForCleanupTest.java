@@ -99,7 +99,7 @@ public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
 
   @TestTemplate
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml" })
-  public void testFindHistoricProcessInstanceIdsForCleanup() {
+  void testFindHistoricProcessInstanceIdsForCleanup() {
 
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
 

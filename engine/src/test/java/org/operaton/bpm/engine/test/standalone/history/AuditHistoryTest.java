@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class AuditHistoryTest {
+class AuditHistoryTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
@@ -47,7 +47,7 @@ public class AuditHistoryTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testReceivesNoHistoricVariableUpdatesAsDetails() {
+  void testReceivesNoHistoricVariableUpdatesAsDetails() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 

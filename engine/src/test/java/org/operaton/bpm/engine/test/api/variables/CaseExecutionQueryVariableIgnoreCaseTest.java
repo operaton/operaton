@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionQueryImpl;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 
-public class CaseExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<CaseExecutionQueryImpl, CaseExecution> {
+class CaseExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<CaseExecutionQueryImpl, CaseExecution> {
 
   CaseService caseService;
   RepositoryService repositoryService;

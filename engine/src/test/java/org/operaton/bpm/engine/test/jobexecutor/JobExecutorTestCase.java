@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 /**
  * @author Tom Baeyens
  */
-public class JobExecutorTestCase {
+class JobExecutorTestCase {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension

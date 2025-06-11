@@ -104,7 +104,7 @@ public class HostnameProviderTest {
   }
 
   @TestTemplate
-  public void shouldUseCustomHostname() {
+  void shouldUseCustomHostname() {
     // given a Process Engine with specified hostname parameters
 
     // when
@@ -115,7 +115,7 @@ public class HostnameProviderTest {
   }
 
   @TestTemplate
-  public void shouldUseCustomMetricsReporterId() {
+  void shouldUseCustomMetricsReporterId() {
     // given a Process Engine with some specified hostname and metric properties
 
     // when

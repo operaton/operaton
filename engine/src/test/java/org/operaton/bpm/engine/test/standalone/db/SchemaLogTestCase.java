@@ -38,7 +38,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  * @author Miklas Boskamp
  *
  */
-public class SchemaLogTestCase {
+class SchemaLogTestCase {
 
   protected static final String BASE_PATH = "org/operaton/bpm/engine/db";
   protected static final String CREATE_SCRIPT_FOLDER = BASE_PATH + "/create";

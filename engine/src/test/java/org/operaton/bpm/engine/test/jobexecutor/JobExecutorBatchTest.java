@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHe
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
-public class JobExecutorBatchTest {
+class JobExecutorBatchTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

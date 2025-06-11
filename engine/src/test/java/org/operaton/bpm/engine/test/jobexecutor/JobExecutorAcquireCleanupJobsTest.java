@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 
-public class JobExecutorAcquireCleanupJobsTest extends AbstractJobExecutorAcquireJobsTest {
+class JobExecutorAcquireCleanupJobsTest extends AbstractJobExecutorAcquireJobsTest {
 
   HistoryService historyService;
 

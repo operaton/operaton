@@ -113,7 +113,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit4</classifier>
+      <classifier>junit5</classifier>
     </dependency>
 
     <dependency>

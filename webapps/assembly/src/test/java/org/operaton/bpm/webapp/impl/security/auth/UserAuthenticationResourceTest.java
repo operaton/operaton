@@ -25,6 +25,7 @@ import jakarta.ws.rs.core.Response.Status;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.MockedStatic;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -211,7 +212,7 @@ class UserAuthenticationResourceTest {
       Response response = authResource.doLogin("webapps-test-engine", "tasklist", "jonny", "jonnyspassword");
 
       // then
-      Assert.assertEquals(Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
+      assertThat(response.getStatus()).isEqualTo(Status.UNAUTHORIZED.getStatusCode());
     }
   }
 

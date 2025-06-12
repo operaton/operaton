@@ -45,14 +45,14 @@ import static org.assertj.core.api.Assertions.fail;
  *
  * @author nico.rehwaldt
  */
-public class SecurityFilterRulesTest {
+class SecurityFilterRulesTest {
 
   public static final String FILTER_RULES_FILE = "src/main/webapp/WEB-INF/securityFilterRules.json";
 
   protected static final String EMPTY_PATH = "";
   protected static final String CUSTOM_APP_PATH = "/my-custom/application/path";
 
-  public static List<SecurityFilterRule> filterRules;
+  List<SecurityFilterRule> filterRules;
 
   public static final Authentication LOGGED_IN_USER = new Authentication("user", "default");
 
@@ -64,7 +64,14 @@ public class SecurityFilterRulesTest {
 
   public void initSecurityFilterRulesTest(String applicationPath) {
     this.applicationPath = applicationPath;
-    filterRules = loadFilterRules(applicationPath);
+    try {
+      try (InputStream is = new FileInputStream(FILTER_RULES_FILE)) {
+        filterRules = FilterRules.load(is, applicationPath);
+      }
+    } catch (IOException e) {
+      fail("Could not load security filter rules from " + FILTER_RULES_FILE, e);
+    }
+
   }
 
   @BeforeEach
@@ -478,12 +485,6 @@ public class SecurityFilterRulesTest {
 
   protected boolean isAuthorized(String method, String uri) {
     return getAuthorization(method, uri).isGranted();
-  }
-
-  private static List<SecurityFilterRule> loadFilterRules(String appPath) throws IOException {
-    try (InputStream is = new FileInputStream(FILTER_RULES_FILE)) {
-      return FilterRules.load(is, appPath);
-    }
   }
 
   private void authenticatedForEngine(String engineName, Runnable codeBlock) {

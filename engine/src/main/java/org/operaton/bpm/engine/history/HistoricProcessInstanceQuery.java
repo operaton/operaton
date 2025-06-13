@@ -176,7 +176,9 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    *
    * @return HistoricProcessInstanceQuery
    */
-  HistoricProcessInstanceQuery withJobsRetrying();
+  default HistoricProcessInstanceQuery withJobsRetrying() {
+    return this;
+  }
 
   /**
    * Only select historic process instances which are associated with the given case instance id.

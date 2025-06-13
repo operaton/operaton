@@ -497,7 +497,7 @@ class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/history/testInstancesWithJobsRetrying.bpmn20.xml"})
-  public void testHistoricProcessInstanceQueryWithJobsRetrying() {
+  void testHistoricProcessInstanceQueryWithJobsRetrying() {
     // given query for instances with jobs that have an exception and retries left
     HistoricProcessInstanceQuery queryWithJobsRetrying = historyService.createHistoricProcessInstanceQuery()
         .withJobsRetrying();
@@ -2678,11 +2678,10 @@ class HistoricProcessInstanceTest {
     @Test
     @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
     void testQueryByOneInvalidProcessInstanceIdNotIn() {
-      String processInstanceId = null;
-      assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-                .processInstanceIdNotIn(processInstanceId))
+      var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
+      assertThatThrownBy(() -> historicProcessInstanceQuery.processInstanceIdNotIn(null))
             .isInstanceOf(ProcessEngineException.class)
-            .hasMessageContaining("processInstanceIdNotIn contains null value");
+            .hasMessageContaining("processInstanceIdNotIn is null");
     }
 
     @Test

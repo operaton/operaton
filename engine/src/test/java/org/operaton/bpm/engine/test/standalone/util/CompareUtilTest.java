@@ -92,7 +92,7 @@ class CompareUtilTest {
   }
 
   @Test
-  public void testElementsAreContainedInArray() {
+  void testElementsAreContainedInArray() {
     // Positive case: all elements of subset are in superset
     List<String> subset = Arrays.asList("a", "b");
     String[] superset = {"a", "b", "c"};

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
@@ -81,9 +82,9 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Joram Barrez
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricProcessInstanceTest {
+class HistoricProcessInstanceTest {
 
-  public static final BpmnModelInstance FORK_JOIN_SUB_PROCESS_MODEL = ProcessModels.newModel()
+  static final BpmnModelInstance FORK_JOIN_SUB_PROCESS_MODEL = ProcessModels.newModel()
     .startEvent()
     .subProcess("subProcess")
     .embeddedSubProcess()
@@ -2588,7 +2589,7 @@ public class HistoricProcessInstanceTest {
 
     @Test
     @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-    public void shouldExcludeByProcessInstanceIdNotIn() {
+    void shouldExcludeByProcessInstanceIdNotIn() {
         // given
         String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
         String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
@@ -2614,7 +2615,7 @@ public class HistoricProcessInstanceTest {
 
     @Test
     @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-    public void testWithNonExistentProcessInstanceIdNotIn() {
+    void testWithNonExistentProcessInstanceIdNotIn() {
         // given
         String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
         String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
@@ -2637,20 +2638,17 @@ public class HistoricProcessInstanceTest {
 
     @Test
     @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-    public void testQueryByOneInvalidProcessInstanceIdNotIn() {
-        try {
-            // when
-            historyService.createHistoricProcessInstanceQuery()
-                    .processInstanceIdNotIn((String) null);
-            fail();
-        } catch(ProcessEngineException expected) {
-            // then Exception is expected
-        }
+    void testQueryByOneInvalidProcessInstanceIdNotIn() {
+      String processInstanceId = null;
+      assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(processInstanceId))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("processInstanceIdNotIn contains null value");
     }
 
     @Test
     @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-    public void testExcludingProcessInstanceAndProcessInstanceIdNotIn() {
+    void testExcludingProcessInstanceAndProcessInstanceIdNotIn() {
         // given
         String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
         runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
@@ -2662,12 +2660,12 @@ public class HistoricProcessInstanceTest {
 
         // then
         // making a query that has contradicting conditions should succeed
-        assertThat(count).isEqualTo(0L);
+        assertThat(count).isZero();
     }
 
     @Test
     @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-    public void testExcludingProcessInstanceIdsAndProcessInstanceIdNotIn() {
+    void testExcludingProcessInstanceIdsAndProcessInstanceIdNotIn() {
         // given
         String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
         String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
@@ -2680,7 +2678,7 @@ public class HistoricProcessInstanceTest {
 
         // then
         // making a query that has contradicting conditions should succeed
-        assertThat(count).isEqualTo(0L);
+        assertThat(count).isZero();
     }
 
 

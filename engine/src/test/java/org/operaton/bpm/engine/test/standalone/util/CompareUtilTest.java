@@ -90,4 +90,28 @@ class CompareUtilTest {
     assertThat(CompareUtil.elementIsContainedInList(null, nullList)).isFalse();
     assertThat(CompareUtil.elementIsContainedInList(element, nullList)).isFalse();
   }
+
+  @Test
+  void testElementsAreContainedInArray() {
+    // Positive case: all elements of subset are in superset
+    List<String> subset = Arrays.asList("a", "b");
+    String[] superset = {"a", "b", "c"};
+    assertThat(CompareUtil.elementsAreContainedInArray(subset, superset)).isTrue();
+
+    // Negative case: not all elements of subset are in superset
+    String[] notSuperset = {"a", "c"};
+    assertThat(CompareUtil.elementsAreContainedInArray(subset, notSuperset)).isFalse();
+
+    // Empty array: should return false
+    String[] emptyArray = {};
+    assertThat(CompareUtil.elementsAreContainedInArray(subset, emptyArray)).isFalse();
+
+    // Empty subset: should return false
+    List<String> emptyList = Arrays.asList();
+    assertThat(CompareUtil.elementsAreContainedInArray(emptyList, superset)).isFalse();
+
+    // Null parameters: should return false
+    assertThat(CompareUtil.elementsAreContainedInArray(null, superset)).isFalse();
+    assertThat(CompareUtil.elementsAreContainedInArray(subset, null)).isFalse();
+  }
 }

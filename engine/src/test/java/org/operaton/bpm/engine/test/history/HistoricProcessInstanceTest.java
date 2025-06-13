@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
@@ -32,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -80,9 +82,9 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Joram Barrez
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricProcessInstanceTest {
+class HistoricProcessInstanceTest {
 
-  public static final BpmnModelInstance FORK_JOIN_SUB_PROCESS_MODEL = ProcessModels.newModel()
+  static final BpmnModelInstance FORK_JOIN_SUB_PROCESS_MODEL = ProcessModels.newModel()
     .startEvent()
     .subProcess("subProcess")
     .embeddedSubProcess()
@@ -2584,6 +2586,101 @@ public class HistoricProcessInstanceTest {
         .extracting("processInstanceId")
         .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
   }
+
+    @Test
+    @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+    void shouldExcludeByProcessInstanceIdNotIn() {
+        // given
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // when
+        List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery().list();
+        List<HistoricProcessInstance> excludedFirst = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(processInstanceIdOne).list();
+        List<HistoricProcessInstance> excludedAll = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(processInstanceIdOne, processInstanceIdTwo).list();
+
+        // then
+        assertThat(processInstances)
+                .extracting("processInstanceId")
+                .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
+        assertThat(excludedFirst)
+                .extracting("processInstanceId")
+                .containsExactly(processInstanceIdTwo);
+        assertThat(excludedAll)
+                .extracting("processInstanceId")
+                .isEmpty();
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    void testWithNonExistentProcessInstanceIdNotIn() {
+        // given
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        String nonExistentProcessInstanceId = "ThisIsAFake";
+
+        // when
+        List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery().list();
+        List<HistoricProcessInstance> excludedNonExistent = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(nonExistentProcessInstanceId).list();
+
+        // then
+        assertThat(processInstances)
+                .extracting("processInstanceId")
+                .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
+        assertThat(excludedNonExistent)
+                .extracting("processInstanceId")
+                .containsExactly(processInstanceIdOne, processInstanceIdTwo);
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    void testQueryByOneInvalidProcessInstanceIdNotIn() {
+      String processInstanceId = null;
+      assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(processInstanceId))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("processInstanceIdNotIn contains null value");
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    void testExcludingProcessInstanceAndProcessInstanceIdNotIn() {
+        // given
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // when
+        long count = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceId(processInstanceIdOne)
+                .processInstanceIdNotIn(processInstanceIdOne).count();
+
+        // then
+        // making a query that has contradicting conditions should succeed
+        assertThat(count).isZero();
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    void testExcludingProcessInstanceIdsAndProcessInstanceIdNotIn() {
+        // given
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // when
+        long count = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIds(new HashSet<>(Arrays.asList(processInstanceIdOne, processInstanceIdTwo)))
+                .processInstanceIdNotIn(processInstanceIdOne, processInstanceIdTwo).count();
+
+        // then
+        // making a query that has contradicting conditions should succeed
+        assertThat(count).isZero();
+    }
+
 
   protected void deployment(String... resources) {
     testHelper.deploy(resources);

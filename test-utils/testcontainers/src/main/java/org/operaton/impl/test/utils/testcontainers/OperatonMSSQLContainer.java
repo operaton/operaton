@@ -23,7 +23,11 @@ import java.io.IOException;
 
 public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> extends MSSQLServerContainer<SELF> {
 
-    OperatonMSSQLContainer(DockerImageName dockerImageName) {
+    public OperatonMSSQLContainer(DockerImageName dockerImageName) {
+        super(dockerImageName);
+    }
+
+    public OperatonMSSQLContainer(String dockerImageName) {
         super(dockerImageName);
     }
 

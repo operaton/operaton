@@ -20,6 +20,7 @@ import java.util.Map;
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
+import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainer;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -34,10 +35,14 @@ public class ArquillianEventObserver {
   private static final String POSTGRES = "postgres";
   private static final String POSTGRES_VERSION = "13.2";
 
+  private static final String SQLSERVER = "sqlserver";
+  private static final String SQLSERVER_VERSION = "2022-latest";
+
   private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = new HashMap<>();
 
   static {
     AVAILABLE_DB_CONTAINERS.put(POSTGRES, new PostgreSQLContainer(POSTGRES + ":" + POSTGRES_VERSION));
+    AVAILABLE_DB_CONTAINERS.put(SQLSERVER, new OperatonMSSQLContainer("mcr.microsoft.com/mssql/server" + ":" + SQLSERVER_VERSION).acceptLicense());
   }
 
   private static JdbcDatabaseContainer dbContainer;

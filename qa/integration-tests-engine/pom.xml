@@ -49,6 +49,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>

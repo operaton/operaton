@@ -48,8 +48,8 @@
     <version.commonj>1.1.0</version.commonj>
 
     <!-- application servers -->
-    <version.wildfly>35.0.1.Final</version.wildfly>
-    <version.wildfly.core>27.0.1.Final</version.wildfly.core>
+    <version.wildfly>36.0.1.Final</version.wildfly>
+    <version.wildfly.core>28.0.1.Final</version.wildfly.core>
 
     <version.tomcat>10.1.39</version.tomcat>
 

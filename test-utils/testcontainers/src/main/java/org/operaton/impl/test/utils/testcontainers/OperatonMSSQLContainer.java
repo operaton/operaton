@@ -33,7 +33,7 @@ public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> ext
 
     /**
      * Hook, to set up a database with correct transaction isolation after starting the container and setting it as a default.
-     * Necessary, because the master DB of SQL server has some constraints and cannot be configured to enable 'READ_COMMITTED_SNAPSHOT'.
+     * Necessary, because the master DB of SQL server has some constraints and cannot be configured to enable {@code READ_COMMITTED_SNAPSHOT}.
      * Cannot be put into `OperatonMSSQLContainerProvider`, as this has no influence over the container after it was started
      *
      * @param containerResponse

@@ -43,7 +43,7 @@ public class CookieConfigurator {
       isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookie);
     }
 
-    String cookieNameInput = filterConfig.getInitParameter("cookieName");
+    String cookieNameInput = filterConfig.getServletContext().getSessionCookieConfig().getName();
     if (!isBlank(cookieNameInput)) {
       cookieName = cookieNameInput;
     }

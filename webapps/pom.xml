@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
@@ -9,29 +9,31 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
     <relativePath>../database</relativePath>
   </parent>
+  <groupId>org.operaton.bpm.webapp</groupId>
 
   <artifactId>operaton-webapp-root</artifactId>
-  <groupId>org.operaton.bpm.webapp</groupId>
   <packaging>pom</packaging>
   <name>Operaton - Webapp - Root</name>
 
+  <description>${project.name}</description>
+
+  <modules>
+    <module>assembly</module>
+  </modules>
+
   <properties>
 
-    <web.resources.override>src/main/runtime/default/webapp</web.resources.override>
+    <authorizationCheckRevokes>auto</authorizationCheckRevokes>
+    <exec.arg>-c</exec.arg>
 
-    <history.level>full</history.level>
+    <exec.shell>bash</exec.shell>
 
     <frontend.app.path>${project.build.directory}/webapp/</frontend.app.path>
 
     <frontend.development.cockpit.path>${frontend.app.path}</frontend.development.cockpit.path>
     <frontend.development.tasklist.path>${frontend.app.path}</frontend.development.tasklist.path>
 
-    <exec.shell>bash</exec.shell>
-    <exec.arg>-c</exec.arg>
-
-    <skip.frontend.build>false</skip.frontend.build>
-
-    <authorizationCheckRevokes>auto</authorizationCheckRevokes>
+    <history.level>full</history.level>
 
     <jdbcBatchProcessing>true</jdbcBatchProcessing>
 
@@ -41,7 +43,11 @@
     Artifact generation is skipped when it comes to maven central deployment -->
     <skip-zip-frontend-sources>false</skip-zip-frontend-sources>
 
+    <skip.frontend.build>false</skip.frontend.build>
+
     <surefire.forkCount>1</surefire.forkCount>
+
+    <web.resources.override>src/main/runtime/default/webapp</web.resources.override>
   </properties>
 
   <dependencyManagement>
@@ -50,19 +56,13 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <scope>provided</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.operaton.commons</groupId>
@@ -74,18 +74,22 @@
         </exclusion>
       </exclusions>
     </dependency>
-
-    <!-- tests -->
-
-    <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-testing</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -103,12 +107,6 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -132,14 +130,113 @@
     </dependency>
 
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- tests -->
+
+    <dependency>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-testing</artifactId>
       <scope>test</scope>
     </dependency>
 
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <!-- test plugins -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <systemPropertyVariables>
+              <myWorkingDir>${project.build.directory}</myWorkingDir>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.3.1</version>
+          <configuration>
+            <nonFilteredFileExtensions>
+              <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+              <nonFilteredFileExtension>png</nonFilteredFileExtension>
+            </nonFilteredFileExtensions>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <configuration>
+            <webResources>
+              <resource>
+                <filtering>true</filtering>
+                <directory>${web.resources.override}</directory>
+              </resource>
+              <resource>
+                <filtering>false</filtering>
+                <directory>target/webapp</directory>
+                <excludes>
+                  <exclude>**/*.html</exclude>
+                </excludes>
+              </resource>
+              <resource>
+                <filtering>true</filtering>
+                <directory>target/webapp</directory>
+                <!-- no filtering for favicon because linux destroys images through carriage return -->
+                <includes>
+                  <include>**/*.html</include>
+                </includes>
+              </resource>
+            </webResources>
+            <!-- exclude development resources (task forms etc.) -->
+            <packagingExcludes>develop/**</packagingExcludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>create-jar</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+              <phase>package</phase>
+              <configuration>
+                <classifier>classes</classifier>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>zip-frontend-sources</id>
+              <goals>
+                <goal>single</goal>
+              </goals>
+              <phase>process-resources</phase>
+              <configuration>
+                <skipAssembly>${skip-zip-frontend-sources}</skipAssembly>
+                <descriptors>
+                  <descriptor>assembly.xml</descriptor>
+                </descriptors>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
@@ -201,104 +298,7 @@
         </executions>
       </plugin>
     </plugins>
-    <pluginManagement>
-      <plugins>
-        <!-- test plugins -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <configuration>
-            <systemPropertyVariables>
-              <myWorkingDir>${project.build.directory}</myWorkingDir>
-            </systemPropertyVariables>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
-          <configuration>
-            <nonFilteredFileExtensions>
-              <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
-              <nonFilteredFileExtension>png</nonFilteredFileExtension>
-            </nonFilteredFileExtensions>
-          </configuration>
-		</plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <configuration>
-            <webResources>
-              <resource>
-                <filtering>true</filtering>
-                <directory>${web.resources.override}</directory>
-              </resource>
-              <resource>
-                <filtering>false</filtering>
-                <directory>target/webapp</directory>
-                <excludes>
-                  <exclude>**/*.html</exclude>
-                </excludes>
-              </resource>
-              <resource>
-                <filtering>true</filtering>
-                <directory>target/webapp</directory>
-								<!-- no filtering for favicon because linux destroys images through carriage return -->
-                <includes>
-                  <include>**/*.html</include>
-                </includes>
-              </resource>
-            </webResources>
-						<!-- exclude development resources (task forms etc.) -->
-            <packagingExcludes>
-              develop/**
-            </packagingExcludes>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>create-jar</id>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-              <phase>package</phase>
-              <configuration>
-                <classifier>classes</classifier>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>zip-frontend-sources</id>
-              <phase>process-resources</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
-              <configuration>
-                <skipAssembly>${skip-zip-frontend-sources}</skipAssembly>
-                <descriptors>
-                  <descriptor>assembly.xml</descriptor>
-                </descriptors>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
   </build>
-
-  <modules>
-    <module>assembly</module>
-  </modules>
 
   <profiles>
     <profile>
@@ -308,6 +308,4 @@
       </properties>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -9,6 +10,7 @@
 
   <artifactId>operaton-connect-connectors-all</artifactId>
   <name>Operaton - Connect - All connectors in one</name>
+  <description>${project.name}</description>
 
   <properties>
     <!-- We shade artifacts into the jar, so we need to generate 
@@ -37,10 +39,10 @@
         <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
-            <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <createDependencyReducedPom>true</createDependencyReducedPom>
               <createSourcesJar>true</createSourcesJar>
@@ -59,7 +61,7 @@
                 </relocation>
               </relocations>
               <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
               </transformers>
             </configuration>
           </execution>
@@ -83,11 +85,13 @@
         <configuration>
           <unpackBundle>false</unpackBundle>
           <instructions>
+            <?SORTPOM IGNORE?>
             <Import-Package>
               !connectjar*,
               javax.*;resolution:=optional,
               org.operaton.commons.logging
             </Import-Package>
+            <?SORTPOM RESUME?>
             <Bundle-ClassPath>.</Bundle-ClassPath>
             <Embed-Dependency>*;inline=true</Embed-Dependency>
             <Embed-Transitive>true</Embed-Transitive>
@@ -96,14 +100,13 @@
         <executions>
           <execution>
             <id>bundle-manifest</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>manifest</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

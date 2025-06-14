@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -10,8 +11,10 @@
 
   <groupId>org.operaton.commons</groupId>
   <artifactId>operaton-commons-bom</artifactId>
-  <name>Operaton - Commons - BOM</name>
   <packaging>pom</packaging>
+  <name>Operaton - Commons - BOM</name>
+
+  <description>${project.name}</description>
 
   <dependencyManagement>
     <dependencies>
@@ -19,12 +22,6 @@
       <dependency>
         <groupId>org.operaton.commons</groupId>
         <artifactId>operaton-commons-logging</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.operaton.commons</groupId>
-        <artifactId>operaton-commons-utils</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -40,9 +37,12 @@
         <version>${project.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.operaton.commons</groupId>
+        <artifactId>operaton-commons-utils</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
-
-
-  <description>${project.name}</description>
 </project>

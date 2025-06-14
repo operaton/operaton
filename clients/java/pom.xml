@@ -2,22 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <name>Operaton - Java External Task Client - Root</name>
-
-  <artifactId>operaton-external-task-client-root</artifactId>
-
-  <packaging>pom</packaging>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <relativePath>../../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../../parent</relativePath>
   </parent>
 
+  <artifactId>operaton-external-task-client-root</artifactId>
+
+  <packaging>pom</packaging>
+  <name>Operaton - Java External Task Client - Root</name>
+
+  <description>${project.name}</description>
+
   <modules>
-    <module>qa</module>
     <module>client</module>
+    <module>qa</module>
   </modules>
 
   <dependencyManagement>
@@ -33,8 +35,8 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -47,11 +49,9 @@
   </dependencies>
 
   <scm>
-    <url>http://github.com/operaton/operaton-external-task-client-java</url>
     <connection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</connection>
     <developerConnection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</developerConnection>
+    <url>http://github.com/operaton/operaton-external-task-client-java</url>
     <tag>HEAD</tag>
   </scm>
-
-  <description>${project.name}</description>
 </project>

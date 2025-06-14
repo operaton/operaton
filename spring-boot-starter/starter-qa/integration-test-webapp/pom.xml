@@ -9,10 +9,12 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
-  <packaging>pom</packaging>
-
   <artifactId>qa-webapp</artifactId>
+
+  <packaging>pom</packaging>
   <name>Operaton - Spring Boot Starter - QA - Webapps</name>
+
+  <description>${project.name}</description>
 
   <modules>
     <module>invoice-example</module>
@@ -55,6 +57,4 @@
     </profile>
 
   </profiles>
-
-  <description>${project.name}</description>
 </project>

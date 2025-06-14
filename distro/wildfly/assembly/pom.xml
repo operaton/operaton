@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -12,10 +13,12 @@
 
   <name>Operaton - Wildfly Assembly</name>
 
+  <?SORTPOM IGNORE?>
   <description>
     Assembles the Operaton and makes it ready for qa.
     The assembly is installed to maven later in the reactor, if the integration tests pass successfully
   </description>
+  <?SORTPOM RESUME?>
 
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
@@ -25,36 +28,10 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.wildfly</groupId>
-      <artifactId>wildfly-dist</artifactId>
-      <version>${version.wildfly}</version>
-      <type>tar.gz</type>
-    </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm.jakartaee</groupId>
-      <artifactId>operaton-ejb-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm.identity</groupId>
-      <artifactId>operaton-identity-ldap</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-cdi</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-spring</artifactId>
+      <groupId>com.fasterxml.uuid</groupId>
+      <artifactId>java-uuid-generator</artifactId>
     </dependency>
 
     <dependency>
@@ -64,10 +41,41 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest</artifactId>
-      <classifier>classes</classifier>
-      <version>${project.version}</version>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-datetime</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-dateutil</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-jsr223</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-templates</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-xml</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js-scriptengine</artifactId>
     </dependency>
 
     <dependency>
@@ -78,46 +86,41 @@
     </dependency>
 
     <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-jsr223</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-json</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-xml</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-templates</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-dateutil</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-datetime</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-cdi</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest</artifactId>
+      <version>${project.version}</version>
+      <classifier>classes</classifier>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-spring</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm.identity</groupId>
+      <artifactId>operaton-identity-ldap</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm.jakartaee</groupId>
+      <artifactId>operaton-ejb-client</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js-scriptengine</artifactId>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-dist</artifactId>
+      <version>${version.wildfly}</version>
+      <type>tar.gz</type>
     </dependency>
 
     <dependency>
@@ -139,10 +142,10 @@
         <executions>
           <execution>
             <id>assemble</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly.xml</descriptor>

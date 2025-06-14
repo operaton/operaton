@@ -1,15 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-  <parent>
-    <artifactId>operaton-engine-rest-root</artifactId>
-    <groupId>org.operaton.bpm</groupId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
-  </parent>
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-engine-rest-root</artifactId>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
+  </parent>
+
   <artifactId>docs</artifactId>
-  <name>Operaton - Engine - REST - Docs</name>
   <packaging>pom</packaging>
+  <name>Operaton - Engine - REST - Docs</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <skip-third-party-bom>true</skip-third-party-bom>
@@ -31,10 +34,10 @@
         <executions>
           <execution>
             <id>unpack</id>
-            <phase>generate-resources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
+            <phase>generate-resources</phase>
             <configuration>
               <artifactItems>
                 <artifactItem>
@@ -86,6 +89,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

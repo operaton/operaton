@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-integration-tests-webapps</artifactId>
-  <name>Operaton - QA Integration Tests - Webapps ITs</name>
 
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+
+  <artifactId>operaton-qa-integration-tests-webapps</artifactId>
+  <name>Operaton - QA Integration Tests - Webapps ITs</name>
+
+  <description>${project.name}</description>
 
   <!--
     Maven modules running these tests with the failsafe plugin should declare the following system property:
@@ -19,21 +22,7 @@
    -->
 
   <dependencies>
-    <!-- set shrinkwrap artifacts -->
-    <dependency>
-      <groupId>org.jboss.shrinkwrap.resolver</groupId>
-      <artifactId>shrinkwrap-resolver-depchain</artifactId>
-      <exclusions>
-        <exclusion>
-          <!-- conflicts with the version pulled in transitively via selenium-java  -->
-          <groupId>com.google.guava</groupId>
-          <artifactId>guava</artifactId>
-        </exclusion>
-      </exclusions>
-      <scope>provided</scope>
-      <type>pom</type>
-    </dependency>
-
+    <?SORTPOM IGNORE?>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
@@ -42,9 +31,23 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest</artifactId>
-      <type>jar</type>
       <classifier>classes</classifier>
+      <type>jar</type>
       <scope>provided</scope>
+    </dependency>
+    <?SORTPOM RESUME?>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey.contribs</groupId>
@@ -52,22 +55,14 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.glassfish.jersey.core</groupId>
-      <artifactId>jersey-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.jaxrs</groupId>
-      <artifactId>jackson-jaxrs-json-provider</artifactId>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -80,9 +75,23 @@
       <artifactId>arquillian-junit-container</artifactId>
       <scope>provided</scope>
     </dependency>
+    <!-- set shrinkwrap artifacts -->
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-depchain</artifactId>
+      <type>pom</type>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <!-- conflicts with the version pulled in transitively via selenium-java  -->
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -90,11 +99,5 @@
       <artifactId>selenium-java</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>jakarta.ws.rs</groupId>
-      <artifactId>jakarta.ws.rs-api</artifactId>
-    </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

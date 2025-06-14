@@ -12,13 +12,9 @@
   <artifactId>qa-webapp-invoice-example</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Webapps Invoice Example</name>
 
+  <description>${project.name}</description>
+
   <dependencies>
-    <dependency>
-      <groupId>org.operaton.bpm.springboot</groupId>
-      <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm.example</groupId>
@@ -27,7 +23,11 @@
       <classifier>classes</classifier>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm.springboot</groupId>
+      <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

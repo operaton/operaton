@@ -33,7 +33,6 @@ on:
         default: '["engine"]'
         options:
           - '["engine"]'
-          - '["engine-integration"]'
           - '["webapps"]'
           - '["engine", "webapps"]'
       distro:

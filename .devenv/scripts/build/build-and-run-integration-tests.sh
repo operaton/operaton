@@ -5,7 +5,7 @@ EXECUTE_TEST=true
 TEST_SUITE="engine"
 DATABASE="h2"
 DISTRO="tomcat"
-VALID_TEST_SUITES=("engine" "webapps" "engine-integration")
+VALID_TEST_SUITES=("engine" "webapps")
 VALID_DISTROS=("operaton" "tomcat" "wildfly")
 VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb", "oracle" "db2" "sqlserver")
 

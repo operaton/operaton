@@ -1,14 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-engine-rest</artifactId>
-  <name>Operaton - Engine - REST - Assembly</name>
-  <packaging>war</packaging>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+  <artifactId>operaton-engine-rest</artifactId>
+  <packaging>war</packaging>
+  <name>Operaton - Engine - REST - Assembly</name>
+  <description>${project.name}</description>
 
   <properties>
     <!-- generate a bom of dependencies for the license book.
@@ -24,6 +26,28 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest-core</artifactId>
       <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Jakarta API -->
+
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Resteasy -->
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-core</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- dependencies only used for assemblies should be scope provided -->
@@ -43,28 +67,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Jakarta API -->
-
-    <dependency>
-      <groupId>jakarta.ws.rs</groupId>
-      <artifactId>jakarta.ws.rs-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- Resteasy -->
-
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-core</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
   </dependencies>
 
   <build>
@@ -75,10 +77,10 @@
         <executions>
           <execution>
             <id>wildfly</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <archive>
                 <manifestEntries>
@@ -99,10 +101,10 @@
 
           <execution>
             <id>tomcat</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly-war-tomcat.xml</descriptor>
@@ -117,10 +119,10 @@
 
           <execution>
             <id>classes</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly-classes.xml</descriptor>
@@ -134,10 +136,10 @@
 
           <execution>
             <id>sources</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly-sources.xml</descriptor>
@@ -151,10 +153,10 @@
 
           <execution>
             <id>tests</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly-tests.xml</descriptor>
@@ -170,5 +172,4 @@
 
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

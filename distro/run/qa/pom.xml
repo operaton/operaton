@@ -9,16 +9,18 @@
   </parent>
 
   <artifactId>operaton-bpm-run-qa</artifactId>
-  <name>Operaton - Run - QA</name>
   <packaging>pom</packaging>
+  <name>Operaton - Run - QA</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <!-- default os -->
     <os.type>linux64</os.type>
+    <version.chromedriver>112.0.5615.49</version.chromedriver>
+    <version.httpcomponents>4.5.10</version.httpcomponents>
 
     <version.jersey-apache-client>1.15</version.jersey-apache-client>
-    <version.httpcomponents>4.5.10</version.httpcomponents>
-    <version.chromedriver>112.0.5615.49</version.chromedriver>
   </properties>
 
   <dependencyManagement>
@@ -47,8 +49,8 @@
       </activation>
       <modules>
         <module>example-plugin</module>
-        <module>runtime</module>
         <module>integration-tests</module>
+        <module>runtime</module>
       </modules>
     </profile>
     <profile>
@@ -60,6 +62,4 @@
       </modules>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

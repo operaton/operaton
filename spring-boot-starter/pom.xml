@@ -1,18 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <relativePath>../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../parent</relativePath>
   </parent>
 
   <groupId>org.operaton.bpm.springboot.project</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
-  <name>Operaton - Spring Boot Starter - Root POM</name>
 
   <packaging>pom</packaging>
+  <name>Operaton - Spring Boot Starter - Root POM</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <surefire.forkCount>1</surefire.forkCount>
@@ -24,12 +27,46 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
+  <build>
+    <defaultGoal>clean install</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifest>
+                <addDefaultImplementationEntries/>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+        <!-- set version for spring-boot-maven-plugin because we use the
+          spring-boot-parent only in dependencyManagement section, not as parent. -->
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${version.spring-boot}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <configuration>
+            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+            <trimStackTrace>false</trimStackTrace>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
   <profiles>
     <profile>
       <id>distro</id>
@@ -38,14 +75,14 @@
       </activation>
       <modules>
         <module>starter</module>
+        <module>starter-client/spring</module>
+        <module>starter-client/spring-boot</module>
+        <module>starter-qa</module>
         <module>starter-rest</module>
         <module>starter-security</module>
         <module>starter-test</module>
-        <module>starter-client/spring</module>
-        <module>starter-client/spring-boot</module>
-        <module>starter-webapp-core</module>
         <module>starter-webapp</module>
-        <module>starter-qa</module>
+        <module>starter-webapp-core</module>
       </modules>
     </profile>
     <profile>
@@ -54,21 +91,21 @@
           It can be removed if the distro job is merged with the assembly and
           distro-ce is not used for building the spring boot starter -->
       <modules>
-        <module>starter-webapp-core</module>
-        <module>starter-webapp</module>
         <module>starter-qa</module>
+        <module>starter-webapp</module>
+        <module>starter-webapp-core</module>
       </modules>
     </profile>
     <profile>
       <id>integration-test-spring-boot-starter</id>
       <modules>
+        <module>starter</module>
+        <module>starter-client/spring-boot</module>
         <!-- All modules that contain *IT.java test classes need to be listed here -->
 
         <module>starter-qa</module>
-        <module>starter</module>
         <module>starter-rest</module>
         <module>starter-security</module>
-        <module>starter-client/spring-boot</module>
         <module>starter-webapp-core</module>
       </modules>
       <build>
@@ -96,40 +133,4 @@
       </build>
     </profile>
   </profiles>
-
-  <build>
-    <defaultGoal>clean install</defaultGoal>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <configuration>
-            <archive>
-              <manifest>
-                <addDefaultImplementationEntries />
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
-        <!-- set version for spring-boot-maven-plugin because we use the
-          spring-boot-parent only in dependencyManagement section, not as parent. -->
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>${version.spring-boot}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-failsafe-plugin</artifactId>
-          <configuration>
-            <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <trimStackTrace>false</trimStackTrace>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-
-  <description>${project.name}</description>
 </project>

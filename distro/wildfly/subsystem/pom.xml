@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -12,12 +13,14 @@
 
   <name>Operaton - Wildfly Subsystem</name>
 
+  <description>${project.name}</description>
+
   <properties>
     <surefire.memArgs>-Xmx512m</surefire.memArgs>
   </properties>
 
   <dependencies>
-
+    <?SORTPOM IGNORE?>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
@@ -28,6 +31,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <?SORTPOM RESUME?>
 
     <dependency>
       <groupId>com.fasterxml.uuid</groupId>
@@ -42,6 +46,13 @@
 
     <dependency>
       <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-connector</artifactId>
+      <version>${version.wildfly}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.wildfly</groupId>
       <artifactId>wildfly-ejb3</artifactId>
       <version>${version.wildfly}</version>
       <scope>provided</scope>
@@ -52,14 +63,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-    
-    <dependency>
-      <groupId>org.wildfly</groupId>
-      <artifactId>wildfly-connector</artifactId>
-      <version>${version.wildfly}</version>
-      <scope>provided</scope>
-    </dependency>
-    
+
     <dependency>
       <groupId>org.wildfly</groupId>
       <artifactId>wildfly-web-common</artifactId>
@@ -74,22 +78,22 @@
       </exclusions>
     </dependency>
 
-    <dependency>
-      <groupId>org.wildfly.core</groupId>
-      <artifactId>wildfly-subsystem-test-framework</artifactId>
-      <version>${version.wildfly.core}</version>
-      <scope>test</scope>
-    </dependency>
-
     <!-- test dependencies -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.wildfly.core</groupId>
+      <artifactId>wildfly-subsystem-test-framework</artifactId>
+      <version>${version.wildfly.core}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
-  <build>  
+  <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -111,6 +115,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

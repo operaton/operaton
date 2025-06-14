@@ -12,11 +12,18 @@
   <artifactId>qa-plugins-spin-dataformat-all</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Plugins - Spin All</name>
 
+  <description>${project.name}</description>
+
   <properties>
     <install.skip>true</install.skip>
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm.springboot.project</groupId>
@@ -35,13 +42,8 @@
       <artifactId>operaton-spin-dataformat-all</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
-    </dependency>
-
   </dependencies>
-  
+
   <profiles>
     <profile>
       <id>integration-test-spring-boot-starter</id>
@@ -72,6 +74,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

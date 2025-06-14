@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-
-  <modelVersion>4.0.0</modelVersion>
   <groupId>org.operaton.bpm.webapp</groupId>
-  <name>Operaton - Webapp - WildFly</name>
   <artifactId>operaton-webapp-wildfly</artifactId>
   <packaging>war</packaging>
+  <name>Operaton - Webapp - WildFly</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
@@ -47,6 +49,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

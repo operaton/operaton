@@ -1,45 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-qa-performance-tests-engine</artifactId>
-  <packaging>jar</packaging>
-  <name>Operaton - QA Performance Tests Engine</name>
 
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+  <artifactId>operaton-qa-performance-tests-engine</artifactId>
+  <packaging>jar</packaging>
+  <name>Operaton - QA Performance Tests Engine</name>
+
+  <description>${project.name}</description>
 
   <properties>
-    <test.includes />
-    <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
-    <test.excludes>$.</test.excludes>
     <historyLevel>full</historyLevel>
     <jdbcBatchProcessing>true</jdbcBatchProcessing>
+    <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
+    <test.excludes>$.</test.excludes>
+    <test.includes/>
   </properties>
 
   <dependencies>
+
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
+
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <classifier>junit5</classifier>
+      <groupId>com.fasterxml.uuid</groupId>
+      <artifactId>java-uuid-generator</artifactId>
     </dependency>
 
     <dependency>
@@ -53,15 +48,23 @@
       <artifactId>tomcat-juli</artifactId>
       <version>7.0.33</version>
     </dependency>
-
     <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>compile</scope>
     </dependency>
-
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
     </dependency>
 
   </dependencies>
@@ -88,10 +91,10 @@
             <artifactId>maven-shade-plugin</artifactId>
             <executions>
               <execution>
-                <phase>package</phase>
                 <goals>
                   <goal>shade</goal>
                 </goals>
+                <phase>package</phase>
               </execution>
             </executions>
           </plugin>
@@ -104,20 +107,20 @@
       <id>benchmark</id>
 
       <properties>
+        <numberOfRuns>100</numberOfRuns>
         <!-- default values for properties -->
         <numberOfThreads>2</numberOfThreads>
-        <numberOfRuns>100</numberOfRuns>
-        <testWatchers />
-        <processEnginePlugins />
-        <watchActivities />
+        <processEnginePlugins/>
         <test.excludes>query</test.excludes>
+        <testWatchers/>
+        <watchActivities/>
       </properties>
 
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources</directory>
           </testResource>
         </testResources>
 
@@ -129,7 +132,7 @@
               <runOrder>alphabetical</runOrder>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
               <includes>
-                 <include>%regex[.*(${test.includes}).*Test.*.class]</include>
+                <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
               <excludes>
                 <exclude>**/*TestCase.java</exclude>
@@ -143,19 +146,19 @@
             <executions>
               <execution>
                 <id>database-test-drop-schema</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <tasks>
-                    <echo message="Generating reports" />
-                    <copy todir="${basedir}/target/reports/images" flatten="true">
+                    <echo message="Generating reports"/>
+                    <copy flatten="true" todir="${basedir}/target/reports/images">
                       <fileset dir="${basedir}/src/test/resources">
-                        <include name="**/*.png" />
+                        <include name="**/*.png"/>
                       </fileset>
                     </copy>
-                    <java classname="org.operaton.bpm.qa.performance.engine.benchmark.BenchmarkReport" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.benchmark.BenchmarkReport" classpathref="maven.test.classpath"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -168,26 +171,25 @@
 
     </profile>
 
-
     <!-- the benchmark performs multiple runs of the same process on multiple threads. -->
     <profile>
       <id>single-run</id>
 
       <properties>
+        <numberOfRuns>1</numberOfRuns>
         <!-- default values for properties -->
         <numberOfThreads>1</numberOfThreads>
-        <numberOfRuns>1</numberOfRuns>
-        <testWatchers />
-        <processEnginePlugins />
-        <watchActivities />
+        <processEnginePlugins/>
         <test.excludes>query</test.excludes>
+        <testWatchers/>
+        <watchActivities/>
       </properties>
 
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources</directory>
           </testResource>
         </testResources>
 
@@ -198,7 +200,7 @@
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
               <includes>
-                 <include>%regex[.*(${test.includes}).*Test.*.class]</include>
+                <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
               <excludes>
                 <exclude>**/*TestCase.java</exclude>
@@ -212,19 +214,19 @@
             <executions>
               <execution>
                 <id>database-test-drop-schema</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <tasks>
-                    <echo message="Generating reports" />
-                    <copy todir="${basedir}/target/reports/images" flatten="true">
+                    <echo message="Generating reports"/>
+                    <copy flatten="true" todir="${basedir}/target/reports/images">
                       <fileset dir="${basedir}/src/test/resources">
-                        <include name="**/*.png" />
+                        <include name="**/*.png"/>
                       </fileset>
                     </copy>
-                    <java classname="org.operaton.bpm.qa.performance.engine.benchmark.BenchmarkReport" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.benchmark.BenchmarkReport" classpathref="maven.test.classpath"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -242,19 +244,19 @@
       <id>sql-statementlog</id>
 
       <properties>
-        <numberOfThreads>1</numberOfThreads>
         <numberOfRuns>1</numberOfRuns>
-        <testWatchers>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogPerfTestWatcher</testWatchers>
+        <numberOfThreads>1</numberOfThreads>
         <processEnginePlugins>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogProcessEnginePlugin</processEnginePlugins>
-        <watchActivities />
         <test.excludes>query</test.excludes>
+        <testWatchers>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogPerfTestWatcher</testWatchers>
+        <watchActivities/>
       </properties>
 
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources</directory>
           </testResource>
         </testResources>
 
@@ -265,7 +267,7 @@
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
               <includes>
-                 <include>%regex[.*(${test.includes}).*Test.*.class]</include>
+                <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
               <excludes>
                 <exclude>**/*TestCase.java</exclude>
@@ -278,19 +280,19 @@
             <executions>
               <execution>
                 <id>database-test-drop-schema</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <tasks>
-                    <echo message="Generating reports in ${basedir}/target/reports/" />
-                    <copy todir="${basedir}/target/reports/images" flatten="true">
+                    <echo message="Generating reports in ${basedir}/target/reports/"/>
+                    <copy flatten="true" todir="${basedir}/target/reports/images">
                       <fileset dir="${basedir}/src/test/resources">
-                        <include name="**/*.png" />
+                        <include name="**/*.png"/>
                       </fileset>
                     </copy>
-                    <java classname="org.operaton.bpm.qa.performance.engine.sqlstatementlog.SqlStatementLogReport" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.sqlstatementlog.SqlStatementLogReport" classpathref="maven.test.classpath"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -306,19 +308,19 @@
       <id>generate-load</id>
 
       <properties>
-        <loadGenerator.numberOfIterations>10000</loadGenerator.numberOfIterations>
         <loadGenerator.colorOutput>false</loadGenerator.colorOutput>
-        <testWatchers />
-        <processEnginePlugins />
-        <watchActivities />
+        <loadGenerator.numberOfIterations>10000</loadGenerator.numberOfIterations>
+        <processEnginePlugins/>
         <skip.tests>true</skip.tests>
+        <testWatchers/>
+        <watchActivities/>
       </properties>
 
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources</directory>
           </testResource>
         </testResources>
 
@@ -328,14 +330,14 @@
             <executions>
               <execution>
                 <id>generate load</id>
-                <phase>process-test-classes</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>process-test-classes</phase>
                 <configuration>
                   <tasks>
-                    <echo message="Generating load" />
-                    <java classname="org.operaton.bpm.qa.performance.engine.query.DefaultLoadGenerator" classpathref="maven.test.classpath" failonerror="true" />
+                    <echo message="Generating load"/>
+                    <java classname="org.operaton.bpm.qa.performance.engine.query.DefaultLoadGenerator" classpathref="maven.test.classpath" failonerror="true"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -352,25 +354,24 @@
       </build>
     </profile>
 
-
     <profile>
       <id>query-perf-test</id>
 
       <properties>
-        <numberOfThreads>1</numberOfThreads>
         <numberOfRuns>1</numberOfRuns>
-        <testWatchers>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogPerfTestWatcher</testWatchers>
+        <numberOfThreads>1</numberOfThreads>
         <processEnginePlugins>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogProcessEnginePlugin</processEnginePlugins>
-        <watchActivities />
-        <test.includes>query</test.includes>
         <skip.tests>false</skip.tests>
+        <test.includes>query</test.includes>
+        <testWatchers>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogPerfTestWatcher</testWatchers>
+        <watchActivities/>
       </properties>
 
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources</directory>
           </testResource>
         </testResources>
 
@@ -381,7 +382,7 @@
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
               <includes>
-                 <include>%regex[.*(${test.includes}).*Test.*.class]</include>
+                <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
               <excludes>
                 <exclude>**/*TestCase.java</exclude>
@@ -394,19 +395,19 @@
             <executions>
               <execution>
                 <id>database-test-drop-schema</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <tasks>
-                    <echo message="Generating reports in ${basedir}/target/reports/" />
-                    <copy todir="${basedir}/target/reports/images" flatten="true">
+                    <echo message="Generating reports in ${basedir}/target/reports/"/>
+                    <copy flatten="true" todir="${basedir}/target/reports/images">
                       <fileset dir="${basedir}/src/test/resources">
-                        <include name="**/*.png" />
+                        <include name="**/*.png"/>
                       </fileset>
                     </copy>
-                    <java classname="org.operaton.bpm.qa.performance.engine.sqlstatementlog.SqlStatementLogReport" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.sqlstatementlog.SqlStatementLogReport" classpathref="maven.test.classpath"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -423,19 +424,19 @@
       <id>activity-count</id>
 
       <properties>
+        <numberOfRuns>100</numberOfRuns>
         <!-- default values for properties -->
         <numberOfThreads>1</numberOfThreads>
-        <numberOfRuns>100</numberOfRuns>
-        <testWatchers />
-        <processEnginePlugins />
-        <watchActivities />
+        <processEnginePlugins/>
+        <testWatchers/>
+        <watchActivities/>
       </properties>
 
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/resources</directory>
             <filtering>true</filtering>
+            <directory>src/test/resources</directory>
           </testResource>
         </testResources>
 
@@ -446,7 +447,7 @@
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
               <includes>
-                 <include>%regex[.*(${test.includes}).*Test.*.class]</include>
+                <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
               <excludes>
                 <exclude>**/*TestCase.java</exclude>
@@ -460,19 +461,19 @@
             <executions>
               <execution>
                 <id>generate-report</id>
-                <phase>prepare-package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <tasks>
-                    <echo message="Generating reports" />
-                    <copy todir="${basedir}/target/reports/images" flatten="true">
+                    <echo message="Generating reports"/>
+                    <copy flatten="true" todir="${basedir}/target/reports/images">
                       <fileset dir="${basedir}/src/test/resources">
-                        <include name="**/*.png" />
+                        <include name="**/*.png"/>
                       </fileset>
                     </copy>
-                    <java classname="org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityCountReporter" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityCountReporter" classpathref="maven.test.classpath"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -489,15 +490,14 @@
     <profile>
       <id>h2</id>
       <properties>
-        <database.type>h2</database.type>
-        <database.username>sa</database.username>
-        <database.password>sa</database.password>
-        <database.driver>org.h2.Driver</database.driver>
         <database.datasource.class>org.h2.jdbcx.JdbcDataSource</database.datasource.class>
+        <database.driver>org.h2.Driver</database.driver>
+        <database.password>sa</database.password>
+        <database.type>h2</database.type>
         <database.url>jdbc:h2:mem:performance-test</database.url>
+        <database.username>sa</database.username>
       </properties>
     </profile>
-
 
     <profile>
       <id>history-level-none</id>
@@ -522,20 +522,17 @@
 
     <!-- test profiles -->
     <profile>
-     <id>testBpmn</id>
-     <properties>
-      <test.includes>bpmn</test.includes>
-     </properties>
+      <id>testBpmn</id>
+      <properties>
+        <test.includes>bpmn</test.includes>
+      </properties>
     </profile>
     <profile>
-     <id>testDmn</id>
-     <properties>
-      <test.includes>dmn</test.includes>
-     </properties>
+      <id>testDmn</id>
+      <properties>
+        <test.includes>dmn</test.includes>
+      </properties>
     </profile>
 
   </profiles>
-
-
-  <description>${project.name}</description>
 </project>

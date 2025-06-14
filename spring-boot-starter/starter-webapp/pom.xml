@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -11,6 +12,8 @@
   <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
   <name>Operaton - Spring Boot Starter - Webapps</name>
 
+  <description>${project.name}</description>
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -19,15 +22,15 @@
     </dependency>
 
     <dependency>
-      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
-      <groupId>${project.groupId}</groupId>
-      <version>${project.version}</version>
-      <scope>test</scope>
+      <groupId>org.operaton.bpm.webapp</groupId>
+      <artifactId>operaton-webapp-webjar</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp-webjar</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
@@ -35,6 +38,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

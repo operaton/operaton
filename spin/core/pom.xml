@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -9,6 +10,7 @@
 
   <artifactId>operaton-spin-core</artifactId>
   <name>Operaton - Spin - Core</name>
+  <description>${project.name}</description>
 
   <dependencies>
 
@@ -23,8 +25,38 @@
     </dependency>
 
     <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>net.javacrumbs.json-unit</groupId>
+      <artifactId>json-unit-fluent</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js-scriptengine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby-complete</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -40,89 +72,7 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.jruby</groupId>
-      <artifactId>jruby-complete</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js</artifactId>
-      <scope>test</scope>
-    </dependency>
-    
-    <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js-scriptengine</artifactId>
-      <scope>test</scope>
-    </dependency>
-    
-
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>net.javacrumbs.json-unit</groupId>
-      <artifactId>json-unit-fluent</artifactId>
-      <scope>test</scope>
-    </dependency>
-
   </dependencies>
-
-  <profiles>
-    <!-- check for api differences between latest minor release -->
-    <profile>
-      <id>check-api-compatibility</id>
-      <activation>
-        <jdk>(,)</jdk>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>clirr-maven-plugin</artifactId>
-            <configuration>
-              <comparisonVersion>${spin.version.old}</comparisonVersion>
-              <logResults>true</logResults>
-              <excludes>
-                <exclude>org/operaton/spin/impl/**</exclude>
-              </excludes>
-            </configuration>
-            <executions>
-              <execution>
-                <id>all</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>check-no-fork</goal>
-                </goals>
-                <configuration>
-                  <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
-                  <failOnWarning>false</failOnWarning>
-                  <failOnError>false</failOnError>
-                </configuration>
-              </execution>
-              <execution>
-                <id>restrictive</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>check-no-fork</goal>
-                </goals>
-                <configuration>
-                  <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
-                  <failOnWarning>true</failOnWarning>
-                  <ignoredDifferencesFile>../.clirr-jenkins-ignore.xml</ignoredDifferencesFile>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 
   <build>
     <plugins>
@@ -130,20 +80,18 @@
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <configuration>
-         <instructions>
-          <Import-Package>
-            org.junit*;resolution:=optional,
-            *
-          </Import-Package>
-         </instructions>
+          <instructions>
+            <Import-Package>org.junit*;resolution:=optional,
+            *</Import-Package>
+          </instructions>
         </configuration>
         <executions>
           <execution>
             <id>bundle-manifest</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>manifest</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
@@ -171,5 +119,55 @@
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
+
+  <profiles>
+    <!-- check for api differences between latest minor release -->
+    <profile>
+      <id>check-api-compatibility</id>
+      <activation>
+        <jdk>(,)</jdk>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>clirr-maven-plugin</artifactId>
+            <configuration>
+              <comparisonVersion>${spin.version.old}</comparisonVersion>
+              <logResults>true</logResults>
+              <excludes>
+                <exclude>org/operaton/spin/impl/**</exclude>
+              </excludes>
+            </configuration>
+            <executions>
+              <execution>
+                <id>all</id>
+                <goals>
+                  <goal>check-no-fork</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
+                  <failOnWarning>false</failOnWarning>
+                  <failOnError>false</failOnError>
+                </configuration>
+              </execution>
+              <execution>
+                <id>restrictive</id>
+                <goals>
+                  <goal>check-no-fork</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
+                  <failOnWarning>true</failOnWarning>
+                  <ignoredDifferencesFile>../.clirr-jenkins-ignore.xml</ignoredDifferencesFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

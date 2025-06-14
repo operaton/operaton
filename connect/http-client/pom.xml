@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>operaton-connect-root</artifactId>
     <groupId>org.operaton.connect</groupId>
+    <artifactId>operaton-connect-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
 
   <artifactId>operaton-connect-http-client</artifactId>
   <name>Operaton - Connect - HTTP Client</name>
 
+  <description>${project.name}</description>
+
   <dependencies>
+    <!-- commons-codec is a transitive dependency of httpclient;
+      we override its version here in order to update the default commons-codec
+      version which has known vulnerabilities, see https://jira.camunda.com/browse/CAM-12774 -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.operaton.connect</groupId>
@@ -19,15 +33,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-    </dependency>
-    <!-- commons-codec is a transitive dependency of httpclient;
-      we override its version here in order to update the default commons-codec
-      version which has known vulnerabilities, see https://jira.camunda.com/browse/CAM-12774 -->
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -43,20 +51,14 @@
     </dependency>
 
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.wiremock</groupId>
       <artifactId>wiremock-standalone</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -70,10 +72,10 @@
         <executions>
           <execution>
             <id>bundle-manifest</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>manifest</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
@@ -102,10 +104,10 @@
             <executions>
               <execution>
                 <id>all</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>check-no-fork</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
                   <failOnWarning>false</failOnWarning>
@@ -114,10 +116,10 @@
               </execution>
               <execution>
                 <id>restrictive</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>check-no-fork</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
                   <failOnWarning>true</failOnWarning>
@@ -130,6 +132,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

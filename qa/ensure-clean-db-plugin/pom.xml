@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.operaton.bpm.qa</groupId>
+    <artifactId>operaton-qa</artifactId>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
+  </parent>
   <artifactId>operaton-qa-ensure-clean-db</artifactId>
   <packaging>jar</packaging>
   <name>Operaton - QA - Ensure clean DB plugin</name>
-  
-  <parent>
-    <artifactId>operaton-qa</artifactId>
-    <groupId>org.operaton.bpm.qa</groupId>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
-  </parent>
+
+  <description>${project.name}</description>
 
   <dependencies>
     <dependency>
@@ -17,6 +20,4 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

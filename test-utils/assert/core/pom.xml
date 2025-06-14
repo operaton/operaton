@@ -1,15 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-bpm-assert</artifactId>
-  <packaging>jar</packaging>
-
-  <name>Operaton - Assert</name>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-bpm-assert-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+  <artifactId>operaton-bpm-assert</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Operaton - Assert</name>
+
+  <description>${project.name}</description>
 
   <dependencyManagement>
     <dependencies>
@@ -17,8 +20,8 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -38,6 +41,33 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>com.fasterxml.uuid</groupId>
+      <artifactId>java-uuid-generator</artifactId>
+      <version>${version.uuid-generator}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${version.mockito}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit5</classifier>
@@ -53,34 +83,5 @@
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <version>${version.mockito}</version>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
-      <version>${version.uuid-generator}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

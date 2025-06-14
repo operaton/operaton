@@ -36,7 +36,7 @@ public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> ext
      * Necessary, because the master DB of SQL server has some constraints and cannot be configured to enable {@code READ_COMMITTED_SNAPSHOT}.
      * Cannot be put into `OperatonMSSQLContainerProvider`, as this has no influence over the container after it was started
      *
-     * @param containerResponse
+     * @param containerResponse Metadata of the started container
      */
     @Override
     protected void containerIsStarted(InspectContainerResponse containerResponse) {

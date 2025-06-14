@@ -16,20 +16,23 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.csrf;
 
+import jakarta.servlet.ServletException;
+import jakarta.ws.rs.core.Response;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
-import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockServletContext;
 
-import jakarta.servlet.ServletException;
-import jakarta.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.webapp.impl.security.filter.util.CsrfConstants.CSRF_PATH_FIELD_NAME;
 import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.SET_COOKIE_HEADER_NAME;
+import static org.operaton.bpm.webapp.impl.security.filter.util.CsrfConstants.CSRF_PATH_FIELD_NAME;
 
 public class CsrfPreventionFilterAppPathTest extends CsrfPreventionFilterTest {
 
@@ -37,12 +40,11 @@ public class CsrfPreventionFilterAppPathTest extends CsrfPreventionFilterTest {
 
   protected MockServletContext mockServletContext;
 
-  public CsrfPreventionFilterAppPathTest(String nonModifyingRequestUrl,
-                                         String modifyingRequestUrl,
-                                         boolean isModifyingFetchRequest) {
-    super(nonModifyingRequestUrl, modifyingRequestUrl, isModifyingFetchRequest);
+  public static Collection<Object[]> getRequestUrls() {
+    return CsrfPreventionFilterTest.getRequestUrls();
   }
 
+    @BeforeEach
   @Override
   public void setup() throws Exception {
     mockServletContext = new MockServletContext();
@@ -50,8 +52,9 @@ public class CsrfPreventionFilterAppPathTest extends CsrfPreventionFilterTest {
     super.setup();
   }
 
-  @Test
-  public void shouldCheckNonModifyingRequestTokenGenerationWithRootContextPathAndEmptyAppPath()
+  @MethodSource("getRequestUrls")
+  @ParameterizedTest
+  void shouldCheckNonModifyingRequestTokenGenerationWithRootContextPathAndEmptyAppPath()
     throws IOException, ServletException {
     // given
     MockServletContext mockServletContext = new MockServletContext();

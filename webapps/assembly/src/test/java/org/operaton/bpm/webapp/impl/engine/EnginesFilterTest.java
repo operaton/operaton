@@ -16,30 +16,30 @@
  */
 package org.operaton.bpm.webapp.impl.engine;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.cockpit.Cockpit;
+import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
+import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
 
 import java.util.Collections;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.operaton.bpm.cockpit.Cockpit;
-import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
-import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
-import org.junit.After;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  *
  * @author nico.rehwaldt
  */
-public class EnginesFilterTest {
+class EnginesFilterTest {
 
   @Test
-  public void testHTML_FILE_PATTERN() {
+  void htmlFilePattern() {
 
     // given
     Pattern pattern = ProcessEnginesFilter.APP_PREFIX_PATTERN;
@@ -85,7 +85,7 @@ public class EnginesFilterTest {
   }
 
   @Test
-  public void testGetDefaultProcessEngine() {
+  void getDefaultProcessEngine() {
 
     // see https://app.camunda.com/jira/browse/CAM-2126
 
@@ -136,15 +136,15 @@ public class EnginesFilterTest {
 
     try {
       defaultEngineName = processEnginesFilter.getDefaultEngineName();
-      fail();
+      fail("");
     } catch(IllegalWebAppConfigurationException e) {
       // expected
     }
 
   }
 
-  @After
-  public void cleanup() {
+  @AfterEach
+  void cleanup() {
     Cockpit.setCockpitRuntimeDelegate(null);
   }
 }

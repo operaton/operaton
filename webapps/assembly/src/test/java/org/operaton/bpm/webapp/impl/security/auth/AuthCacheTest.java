@@ -23,9 +23,9 @@ import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
 import org.operaton.bpm.webapp.impl.security.SecurityActions;
 import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
@@ -51,7 +51,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
-public class AuthCacheTest {
+class AuthCacheTest {
 
   protected MockedStatic<AuthenticationUtil> mockedAuthenticationUtil;
 
@@ -59,13 +59,13 @@ public class AuthCacheTest {
 
   protected MockedStatic<ProcessEngineUtil> mockedProcessEngineUtil;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     ClockUtil.setCurrentTime(ClockUtil.getCurrentTime());
   }
 
-  @After
-  public void reset() {
+  @AfterEach
+  void reset() {
     Authentications.clearCurrent();
     ClockUtil.reset();
     if (mockedAuthenticationUtil != null) {
@@ -80,7 +80,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenTimeToLiveIsNegative() {
+  void shouldThrowExceptionWhenTimeToLiveIsNegative() {
     AuthenticationFilter authenticationFilter = new AuthenticationFilter();
     MockFilterConfig config = new MockFilterConfig();
     config.addInitParameter(AuthenticationFilter.AUTH_CACHE_TTL_INIT_PARAM_NAME, "-1000");
@@ -90,7 +90,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldThrowExceptionSinceTimeToLiveIsNotALong() {
+  void shouldThrowExceptionSinceTimeToLiveIsNotALong() {
     AuthenticationFilter authenticationFilter = new AuthenticationFilter();
     MockFilterConfig config = new MockFilterConfig();
     config.addInitParameter(AuthenticationFilter.AUTH_CACHE_TTL_INIT_PARAM_NAME, "6.7");
@@ -100,7 +100,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldTrimTimeToLive() throws ServletException {
+  void shouldTrimTimeToLive() throws ServletException {
     AuthenticationFilter authenticationFilter = new AuthenticationFilter();
     MockFilterConfig config = new MockFilterConfig();
     config.addInitParameter(AuthenticationFilter.AUTH_CACHE_TTL_INIT_PARAM_NAME, " 123   ");
@@ -109,7 +109,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldRevalidateWhenValidationTimeDue() throws ServletException, IOException {
+  void shouldRevalidateWhenValidationTimeDue() throws ServletException, IOException {
     // given
     setupEngineMock();
     AuthenticationFilter filter = setupFilter(1000 * 60 * 5);
@@ -140,7 +140,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldRevalidateWhenTTLZero() throws ServletException, IOException {
+  void shouldRevalidateWhenTTLZero() throws ServletException, IOException {
     // given
     setupEngineMock();
     AuthenticationFilter filter = setupFilter(0);
@@ -169,7 +169,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldNotRevalidateWhenValidationTimeNotDue() throws ServletException, IOException {
+  void shouldNotRevalidateWhenValidationTimeNotDue() throws ServletException, IOException {
     // given
     setupEngineMock();
     AuthenticationFilter filter = setupFilter(1000 * 60 * 5);
@@ -199,7 +199,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldNotRevalidateWhenDisabled() throws ServletException, IOException {
+  void shouldNotRevalidateWhenDisabled() throws ServletException, IOException {
     setupEngineMock();
     Authentications authentications = setupAuth();
     UserAuthentication initialAuthentication = getAuthByEngine(authentications, "engine1");
@@ -218,7 +218,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldSetValidationTimeInitially() throws ServletException, IOException {
+  void shouldSetValidationTimeInitially() throws ServletException, IOException {
     // given
     setupEngineMock();
     Authentications authentications = setupAuth();
@@ -240,7 +240,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldHaveValidationTimeInitially() throws ServletException, IOException {
+  void shouldHaveValidationTimeInitially() throws ServletException, IOException {
     // given
     setupEngineMock();
     Authentications authentications = setupAuth();
@@ -263,7 +263,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldInvalidateSessionDueToDeletedUser() throws ServletException, IOException {
+  void shouldInvalidateSessionDueToDeletedUser() throws ServletException, IOException {
     // given
     ProcessEngine engineMock = setupEngineMock()[0];
     Authentications authentications = setupAuth();
@@ -301,7 +301,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldRevalidateWhenValidationTimeDueWithMultipleAuths() throws ServletException, IOException {
+  void shouldRevalidateWhenValidationTimeDueWithMultipleAuths() throws ServletException, IOException {
     // given
     setupEngineMock("engine1", "engine2", "engine3");
     AuthenticationFilter filter = setupFilter(1000 * 60 * 5);
@@ -360,7 +360,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldInvalidateSessionDueToDeletedUserWithMultipleAuths() throws ServletException, IOException {
+  void shouldInvalidateSessionDueToDeletedUserWithMultipleAuths() throws ServletException, IOException {
     // given
     ProcessEngine[] engineMocks = setupEngineMock("engine1", "engine2", "engine3");
     Authentications authentications = setupAuth("engine1", "engine2", "engine3");
@@ -416,7 +416,7 @@ public class AuthCacheTest {
   }
 
   @Test
-  public void shouldNotRevalidateWhenValidationTimeNotDueWithMultipleAuths() throws ServletException, IOException {
+  void shouldNotRevalidateWhenValidationTimeNotDueWithMultipleAuths() throws ServletException, IOException {
     // given
     setupEngineMock("engine1", "engine2", "engine3");
     AuthenticationFilter filter = setupFilter(1000 * 60 * 5);

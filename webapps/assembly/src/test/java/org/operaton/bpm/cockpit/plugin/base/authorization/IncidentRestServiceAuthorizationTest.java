@@ -16,27 +16,27 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.authorization;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
+import org.operaton.bpm.cockpit.impl.plugin.resources.IncidentRestService;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.IncidentDto;
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.IncidentQueryDto;
-import org.operaton.bpm.cockpit.impl.plugin.resources.IncidentRestService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
+class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
 
   protected static final String FAILING_PROCESS_KEY = "FailingProcess";
 
@@ -45,11 +45,9 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
   protected IncidentRestService resource;
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     super.setUp();
-
-    runtimeService = processEngine.getRuntimeService();
 
     deploymentId = createDeployment(null, "processes/failing-process.bpmn").getId();
 
@@ -62,14 +60,14 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     deleteDeployment(deploymentId);
     super.tearDown();
   }
 
   @Test
-  public void testQueryWithoutAuthorization() {
+  void queryWithoutAuthorization() {
     // given
     IncidentQueryDto queryParameter = new IncidentQueryDto();
 
@@ -81,7 +79,7 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnProcessInstance() {
+  void queryWithReadPermissionOnProcessInstance() {
     // given
     String processInstanceId = selectAnyProcessInstanceByKey(FAILING_PROCESS_KEY).getId();
     createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
@@ -97,7 +95,7 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnAnyProcessInstance() {
+  void queryWithReadPermissionOnAnyProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
 
@@ -111,7 +109,7 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithMultipleReadPermissions() {
+  void queryWithMultipleReadPermissions() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, READ);
     String processInstanceId = selectAnyProcessInstanceByKey(FAILING_PROCESS_KEY).getId();
@@ -127,7 +125,7 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testQueryWithReadPermissionOnProcessDefinition() {
+  void queryWithReadPermissionOnProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, FAILING_PROCESS_KEY, userId, READ_INSTANCE);
 

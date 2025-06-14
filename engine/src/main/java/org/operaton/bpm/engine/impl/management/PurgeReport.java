@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.CachePurgeReport;
 /**
  * The purge report contains information about the deleted rows for each table
  * and also the deleted values which are removed from the deployment cache.
- * If now entities are deleted since the database was already clean the purge report is empty.
+ * If no entities are deleted since the database was already clean the purge report is empty.
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */

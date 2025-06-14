@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.authorization;
 
-import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto;
-import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessDefinitionRestService;
-import org.operaton.bpm.engine.rest.dto.CountResultDto;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto;
+import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessDefinitionRestService;
+import org.operaton.bpm.engine.rest.dto.CountResultDto;
+
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +35,7 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 
-public class ProcessDefinitionRestServiceAuthorizationTest  extends AuthorizationTest {
+class ProcessDefinitionRestServiceAuthorizationTest  extends AuthorizationTest {
 
   private static final String USER_TASK_PROCESS_KEY = "userTaskProcess";
   private static final String CALLING_USER_TASK_PROCESS_KEY = "CallingUserTaskProcess";
@@ -45,12 +45,11 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   private final MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
 
   @Override
-  @Before
+  @BeforeEach
   public void setUp() {
     super.setUp();
 
     resource = new ProcessDefinitionRestService(engineName);
-    runtimeService = processEngine.getRuntimeService();
 
     deploymentId = createDeployment(null, "processes/user-task-process.bpmn", "processes/calling-user-task-process.bpmn").getId();
 
@@ -63,7 +62,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Override
-  @After
+  @AfterEach
   public void tearDown() {
     queryParameters.clear();
     deleteDeployment(deploymentId);
@@ -71,7 +70,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Test
-  public void queryStatisticsWithoutAuthorization() {
+  void queryStatisticsWithoutAuthorization() {
     // when
     List<ProcessDefinitionStatisticsDto> actual = resource.queryStatistics(uriInfo, null, null);
 
@@ -80,7 +79,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Test
-  public void queryStatisticsWithReadPermissionOnProcessDefinition() {
+  void queryStatisticsWithReadPermissionOnProcessDefinition() {
     // given
     String key = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getKey();
     createGrantAuthorization(PROCESS_DEFINITION, key, userId, READ);
@@ -95,7 +94,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Test
-  public void queryStatisticsWithReadPermissionOnAnyProcessDefinition() {
+  void queryStatisticsWithReadPermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
 
@@ -110,7 +109,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Test
-  public void queryStatisticsWithMultipleReadPermissions() {
+  void queryStatisticsWithMultipleReadPermissions() {
     // given
     String key = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getKey();
     createGrantAuthorization(PROCESS_DEFINITION, key, userId, READ);
@@ -127,7 +126,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Test
-  public void getStatisticsCountWithoutAuthorization() {
+  void getStatisticsCountWithoutAuthorization() {
     // when
     CountResultDto actual = resource.getStatisticsCount(uriInfo);
 
@@ -136,7 +135,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Test
-  public void getStatisticsCountWithReadPermissionOnProcessDefinition() {
+  void getStatisticsCountWithReadPermissionOnProcessDefinition() {
     // given
     String key = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getKey();
     createGrantAuthorization(PROCESS_DEFINITION, key, userId, READ);
@@ -149,7 +148,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Test
-  public void getStatisticsCountWithReadPermissionOnAnyProcessDefinition() {
+  void getStatisticsCountWithReadPermissionOnAnyProcessDefinition() {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ);
 
@@ -161,7 +160,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
   }
 
   @Test
-  public void getStatisticsCountWithMultipleReadPermissions() {
+  void getStatisticsCountWithMultipleReadPermissions() {
     // given
     String key = selectProcessDefinitionByKey(CALLING_USER_TASK_PROCESS_KEY).getKey();
     createGrantAuthorization(PROCESS_DEFINITION, key, userId, READ);

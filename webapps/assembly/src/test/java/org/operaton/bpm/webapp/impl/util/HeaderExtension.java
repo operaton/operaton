@@ -21,6 +21,7 @@ import org.eclipse.jetty.server.Server;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 
 import java.io.IOException;
 import java.net.BindException;
@@ -145,7 +146,7 @@ public class HeaderExtension implements BeforeEachCallback, AfterEachCallback {
     }
 
     public String getCookieHeader() {
-        return connection.getHeaderField("Set-Cookie");
+        return connection.getHeaderField(CookieConstants.SET_COOKIE_HEADER_NAME);
     }
 
     public Throwable getException() {

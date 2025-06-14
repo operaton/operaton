@@ -356,11 +356,11 @@ public abstract class TestHelper {
   public static String assertAndEnsureCleanDbAndCache(ProcessEngine processEngine, boolean fail) {
     ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
 
+    clearMetrics(processEngineConfiguration);
+
     // clear user operation log in case some operations are
     // executed with an authenticated user
     clearUserOperationLog(processEngineConfiguration);
-
-    clearMetrics(processEngineConfiguration);
 
     LOG.debug("verifying that db is clean after test");
     PurgeReport purgeReport = ((ManagementServiceImpl) processEngine.getManagementService()).purge();

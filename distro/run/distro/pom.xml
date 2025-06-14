@@ -9,23 +9,25 @@
   </parent>
 
   <artifactId>operaton-bpm-run</artifactId>
-  <name>Operaton - Run - Distribution</name>
   <packaging>pom</packaging>
+  <name>Operaton - Run - Distribution</name>
+
+  <description>${project.name}</description>
 
   <dependencies>
-
-    <dependency>
-      <groupId>org.operaton.bpm.run</groupId>
-      <artifactId>operaton-bpm-run-assembly</artifactId>
-      <version>${project.version}</version>
-      <type>tar.gz</type>
-    </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm.distro</groupId>
       <artifactId>operaton-sql-scripts</artifactId>
       <version>${version.operaton.dbscheme}</version>
       <type>jar</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm.run</groupId>
+      <artifactId>operaton-bpm-run-assembly</artifactId>
+      <version>${project.version}</version>
+      <type>tar.gz</type>
     </dependency>
 
     <!-- make sure this runs after webapps -->
@@ -59,10 +61,10 @@
         <executions>
           <execution>
             <id>assemble</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptors>
                 <descriptor>assembly.xml</descriptor>
@@ -74,6 +76,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

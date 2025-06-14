@@ -12,19 +12,16 @@
   <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
   <name>Operaton - Spring Boot Starter - Test</name>
 
-  <dependencies>
+  <description>${project.name}</description>
 
+  <dependencies>
+    <?SORTPOM IGNORE?>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>compile</scope>
     </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <scope>provided</scope>
-    </dependency>
+    <?SORTPOM RESUME?>
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -45,7 +42,11 @@
       <scope>compile</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
-  
-  <description>${project.name}</description>
 </project>

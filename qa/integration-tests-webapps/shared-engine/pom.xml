@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>operaton-qa-integration-tests-webapps-shared-engine</artifactId>
-  <name>Operaton - QA Integration Tests - Webapps Shared Engine</name>
 
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+
+  <artifactId>operaton-qa-integration-tests-webapps-shared-engine</artifactId>
+  <name>Operaton - QA Integration Tests - Webapps Shared Engine</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <install.skip>true</install.skip>
@@ -23,12 +26,52 @@
     </dependency>
   </dependencies>
 
+  <build>
+    <testResources>
+      <testResource>
+        <filtering>true</filtering>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build
+          itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <versionRange>[1.7,)</versionRange>
+                    <goals>
+                      <goal>run</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
   <profiles>
     <profile>
       <id>wildfly</id>
       <properties>
-        <jboss.runtime>${basedir}/../${wildfly.runtime.location}</jboss.runtime>
         <http.port>${jboss.http.port}</http.port>
+        <jboss.runtime>${basedir}/../${wildfly.runtime.location}</jboss.runtime>
       </properties>
       <dependencies>
         <dependency>
@@ -39,26 +82,26 @@
           <type>pom</type>
         </dependency>
         <dependency>
-          <groupId>org.operaton.bpm.webapp</groupId>
-          <artifactId>operaton-webapp-wildfly</artifactId>
-          <version>${project.version}</version>
-          <type>war</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
           <groupId>org.operaton.bpm</groupId>
           <artifactId>operaton-engine-rest</artifactId>
           <version>${project.version}</version>
           <classifier>wildfly</classifier>
-          <scope>test</scope>
           <type>war</type>
+          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm.example</groupId>
           <artifactId>operaton-example-invoice</artifactId>
           <version>${project.version}</version>
-          <scope>test</scope>
           <type>war</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.operaton.bpm.webapp</groupId>
+          <artifactId>operaton-webapp-wildfly</artifactId>
+          <version>${project.version}</version>
+          <type>war</type>
+          <scope>test</scope>
         </dependency>
       </dependencies>
       <build>
@@ -66,22 +109,6 @@
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
             <artifactId>cargo-maven3-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>start-container</id>
-                <phase>pre-integration-test</phase>
-                <goals>
-                  <goal>start</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>stop-container</id>
-                <phase>post-integration-test</phase>
-                <goals>
-                  <goal>stop</goal>
-                </goals>
-              </execution>
-            </executions>
             <configuration>
               <skip>${skipTests}</skip>
               <!-- Container configuration -->
@@ -127,6 +154,22 @@
                 </deployable>
               </deployables>
             </configuration>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+                <phase>pre-integration-test</phase>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+                <phase>post-integration-test</phase>
+              </execution>
+            </executions>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -145,8 +188,8 @@
     <profile>
       <id>tomcat</id>
       <properties>
-        <tomcat.runtime>${basedir}/../${tomcat.runtime.location}</tomcat.runtime>
         <http.port>${tomcat.connector.http.port}</http.port>
+        <tomcat.runtime>${basedir}/../${tomcat.runtime.location}</tomcat.runtime>
       </properties>
       <dependencies>
         <dependency>
@@ -157,23 +200,23 @@
           <type>pom</type>
         </dependency>
         <dependency>
-          <groupId>org.operaton.bpm.webapp</groupId>
-          <artifactId>operaton-webapp-tomcat</artifactId>
-          <version>${project.version}</version>
-          <type>war</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
           <groupId>org.operaton.bpm</groupId>
           <artifactId>operaton-engine-rest</artifactId>
           <version>${project.version}</version>
+          <classifier>tomcat</classifier>
           <type>war</type>
           <scope>test</scope>
-          <classifier>tomcat</classifier>
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm.example</groupId>
           <artifactId>operaton-example-invoice</artifactId>
+          <version>${project.version}</version>
+          <type>war</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.operaton.bpm.webapp</groupId>
+          <artifactId>operaton-webapp-tomcat</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
@@ -185,22 +228,6 @@
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
             <artifactId>cargo-maven3-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>start-container</id>
-                <phase>pre-integration-test</phase>
-                <goals>
-                  <goal>start</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>stop-container</id>
-                <phase>post-integration-test</phase>
-                <goals>
-                  <goal>stop</goal>
-                </goals>
-              </execution>
-            </executions>
             <configuration>
               <skip>${skipTests}</skip>
               <!-- Container configuration -->
@@ -252,6 +279,22 @@
                 </deployable>
               </deployables>
             </configuration>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+                <phase>pre-integration-test</phase>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+                <phase>post-integration-test</phase>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
@@ -306,10 +349,10 @@
             <executions>
               <execution>
                 <id>unpack-sql-scripts</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>unpack</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <artifactItems>
                     <artifactItem>
@@ -329,10 +372,10 @@
             <executions>
               <execution>
                 <id>drop-db-if-present</id>
-                <phase>generate-test-sources</phase>
                 <goals>
                   <goal>execute</goal>
                 </goals>
+                <phase>generate-test-sources</phase>
                 <configuration>
                   <srcFiles>
                     <!-- try dropping the DB if it exists. -->
@@ -402,52 +445,4 @@
       </build>
     </profile>
   </profiles>
-
-  <build>
-    <testResources>
-      <testResource>
-        <directory>src/test/resources</directory>
-        <filtering>true</filtering>
-      </testResource>
-    </testResources>
-
-    <pluginManagement>
-      <plugins>
-        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build
-          itself. -->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>
-                      org.apache.maven.plugins
-                    </groupId>
-                    <artifactId>
-                      maven-antrun-plugin
-                    </artifactId>
-                    <versionRange>
-                      [1.7,)
-                    </versionRange>
-                    <goals>
-                      <goal>run</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-
-  <description>${project.name}</description>
 </project>

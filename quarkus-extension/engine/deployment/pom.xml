@@ -12,20 +12,13 @@
   <artifactId>operaton-bpm-quarkus-engine-deployment</artifactId>
 
   <name>Operaton - Quarkus Extension - Engine - Deployment</name>
+  <description>${project.name}</description>
 
   <dependencies>
 
-    <!-- Operaton dependencies -->
     <dependency>
-      <groupId>org.operaton.bpm.quarkus</groupId>
-      <artifactId>operaton-bpm-quarkus-engine</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <classifier>junit5</classifier>
-      <scope>test</scope>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-agroal-deployment</artifactId>
     </dependency>
 
     <!-- Quarkus dependencies -->
@@ -34,9 +27,16 @@
       <artifactId>quarkus-arc-deployment</artifactId>
     </dependency>
 
+    <!-- Operaton dependencies -->
+    <dependency>
+      <groupId>org.operaton.bpm.quarkus</groupId>
+      <artifactId>operaton-bpm-quarkus-engine</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-agroal-deployment</artifactId>
+      <artifactId>quarkus-jdbc-h2-deployment</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <!-- Test dependencies -->
@@ -47,15 +47,16 @@
     </dependency>
 
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jdbc-h2-deployment</artifactId>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.22.0</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>3.22.0</version>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
       <scope>test</scope>
     </dependency>
 
@@ -77,5 +78,4 @@
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

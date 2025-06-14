@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../database</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../database</relativePath>
   </parent>
 
   <artifactId>operaton-engine-rest-root</artifactId>
@@ -13,23 +14,33 @@
   <packaging>pom</packaging>
   <name>Operaton - Engine - REST - Root</name>
 
+  <description>${project.name}</description>
+
+  <modules>
+    <module>assembly</module>
+    <module>docs</module>
+    <module>engine-rest</module>
+    <module>engine-rest-openapi</module>
+    <module>engine-rest-openapi-generator</module>
+  </modules>
+
   <properties>
-    <version.rest-assured>5.5.2</version.rest-assured>
-    <!-- override groovy version with the one used by rest-assured -->
-    <version.groovy>3.0.9</version.groovy>
+    <surefire.forkCount>1</surefire.forkCount>
     <version.apache.httpcore>4.4.5</version.apache.httpcore>
     <version.commons-codec>1.15</version.commons-codec>
-    <surefire.forkCount>1</surefire.forkCount>
+    <!-- override groovy version with the one used by rest-assured -->
+    <version.groovy>3.0.9</version.groovy>
+    <version.rest-assured>5.5.2</version.rest-assured>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
-        <scope>import</scope>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${version.jackson}</version>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <!-- explicitly declare groovy dependencies, so it prevents our groovy version
             from overriding the groovy version from rest-assured -->
@@ -37,8 +48,20 @@
         <groupId>org.codehaus.groovy</groupId>
         <artifactId>groovy-bom</artifactId>
         <version>${version.groovy}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>${version.commons-codec}</version>
       </dependency>
       <dependency>
         <groupId>io.rest-assured</groupId>
@@ -46,32 +69,10 @@
         <version>${version.rest-assured}</version>
       </dependency>
       <dependency>
-        <groupId>com.fasterxml.jackson</groupId>
-        <artifactId>jackson-bom</artifactId>
-        <version>${version.jackson}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-      <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpcore</artifactId>
         <version>${version.apache.httpcore}</version>
       </dependency>
-      <dependency>
-        <groupId>commons-codec</groupId>
-        <artifactId>commons-codec</artifactId>
-        <version>${version.commons-codec}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <modules>
-    <module>engine-rest</module>
-    <module>engine-rest-openapi</module>
-    <module>engine-rest-openapi-generator</module>
-    <module>assembly</module>
-    <module>docs</module>
-  </modules>
-
-  <description>${project.name}</description>
 </project>

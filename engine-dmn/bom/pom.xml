@@ -12,8 +12,10 @@
   <groupId>org.operaton.bpm.dmn</groupId>
   <artifactId>operaton-engine-dmn-bom</artifactId>
   <version>1.0.0-beta-5-SNAPSHOT</version>
-  <name>Operaton - DMN - Engine - BOM</name>
   <packaging>pom</packaging>
+  <name>Operaton - DMN - Engine - BOM</name>
+
+  <description>${project.name}</description>
 
   <dependencyManagement>
     <dependencies>
@@ -52,6 +54,4 @@
 
     </dependencies>
   </dependencyManagement>
-
-  <description>${project.name}</description>
 </project>

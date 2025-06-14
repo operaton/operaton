@@ -1,20 +1,21 @@
-<?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <relativePath>../../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../../parent</relativePath>
   </parent>
 
   <groupId>org.operaton.bpm.webapp</groupId>
   <artifactId>operaton-webapp-webjar</artifactId>
   <packaging>jar</packaging>
   <name>Operaton - Webapp - Webjar</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <skipTests>true</skipTests>
@@ -26,8 +27,8 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -40,10 +41,10 @@
         <executions>
           <execution>
             <id>unpack</id>
-            <phase>process-sources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
+            <phase>process-sources</phase>
             <configuration>
               <artifactItems>
                 <artifactItem>
@@ -52,8 +53,7 @@
                   <version>${project.parent.version}</version>
                   <type>war</type>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.outputDirectory}/META-INF/resources/webjars/operaton
-                  </outputDirectory>
+                  <outputDirectory>${project.build.outputDirectory}/META-INF/resources/webjars/operaton</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
               </artifactItems>
@@ -66,25 +66,22 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
+            <goals>
+              <goal>run</goal>
+            </goals>
             <phase>generate-resources</phase>
             <configuration>
               <skip>${skip.frontend.build}</skip>
               <target>
-                <move
-                  file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json"
-                  todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/"/>
+                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/"/>
                 <delete dir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF"/>
-                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/plugin"
-                      tofile="${project.build.outputDirectory}/META-INF/resources/plugin" verbose="true"/>
+                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/plugin" tofile="${project.build.outputDirectory}/META-INF/resources/plugin" verbose="true"/>
                 <!-- add operaton-welcome page -->
                 <copy todir="${project.build.outputDirectory}/META-INF/resources/operaton-welcome/">
                   <fileset dir="../operaton-welcome/"/>
                 </copy>
               </target>
             </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
@@ -99,6 +96,4 @@
       </properties>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

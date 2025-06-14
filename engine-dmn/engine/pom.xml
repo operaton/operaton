@@ -10,28 +10,14 @@
 
   <artifactId>operaton-engine-dmn</artifactId>
   <name>Operaton - DMN - Engine</name>
+
+  <description>${project.name}</description>
   <properties>
     <operaton.artifact>org.operaton.bpm.dmn.engine</operaton.artifact>
-    <operaton.osgi.import.additional>
-      org.junit.*;resolution:=optional
-    </operaton.osgi.import.additional>
+    <operaton.osgi.import.additional>org.junit.*;resolution:=optional</operaton.osgi.import.additional>
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-utils</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-typed-values</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm.model</groupId>
-      <artifactId>operaton-dmn-model</artifactId>
-    </dependency>
-
+    <?SORTPOM IGNORE?>
     <dependency>
       <groupId>org.operaton.bpm.dmn</groupId>
       <artifactId>operaton-engine-feel-api</artifactId>
@@ -48,9 +34,35 @@
     </dependency>
 
     <dependency>
+      <groupId>org.operaton.bpm.juel</groupId>
+      <artifactId>operaton-juel</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm.model</groupId>
+      <artifactId>operaton-dmn-model</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-typed-values</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-utils</artifactId>
+    </dependency>
+    <?SORTPOM RESUME?>
+
+    <dependency>
       <groupId>org.camunda.feel</groupId>
       <artifactId>feel-engine</artifactId>
       <classifier>scala-shaded</classifier>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -65,31 +77,16 @@
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
-    <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm.juel</groupId>
-      <artifactId>operaton-juel</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
 
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -110,10 +107,15 @@
       <artifactId>js-scriptengine</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -140,10 +142,10 @@
         <executions>
           <execution>
             <id>add-sources</id>
-            <phase>generate-sources</phase>
             <goals>
               <goal>add-source</goal>
             </goals>
+            <phase>generate-sources</phase>
             <configuration>
               <sources>
                 <source>src/main/junit4</source>
@@ -153,10 +155,10 @@
           </execution>
           <execution>
             <id>add-test-sources</id>
-            <phase>generate-test-sources</phase>
             <goals>
               <goal>add-test-source</goal>
             </goals>
+            <phase>generate-test-sources</phase>
             <configuration>
               <sources>
                 <source>src/test/junit4</source>
@@ -204,18 +206,18 @@
         <executions>
           <execution>
             <id>default-testCompile</id>
-            <phase>test-compile</phase>
             <goals>
               <goal>testCompile</goal>
             </goals>
+            <phase>test-compile</phase>
           </execution>
           <!-- Additional execution to compile code needed for JUnit4 test only -->
           <execution>
             <id>junit4-compile</id>
-            <phase>compile</phase>
             <goals>
               <goal>compile</goal>
             </goals>
+            <phase>compile</phase>
             <configuration>
               <!-- Specify the extra test source folder -->
               <compileSourceRoots>
@@ -228,10 +230,10 @@
           <!-- Additional execution to compile code needed for JUnit5 test only -->
           <execution>
             <id>junit5-compile</id>
-            <phase>compile</phase>
             <goals>
               <goal>compile</goal>
             </goals>
+            <phase>compile</phase>
             <configuration>
               <!-- Specify the extra test source folder -->
               <compileSourceRoots>
@@ -257,10 +259,10 @@
         <executions>
           <execution>
             <id>bundle-manifest</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>manifest</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
@@ -289,10 +291,10 @@
             <executions>
               <execution>
                 <id>all</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>check-no-fork</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
                   <failOnWarning>false</failOnWarning>
@@ -301,10 +303,10 @@
               </execution>
               <execution>
                 <id>restrictive</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>check-no-fork</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
                   <failOnWarning>true</failOnWarning>
@@ -317,6 +319,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

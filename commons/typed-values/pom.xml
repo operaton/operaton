@@ -1,17 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-parent</artifactId>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../../parent</relativePath>
+  </parent>
 
   <groupId>org.operaton.commons</groupId>
   <artifactId>operaton-commons-typed-values</artifactId>
   <name>Operaton - Commons - Typed Values</name>
 
-  <parent>
-    <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-parent</artifactId>
-    <relativePath>../../parent</relativePath>
-    <version>1.0.0-beta-5-SNAPSHOT</version>
-  </parent>
+  <description>${project.name}</description>
+  <properties>
+    <operaton.artifact>org.operaton.bpm.engine.variable</operaton.artifact>
+    <operaton.osgi.import.additional>!jakarta.activation</operaton.osgi.import.additional>
+  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -19,22 +26,23 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <properties>
-    <operaton.artifact>org.operaton.bpm.engine.variable</operaton.artifact>
-    <operaton.osgi.import.additional>
-      !jakarta.activation
-    </operaton.osgi.import.additional>
-  </properties>
   <dependencies>
-
+    <?SORTPOM IGNORE?>
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-utils</artifactId>
+    </dependency>
+    <?SORTPOM RESUME?>
+
+    <dependency>
+      <groupId>jakarta.activation</groupId>
+      <artifactId>jakarta.activation-api</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
@@ -45,12 +53,6 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.activation</groupId>
-      <artifactId>jakarta.activation-api</artifactId>
-      <optional>true</optional>
     </dependency>
 
     <dependency>
@@ -83,10 +85,10 @@
         <executions>
           <execution>
             <id>all</id>
-            <phase>verify</phase>
             <goals>
               <goal>check-no-fork</goal>
             </goals>
+            <phase>verify</phase>
             <configuration>
               <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
               <failOnWarning>false</failOnWarning>
@@ -105,10 +107,10 @@
           </execution>
           <execution>
             <id>restrictive</id>
-            <phase>verify</phase>
             <goals>
               <goal>check-no-fork</goal>
             </goals>
+            <phase>verify</phase>
             <configuration>
               <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
               <failOnWarning>true</failOnWarning>
@@ -122,10 +124,10 @@
         <artifactId>maven-shade-plugin</artifactId>
         <executions>
           <execution>
-            <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
               <artifactSet>
@@ -152,17 +154,17 @@
         <artifactId>maven-bundle-plugin</artifactId>
         <executions>
           <execution>
-            <phase>generate-sources</phase>
             <goals>
               <goal>cleanVersions</goal>
             </goals>
+            <phase>generate-sources</phase>
           </execution>
           <execution>
             <id>bundle-manifest</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>manifest</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
@@ -176,6 +178,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

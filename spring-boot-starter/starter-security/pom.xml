@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -13,16 +12,22 @@
   <artifactId>operaton-bpm-spring-boot-starter-security</artifactId>
   <name>Operaton Platform - Spring Boot Starter - Spring Security</name>
 
+  <description>${project.name}</description>
+
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>operaton-bpm-spring-boot-starter</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-client</artifactId>
+    </dependency>
+
+    <!-- spring security dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
+      <artifactId>operaton-bpm-spring-boot-starter</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
@@ -32,26 +37,17 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
-
-    <!-- spring security dependencies -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-oauth2-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
       <groupId>${project.groupId}</groupId>
+      <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
       <version>${project.version}</version>
-      <scope>test</scope>
+      <scope>provided</scope>
     </dependency>
+
     <dependency>
-      <groupId>org.apache.httpcomponents.client5</groupId>
-      <artifactId>httpclient5</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
+      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -60,8 +56,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -70,7 +66,10 @@
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

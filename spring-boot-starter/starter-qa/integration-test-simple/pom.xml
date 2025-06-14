@@ -12,17 +12,19 @@
   <artifactId>qa-simple</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Simple</name>
 
+  <description>${project.name}</description>
+
   <dependencies>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.operaton.bpm.springboot</groupId>
       <artifactId>operaton-bpm-spring-boot-starter</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
     </dependency>
   </dependencies>
 
@@ -56,6 +58,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

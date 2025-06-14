@@ -2,11 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <name>Operaton - Java External Task Client - QA Variable Test</name>
-
-  <artifactId>engine-variable-test</artifactId>
-
-  <packaging>war</packaging>
 
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
@@ -14,12 +9,21 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
+  <artifactId>engine-variable-test</artifactId>
+
+  <packaging>war</packaging>
+  <name>Operaton - Java External Task Client - QA Variable Test</name>
+
+  <description>${project.name}</description>
+
   <dependencies>
+    <?SORTPOM IGNORE?>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
     </dependency>
+    <?SORTPOM RESUME?>
 
     <dependency>
       <groupId>jakarta.servlet</groupId>
@@ -40,6 +44,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

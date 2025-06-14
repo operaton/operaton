@@ -12,14 +12,14 @@
   <packaging>pom</packaging>
   <name>Operaton - BOM Root</name>
 
+  <description>${project.name}</description>
+
   <modules>
-    <module>operaton-only-bom</module>
-    <module>operaton-bom</module>
-    <module>internal-dependencies</module>
     <module>commons</module>
     <module>connect</module>
+    <module>internal-dependencies</module>
+    <module>operaton-bom</module>
+    <module>operaton-only-bom</module>
     <module>spin</module>
   </modules>
-
-  <description>${project.name}</description>
 </project>

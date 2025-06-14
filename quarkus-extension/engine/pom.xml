@@ -4,26 +4,28 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>operaton-bpm-quarkus-parent</artifactId>
     <groupId>org.operaton.bpm.quarkus</groupId>
+    <artifactId>operaton-bpm-quarkus-parent</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-bpm-quarkus-engine-parent</artifactId>
 
+  <packaging>pom</packaging>
+
   <name>Operaton - Quarkus Extension - Engine - Parent</name>
 
-  <packaging>pom</packaging>
+  <description>${project.name}</description>
+
+  <modules>
+    <module>deployment</module>
+    <module>qa</module>
+    <module>runtime</module>
+  </modules>
 
   <properties>
     <surefire.memArgs>-Xmx2048m</surefire.memArgs>
   </properties>
-
-  <modules>
-    <module>deployment</module>
-    <module>runtime</module>
-    <module>qa</module>
-  </modules>
 
   <build>
     <plugins>
@@ -37,6 +39,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

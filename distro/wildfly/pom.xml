@@ -1,18 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../../database</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../../database</relativePath>
   </parent>
-  
+
   <groupId>org.operaton.bpm.wildfly</groupId>
   <artifactId>operaton-wildfly</artifactId>
   <packaging>pom</packaging>
 
   <name>Operaton - Wildfly</name>
+
+  <description>${project.name}</description>
 
   <dependencyManagement>
     <dependencies>
@@ -20,8 +23,8 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -31,13 +34,11 @@
       <id>distro-wildfly</id>
       <modules>
         <module>assembly</module>
+        <module>distro</module>
         <module>modules</module>
         <module>subsystem</module>
         <module>webapp</module>
-        <module>distro</module>
       </modules>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

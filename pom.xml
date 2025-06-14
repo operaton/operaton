@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -6,97 +7,36 @@
   <version>1.0.0-beta-5-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Operaton - Root POM</name>
-  <inceptionYear>2024</inceptionYear>
 
-  <description>
-    This pom defines the modules that make up the build.
-    The parent pom for all Operaton projects can be found in the parent directory relative to this file.
-  </description>
+  <description>This pom defines the modules that make up the build.
+    The parent pom for all Operaton projects can be found in the parent directory relative to this file.</description>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
-
-    <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
-    <version.mybatis>3.5.19</version.mybatis>
-    <version.joda-time>2.12.5</version.joda-time>
-    <version.uuid-generator>5.1.0</version.uuid-generator>
-    <version.feel-scala>1.19.1</version.feel-scala>
-    <version.quarkus>3.23.0</version.quarkus>
-    <version.java>17</version.java>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <sonar.organization>operaton</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <sonar.coverage.jacoco.xmlReportPaths>**/target/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <?SORTPOM IGNORE?>
     <!-- Set to false for each module that must be deployed -->
     <deploy.skip>true</deploy.skip>
     <!-- Set to true for each module with packaging default/jar that does not have 'main' sources -->
     <install.skip>false</install.skip>
+    <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <sonar.coverage.jacoco.xmlReportPaths>**/target/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.organization>operaton</sonar.organization>
+    <version.feel-scala>1.19.1</version.feel-scala>
+    <version.java>17</version.java>
+    <version.joda-time>2.12.5</version.joda-time>
+
+    <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
+    <version.mybatis>3.5.19</version.mybatis>
+    <version.quarkus>3.23.0</version.quarkus>
+    <version.uuid-generator>5.1.0</version.uuid-generator>
+    <?SORTPOM RESUME?>
   </properties>
 
   <build>
     <defaultGoal>verify</defaultGoal>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.5.0</version>
-        <executions>
-          <execution>
-            <id>enforce-default</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireJavaVersion>
-                  <version>[17,)</version>
-                  <message>
-                    *************************************************************************************
-                    *                                                                                   *
-                    *                You must use at least JDK 17 to compile Operaton !!!               *
-                    *                                                                                   *
-                    *************************************************************************************
-                  </message>
-                </requireJavaVersion>
-                <requireMavenVersion>
-                  <version>3.9.0</version>
-                </requireMavenVersion>
-                <requireMatchingCoordinates>
-                  <groupIdPattern>org\.operaton(?:..*)</groupIdPattern>
-                </requireMatchingCoordinates>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <acceptPomPackaging>true</acceptPomPackaging>
-          <excludedScopes>test</excludedScopes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.openrewrite.maven</groupId>
-        <artifactId>rewrite-maven-plugin</artifactId>
-        <version>5.42.0</version>
-        <configuration>
-          <activeRecipes>
-            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
-          </activeRecipes>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-testing-frameworks</artifactId>
-            <version>3.5.1</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-    </plugins>
 
     <pluginManagement>
       <plugins>
@@ -321,8 +261,113 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <id>enforce-default</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>[17,)</version>
+                  <message>*************************************************************************************
+                    *                                                                                   *
+                    *                You must use at least JDK 17 to compile Operaton !!!               *
+                    *                                                                                   *
+                    *************************************************************************************</message>
+                </requireJavaVersion>
+                <requireMavenVersion>
+                  <version>3.9.0</version>
+                </requireMavenVersion>
+                <requireMatchingCoordinates>
+                  <groupIdPattern>org\.operaton(?:..*)</groupIdPattern>
+                </requireMatchingCoordinates>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <acceptPomPackaging>true</acceptPomPackaging>
+          <excludedScopes>test</excludedScopes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.openrewrite.maven</groupId>
+        <artifactId>rewrite-maven-plugin</artifactId>
+        <version>5.42.0</version>
+        <configuration>
+          <activeRecipes>
+            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
+          </activeRecipes>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-testing-frameworks</artifactId>
+            <version>3.5.1</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
 
   </build>
+
+  <url>http://www.operaton.org</url>
+  <inceptionYear>2024</inceptionYear>
+
+  <organization>
+    <name>Operaton</name>
+    <url>http://www.operaton.com</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>operaton.org</id>
+      <name>Operaton Community</name>
+      <organization>operaton.org</organization>
+      <organizationUrl>http://operaton.org</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com:operaton/operaton.git</connection>
+    <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
+    <url>https://github.com/operaton/operaton</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/operaton/operaton/issues/</url>
+  </issueManagement>
+
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>maven-central</id>
+      <name>Maven Central</name>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+  </repositories>
 
   <profiles>
     <!-- distro profile is default and builds the complete distribution.
@@ -333,66 +378,66 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
+        <module>bom</module>
+        <module>clients/java</module>
+        <module>commons</module>
+        <module>connect</module>
+        <module>database</module>
+        <module>distro/jboss</module>
+        <module>distro/license-book</module>
+        <module>distro/sql-script</module>
+        <module>distro/tomcat</module>
+        <module>engine</module>
+        <module>engine-cdi</module>
+        <module>engine-dmn</module>
+        <module>engine-plugins</module>
+        <module>engine-rest</module>
+        <module>engine-spring</module>
+        <module>examples</module>
+        <module>freemarker-template-engine</module>
+        <module>jakarta-ee/ejb-client</module>
+        <module>jakarta-ee/ejb-service</module>
+        <module>jakarta-ee/jobexecutor-ra</module>
+        <module>jakarta-ee/jobexecutor-rar</module>
+        <module>juel</module>
+        <module>model-api</module>
+        <module>parent</module>
+        <module>qa</module>
+        <module>quarkus-extension</module>
+        <module>spin</module>
         <!-- This profile is run in the CI as the first step (platform-ASSEMBLY); It must not activate
           any modules that have a dependency to the webapps. See also the referenced POMs,
           they usually define which modules are covered by the distro profile -->
         <module>spring-boot-starter</module>
-        <module>quarkus-extension</module>
-        <module>qa</module>
-        <module>jakarta-ee/ejb-service</module>
-        <module>jakarta-ee/ejb-client</module>
-        <module>jakarta-ee/jobexecutor-ra</module>
-        <module>jakarta-ee/jobexecutor-rar</module>
-        <module>model-api</module>
-        <module>engine-dmn</module>
-        <module>connect</module>
-        <module>juel</module>
-        <module>spin</module>
-        <module>commons</module>
-        <module>freemarker-template-engine</module>
-        <module>test-utils/testcontainers</module>
-        <module>test-utils/junit5-extension</module>
-        <module>test-utils/assert</module>
         <module>test-utils/archunit</module>
-        <module>engine</module>
-        <module>engine-cdi</module>
-        <module>engine-spring</module>
-        <module>engine-rest</module>
+        <module>test-utils/assert</module>
+        <module>test-utils/junit5-extension</module>
+        <module>test-utils/testcontainers</module>
         <module>webapps</module>
-        <module>examples</module>
-        <module>engine-plugins</module>
-        <module>distro/license-book</module>
-        <module>distro/jboss</module>
-        <module>distro/tomcat</module>
-        <module>distro/sql-script</module>
-        <module>clients/java</module>
-        <module>database</module>
-        <module>parent</module>
-        <module>bom</module>
       </modules>
     </profile>
 
     <profile>
       <id>distro-serverless</id>
       <modules>
-        <module>qa</module>
-        <module>model-api</module>
-        <module>test-utils/archunit</module>
-        <module>test-utils/testcontainers</module>
+        <module>bom</module>
         <module>commons</module>
-        <module>juel</module>
+        <module>database</module>
+        <module>distro/sql-script</module>
         <module>engine</module>
         <module>engine-cdi</module>
         <module>engine-dmn</module>
-        <module>engine-spring</module>
-        <module>engine-rest</module>
-        <module>webapps</module>
-        <module>examples</module>
         <module>engine-plugins</module>
-        <module>distro/sql-script</module>
-        <module>database</module>
+        <module>engine-rest</module>
+        <module>engine-spring</module>
+        <module>examples</module>
+        <module>juel</module>
+        <module>model-api</module>
         <module>parent</module>
-        <module>bom</module>
+        <module>qa</module>
+        <module>test-utils/archunit</module>
+        <module>test-utils/testcontainers</module>
+        <module>webapps</module>
       </modules>
     </profile>
 
@@ -413,9 +458,9 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <modules>
-        <module>jakarta-ee/ejb-client</module>
         <module>distro/license-book</module>
         <module>distro/wildfly</module>
+        <module>jakarta-ee/ejb-client</module>
       </modules>
     </profile>
 
@@ -453,14 +498,14 @@
       <!-- profile for running process-engine unit tests in QA -->
       <id>check-engine</id>
       <modules>
-        <module>engine</module>
-        <module>engine-cdi</module>
-        <module>engine-spring</module>
-        <module>engine-rest</module>
+        <module>bom</module>
 
         <module>database</module>
+        <module>engine</module>
+        <module>engine-cdi</module>
+        <module>engine-rest</module>
+        <module>engine-spring</module>
         <module>parent</module>
-        <module>bom</module>
       </modules>
     </profile>
 
@@ -468,44 +513,44 @@
       <!-- profile for running webapp unit tests in QA -->
       <id>check-webapps</id>
       <modules>
-        <module>parent</module>
         <module>bom</module>
+        <module>parent</module>
       </modules>
     </profile>
 
     <profile>
       <id>sonatype-oss-release</id>
+      <modules>
+        <module>bom</module>
+        <module>clients/java</module>
+        <module>commons</module>
+        <module>connect</module>
+        <module>database</module>
+        <module>distro/sql-script</module>
+        <module>distro/webjar</module>
+        <module>engine</module>
+        <module>engine-cdi</module>
+        <module>engine-dmn</module>
+        <module>engine-plugins</module>
+        <module>engine-rest</module>
+        <module>engine-spring</module>
+        <module>freemarker-template-engine</module>
+        <module>jakarta-ee/ejb-client</module>
+        <module>juel</module>
+        <module>model-api</module>
+        <module>parent</module>
+        <module>quarkus-extension</module>
+        <module>spin</module>
+        <module>spring-boot-starter</module>
+        <module>test-utils/archunit</module>
+        <module>test-utils/assert</module>
+        <module>test-utils/junit5-extension</module>
+        <module>test-utils/testcontainers</module>
+        <module>webapps</module>
+      </modules>
       <properties>
         <deploy.skip>false</deploy.skip>
       </properties>
-      <modules>
-        <module>spring-boot-starter</module>
-        <module>quarkus-extension</module>
-        <module>model-api</module>
-        <module>engine</module>
-        <module>engine-cdi</module>
-        <module>engine-spring</module>
-        <module>engine-rest</module>
-        <module>engine-dmn</module>
-        <module>connect</module>
-        <module>juel</module>
-        <module>spin</module>
-        <module>commons</module>
-        <module>freemarker-template-engine</module>
-        <module>jakarta-ee/ejb-client</module>
-        <module>webapps</module>
-        <module>engine-plugins</module>
-        <module>distro/webjar</module>
-        <module>distro/sql-script</module>
-        <module>clients/java</module>
-        <module>test-utils/junit5-extension</module>
-        <module>test-utils/archunit</module>
-        <module>test-utils/assert</module>
-        <module>test-utils/testcontainers</module>
-        <module>database</module>
-        <module>parent</module>
-        <module>bom</module>
-      </modules>
 
       <build>
         <plugins>
@@ -567,15 +612,11 @@
             <artifactId>rewrite-maven-plugin</artifactId>
             <version>5.45.0</version>
             <configuration>
-              <activeRecipes>
-                org.openrewrite.java.RemoveUnusedImports,
+              <activeRecipes>org.openrewrite.java.RemoveUnusedImports,
                 org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic,
-                org.openrewrite.staticanalysis.ModifierOrder
-              </activeRecipes>
+                org.openrewrite.staticanalysis.ModifierOrder</activeRecipes>
               <failOnDryRunResults>true</failOnDryRunResults>
-              <exclusions>
-                **/node/**
-              </exclusions>
+              <exclusions>**/node/**</exclusions>
             </configuration>
             <dependencies>
               <dependency>
@@ -593,51 +634,39 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>code-cleanup</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.ekryd.sortpom</groupId>
+            <artifactId>sortpom-maven-plugin</artifactId>
+            <version>4.0.0</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>sort</goal>
+                </goals>
+                <configuration>
+                  <nrOfIndentSpace>2</nrOfIndentSpace>
+                  <endWithNewline>true</endWithNewline>
+                  <expandEmptyElements>false</expandEmptyElements>
+                  <lineSeparator>\n</lineSeparator>
+                  <sortProperties>false</sortProperties>
+                  <sortDependencies>scope,groupId,artifactId</sortDependencies>
+                  <sortModules>true</sortModules>
+                  <createBackupFile>false</createBackupFile>
+                  <predefinedSortOrder>custom_1</predefinedSortOrder>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
-
-  <repositories>
-    <repository>
-      <id>maven-central</id>
-      <name>Maven Central</name>
-      <url>https://repo1.maven.org/maven2</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-    </license>
-  </licenses>
-
-  <organization>
-    <name>Operaton</name>
-    <url>http://www.operaton.com</url>
-  </organization>
-
-  <url>http://www.operaton.org</url>
-
-  <developers>
-    <developer>
-      <id>operaton.org</id>
-      <name>Operaton Community</name>
-      <organization>operaton.org</organization>
-      <organizationUrl>http://operaton.org</organizationUrl>
-    </developer>
-  </developers>
-
-  <scm>
-    <url>https://github.com/operaton/operaton</url>
-    <connection>scm:git:git@github.com:operaton/operaton.git</connection>
-    <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
-
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/operaton/operaton/issues/</url>
-  </issueManagement>
 </project>

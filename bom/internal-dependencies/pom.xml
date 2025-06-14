@@ -5,26 +5,25 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <relativePath>../../parent/pom.xml</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../../parent/pom.xml</relativePath>
   </parent>
 
   <artifactId>operaton-core-internal-dependencies</artifactId>
   <packaging>pom</packaging>
   <name>Operaton - Core - Internal Dependencies</name>
 
-  <description>
-    This is a Bill of Materials (BOM) for internal dependencies of Operaton.
+  <description>This is a Bill of Materials (BOM) for internal dependencies of Operaton.
     All modules should import this BOM to ensure consistent versions of dependencies.
-    By using this BOM, you can omit the version tag in dependency declarations.
-  </description>
+    By using this BOM, you can omit the version tag in dependency declarations.</description>
 
   <properties>
-    <version.slf4j>2.0.16</version.slf4j>
     <version.jetty>12.0.16</version.jetty>
+    <version.slf4j>2.0.16</version.slf4j>
   </properties>
 
   <dependencyManagement>
+    <?SORTPOM IGNORE?>
     <dependencies>
       <!-- BOMs -->
       <dependency>
@@ -522,5 +521,6 @@
       </dependency>
 
     </dependencies>
+    <?SORTPOM RESUME?>
   </dependencyManagement>
 </project>

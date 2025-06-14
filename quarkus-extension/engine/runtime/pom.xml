@@ -12,9 +12,10 @@
   <artifactId>operaton-bpm-quarkus-engine</artifactId>
 
   <name>Operaton - Quarkus Extension - Engine - Runtime</name>
+  <description>${project.name}</description>
 
   <dependencies>
-
+    <?SORTPOM IGNORE?>
     <!-- Operaton dependencies -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -25,21 +26,22 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-cdi</artifactId>
     </dependency>
+    <?SORTPOM RESUME?>
 
     <dependency>
       <groupId>com.fasterxml.uuid</groupId>
       <artifactId>java-uuid-generator</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-agroal</artifactId>
+    </dependency>
+
     <!-- Quarkus dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-agroal</artifactId>
     </dependency>
 
   </dependencies>
@@ -51,16 +53,16 @@
         <artifactId>quarkus-extension-maven-plugin</artifactId>
         <executions>
           <execution>
-            <phase>compile</phase>
             <goals>
               <goal>extension-descriptor</goal>
             </goals>
+            <phase>compile</phase>
             <configuration>
               <deployment>${project.groupId}:${project.artifactId}-deployment:${project.version}</deployment>
             </configuration>
           </execution>
         </executions>
-      </plugin>      
+      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -75,5 +77,4 @@
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

@@ -9,8 +9,10 @@
   </parent>
 
   <artifactId>operaton-bpm-run-core</artifactId>
-  <name>Operaton - Run - Core</name>
   <packaging>jar</packaging>
+  <name>Operaton - Run - Core</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
@@ -22,7 +24,7 @@
   </properties>
 
   <dependencies>
-
+    <?SORTPOM IGNORE?>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
@@ -92,11 +94,18 @@
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
     </dependency>
+    <?SORTPOM RESUME?>
 
     <!-- Testing -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -110,12 +119,6 @@
           <artifactId>asm</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.httpcomponents.client5</groupId>
-      <artifactId>httpclient5</artifactId>
-      <scope>test</scope>
     </dependency>
 
   </dependencies>
@@ -154,6 +157,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <description>${project.name}</description>
 </project>

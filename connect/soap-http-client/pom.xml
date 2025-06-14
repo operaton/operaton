@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -10,6 +11,8 @@
   <artifactId>operaton-connect-soap-http-client</artifactId>
   <name>Operaton - Connect - SOAP HTTP Client</name>
 
+  <description>${project.name}</description>
+
   <dependencies>
 
     <dependency>
@@ -18,19 +21,20 @@
     </dependency>
 
     <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -50,10 +54,10 @@
         <executions>
           <execution>
             <id>bundle-manifest</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>manifest</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
@@ -82,10 +86,10 @@
             <executions>
               <execution>
                 <id>all</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>check-no-fork</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-all.txt</textOutputFile>
                   <failOnWarning>false</failOnWarning>
@@ -94,10 +98,10 @@
               </execution>
               <execution>
                 <id>restrictive</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>check-no-fork</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
                   <failOnWarning>true</failOnWarning>
@@ -110,6 +114,4 @@
       </build>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

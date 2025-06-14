@@ -9,10 +9,12 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
-  <packaging>pom</packaging>
-
   <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
+
+  <packaging>pom</packaging>
   <name>Operaton - Spring Boot Starter - QA - Root POM</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <deploy.skip>true</deploy.skip>
@@ -61,10 +63,10 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>integration-test-simple</module>
-        <module>integration-test-request-scope</module>
-        <module>integration-test-plugins</module>
         <module>integration-test-liquibase</module>
+        <module>integration-test-plugins</module>
+        <module>integration-test-request-scope</module>
+        <module>integration-test-simple</module>
         <module>integration-test-webapp</module>
       </modules>
       <build>
@@ -87,14 +89,12 @@
           It can be removed if the webapp repo is merged to the platform and
           distro-ce is not used for building the spring boot starter -->
       <modules>
-        <module>integration-test-simple</module>
-        <module>integration-test-request-scope</module>
-        <module>integration-test-plugins</module>
-        <module>integration-test-webapp</module>
         <module>integration-test-liquibase</module>
+        <module>integration-test-plugins</module>
+        <module>integration-test-request-scope</module>
+        <module>integration-test-simple</module>
+        <module>integration-test-webapp</module>
       </modules>
     </profile>
   </profiles>
-
-  <description>${project.name}</description>
 </project>

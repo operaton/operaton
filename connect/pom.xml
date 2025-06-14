@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -10,24 +11,26 @@
 
   <groupId>org.operaton.connect</groupId>
   <artifactId>operaton-connect-root</artifactId>
-  <name>Operaton - Connect - Root</name>
   <packaging>pom</packaging>
+  <name>Operaton - Connect - Root</name>
 
-  <properties>
-    <commons-codec.version>1.15</commons-codec.version>
-    <connect.version.old>7.22.0</connect.version.old>
-    <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
-
-    <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
-    <additionalparam>-Xdoclint:none</additionalparam>
-  </properties>
+  <description>${project.name}</description>
 
   <modules>
+    <module>connectors-all</module>
     <module>core</module>
     <module>http-client</module>
     <module>soap-http-client</module>
-    <module>connectors-all</module>
   </modules>
+
+  <properties>
+    <additionalparam>-Xdoclint:none</additionalparam>
+    <commons-codec.version>1.15</commons-codec.version>
+    <connect.version.old>7.22.0</connect.version.old>
+
+    <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
+    <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
+  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -35,8 +38,8 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
       <dependency>
@@ -55,9 +58,7 @@
           <artifactId>maven-bundle-plugin</artifactId>
           <configuration>
             <instructions>
-              <Export-Package>
-                org.operaton.connect*
-              </Export-Package>
+              <Export-Package>org.operaton.connect*</Export-Package>
             </instructions>
           </configuration>
         </plugin>
@@ -82,6 +83,13 @@
     </plugins>
   </build>
 
+  <scm>
+    <connection>scm:git:git@github.com:operaton/operaton.git</connection>
+    <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
+    <url>https://github.com/operaton/operaton</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <profiles>
     <profile>
       <id>license-header-check</id>
@@ -95,13 +103,4 @@
       </build>
     </profile>
   </profiles>
-
-  <scm>
-    <url>https://github.com/operaton/operaton</url>
-    <connection>scm:git:git@github.com:operaton/operaton.git</connection>
-    <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
-
-  <description>${project.name}</description>
 </project>

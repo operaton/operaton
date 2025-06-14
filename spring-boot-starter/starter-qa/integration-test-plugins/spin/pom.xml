@@ -9,15 +9,15 @@
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
-  <packaging>pom</packaging>
-
   <artifactId>qa-plugins-spin</artifactId>
+
+  <packaging>pom</packaging>
   <name>Operaton - Spring Boot Starter - QA - Plugins - Spin</name>
 
-  <modules>
-    <module>spin-dataformat-json-jackson</module>
-    <module>spin-dataformat-all</module>
-  </modules>
-
   <description>${project.name}</description>
+
+  <modules>
+    <module>spin-dataformat-all</module>
+    <module>spin-dataformat-json-jackson</module>
+  </modules>
 </project>

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
@@ -12,6 +12,8 @@
   <artifactId>operaton-webapp</artifactId>
   <packaging>war</packaging>
   <name>Operaton - Webapp - Assembly</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <java.resources.override>src/main/runtime/default/resources</java.resources.override>
@@ -29,13 +31,24 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <!-- rest api -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
 
     <!-- jee spec -->
     <dependency>
@@ -54,25 +67,25 @@
     </dependency>
 
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit4</classifier>
     </dependency>
-
 
     <!-- rest api -->
     <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.activation</groupId>
+      <artifactId>jakarta.activation-api</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.activation</groupId>
-      <artifactId>jakarta.activation-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -84,12 +97,6 @@
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
       <scope>provided</scope>
-    </dependency>
-
-    <!-- rest api -->
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-core</artifactId>
     </dependency>
 
     <dependency>
@@ -121,21 +128,9 @@
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <scope>test</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-http</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty.ee10</groupId>
-      <artifactId>jetty-ee10-webapp</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -146,6 +141,31 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.ee10</groupId>
+      <artifactId>jetty-ee10-webapp</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-core</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -163,15 +183,15 @@
         <directory>src/main/resources</directory>
       </resource>
       <resource>
-        <directory>${java.resources.override}</directory>
         <filtering>true</filtering>
+        <directory>${java.resources.override}</directory>
       </resource>
     </resources>
 
     <testResources>
       <testResource>
-        <directory>src/test/resources</directory>
         <filtering>true</filtering>
+        <directory>src/test/resources</directory>
       </testResource>
     </testResources>
 
@@ -208,15 +228,15 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
-            <phase>generate-resources</phase>
-            <configuration>
-              <target>
-                <mkdir dir="${project.basedir}/target/webapp" />
-              </target>
-            </configuration>
             <goals>
               <goal>run</goal>
             </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <target>
+                <mkdir dir="${project.basedir}/target/webapp"/>
+              </target>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -226,10 +246,10 @@
         <executions>
           <execution>
             <id>copy-resources-assembly</id>
-            <phase>prepare-package</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
+            <phase>prepare-package</phase>
             <configuration>
               <outputDirectory>${basedir}/target/webapp</outputDirectory>
               <resources>
@@ -263,22 +283,40 @@
         </os>
       </activation>
       <properties>
-        <exec.shell>cmd</exec.shell>
         <exec.arg>/c</exec.arg>
+        <exec.shell>cmd</exec.shell>
       </properties>
     </profile>
 
     <profile>
       <id>develop</id>
+      <properties>
+        <java.resources.override>src/main/runtime/develop/resources</java.resources.override>
+      </properties>
       <dependencies>
         <dependency>
-          <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-jaxrs</artifactId>
-          <scope>runtime</scope>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>com.fasterxml.uuid</groupId>
+          <artifactId>java-uuid-generator</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
         </dependency>
         <dependency>
           <groupId>jakarta.servlet</groupId>
           <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.graalvm.js</groupId>
+          <artifactId>js</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.graalvm.js</groupId>
+          <artifactId>js-scriptengine</artifactId>
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm</groupId>
@@ -286,7 +324,15 @@
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-plugin-connect</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.operaton.bpm</groupId>
           <artifactId>operaton-engine-plugin-spin</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.operaton.bpm.identity</groupId>
+          <artifactId>operaton-identity-ldap</artifactId>
         </dependency>
         <dependency>
           <groupId>org.operaton.spin</groupId>
@@ -297,32 +343,9 @@
           <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
         </dependency>
         <dependency>
-          <groupId>org.operaton.bpm</groupId>
-          <artifactId>operaton-engine-plugin-connect</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.operaton.bpm.identity</groupId>
-          <artifactId>operaton-identity-ldap</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>com.h2database</groupId>
-          <artifactId>h2</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>com.fasterxml.uuid</groupId>
-          <artifactId>java-uuid-generator</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.graalvm.js</groupId>
-          <artifactId>js</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.graalvm.js</groupId>
-          <artifactId>js-scriptengine</artifactId>
+          <groupId>org.jboss.resteasy</groupId>
+          <artifactId>resteasy-jaxrs</artifactId>
+          <scope>runtime</scope>
         </dependency>
       </dependencies>
       <build>
@@ -335,8 +358,8 @@
                 <phase>generate-resources</phase>
                 <configuration>
                   <tasks>
-                    <mkdir dir="${project.basedir}/target/webapp" />
-                    <mkdir dir="${project.basedir}/target/operaton-welcome" />
+                    <mkdir dir="${project.basedir}/target/webapp"/>
+                    <mkdir dir="${project.basedir}/target/operaton-welcome"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -394,9 +417,6 @@
           </plugin>
         </plugins>
       </build>
-      <properties>
-        <java.resources.override>src/main/runtime/develop/resources</java.resources.override>
-      </properties>
     </profile>
 
     <profile>
@@ -408,6 +428,9 @@
 
     <profile>
       <id>dev-e2e</id>
+      <properties>
+        <java.resources.override>src/main/runtime/test/resources</java.resources.override>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
@@ -425,8 +448,8 @@
                 <phase>generate-resources</phase>
                 <configuration>
                   <tasks>
-                    <mkdir dir="${project.basedir}/target/webapp" />
-                    <mkdir dir="${project.basedir}/target/operaton-welcome" />
+                    <mkdir dir="${project.basedir}/target/webapp"/>
+                    <mkdir dir="${project.basedir}/target/operaton-welcome"/>
                   </tasks>
                 </configuration>
               </execution>
@@ -457,6 +480,16 @@
             </configuration>
             <dependencies>
               <dependency>
+                <groupId>com.fasterxml.uuid</groupId>
+                <artifactId>java-uuid-generator</artifactId>
+                <version>${version.uuid-generator}</version>
+              </dependency>
+              <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${version.h2}</version>
+              </dependency>
+              <dependency>
                 <groupId>org.operaton.bpm</groupId>
                 <artifactId>operaton-engine</artifactId>
                 <version>${project.version}</version>
@@ -469,16 +502,6 @@
               <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-jdk14</artifactId>
-              </dependency>
-              <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${version.h2}</version>
-              </dependency>
-              <dependency>
-                <groupId>com.fasterxml.uuid</groupId>
-                <artifactId>java-uuid-generator</artifactId>
-                <version>${version.uuid-generator}</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -518,10 +541,10 @@
             <executions>
               <execution>
                 <id>copy</id>
-                <phase>generate-resources</phase>
                 <goals>
                   <goal>copy</goal>
                 </goals>
+                <phase>generate-resources</phase>
                 <configuration>
                   <artifactItems>
                     <artifactItem>
@@ -541,9 +564,6 @@
           </plugin>
         </plugins>
       </build>
-      <properties>
-        <java.resources.override>src/main/runtime/test/resources</java.resources.override>
-      </properties>
     </profile>
 
     <!-- database QA profiles -->
@@ -554,26 +574,26 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>database-test-drop-schema-before-test</id>
-                <phase>process-test-classes</phase>
-                <goals>
-                  <goal>java</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>database-test-drop-schema-after-test</id>
-                <phase>prepare-package</phase>
-                <goals>
-                  <goal>java</goal>
-                </goals>
-              </execution>
-            </executions>
             <configuration>
               <mainClass>org.operaton.bpm.engine.impl.db.DbSchemaDrop</mainClass>
               <classpathScope>test</classpathScope>
             </configuration>
+            <executions>
+              <execution>
+                <id>database-test-drop-schema-before-test</id>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+                <phase>process-test-classes</phase>
+              </execution>
+              <execution>
+                <id>database-test-drop-schema-after-test</id>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+                <phase>prepare-package</phase>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
@@ -588,8 +608,8 @@
           <groupId>org.operaton.bpm</groupId>
           <artifactId>operaton-engine</artifactId>
           <version>${project.version}</version>
-          <scope>test</scope>
           <classifier>tests</classifier>
+          <scope>test</scope>
         </dependency>
       </dependencies>
 
@@ -600,13 +620,13 @@
             <executions>
               <execution>
                 <id>database-test-create-schema</id>
-                <phase>process-test-classes</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>process-test-classes</phase>
                 <configuration>
                   <target>
-                    <copy file="target/test-classes/operaton.cfg.prefix.xml" tofile="target/test-classes/operaton.cfg.xml" overwrite="true" />
+                    <copy file="target/test-classes/operaton.cfg.prefix.xml" overwrite="true" tofile="target/test-classes/operaton.cfg.xml"/>
                   </target>
                 </configuration>
               </execution>
@@ -660,6 +680,4 @@
     </profile>
 
   </profiles>
-
-  <description>${project.name}</description>
 </project>

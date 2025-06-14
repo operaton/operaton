@@ -1,20 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <relativePath>../../pom.xml</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <groupId>org.operaton.connect</groupId>
   <artifactId>operaton-connect-bom</artifactId>
-  <name>Operaton - Connect - BOM</name>
   <packaging>pom</packaging>
+  <name>Operaton - Connect - BOM</name>
+
+  <description>${project.name}</description>
 
   <dependencyManagement>
     <dependencies>
+
+      <dependency>
+        <groupId>org.operaton.connect</groupId>
+        <artifactId>operaton-connect-connectors-all</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>org.operaton.connect</groupId>
@@ -34,21 +43,13 @@
         <version>${project.version}</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.operaton.connect</groupId>
-        <artifactId>operaton-connect-connectors-all</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
     </dependencies>
   </dependencyManagement>
 
   <scm>
-    <url>https://github.com/operaton/operaton</url>
     <connection>scm:git:git@github.com:operaton/operaton.git</connection>
     <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
+    <url>https://github.com/operaton/operaton</url>
     <tag>HEAD</tag>
   </scm>
-
-  <description>${project.name}</description>
 </project>

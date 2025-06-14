@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../database</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../database</relativePath>
   </parent>
 
   <artifactId>operaton-engine-plugins</artifactId>
@@ -13,9 +14,11 @@
 
   <name>Operaton - Engine Plugins</name>
 
+  <description>${project.name}</description>
+
   <modules>
-    <module>identity-ldap</module>
     <module>connect-plugin</module>
+    <module>identity-ldap</module>
     <module>spin-plugin</module>
   </modules>
 
@@ -25,8 +28,8 @@
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -36,13 +39,6 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
-      <classifier>junit4</classifier>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -64,11 +60,16 @@
     </dependency>
 
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit4</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-testing</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <description>${project.name}</description>
 </project>

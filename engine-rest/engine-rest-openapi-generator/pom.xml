@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-engine-rest-openapi-generator</artifactId>
-  <name>Operaton - Engine - REST - OpenAPI (JSON Generator)</name>
-  <packaging>jar</packaging>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
     <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
+  <artifactId>operaton-engine-rest-openapi-generator</artifactId>
+  <packaging>jar</packaging>
+  <name>Operaton - Engine - REST - OpenAPI (JSON Generator)</name>
+
+  <description>${project.name}</description>
 
   <properties>
     <version.json-schema-validator>1.5.6</version.json-schema-validator>
@@ -16,21 +19,10 @@
 
   <dependencies>
 
-    <dependency>
-      <groupId>org.freemarker</groupId>
-      <artifactId>freemarker</artifactId>
-    </dependency>
-
     <!-- json formatting -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-    </dependency>
-
-    <!-- file management -->
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
     </dependency>
 
     <!-- json schema validation -->
@@ -40,7 +32,16 @@
       <version>${version.json-schema-validator}</version>
     </dependency>
 
-  </dependencies>
+    <!-- file management -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
 
-  <description>${project.name}</description>
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+    </dependency>
+
+  </dependencies>
 </project>

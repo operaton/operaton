@@ -5,8 +5,8 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <relativePath>../parent</relativePath>
     <version>1.0.0-beta-5-SNAPSHOT</version>
+    <relativePath>../parent</relativePath>
   </parent>
 
   <artifactId>operaton-database-settings</artifactId>
@@ -15,26 +15,29 @@
   <description>Provides general dependencies and profiles for database testing</description>
 
   <properties>
+    <?SORTPOM IGNORE?>
+    <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
+    <database.tc.params>TC_DAEMON=true</database.tc.params>
+
+    <!-- needed for sql script and backward compatibility checks -->
+    <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
+    <operaton.version.old>7.22.0</operaton.version.old>
+
+    <version.liquibase>4.32.0</version.liquibase>
 
     <!-- database driver versions -->
+    <version.db2>${version.db2-11.5}</version.db2>
+    <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.h2>2.3.232</version.h2>
-    <version.h2-v1>1.4.200</version.h2-v1><!-- used for instance migration qa -->
-    <version.oracle>23.5.0.24.07</version.oracle>
+    <!-- used for instance migration qa -->
+    <version.h2-v1>1.4.200</version.h2-v1>
     <version.mariadb>1.7.6</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
     <version.mysql>9.2.0</version.mysql>
-    <version.sqlserver>12.10.0.jre8</version.sqlserver>
-    <version.db2-11.5>11.5.9.0</version.db2-11.5>
-    <version.db2>${version.db2-11.5}</version.db2>
+    <version.oracle>23.5.0.24.07</version.oracle>
     <version.postgresql>42.7.7</version.postgresql>
-    <version.liquibase>4.32.0</version.liquibase>
-    <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
-
-    <!-- needed for sql script and backward compatibility checks -->
-    <operaton.version.old>7.22.0</operaton.version.old>
-
-    <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
-    <database.tc.params>TC_DAEMON=true</database.tc.params>
+    <version.sqlserver>12.10.0.jre8</version.sqlserver>
+    <?SORTPOM RESUME?>
   </properties>
 
   <dependencyManagement>
@@ -43,6 +46,21 @@
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
         <version>${version.h2}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.ibm.db2</groupId>
+        <artifactId>jcc</artifactId>
+        <version>${version.db2}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.microsoft.sqlserver</groupId>
+        <artifactId>mssql-jdbc</artifactId>
+        <version>${version.sqlserver}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <version>${version.mysql}</version>
       </dependency>
       <dependency>
         <groupId>com.oracle.database.jdbc</groupId>
@@ -55,24 +73,9 @@
         <version>${version.mariadb}</version>
       </dependency>
       <dependency>
-        <groupId>com.mysql</groupId>
-        <artifactId>mysql-connector-j</artifactId>
-        <version>${version.mysql}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.microsoft.sqlserver</groupId>
-        <artifactId>mssql-jdbc</artifactId>
-        <version>${version.sqlserver}</version>
-      </dependency>
-      <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>${version.postgresql}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.ibm.db2</groupId>
-        <artifactId>jcc</artifactId>
-        <version>${version.db2}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -110,9 +113,9 @@
     <profile>
       <id>db2</id>
       <properties>
-        <database.type>db2</database.type>
-        <database.driver>com.ibm.db2.jcc.DB2Driver</database.driver>
         <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
+        <database.driver>com.ibm.db2.jcc.DB2Driver</database.driver>
+        <database.type>db2</database.type>
       </properties>
     </profile>
 
@@ -152,11 +155,11 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <database.url>jdbc:h2:mem:operaton;DB_CLOSE_DELAY=1000;LOCK_TIMEOUT=10000</database.url>
-        <database.type>h2</database.type>
         <database.driver>org.h2.Driver</database.driver>
+        <database.password/>
+        <database.type>h2</database.type>
+        <database.url>jdbc:h2:mem:operaton;DB_CLOSE_DELAY=1000;LOCK_TIMEOUT=10000</database.url>
         <database.username>sa</database.username>
-        <database.password />
         <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
       </properties>
       <dependencies>
@@ -188,20 +191,20 @@
     <profile>
       <id>h2</id>
       <properties>
+        <database.datasource.class>org.h2.jdbcx.JdbcDataSource</database.datasource.class>
+        <database.driver>org.h2.Driver</database.driver>
         <database.host>${project.parent.basedir}/target/h2/</database.host>
         <database.name>process-engine</database.name>
-        <database.username>sa</database.username>
         <database.password>sa</database.password>
         <database.port>18080</database.port>
-        <!-- This url has to be consistent for the subprojects: {server}-runtime and webapp-integration-tests -->
-        <database.url>jdbc:h2:${database.host}${database.name};AUTO_SERVER=TRUE;AUTO_SERVER_PORT=${database.port};LOCK_TIMEOUT=10000</database.url>
 
         <database.type>h2</database.type>
-        <database.driver>org.h2.Driver</database.driver>
-        <database.datasource.class>org.h2.jdbcx.JdbcDataSource</database.datasource.class>
+        <!-- This url has to be consistent for the subprojects: {server}-runtime and webapp-integration-tests -->
+        <database.url>jdbc:h2:${database.host}${database.name};AUTO_SERVER=TRUE;AUTO_SERVER_PORT=${database.port};LOCK_TIMEOUT=10000</database.url>
+        <database.username>sa</database.username>
+        <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
         <jboss.datasource.filename>h2-ds.xml</jboss.datasource.filename>
         <was.liberty.datasource.filename>h2-config.xml</was.liberty.datasource.filename>
-        <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
       </properties>
       <dependencies>
         <dependency>
@@ -232,11 +235,11 @@
     <profile>
       <id>mariadb</id>
       <properties>
-        <database.type>mariadb</database.type>
-        <database.driver>org.mariadb.jdbc.Driver</database.driver>
         <database.datasource.class>org.mariadb.jdbc.MySQLDataSource</database.datasource.class>
-        <database.tc.url>operatonmariadb:10.6</database.tc.url>
+        <database.driver>org.mariadb.jdbc.Driver</database.driver>
         <database.tc.params>/${database.name}?user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
+        <database.tc.url>operatonmariadb:10.6</database.tc.url>
+        <database.type>mariadb</database.type>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 
@@ -269,11 +272,11 @@
     <profile>
       <id>mysql</id>
       <properties>
-        <database.type>mysql</database.type>
-        <database.driver>com.mysql.cj.jdbc.Driver</database.driver>
         <database.datasource.class>com.mysql.cj.jdbc.MysqlDataSource</database.datasource.class>
-        <database.tc.url>operatonmysql:8.0</database.tc.url>
+        <database.driver>com.mysql.cj.jdbc.Driver</database.driver>
         <database.tc.params>/${database.name}?sendFractionalSeconds=false&amp;amp;user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
+        <database.tc.url>operatonmysql:8.0</database.tc.url>
+        <database.type>mysql</database.type>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 
@@ -306,10 +309,10 @@
     <profile>
       <id>oracle</id>
       <properties>
-        <database.type>oracle</database.type>
-        <database.driver>oracle.jdbc.OracleDriver</database.driver>
         <database.datasource.class>oracle.jdbc.pool.OracleDataSource</database.datasource.class>
+        <database.driver>oracle.jdbc.OracleDriver</database.driver>
         <database.tc.url>operatonoracle:21-faststart</database.tc.url>
+        <database.type>oracle</database.type>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
       <dependencies>
@@ -342,16 +345,16 @@
     <profile>
       <id>postgresql</id>
       <properties>
-        <database.type>postgres</database.type>
-        <database.username>test</database.username>
-        <database.password>test</database.password>
-        <database.driver>org.postgresql.Driver</database.driver>
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
+        <database.driver>org.postgresql.Driver</database.driver>
+        <database.password>test</database.password>
+        <database.tc.url>operatonpostgresql:13.2</database.tc.url>
+        <database.type>postgres</database.type>
+        <database.url>jdbc:tc:${database.tc.url}:///${database.name}/${database.tc.params}</database.url>
+        <database.username>test</database.username>
+        <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>
         <was.liberty.datasource.filename>postgresql-config.xml</was.liberty.datasource.filename>
-        <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
-        <database.tc.url>operatonpostgresql:13.2</database.tc.url>
-        <database.url>jdbc:tc:${database.tc.url}:///${database.name}/${database.tc.params}</database.url>
       </properties>
 
       <dependencies>
@@ -390,11 +393,11 @@
     <profile>
       <id>sqlserver</id>
       <properties>
-        <database.type>mssql</database.type>
-        <database.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</database.driver>
         <database.datasource.class>com.microsoft.sqlserver.jdbc.SQLServerDataSource</database.datasource.class>
-        <database.tc.url>operatonsqlserver:2019</database.tc.url>
+        <database.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</database.driver>
         <database.tc.params>;DatabaseName=${database.name};user=${database.username};password=${database.password};</database.tc.params>
+        <database.tc.url>operatonsqlserver:2019</database.tc.url>
+        <database.type>mssql</database.type>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -9,6 +10,7 @@
 
   <artifactId>operaton-engine-feel-scala</artifactId>
   <name>Operaton - DMN - Engine - FEEL - SCALA</name>
+  <description>${project.name}</description>
   <properties>
     <operaton.artifact>org.operaton.bpm.dmn.feel.impl.scala</operaton.artifact>
   </properties>
@@ -44,21 +46,20 @@
         <artifactId>maven-bundle-plugin</artifactId>
         <executions>
           <execution>
-            <phase>generate-sources</phase>
             <goals>
               <goal>cleanVersions</goal>
             </goals>
+            <phase>generate-sources</phase>
           </execution>
           <execution>
             <id>bundle-manifest</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>manifest</goal>
             </goals>
+            <phase>process-classes</phase>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
-  <description>${project.name}</description>
 </project>

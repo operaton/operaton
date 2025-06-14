@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,9 +34,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DateValueMapperTest {
 
-  protected static final String DATE_FORMAT = "dd.MM.yyyy - HH:mm:ss.SSSZ";
-  protected final Date VARIABLE_VALUE_DATE = new GregorianCalendar(2018, Calendar.JANUARY, 1, 8, 0, 0).getTime();
-  protected final String VARIABLE_VALUE_DATE_SERIALIZED = new SimpleDateFormat(DATE_FORMAT).format(VARIABLE_VALUE_DATE);
+  private static final String DATE_FORMAT = "dd.MM.yyyy - HH:mm:ss.SSSZ";
+  private static final Date VARIABLE_VALUE_DATE = new GregorianCalendar(2018, Calendar.JANUARY, 1, 8, 0, 0).getTime();
+  private static final String VARIABLE_VALUE_DATE_SERIALIZED = new SimpleDateFormat(DATE_FORMAT).format(VARIABLE_VALUE_DATE);
 
   protected DateValueMapper dateValueMapper;
 

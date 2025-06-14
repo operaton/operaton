@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
+import java.util.Base64;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.AuthorizationServiceImpl;
 import org.operaton.bpm.engine.impl.IdentityServiceImpl;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
@@ -34,7 +34,6 @@ import org.operaton.bpm.engine.rest.impl.NamedProcessEngineRestServiceImpl;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -84,7 +83,7 @@ public abstract class AbstractAuthenticationFilterTest extends AbstractRestServi
 
     // example method
     ProcessDefinition mockDefinition = MockProvider.createMockDefinition();
-    List<ProcessDefinition> mockDefinitions = Arrays.asList(mockDefinition);
+    List<ProcessDefinition> mockDefinitions = List.of(mockDefinition);
     ProcessDefinitionQuery mockQuery = mock(ProcessDefinitionQuery.class);
     when(repositoryServiceMock.createProcessDefinitionQuery()).thenReturn(mockQuery);
     when(mockQuery.list()).thenReturn(mockDefinitions);
@@ -163,7 +162,8 @@ public abstract class AbstractAuthenticationFilterTest extends AbstractRestServi
   @Test
   public void testMalformedCredentials() {
     given()
-      .header(HttpHeaders.AUTHORIZATION, "Basic " + new String(Base64.encodeBase64("this is not a valid format".getBytes())))
+      .header(HttpHeaders.AUTHORIZATION,
+          "Basic " + Base64.getEncoder().encodeToString("this is not a valid format".getBytes()))
       .pathParam("name", "default")
     .then().expect()
       .statusCode(Status.UNAUTHORIZED.getStatusCode())

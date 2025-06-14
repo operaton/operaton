@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,9 +20,9 @@ package org.operaton.bpm.engine.authorization;
  * The set of built-in {@link Permission Permissions} for
  * {@link Resources#OPTIMIZE Optimize resource} in Operaton.
  *
- * @deprecated These permissions have no effect
+ * @deprecated These permissions have no effect.
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0")
 public enum OptimizePermissions implements Permission {
 
   /**
@@ -36,7 +36,7 @@ public enum OptimizePermissions implements Permission {
    * that the user is not permitted to do everything, which means that at least
    * one permission is revoked. This does not implicate that all individual
    * permissions are revoked.
-   * 
+   *
    * Example: If the EDIT permission is revoked then the ALL
    * permission is revoked as well, because the user is not authorized
    * to execute all actions anymore.
@@ -54,7 +54,7 @@ public enum OptimizePermissions implements Permission {
   private String name;
   private int id;
 
-  private OptimizePermissions(String name, int id) {
+  OptimizePermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

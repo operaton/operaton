@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,10 +33,10 @@ import java.util.TreeMap;
 public abstract class HalResource<T extends HalResource<?>> {
 
   /** This resource links */
-  protected Map<String, HalLink> _links;
+  protected Map<String, HalLink> links;
 
   /** Embedded resources */
-  protected Map<String, Object> _embedded;
+  protected Map<String, Object> embedded;
 
   // the linker used by this resource
   protected transient HalLinker linker;
@@ -46,18 +46,18 @@ public abstract class HalResource<T extends HalResource<?>> {
   }
 
   public Map<String, HalLink> get_links() {
-    return _links;
+    return links;
   }
 
   public Map<String, Object> get_embedded() {
-    return _embedded;
+    return embedded;
   }
 
   public void addLink(String rel, String href) {
-    if(_links == null) {
-      _links = new TreeMap<>();
+    if(this.links == null) {
+      this.links = new TreeMap<>();
     }
-    _links.put(rel, new HalLink(href));
+    this.links.put(rel, new HalLink(href));
   }
 
   public void addLink(String rel, URI hrefUri) {
@@ -70,10 +70,10 @@ public abstract class HalResource<T extends HalResource<?>> {
   }
 
   private void addEmbeddedObject(String name, Object embedded) {
-    if(_embedded == null) {
-      _embedded = new TreeMap<>();
+    if(this.embedded == null) {
+      this.embedded = new TreeMap<>();
     }
-    _embedded.put(name, embedded);
+    this.embedded.put(name, embedded);
   }
 
   public void addEmbedded(String name, List<HalResource<?>> embeddedCollection) {
@@ -84,7 +84,7 @@ public abstract class HalResource<T extends HalResource<?>> {
   }
 
   public Object getEmbedded(String name) {
-    return _embedded.get(name);
+    return embedded.get(name);
   }
 
   /**

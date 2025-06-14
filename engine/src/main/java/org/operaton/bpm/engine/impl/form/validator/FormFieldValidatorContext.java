@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,22 +30,23 @@ import org.operaton.bpm.engine.impl.form.handler.FormFieldHandler;
  */
 public interface FormFieldValidatorContext {
 
-  public FormFieldHandler getFormFieldHandler();
+  FormFieldHandler getFormFieldHandler();
 
   /** @return the execution
-   * Deprecated, use {@link #getVariableScope()} */
-  @Deprecated
-  public DelegateExecution getExecution();
+   * @deprecated Use {@link #getVariableScope()} instead.
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
+  DelegateExecution getExecution();
 
   /**
    * @return the variable scope in which the value is submitted
    */
-  public VariableScope getVariableScope();
+  VariableScope getVariableScope();
 
   /** @return the configuration of this validator */
-  public String getConfiguration();
+  String getConfiguration();
 
   /** @return all values submitted in the form */
-  public Map<String, Object> getSubmittedValues();
+  Map<String, Object> getSubmittedValues();
 
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+						 xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+						 targetNamespace="Examples">
+
+	<process id="processWithJobsRetrying" name="Process with jobs retrying" isExecutable="true">
+		<startEvent id="start" />
+		<sequenceFlow id="flow1" sourceRef="start" targetRef="serviceTask1" />
+		<serviceTask id="serviceTask1" operaton:expression="true" operaton:async="true" name="Succeeding service task"/>
+		<sequenceFlow id="flow2" sourceRef="serviceTask1" targetRef="serviceTaskFail" />
+		<serviceTask id="serviceTaskFail" operaton:async="true"
+								 operaton:class="org.operaton.bpm.engine.test.api.runtime.FailingDelegate" name="Failing service task"/>
+		<sequenceFlow id="flow4" sourceRef="serviceTaskFail" targetRef="end" />
+		<endEvent id="end" />
+	</process>
+
+</definitions>

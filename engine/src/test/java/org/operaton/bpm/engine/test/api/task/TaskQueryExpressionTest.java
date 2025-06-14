@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,19 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -24,31 +37,20 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
+import org.operaton.bpm.engine.impl.mock.Mocks;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.mock.Mocks;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.joda.time.DateTime;
-import org.junit.*;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Sebastian Menski
  */
-public class TaskQueryExpressionTest {
+class TaskQueryExpressionTest {
 
   protected Task testTask;
   protected User testUser;
@@ -56,25 +58,20 @@ public class TaskQueryExpressionTest {
   protected User userWithoutGroups;
   protected Group group1;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/api/task/task-query-expression-test.operaton.cfg.xml");
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurationResource("org/operaton/bpm/engine/test/api/task/task-query-expression-test.operaton.cfg.xml")
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  RuntimeService runtimeService;
+  TaskService taskService;
+  IdentityService identityService;
 
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected IdentityService identityService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    identityService = engineRule.getIdentityService();
-
+  @BeforeEach
+  void setUp() {
     group1 = createGroup("group1");
     Group group2 = createGroup("group2");
     Group group3 = createGroup("group3");
@@ -102,7 +99,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByAssigneeExpression() {
+  void testQueryByAssigneeExpression() {
     assertCount(taskQuery().taskAssigneeExpression("${'" + testUser.getId() + "'}"), 2);
     assertCount(taskQuery().taskAssigneeExpression("${'" + anotherUser.getId() + "'}"), 0);
 
@@ -114,7 +111,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByAssigneeLikeExpression() {
+  void testQueryByAssigneeLikeExpression() {
     assertCount(taskQuery().taskAssigneeLikeExpression("${'%" + testUser.getId().substring(2) + "'}"), 2);
     assertCount(taskQuery().taskAssigneeLikeExpression("${'%" + anotherUser.getId().substring(2) + "'}"), 0);
 
@@ -126,7 +123,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByOwnerExpression() {
+  void testQueryByOwnerExpression() {
     assertCount(taskQuery().taskOwnerExpression("${'" + testUser.getId() + "'}"), 1);
     assertCount(taskQuery().taskOwnerExpression("${'" + anotherUser.getId() + "'}"), 0);
 
@@ -138,7 +135,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByInvolvedUserExpression() {
+  void testQueryByInvolvedUserExpression() {
     assertCount(taskQuery().taskInvolvedUserExpression("${'" + testUser.getId() + "'}"), 3);
     assertCount(taskQuery().taskInvolvedUserExpression("${'" + anotherUser.getId() + "'}"), 0);
 
@@ -150,7 +147,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByCandidateUserExpression() {
+  void testQueryByCandidateUserExpression() {
     assertCount(taskQuery().taskCandidateUserExpression("${'" + testUser.getId() + "'}"), 1);
     assertCount(taskQuery().taskCandidateUserExpression("${'" + testUser.getId() + "'}").includeAssignedTasks(), 2);
     assertCount(taskQuery().taskCandidateUserExpression("${'" + anotherUser.getId() + "'}"), 0);
@@ -164,7 +161,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByCandidateGroupExpression() {
+  void testQueryByCandidateGroupExpression() {
     assertCount(taskQuery().taskCandidateGroupExpression("${'" + group1.getId() + "'}"), 1);
     assertCount(taskQuery().taskCandidateGroupExpression("${'unknown'}"), 0);
 
@@ -177,7 +174,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByCandidateGroupsExpression() {
+  void testQueryByCandidateGroupsExpression() {
     setCurrentUser(testUser);
     assertCount(taskQuery().taskCandidateGroupInExpression("${currentUserGroups()}"), 1);
     assertCount(taskQuery().taskCandidateGroupInExpression("${currentUserGroups()}").includeAssignedTasks(), 2);
@@ -198,7 +195,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByTaskCreatedBeforeExpression() {
+  void testQueryByTaskCreatedBeforeExpression() {
     adjustTime(1);
 
     assertCount(taskQuery().taskCreatedBeforeExpression("${now()}"), 3);
@@ -215,7 +212,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByTaskCreatedOnExpression() {
+  void testQueryByTaskCreatedOnExpression() {
     setTime(testTask.getCreateTime());
     assertCount(taskQuery().taskCreatedOnExpression("${now()}"), 1);
 
@@ -227,7 +224,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByTaskCreatedAfterExpression() {
+  void testQueryByTaskCreatedAfterExpression() {
     adjustTime(1);
 
     assertCount(taskQuery().taskCreatedAfterExpression("${now()}"), 0);
@@ -244,7 +241,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByTaskUpdatedAfterExpression() {
+  void testQueryByTaskUpdatedAfterExpression() {
     adjustTime(1);
 
     assertCount(taskQuery().taskUpdatedAfterExpression("${now()}"), 0);
@@ -261,7 +258,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByDueBeforeExpression() {
+  void testQueryByDueBeforeExpression() {
     adjustTime(1);
 
     assertCount(taskQuery().dueBeforeExpression("${now()}"), 3);
@@ -278,7 +275,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByDueDateExpression() {
+  void testQueryByDueDateExpression() {
     setTime(testTask.getDueDate());
     assertCount(taskQuery().dueDateExpression("${now()}"), 1);
 
@@ -290,7 +287,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByDueAfterExpression() {
+  void testQueryByDueAfterExpression() {
     adjustTime(1);
 
     assertCount(taskQuery().dueAfterExpression("${now()}"), 0);
@@ -307,7 +304,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByFollowUpBeforeExpression() {
+  void testQueryByFollowUpBeforeExpression() {
     adjustTime(1);
 
     assertCount(taskQuery().followUpBeforeExpression("${now()}"), 3);
@@ -324,7 +321,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByFollowUpDateExpression() {
+  void testQueryByFollowUpDateExpression() {
     setTime(testTask.getFollowUpDate());
     assertCount(taskQuery().followUpDateExpression("${now()}"), 1);
 
@@ -336,7 +333,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByFollowUpAfterExpression() {
+  void testQueryByFollowUpAfterExpression() {
     adjustTime(1);
 
     assertCount(taskQuery().followUpAfterExpression("${now()}"), 0);
@@ -353,7 +350,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceBusinessKeyExpression() {
+  void testQueryByProcessInstanceBusinessKeyExpression() {
     // given
     String aBusinessKey = "business key";
     Mocks.register("aBusinessKey", aBusinessKey);
@@ -369,7 +366,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryByProcessInstanceBusinessKeyLikeExpression() {
+  void testQueryByProcessInstanceBusinessKeyLikeExpression() {
     // given
     String aBusinessKey = "business key";
     Mocks.register("aBusinessKeyLike", "%" + aBusinessKey.substring(5));
@@ -398,7 +395,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testExpressionOverrideQuery() {
+  void testExpressionOverrideQuery() {
     String queryString = "query";
     String expressionString = "expression";
     String testStringExpression = "${'" + expressionString + "'}";
@@ -486,7 +483,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryOverrideExpression() {
+  void testQueryOverrideExpression() {
     String queryString = "query";
     String expressionString = "expression";
     String testStringExpression = "${'" + expressionString + "'}";
@@ -578,7 +575,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void testQueryOr() {
+  void testQueryOr() {
     // given
     Date date = DateTimeUtil.now().plusDays(2).toDate();
 
@@ -621,7 +618,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void shouldRejectDueDateExpressionAndWithoutDueDateCombination() {
+  void shouldRejectDueDateExpressionAndWithoutDueDateCombination() {
     var taskQuery = taskService.createTaskQuery().dueDateExpression("");
     assertThatThrownBy(taskQuery::withoutDueDate)
       .isInstanceOf(ProcessEngineException.class)
@@ -629,7 +626,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void shouldRejectWithoutDueDateAndDueDateExpressionCombination() {
+  void shouldRejectWithoutDueDateAndDueDateExpressionCombination() {
     var taskQuery = taskService.createTaskQuery().withoutDueDate();
     assertThatThrownBy(() -> taskQuery.dueDateExpression(""))
       .isInstanceOf(ProcessEngineException.class)
@@ -637,7 +634,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void shouldRejectDueAfterExpressionAndWithoutDueDateCombination() {
+  void shouldRejectDueAfterExpressionAndWithoutDueDateCombination() {
     var taskQuery = taskService.createTaskQuery().dueAfterExpression("");
     assertThatThrownBy(taskQuery::withoutDueDate)
       .isInstanceOf(ProcessEngineException.class)
@@ -645,7 +642,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void shouldRejectWithoutDueDateAndDueAfterExpressionCombination() {
+  void shouldRejectWithoutDueDateAndDueAfterExpressionCombination() {
     var taskQuery = taskService.createTaskQuery().withoutDueDate();
     assertThatThrownBy(() -> taskQuery.dueAfterExpression(""))
       .isInstanceOf(ProcessEngineException.class)
@@ -653,7 +650,7 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void shouldRejectDueBeforeExpressionAndWithoutDueDateCombination() {
+  void shouldRejectDueBeforeExpressionAndWithoutDueDateCombination() {
     var taskQuery = taskService.createTaskQuery().dueBeforeExpression("");
     assertThatThrownBy(taskQuery::withoutDueDate)
       .isInstanceOf(ProcessEngineException.class)
@@ -661,15 +658,15 @@ public class TaskQueryExpressionTest {
   }
 
   @Test
-  public void shouldRejectWithoutDueDateAndDueBeforeExpressionCombination() {
+  void shouldRejectWithoutDueDateAndDueBeforeExpressionCombination() {
     var taskQuery = taskService.createTaskQuery().withoutDueDate();
     assertThatThrownBy(() -> taskQuery.dueBeforeExpression(""))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage");
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     Mocks.reset();
 
     for (Group group : identityService.createGroupQuery().list()) {

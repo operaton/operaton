@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,15 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
-
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
@@ -36,6 +27,15 @@ import org.operaton.bpm.engine.impl.metrics.MetricsQueryImpl;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.MetricIntervalValue;
+
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Daniel Meyer
@@ -53,6 +53,10 @@ public class MeterLogManager extends AbstractManager {
   public static final String DELETE_TASK_METER_BY_TIMESTAMP = "deleteTaskMeterLogEntriesByTimestamp";
   public static final String DELETE_TASK_METER_BY_REMOVAL_TIME = "deleteTaskMetricsByRemovalTime";
   public static final String DELETE_TASK_METER_BY_IDS = "deleteTaskMeterLogEntriesByIds";
+  private static final String START_TIME = "startTime";
+  private static final String END_TIME = "endTime";
+  private static final String REPORTER = "reporter";
+  private static final String MILLISECONDS = "milliseconds";
 
   public void insert(MeterLogEntity meterLogEntity) {
     getDbEntityManager()
@@ -130,9 +134,9 @@ public class MeterLogManager extends AbstractManager {
   public void deleteByTimestampAndReporter(Date timestamp, String reporter) {
     Map<String, Object> parameters = new HashMap<>();
     if (timestamp != null) {
-      parameters.put("milliseconds", timestamp.getTime());
+      parameters.put(MILLISECONDS, timestamp.getTime());
     }
-    parameters.put("reporter", reporter);
+    parameters.put(REPORTER, reporter);
     getDbEntityManager().delete(MeterLogEntity.class, DELETE_ALL_METER_BY_TIMESTAMP_AND_REPORTER, parameters);
   }
 
@@ -140,8 +144,8 @@ public class MeterLogManager extends AbstractManager {
 
   public long findUniqueTaskWorkerCount(Date startTime, Date endTime) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("startTime", startTime);
-    parameters.put("endTime", endTime);
+    parameters.put(START_TIME, startTime);
+    parameters.put(END_TIME, endTime);
 
     return (Long) getDbEntityManager().selectOne(SELECT_UNIQUE_TASK_WORKER, parameters);
   }
@@ -159,12 +163,12 @@ public class MeterLogManager extends AbstractManager {
     Map<String, Object> parameters = new HashMap<>();
     // data inserted prior to now minus timeToLive-days can be removed
     Date removalTime = Date.from(currentTimestamp.toInstant().minus(timeToLive, ChronoUnit.DAYS));
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(TaskMeterLogEntity.class, DELETE_TASK_METER_BY_REMOVAL_TIME,
@@ -174,11 +178,11 @@ public class MeterLogManager extends AbstractManager {
   @SuppressWarnings("unchecked")
   public List<String> findTaskMetricsForCleanup(int batchSize, Integer timeToLive, int minuteFrom, int minuteTo) {
     Map<String, Object> queryParameters = new HashMap<>();
-    queryParameters.put("currentTimestamp", ClockUtil.getCurrentTime());
+    queryParameters.put(CURRENT_TIMESTAMP, ClockUtil.getCurrentTime());
     queryParameters.put("timeToLive", timeToLive);
     if (minuteTo - minuteFrom + 1 < 60) {
-      queryParameters.put("minuteFrom", minuteFrom);
-      queryParameters.put("minuteTo", minuteTo);
+      queryParameters.put(MINUTE_FROM, minuteFrom);
+      queryParameters.put(MINUTE_TO, minuteTo);
     }
     ListQueryParameterObject parameterObject = new ListQueryParameterObject(queryParameters, 0, batchSize);
     parameterObject.getOrderingProperties().add(new QueryOrderingProperty(new QueryPropertyImpl("TIMESTAMP_"), Direction.ASCENDING));

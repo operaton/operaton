@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -48,7 +48,7 @@ import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
  * @author Tom Baeyens
  * @author Joram Barrez
  * @author Falko Menge
- * @author Bernd Ruecker (operaton)
+ * @author Bernd Ruecker (Camunda)
  * @author Christian Lipphardt (Camunda)
  *
  * @author Daniel Meyer
@@ -59,14 +59,14 @@ public class HistoryParseListener implements BpmnParseListener {
   // listeners can be reused for a given process engine instance but cannot be cached in static fields since
   // different process engine instances on the same Classloader may have different HistoryEventProducer
   // configurations wired
-  protected ExecutionListener PROCESS_INSTANCE_START_LISTENER;
-  protected ExecutionListener PROCESS_INSTANCE_END_LISTENER;
+  protected ExecutionListener processInstanceStartListener;
+  protected ExecutionListener processInstanceEndListener;
 
-  protected ExecutionListener ACTIVITY_INSTANCE_START_LISTENER;
-  protected ExecutionListener ACTIVITY_INSTANCE_END_LISTENER;
+  protected ExecutionListener activityInstanceStartListener;
+  protected ExecutionListener activityInstanceEndListener;
 
-  protected TaskListener USER_TASK_ASSIGNMENT_HANDLER;
-  protected TaskListener USER_TASK_ID_HANDLER;
+  protected TaskListener userTaskAssignmentHandler;
+  protected TaskListener userTaskIdHandler;
 
   // The history level set in the process engine configuration
   protected HistoryLevel historyLevel;
@@ -76,21 +76,21 @@ public class HistoryParseListener implements BpmnParseListener {
   }
 
   protected void initExecutionListeners(HistoryEventProducer historyEventProducer) {
-    PROCESS_INSTANCE_START_LISTENER = new ProcessInstanceStartListener(historyEventProducer);
-    PROCESS_INSTANCE_END_LISTENER = new ProcessInstanceEndListener(historyEventProducer);
+    processInstanceStartListener = new ProcessInstanceStartListener(historyEventProducer);
+    processInstanceEndListener = new ProcessInstanceEndListener(historyEventProducer);
 
-    ACTIVITY_INSTANCE_START_LISTENER = new ActivityInstanceStartListener(historyEventProducer);
-    ACTIVITY_INSTANCE_END_LISTENER = new ActivityInstanceEndListener(historyEventProducer);
+    activityInstanceStartListener = new ActivityInstanceStartListener(historyEventProducer);
+    activityInstanceEndListener = new ActivityInstanceEndListener(historyEventProducer);
 
-    USER_TASK_ASSIGNMENT_HANDLER = new ActivityInstanceUpdateListener(historyEventProducer);
-    USER_TASK_ID_HANDLER = USER_TASK_ASSIGNMENT_HANDLER;
+    userTaskAssignmentHandler = new ActivityInstanceUpdateListener(historyEventProducer);
+    userTaskIdHandler = userTaskAssignmentHandler;
   }
 
   @Override
   public void parseProcess(Element processElement, ProcessDefinitionEntity processDefinition) {
     ensureHistoryLevelInitialized();
     if (historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_END, null)) {
-      processDefinition.addBuiltInListener(PvmEvent.EVENTNAME_END, PROCESS_INSTANCE_END_LISTENER);
+      processDefinition.addBuiltInListener(PvmEvent.EVENTNAME_END, processInstanceEndListener);
     }
   }
 
@@ -136,8 +136,8 @@ public class HistoryParseListener implements BpmnParseListener {
 
     if (historyLevel.isHistoryEventProduced(HistoryEventTypes.TASK_INSTANCE_CREATE, null)) {
       TaskDefinition taskDefinition = ((UserTaskActivityBehavior) activity.getActivityBehavior()).getTaskDefinition();
-      taskDefinition.addBuiltInTaskListener(TaskListener.EVENTNAME_ASSIGNMENT, USER_TASK_ASSIGNMENT_HANDLER);
-      taskDefinition.addBuiltInTaskListener(TaskListener.EVENTNAME_CREATE, USER_TASK_ID_HANDLER);
+      taskDefinition.addBuiltInTaskListener(TaskListener.EVENTNAME_ASSIGNMENT, userTaskAssignmentHandler);
+      taskDefinition.addBuiltInTaskListener(TaskListener.EVENTNAME_CREATE, userTaskIdHandler);
     }
   }
 
@@ -279,10 +279,10 @@ public class HistoryParseListener implements BpmnParseListener {
   protected void addActivityHandlers(ActivityImpl activity) {
     ensureHistoryLevelInitialized();
     if (historyLevel.isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_START, null)) {
-      activity.addBuiltInListener(PvmEvent.EVENTNAME_START, ACTIVITY_INSTANCE_START_LISTENER, 0);
+      activity.addBuiltInListener(PvmEvent.EVENTNAME_START, activityInstanceStartListener, 0);
     }
     if (historyLevel.isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_END, null)) {
-      activity.addBuiltInListener(PvmEvent.EVENTNAME_END, ACTIVITY_INSTANCE_END_LISTENER);
+      activity.addBuiltInListener(PvmEvent.EVENTNAME_END, activityInstanceEndListener);
     }
   }
 

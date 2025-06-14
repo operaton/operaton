@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,32 +20,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
 @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/JobExecutorAcquireJobsForPriorityRangeTest.jobPrioProcess.bpmn20.xml")
-public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecutorAcquireJobsTest {
+class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecutorAcquireJobsTest {
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     configuration.setJobExecutorAcquireByPriority(true);
     // create 10 jobs, 5 with prio 5 and 5 with prio 10
     createJobs();
   }
 
   @Test
-  public void shouldAcquireAllJobs() {
+  void shouldAcquireAllJobs() {
     // given
     configuration.setJobExecutorPriorityRangeMin(0);
     configuration.setJobExecutorPriorityRangeMax(Long.MAX_VALUE);
@@ -64,7 +64,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
   }
 
   @Test
-  public void shouldAcquireOnlyJobsInRangeWithUpperBound() {
+  void shouldAcquireOnlyJobsInRangeWithUpperBound() {
     // given
     configuration.setJobExecutorPriorityRangeMin(0);
     configuration.setJobExecutorPriorityRangeMax(7L);
@@ -80,7 +80,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
   }
 
   @Test
-  public void shouldAcquireOnlyJobsInRangeWithLowerBound() {
+  void shouldAcquireOnlyJobsInRangeWithLowerBound() {
     // given
     configuration.setJobExecutorPriorityRangeMin(7L);
     configuration.setJobExecutorPriorityRangeMax(Long.MAX_VALUE);
@@ -96,7 +96,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
   }
 
   @Test
-  public void shouldAcquireOnlyJobsInBoundWithUpperAndLowerBound() {
+  void shouldAcquireOnlyJobsInBoundWithUpperAndLowerBound() {
     // given
     configuration.setJobExecutorPriorityRangeMin(7L);
     configuration.setJobExecutorPriorityRangeMax(12L);
@@ -112,7 +112,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
   }
 
   @Test
-  public void shouldAcquireOnlyJobsInBoundWithUpperAndLowerBoundNoJobsFound() {
+  void shouldAcquireOnlyJobsInBoundWithUpperAndLowerBoundNoJobsFound() {
     // given
     configuration.setJobExecutorPriorityRangeMin(12L);
     configuration.setJobExecutorPriorityRangeMax(15L);
@@ -125,7 +125,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
   }
 
   @Test
-  public void shouldAcquireJobsWithNegativePriorityInRange() {
+  void shouldAcquireJobsWithNegativePriorityInRange() {
     // given
     configuration.setJobExecutorPriorityRangeMin(-5);
     startProcess("jobPrioProcess", "task3", 1);
@@ -139,7 +139,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
   }
 
   @Test
-  public void shouldSetDefaultPriorityRange() {
+  void shouldSetDefaultPriorityRange() {
     // given standard configuration
 
     // when
@@ -151,7 +151,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
   }
 
   @Test
-  public void shouldAcquireAllJobsWhenDefaultPriorityRange() {
+  void shouldAcquireAllJobsWhenDefaultPriorityRange() {
     // given default configuration
 
     // when
@@ -163,7 +163,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
 
   @Test
   @WatchLogger(loggerNames = "org.operaton.bpm.engine.impl.persistence.entity.JobEntity", level = "debug")
-  public void shouldDisableRangeCheckInQueryWhenDefaultConfig() {
+  void shouldDisableRangeCheckInQueryWhenDefaultConfig() {
     // given default configuration
     configuration.setJobExecutorAcquireByPriority(false);
 
@@ -177,7 +177,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
 
   @Test
   @WatchLogger(loggerNames = "org.operaton.bpm.engine.impl.persistence.entity.JobEntity", level = "debug")
-  public void shouldEnableRangeCheckInQueryWhenUsingCustomMinBoundaryConfig() {
+  void shouldEnableRangeCheckInQueryWhenUsingCustomMinBoundaryConfig() {
     // given default configuration
     configuration.setJobExecutorPriorityRangeMin(6);
 
@@ -193,7 +193,7 @@ public class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecu
 
   @Test
   @WatchLogger(loggerNames = "org.operaton.bpm.engine.impl.persistence.entity.JobEntity", level = "debug")
-  public void shouldEnableRangeCheckInQueryWhenUsingCustomMaxBoundaryConfig() {
+  void shouldEnableRangeCheckInQueryWhenUsingCustomMaxBoundaryConfig() {
     // given default configuration
     configuration.setJobExecutorPriorityRangeMax(11);
 

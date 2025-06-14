@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.PersistenceSession;
@@ -29,14 +31,12 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class DbOperationsOrderingTest {
+class DbOperationsOrderingTest {
 
   protected ExposingDbEntityManager entityManager;
 
@@ -61,8 +61,8 @@ public class DbOperationsOrderingTest {
   VariableInstanceEntity variable4 = null;
 
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     TestIdGenerator idGenerator = new TestIdGenerator();
     entityManager = new ExposingDbEntityManager(idGenerator, null);
 
@@ -103,7 +103,7 @@ public class DbOperationsOrderingTest {
   }
 
   @Test
-  public void testInsertSingleEntity() {
+  void testInsertSingleEntity() {
 
     entityManager.insert(execution1);
     entityManager.flushEntityCache();
@@ -113,7 +113,7 @@ public class DbOperationsOrderingTest {
   }
 
   @Test
-  public void testInsertReferenceOrdering() {
+  void testInsertReferenceOrdering() {
 
     execution2.setParentExecution(execution3);
 
@@ -129,7 +129,7 @@ public class DbOperationsOrderingTest {
 
 
   @Test
-  public void testInsertReferenceOrderingAndIdOrdering() {
+  void testInsertReferenceOrderingAndIdOrdering() {
 
     execution2.setParentExecution(execution3);
 
@@ -147,7 +147,7 @@ public class DbOperationsOrderingTest {
   }
 
   @Test
-  public void testInsertReferenceOrderingMultipleTrees() {
+  void testInsertReferenceOrderingMultipleTrees() {
 
     // tree1
     execution3.setParentExecution(execution4);
@@ -177,7 +177,7 @@ public class DbOperationsOrderingTest {
   }
 
   @Test
-  public void testDeleteReferenceOrdering() {
+  void testDeleteReferenceOrdering() {
     // given
     execution1.setParentExecution(execution2);
     entityManager.getDbEntityCache().putPersistent(execution1);
@@ -195,7 +195,7 @@ public class DbOperationsOrderingTest {
   }
 
   @Test
-  public void testDeleteReferenceOrderingAfterTransientUpdate() {
+  void testDeleteReferenceOrderingAfterTransientUpdate() {
     // given
     execution1.setParentExecution(execution2);
     entityManager.getDbEntityCache().putPersistent(execution1);
@@ -238,7 +238,7 @@ public class DbOperationsOrderingTest {
   }
 
   @Test
-  public void testInsertIdOrdering() {
+  void testInsertIdOrdering() {
 
     entityManager.insert(execution1);
     entityManager.insert(execution2);

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,23 +23,23 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class MigrationNestedEventSubProcessTest {
 
   protected static final String USER_TASK_ID = "userTask";
@@ -52,16 +52,16 @@ public class MigrationNestedEventSubProcessTest {
 
     public abstract String getEventName();
 
-    public void assertMigration(MigrationTestRule testHelper) {
+    public void assertMigration(MigrationTestExtension testHelper) {
       testHelper.assertEventSubscriptionRemoved(EVENT_SUB_PROCESS_START_ID, getEventName());
       testHelper.assertEventSubscriptionCreated(EVENT_SUB_PROCESS_START_ID, getEventName());
     }
 
-    public abstract void triggerEventSubProcess(MigrationTestRule testHelper);
+    public abstract void triggerEventSubProcess(MigrationTestExtension testHelper);
   }
 
 
-  @Parameterized.Parameters(name = "{index}: {0}")
+  @Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][]{
       {//message event sub process configuration
@@ -77,7 +77,7 @@ public class MigrationNestedEventSubProcessTest {
           }
 
           @Override
-          public void triggerEventSubProcess(MigrationTestRule testHelper) {
+          public void triggerEventSubProcess(MigrationTestExtension testHelper) {
             testHelper.correlateMessage(EventSubProcessModels.MESSAGE_NAME);
           }
 
@@ -107,7 +107,7 @@ public class MigrationNestedEventSubProcessTest {
         }
 
         @Override
-        public void triggerEventSubProcess(MigrationTestRule testHelper) {
+        public void triggerEventSubProcess(MigrationTestExtension testHelper) {
           testHelper.sendSignal(EventSubProcessModels.SIGNAL_NAME);
         }
 
@@ -132,7 +132,7 @@ public class MigrationNestedEventSubProcessTest {
         }
 
         @Override
-        public void assertMigration(MigrationTestRule testHelper) {
+        public void assertMigration(MigrationTestExtension testHelper) {
           testHelper.assertEventSubProcessTimerJobRemoved(EVENT_SUB_PROCESS_START_ID);
           testHelper.assertEventSubProcessTimerJobCreated(EVENT_SUB_PROCESS_START_ID);
         }
@@ -143,7 +143,7 @@ public class MigrationNestedEventSubProcessTest {
         }
 
         @Override
-        public void triggerEventSubProcess(MigrationTestRule testHelper) {
+        public void triggerEventSubProcess(MigrationTestExtension testHelper) {
           testHelper.triggerTimer();
         }
 
@@ -174,7 +174,7 @@ public class MigrationNestedEventSubProcessTest {
         }
 
         @Override
-        public void triggerEventSubProcess(MigrationTestRule testHelper) {
+        public void triggerEventSubProcess(MigrationTestExtension testHelper) {
           testHelper.setAnyVariable(testHelper.snapshotAfterMigration.getProcessInstanceId());
         }
 
@@ -186,17 +186,16 @@ public class MigrationNestedEventSubProcessTest {
     });
   }
 
-  @Parameterized.Parameter
+  @Parameter
   public MigrationEventSubProcessTestConfiguration configuration;
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  @Test
-  public void testMapUserTaskSiblingOfEventSubProcess() {
+  @TestTemplate
+  void testMapUserTaskSiblingOfEventSubProcess() {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(configuration.getSourceProcess());
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(configuration.getSourceProcess());
@@ -230,8 +229,8 @@ public class MigrationNestedEventSubProcessTest {
     testHelper.assertProcessEnded(testHelper.snapshotBeforeMigration.getProcessInstanceId());
   }
 
-  @Test
-  public void testMapUserTaskSiblingOfEventSubProcessAndTriggerEvent() {
+  @TestTemplate
+  void testMapUserTaskSiblingOfEventSubProcessAndTriggerEvent() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(configuration.getSourceProcess());
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(configuration.getSourceProcess());
 

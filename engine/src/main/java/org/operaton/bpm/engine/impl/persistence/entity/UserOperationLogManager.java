@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -48,6 +41,14 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.util.PermissionConverter;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Manager for {@link UserOperationLogEntryEventEntity} that also provides a generic and some specific log methods.
  *
@@ -55,6 +56,12 @@ import org.operaton.bpm.engine.impl.util.StringUtil;
  * @author Tobias Metzke
  */
 public class UserOperationLogManager extends AbstractHistoricManager {
+
+  private static final String OPERATION_ID = "operationId";
+  private static final String ANNOTATION = "annotation";
+  private static final String PROP_GROUP_ID = "groupId";
+  private static final String PROP_TENANT_ID = "tenantId";
+  private static final String PROP_USER_ID = "userId";
 
   public UserOperationLogEntry findOperationLogById(String entryId) {
     return getDbEntityManager().selectById(UserOperationLogEntryEventEntity.class, entryId);
@@ -81,9 +88,9 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToUserOperationLogByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(UserOperationLogEntryEventEntity.class, "updateUserOperationLogByRootProcessInstanceId", parameters);
@@ -91,9 +98,9 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToUserOperationLogByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(UserOperationLogEntryEventEntity.class, "updateUserOperationLogByProcessInstanceId", parameters);
@@ -101,8 +108,8 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public void updateOperationLogAnnotationByOperationId(String operationId, String annotation) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("operationId", operationId);
-    parameters.put("annotation", annotation);
+    parameters.put(OPERATION_ID, operationId);
+    parameters.put(ANNOTATION, annotation);
 
     getDbEntityManager()
         .updatePreserveOrder(UserOperationLogEntryEventEntity.class, "updateOperationLogAnnotationByOperationId", parameters);
@@ -116,12 +123,12 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public DbOperation deleteOperationLogByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(UserOperationLogEntryEventEntity.class, "deleteUserOperationLogByRemovalTime",
@@ -144,7 +151,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
       UserOperationLogContextEntryBuilder entryBuilder =
           UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.USER)
             .category(UserOperationLogEntry.CATEGORY_ADMIN)
-            .propertyChanges(new PropertyChange("userId", null, userId));
+            .propertyChanges(new PropertyChange(PROP_USER_ID, null, userId));
 
       context.addEntry(entryBuilder.create());
       fireUserOperationLog(context);
@@ -161,7 +168,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
       UserOperationLogContextEntryBuilder entryBuilder =
           UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.GROUP)
             .category(UserOperationLogEntry.CATEGORY_ADMIN)
-            .propertyChanges(new PropertyChange("groupId", null, groupId));
+            .propertyChanges(new PropertyChange(PROP_GROUP_ID, null, groupId));
 
       context.addEntry(entryBuilder.create());
       fireUserOperationLog(context);
@@ -179,7 +186,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
           UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.TENANT)
             .category(UserOperationLogEntry.CATEGORY_ADMIN)
             .tenantId(tenantId)
-            .propertyChanges(new PropertyChange("tenantId", null, tenantId));
+            .propertyChanges(new PropertyChange(PROP_TENANT_ID, null, tenantId));
 
       context.addEntry(entryBuilder.create());
       fireUserOperationLog(context);
@@ -201,13 +208,13 @@ public class UserOperationLogManager extends AbstractHistoricManager {
             .category(UserOperationLogEntry.CATEGORY_ADMIN);
       List<PropertyChange> propertyChanges = new ArrayList<>();
       if (userId != null) {
-        propertyChanges.add(new PropertyChange("userId", null, userId));
+        propertyChanges.add(new PropertyChange(PROP_USER_ID, null, userId));
       }
       if (groupId != null) {
-        propertyChanges.add(new PropertyChange("groupId", null, groupId));
+        propertyChanges.add(new PropertyChange(PROP_GROUP_ID, null, groupId));
       }
       if (tenantId != null) {
-        propertyChanges.add(new PropertyChange("tenantId", null, tenantId));
+        propertyChanges.add(new PropertyChange(PROP_TENANT_ID, null, tenantId));
       }
       entryBuilder.propertyChanges(propertyChanges);
 
@@ -712,11 +719,11 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   public void logSetAnnotationOperation(String operationId, String tenantId) {
-    logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, "operationId", UserOperationLogEntry.OPERATION_TYPE_SET_ANNOTATION, tenantId);
+    logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, OPERATION_ID, UserOperationLogEntry.OPERATION_TYPE_SET_ANNOTATION, tenantId);
   }
 
   public void logClearAnnotationOperation(String operationId, String tenantId) {
-    logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, "operationId", UserOperationLogEntry.OPERATION_TYPE_CLEAR_ANNOTATION, tenantId);
+    logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, OPERATION_ID, UserOperationLogEntry.OPERATION_TYPE_CLEAR_ANNOTATION, tenantId);
   }
 
   public void logSetIncidentAnnotationOperation(String incidentId, String tenantId) {
@@ -753,10 +760,10 @@ public class UserOperationLogManager extends AbstractHistoricManager {
       propertyChanges.add(new PropertyChange("resource", previousValues == null ? null : getResourceName(previousValues.getResourceType()), getResourceName(authorization.getResourceType())));
       propertyChanges.add(new PropertyChange("resourceId", previousValues == null ? null : previousValues.getResourceId(), authorization.getResourceId()));
       if (authorization.getUserId() != null || (previousValues != null && previousValues.getUserId() != null)) {
-        propertyChanges.add(new PropertyChange("userId", previousValues == null ? null : previousValues.getUserId(), authorization.getUserId()));
+        propertyChanges.add(new PropertyChange(PROP_USER_ID, previousValues == null ? null : previousValues.getUserId(), authorization.getUserId()));
       }
       if (authorization.getGroupId() != null || (previousValues != null && previousValues.getGroupId() != null)) {
-        propertyChanges.add(new PropertyChange("groupId", previousValues == null ? null : previousValues.getGroupId(), authorization.getGroupId()));
+        propertyChanges.add(new PropertyChange(PROP_GROUP_ID, previousValues == null ? null : previousValues.getGroupId(), authorization.getGroupId()));
       }
 
       UserOperationLogContext context = new UserOperationLogContext();

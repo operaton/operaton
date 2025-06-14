@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,9 +16,22 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertNotSame;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.Problem;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.EventSubscription;
@@ -26,16 +39,8 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import java.util.HashMap;
-import java.util.List;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotSame;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
@@ -43,11 +48,22 @@ import static org.junit.Assert.assertNotSame;
  * @author Kristin Polenz (operaton)
  * @author Christian Lipphardt (Camunda)
  */
-public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
+class MessageBoundaryEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+  HistoryService historyService;
 
   @Deployment
   @Test
-  public void testSingleBoundaryMessageEvent() {
+  void testSingleBoundaryMessageEvent() {
     runtimeService.startProcessInstanceByKey("process");
 
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(2);
@@ -92,7 +108,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDoubleBoundaryMessageEventSameMessageId() {
+  void testDoubleBoundaryMessageEventSameMessageId() {
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageBoundaryEventTest.testDoubleBoundaryMessageEventSameMessageId.bpmn20.xml");
@@ -111,7 +127,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDoubleBoundaryMessageEvent() {
+  void testDoubleBoundaryMessageEvent() {
     runtimeService.startProcessInstanceByKey("process");
 
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(2);
@@ -178,7 +194,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDoubleBoundaryMessageEventMultiInstance() {
+  void testDoubleBoundaryMessageEventMultiInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     // assume we have 7 executions
     // one process instance
@@ -278,7 +294,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryMessageEventInsideSubprocess() {
+  void testBoundaryMessageEventInsideSubprocess() {
 
     // this time the boundary events are placed on a user task that is contained inside a sub process
 
@@ -328,7 +344,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryMessageEventOnSubprocessAndInsideSubprocess() {
+  void testBoundaryMessageEventOnSubprocessAndInsideSubprocess() {
 
     // this time the boundary events are placed on a user task that is contained inside a sub process
     // and on the subprocess itself
@@ -467,7 +483,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryMessageEventOnSubprocess() {
+  void testBoundaryMessageEventOnSubprocess() {
     runtimeService.startProcessInstanceByKey("process");
 
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(2);
@@ -536,7 +552,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryMessageEventOnSubprocessWithIntermediateMessageCatch() {
+  void testBoundaryMessageEventOnSubprocessWithIntermediateMessageCatch() {
 
     // given
     // a process instance waiting inside the intermediate message catch inside the subprocess
@@ -561,7 +577,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testBoundaryMessageEventOnSubprocessAndInsideSubprocessMultiInstance() {
+  void testBoundaryMessageEventOnSubprocessAndInsideSubprocessMultiInstance() {
 
     // this time the boundary events are placed on a user task that is contained inside a sub process
     // and on the subprocess itself
@@ -618,7 +634,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testBoundaryMessageEventConcurrent() {
+  void testBoundaryMessageEventConcurrent() {
     runtimeService.startProcessInstanceByKey("boundaryEvent");
 
     EventSubscription eventSubscriptionTask1 = runtimeService.createEventSubscriptionQuery().activityId("messageBoundary1").singleResult();
@@ -638,7 +654,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExpressionInBoundaryMessageEventName() {
+  void testExpressionInBoundaryMessageEventName() {
 
     // given a process instance with its variables
     HashMap<String, Object> variables = new HashMap<>();

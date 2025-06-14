@@ -9,11 +9,11 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <properties>
-    <version.asm>9.7.1</version.asm>
+    <version.asm>9.8</version.asm>
   </properties>
 
   <dependencyManagement>
@@ -88,7 +88,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-test-utils-testcontainers</artifactId>
-      <version>1.0.0-beta-4-SNAPSHOT</version>
+      <version>1.0.0-beta-5-SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
 

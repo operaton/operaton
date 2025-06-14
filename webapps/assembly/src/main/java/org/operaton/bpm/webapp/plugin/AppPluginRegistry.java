@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ public interface AppPluginRegistry<T extends AppPlugin> {
    *
    * @return
    */
-  public List<T> getPlugins();
+  List<T> getPlugins();
 
   /**
    * Returns the registered plugin with the given name or
@@ -41,5 +41,5 @@ public interface AppPluginRegistry<T extends AppPlugin> {
    * @param id
    * @return
    */
-  public T getPlugin(String id);
+  T getPlugin(String id);
 }

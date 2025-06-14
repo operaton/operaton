@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -179,6 +179,13 @@
     </dependency>
 
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit4</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
     </dependency>
@@ -244,6 +251,18 @@
     <dependency>
       <groupId>org.wiremock</groupId>
       <artifactId>wiremock-standalone</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>jdbc</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -524,6 +543,9 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
+              <systemPropertyVariables>
+                <databaseType>${database.type}</databaseType>
+              </systemPropertyVariables>
               <excludes>
                 <!-- HEMERA-2453 -->
                 <exclude>**/JobExecutorRequestContextLocalInvocationTest.java</exclude>

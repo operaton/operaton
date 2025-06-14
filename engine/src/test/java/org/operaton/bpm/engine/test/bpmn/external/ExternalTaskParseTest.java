@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,21 +22,35 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ExternalTaskParseTest extends PluggableProcessEngineTest {
+class ExternalTaskParseTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ExternalTaskService externalTaskService;
 
   @Test
-  public void testParseExternalTaskWithoutTopic() {
+  void testParseExternalTaskWithoutTopic() {
     DeploymentBuilder deploymentBuilder = repositoryService
       .createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/bpmn/external/ExternalTaskParseTest.testParseExternalTaskWithoutTopic.bpmn20.xml");
@@ -53,7 +67,7 @@ public class ExternalTaskParseTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParseExternalTaskWithExpressionTopic() {
+  void testParseExternalTaskWithExpressionTopic() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("topicName", "testTopicExpression");
 
@@ -64,7 +78,7 @@ public class ExternalTaskParseTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParseExternalTaskWithStringTopic() {
+  void testParseExternalTaskWithStringTopic() {
     Map<String, Object> variables = new HashMap<>();
 
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithStringTopicProcess", variables);

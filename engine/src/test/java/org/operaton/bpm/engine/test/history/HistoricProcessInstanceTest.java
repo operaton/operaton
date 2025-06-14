@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,39 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionName;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionVersion;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
@@ -33,45 +65,26 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.CallActivityModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.CompensationModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.util.ChangeVariablesDelegate;
 import org.operaton.bpm.engine.test.jobexecutor.FailingDelegate;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionName;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionVersion;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
-import java.util.*;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricProcessInstanceTest {
+class HistoricProcessInstanceTest {
 
-  public static final BpmnModelInstance FORK_JOIN_SUB_PROCESS_MODEL = ProcessModels.newModel()
+  static final BpmnModelInstance FORK_JOIN_SUB_PROCESS_MODEL = ProcessModels.newModel()
     .startEvent()
     .subProcess("subProcess")
     .embeddedSubProcess()
@@ -88,32 +101,21 @@ public class HistoricProcessInstanceTest {
     .endEvent()
     .done();
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testHelper);
-
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected ManagementService managementService;
-  protected HistoryService historyService;
-  protected TaskService taskService;
-  protected CaseService caseService;
-
-  @Before
-  public void initServices() {
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-    historyService = engineRule.getHistoryService();
-    taskService = engineRule.getTaskService();
-    caseService = engineRule.getCaseService();
-  }
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  HistoryService historyService;
+  TaskService taskService;
+  CaseService caseService;
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testHistoricDataCreatedForProcessExecution() {
+  void testHistoricDataCreatedForProcessExecution() {
 
     Calendar calendar = new GregorianCalendar();
     calendar.set(Calendar.YEAR, 2010);
@@ -173,7 +175,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testLongRunningHistoricDataCreatedForProcessExecution() {
+  void testLongRunningHistoricDataCreatedForProcessExecution() {
     final long ONE_YEAR = 1000 * 60 * 60 * 24 * 365;
 
     Calendar cal = Calendar.getInstance();
@@ -215,7 +217,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testDeleteProcessInstanceHistoryCreated() {
+  void testDeleteProcessInstanceHistoryCreated() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     assertThat(processInstance).isNotNull();
 
@@ -227,7 +229,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceWithoutSubprocessInstances() {
+  void testDeleteProcessInstanceWithoutSubprocessInstances() {
     // given a process instance with subprocesses
     BpmnModelInstance calling =
         Bpmn.createExecutableProcess("calling")
@@ -259,7 +261,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testDeleteProcessInstanceWithSubprocessInstances() {
+  void testDeleteProcessInstanceWithSubprocessInstances() {
     // given a process instance with subprocesses
     BpmnModelInstance calling =
         Bpmn.createExecutableProcess("calling")
@@ -293,7 +295,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @SuppressWarnings("deprecation")
-  public void testHistoricProcessInstanceStartDate() {
+  void testHistoricProcessInstanceStartDate() {
     ClockUtil.setCurrentTime(new Date());
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -311,7 +313,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @SuppressWarnings("deprecation")
-  public void testHistoricProcessInstanceFinishDateUnfinished() {
+  void testHistoricProcessInstanceFinishDateUnfinished() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Date date = new Date();
@@ -327,7 +329,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @SuppressWarnings("deprecation")
-  public void testHistoricProcessInstanceFinishDateFinished() {
+  void testHistoricProcessInstanceFinishDateFinished() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     Date date = new Date();
@@ -345,7 +347,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void testHistoricProcessInstanceDelete() {
+  void testHistoricProcessInstanceDelete() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     runtimeService.deleteProcessInstance(pi.getId(), "cancel");
@@ -360,7 +362,7 @@ public class HistoricProcessInstanceTest {
   /** See: <a href="https://app.camunda.com/jira/browse/CAM-1324">CAM-1324</a> */
   @Test
   @Deployment
-  public void testHistoricProcessInstanceDeleteAsync() {
+  void testHistoricProcessInstanceDeleteAsync() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failing");
 
     runtimeService.deleteProcessInstance(pi.getId(), "cancel");
@@ -375,7 +377,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcessInstanceQueryWithIncidents() {
+  void testHistoricProcessInstanceQueryWithIncidents() {
     // start instance with incidents
     runtimeService.startProcessInstanceByKey("Process_1");
     testHelper.executeAvailableJobs();
@@ -414,7 +416,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldDeleteIncidentAfterJobWasSuccessfully.bpmn"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcessInstanceQueryIncidentStatusOpen() {
+  void testHistoricProcessInstanceQueryIncidentStatusOpen() {
     //given a processes instance, which will fail
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -430,7 +432,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldDeleteIncidentAfterJobWasSuccessfully.bpmn"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcessInstanceQueryIncidentStatusResolved() {
+  void testHistoricProcessInstanceQueryIncidentStatusResolved() {
     //given a incident processes instance
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -450,7 +452,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldDeleteIncidentAfterJobWasSuccessfully.bpmn"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcessInstanceQueryIncidentStatusOpenWithTwoProcesses() {
+  void testHistoricProcessInstanceQueryIncidentStatusOpenWithTwoProcesses() {
     //given two processes, which will fail, are started
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
@@ -472,7 +474,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcessInstanceQueryWithIncidentMessageNull() {
+  void testHistoricProcessInstanceQueryWithIncidentMessageNull() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.incidentMessage(null);
@@ -483,7 +485,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcessInstanceQueryWithIncidentMessageLikeNull() {
+  void testHistoricProcessInstanceQueryWithIncidentMessageLikeNull() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.incidentMessageLike(null);
@@ -494,8 +496,47 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/history/testInstancesWithJobsRetrying.bpmn20.xml"})
+  void testHistoricProcessInstanceQueryWithJobsRetrying() {
+    // given query for instances with jobs that have an exception and retries left
+    HistoricProcessInstanceQuery queryWithJobsRetrying = historyService.createHistoricProcessInstanceQuery()
+        .withJobsRetrying();
+
+    // when we have 2 instances, both instances have jobs with retries left but no exception
+    ProcessInstance instanceWithRetryingJob = runtimeService.startProcessInstanceByKey("processWithJobsRetrying");
+    runtimeService.startProcessInstanceByKey("processWithJobsRetrying");
+
+    // then
+    assertThat(queryWithJobsRetrying.count()).isZero();
+    assertThat(queryWithJobsRetrying.list()).isEmpty();
+
+    // when we have 1 instance with a job that has an exception and retries left
+    Job suceedingJob = managementService.createJobQuery()
+        .processInstanceId(instanceWithRetryingJob.getId())
+        .singleResult();
+    managementService.executeJob(suceedingJob.getId());
+    Job failingJob = managementService.createJobQuery()
+        .processInstanceId(instanceWithRetryingJob.getId())
+        .singleResult();
+    executeFailingJob(failingJob);
+
+    // then
+    assertThat(queryWithJobsRetrying.count()).isEqualTo(1L);
+    assertThat(queryWithJobsRetrying.list()).hasSize(1);
+    assertThat(instanceWithRetryingJob.getId()).isEqualTo(queryWithJobsRetrying.singleResult().getId());
+
+    // when all retries are exhausted, so now the instance has a job with exception but no retries left
+    executeFailingJob(failingJob);
+    executeFailingJob(failingJob);
+
+    // then
+    assertThat(queryWithJobsRetrying.count()).isZero();
+    assertThat(queryWithJobsRetrying.list()).isEmpty();
+  }
+
+  @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
-  public void testHistoricProcessInstanceQuery() {
+  void testHistoricProcessInstanceQuery() {
     Calendar startTime = Calendar.getInstance();
 
     ClockUtil.setCurrentTime(startTime.getTime());
@@ -588,7 +629,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcessInstanceSorting() {
+  void testHistoricProcessInstanceSorting() {
 
     deployment("org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml");
     deployment("org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testSorting.bpmn20.xml");
@@ -654,7 +695,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/superProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/runtime/subProcess.bpmn20.xml"})
-  public void testHistoricProcessInstanceSubProcess() {
+  void testHistoricProcessInstanceSubProcess() {
     ProcessInstance superPi = runtimeService.startProcessInstanceByKey("subProcessQueryTest");
     ProcessInstance subPi = runtimeService.createProcessInstanceQuery().superProcessInstanceId(superPi.getProcessInstanceId()).singleResult();
 
@@ -664,7 +705,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testInvalidSorting() {
+  void testInvalidSorting() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.asc();
@@ -689,10 +730,10 @@ public class HistoricProcessInstanceTest {
     }
   }
 
+  // ACT-1098
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  // ACT-1098
-  public void testDeleteReason() {
+  void testDeleteReason() {
     if(!ProcessEngineConfiguration.HISTORY_NONE.equals(engineRule.getProcessEngineConfiguration().getHistory())) {
       final String deleteReason = "some delete reason";
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -704,7 +745,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment
-  public void testLongProcessDefinitionKey() {
+  void testLongProcessDefinitionKey() {
     // must be equals to attribute id of element process in process model
     final String PROCESS_DEFINITION_KEY = "myrealrealrealrealrealrealrealrealrealrealreallongprocessdefinitionkeyawesome";
 
@@ -728,11 +769,11 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources =
-    {
-      "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceId.cmmn",
-      "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceId.bpmn20.xml"
+      {
+          "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceId.cmmn",
+          "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceId.bpmn20.xml"
       })
-  public void testQueryByCaseInstanceId() {
+  void testQueryByCaseInstanceId() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -776,12 +817,12 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources =
-    {
-      "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceId.cmmn",
-      "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceIdHierarchy-super.bpmn20.xml",
-      "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceIdHierarchy-sub.bpmn20.xml"
+      {
+          "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceId.cmmn",
+          "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceIdHierarchy-super.bpmn20.xml",
+          "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryByCaseInstanceIdHierarchy-sub.bpmn20.xml"
       })
-  public void testQueryByCaseInstanceIdHierarchy() {
+  void testQueryByCaseInstanceIdHierarchy() {
     // given
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
@@ -820,7 +861,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseInstanceId() {
+  void testQueryByInvalidCaseInstanceId() {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 
     query.caseInstanceId("invalid");
@@ -836,11 +877,11 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources =
-    {
-      "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testBusinessKey.cmmn",
-      "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testBusinessKey.bpmn20.xml"
+      {
+          "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testBusinessKey.cmmn",
+          "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testBusinessKey.bpmn20.xml"
       })
-  public void testBusinessKey() {
+  void testBusinessKey() {
     // given
     String businessKey = "aBusinessKey";
 
@@ -870,7 +911,7 @@ public class HistoricProcessInstanceTest {
       "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testStartActivityId-super.bpmn20.xml",
       "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testStartActivityId-sub.bpmn20.xml"
   })
-  public void testStartActivityId() {
+  void testStartActivityId() {
     // given
 
     // when
@@ -891,7 +932,7 @@ public class HistoricProcessInstanceTest {
       "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testStartActivityId-super.bpmn20.xml",
       "org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testAsyncStartActivityId-sub.bpmn20.xml"
   })
-  public void testAsyncStartActivityId() {
+  void testAsyncStartActivityId() {
     // given
     runtimeService.startProcessInstanceByKey("super");
 
@@ -910,7 +951,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testStartByKeyWithCaseInstanceId() {
+  void testStartByKeyWithCaseInstanceId() {
     String caseInstanceId = "aCaseInstanceId";
 
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess", null, caseInstanceId).getId();
@@ -941,7 +982,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testStartByIdWithCaseInstanceId() {
+  void testStartByIdWithCaseInstanceId() {
     String processDefinitionId = repositoryService
         .createProcessDefinitionQuery()
         .processDefinitionKey("oneTaskProcess")
@@ -978,7 +1019,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment
   @SuppressWarnings("deprecation")
-  public void testEndTimeAndEndActivity() {
+  void testEndTimeAndEndActivity() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -1014,7 +1055,7 @@ public class HistoricProcessInstanceTest {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"
   })
-  public void testQueryBySuperCaseInstanceId() {
+  void testQueryBySuperCaseInstanceId() {
     String superCaseInstanceId = caseService.createCaseInstanceByKey("oneProcessTaskCase").getId();
 
     HistoricProcessInstanceQuery query = historyService
@@ -1031,7 +1072,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryByInvalidSuperCaseInstanceId() {
+  void testQueryByInvalidSuperCaseInstanceId() {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 
     query.superCaseInstanceId("invalid");
@@ -1048,8 +1089,8 @@ public class HistoricProcessInstanceTest {
   @Test
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/runtime/superProcessWithCaseCallActivity.bpmn20.xml",
-      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
-  public void testQueryBySubCaseInstanceId() {
+      "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  void testQueryBySubCaseInstanceId() {
     String superProcessInstanceId = runtimeService.startProcessInstanceByKey("subProcessQueryTest").getId();
 
     String subCaseInstanceId = caseService
@@ -1073,7 +1114,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryByInvalidSubCaseInstanceId() {
+  void testQueryByInvalidSubCaseInstanceId() {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 
     query.subCaseInstanceId("invalid");
@@ -1092,7 +1133,7 @@ public class HistoricProcessInstanceTest {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
       "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"
   })
-  public void testSuperCaseInstanceIdProperty() {
+  void testSuperCaseInstanceIdProperty() {
     String superCaseInstanceId = caseService.createCaseInstanceByKey("oneProcessTaskCase").getId();
 
     caseService
@@ -1124,7 +1165,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessDefinitionKeyProperty() {
+  void testProcessDefinitionKeyProperty() {
     // given
     String key = "oneTaskProcess";
     String processInstanceId = runtimeService.startProcessInstanceByKey(key).getId();
@@ -1142,7 +1183,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment
-  public void testProcessInstanceShouldBeActive() {
+  void testProcessInstanceShouldBeActive() {
     // given
 
     // when
@@ -1160,7 +1201,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testRetrieveProcessDefinitionName() {
+  void testRetrieveProcessDefinitionName() {
 
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
@@ -1176,7 +1217,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testRetrieveProcessDefinitionVersion() {
+  void testRetrieveProcessDefinitionVersion() {
 
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
@@ -1191,7 +1232,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcInstExecutedActivityInInterval() {
+  void testHistoricProcInstExecutedActivityInInterval() {
     // given proc instance with wait state
     Calendar now = Calendar.getInstance();
     ClockUtil.setCurrentTime(now.getTime());
@@ -1236,7 +1277,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcInstExecutedActivityAfter() {
+  void testHistoricProcInstExecutedActivityAfter() {
     // given
     Calendar now = Calendar.getInstance();
     ClockUtil.setCurrentTime(now.getTime());
@@ -1262,7 +1303,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcInstExecutedActivityBefore() {
+  void testHistoricProcInstExecutedActivityBefore() {
     // given
     Calendar now = Calendar.getInstance();
     ClockUtil.setCurrentTime(now.getTime());
@@ -1288,7 +1329,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcInstExecutedActivityWithTwoProcInsts() {
+  void testHistoricProcInstExecutedActivityWithTwoProcInsts() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess("proc").startEvent().endEvent().done();
     deployment(model);
@@ -1323,7 +1364,7 @@ public class HistoricProcessInstanceTest {
 
 
   @Test
-  public void testHistoricProcInstExecutedActivityWithEmptyInterval() {
+  void testHistoricProcInstExecutedActivityWithEmptyInterval() {
     // given
     Calendar now = Calendar.getInstance();
     ClockUtil.setCurrentTime(now.getTime());
@@ -1346,7 +1387,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcInstExecutedJobAfter() {
+  void testHistoricProcInstExecutedJobAfter() {
     // given
     BpmnModelInstance asyncModel = Bpmn.createExecutableProcess("async").startEvent().operatonAsyncBefore().endEvent().done();
     deployment(asyncModel);
@@ -1380,7 +1421,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcInstExecutedJobBefore() {
+  void testHistoricProcInstExecutedJobBefore() {
     // given
     BpmnModelInstance asyncModel = Bpmn.createExecutableProcess("async").startEvent().operatonAsyncBefore().endEvent().done();
     deployment(asyncModel);
@@ -1413,7 +1454,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcInstExecutedJobWithTwoProcInsts() {
+  void testHistoricProcInstExecutedJobWithTwoProcInsts() {
     // given
     BpmnModelInstance asyncModel = Bpmn.createExecutableProcess("async").startEvent().operatonAsyncBefore().endEvent().done();
     deployment(asyncModel);
@@ -1455,7 +1496,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcInstExecutedJobWithEmptyInterval() {
+  void testHistoricProcInstExecutedJobWithEmptyInterval() {
     // given
     BpmnModelInstance asyncModel = Bpmn.createExecutableProcess("async").startEvent().operatonAsyncBefore().endEvent().done();
     deployment(asyncModel);
@@ -1483,7 +1524,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcInstQueryWithExecutedActivityIds() {
+  void testHistoricProcInstQueryWithExecutedActivityIds() {
     // given
     deployment(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -1513,7 +1554,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcInstQueryWithExecutedActivityIdsNull() {
+  void testHistoricProcInstQueryWithExecutedActivityIdsNull() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.executedActivityIdIn((String[]) null);
@@ -1524,7 +1565,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcInstQueryWithExecutedActivityIdsContainNull() {
+  void testHistoricProcInstQueryWithExecutedActivityIdsContainNull() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.executedActivityIdIn(null, "1");
@@ -1536,7 +1577,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testHistoricProcInstQueryWithActiveActivityIds() {
+  void testHistoricProcInstQueryWithActiveActivityIds() {
     // given
     deployment(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -1562,7 +1603,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldFailWhenQueryByNullActivityId() {
+  void shouldFailWhenQueryByNullActivityId() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.activityIdIn((String) null);
@@ -1574,7 +1615,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldFailWhenQueryByNullActivityIds() {
+  void shouldFailWhenQueryByNullActivityIds() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.activityIdIn((String[]) null);
@@ -1586,7 +1627,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldReturnEmptyWhenQueryByUnknownActivityId() {
+  void shouldReturnEmptyWhenQueryByUnknownActivityId() {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery()
         .activityIdIn("unknown");
 
@@ -1594,7 +1635,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldQueryByLeafActivityId() {
+  void shouldQueryByLeafActivityId() {
     // given
     ProcessDefinition oneTaskDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition gatewaySubProcessDefinition = testHelper.deployAndGetDefinition(FORK_JOIN_SUB_PROCESS_MODEL);
@@ -1632,7 +1673,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldReturnEmptyWhenQueryByNonLeafActivityId() {
+  void shouldReturnEmptyWhenQueryByNonLeafActivityId() {
     // given
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(FORK_JOIN_SUB_PROCESS_MODEL);
 
@@ -1646,7 +1687,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldQueryByAsyncBeforeActivityId() {
+  void shouldQueryByAsyncBeforeActivityId() {
     // given
     ProcessDefinition testProcess = testHelper.deployAndGetDefinition(ProcessModels.newModel()
       .startEvent("start").operatonAsyncBefore()
@@ -1687,7 +1728,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldQueryByAsyncAfterActivityId() {
+  void shouldQueryByAsyncAfterActivityId() {
     // given
     ProcessDefinition testProcess = testHelper.deployAndGetDefinition(ProcessModels.newModel()
       .startEvent("start").operatonAsyncAfter()
@@ -1728,7 +1769,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldReturnEmptyWhenQueryByActivityIdBeforeCompensation() {
+  void shouldReturnEmptyWhenQueryByActivityIdBeforeCompensation() {
     // given
     ProcessDefinition testProcess = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
 
@@ -1742,7 +1783,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldQueryByActivityIdDuringCompensation() {
+  void shouldQueryByActivityIdDuringCompensation() {
     // given
     ProcessDefinition testProcess = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
 
@@ -1764,7 +1805,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldQueryWithActivityIdsWithOneId() {
+  void shouldQueryWithActivityIdsWithOneId() {
     // given
     String userTask1 = "userTask1";
     deployment(ProcessModels.TWO_TASKS_PROCESS);
@@ -1788,7 +1829,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldQueryWithActivityIdsWithMultipleIds() {
+  void shouldQueryWithActivityIdsWithMultipleIds() {
     // given
     String userTask1 = "userTask1";
     String userTask2 = "userTask2";
@@ -1813,7 +1854,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldQueryWithActivityIdsWhenDeletedCompetedInstancesExist() {
+  void shouldQueryWithActivityIdsWhenDeletedCompetedInstancesExist() {
     // given
     String userTask1 = "userTask1";
     String userTask2 = "userTask2";
@@ -1849,7 +1890,7 @@ public class HistoricProcessInstanceTest {
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testHistoricProcessInstanceQueryActivityIdInWithIncident.bpmn"})
-  public void shouldQueryQueryWithActivityIdsWithFailingActivity() {
+  void shouldQueryQueryWithActivityIdsWithFailingActivity() {
     // given
     String piOne = runtimeService.startProcessInstanceByKey("failingProcess").getId();
     testHelper.executeAvailableJobs();
@@ -1875,8 +1916,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
-  public void shouldNotRetrieveInstanceWhenQueryByActivityIdInWithFailingSubprocess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  void shouldNotRetrieveInstanceWhenQueryByActivityIdInWithFailingSubprocess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
@@ -1892,8 +1933,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
-  public void shouldQueryByActivityIdInWithFailingSubServiceTask() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  void shouldQueryByActivityIdInWithFailingSubServiceTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
@@ -1910,8 +1951,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocess.bpmn20.xml"})
-  public void shouldNotReturnInstanceWhenQueryByActivityIdInWithSubprocess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocess.bpmn20.xml"})
+  void shouldNotReturnInstanceWhenQueryByActivityIdInWithSubprocess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess");
 
@@ -1928,8 +1969,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocess.bpmn20.xml"})
-  public void shouldQueryByActivityIdInWithActivityIdOfSubServiceTask() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocess.bpmn20.xml"})
+  void shouldQueryByActivityIdInWithActivityIdOfSubServiceTask() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess");
 
@@ -1947,8 +1988,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.failingSubprocessWithAsyncBeforeTask.bpmn20.xml"})
-  public void shouldQueryByActivityIdInWithMultipleScopeAndIncident() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.failingSubprocessWithAsyncBeforeTask.bpmn20.xml"})
+  void shouldQueryByActivityIdInWithMultipleScopeAndIncident() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("failingSubProcess");
@@ -1980,8 +2021,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocessWithAsyncBeforeTask.bpmn20.xml"})
-  public void shouldQueryByActivityIdInWithMultipleScope() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocessWithAsyncBeforeTask.bpmn20.xml"})
+  void shouldQueryByActivityIdInWithMultipleScope() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("failingSubProcess");
@@ -2011,7 +2052,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldQueryByActivityIdWhereIncidentOccurred() {
+  void shouldQueryByActivityIdWhereIncidentOccurred() {
     // given
     testHelper.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -2049,7 +2090,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcInstQueryWithActiveActivityIdsNull() {
+  void testHistoricProcInstQueryWithActiveActivityIdsNull() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.activeActivityIdIn((String[]) null);
@@ -2060,7 +2101,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testHistoricProcInstQueryWithActiveActivityIdsContainNull() {
+  void testHistoricProcInstQueryWithActiveActivityIdsContainNull() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.activeActivityIdIn(null, "1");
@@ -2071,7 +2112,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryByActiveActivityIdInAndProcessDefinitionKey() {
+  void testQueryByActiveActivityIdInAndProcessDefinitionKey() {
     // given
     deployment(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -2088,7 +2129,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryByExecutedActivityIdInAndProcessDefinitionKey() {
+  void testQueryByExecutedActivityIdInAndProcessDefinitionKey() {
     // given
     deployment(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
@@ -2108,7 +2149,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testQueryWithRootIncidents() {
+  void testQueryWithRootIncidents() {
     // given
     deployment("org/operaton/bpm/engine/test/history/HistoricProcessInstanceTest.testQueryWithRootIncidents.bpmn20.xml");
     deployment(CallActivityModels.oneBpmnCallActivityProcess("Process_1"));
@@ -2127,7 +2168,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryWithProcessDefinitionKeyIn() {
+  void testQueryWithProcessDefinitionKeyIn() {
     // given
     deployment(ProcessModels.ONE_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(ProcessModels.PROCESS_KEY);
@@ -2157,7 +2198,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryByNonExistingProcessDefinitionKeyIn() {
+  void testQueryByNonExistingProcessDefinitionKeyIn() {
     // given
     deployment(ProcessModels.ONE_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(ProcessModels.PROCESS_KEY);
@@ -2172,7 +2213,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryByOneInvalidProcessDefinitionKeyIn() {
+  void testQueryByOneInvalidProcessDefinitionKeyIn() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       // when
@@ -2184,7 +2225,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void testQueryByMultipleInvalidProcessDefinitionKeyIn() {
+  void testQueryByMultipleInvalidProcessDefinitionKeyIn() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       // when
@@ -2197,8 +2238,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
-  public void shouldQueryProcessInstancesWithIncidentIdIn() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
+  void shouldQueryProcessInstancesWithIncidentIdIn() {
     // GIVEN
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("failingProcess");
@@ -2224,8 +2265,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessAfterUserTaskCreateOneIncident.bpmn20.xml"})
-  public void shouldOnlyQueryProcessInstancesWithIncidentIdIn() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingProcessAfterUserTaskCreateOneIncident.bpmn20.xml"})
+  void shouldOnlyQueryProcessInstancesWithIncidentIdIn() {
     // GIVEN
     ProcessInstance processWithIncident1 = runtimeService.startProcessInstanceByKey("failingProcess");
     ProcessInstance processWithIncident2 = runtimeService.startProcessInstanceByKey("failingProcess");
@@ -2257,7 +2298,7 @@ public class HistoricProcessInstanceTest {
   }
 
   @Test
-  public void shouldFailWhenQueryWithNullIncidentIdIn() {
+  void shouldFailWhenQueryWithNullIncidentIdIn() {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.incidentIdIn(null);
@@ -2269,8 +2310,8 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
-  public void shouldQueryByIncidentIdInSubProcess() {
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
+  void shouldQueryByIncidentIdInSubProcess() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
@@ -2292,7 +2333,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
-  public void testShouldStoreHistoricProcessInstanceVariableOnAsyncBefore() {
+  void testShouldStoreHistoricProcessInstanceVariableOnAsyncBefore() {
     // given definition with asyncBefore startEvent
 
     // when trigger process instance with variables
@@ -2306,7 +2347,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
-  public void testShouldStoreInitialHistoricProcessInstanceVariableOnAsyncBefore() {
+  void testShouldStoreInitialHistoricProcessInstanceVariableOnAsyncBefore() {
     // given definition with asyncBefore startEvent
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", Variables.createVariables().putValue("foo", "bar"));
@@ -2327,7 +2368,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
-  public void testShouldSetVariableBeforeAsyncBefore() {
+  void testShouldSetVariableBeforeAsyncBefore() {
     // given definition with asyncBefore startEvent
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -2345,7 +2386,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_1() {
+  void shouldQueryByVariableValue_1() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("foo", "bar").putValue("bar", "foo"))
@@ -2368,7 +2409,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_2() {
+  void shouldQueryByVariableValue_2() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("foo", "bar").putValue("bar", "foo"))
@@ -2391,7 +2432,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_3() {
+  void shouldQueryByVariableValue_3() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("foo", "bar").putValue("bar", "foo"))
@@ -2413,7 +2454,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_4() {
+  void shouldQueryByVariableValue_4() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("foo", "bar"))
@@ -2435,7 +2476,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_5() {
+  void shouldQueryByVariableValue_5() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.putValue("foo", "bar"))
@@ -2458,7 +2499,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_6() {
+  void shouldQueryByVariableValue_6() {
     // GIVEN
     runtimeService.startProcessInstanceByKey("oneTaskProcess", Variables.putValue("foo", "bar"));
     runtimeService.startProcessInstanceByKey("oneTaskProcess", Variables.putValue("bar", "foo"));
@@ -2477,7 +2518,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_7() {
+  void shouldQueryByVariableValue_7() {
     // GIVEN
     runtimeService.startProcessInstanceByKey("oneTaskProcess", Variables.putValue("foo", "foo"));
     runtimeService.startProcessInstanceByKey("oneTaskProcess", Variables.putValue("bar", "foo"));
@@ -2496,7 +2537,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_8() {
+  void shouldQueryByVariableValue_8() {
     // GIVEN
     runtimeService.startProcessInstanceByKey("oneTaskProcess", Variables.putValue("foo", "foo"));
     runtimeService.startProcessInstanceByKey("oneTaskProcess", Variables.putValue("foo", "bar"));
@@ -2515,7 +2556,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_9() {
+  void shouldQueryByVariableValue_9() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess", "a-business-key").getProcessInstanceId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess", "another-business-key").getProcessInstanceId();
@@ -2533,7 +2574,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_10() {
+  void shouldQueryByVariableValue_10() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess", "a-business-key").getProcessInstanceId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
@@ -2551,7 +2592,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_11() {
+  void shouldQueryByVariableValue_11() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess", "a-business-key").getProcessInstanceId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess", "a-business-key").getProcessInstanceId();
@@ -2569,7 +2610,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
-  public void shouldQueryByVariableValue_12() {
+  void shouldQueryByVariableValue_12() {
     // GIVEN
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess", "a-business-key").getProcessInstanceId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess", "a-business-key").getProcessInstanceId();
@@ -2584,6 +2625,100 @@ public class HistoricProcessInstanceTest {
         .extracting("processInstanceId")
         .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
   }
+
+    @Test
+    @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+    void shouldExcludeByProcessInstanceIdNotIn() {
+        // given
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // when
+        List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery().list();
+        List<HistoricProcessInstance> excludedFirst = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(processInstanceIdOne).list();
+        List<HistoricProcessInstance> excludedAll = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(processInstanceIdOne, processInstanceIdTwo).list();
+
+        // then
+        assertThat(processInstances)
+                .extracting("processInstanceId")
+                .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
+        assertThat(excludedFirst)
+                .extracting("processInstanceId")
+                .containsExactly(processInstanceIdTwo);
+        assertThat(excludedAll)
+                .extracting("processInstanceId")
+                .isEmpty();
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    void testWithNonExistentProcessInstanceIdNotIn() {
+        // given
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        String nonExistentProcessInstanceId = "ThisIsAFake";
+
+        // when
+        List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery().list();
+        List<HistoricProcessInstance> excludedNonExistent = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIdNotIn(nonExistentProcessInstanceId).list();
+
+        // then
+        assertThat(processInstances)
+                .extracting("processInstanceId")
+                .containsExactlyInAnyOrder(processInstanceIdOne, processInstanceIdTwo);
+        assertThat(excludedNonExistent)
+                .extracting("processInstanceId")
+                .containsExactly(processInstanceIdOne, processInstanceIdTwo);
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    void testQueryByOneInvalidProcessInstanceIdNotIn() {
+      var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
+      assertThatThrownBy(() -> historicProcessInstanceQuery.processInstanceIdNotIn(null))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("processInstanceIdNotIn is null");
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    void testExcludingProcessInstanceAndProcessInstanceIdNotIn() {
+        // given
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // when
+        long count = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceId(processInstanceIdOne)
+                .processInstanceIdNotIn(processInstanceIdOne).count();
+
+        // then
+        // making a query that has contradicting conditions should succeed
+        assertThat(count).isZero();
+    }
+
+    @Test
+    @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+    void testExcludingProcessInstanceIdsAndProcessInstanceIdNotIn() {
+        // given
+        String processInstanceIdOne = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        String processInstanceIdTwo = runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+        runtimeService.startProcessInstanceByKey("oneTaskProcess").getProcessInstanceId();
+
+        // when
+        long count = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceIds(new HashSet<>(Arrays.asList(processInstanceIdOne, processInstanceIdTwo)))
+                .processInstanceIdNotIn(processInstanceIdOne, processInstanceIdTwo).count();
+
+        // then
+        // making a query that has contradicting conditions should succeed
+        assertThat(count).isZero();
+    }
+
 
   protected void deployment(String... resources) {
     testHelper.deploy(resources);
@@ -2611,4 +2746,11 @@ public class HistoricProcessInstanceTest {
     managementService.executeJob(job.getId());
   }
 
+  private void executeFailingJob(Job job) {
+    try {
+      managementService.executeJob(job.getId());
+    } catch (RuntimeException re) {
+      // Exception expected. Do nothing
+    }
+  }
 }

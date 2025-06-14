@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,6 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -29,40 +31,29 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class CallActivityDelegateMappingTest {
+class CallActivityDelegateMappingTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testHelper);
   RuntimeService runtimeService;
   TaskService taskService;
 
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-  }
-
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMapping.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMapping.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMapping() {
+  void testCallSubProcessWithDelegatedVariableMapping() {
     //given
     runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
     TaskQuery taskQuery = taskService.createTaskQuery();
@@ -88,10 +79,10 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpression.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpression.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingeExpression() {
+  void testCallSubProcessWithDelegatedVariableMappingeExpression() {
     //given
 
     Map<Object, Object> vars = engineRule.getProcessEngineConfiguration().getBeans();
@@ -121,10 +112,10 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingNotFound.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingNotFound.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingNotFound() {
+  void testCallSubProcessWithDelegatedVariableMappingNotFound() {
     try {
       runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
       fail("Execption expected!");
@@ -137,10 +128,10 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionNotFound.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionNotFound.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingeExpressionNotFound() {
+  void testCallSubProcessWithDelegatedVariableMappingeExpressionNotFound() {
     try {
       runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
       fail("Exception expected!");
@@ -176,19 +167,19 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingThrowException.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingThrowException.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingThrowException() {
+  void testCallSubProcessWithDelegatedVariableMappingThrowException() {
     delegateVariableMappingThrowException();
   }
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionThrowException.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionThrowException.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingeExpressionThrowException() {
+  void testCallSubProcessWithDelegatedVariableMappingeExpressionThrowException() {
     //given
     Map<Object, Object> vars = engineRule.getProcessEngineConfiguration().getBeans();
     vars.put("expr", new DelegateVarMappingThrowException());
@@ -198,19 +189,19 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingThrowBpmnError.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingThrowBpmnError.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingThrowBpmnError() {
+  void testCallSubProcessWithDelegatedVariableMappingThrowBpmnError() {
     delegateVariableMappingThrowException();
   }
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionThrowException.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionThrowException.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingeExpressionThrowBpmnError() {
+  void testCallSubProcessWithDelegatedVariableMappingeExpressionThrowBpmnError() {
     //given
     Map<Object, Object> vars = engineRule.getProcessEngineConfiguration().getBeans();
     vars.put("expr", new DelegateVarMappingThrowBpmnError());
@@ -245,19 +236,19 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingThrowExceptionOutput.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingThrowExceptionOutput.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingThrowExceptionOutput() {
+  void testCallSubProcessWithDelegatedVariableMappingThrowExceptionOutput() {
     delegateVariableMappingThrowExceptionOutput();
   }
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionThrowException.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionThrowException.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingeExpressionThrowExceptionOutput() {
+  void testCallSubProcessWithDelegatedVariableMappingeExpressionThrowExceptionOutput() {
     //given
     Map<Object, Object> vars = engineRule.getProcessEngineConfiguration().getBeans();
     vars.put("expr", new DelegateVarMappingThrowExceptionOutput());
@@ -267,19 +258,19 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingThrowBpmnErrorOutput.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingThrowBpmnErrorOutput.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingThrowBpmnErrorOutput() {
+  void testCallSubProcessWithDelegatedVariableMappingThrowBpmnErrorOutput() {
     delegateVariableMappingThrowExceptionOutput();
   }
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionThrowException.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSimpleSubProcessDelegateVarMappingExpressionThrowException.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingeExpressionThrowBpmnErrorOutput() {
+  void testCallSubProcessWithDelegatedVariableMappingeExpressionThrowBpmnErrorOutput() {
     //given
     Map<Object, Object> vars = engineRule.getProcessEngineConfiguration().getBeans();
     vars.put("expr", new DelegateVarMappingThrowBpmnErrorOutput());
@@ -289,10 +280,10 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallFailingSubProcessWithDelegatedVariableMapping.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/failingSubProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallFailingSubProcessWithDelegatedVariableMapping.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/failingSubProcess.bpmn20.xml"
   })
-  public void testCallFailingSubProcessWithDelegatedVariableMapping() {
+  void testCallFailingSubProcessWithDelegatedVariableMapping() {
     //given starting process instance with call activity
     //when call activity execution fails
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
@@ -304,10 +295,10 @@ public class CallActivityDelegateMappingTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSubProcessWithDelegatedVariableMappingAndAsyncServiceTask.bpmn20.xml",
-    "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcessWithAsyncService.bpmn20.xml"
+      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivityDelegateMappingTest.testCallSubProcessWithDelegatedVariableMappingAndAsyncServiceTask.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcessWithAsyncService.bpmn20.xml"
   })
-  public void testCallSubProcessWithDelegatedVariableMappingAndAsyncServiceTask() {
+  void testCallSubProcessWithDelegatedVariableMappingAndAsyncServiceTask() {
     //given starting process instance with call activity which has asyn service task
     ProcessInstance superProcInst = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 

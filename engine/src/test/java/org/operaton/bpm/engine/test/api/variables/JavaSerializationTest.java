@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserializedNull;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
@@ -30,58 +32,47 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Base64;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class JavaSerializationTest {
+class JavaSerializationTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/variables/oneTaskProcess.bpmn20.xml";
 
   protected static final String JAVA_DATA_FORMAT = Variables.SerializationDataFormats.JAVA.getName();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJavaSerializationFormatEnabled(true));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> config.setJavaSerializationFormatEnabled(true))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializationAsJava() {
+  void testSerializationAsJava() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JavaSerializable javaSerializable = new JavaSerializable("foo");
@@ -100,14 +91,15 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectSerialized() throws Exception {
+  void testSetJavaObjectSerialized() throws Exception {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JavaSerializable javaSerializable = new JavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
+        engineRule.getProcessEngine());
 
     runtimeService.setVariable(instance.getId(), "simpleBean",
         serializedObjectValue(serializedObject)
@@ -127,7 +119,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment
-  public void testJavaObjectDeserializedInFirstCommand() throws Exception {
+  void testJavaObjectDeserializedInFirstCommand() throws Exception {
 
     // this test makes sure that if a serialized value is set, it can be deserialized in the same command in which it is set.
 
@@ -136,7 +128,7 @@ public class JavaSerializationTest {
     JavaSerializable javaSerializable = new JavaSerializable("foo");
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
 
     // if
     // I start a process instance in which a Java Delegate reads the value in its deserialized form
@@ -153,7 +145,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment
-  public void testJavaObjectNotDeserializedIfNotRequested() throws Exception {
+  void testJavaObjectNotDeserializedIfNotRequested() throws Exception {
 
     // this test makes sure that if a serialized value is set, it is not automatically deserialized if deserialization is not requested
 
@@ -163,7 +155,7 @@ public class JavaSerializationTest {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
     byte[] serializedObjectBytes = baos.toByteArray();
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(serializedObjectBytes), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(serializedObjectBytes), engineRule.getProcessEngine());
 
     // which cannot be deserialized
     ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(serializedObjectBytes));
@@ -185,7 +177,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectNullDeserialized() {
+  void testSetJavaObjectNullDeserialized() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -206,7 +198,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectNullSerialized() {
+  void testSetJavaObjectNullSerialized() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -229,7 +221,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectNullSerializedObjectTypeName() {
+  void testSetJavaObjectNullSerializedObjectTypeName() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -265,7 +257,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetUntypedNullForExistingVariable() {
+  void testSetUntypedNullForExistingVariable() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -291,7 +283,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetTypedNullForExistingVariable() {
+  void testSetTypedNullForExistingVariable() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -315,14 +307,14 @@ public class JavaSerializationTest {
   }
 
   @Test
-  public void testStandaloneTaskTransientVariable() throws IOException {
+  void testStandaloneTaskTransientVariable() throws IOException {
     Task task = taskService.newTask();
     task.setName("gonzoTask");
     taskService.saveTask(task);
     String taskId = task.getId();
     try (var baos = new ByteArrayOutputStream(); var oos = new ObjectOutputStream(baos)) {
       oos.writeObject("trumpet");
-      String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+      String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
 
       taskService.setVariable(taskId, "instrument",
         serializedObjectValue(serializedObject)
@@ -337,7 +329,7 @@ public class JavaSerializationTest {
   }
 
   @Test
-  public void testTransientObjectValue() throws IOException {
+  void testTransientObjectValue() throws IOException {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -357,7 +349,7 @@ public class JavaSerializationTest {
     JavaSerializable bean = new JavaSerializable("bar");
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(bean);
-    String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
     ObjectValue javaValue = serializedObjectValue(serializedObject, true)
         .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
         .objectTypeName(JavaSerializable.class.getName())

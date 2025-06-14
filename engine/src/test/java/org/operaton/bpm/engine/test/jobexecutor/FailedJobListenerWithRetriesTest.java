@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -35,50 +38,41 @@ import org.operaton.bpm.engine.impl.jobexecutor.DefaultFailedJobCommandFactory;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-@RunWith(Parameterized.class)
+@Parameterized
 public class FailedJobListenerWithRetriesTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-
-  @Parameterized.Parameter(0)
+  @Parameter(0)
   public int failedRetriesNumber;
 
-  @Parameterized.Parameter(1)
+  @Parameter(1)
   public int jobRetries;
 
-  @Parameterized.Parameter(2)
+  @Parameter(2)
   public boolean jobLocked;
 
-  @Before
-  public void init() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
+  @BeforeEach
+  void init() {
     processEngineConfiguration.setFailedJobCommandFactory(new OLEFailedJobCommandFactory());
     processEngineConfiguration.setFailedJobListenerMaxRetries(5);
-    runtimeService = engineRule.getRuntimeService();
   }
 
-  @Parameterized.Parameters
+  @Parameters
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
         { 4, 0, false },
@@ -87,9 +81,9 @@ public class FailedJobListenerWithRetriesTest {
     });
   }
 
-  @Test
+  @TestTemplate
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
-  public void testFailedJobListenerRetries() {
+  void testFailedJobListenerRetries() {
     //given
     runtimeService.startProcessInstanceByKey("failingProcess");
 

@@ -8,7 +8,7 @@
     Version 2.0; you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -324,11 +324,11 @@
             on PROC_EXECUTION.ID_ = RES.PROC_INST_ID_
 
             left join ${prefix}ACT_RE_PROCDEF PROCDEF
-            on PROCDEF.ID_ = PROC_EXECUTION.PROC_DEF_ID_   
-            <if test="!authCheck.revokeAuthorizationCheckEnabled">      
-              <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" /> 
+            on PROCDEF.ID_ = PROC_EXECUTION.PROC_DEF_ID_
+            <if test="!authCheck.revokeAuthorizationCheckEnabled">
+              <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
               AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart}
-                RES.PROC_INST_ID_ 
+                RES.PROC_INST_ID_
                 ${authJoinSeparator} PROC_EXECUTION.ID_
                 ${authJoinSeparator} PROCDEF.KEY_
                 ${authJoinSeparator} RES.TASK_ID_
@@ -476,22 +476,22 @@
     insert into ${prefix}ACT_GE_BYTEARRAY(ID_, NAME_, BYTES_, DEPLOYMENT_ID_, TENANT_ID_, TYPE_, CREATE_TIME_, ROOT_PROC_INST_ID_, REMOVAL_TIME_, REV_)
     values (
       #{id, jdbcType=VARCHAR},
-      #{name, jdbcType=VARCHAR}, 
-      #{bytes, jdbcType=BLOB}, 
+      #{name, jdbcType=VARCHAR},
+      #{bytes, jdbcType=BLOB},
       #{deploymentId, jdbcType=VARCHAR},
       #{tenantId, jdbcType=VARCHAR},
       #{type, jdbcType=INTEGER},
       #{createTime, jdbcType=TIMESTAMP},
       #{rootProcessInstanceId, jdbcType=VARCHAR},
       #{removalTime, jdbcType=TIMESTAMP},
-      1 
-    )  
+      1
+    )
   </insert>
 
   <!-- BYTE ARRAY UPDATE -->
 
   <update id="updateByteArray" parameterType="org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity">
-    update ${prefix}ACT_GE_BYTEARRAY 
+    update ${prefix}ACT_GE_BYTEARRAY
     set
       REV_ = #{revisionNext, jdbcType=INTEGER},
       BYTES_ = #{bytes, jdbcType=BLOB}
@@ -532,7 +532,7 @@
 
   <update id="updateByteArraysByRootProcessInstanceId_mysql"
           parameterType="java.util.Map">
-      update ${prefix}ACT_GE_BYTEARRAY 
+      update ${prefix}ACT_GE_BYTEARRAY
       <choose>
         <when test="maxResults != null">
           ${limitBeforeInUpdate} ${prefix}ACT_GE_BYTEARRAY

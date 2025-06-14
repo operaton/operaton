@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.task.Event.ACTION_ADD_ATTACHMENT;
 import static org.operaton.bpm.engine.task.Event.ACTION_ADD_GROUP_LINK;
 import static org.operaton.bpm.engine.task.Event.ACTION_ADD_USER_LINK;
@@ -24,26 +25,24 @@ import static org.operaton.bpm.engine.task.Event.ACTION_DELETE_GROUP_LINK;
 import static org.operaton.bpm.engine.task.Event.ACTION_DELETE_USER_LINK;
 import static org.operaton.bpm.engine.task.IdentityLinkType.CANDIDATE;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.persistence.entity.CommentEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Event;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.history.useroperationlog.AbstractUserOperationLogTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  */
-@SuppressWarnings("deprecation")
-public class TaskEventsTest extends AbstractUserOperationLogTest {
+@SuppressWarnings("removal")
+class TaskEventsTest extends AbstractUserOperationLogTest {
 
   static final String JONNY = "jonny";
   static final String ACCOUNTING = "accounting";
@@ -54,20 +53,20 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
   private Task task;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     task = taskService.newTask();
     taskService.saveTask(task);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     // delete task
     taskService.deleteTask(task.getId(), true);
   }
 
   @Test
-  public void testAddUserLinkEvents() {
+  void testAddUserLinkEvents() {
 
     // initially there are no task events
     assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
@@ -90,7 +89,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   }
 
   @Test
-  public void testDeleteUserLinkEvents() {
+  void testDeleteUserLinkEvents() {
 
     // initially there are no task events
     assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
@@ -117,7 +116,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   }
 
   @Test
-  public void testAddGroupLinkEvents() {
+  void testAddGroupLinkEvents() {
 
     // initially there are no task events
     assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
@@ -140,7 +139,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   }
 
   @Test
-  public void testDeleteGroupLinkEvents() {
+  void testDeleteGroupLinkEvents() {
 
     // initially there are no task events
     assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
@@ -167,7 +166,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   }
 
   @Test
-  public void testAddAttachmentEvents() {
+  void testAddAttachmentEvents() {
     // initially there are no task events
     assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
 
@@ -190,7 +189,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   }
 
   @Test
-  public void testDeleteAttachmentEvents() {
+  void testDeleteAttachmentEvents() {
     // initially there are no task events
     assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
 

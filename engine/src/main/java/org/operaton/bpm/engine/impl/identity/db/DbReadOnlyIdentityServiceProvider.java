@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -165,7 +165,7 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
     configureQuery(query, Resources.TENANT);
     return getDbEntityManager().selectList("selectTenantByQueryCriteria", query);
   }
-  
+
   //memberships //////////////////////////////////////////
   protected boolean existsMembership(String userId, String groupId) {
     Map<String, String> key = new HashMap<>();
@@ -173,7 +173,7 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
     key.put("groupId", groupId);
     return ((Long) getDbEntityManager().selectOne("selectMembershipCount", key)) > 0;
   }
-  
+
   protected boolean existsTenantMembership(String tenantId, String userId, String groupId) {
     Map<String, String> key = new HashMap<>();
     key.put("tenantId", tenantId);

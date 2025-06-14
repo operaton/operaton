@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,7 +45,7 @@ public abstract class AbstractMetricsIntervalTest {
   @RegisterExtension
   protected static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
+  ProcessEngineTestExtension testExtension = new ProcessEngineTestExtension(engineExtension);
 
   protected static final String REPORTER_ID = "REPORTER_ID";
   protected static final int DEFAULT_INTERVAL = 15;

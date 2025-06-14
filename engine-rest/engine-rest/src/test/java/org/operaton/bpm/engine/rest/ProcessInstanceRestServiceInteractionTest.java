@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -1423,6 +1423,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body("id", Matchers.equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))
       .body("ended", Matchers.equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_ENDED))
       .body("definitionId", Matchers.equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))
+      .body("definitionKey", Matchers.equalTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY))
       .body("businessKey", Matchers.equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY))
       .body("suspended", Matchers.equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
       .body("tenantId", Matchers.equalTo(MockProvider.EXAMPLE_TENANT_ID))

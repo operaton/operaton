@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,21 +22,28 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.Collections;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.exception.NullValueException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Ronny Bräunlich
  *
  */
-public class ServiceTaskExpressionActivityBehaviorTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ServiceTaskExpressionActivityBehaviorTest {
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testExceptionThrownBySecondScopeServiceTaskIsNotHandled(){
+  void testExceptionThrownBySecondScopeServiceTaskIsNotHandled(){
     Map<Object, Object> beans = processEngineConfiguration.getBeans();
     beans.put("dummyServiceTask", new DummyServiceTask());
     processEngineConfiguration.setBeans(beans);

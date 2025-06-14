@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,15 @@
  */
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ScriptCompilationException;
 import org.operaton.bpm.engine.ScriptEvaluationException;
@@ -30,8 +35,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
-import static org.assertj.core.api.Assertions.*;
-
 /**
  *
  * @author Daniel Meyer (Javascript)
@@ -40,7 +43,7 @@ import static org.assertj.core.api.Assertions.*;
  * @author Christian Lipphardt (Groovy)
  *
  */
-public class ScriptTaskTest extends AbstractScriptTaskTest {
+class ScriptTaskTest extends AbstractScriptTaskTest {
 
   private static final String JAVASCRIPT = "javascript";
   private static final String PYTHON = "python";
@@ -49,7 +52,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   private static final String JUEL = "juel";
 
   @Test
-  public void testJavascriptProcessVarVisibility() {
+  void testJavascriptProcessVarVisibility() {
 
     deployProcess(JAVASCRIPT, """
 		// GIVEN
@@ -93,7 +96,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testPythonProcessVarAssignment() {
+  void testPythonProcessVarAssignment() {
 
     deployProcess(PYTHON, """
 		# GIVEN
@@ -134,7 +137,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testRubyProcessVarVisibility() {
+  void testRubyProcessVarVisibility() {
 
     deployProcess(RUBY, """
 	      # GIVEN
@@ -176,7 +179,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testGroovyProcessVarVisibility() {
+  void testGroovyProcessVarVisibility() {
 
     deployProcess(GROOVY, """
         // GIVEN
@@ -221,7 +224,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testJavascriptFunctionInvocation() {
+  void testJavascriptFunctionInvocation() {
 
     deployProcess(JAVASCRIPT, """
 	      // GIVEN
@@ -250,7 +253,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testPythonFunctionInvocation() {
+  void testPythonFunctionInvocation() {
 
     deployProcess(PYTHON, """
 		# GIVEN
@@ -277,7 +280,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testRubyFunctionInvocation() {
+  void testRubyFunctionInvocation() {
 
     deployProcess(RUBY, """
 		# GIVEN
@@ -306,7 +309,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testGroovyFunctionInvocation() {
+  void testGroovyFunctionInvocation() {
 
     deployProcess(GROOVY, """
 		// GIVEN
@@ -335,7 +338,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testJsVariable() {
+  void testJsVariable() {
 
     String scriptText = "var foo = 1;";
 
@@ -348,7 +351,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testPythonVariable() {
+  void testPythonVariable() {
 
     String scriptText = "foo = 1";
 
@@ -361,7 +364,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testRubyVariable() {
+  void testRubyVariable() {
 
     String scriptText = "foo = 1";
 
@@ -374,7 +377,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testGroovyVariable() {
+  void testGroovyVariable() {
 
     String scriptText = "def foo = 1";
 
@@ -387,7 +390,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testJuelExpression() {
+  void testJuelExpression() {
     deployProcess(JUEL, "${execution.setVariable('foo', 'bar')}");
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -397,7 +400,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testJuelCapitalizedExpression() {
+  void testJuelCapitalizedExpression() {
     deployProcess(JUEL.toUpperCase(), "${execution.setVariable('foo', 'bar')}");
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -407,7 +410,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testSourceAsExpressionAsVariable() {
+  void testSourceAsExpressionAsVariable() {
     deployProcess(PYTHON, "${scriptSource}");
 
     Map<String, Object> variables = new HashMap<>();
@@ -419,7 +422,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testSourceAsExpressionAsNonExistingVariable() {
+  void testSourceAsExpressionAsNonExistingVariable() {
     deployProcess(PYTHON, "${scriptSource}");
 
     try {
@@ -432,7 +435,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testSourceAsExpressionAsBean() {
+  void testSourceAsExpressionAsBean() {
     deployProcess(PYTHON, "#{scriptResourceBean.getSource()}");
 
     Map<String, Object> variables = new HashMap<>();
@@ -444,7 +447,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testSourceAsExpressionWithWhitespace() {
+  void testSourceAsExpressionWithWhitespace() {
     deployProcess(PYTHON, "\t\n  \t \n  ${scriptSource}");
 
     Map<String, Object> variables = new HashMap<>();
@@ -456,7 +459,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testJavascriptVariableSerialization() {
+  void testJavascriptVariableSerialization() {
     deployProcess(JAVASCRIPT, "execution.setVariable('date', new java.util.Date(0));");
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -473,7 +476,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testPythonVariableSerialization() {
+  void testPythonVariableSerialization() {
     deployProcess(PYTHON, "import java.util.Date\nexecution.setVariable('date', java.util.Date(0))");
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -491,7 +494,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testRubyVariableSerialization() {
+  void testRubyVariableSerialization() {
     deployProcess(RUBY, "require 'java'\n$execution.setVariable('date', java.util.Date.new(0))");
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -508,7 +511,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testGroovyVariableSerialization() {
+  void testGroovyVariableSerialization() {
     deployProcess(GROOVY, "execution.setVariable('date', new java.util.Date(0))");
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -525,7 +528,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testGroovyNotExistingImport() {
+  void testGroovyNotExistingImport() {
     deployProcess(GROOVY, "import unknown");
 
     try {
@@ -538,7 +541,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testGroovyNotExistingImportWithoutCompilation() {
+  void testGroovyNotExistingImportWithoutCompilation() {
     // disable script compilation
     processEngineConfiguration.setEnableScriptCompilation(false);
 
@@ -558,7 +561,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testShouldNotDeployProcessWithMissingScriptElementAndResource() {
+  void testShouldNotDeployProcessWithMissingScriptElementAndResource() {
     var processBuilder = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
         .scriptTask()
@@ -576,7 +579,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testShouldUseJuelAsDefaultScriptLanguage() {
+  void testShouldUseJuelAsDefaultScriptLanguage() {
     deployProcess(Bpmn.createExecutableProcess("testProcess")
       .startEvent()
       .scriptTask()
@@ -592,13 +595,13 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testAutoStoreScriptVarsOff() {
+  void testAutoStoreScriptVarsOff() {
     assertThat(processEngineConfiguration.isAutoStoreScriptVariables()).isFalse();
   }
 
   @org.operaton.bpm.engine.test.Deployment
   @Test
-  public void testPreviousTaskShouldNotHandleException(){
+  void testPreviousTaskShouldNotHandleException(){
     try {
       runtimeService.startProcessInstanceByKey("process");
       fail("");
@@ -614,7 +617,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @org.operaton.bpm.engine.test.Deployment
   @Test
-  public void testSetScriptResultToProcessVariable() {
+  void testSetScriptResultToProcessVariable() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("echo", "hello");
     variables.put("existingProcessVariableName", "one");
@@ -627,7 +630,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @org.operaton.bpm.engine.test.Deployment
   @Test
-  public void testGroovyScriptExecution() {
+  void testGroovyScriptExecution() {
     try {
 
       processEngineConfiguration.setAutoStoreScriptVariables(true);
@@ -644,7 +647,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @org.operaton.bpm.engine.test.Deployment
   @Test
-  public void testGroovySetVariableThroughExecutionInScript() {
+  void testGroovySetVariableThroughExecutionInScript() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("setScriptVariableThroughExecution");
 
     // Since 'def' is used, the 'scriptVar' will be script local
@@ -655,7 +658,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @org.operaton.bpm.engine.test.Deployment
   @Test
-  public void testScriptEvaluationException() {
+  void testScriptEvaluationException() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey("Process_1").singleResult();
     try {
       runtimeService.startProcessInstanceByKey("Process_1");
@@ -665,7 +668,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void shouldLoadExternalScriptJavascript() {
+  void shouldLoadExternalScriptJavascript() {
     try {
       // GIVEN
       // an external JS file with a function
@@ -696,7 +699,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void shouldFailOnLoadExternalScriptJavascriptIfNotEnabled() {
+  void shouldFailOnLoadExternalScriptJavascriptIfNotEnabled() {
     // GIVEN
     // an external JS file with a function
     deployProcess(JAVASCRIPT,

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -348,10 +348,11 @@ public interface HistoryService {
 
   /**
    * Finds history cleanup job, if present.
-   * @deprecated As of v. 7.9.0, because there can be more than one history cleanup job at once, use {@link #findHistoryCleanupJobs} instead.
+   *
+   * @deprecated There can be more than one history cleanup job at once. Use {@link #findHistoryCleanupJobs} instead.
    * @return history cleanup job entity
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   Job findHistoryCleanupJob();
 
   /**
@@ -431,7 +432,7 @@ public interface HistoryService {
    * decision inputs and outputs are deleted as well.
    *
    * @deprecated Note that this method name is not expressive enough, because it is also possible to delete the historic
-   * decision instance by the instance id. Therefore use {@link #deleteHistoricDecisionInstanceByDefinitionId} instead
+   * decision instance by the instance id. Therefore, use {@link #deleteHistoricDecisionInstanceByDefinitionId} instead
    * to delete the historic decision instance by the definition id.
    *
    * @param decisionDefinitionId
@@ -440,7 +441,7 @@ public interface HistoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#DECISION_DEFINITION}.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteHistoricDecisionInstance(String decisionDefinitionId);
 
   /**

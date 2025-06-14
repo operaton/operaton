@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.test.history;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.Mockito;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -28,19 +31,13 @@ import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.mockito.Mockito;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricIncidentAuditTest {
+class HistoricIncidentAuditTest {
 
   private static SessionFactory sessionFactory = Mockito.spy(new MockSessionFactory());
 
@@ -57,20 +54,16 @@ public class HistoricIncidentAuditTest {
     }
   }
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-
-    configuration.setCustomSessionFactories(Arrays.asList(sessionFactory));
-  });
-
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(configuration -> configuration.setCustomSessionFactories(Arrays.asList(sessionFactory)))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void shouldNotQueryForHistoricJobLogWhenSettingJobToZeroRetries() {
+  void shouldNotQueryForHistoricJobLogWhenSettingJobToZeroRetries() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
     .startEvent().operatonAsyncAfter().endEvent().done();
@@ -95,7 +88,7 @@ public class HistoricIncidentAuditTest {
 
 
   @Test
-  public void shouldNotQueryForHistoricJobLogWhenSettingExternalTaskToZeroRetries() {
+  void shouldNotQueryForHistoricJobLogWhenSettingExternalTaskToZeroRetries() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
     .startEvent().serviceTask().operatonExternalTask("topic").endEvent().done();

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@
 package org.operaton.bpm.integrationtest.deployment.cfg;
 
 import java.util.List;
+
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
@@ -41,14 +42,13 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
 
   @Deployment
   public static WebArchive processArchive() {
-
-    return ShrinkWrap.create(WebArchive.class, "test.war")
+      return ShrinkWrap.create(WebArchive.class)
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
-        .addAsLibraries(DeploymentHelper.getAssertJ())
-        .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes-additional-resource-suffixes.xml", "META-INF/processes.xml")
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(DummyProcessApplication.class)
+        .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes-additional-resource-suffixes.xml", "META-INF/processes.xml")
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/invoice-it.bpmn20.xml")
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/hello.groovy")
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/hello.py");

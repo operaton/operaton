@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,22 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupJobHandler;
@@ -25,44 +40,44 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.After;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  * Test timer recalculation
- * 
+ *
  * @author Tobias Metzke
  */
 
-public class TimerRecalculationTest extends PluggableProcessEngineTest {
-	
+class TimerRecalculationTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  ManagementService managementService;
+  RuntimeService runtimeService;
+  HistoryService historyService;
+
   private Set<String> jobIds = new HashSet<>();
-  
-  @After
-  public void tearDown() {
+
+  @AfterEach
+  void tearDown() {
     clearMeterLog();
 
     for (String jobId : jobIds) {
       clearJobLog(jobId);
       clearJob(jobId);
     }
-    
+
     jobIds = new HashSet<>();
   }
-	  
+
   @Test
-  public void testUnknownId() {
+  void testUnknownId() {
     try {
       // when
       managementService.recalculateJobDuedate("unknownID", false);
@@ -72,9 +87,9 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
       testRule.assertTextPresent("No job found with id '" + "unknownID", pe.getMessage());
     }
   }
-  
+
   @Test
-  public void testEmptyId() {
+  void testEmptyId() {
     try {
       // when
       managementService.recalculateJobDuedate("", false);
@@ -84,9 +99,9 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
       testRule.assertTextPresent("The job id is mandatory: jobId is empty", pe.getMessage());
     }
   }
-  
+
   @Test
-  public void testNullId() {
+  void testNullId() {
     try {
       // when
       managementService.recalculateJobDuedate(null, false);
@@ -99,7 +114,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testFinishedJob() {
+  void testFinishedJob() {
     // given
     HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("dueDate", new Date());
@@ -117,7 +132,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobId);
     assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
-    
+
     try {
       // when
       managementService.recalculateJobDuedate(jobId, false);
@@ -127,32 +142,32 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
       testRule.assertTextPresent("No job found with id '" + jobId, pe.getMessage());
     }
   }
-  
+
   @Test
-  public void testEverLivingJob() {
+  void testEverLivingJob() {
     // given
     Job job = historyService.cleanUpHistoryAsync(true);
     jobIds.add(job.getId());
-    
+
     // when & then
     tryRecalculateUnsupported(job, HistoryCleanupJobHandler.TYPE);
   }
-  
+
   @Deployment
   @Test
-  public void testMessageJob() {
+  void testMessageJob() {
     // given
     runtimeService.startProcessInstanceByKey("asyncService");
     Job job = managementService.createJobQuery().singleResult();
     jobIds.add(job.getId());
-    
+
     // when & then
     tryRecalculateUnsupported(job, AsyncContinuationJobHandler.TYPE);
   }
-  
+
 
   // helper /////////////////////////////////////////////////////////////////
-  
+
   protected void tryRecalculateUnsupported(Job job, String type) {
     // given
     String jobId = job.getId();
@@ -166,7 +181,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
     }
   }
 
-  
+
   protected void clearMeterLog() {
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(commandContext -> {
@@ -175,7 +190,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
       return null;
     });
   }
-  
+
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(commandContext -> {
@@ -183,7 +198,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
       return null;
     });
   }
-  
+
   protected void clearJob(final String jobId) {
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(commandContext -> {

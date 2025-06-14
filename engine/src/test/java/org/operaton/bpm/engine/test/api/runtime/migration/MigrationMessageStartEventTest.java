@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,38 +18,31 @@ package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MessageReceiveModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 
-public class MigrationMessageStartEventTest {
+class MigrationMessageStartEventTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-  protected RuntimeService runtimeService;
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  @Before
-  public void setup() {
-    runtimeService = rule.getRuntimeService();
-  }
+  RuntimeService runtimeService;
 
   @Test
-  public void testMigrateEventSubscription() {
+  void testMigrateEventSubscription() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MessageReceiveModels.MESSAGE_START_PROCESS);
     String sourceProcessDefinitionId = sourceProcessDefinition.getId();
@@ -77,7 +70,7 @@ public class MigrationMessageStartEventTest {
   }
 
   @Test
-  public void testMigrateEventSubscriptionWithEventSubProcess() {
+  void testMigrateEventSubscriptionWithEventSubProcess() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.MESSAGE_EVENT_SUBPROCESS_PROCESS);

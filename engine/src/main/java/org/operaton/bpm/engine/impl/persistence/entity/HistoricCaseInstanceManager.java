@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.CleanableHistoricCaseInstanceReportResult;
+import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.impl.CleanableHistoricCaseInstanceReportImpl;
 import org.operaton.bpm.engine.impl.HistoricCaseInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -31,6 +26,10 @@ import org.operaton.bpm.engine.impl.history.event.HistoricCaseInstanceEventEntit
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sebastian Menski
@@ -110,10 +109,10 @@ public class HistoricCaseInstanceManager extends AbstractHistoricManager {
   @SuppressWarnings("unchecked")
   public List<String> findHistoricCaseInstanceIdsForCleanup(int batchSize, int minuteFrom, int minuteTo) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("currentTimestamp", ClockUtil.getCurrentTime());
+    parameters.put(CURRENT_TIMESTAMP, ClockUtil.getCurrentTime());
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
     ListQueryParameterObject parameterObject = new ListQueryParameterObject(parameters, 0, batchSize);
     return getDbEntityManager().selectList("selectHistoricCaseInstanceIdsForCleanup", parameterObject);

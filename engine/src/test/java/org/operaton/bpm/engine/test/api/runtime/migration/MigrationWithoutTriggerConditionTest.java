@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.BOUNDARY_ID;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
@@ -26,35 +27,32 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.Conditio
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VAR_CONDITION;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_START_ID;
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.TASK_AFTER_CONDITION_ID;
-import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.bpmn.event.conditional.SetVariableDelegate;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class MigrationWithoutTriggerConditionTest {
+class MigrationWithoutTriggerConditionTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testIntermediateConditionalEventWithSetVariableOnEndListener() {
+  void testIntermediateConditionalEventWithSetVariableOnEndListener() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(Bpmn.createExecutableProcess()
       .startEvent()
@@ -104,7 +102,7 @@ public class MigrationWithoutTriggerConditionTest {
 
 
   @Test
-  public void testIntermediateConditionalEventWithSetVariableOnStartListener() {
+  void testIntermediateConditionalEventWithSetVariableOnStartListener() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(Bpmn.createExecutableProcess()
       .startEvent()
@@ -155,7 +153,7 @@ public class MigrationWithoutTriggerConditionTest {
   }
 
   @Test
-  public void testBoundaryConditionalEventWithSetVariableOnStartListener() {
+  void testBoundaryConditionalEventWithSetVariableOnStartListener() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.ONE_TASK_PROCESS)
       .userTaskBuilder(USER_TASK_ID)
@@ -212,7 +210,7 @@ public class MigrationWithoutTriggerConditionTest {
   }
 
   @Test
-  public void testBoundaryConditionalEventWithSetVariableOnEndListener() {
+  void testBoundaryConditionalEventWithSetVariableOnEndListener() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(
       Bpmn.createExecutableProcess(PROC_DEF_KEY)
@@ -268,7 +266,7 @@ public class MigrationWithoutTriggerConditionTest {
   }
 
   @Test
-  public void tesConditionalEventSubProcessWithSetVariableOnStartListener() {
+  void tesConditionalEventSubProcessWithSetVariableOnStartListener() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.ONE_TASK_PROCESS)
       .addSubProcessTo(PROC_DEF_KEY)
@@ -335,7 +333,7 @@ public class MigrationWithoutTriggerConditionTest {
   }
 
   @Test
-  public void testConditionalEventSubProcessWithSetVariableOnEndListener() {
+  void testConditionalEventSubProcessWithSetVariableOnEndListener() {
     // given
     BpmnModelInstance sourceModel = modify(
       Bpmn.createExecutableProcess(PROC_DEF_KEY)

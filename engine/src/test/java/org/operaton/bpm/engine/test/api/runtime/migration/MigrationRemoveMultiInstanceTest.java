@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,33 +22,31 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MultiInstanceProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationRemoveMultiInstanceTest {
+class MigrationRemoveMultiInstanceTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testRemoveParallelMultiInstanceBody() {
+  void testRemoveParallelMultiInstanceBody() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -91,9 +89,8 @@ public class MigrationRemoveMultiInstanceTest {
   }
 
 
-
   @Test
-  public void testRemoveParallelMultiInstanceBodyVariables() {
+  void testRemoveParallelMultiInstanceBodyVariables() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -119,7 +116,7 @@ public class MigrationRemoveMultiInstanceTest {
   }
 
   @Test
-  public void testRemoveParallelMultiInstanceBodyScope() {
+  void testRemoveParallelMultiInstanceBodyScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
@@ -173,7 +170,7 @@ public class MigrationRemoveMultiInstanceTest {
   }
 
   @Test
-  public void testRemoveParallelMultiInstanceBodyOneInstanceFinished() {
+  void testRemoveParallelMultiInstanceBodyOneInstanceFinished() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -220,7 +217,7 @@ public class MigrationRemoveMultiInstanceTest {
   }
 
   @Test
-  public void testRemoveSequentialMultiInstanceBody() {
+  void testRemoveSequentialMultiInstanceBody() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -254,7 +251,7 @@ public class MigrationRemoveMultiInstanceTest {
   }
 
   @Test
-  public void testRemoveSequentialMultiInstanceBodyVariables() {
+  void testRemoveSequentialMultiInstanceBodyVariables() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -272,7 +269,7 @@ public class MigrationRemoveMultiInstanceTest {
   }
 
   @Test
-  public void testRemovSequentialMultiInstanceBodyScope() {
+  void testRemovSequentialMultiInstanceBodyScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);

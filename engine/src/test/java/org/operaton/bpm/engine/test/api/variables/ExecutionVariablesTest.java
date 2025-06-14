@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,24 +18,36 @@ package org.operaton.bpm.engine.test.api.variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class ExecutionVariablesTest extends PluggableProcessEngineTest {
+class ExecutionVariablesTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testTreeCompactionWithLocalVariableOnConcurrentExecution() {
+  void testTreeCompactionWithLocalVariableOnConcurrentExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     Execution innerTaskExecution = runtimeService
@@ -67,7 +79,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionWithLocalVariableOnConcurrentExecution.bpmn20.xml")
   @Test
-  public void testStableVariableInstanceIdsOnCompaction() {
+  void testStableVariableInstanceIdsOnCompaction() {
     runtimeService.startProcessInstanceByKey("process");
 
     Execution innerTaskExecution = runtimeService
@@ -99,7 +111,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")
   @Test
-  public void testStableVariableInstanceIdsOnCompactionAndExpansion() {
+  void testStableVariableInstanceIdsOnCompactionAndExpansion() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     Execution task1Execution = runtimeService
@@ -131,7 +143,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTreeCompactionForkParallelGateway() {
+  void testTreeCompactionForkParallelGateway() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -159,7 +171,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTreeCompactionNestedForkParallelGateway() {
+  void testTreeCompactionNestedForkParallelGateway() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -188,7 +200,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")
   @Test
-  public void testTreeCompactionWithVariablesOnScopeAndConcurrentExecution() {
+  void testTreeCompactionWithVariablesOnScopeAndConcurrentExecution() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
@@ -217,7 +229,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkWithThreeBranchesAndJoinOfTwoBranchesParallelGateway() {
+  void testForkWithThreeBranchesAndJoinOfTwoBranchesParallelGateway() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -237,7 +249,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkWithThreeBranchesAndJoinOfTwoBranchesInclusiveGateway() {
+  void testForkWithThreeBranchesAndJoinOfTwoBranchesInclusiveGateway() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -257,7 +269,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")
   @Test
-  public void testTreeCompactionAndExpansionWithConcurrentLocalVariables() {
+  void testTreeCompactionAndExpansionWithConcurrentLocalVariables() {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -284,7 +296,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")
   @Test
-  public void testTreeCompactionAndExpansionWithScopeExecutionVariables() {
+  void testTreeCompactionAndExpansionWithScopeExecutionVariables() {
 
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");

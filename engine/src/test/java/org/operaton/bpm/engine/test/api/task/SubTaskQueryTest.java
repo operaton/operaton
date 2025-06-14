@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,25 +22,32 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * Tests for cub-tasks querying
  * @author Ionut Paduraru
- * @see TaskQueryTest 
+ * @see TaskQueryTest
  */
-public class SubTaskQueryTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class SubTaskQueryTest {
+
+  IdentityService identityService;
+  TaskService taskService;
 
   private List<String> taskIds;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
 
     identityService.saveUser(identityService.newUser("kermit"));
     identityService.saveUser(identityService.newUser("gonzo"));
@@ -54,8 +61,8 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     taskIds = generateTestSubTasks();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.deleteGroup("accountancy");
     identityService.deleteGroup("management");
     identityService.deleteUser("gonzo");
@@ -64,10 +71,10 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * test for task inclusion/exclusion (no other filters, no sort) 
+   * test for task inclusion/exclusion (no other filters, no sort)
    */
   @Test
-  public void testQueryExcludeSubtasks() {
+  void testQueryExcludeSubtasks() {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery();
     assertThat(query.count()).isEqualTo(10);
@@ -79,10 +86,10 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * test for task inclusion/exclusion (no other filters, no sort) 
+   * test for task inclusion/exclusion (no other filters, no sort)
    */
   @Test
-  public void testQueryWithPagination() {
+  void testQueryWithPagination() {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery();
     assertThat(query.count()).isEqualTo(10);
@@ -94,10 +101,10 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * test for task inclusion/exclusion (no other filters, order by task assignee ) 
+   * test for task inclusion/exclusion (no other filters, order by task assignee )
    */
   @Test
-  public void testQueryExcludeSubtasksSorted() {
+  void testQueryExcludeSubtasksSorted() {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery().orderByTaskAssignee().asc();
     assertThat(query.count()).isEqualTo(10);
@@ -109,10 +116,10 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * test for task inclusion/exclusion when additional filter is specified (like assignee), no order. 
-   */ 
+   * test for task inclusion/exclusion when additional filter is specified (like assignee), no order.
+   */
   @Test
-  public void testQueryByAssigneeExcludeSubtasks() {
+  void testQueryByAssigneeExcludeSubtasks() {
     // gonzo has 2 root tasks and 3+2 subtasks assigned
     // include subtasks
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo");
@@ -137,10 +144,10 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * test for task inclusion/exclusion when additional filter is specified (like assignee), no order. 
-   */ 
+   * test for task inclusion/exclusion when additional filter is specified (like assignee), no order.
+   */
   @Test
-  public void testQueryByAssigneeExcludeSubtasksPaginated() {
+  void testQueryByAssigneeExcludeSubtasksPaginated() {
     // gonzo has 2 root tasks and 3+2 subtasks assigned
     // include subtasks
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo");
@@ -165,10 +172,10 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * test for task inclusion/exclusion when additional filter is specified (like assignee), ordered. 
-   */ 
+   * test for task inclusion/exclusion when additional filter is specified (like assignee), ordered.
+   */
   @Test
-  public void testQueryByAssigneeExcludeSubtasksOrdered() throws Exception {
+  void testQueryByAssigneeExcludeSubtasksOrdered() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
     // gonzo has 2 root tasks and 3+2 subtasks assigned
@@ -199,10 +206,10 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * test for task inclusion/exclusion when additional filter is specified (like assignee), ordered. 
-   */ 
+   * test for task inclusion/exclusion when additional filter is specified (like assignee), ordered.
+   */
   @Test
-  public void testQueryByAssigneeExcludeSubtasksOrderedAndPaginated() throws Exception {
+  void testQueryByAssigneeExcludeSubtasksOrderedAndPaginated() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
     // gonzo has 2 root tasks and 3+2 subtasks assigned
@@ -239,9 +246,9 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * Generates some test sub-tasks to the tasks generated by {@link #generateTestTasks()}.<br/> 
-   * - 1 root task where kermit is a candidate with 2 subtasks (both with kermit as candidate) <br/> 
-   * - 2 root task where gonzo is assignee with 3 + 2 subtasks assigned to gonzo  
+   * Generates some test sub-tasks to the tasks generated by {@link #generateTestTasks()}.<br/>
+   * - 1 root task where kermit is a candidate with 2 subtasks (both with kermit as candidate) <br/>
+   * - 2 root task where gonzo is assignee with 3 + 2 subtasks assigned to gonzo
    */
   private List<String> generateTestSubTasks() throws Exception {
     List<String> ids = new ArrayList<>();

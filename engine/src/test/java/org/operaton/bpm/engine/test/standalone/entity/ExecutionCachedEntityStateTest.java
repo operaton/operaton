@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,24 +20,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.impl.util.BitMaskUtil;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ExecutionCachedEntityStateTest {
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testProcessInstanceTasks() {
+  void testProcessInstanceTasks() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
@@ -46,7 +53,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionTasksScope() {
+  void testExecutionTasksScope() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
@@ -59,7 +66,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionTasksParallel() {
+  void testExecutionTasksParallel() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
@@ -72,7 +79,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionTasksMi() {
+  void testExecutionTasksMi() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
@@ -93,7 +100,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testProcessInstanceEventSubscriptions() {
+  void testProcessInstanceEventSubscriptions() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
@@ -102,7 +109,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionEventSubscriptionsScope() {
+  void testExecutionEventSubscriptionsScope() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -116,7 +123,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionEventSubscriptionsMi() {
+  void testExecutionEventSubscriptionsMi() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -138,7 +145,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testProcessInstanceJobs() {
+  void testProcessInstanceJobs() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -149,7 +156,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionJobsScope() {
+  void testExecutionJobsScope() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
@@ -161,7 +168,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionJobsParallel() {
+  void testExecutionJobsParallel() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -175,7 +182,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testProcessInstanceIncident() {
+  void testProcessInstanceIncident() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -203,7 +210,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionIncidentParallel() {
+  void testExecutionIncidentParallel() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -231,7 +238,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExecutionExternalTask() {
+  void testExecutionExternalTask() {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
     ExecutionEntity execution = (ExecutionEntity) runtimeService

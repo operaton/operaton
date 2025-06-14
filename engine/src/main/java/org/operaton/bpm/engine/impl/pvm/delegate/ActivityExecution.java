@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -254,7 +254,7 @@ public interface ActivityExecution extends DelegateExecution {
    *   must be an ancestor of the execution's current activity
    * @return
    */
-  public ActivityExecution findExecutionForFlowScope(PvmScope targetScope);
+  ActivityExecution findExecutionForFlowScope(PvmScope targetScope);
 
   /**
    * Returns a mapping from scope activities to scope executions for all scopes that
@@ -262,10 +262,10 @@ public interface ActivityExecution extends DelegateExecution {
    *
    * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not null).
    */
-  public Map<ScopeImpl, PvmExecutionImpl> createActivityExecutionMapping();
+  Map<ScopeImpl, PvmExecutionImpl> createActivityExecutionMapping();
 
   void setEnded(boolean b);
-  
+
   void setIgnoreAsync(boolean ignoreAsync);
 
 }

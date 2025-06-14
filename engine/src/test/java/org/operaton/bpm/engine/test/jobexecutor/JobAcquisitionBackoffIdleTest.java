@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,6 +22,9 @@ import static junit.framework.TestCase.assertNotNull;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
@@ -30,12 +33,8 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper.ThreadControl;
 import org.operaton.bpm.engine.test.jobexecutor.RecordingAcquireJobsRunnable.RecordedWaitEvent;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
@@ -46,24 +45,26 @@ public class JobAcquisitionBackoffIdleTest {
   public static final int BASE_IDLE_WAIT_TIME = 5000;
   public static final int MAX_IDLE_WAIT_TIME = 60000;
 
-  protected ControllableJobExecutor jobExecutor;
-  protected ThreadControl acquisitionThread;
+  protected static ControllableJobExecutor jobExecutor;
+  protected static ThreadControl acquisitionThread;
 
-  protected ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    jobExecutor = new ControllableJobExecutor(true);
-    jobExecutor.setMaxJobsPerAcquisition(1);
-    jobExecutor.setWaitTimeInMillis(BASE_IDLE_WAIT_TIME);
-    jobExecutor.setMaxWait(MAX_IDLE_WAIT_TIME);
-    acquisitionThread = jobExecutor.getAcquisitionThreadControl();
-    configuration.setJobExecutor(jobExecutor);
-  });
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterEachTest()
+    .configurator(configuration -> {
+      jobExecutor = new ControllableJobExecutor(true);
+      jobExecutor.setMaxJobsPerAcquisition(1);
+      jobExecutor.setWaitTimeInMillis(BASE_IDLE_WAIT_TIME);
+      jobExecutor.setMaxWait(MAX_IDLE_WAIT_TIME);
+      acquisitionThread = jobExecutor.getAcquisitionThreadControl();
+      configuration.setJobExecutor(jobExecutor);
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule).around(engineRule);
-
-  @After
-  public void shutdownJobExecutor() {
+  @AfterEach
+  void shutdownJobExecutor() {
     ClockUtil.reset();
     jobExecutor.shutdown();
   }
@@ -73,7 +74,7 @@ public class JobAcquisitionBackoffIdleTest {
    */
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
-  public void testIdlingAfterConcurrentJobAddedNotification() {
+  void testIdlingAfterConcurrentJobAddedNotification() {
     // start job acquisition - waiting before acquiring jobs
     jobExecutor.start();
     acquisitionThread.waitForSync();
@@ -100,7 +101,7 @@ public class JobAcquisitionBackoffIdleTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/JobAcquisitionBackoffIdleTest.testShortTimerOnUserTaskWithExpression.bpmn20.xml")
-  public void testIdlingWithHintOnSuspend() {
+  void testIdlingWithHintOnSuspend() {
     testIdlingWithHint(() -> {
       //continue sync before acquire
       acquisitionThread.makeContinueAndWaitForSync();
@@ -123,7 +124,7 @@ public class JobAcquisitionBackoffIdleTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/JobAcquisitionBackoffIdleTest.testShortTimerOnUserTaskWithExpression.bpmn20.xml")
-  public void testIdlingWithHintOnAcquisition() {
+  void testIdlingWithHintOnAcquisition() {
     testIdlingWithHint(() -> {
       //continue sync before acquire
       acquisitionThread.makeContinueAndWaitForSync();
@@ -143,7 +144,7 @@ public class JobAcquisitionBackoffIdleTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/JobAcquisitionBackoffIdleTest.testShortTimerOnUserTaskWithExpression.bpmn20.xml")
-  public void testIdlingWithHintBeforeAcquisition() {
+  void testIdlingWithHintBeforeAcquisition() {
     testIdlingWithHint(() -> {
       //process is started with timer boundary event which should start after 3 seconds
       ProcessInstance procInstance = engineRule.getRuntimeService().startProcessInstanceByKey("timer-example");

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.impl.juel;
-
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
 
 import jakarta.el.ArrayELResolver;
 import jakarta.el.BeanELResolver;
@@ -31,28 +28,26 @@ import jakarta.el.ResourceBundleELResolver;
  * Simple resolver implementation. This resolver handles root properties (top-level identifiers).
  * Resolving "real" properties (<code>base != null</code>) is delegated to a resolver specified at
  * construction time.
- * 
+ *
  * @author Christoph Beck
  */
 public class SimpleResolver extends ELResolver {
-	private static final ELResolver DEFAULT_RESOLVER_READ_ONLY = new CompositeELResolver() {
-		{
-			add(new ArrayELResolver(true));
-			add(new ListELResolver(true));
-			add(new MapELResolver(true));
-			add(new ResourceBundleELResolver());
-			add(new BeanELResolver(true));
-		}
-	};
-	private static final ELResolver DEFAULT_RESOLVER_READ_WRITE = new CompositeELResolver() {
-		{
-			add(new ArrayELResolver(false));
-			add(new ListELResolver(false));
-			add(new MapELResolver(false));
-			add(new ResourceBundleELResolver());
-			add(new BeanELResolver(false));
-		}
-	};
+	private static final CompositeELResolver DEFAULT_RESOLVER_READ_ONLY = new CompositeELResolver();
+	private static final CompositeELResolver DEFAULT_RESOLVER_READ_WRITE = new CompositeELResolver();
+
+	static {
+		DEFAULT_RESOLVER_READ_ONLY.add(new ArrayELResolver(true));
+		DEFAULT_RESOLVER_READ_ONLY.add(new ListELResolver(true));
+		DEFAULT_RESOLVER_READ_ONLY.add(new MapELResolver(true));
+		DEFAULT_RESOLVER_READ_ONLY.add(new ResourceBundleELResolver());
+		DEFAULT_RESOLVER_READ_ONLY.add(new BeanELResolver(true));
+
+		DEFAULT_RESOLVER_READ_WRITE.add(new ArrayELResolver(false));
+		DEFAULT_RESOLVER_READ_WRITE.add(new ListELResolver(false));
+		DEFAULT_RESOLVER_READ_WRITE.add(new MapELResolver(false));
+		DEFAULT_RESOLVER_READ_WRITE.add(new ResourceBundleELResolver());
+		DEFAULT_RESOLVER_READ_WRITE.add(new BeanELResolver(false));
+	}
 
 	private final RootPropertyResolver root;
 	private final CompositeELResolver delegate;
@@ -93,7 +88,7 @@ public class SimpleResolver extends ELResolver {
 
 	/**
 	 * Answer our root resolver which provides an API to access top-level properties.
-	 * 
+	 *
 	 * @return root property resolver
 	 */
 	public RootPropertyResolver getRootPropertyResolver() {
@@ -103,11 +98,6 @@ public class SimpleResolver extends ELResolver {
 	@Override
 	public Class<?> getCommonPropertyType(ELContext context, Object base) {
 		return delegate.getCommonPropertyType(context, base);
-	}
-
-	@Override
-	public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
-		return delegate.getFeatureDescriptors(context, base);
 	}
 
 	@Override

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,30 +16,19 @@
  */
 package org.operaton.bpm.dmn.engine.impl.transform;
 
+import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
+import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandlerRegistry;
+import org.operaton.bpm.model.dmn.instance.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
-import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandlerRegistry;
-import org.operaton.bpm.model.dmn.instance.Decision;
-import org.operaton.bpm.model.dmn.instance.DecisionTable;
-import org.operaton.bpm.model.dmn.instance.Definitions;
-import org.operaton.bpm.model.dmn.instance.DmnModelElementInstance;
-import org.operaton.bpm.model.dmn.instance.Input;
-import org.operaton.bpm.model.dmn.instance.InputEntry;
-import org.operaton.bpm.model.dmn.instance.InputExpression;
-import org.operaton.bpm.model.dmn.instance.LiteralExpression;
-import org.operaton.bpm.model.dmn.instance.Output;
-import org.operaton.bpm.model.dmn.instance.OutputEntry;
-import org.operaton.bpm.model.dmn.instance.Rule;
-import org.operaton.bpm.model.dmn.instance.Variable;
-
 public class DefaultElementTransformHandlerRegistry implements DmnElementTransformHandlerRegistry {
 
-  protected final Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler> handlers = getDefaultElementTransformHandlers();
+  protected final Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler<? extends DmnModelElementInstance, ?>> handlers = getDefaultElementTransformHandlers();
 
-  protected static Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler> getDefaultElementTransformHandlers() {
-    Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler> handlers = new HashMap<>();
+  protected static Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler<? extends DmnModelElementInstance, ?>> getDefaultElementTransformHandlers() {
+    Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler<? extends DmnModelElementInstance, ?>> handlers = new HashMap<>();
 
     handlers.put(Definitions.class, new DmnDecisionRequirementsGraphTransformHandler());
     handlers.put(Decision.class, new DmnDecisionTransformHandler());
@@ -66,7 +55,7 @@ public class DefaultElementTransformHandlerRegistry implements DmnElementTransfo
   @Override
   @SuppressWarnings("unchecked")
   public <Source extends DmnModelElementInstance, Target> DmnElementTransformHandler<Source, Target> getHandler(Class<Source> sourceClass) {
-    return handlers.get(sourceClass);
+    return (DmnElementTransformHandler<Source, Target>) handlers.get(sourceClass);
   }
 
 }

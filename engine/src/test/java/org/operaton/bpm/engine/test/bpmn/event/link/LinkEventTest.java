@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,23 +22,38 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  * @author Bernd Ruecker
  */
-public class LinkEventTest extends PluggableProcessEngineTest {
+class LinkEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  RepositoryService repositoryService;
 
   @Deployment
   @Test
-  public void testValidEventLink() {
+  void testValidEventLink() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("linkEventValid");
 
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
@@ -68,7 +83,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testEventLinkMultipleSources() {
+  void testEventLinkMultipleSources() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("linkEventValid");
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
 
@@ -91,7 +106,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testInvalidEventLinkMultipleTargets() {
+  void testInvalidEventLinkMultipleTargets() {
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/link/LinkEventTest.testInvalidEventLinkMultipleTargets.bpmn20.xml");
     try {
       deploymentBuilder.deploy();
@@ -104,7 +119,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCatchLinkEventAfterEventBasedGatewayNotAllowed() {
+  void testCatchLinkEventAfterEventBasedGatewayNotAllowed() {
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/link/LinkEventTest.testCatchLinkEventAfterEventBasedGatewayNotAllowed.bpmn20.xml");
     try {
       deploymentBuilder.deploy();

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -158,10 +158,12 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
   // event subscriptions //////////////////////////////////////////////////
 
   /**
-   * @see #signalEventSubscriptionName(String)
+   * @deprecated Use #signalEventSubscriptionName(String) instead.
    */
-  @Deprecated
-  ExecutionQuery signalEventSubscription(String signalName);
+  @Deprecated(forRemoval = true, since = "1.0")
+  default ExecutionQuery signalEventSubscription(String signalName) {
+    return signalEventSubscriptionName(signalName);
+  }
 
   /**
    * Only select executions which have a signal event subscription

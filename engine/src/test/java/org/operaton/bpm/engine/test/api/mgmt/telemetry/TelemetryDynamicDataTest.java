@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.util.Map;
 
@@ -43,12 +44,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 @ExtendWith(ProcessEngineExtension.class)
 class TelemetryDynamicDataTest {
 
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
   protected ProcessEngineConfigurationImpl configuration;
   protected RuntimeService runtimeService;
   protected TaskService taskService;
   protected ManagementService managementService;
-
-  protected ProcessEngine processEngineInMem;
 
   @BeforeEach
   void init() {
@@ -58,11 +58,6 @@ class TelemetryDynamicDataTest {
   @AfterEach
   void tearDown() {
     clearMetrics();
-
-    if (processEngineInMem != null) {
-      ProcessEngines.unregister(processEngineInMem);
-      processEngineInMem.close();
-    }
   }
 
   public void clearMetrics() {
@@ -81,8 +76,9 @@ class TelemetryDynamicDataTest {
   @Test
   void shouldCountCommandsFromEngineStartAfterTelemetryActivation() {
     // when
-    processEngineInMem =  new StandaloneInMemProcessEngineConfiguration()
+    ProcessEngine processEngineInMem = new StandaloneInMemProcessEngineConfiguration()
         .setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName())
+        .setProcessEngineName(PROCESS_ENGINE_NAME)
         .buildProcessEngine();
 
     // then
@@ -100,6 +96,9 @@ class TelemetryDynamicDataTest {
     for (String commandName : entries.keySet()) {
       assertThat(entries.get(commandName).get()).isEqualTo(1);
     }
+
+    ProcessEngines.unregister(processEngineInMem);
+    processEngineInMem.close();
   }
 
   @Test

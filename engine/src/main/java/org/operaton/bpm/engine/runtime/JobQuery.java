@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -84,25 +84,25 @@ public interface JobQuery extends Query<JobQuery, Job> {
   /** Only select jobs where the duedate is lower then the given date.
    * @deprecated
    */
-  @Deprecated
+  @Deprecated(since = "1.0")
   JobQuery duedateLowerThen(Date date);
 
   /** Only select jobs where the duedate is lower then or equals the given date.
    * @deprecated
    */
-  @Deprecated
+  @Deprecated(since = "1.0")
   JobQuery duedateLowerThenOrEquals(Date date);
 
   /** Only select jobs where the duedate is higher then the given date.
    * @deprecated
    */
-  @Deprecated
+  @Deprecated(since = "1.0")
   JobQuery duedateHigherThen(Date date);
 
   /** Only select jobs where the duedate is higher then or equals the given date.
    * @deprecated
    */
-  @Deprecated
+  @Deprecated(since = "1.0")
   JobQuery duedateHigherThenOrEquals(Date date);
 
   /** Only select jobs created before the given date. */

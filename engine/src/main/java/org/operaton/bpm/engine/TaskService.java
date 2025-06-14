@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -1099,9 +1099,9 @@ public interface TaskService {
   /**
    * Add a comment to a task and/or process instance.
    *
-   * @deprecated Use {@link #createComment(String, String, String)} instead
+   * @deprecated Use {@link #createComment(String, String, String)} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void addComment(String taskId, String processInstanceId, String message);
 
   /** Creates a comment to a task and/or process instance and returns the comment. */
@@ -1195,12 +1195,12 @@ public interface TaskService {
    * property <code>legacyUserOperationLog</code> (default false). To restore the engine's
    * previous behavior, set the flag to <code>true</code>.</p>
    *
-   * @deprecated This method has been deprecated as of Operaton.1. It has been replaced with
-   * the operation log. See {@link UserOperationLogEntry} and {@link UserOperationLogQuery}.
+   * @deprecated It has been replaced with the operation log. See {@link UserOperationLogEntry}
+   * and {@link UserOperationLogQuery}.
    *
    * @see HistoryService#createUserOperationLogQuery()
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   List<Event> getTaskEvents(String taskId);
 
   /** The comments related to the given process instance. */

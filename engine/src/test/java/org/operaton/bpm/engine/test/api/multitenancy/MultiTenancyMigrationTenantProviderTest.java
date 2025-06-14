@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,15 +46,13 @@ class MultiTenancyMigrationTenantProviderTest {
   protected static final String TENANT_TWO = "tenant2";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
-      .configurator(configuration -> {
-        TenantIdProvider tenantIdProvider = new VariableBasedTenantIdProvider();
-        configuration.setTenantIdProvider(tenantIdProvider);
-      })
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
+      .randomEngineName()
+      .configurator(configuration -> configuration.setTenantIdProvider(new VariableBasedTenantIdProvider()))
       .build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   @Test
   void cannotMigrateInstanceBetweenDifferentTenants() {

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,14 +18,14 @@ package org.operaton.bpm.engine.test.bpmn.event.error;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.delegate.BpmnError;
-import org.junit.Test;
 
 /**
  * This test asserts the constructors of the {@link BpmnError} class as this
  * is part of the public API
  */
-public class BpmnErrorTest {
+class BpmnErrorTest {
 
   /** Error code used when creating BpmnError instances */
   private static final String ERROR_CODE = "testErrorCode";
@@ -37,30 +37,30 @@ public class BpmnErrorTest {
   private static final Throwable CAUSE = new IllegalArgumentException("causeMessage");
 
   @Test
-  public void testCreation_ErrorCodeOnly() {
+  void testCreation_ErrorCodeOnly() {
     // when
     BpmnError bpmnError = new BpmnError(ERROR_CODE);
-    
+
     // then
     assertThat(bpmnError).hasMessage(null);
     assertThat(bpmnError.getErrorCode()).isEqualTo(ERROR_CODE);
   }
 
   @Test
-  public void testCreation_ErrorMessagePresent() {
+  void testCreation_ErrorMessagePresent() {
     // when
     BpmnError bpmnError = new BpmnError(ERROR_CODE, ERROR_MESSAGE);
-    
+
     // then
     assertThat(bpmnError).hasMessage(ERROR_MESSAGE);
     assertThat(bpmnError.getErrorCode()).isEqualTo(ERROR_CODE);
   }
 
   @Test
-  public void testCreation_ErrorCodeOnlyWithCause() {
+  void testCreation_ErrorCodeOnlyWithCause() {
     // when
     BpmnError bpmnError = new BpmnError(ERROR_CODE, CAUSE);
-    
+
     // then
     assertThat(bpmnError)
             .hasMessage(null)
@@ -69,10 +69,10 @@ public class BpmnErrorTest {
   }
 
   @Test
-  public void testCreation_ErrorMessageAndCausePresent() {
+  void testCreation_ErrorMessageAndCausePresent() {
     // when
     BpmnError bpmnError = new BpmnError(ERROR_CODE, ERROR_MESSAGE, CAUSE);
-    
+
     // then
     assertThat(bpmnError)
             .hasMessageContaining(ERROR_MESSAGE)

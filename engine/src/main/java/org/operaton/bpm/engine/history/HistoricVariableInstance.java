@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,20 +62,23 @@ public interface HistoricVariableInstance {
   /**
    * Returns the name of this variable instance.
    *
-   * <p>Deprecated since 7.2: use {@link #getName()} instead.</p>
+   * @deprecated Use {@link #getName()} instead.
    *
    */
-   @Deprecated
-  String getVariableName();
+  @Deprecated(forRemoval = true, since = "1.0")
+  default String getVariableName() {
+    return getName();
+  }
 
   /**
-   * <p>Returns the name of the type of this variable instance</p>
+   * Returns the name of the type of this variable instance.
    *
-   * <p>Deprecated since 7.2: use {@link #getTypeName()} instead.</p>
-   *
+   * @deprecated Use {@link #getTypeName()} instead.
    */
-  @Deprecated
-  String getVariableTypeName();
+  @Deprecated(forRemoval = true, since = "1.0")
+  default String getVariableTypeName() {
+    return getTypeName();
+  }
 
   /**
    * The process definition key reference.
@@ -105,7 +108,7 @@ public interface HistoricVariableInstance {
   /**
    * Returns the corresponding activity instance id.
    */
-  @Deprecated
+  @Deprecated(since = "1.0")
   String getActivtyInstanceId();
 
   /**

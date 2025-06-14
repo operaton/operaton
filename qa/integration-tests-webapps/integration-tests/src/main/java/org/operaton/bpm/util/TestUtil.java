@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,6 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.ClientConfig;
 import org.operaton.bpm.TestProperties;
 import org.operaton.bpm.engine.rest.dto.identity.UserCredentialsDto;
@@ -31,7 +30,6 @@ import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.core.GenericType;
 
 public class TestUtil {
 

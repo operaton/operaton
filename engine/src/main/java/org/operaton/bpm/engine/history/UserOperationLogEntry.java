@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -63,14 +63,14 @@ import org.operaton.bpm.engine.EntityTypes;
  */
 public interface UserOperationLogEntry {
 
-  /** @deprecated Please use {@link EntityTypes#TASK} instead. */
-  @Deprecated
+  /** @deprecated Use {@link EntityTypes#TASK} instead. */
+  @Deprecated(forRemoval = true, since = "1.0")
   String ENTITY_TYPE_TASK = EntityTypes.TASK;
-  /** @deprecated Please use {@link EntityTypes#IDENTITY_LINK} instead. */
-  @Deprecated
+  /** @deprecated Use {@link EntityTypes#IDENTITY_LINK} instead. */
+  @Deprecated(forRemoval = true, since = "1.0")
   String ENTITY_TYPE_IDENTITY_LINK = EntityTypes.IDENTITY_LINK;
-  /** @deprecated Please use {@link EntityTypes#ATTACHMENT} instead. */
-  @Deprecated
+  /** @deprecated Use {@link EntityTypes#ATTACHMENT} instead. */
+  @Deprecated(forRemoval = true, since = "1.0")
   String ENTITY_TYPE_ATTACHMENT = EntityTypes.ATTACHMENT;
 
   String OPERATION_TYPE_ASSIGN = "Assign";

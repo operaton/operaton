@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,19 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
-import org.operaton.bpm.engine.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEntity;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -24,39 +36,29 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.AsyncProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.CompensationModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MultiInstanceProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationHistoricVariablesTest {
+class MigrationHistoricVariablesTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   protected static final BpmnModelInstance ONE_BOUNDARY_TASK = ModifiableBpmnModelInstance.modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder("userTask")
@@ -82,25 +84,14 @@ public class MigrationHistoricVariablesTest {
       .message("Message")
       .done();
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected ManagementService managementService;
-
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-    taskService = rule.getTaskService();
-    historyService = rule.getHistoryService();
-    managementService = rule.getManagementService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
+  HistoryService historyService;
+  ManagementService managementService;
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void noHistoryUpdateOnSameStructureMigration() {
+  void noHistoryUpdateOnSameStructureMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ONE_BOUNDARY_TASK);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ONE_BOUNDARY_TASK);
@@ -130,7 +121,7 @@ public class MigrationHistoricVariablesTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void noHistoryUpdateOnAddScopeMigration() {
+  void noHistoryUpdateOnAddScopeMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CONCURRENT_BOUNDARY_TASKS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(SUBPROCESS_CONCURRENT_BOUNDARY_TASKS);
@@ -164,7 +155,7 @@ public class MigrationHistoricVariablesTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testMigrateHistoryVariableInstance() {
+  void testMigrateHistoryVariableInstance() {
     //given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.ONE_TASK_PROCESS)
@@ -195,7 +186,7 @@ public class MigrationHistoricVariablesTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testMigrateHistoryVariableInstanceMultiInstance() {
+  void testMigrateHistoryVariableInstanceMultiInstance() {
     //given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
@@ -225,7 +216,7 @@ public class MigrationHistoricVariablesTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testMigrateEventScopeVariable() {
+  void testMigrateEventScopeVariable() {
     //given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_ONE_TASK_SUBPROCESS_MODEL);
@@ -267,7 +258,7 @@ public class MigrationHistoricVariablesTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testMigrateHistoricVariablesAsyncBeforeStartEvent() {
+  void testMigrateHistoricVariablesAsyncBeforeStartEvent() {
     //given
     String userTask = "task";
     BpmnModelInstance failing =
@@ -339,7 +330,7 @@ public class MigrationHistoricVariablesTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testMigrateHistoryVariableInstanceWithAsyncBefore() {
+  void testMigrateHistoryVariableInstanceWithAsyncBefore() {
     //given
     BpmnModelInstance model = AsyncProcessModels.ASYNC_BEFORE_USER_TASK_PROCESS;
 

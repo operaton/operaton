@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,13 +19,18 @@ package org.operaton.bpm.engine.test.bpmn.shell;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotSame;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class ShellTaskTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ShellTaskTest {
+
+  RuntimeService runtimeService;
 
   enum OsType {
     LINUX, WINDOWS, MAC, SOLARIS, UNKNOWN
@@ -47,23 +52,23 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
       return OsType.UNKNOWN;
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     osType = getSystemOsType();
   }
 
   @Test
-  public void testOsDetection() {
+  void testOsDetection() {
     assertNotSame(OsType.UNKNOWN, osType);
   }
 
   @Deployment
   @Test
-  public void testEchoShellWindows() {
+  void testEchoShellWindows() {
     if (osType == OsType.WINDOWS) {
 
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellWindows");
-  
+
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
       assertThat(st).isNotNull();
       assertThat(st).startsWith("EchoTest");
@@ -72,24 +77,24 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testEchoShellLinux() {
+  void testEchoShellLinux() {
     if (osType == OsType.LINUX) {
 
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellLinux");
-  
+
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
       assertThat(st).isNotNull();
       assertThat(st).startsWith("EchoTest");
     }
   }
-  
+
   @Deployment
   @Test
-  public void testEchoShellMac() {
+  void testEchoShellMac() {
     if (osType == OsType.MAC) {
 
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellMac");
-  
+
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
       assertThat(st).isNotNull();
       assertThat(st).startsWith("EchoTest");

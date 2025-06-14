@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ public class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd<Void>  im
 
   private static final long serialVersionUID = 1L;
   String groupId;
-  
+
   public DeleteGroupCmd(String groupId) {
     this.groupId = groupId;
   }
@@ -40,11 +40,11 @@ public class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd<Void>  im
   @Override
   protected Void executeCmd(CommandContext commandContext) {
     ensureNotNull("groupId", groupId);
-    
+
     IdentityOperationResult operationResult = commandContext
       .getWritableIdentityProvider()
       .deleteGroup(groupId);
-    
+
     commandContext.getOperationLogManager().logGroupOperation(operationResult, groupId);
 
     return null;

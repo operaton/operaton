@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,24 +21,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.history.RemoveAndUpdateValueDelegate;
 import org.operaton.bpm.engine.test.history.ReplaceAndUpdateValueDelegate;
 import org.operaton.bpm.engine.test.history.UpdateValueDelegate;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ImplicitVariableUpdateTest {
+
+  RuntimeService runtimeService;
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
   @Test
-  public void testUpdate() {
+  void testUpdate() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("serviceTaskProcess",
         Variables.createVariables()
           .putValue("listVar", new ArrayList<String>())
@@ -54,7 +59,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.parallel.bpmn20.xml")
   @Test
-  public void testUpdateParallelFlow() {
+  void testUpdateParallelFlow() {
     // should also work when execution tree is expanded between the implicit update
     // and when the engine notices it
 
@@ -73,7 +78,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
   @Test
-  public void testUpdatePreviousValue() {
+  void testUpdatePreviousValue() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("serviceTaskProcess",
         Variables.createVariables()
           .putValue("listVar", new ArrayList<String>())
@@ -86,7 +91,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
   @Test
-  public void testRemoveAndUpdateValue() {
+  void testRemoveAndUpdateValue() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("serviceTaskProcess",
         Variables.createVariables()
           .putValue("listVar", new ArrayList<String>())
@@ -103,7 +108,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
   @Test
-  public void testSerialization() {
+  void testSerialization() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("serviceTaskProcess",
         Variables.createVariables()
             .putValue("pojo", new Pojo(1))

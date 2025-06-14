@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,31 +20,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineInfo;
 import org.operaton.bpm.engine.ProcessEngines;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Tom Baeyens
  */
-public class ProcessEnginesTest {
+class ProcessEnginesTest {
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     ProcessEngines.destroy();
     ProcessEngines.init();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ProcessEngines.destroy();
   }
 
   @Test
-  public void testProcessEngineInfo() {
+  void testProcessEngineInfo() {
     // given
     ProcessEngines.init();
 

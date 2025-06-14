@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,55 +41,55 @@ import org.operaton.bpm.engine.ProcessEngine;
 public interface RuntimeContainerDelegate {
 
   /** Holds the current {@link RuntimeContainerDelegate} instance */
-  public static RuntimeContainerDelegateInstance INSTANCE = new RuntimeContainerDelegateInstance();
+  RuntimeContainerDelegateInstance INSTANCE = new RuntimeContainerDelegateInstance();
 
   /**
    * <p>Adds a managed {@link ProcessEngine} to the runtime container.</p>
    * <p>Process Engines registered through this method are returned by the {@link ProcessEngineService}.</p>
    */
-  public void registerProcessEngine(ProcessEngine processEngine);
+  void registerProcessEngine(ProcessEngine processEngine);
 
   /**
    * <p>Unregisters a managed {@link ProcessEngine} instance from the Runtime Container.</p>
    */
-  public void unregisterProcessEngine(ProcessEngine processEngine);
+  void unregisterProcessEngine(ProcessEngine processEngine);
 
   /**
    * Deploy a {@link AbstractProcessApplication} into the runtime container.
    *
    */
-  public void deployProcessApplication(AbstractProcessApplication processApplication);
+  void deployProcessApplication(AbstractProcessApplication processApplication);
 
   /**
    * Undeploy a {@link AbstractProcessApplication} from the runtime container.
    *
    */
-  public void undeployProcessApplication(AbstractProcessApplication processApplication);
+  void undeployProcessApplication(AbstractProcessApplication processApplication);
 
   /**
    * @return the Container's {@link ProcessEngineService} implementation.
    */
-  public ProcessEngineService getProcessEngineService();
+  ProcessEngineService getProcessEngineService();
 
   /**
    * @return the Container's {@link ProcessApplicationService} implementation
    */
-  public ProcessApplicationService getProcessApplicationService();
+  ProcessApplicationService getProcessApplicationService();
 
   /**
    * @return the Runtime Container's {@link ExecutorService} implementation
    */
-  public ExecutorService getExecutorService();
+  ExecutorService getExecutorService();
 
   /**
    * @return a reference to the process application with the given name if deployed; null otherwise
    */
-  public ProcessApplicationReference getDeployedProcessApplication(String name);
+  ProcessApplicationReference getDeployedProcessApplication(String name);
 
   /**
    * Holder of the current {@link RuntimeContainerDelegate} instance.
    */
-  public static class RuntimeContainerDelegateInstance {
+  class RuntimeContainerDelegateInstance {
 
     // hide
     private RuntimeContainerDelegateInstance() {}

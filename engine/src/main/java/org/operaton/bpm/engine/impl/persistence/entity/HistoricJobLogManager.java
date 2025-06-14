@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.HistoricJobLogQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -36,6 +32,11 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Job;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Roman Smirnov
@@ -69,9 +70,9 @@ public class HistoricJobLogManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToJobLogByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(HistoricJobLogEventEntity.class, "updateJobLogByRootProcessInstanceId", parameters);
@@ -79,9 +80,9 @@ public class HistoricJobLogManager extends AbstractHistoricManager {
 
   public DbOperation addRemovalTimeToJobLogByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
       .updatePreserveOrder(HistoricJobLogEventEntity.class, "updateJobLogByProcessInstanceId", parameters);
@@ -89,8 +90,8 @@ public class HistoricJobLogManager extends AbstractHistoricManager {
 
   public void addRemovalTimeToJobLogByBatchId(String batchId, Date removalTime) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("batchId", batchId);
-    parameters.put("removalTime", removalTime);
+    parameters.put(BATCH_ID, batchId);
+    parameters.put(REMOVAL_TIME, removalTime);
 
     getDbEntityManager()
       .updatePreserveOrder(HistoricJobLogEventEntity.class, "updateJobLogByBatchId", parameters);
@@ -157,12 +158,12 @@ public class HistoricJobLogManager extends AbstractHistoricManager {
 
   public DbOperation deleteJobLogByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
       .deletePreserveOrder(HistoricJobLogEventEntity.class, "deleteJobLogByRemovalTime",

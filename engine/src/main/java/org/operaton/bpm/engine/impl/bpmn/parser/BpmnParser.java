@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -53,9 +53,9 @@ public class BpmnParser extends Parser {
 
   /**
    * The namespace of the Camunda custom BPMN extensions.
-   * @deprecated use {@link #OPERATON_BPMN_EXTENSIONS_NS}
+   * @deprecated Use {@link #OPERATON_BPMN_EXTENSIONS_NS} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String CAMUNDA_BPMN_EXTENSIONS_NS = "http://camunda.org/schema/1.0/bpmn";
 
   /**

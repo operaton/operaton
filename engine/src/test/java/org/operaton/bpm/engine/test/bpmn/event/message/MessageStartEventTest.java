@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,31 +16,46 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-
-import java.util.List;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  * @author Daniel Meyer
  */
-public class MessageStartEventTest extends PluggableProcessEngineTest {
+class MessageStartEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Test
-  public void testDeploymentCreatesSubscriptions() {
+  void testDeploymentCreatesSubscriptions() {
     String deploymentId = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testSingleMessageStartEvent.bpmn20.xml")
@@ -55,7 +70,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testSameMessageNameFails() {
+  void testSameMessageNameFails() {
     repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testSingleMessageStartEvent.bpmn20.xml")
@@ -83,7 +98,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
   // SEE: https://app.camunda.com/jira/browse/CAM-1448
   @Test
-  public void testEmptyMessageNameFails() {
+  void testEmptyMessageNameFails() {
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testEmptyMessageNameFails.bpmn20.xml");
@@ -97,7 +112,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testSameMessageNameInSameProcessFails() {
+  void testSameMessageNameInSameProcessFails() {
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/testSameMessageNameInSameProcessFails.bpmn20.xml");
@@ -110,7 +125,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testUpdateProcessVersionCancelsSubscriptions() {
+  void testUpdateProcessVersionCancelsSubscriptions() {
     String deploymentId = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testSingleMessageStartEvent.bpmn20.xml")
@@ -155,7 +170,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSingleMessageStartEvent() {
+  void testSingleMessageStartEvent() {
 
     // using startProcessInstanceByMessage triggers the message start event
 
@@ -169,6 +184,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
+    assertThat(processInstance.getProcessDefinitionKey()).isEqualTo("singleMessageStartEvent");
 
     // using startProcessInstanceByKey also triggers the message event, if there is a single start event
 
@@ -182,13 +198,13 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-
+    assertThat(processInstance.getProcessDefinitionKey()).isEqualTo("singleMessageStartEvent");
   }
 
 
   @Deployment
   @Test
-  public void testMessageStartEventAndNoneStartEvent() {
+  void testMessageStartEventAndNoneStartEvent() {
 
     // using startProcessInstanceByKey triggers the none start event
 
@@ -215,12 +231,11 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-
   }
 
   @Deployment
   @Test
-  public void testMultipleMessageStartEvents() {
+  void testMultipleMessageStartEvents() {
 
     // sending newInvoiceMessage
 
@@ -260,7 +275,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDeployStartAndIntermediateEventWithSameMessageInSameProcess() {
+  void testDeployStartAndIntermediateEventWithSameMessageInSameProcess() {
     ProcessInstance pi = null;
     try {
       runtimeService.startProcessInstanceByMessage("message");
@@ -289,7 +304,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testDeployStartAndIntermediateEventWithSameMessageDifferentProcesses.bpmn"})
   @Test
-  public void testDeployStartAndIntermediateEventWithSameMessageDifferentProcessesFirstStartEvent() {
+  void testDeployStartAndIntermediateEventWithSameMessageDifferentProcessesFirstStartEvent() {
     ProcessInstance pi = null;
     try {
       runtimeService.startProcessInstanceByMessage("message");
@@ -318,7 +333,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testDeployStartAndIntermediateEventWithSameMessageDifferentProcesses2.bpmn"})
   @Test
-  public void testDeployStartAndIntermediateEventWithSameMessageDifferentProcessesFirstIntermediateEvent() {
+  void testDeployStartAndIntermediateEventWithSameMessageDifferentProcessesFirstIntermediateEvent() {
     ProcessInstance pi = null;
     try {
       runtimeService.startProcessInstanceByKey("Process_2");
@@ -346,7 +361,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testUsingExpressionWithDollarTagInMessageStartEventNameThrowsException() {
+  void testUsingExpressionWithDollarTagInMessageStartEventNameThrowsException() {
 
     // given a process definition with a start message event that has a message name which contains an expression
     String processDefinition =
@@ -367,7 +382,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testUsingExpressionWithHashTagInMessageStartEventNameThrowsException() {
+  void testUsingExpressionWithHashTagInMessageStartEventNameThrowsException() {
 
     // given a process definition with a start message event that has a message name which contains an expression
     String processDefinition =
@@ -390,7 +405,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
   //test fix CAM-10819
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testMessageStartEventUsingCorrelationEngine.bpmn"})
   @Test
-  public void testMessageStartEventUsingCorrelationEngineAndLocalVariable() {
+  void testMessageStartEventUsingCorrelationEngineAndLocalVariable() {
 
     // when
     // sending newCorrelationStartMessage using correlation engine

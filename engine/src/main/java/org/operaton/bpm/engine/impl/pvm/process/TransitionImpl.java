@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,26 +58,26 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
   }
 
   /**
-   * @deprecated Use {@link #addListener(ExecutionListener.EVENTNAME_TAKE, executionListener)} instead
+   * @deprecated Use {@link #addListener(ExecutionListener.EVENTNAME_TAKE, executionListener)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public void addExecutionListener(ExecutionListener executionListener) {
     super.addListener(ExecutionListener.EVENTNAME_TAKE, executionListener);
   }
 
   /**
-   * @deprecated Use {@link #getListeners(ExecutionListener.EVENTNAME_TAKE)} instead
+   * @deprecated Use {@link #getListeners(ExecutionListener.EVENTNAME_TAKE)} instead.
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  @Deprecated(forRemoval=true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public List<ExecutionListener> getExecutionListeners() {
     return (List) super.getListeners(ExecutionListener.EVENTNAME_TAKE);
   }
 
   /**
-   * @deprecated Use {@link #addListener(ExecutionListener.EVENTNAME_TAKE, executionListener)} in a loop instead
+   * @deprecated Use {@link #addListener(ExecutionListener.EVENTNAME_TAKE, executionListener)} in a loop instead.
    */
-  @Deprecated(forRemoval=true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public void setExecutionListeners(List<ExecutionListener> executionListeners) {
     for (ExecutionListener executionListener : executionListeners) {
       addListener(ExecutionListener.EVENTNAME_TAKE, executionListener);

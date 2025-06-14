@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
@@ -31,8 +36,7 @@ import org.operaton.bpm.engine.management.JobDefinitionQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * These testcases verify that job definitions are created upon deployment of the process definition.
@@ -40,11 +44,16 @@ import org.junit.Test;
  * @author Daniel Meyer
  *
  */
-public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class JobDefinitionDeploymentTest {
+
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
 
   @Deployment
   @Test
-  public void testTimerStartEvent() {
+  void testTimerStartEvent() {
 
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -64,7 +73,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTimerBoundaryEvent() {
+  void testTimerBoundaryEvent() {
 
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -80,7 +89,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleTimerBoundaryEvents() {
+  void testMultipleTimerBoundaryEvents() {
 
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -106,7 +115,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testEventBasedGateway() {
+  void testEventBasedGateway() {
 
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -132,7 +141,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTimerIntermediateEvent() {
+  void testTimerIntermediateEvent() {
 
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -148,7 +157,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncContinuation() {
+  void testAsyncContinuation() {
 
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -164,7 +173,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncContinuationOfMultiInstance() {
+  void testAsyncContinuationOfMultiInstance() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().processDefinitionKey("testProcess").singleResult();
@@ -179,7 +188,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncContinuationOfActivityWrappedInMultiInstance() {
+  void testAsyncContinuationOfActivityWrappedInMultiInstance() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().processDefinitionKey("testProcess").singleResult();
@@ -193,9 +202,9 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testAsyncContinuation.bpmn20.xml",
-      "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testMultipleProcessesWithinDeployment.bpmn20.xml"})
+    "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testMultipleProcessesWithinDeployment.bpmn20.xml"})
   @Test
-  public void testMultipleProcessDeployment() {
+  void testMultipleProcessDeployment() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery();
     List<JobDefinition> jobDefinitions = query.list();
     assertThat(jobDefinitions).hasSize(3);

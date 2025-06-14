@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -71,6 +71,7 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
 
   private String processInstanceId;
   private Set<String> processInstanceIds;
+  private List<String> processInstanceIdNotIn;
   private String processDefinitionId;
   private String processDefinitionKey;
   private List<String> processDefinitionKeys;
@@ -141,6 +142,11 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
   @OperatonQueryParam(value = "processInstanceIds", converter = StringSetConverter.class)
   public void setProcessInstanceIds(Set<String> processInstanceIds) {
     this.processInstanceIds = processInstanceIds;
+  }
+
+  @OperatonQueryParam(value = "processInstanceIdNotIn", converter = StringListConverter.class)
+  public void setProcessInstanceIdNotIn(List<String> processInstanceIdNotIn) {
+    this.processInstanceIdNotIn = processInstanceIdNotIn;
   }
 
   public String getProcessDefinitionId() {
@@ -410,6 +416,9 @@ public class HistoricProcessInstanceQueryDto extends AbstractQueryDto<HistoricPr
     }
     if (processInstanceIds != null) {
       query.processInstanceIds(processInstanceIds);
+    }
+    if (processInstanceIdNotIn != null && !processInstanceIdNotIn.isEmpty()) {
+      query.processInstanceIdNotIn(processInstanceIdNotIn.toArray(new String[0]));
     }
     if (processDefinitionId != null) {
       query.processDefinitionId(processDefinitionId);

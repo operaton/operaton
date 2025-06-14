@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.cdi.jsf;
 
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.cdi.BusinessProcess;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.cdi.BusinessProcess;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
@@ -36,6 +36,10 @@ import java.util.logging.Logger;
 @Named("operatonTaskForm")
 public class TaskForm implements Serializable {
 
+  private static final String REQUEST_PARAM_TASK_ID = "taskId";
+  private static final String REQUEST_PARAM_CALLBACK_URL = "callbackUrl";
+  private static final String REQUEST_PARAM_PROCESS_DEFINITION_ID = "processDefinitionId";
+  private static final String REQUEST_PARAM_PROCESS_DEFINITION_KEY = "processDefinitionKey";
   private static Logger log = Logger.getLogger(TaskForm.class.getName());
 
   private static final long serialVersionUID = 1L;
@@ -55,12 +59,12 @@ public class TaskForm implements Serializable {
   protected Instance<Conversation> conversationInstance;
 
   /**
-   * @deprecated use {@link startTaskForm()} instead
+   * @deprecated Use {@link startTaskForm()} instead.
    *
    * @param taskId
    * @param callbackUrl
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   public void startTask(String taskId, String callbackUrl) {
     if (taskId==null || callbackUrl == null) {
       if (FacesContext.getCurrentInstance().isPostback()) {
@@ -85,8 +89,8 @@ public class TaskForm implements Serializable {
    */
   public void startTaskForm() {
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    String taskId = requestParameterMap.get("taskId");
-    String callbackUrl = requestParameterMap.get("callbackUrl");
+    String taskId = requestParameterMap.get(REQUEST_PARAM_TASK_ID);
+    String callbackUrl = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
 
     if (taskId==null || callbackUrl == null) {
       if (FacesContext.getCurrentInstance().isPostback()) {
@@ -118,12 +122,12 @@ public class TaskForm implements Serializable {
   }
 
   /**
-   * @deprecated use {@link #startProcessInstanceByIdForm()} instead
+   * @deprecated Use {@link #startProcessInstanceByIdForm()} instead.
    *
    * @param processDefinitionId
    * @param callbackUrl
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   public void startProcessInstanceByIdForm(String processDefinitionId, String callbackUrl) {
     this.url = callbackUrl;
     this.processDefinitionId = processDefinitionId;
@@ -144,18 +148,18 @@ public class TaskForm implements Serializable {
     }
 
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    this.url = requestParameterMap.get("callbackUrl");
-    this.processDefinitionId = requestParameterMap.get("processDefinitionId");
+    this.url = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
+    this.processDefinitionId = requestParameterMap.get(REQUEST_PARAM_PROCESS_DEFINITION_ID);
     beginConversation();
   }
 
   /**
-   * @deprecated use {@link startProcessInstanceByKeyForm()} instead
+   * @deprecated Use {@link startProcessInstanceByKeyForm()} instead.
    *
    * @param processDefinitionKey
    * @param callbackUrl
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   public void startProcessInstanceByKeyForm(String processDefinitionKey, String callbackUrl) {
     this.url = callbackUrl;
     this.processDefinitionKey = processDefinitionKey;
@@ -176,8 +180,8 @@ public class TaskForm implements Serializable {
     }
 
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    String processDefinitionKey = requestParameterMap.get("processDefinitionKey");
-    String callbackUrl = requestParameterMap.get("callbackUrl");
+    String processDefinitionKey = requestParameterMap.get(REQUEST_PARAM_PROCESS_DEFINITION_KEY);
+    String callbackUrl = requestParameterMap.get(REQUEST_PARAM_CALLBACK_URL);
     this.url = callbackUrl;
     this.processDefinitionKey = processDefinitionKey;
     beginConversation();

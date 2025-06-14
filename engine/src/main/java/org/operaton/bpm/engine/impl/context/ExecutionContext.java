@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,13 +23,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 /**
  * An {@link ExecutionEntity} execution context. Provides access to the process instance and the deployment.
  *
- * @deprecated since 7.2: use {@link BpmnExecutionContext}
+ * @deprecated Use {@link BpmnExecutionContext} instead.
  *
  * @author Tom Baeyens
  * @author Roman Smirnov
  * @author Daniel Meyer
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0")
 public class ExecutionContext extends CoreExecutionContext<ExecutionEntity> {
 
   public ExecutionContext(ExecutionEntity execution) {

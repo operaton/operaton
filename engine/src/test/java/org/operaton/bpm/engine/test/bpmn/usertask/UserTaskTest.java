@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,23 +20,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Joram Barrez
  */
-public class UserTaskTest extends PluggableProcessEngineTest {
+class UserTaskTest {
 
-  @Before
-  public void setUp() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  IdentityService identityService;
+  TaskService taskService;
+
+  @BeforeEach
+  void setUp() {
     identityService.saveUser(identityService.newUser("fozzie"));
     identityService.saveUser(identityService.newUser("kermit"));
 
@@ -47,8 +61,8 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     identityService.createMembership("kermit", "management");
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.deleteUser("fozzie");
     identityService.deleteUser("kermit");
     identityService.deleteGroup("accountancy");
@@ -58,7 +72,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   @SuppressWarnings("deprecation")
-  public void testTaskPropertiesNotNull() {
+  void testTaskPropertiesNotNull() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     runtimeService.getActiveActivityIds(processInstance.getId());
@@ -83,14 +97,14 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testQuerySortingWithParameter() {
+  void testQuerySortingWithParameter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()).list()).hasSize(1);
   }
 
   @Deployment
   @Test
-  public void testCompleteAfterParallelGateway() {
+  void testCompleteAfterParallelGateway() {
 	  // related to http://jira.codehaus.org/browse/ACT-1054
 
 	  // start the process
@@ -110,7 +124,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testComplexScenarioWithSubprocessesAndParallelGateways() {
+  void testComplexScenarioWithSubprocessesAndParallelGateways() {
     runtimeService.startProcessInstanceByKey("processWithSubProcessesAndParallelGateways");
 
     List<Task> taskList = taskService.createTaskQuery().list();
@@ -122,7 +136,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSimpleProcess() {
+  void testSimpleProcess() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("financialReport");
 

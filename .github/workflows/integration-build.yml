@@ -15,19 +15,16 @@ on:
           - '["21"]'
           - '["17", "21"]'
       skip_build:
-        description: 'Build: Set to false to skip the normal build, e.g. when running integration tests only'
+        description: 'Build: By default skipped. Deactivate to perform the regular project build'
         type: boolean
-        required: true
         default: true
       skip_tests:
         description: 'Build: Skip test execution for faster build'
         type: boolean
-        required: true
         default: true
       integration_tests:
         description: 'Integration Tests: Enable/Disable'
         type: boolean
-        required: true
         default: true
       testsuite:
         description: 'Integration Tests: Test suite to run'
@@ -58,7 +55,7 @@ on:
           - '["postgresql"]'
           - '["postgresql-xa"]'
           - '["mariadb"]'
-          - '["mssql"]'
+          - '["sqlserver"]'
           - '["mysql"]'
           - '["oracle"]'
           - '["db2"]'
@@ -113,7 +110,7 @@ jobs:
           echo "project_version=$PROJECT_VERSION"
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
           echo "version=$RELEASE_VERSION"
-          DATABASE_VERSION=$(grep '<version.operaton.dbscheme>' parent/pom.xml | sed -e 's/.*<version.operaton.dbscheme>\(.*\)<\/version.operaton.dbscheme>.*/\1/')
+          DATABASE_VERSION=$(grep '<version.operaton.dbscheme>' database/pom.xml | sed -e 's/.*<version.operaton.dbscheme>\(.*\)<\/version.operaton.dbscheme>.*/\1/')
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
           SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
@@ -177,10 +174,6 @@ jobs:
         id: maven-integration-tests
         shell: bash
         run: |
-          if [[ "${{ matrix.distro }}" == "wildfly" && "${{ matrix.database }}" == "postgresql" && "${{ github.event_name }}" == "schedule" ]]; then
-            echo "Warning: Skipping build for distro 'wildfly' with database 'postgresql' due."
-            exit 0
-          fi
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
         if: always()
@@ -199,6 +192,8 @@ jobs:
             ${{ github.workspace }}/qa/**/target/**/logs/**
             ${{ github.workspace }}/**/target/cargo.log
           retention-days: 30
+          overwrite: true
+
 
   release:
     name: Release

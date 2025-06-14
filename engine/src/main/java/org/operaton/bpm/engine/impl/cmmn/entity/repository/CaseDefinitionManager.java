@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,6 +36,12 @@ import java.util.Map;
 public class CaseDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<CaseDefinitionEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+  private static final String PARAM_CASE_DEFINITION_KEY = "caseDefinitionKey";
+  private static final String PARAM_TENANT_ID = "tenantId";
+  private static final String PARAM_CASE_DEFINITION_VERSION = "caseDefinitionVersion";
+  private static final String PARAM_DEPLOYMENT_ID = "deploymentId";
+  private static final String PARAM_KEY = "key";
+  private static final String PARAM_VERSION = "version";
 
   public void insertCaseDefinition(CaseDefinitionEntity caseDefinition) {
     getDbEntityManager().insert(caseDefinition);
@@ -78,8 +84,8 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
    */
   public CaseDefinitionEntity findLatestCaseDefinitionByKeyAndTenantId(String caseDefinitionKey, String tenantId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("caseDefinitionKey", caseDefinitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(PARAM_CASE_DEFINITION_KEY, caseDefinitionKey);
+    parameters.put(PARAM_TENANT_ID, tenantId);
 
     if (tenantId == null) {
       return (CaseDefinitionEntity) getDbEntityManager().selectOne("selectLatestCaseDefinitionByKeyWithoutTenantId", parameters);
@@ -90,24 +96,24 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
 
   public CaseDefinitionEntity findCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, Integer caseDefinitionVersion, String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("caseDefinitionVersion", caseDefinitionVersion);
-    parameters.put("caseDefinitionKey", caseDefinitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(PARAM_CASE_DEFINITION_VERSION, caseDefinitionVersion);
+    parameters.put(PARAM_CASE_DEFINITION_KEY, caseDefinitionKey);
+    parameters.put(PARAM_TENANT_ID, tenantId);
     return (CaseDefinitionEntity) getDbEntityManager().selectOne("selectCaseDefinitionByKeyVersionAndTenantId", parameters);
   }
 
   public CaseDefinitionEntity findCaseDefinitionByDeploymentAndKey(String deploymentId, String caseDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("deploymentId", deploymentId);
-    parameters.put("caseDefinitionKey", caseDefinitionKey);
+    parameters.put(PARAM_DEPLOYMENT_ID, deploymentId);
+    parameters.put(PARAM_CASE_DEFINITION_KEY, caseDefinitionKey);
     return (CaseDefinitionEntity) getDbEntityManager().selectOne("selectCaseDefinitionByDeploymentAndKey", parameters);
   }
 
   public String findPreviousCaseDefinitionId(String caseDefinitionKey, Integer version, String tenantId) {
     Map<String, Object> params = new HashMap<>();
-    params.put("key", caseDefinitionKey);
-    params.put("version", version);
-    params.put("tenantId", tenantId);
+    params.put(PARAM_KEY, caseDefinitionKey);
+    params.put(PARAM_VERSION, version);
+    params.put(PARAM_TENANT_ID, tenantId);
     return (String) getDbEntityManager().selectOne("selectPreviousCaseDefinitionId", params);
   }
 

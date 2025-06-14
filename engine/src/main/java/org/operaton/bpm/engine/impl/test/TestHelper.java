@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.test;
 
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -38,7 +46,6 @@ import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 import org.operaton.bpm.engine.impl.el.FixedValue;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.management.DatabasePurgeReport;
 import org.operaton.bpm.engine.impl.management.PurgeReport;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CachePurgeReport;
@@ -48,13 +55,6 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-
-import java.io.InputStream;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.function.Consumer;
-
 import org.slf4j.Logger;
 
 
@@ -72,8 +72,6 @@ public abstract class TestHelper {
     "ACT_GE_SCHEMA_LOG"
   );
 
-  static Map<String, ProcessEngine> processEngines = new HashMap<>();
-
   public static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
 
   static {
@@ -83,9 +81,9 @@ public abstract class TestHelper {
   }
 
   /**
-   * @deprecated use {@link ProcessEngineAssert} instead.
+   * @deprecated Use {@link ProcessEngineAssert} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static void assertProcessEnded(ProcessEngine processEngine, String processInstanceId) {
     ProcessEngineAssert.assertProcessEnded(processEngine, processInstanceId);
   }
@@ -160,7 +158,7 @@ public abstract class TestHelper {
   }
 
   public static String annotationDeploymentSetUp(ProcessEngine processEngine, Class<?> testClass, String methodName, Class<?>... parameterTypes) {
-    return annotationDeploymentSetUp(processEngine, testClass, methodName, (Deployment) null, parameterTypes);
+    return annotationDeploymentSetUp(processEngine, testClass, methodName, null, parameterTypes);
   }
 
   public static void annotationDeploymentTearDown(ProcessEngine processEngine, String deploymentId, Class<?> testClass, String methodName) {
@@ -450,42 +448,6 @@ public abstract class TestHelper {
 
   }
 
-  public static void waitForJobExecutorToProcessAllJobs(ProcessEngineConfigurationImpl processEngineConfiguration, long maxMillisToWait, long intervalMillis) {
-    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    jobExecutor.start();
-
-    try {
-      Timer timer = new Timer();
-      InteruptTask task = new InteruptTask(Thread.currentThread());
-      timer.schedule(task, maxMillisToWait);
-      boolean areJobsAvailable = true;
-      try {
-        while (areJobsAvailable && !task.isTimeLimitExceeded()) {
-          Thread.sleep(intervalMillis);
-          areJobsAvailable = areJobsAvailable(processEngineConfiguration);
-        }
-      } catch (InterruptedException e) {
-      } finally {
-        timer.cancel();
-      }
-      if (areJobsAvailable) {
-        throw new ProcessEngineException("time limit of " + maxMillisToWait + " was exceeded");
-      }
-
-    } finally {
-      jobExecutor.shutdown();
-    }
-  }
-
-  public static boolean areJobsAvailable(ProcessEngineConfigurationImpl processEngineConfiguration) {
-    return !processEngineConfiguration
-      .getManagementService()
-      .createJobQuery()
-      .executable()
-      .list()
-      .isEmpty();
-  }
-
   public static void resetIdGenerator(ProcessEngineConfigurationImpl processEngineConfiguration) {
     IdGenerator idGenerator = processEngineConfiguration.getIdGenerator();
 
@@ -494,50 +456,26 @@ public abstract class TestHelper {
     }
   }
 
-  private static class InteruptTask extends TimerTask {
-    protected boolean timeLimitExceeded = false;
-    protected Thread thread;
-    public InteruptTask(Thread thread) {
-      this.thread = thread;
-    }
-    public boolean isTimeLimitExceeded() {
-      return timeLimitExceeded;
-    }
-    @Override
-    public void run() {
-      timeLimitExceeded = true;
-      thread.interrupt();
-    }
-  }
-
   public static ProcessEngine getProcessEngine(String configurationResource) {
-    return getProcessEngine(configurationResource, null, true);
+    return getProcessEngine(configurationResource, null);
   }
 
-  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, boolean cacheForConfigurationResource) {
-    if (cacheForConfigurationResource) {
-      return processEngines.computeIfAbsent(configurationResource, key -> getProcessEngine(processEngineConfigurator, configurationResource));
-    } else {
-      return getProcessEngine(processEngineConfigurator, configurationResource);
-    }
-  }
-
-  private static ProcessEngine getProcessEngine(Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, String resource) {
-    LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
-    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(resource);
+  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(configurationResource);
     if (processEngineConfigurator != null) {
       processEngineConfigurator.accept(processEngineConfiguration);
     }
+    if (ProcessEngines.isRegisteredProcessEngine(processEngineConfiguration.getProcessEngineName())) {
+      return ProcessEngines.getProcessEngine(processEngineConfiguration.getProcessEngineName());
+    }
+    LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
     ProcessEngine newProcessEngine = processEngineConfiguration.buildProcessEngine();
     LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
     return newProcessEngine;
   }
 
   public static void closeProcessEngines() {
-    for (ProcessEngine processEngine: processEngines.values()) {
-      processEngine.close();
-    }
-    processEngines.clear();
+    ProcessEngines.destroy();
   }
 
   public static void createSchema(ProcessEngineConfigurationImpl processEngineConfiguration) {

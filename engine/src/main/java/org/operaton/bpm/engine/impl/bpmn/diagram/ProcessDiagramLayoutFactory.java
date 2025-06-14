@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -54,12 +54,12 @@ public class ProcessDiagramLayoutFactory {
   private static final int GREY_THRESHOLD = 175;
 
   // Parser features and their values needed to disable XXE Parsing
-  private static final Map<String, Boolean> XXE_FEATURES = new HashMap<>(4) {{
-    put("http://apache.org/xml/features/disallow-doctype-decl", true);
-    put("http://xml.org/sax/features/external-general-entities", false);
-    put("http://xml.org/sax/features/external-parameter-entities", false);
-    put("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-  }};
+  private static final Map<String, Boolean> XXE_FEATURES = Map.of(
+          "http://apache.org/xml/features/disallow-doctype-decl", true,
+          "http://xml.org/sax/features/external-general-entities", false,
+          "http://xml.org/sax/features/external-parameter-entities", false,
+          "http://apache.org/xml/features/nonvalidating/load-external-dtd", false
+  );
 
   /**
    * Provides positions and dimensions of elements in a process diagram as
@@ -72,8 +72,7 @@ public class ProcessDiagramLayoutFactory {
    * @param imageStream
    *          BPMN 2.0 diagram in PNG format (JPEG and other formats supported
    *          by {@link ImageIO} may also work)
-   * @return Layout of the process diagram
-   * @return null when parameter imageStream is null
+   * @return Layout of the process diagram. Will return {@code null} when parameter imageStream is {@code null}.
    */
   public DiagramLayout getProcessDiagramLayout(InputStream bpmnXmlStream, InputStream imageStream) {
     Document bpmnModel = parseXml(bpmnXmlStream);
@@ -89,8 +88,7 @@ public class ProcessDiagramLayoutFactory {
    * @param imageStream
    *          BPMN 2.0 diagram in PNG format (JPEG and other formats supported
    *          by {@link ImageIO} may also work)
-   * @return Layout of the process diagram
-   * @return null when parameter imageStream is null
+   * @return Layout of the process. Will return {@code null} when parameter imageStream is {@code null}.
    */
   public DiagramLayout getBpmnProcessDiagramLayout(Document bpmnModel, InputStream imageStream) {
     if (imageStream == null) {

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -2290,29 +2290,6 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     verify(caseExecutionCommandBuilderMock).setVariable(eq(variableKey),
         argThat(EqualsPrimitiveValue.longValue(variableValue)));
     verify(caseExecutionCommandBuilderMock).execute();
-  }
-
-  @Test
-  public void testPutSingleLocalVariableWithUnparseableLong() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String type = "Long";
-
-    Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(variableValue, type);
-
-    given()
-      .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
-      .pathParam("varId", variableKey)
-      .contentType(ContentType.JSON)
-      .body(variableJson)
-    .then()
-      .expect()
-        .statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Cannot put case execution variable aVariableKey: "
-            + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Long.class)))
-    .when()
-      .put(SINGLE_CASE_EXECUTION_LOCAL_VARIABLE_URL);
   }
 
   @Test

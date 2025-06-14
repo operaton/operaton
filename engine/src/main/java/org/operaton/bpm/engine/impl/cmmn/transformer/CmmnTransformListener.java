@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,10 +51,12 @@ public interface CmmnTransformListener {
   void transformCase(Case element, CmmnCaseDefinition caseDefinition);
 
   /**
-   * @deprecated use {@link #transformCasePlanModel(org.operaton.bpm.model.cmmn.instance.CasePlanModel, CmmnActivity)}
+   * @deprecated Use {@link #transformCasePlanModel(org.operaton.bpm.model.cmmn.instance.CasePlanModel, CmmnActivity)} instead.
    */
-  @Deprecated
-  void transformCasePlanModel(org.operaton.bpm.model.cmmn.impl.instance.CasePlanModel casePlanModel, CmmnActivity caseActivity);
+  @Deprecated(forRemoval = true, since = "1.0")
+  default void transformCasePlanModel(org.operaton.bpm.model.cmmn.impl.instance.CasePlanModel casePlanModel, CmmnActivity caseActivity) {
+    transformCasePlanModel((org.operaton.bpm.model.cmmn.instance.CasePlanModel) casePlanModel, caseActivity);
+  }
 
   void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity caseActivity);
 

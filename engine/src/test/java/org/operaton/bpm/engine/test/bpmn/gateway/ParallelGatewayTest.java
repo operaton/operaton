@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,7 +20,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
@@ -31,14 +38,24 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
-import org.junit.Test;
 
 /**
  * @author Joram Barrez
  */
-public class ParallelGatewayTest extends PluggableProcessEngineTest {
+class ParallelGatewayTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  TaskService taskService;
+  ManagementService managementService;
+  HistoryService historyService;
 
   /**
    * Case where there is a parallel gateway that splits into 3 paths of
@@ -47,35 +64,35 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testSplitMergeNoWaitstates() {
+  void testSplitMergeNoWaitstates() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("forkJoinNoWaitStates");
     assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
-  public void testUnstructuredConcurrencyTwoForks() {
+  void testUnstructuredConcurrencyTwoForks() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("unstructuredConcurrencyTwoForks");
     assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
-  public void testUnstructuredConcurrencyTwoJoins() {
+  void testUnstructuredConcurrencyTwoJoins() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("unstructuredConcurrencyTwoJoins");
     assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
-  public void testForkFollowedByOnlyEndEvents() {
+  void testForkFollowedByOnlyEndEvents() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("forkFollowedByEndEvents");
     assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
-  public void testNestedForksFollowedByEndEvents() {
+  void testNestedForksFollowedByEndEvents() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedForksFollowedByEndEvents");
     assertThat(processInstance.isEnded()).isTrue();
   }
@@ -83,7 +100,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   // ACT-482
   @Deployment
   @Test
-  public void testNestedForkJoin() {
+  void testNestedForkJoin() {
     String pid = runtimeService.startProcessInstanceByKey("nestedForkJoin").getId();
 
     // After process start, only task 0 should be active
@@ -130,7 +147,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testReceyclingExecutionWithCallActivity() {
+  void testReceyclingExecutionWithCallActivity() {
     runtimeService.startProcessInstanceByKey("parent-process").getId();
 
     // After process start we have two tasks, one from the parent and one from
@@ -160,7 +177,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCompletingJoin() {
+  void testCompletingJoin() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     assertThat(processInstance.isEnded()).isTrue();
@@ -168,7 +185,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncParallelGateway() {
+  void testAsyncParallelGateway() {
 
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
     assertThat(jobDefinition).isNotNull();
@@ -189,7 +206,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncParallelGatewayAfterScopeTask() {
+  void testAsyncParallelGatewayAfterScopeTask() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     assertThat(processInstance.isEnded()).isFalse();
@@ -209,7 +226,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCompletingJoinInSubProcess() {
+  void testCompletingJoinInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     assertThat(processInstance.isEnded()).isTrue();
@@ -217,7 +234,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testParallelGatewayBeforeAndInSubProcess() {
+  void testParallelGatewayBeforeAndInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(3);
@@ -239,7 +256,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testForkJoin() {
+  void testForkJoin() {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("forkJoin");
     TaskQuery query = taskService
@@ -267,7 +284,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testUnbalancedForkJoin() {
+  void testUnbalancedForkJoin() {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("UnbalancedForkJoin");
     TaskQuery query = taskService.createTaskQuery()
@@ -304,7 +321,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRemoveConcurrentExecutionLocalVariablesOnJoin() {
+  void testRemoveConcurrentExecutionLocalVariablesOnJoin() {
    testRule.deploy(Bpmn.createExecutableProcess("process")
       .startEvent()
       .parallelGateway("fork")
@@ -335,7 +352,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testImplicitParallelGatewayAfterSignalBehavior() {
+  void testImplicitParallelGatewayAfterSignalBehavior() {
     // given
     Exception exceptionOccurred = null;
     runtimeService.startProcessInstanceByKey("process");
@@ -357,7 +374,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExplicitParallelGatewayAfterSignalBehavior() {
+  void testExplicitParallelGatewayAfterSignalBehavior() {
     // given
     runtimeService.startProcessInstanceByKey("process");
     Execution execution = runtimeService.createExecutionQuery()
@@ -373,7 +390,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testParallelGatewayCancellationHistoryEvent() {
+  void testParallelGatewayCancellationHistoryEvent() {
     // given
     // a process with one splitting and one merging parallel gateway and two parallel sequence flows between them
     // one sequence flow has a wait state "Event_Wait", the other has none

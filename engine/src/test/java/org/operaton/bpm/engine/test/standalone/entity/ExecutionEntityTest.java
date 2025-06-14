@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,11 +16,15 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -29,29 +33,26 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  * @author Nikola Koevski <nikola.koevski@camunda.com>
  */
-public class ExecutionEntityTest {
+class ExecutionEntityTest {
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
-  @Rule
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(processEngineRule);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
 
   @Test
-  public void testRestoreProcessInstance() {
+  void testRestoreProcessInstance() {
     //given parent execution
     List<ExecutionEntity> entities = new ArrayList<>();
     ExecutionEntity parent = new ExecutionEntity();
@@ -81,7 +82,7 @@ public class ExecutionEntityTest {
   }
 
   @Test
-  public void testRemoveExecutionSequence() {
+  void testRemoveExecutionSequence() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("singleTaskProcess")
       .startEvent()
@@ -106,6 +107,7 @@ public class ExecutionEntityTest {
     // when
     assertThat(execution).isNotNull();
     assertThat(execution.getProcessInstanceId()).isEqualTo(pi.getId());
+    assertThat(pi.getProcessDefinitionKey()).isEqualTo("singleTaskProcess");
     processEngineRule.getRuntimeService().signal(execution.getId());
 
     // then (see #TestLocalVariableTaskListener::notify)

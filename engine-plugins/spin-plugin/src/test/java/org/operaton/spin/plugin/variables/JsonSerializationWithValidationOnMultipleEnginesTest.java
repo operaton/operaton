@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,7 +46,9 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRulePositive = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
       .configurator(configuration -> {
+        configuration.setProcessEngineName("enginePositive");
         DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
         when(validatorMock.validate(anyString())).thenReturn(true);
         configuration
@@ -58,7 +60,9 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRuleNegative = ProcessEngineExtension.builder()
+      .closeEngineAfterAllTests()
       .configurator(configuration -> {
+        configuration.setProcessEngineName("engineNegative");
         DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
         when(validatorMock.validate(anyString())).thenReturn(false);
         configuration
@@ -66,7 +70,6 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
             .setDeserializationTypeValidationEnabled(true)
             .setJdbcUrl("jdbc:h2:mem:negative");
       })
-      .cacheForConfigurationResource(false)
       .build();
 
   @Test
@@ -95,15 +98,17 @@ class JsonSerializationWithValidationOnMultipleEnginesTest {
     engineRuleNegative.manageDeployment(engineRuleNegative.getRepositoryService().createDeployment()
         .addModelInstance("foo.bpmn", getOneTaskModel())
         .deploy());
-    ProcessInstance instance = engineRuleNegative.getRuntimeService().startProcessInstanceByKey("oneTaskProcess");
+    var runtimeService = engineRuleNegative.getRuntimeService();
+    ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
 
     // add serialized value
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
-    engineRuleNegative.getRuntimeService().setVariable(instance.getId(), "simpleBean",
+    runtimeService.setVariable(instanceId, "simpleBean",
         objectValue(bean).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create());
 
     // when
-    Assertions.assertThatThrownBy(() -> engineRuleNegative.getRuntimeService().getVariable(instance.getId(), "simpleBean"))
+    Assertions.assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
         .isExactlyInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Cannot deserialize")
         .hasCauseExactlyInstanceOf(SpinJsonException.class);

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -64,15 +64,14 @@ public class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
 
   @Test
   public void testProcessEngineInject() {
-    //given only default engine exist
+    //given only the default engine exist
 
     //when TestClass is created
     InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
     assertThat(testClass).isNotNull();
 
-    //then default engine is injected
+    //then the default engine is injected
     assertThat(testClass.processEngine.getName()).isEqualTo("default");
-    assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()
-        .contains("default-process-engine")).isTrue();
+    assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()).contains("default-process-engine");
   }
 }

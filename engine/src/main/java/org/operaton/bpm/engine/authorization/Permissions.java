@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -118,12 +118,12 @@ public enum Permissions implements Permission {
   private int id;
   private Resource[] resourceTypes;
 
-  private Permissions(String name, int id) {
+  Permissions(String name, int id) {
     this.name = name;
     this.id = id;
   }
 
-  private Permissions(String name, int id, EnumSet<Resources> resourceTypes) {
+  Permissions(String name, int id, EnumSet<Resources> resourceTypes) {
     this.name = name;
     this.id = id;
     this.resourceTypes = resourceTypes.toArray(new Resource[resourceTypes.size()]);

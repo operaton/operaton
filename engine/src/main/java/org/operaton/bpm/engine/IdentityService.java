@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -76,7 +76,7 @@ public interface IdentityService {
    * @return true if this identity service implementation provides read-only
    *         access to the user repository, false otherwise.
    */
-  public boolean isReadOnly();
+  boolean isReadOnly();
 
   /**
    * Creates a new user. The user is transient and must be saved using
@@ -326,7 +326,7 @@ public interface IdentityService {
    * is returned as {@link PasswordPolicyResult} which contains all
    * passed and violated rules as well as a flag indicating if the password is
    * valid.
-   * 
+   *
    * @param password
    *          the password that should be tested
    * @return a {@link PasswordPolicyResult} containing passed and
@@ -354,7 +354,7 @@ public interface IdentityService {
    * is returned as {@link PasswordPolicyResult} which contains all
    * passed and violated rules as well as a flag indicating if the password is
    * valid.
-   * 
+   *
    * @param policy
    *          the {@link PasswordPolicy} against which the password is tested
    * @param password
@@ -386,7 +386,7 @@ public interface IdentityService {
   /**
    * Returns the {@link PasswordPolicy} that is currently configured in the
    * engine.
-   * 
+   *
    * @return the current {@link PasswordPolicy} or <code>null</code> if no
    *         policy is set or the configured policy is disabled.
    */
@@ -428,7 +428,7 @@ public interface IdentityService {
   /**
    * @param currentAuthentication
    */
-  public void setAuthentication(Authentication currentAuthentication);
+  void setAuthentication(Authentication currentAuthentication);
 
   /**
    * @return the current authentication for this process engine.
@@ -467,19 +467,19 @@ public interface IdentityService {
   void deleteUserInfo(String userId, String key);
 
   /** Store account information for a remote system */
-  @Deprecated
+  @Deprecated(since = "1.0")
   void setUserAccount(String userId, String userPassword, String accountName, String accountUsername, String accountPassword, Map<String, String> accountDetails);
 
   /** Get account names associated with the given user */
-  @Deprecated
+  @Deprecated(since = "1.0")
   List<String> getUserAccountNames(String userId);
 
   /** Get account information associated with a user */
-  @Deprecated
+  @Deprecated(since = "1.0")
   Account getUserAccount(String userId, String userPassword, String accountName);
 
   /** Delete an entry of the generic extensibility key-value pairs associated with a user */
-  @Deprecated
+  @Deprecated(since = "1.0")
   void deleteUserAccount(String userId, String accountName);
 
 }

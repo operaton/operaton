@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,7 @@ import org.operaton.connect.spi.Connector;
 
 public class AbstractHttpRequest<Q extends HttpBaseRequest<?, ?>, R extends HttpResponse> extends AbstractConnectorRequest<R> {
 
-  private final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
+  private static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
   public AbstractHttpRequest(Connector connector) {
     super(connector);

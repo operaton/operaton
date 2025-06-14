@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,7 +51,7 @@ public class PaDataFormatConfiguratorFailingTest {
   @Deployment(managed = false, name = "deployment")
   public static WebArchive createDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "PaDataFormatConfiguratorFailingTest.war")
-        .addAsLibraries(DeploymentHelper.getAssertJ())
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ReferenceStoringProcessApplication.class)
@@ -69,7 +69,7 @@ public class PaDataFormatConfiguratorFailingTest {
   @Deployment(name = "checkDeployment")
   public static WebArchive createCheckDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
-        .addAsLibraries(DeploymentHelper.getAssertJ());
+        .addAsLibraries(DeploymentHelper.getTestingLibs());
     TestContainer.addContainerSpecificResourcesForNonPa(webArchive);
     return webArchive;
   }

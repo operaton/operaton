@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,6 +52,7 @@ import org.springframework.beans.factory.BeanCreationException;
 class HistoryCleanupOnEngineBootstrapTest {
 
   private static final String ENGINE_NAME = "engineWithHistoryCleanupBatchWindow";
+  private static final String TEMP_ENGINE_NAME = "tempEngine";
 
   private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
@@ -62,6 +63,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     // create history cleanup job
     ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/batchwindow.operaton.cfg.xml")
+      .setProcessEngineName(TEMP_ENGINE_NAME)
       .buildProcessEngine()
       .close();
 
@@ -69,6 +71,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     // suspend history cleanup job
     ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/no-batchwindow.operaton.cfg.xml")
+      .setProcessEngineName(TEMP_ENGINE_NAME)
       .buildProcessEngine()
       .close();
 
@@ -90,6 +93,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     // create history cleanup job
     ProcessEngine engine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-parallelism-default.operaton.cfg.xml")
+      .setProcessEngineName(TEMP_ENGINE_NAME)
       .buildProcessEngine();
 
     // assume
@@ -100,7 +104,8 @@ class HistoryCleanupOnEngineBootstrapTest {
 
     // when
     engine = ProcessEngineConfiguration
-    .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-parallelism-less.operaton.cfg.xml")
+      .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-parallelism-less.operaton.cfg.xml")
+      .setProcessEngineName(TEMP_ENGINE_NAME)
       .buildProcessEngine();
 
     // then
@@ -121,6 +126,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     // create history cleanup job
     ProcessEngine engine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-parallelism-default.operaton.cfg.xml")
+      .setProcessEngineName(TEMP_ENGINE_NAME)
       .buildProcessEngine();
 
     // assume
@@ -131,7 +137,8 @@ class HistoryCleanupOnEngineBootstrapTest {
 
     // when
     engine = ProcessEngineConfiguration
-    .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-parallelism-more.operaton.cfg.xml")
+      .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-parallelism-more.operaton.cfg.xml")
+      .setProcessEngineName(TEMP_ENGINE_NAME)
       .buildProcessEngine();
 
     // then
@@ -196,6 +203,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     //we configure batch window only for Wednesday and start the server
     ProcessEngine engine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-batch-window-map.operaton.cfg.xml")
+      .setProcessEngineName(TEMP_ENGINE_NAME)
       .buildProcessEngine();
 
     //then
@@ -213,6 +221,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     //we reconfigure batch window with default values
     engine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-batch-window-default.operaton.cfg.xml")
+      .setProcessEngineName(TEMP_ENGINE_NAME)
       .buildProcessEngine();
 
     //then
@@ -234,6 +243,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     standaloneInMemProcessEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     standaloneInMemProcessEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00");
     standaloneInMemProcessEngineConfiguration.setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName() + "testHistoryCleanupJobScheduled");
+    standaloneInMemProcessEngineConfiguration.setProcessEngineName(TEMP_ENGINE_NAME);
 
     ProcessEngine engine = standaloneInMemProcessEngineConfiguration
       .buildProcessEngine();
@@ -260,6 +270,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     standaloneInMemProcessEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00");
     standaloneInMemProcessEngineConfiguration
         .setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName() + "testHistoryCleanupJobScheduled");
+    standaloneInMemProcessEngineConfiguration.setProcessEngineName(TEMP_ENGINE_NAME);
 
     ProcessEngine engine = standaloneInMemProcessEngineConfiguration.buildProcessEngine();
     try {
@@ -283,6 +294,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     //we have batch window only once per week - Monday afternoon
     configuration.getHistoryCleanupBatchWindows().put(Calendar.MONDAY, new BatchWindowConfiguration("18:00", "20:00"));
     configuration.setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName() + "testBatchWindowOneDayOfWeek");
+    configuration.setProcessEngineName(TEMP_ENGINE_NAME);
 
     //when
     //we're on Monday evening
@@ -323,6 +335,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     //we have batch window for 24 hours
     configuration.getHistoryCleanupBatchWindows().put(Calendar.MONDAY, new BatchWindowConfiguration("06:00", "06:00"));
     configuration.setJdbcUrl("jdbc:h2:mem:operaton" + getClass().getSimpleName() + "testBatchWindow24Hours");
+    configuration.setProcessEngineName(TEMP_ENGINE_NAME);
 
     //when
     //we're on Monday early morning

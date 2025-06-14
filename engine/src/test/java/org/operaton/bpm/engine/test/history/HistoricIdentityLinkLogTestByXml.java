@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,7 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLog;
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLogQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -28,11 +33,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class HistoricIdentityLinkLogTestByXml {
 
   private static final String PROCESS_DEFINITION_KEY_CANDIDATE_USER = "oneTaskProcessForHistoricIdentityLinkWithCanidateUser";
   private static final String PROCESS_DEFINITION_KEY_CANDIDATE_GROUP = "oneTaskProcessForHistoricIdentityLinkWithCanidateGroup";
@@ -51,9 +56,13 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
   protected static final String CANDIDATE_STARTER_GROUP = "org/operaton/bpm/engine/test/api/repository/ProcessDefinitionCandidateTest.testCandidateStarterGroup.bpmn20.xml";
   protected static final String CANDIDATE_STARTER_GROUPS = "org/operaton/bpm/engine/test/api/repository/ProcessDefinitionCandidateTest.testCandidateStarterGroups.bpmn20.xml";
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithCandidateUser.bpmn20.xml" })
+  HistoryService historyService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithCandidateUser.bpmn20.xml"})
   @Test
-  public void testShouldAddTaskCandidateforAddIdentityLinkUsingXml() {
+  void testShouldAddTaskCandidateforAddIdentityLinkUsingXml() {
 
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
@@ -69,9 +78,9 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
     assertThat(query.userId(XML_USER).count()).isEqualTo(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithTaskAssignee.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithTaskAssignee.bpmn20.xml"})
   @Test
-  public void testShouldAddTaskAssigneeforAddIdentityLinkUsingXml() {
+  void testShouldAddTaskAssigneeforAddIdentityLinkUsingXml() {
 
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
@@ -89,9 +98,9 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
 
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithCandidateGroups.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithCandidateGroups.bpmn20.xml"})
   @Test
-  public void testShouldAddTaskCandidateGroupforAddIdentityLinkUsingXml() {
+  void testShouldAddTaskCandidateGroupforAddIdentityLinkUsingXml() {
 
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
@@ -107,9 +116,9 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
     assertThat(query.groupId(XML_GROUP).count()).isEqualTo(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithCandidateStarterUsers.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithCandidateStarterUsers.bpmn20.xml"})
   @Test
-  public void testShouldAddProcessCandidateStarterUserforAddIdentityLinkUsingXml() {
+  void testShouldAddProcessCandidateStarterUserforAddIdentityLinkUsingXml() {
 
     // Pre test - Historical identity link is added as part of deployment
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
@@ -154,7 +163,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
   }
 
   @Test
-  public void testPropagateTenantIdToCandidateStarterUser() {
+  void testPropagateTenantIdToCandidateStarterUser() {
     // when
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
       .addClasspathResource(CANDIDATE_STARTER_USER)
@@ -173,7 +182,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
   }
 
   @Test
-  public void testPropagateTenantIdToCandidateStarterUsers() {
+  void testPropagateTenantIdToCandidateStarterUsers() {
     // when
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
         .addClasspathResource(CANDIDATE_STARTER_USERS)
@@ -193,7 +202,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
   }
 
   @Test
-  public void testPropagateTenantIdToCandidateStarterGroup() {
+  void testPropagateTenantIdToCandidateStarterGroup() {
     // when
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
         .addClasspathResource(CANDIDATE_STARTER_GROUP)
@@ -212,7 +221,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
   }
 
   @Test
-  public void testPropagateTenantIdToCandidateStarterGroups() {
+  void testPropagateTenantIdToCandidateStarterGroups() {
     // when
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment()
         .addClasspathResource(CANDIDATE_STARTER_GROUPS)

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,7 @@ public interface ConnectorInvocation {
    * The underlying raw request.
    * @return the raw request as executed by the connector
    */
-  public Object getTarget();
+  Object getTarget();
 
   /**
    * <p>The connector request as created through the API. Accessing the request from an
@@ -42,7 +42,7 @@ public interface ConnectorInvocation {
    *
    * @return the connector request
    */
-  public ConnectorRequest<?> getRequest();
+  ConnectorRequest<?> getRequest();
 
   /**
    * Makes the request proceed through the interceptor chain.
@@ -52,6 +52,6 @@ public interface ConnectorInvocation {
    * @return the result of the invocation.
    * @throws Exception
    */
-  public Object proceed() throws Exception;
+  Object proceed() throws Exception;
 
 }

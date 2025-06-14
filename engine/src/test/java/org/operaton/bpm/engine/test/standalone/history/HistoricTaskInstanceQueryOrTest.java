@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,6 +25,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.HistoryService;
@@ -39,44 +43,32 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricTaskInstanceQueryOrTest {
+class HistoricTaskInstanceQueryOrTest {
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
-  protected HistoryService historyService;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected CaseService caseService;
-  protected RepositoryService repositoryService;
-  protected FilterService filterService;
-  private HistoricTaskInstanceQuery historicTaskInstanceQueryStartWithOr;
+  HistoryService historyService;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  CaseService caseService;
+  RepositoryService repositoryService;
+  FilterService filterService;
+  HistoricTaskInstanceQuery historicTaskInstanceQueryStartWithOr;
 
-  @Before
-  public void init() {
-    historyService = processEngineRule.getHistoryService();
-    runtimeService = processEngineRule.getRuntimeService();
-    taskService = processEngineRule.getTaskService();
-    caseService = processEngineRule.getCaseService();
-    repositoryService = processEngineRule.getRepositoryService();
-    filterService = processEngineRule.getFilterService();
-
+  @BeforeEach
+  void init() {
     historicTaskInstanceQueryStartWithOr = historyService.createHistoricTaskInstanceQuery().or();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     for (org.operaton.bpm.engine.repository.Deployment deployment:
       repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
@@ -88,7 +80,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByMissingStartOr() {
+  void shouldThrowExceptionByMissingStartOr() {
     // given
     HistoricTaskInstanceQuery query = historicTaskInstanceQueryStartWithOr
       .endOr();
@@ -100,7 +92,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByNesting() {
+  void shouldThrowExceptionByNesting() {
     // when/then
     assertThatThrownBy(() ->historicTaskInstanceQueryStartWithOr.or())
       .isInstanceOf(ProcessEngineException.class)
@@ -108,7 +100,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByWithCandidateGroupsApplied() {
+  void shouldThrowExceptionByWithCandidateGroupsApplied() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.withCandidateGroups())
       .isInstanceOf(ProcessEngineException.class)
@@ -116,7 +108,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionByWithoutCandidateGroupsApplied() {
+  void shouldThrowExceptionByWithoutCandidateGroupsApplied() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.withoutCandidateGroups())
       .isInstanceOf(ProcessEngineException.class)
@@ -124,7 +116,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTenantId() {
+  void shouldThrowExceptionOnOrderByTenantId() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTenantId())
       .isInstanceOf(ProcessEngineException.class)
@@ -132,7 +124,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskId() {
+  void shouldThrowExceptionOnOrderByTaskId() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskId())
       .isInstanceOf(ProcessEngineException.class)
@@ -140,7 +132,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByHistoricActivityInstanceId() {
+  void shouldThrowExceptionOnOrderByHistoricActivityInstanceId() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByHistoricActivityInstanceId())
       .isInstanceOf(ProcessEngineException.class)
@@ -148,7 +140,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByProcessDefinitionId() {
+  void shouldThrowExceptionOnOrderByProcessDefinitionId() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByProcessDefinitionId())
       .isInstanceOf(ProcessEngineException.class)
@@ -156,7 +148,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByProcessInstanceId() {
+  void shouldThrowExceptionOnOrderByProcessInstanceId() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByProcessInstanceId())
       .isInstanceOf(ProcessEngineException.class)
@@ -164,7 +156,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByExecutionId() {
+  void shouldThrowExceptionOnOrderByExecutionId() {
     // when/then
     assertThatThrownBy(() ->historicTaskInstanceQueryStartWithOr.orderByExecutionId())
       .isInstanceOf(ProcessEngineException.class)
@@ -172,7 +164,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByHistoricTaskInstanceDuration() {
+  void shouldThrowExceptionOnOrderByHistoricTaskInstanceDuration() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByHistoricTaskInstanceDuration())
       .isInstanceOf(ProcessEngineException.class)
@@ -180,7 +172,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByHistoricTaskInstanceEndTime() {
+  void shouldThrowExceptionOnOrderByHistoricTaskInstanceEndTime() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByHistoricTaskInstanceEndTime())
       .isInstanceOf(ProcessEngineException.class)
@@ -188,7 +180,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByHistoricActivityInstanceStartTime() {
+  void shouldThrowExceptionOnOrderByHistoricActivityInstanceStartTime() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByHistoricTaskInstanceEndTime())
       .isInstanceOf(ProcessEngineException.class)
@@ -196,7 +188,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskName() {
+  void shouldThrowExceptionOnOrderByTaskName() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskName())
       .isInstanceOf(ProcessEngineException.class)
@@ -204,7 +196,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskDescription() {
+  void shouldThrowExceptionOnOrderByTaskDescription() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskDescription())
       .isInstanceOf(ProcessEngineException.class)
@@ -212,7 +204,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskAssignee() {
+  void shouldThrowExceptionOnOrderByTaskAssignee() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskAssignee())
       .isInstanceOf(ProcessEngineException.class)
@@ -220,7 +212,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskOwner() {
+  void shouldThrowExceptionOnOrderByTaskOwner() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskOwner())
       .isInstanceOf(ProcessEngineException.class)
@@ -228,7 +220,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskDueDate() {
+  void shouldThrowExceptionOnOrderByTaskDueDate() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskDueDate())
       .isInstanceOf(ProcessEngineException.class)
@@ -236,7 +228,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskFollowUpDate() {
+  void shouldThrowExceptionOnOrderByTaskFollowUpDate() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskFollowUpDate())
       .isInstanceOf(ProcessEngineException.class)
@@ -244,7 +236,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByDeleteReason() {
+  void shouldThrowExceptionOnOrderByDeleteReason() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByDeleteReason())
       .isInstanceOf(ProcessEngineException.class)
@@ -252,7 +244,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskDefinitionKey() {
+  void shouldThrowExceptionOnOrderByTaskDefinitionKey() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskDefinitionKey())
       .isInstanceOf(ProcessEngineException.class)
@@ -261,7 +253,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByTaskPriority() {
+  void shouldThrowExceptionOnOrderByTaskPriority() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByTaskPriority())
       .isInstanceOf(ProcessEngineException.class)
@@ -269,7 +261,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByCaseDefinitionId() {
+  void shouldThrowExceptionOnOrderByCaseDefinitionId() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByCaseDefinitionId())
       .isInstanceOf(ProcessEngineException.class)
@@ -277,7 +269,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByCaseInstanceId() {
+  void shouldThrowExceptionOnOrderByCaseInstanceId() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByCaseInstanceId())
       .isInstanceOf(ProcessEngineException.class)
@@ -285,7 +277,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldThrowExceptionOnOrderByCaseExecutionId() {
+  void shouldThrowExceptionOnOrderByCaseExecutionId() {
     // when/then
     assertThatThrownBy(() -> historicTaskInstanceQueryStartWithOr.orderByCaseExecutionId())
       .isInstanceOf(ProcessEngineException.class)
@@ -293,7 +285,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnHistoricTasksWithEmptyOrQuery() {
+  void shouldReturnHistoricTasksWithEmptyOrQuery() {
     // given
     taskService.saveTask(taskService.newTask());
     taskService.saveTask(taskService.newTask());
@@ -309,7 +301,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnHistoricTasksWithTaskNameOrTaskDescription() {
+  void shouldReturnHistoricTasksWithTaskNameOrTaskDescription() {
     // given
     Task task1 = taskService.newTask();
     task1.setName("aTaskName");
@@ -332,7 +324,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnHistoricTasksWithMultipleOrCriteria() {
+  void shouldReturnHistoricTasksWithMultipleOrCriteria() {
     // given
     Task task1 = taskService.newTask();
     task1.setName("aTaskName");
@@ -369,7 +361,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnHistoricTasksFilteredByMultipleOrAndCriteria() {
+  void shouldReturnHistoricTasksFilteredByMultipleOrAndCriteria() {
     // given
     Task task1 = taskService.newTask();
     task1.setPriority(4);
@@ -419,7 +411,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnHistoricTasksFilteredByMultipleOrQueries() {
+  void shouldReturnHistoricTasksFilteredByMultipleOrQueries() {
     // given
     Task task1 = taskService.newTask();
     task1.setName("aTaskName");
@@ -487,7 +479,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnHistoricTasksWhereSameCriterionWasAppliedThreeTimesInOneQuery() {
+  void shouldReturnHistoricTasksWhereSameCriterionWasAppliedThreeTimesInOneQuery() {
     // given
     Task task1 = taskService.newTask();
     task1.setName("task1");
@@ -515,7 +507,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldReturnHistoricTasksWithActivityInstanceIdInOrTaskId() {
+  void shouldReturnHistoricTasksWithActivityInstanceIdInOrTaskId() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("aProcessDefinition")
       .startEvent()
@@ -550,7 +542,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldTestDueDateCombinations() throws ParseException {
+  void shouldTestDueDateCombinations() throws ParseException {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
     taskService.saveTask(taskService.newTask());
 
@@ -633,7 +625,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldTestFollowUpDateCombinations() throws ParseException {
+  void shouldTestFollowUpDateCombinations() throws ParseException {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
 
     assertThat(historyService.createHistoricTaskInstanceQuery()
@@ -679,7 +671,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldQueryStartedBeforeOrAfter() {
+  void shouldQueryStartedBeforeOrAfter() {
     // given
     Date dateOne = new Date(1363607000000L);
     ClockUtil.setCurrentTime(dateOne);
@@ -707,7 +699,7 @@ public class HistoricTaskInstanceQueryOrTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldQueryStandaloneOrEmbeddedTaskByProcessDefinitionKey() {
+  void shouldQueryStandaloneOrEmbeddedTaskByProcessDefinitionKey() {
     // given
     Task taskOne = taskService.newTask();
     taskService.saveTask(taskOne);
@@ -728,7 +720,7 @@ public class HistoricTaskInstanceQueryOrTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldQueryStandaloneOrEmbeddedTaskByProcessInstanceId() {
+  void shouldQueryStandaloneOrEmbeddedTaskByProcessInstanceId() {
     // given
     Task taskOne = taskService.newTask();
     taskService.saveTask(taskOne);
@@ -749,7 +741,7 @@ public class HistoricTaskInstanceQueryOrTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
-  public void shouldQueryStandaloneOrEmbeddedTaskByCaseDefinitionId() {
+  void shouldQueryStandaloneOrEmbeddedTaskByCaseDefinitionId() {
     // given
     Task taskOne = taskService.newTask();
     taskService.saveTask(taskOne);
@@ -769,7 +761,7 @@ public class HistoricTaskInstanceQueryOrTest {
   }
 
   @Test
-  public void shouldQueryFinishedBeforeOrAfter() {
+  void shouldQueryFinishedBeforeOrAfter() {
     // given
     Date dateOne = new Date(1363607000000L);
     ClockUtil.setCurrentTime(dateOne);
@@ -799,7 +791,7 @@ public class HistoricTaskInstanceQueryOrTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldReturnHistoricTasksWithHadCandidateUserOrHadCandidateGroup() {
+  void shouldReturnHistoricTasksWithHadCandidateUserOrHadCandidateGroup() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);
@@ -823,7 +815,7 @@ public class HistoricTaskInstanceQueryOrTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void shouldReturnHistoricTasksWithCandidateCandidateUserInvolvedOrCandidateGroupInvolved() {
+  void shouldReturnHistoricTasksWithCandidateCandidateUserInvolvedOrCandidateGroupInvolved() {
     // given
     Task task1 = taskService.newTask();
     taskService.saveTask(task1);

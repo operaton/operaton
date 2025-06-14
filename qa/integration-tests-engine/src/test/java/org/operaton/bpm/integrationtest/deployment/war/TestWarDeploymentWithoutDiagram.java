@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,17 +34,17 @@ import org.junit.runner.RunWith;
 public class TestWarDeploymentWithoutDiagram extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive processArchive() {    
+  public static WebArchive processArchive() {
     return initWebArchiveDeployment()
             .addClass(TestHelper.class)
             .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml");
   }
-  
+
   @Test
   public void testDeployProcessArchiveDiagramCreationDisabled() throws IOException {
     String expectedDiagramResource = "/org/operaton/bpm/integrationtest/testDeployProcessArchive.png";
     String processDefinitionKey = "testDeployProcessArchive";
     TestHelper.assertDiagramIsDeployed(false, getClass(), expectedDiagramResource, processDefinitionKey);
   }
-    
+
 }

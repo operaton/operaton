@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -89,7 +89,7 @@ public class ProcessInstanceQueryTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  static ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testHelper = new ProcessEngineTestExtension(engineRule);
 
   private static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
   private static final String PROCESS_DEFINITION_KEY_2 = "otherOneTaskProcess";
@@ -197,9 +197,12 @@ public class ProcessInstanceQueryTest {
   @Test
   void testQueryByProcessDefinitionKeySingleResult() {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_DEFINITION_KEY_2);
+    ProcessInstance processInstance = query.singleResult();
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
-    assertThat(query.singleResult()).isNotNull();
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY_2);
+
   }
 
   @Test

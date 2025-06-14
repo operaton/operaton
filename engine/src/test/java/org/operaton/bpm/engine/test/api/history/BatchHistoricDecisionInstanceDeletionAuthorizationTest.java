@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,15 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.history;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.revoke;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +44,15 @@ import org.operaton.bpm.engine.test.junit5.authorization.AuthorizationTestExtens
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.revoke;
+
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 @Parameterized
 public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
@@ -60,11 +60,11 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
   protected static final String DECISION = "decision";
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
+  AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected DecisionService decisionService;
   protected HistoryService historyService;

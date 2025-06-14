@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,21 +18,33 @@ package org.operaton.bpm.engine.test.bpmn.exclusive;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Stefan Hentschel
  */
-public class ExclusiveCatchEventTest extends PluggableProcessEngineTest {
-  
+class ExclusiveCatchEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  ManagementService managementService;
+
   @Deployment
   @Test
-  public void testNonExclusiveCatchEvent() {
-    // start process 
+  void testNonExclusiveCatchEvent() {
+    // start process
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 non-exclusive job in the database:
     Job job = managementService.createJobQuery().singleResult();
@@ -42,13 +54,13 @@ public class ExclusiveCatchEventTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
     // all the jobs are done
-    assertThat(managementService.createJobQuery().count()).isZero();      
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Deployment
   @Test
-  public void testExclusiveCatchEvent() {
-    // start process 
+  void testExclusiveCatchEvent() {
+    // start process
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 exclusive job in the database:
     Job job = managementService.createJobQuery().singleResult();
@@ -58,13 +70,13 @@ public class ExclusiveCatchEventTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
     // all the jobs are done
-    assertThat(managementService.createJobQuery().count()).isZero();      
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
-  
+
   @Deployment
   @Test
-  public void testExclusiveCatchEventConcurrent() {
-    // start process 
+  void testExclusiveCatchEventConcurrent() {
+    // start process
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 2 exclusive jobs in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(2);
@@ -72,7 +84,7 @@ public class ExclusiveCatchEventTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
     // all the jobs are done
-    assertThat(managementService.createJobQuery().count()).isZero();      
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
-  
+
 }

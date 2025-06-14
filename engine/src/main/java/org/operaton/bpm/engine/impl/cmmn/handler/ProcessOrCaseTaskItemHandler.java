@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -54,6 +54,7 @@ public abstract class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandle
     initializeOutputParameter(element, activity, context, callableElement);
   }
 
+  @SuppressWarnings("unused")
   protected void initializeInputParameter(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, CallableElement callableElement) {
     ExpressionManager expressionManager = context.getExpressionManager();
 
@@ -99,6 +100,7 @@ public abstract class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandle
     }
   }
 
+  @SuppressWarnings("unused")
   protected void initializeOutputParameter(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, CallableElement callableElement) {
     ExpressionManager expressionManager = context.getExpressionManager();
 

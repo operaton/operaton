@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,10 +62,10 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(processInstanceId);
     assertEquals(1, instancesQuery.count());
     assertEquals(1, jobQuery.count());
-    
+
     Job job = jobQuery.singleResult();
     Date oldDueDate = job.getDuedate();
-    
+
     // when
     runtimeService.setVariable(processInstanceId,  "timerExpression", "PT1S");
     managementService.recalculateJobDuedate(job.getId(), true);
@@ -74,13 +74,13 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
     assertEquals(1, jobQuery.count());
     Job jobRecalculated = jobQuery.singleResult();
     assertThat(jobRecalculated.getDuedate()).isNotEqualTo(oldDueDate);
-    
+
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(jobRecalculated.getCreateTime());
     calendar.add(Calendar.SECOND, 1);
     Date expectedDate = calendar.getTime();
     assertEquals(expectedDate, jobRecalculated.getDuedate());
-    
+
     waitForJobExecutorToProcessAllJobs();
 
     assertEquals(0, instancesQuery.count());

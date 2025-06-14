@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,46 +16,40 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import org.operaton.bpm.engine.impl.Page;
-import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
 import java.util.List;
 
-import org.junit.Assume;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.impl.Page;
+import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
+import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class DeploymentAwareJobExecutorForOracleTest {
+class DeploymentAwareJobExecutorForOracleTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule deploymentAwareBootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJobExecutorDeploymentAware(true));
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(deploymentAwareBootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(configuration -> configuration.setJobExecutorDeploymentAware(true))
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @Test
-  public void testFindAcquirableJobsWhen0InstancesDeployed() {
+  void testFindAcquirableJobsWhen0InstancesDeployed() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
 
     // then
     findAcquirableJobs();
   }
 
   @Test
-  public void testFindAcquirableJobsWhen1InstanceDeployed() {
+  void testFindAcquirableJobsWhen1InstanceDeployed() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
     // when
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     // then
@@ -63,9 +57,9 @@ public class DeploymentAwareJobExecutorForOracleTest {
   }
 
   @Test
-  public void testFindAcquirableJobsWhen1000InstancesDeployed() {
+  void testFindAcquirableJobsWhen1000InstancesDeployed() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
     // when
     for (int i=0; i<1000; i++) {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
@@ -75,9 +69,9 @@ public class DeploymentAwareJobExecutorForOracleTest {
   }
 
   @Test
-  public void testFindAcquirableJobsWhen1001InstancesDeployed() {
+  void testFindAcquirableJobsWhen1001InstancesDeployed() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
     // when
     for (int i=0; i<1001; i++) {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
@@ -87,9 +81,9 @@ public class DeploymentAwareJobExecutorForOracleTest {
   }
 
   @Test
-  public void testFindAcquirableJobsWhen2000InstancesDeployed() {
+  void testFindAcquirableJobsWhen2000InstancesDeployed() {
     // given
-    Assume.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
+    Assumptions.assumeTrue(engineRule.getProcessEngineConfiguration().getDatabaseType().equals("oracle"));
     // when
     for (int i=0; i<2000; i++) {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);

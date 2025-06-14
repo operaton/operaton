@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ public interface SchemaLogQuery extends Query<SchemaLogQuery, SchemaLogEntry> {
    * Only show {@link SchemaLogEntry entries} with a given version.
    */
   SchemaLogQuery version(String version);
-  
+
   /**
    * Order by task timestamp (needs to be followed by {@link #asc()} or {@link #desc()}).
    */

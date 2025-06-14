@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * @author Tom Baeyens
  * @author Falko Menge
@@ -46,6 +45,10 @@ import java.util.Set;
  * @author Christopher Zell
  */
 public class ProcessDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<ProcessDefinitionEntity> {
+  private static final String DEPLOYMENT_ID = "deploymentId";
+  private static final String PROCESS_DEFINITION_IDS = "processDefinitionIds";
+  private static final String PROCESS_DEFINITION_VERSION = "processDefinitionVersion";
+  private static final String PROCESS_DEFINITION_VERSION_TAG = "processDefinitionVersionTag";
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -98,8 +101,8 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
    */
   public ProcessDefinitionEntity findLatestProcessDefinitionByKeyAndTenantId(String processDefinitionKey, String tenantId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(TENANT_ID, tenantId);
 
     if (tenantId == null) {
       return (ProcessDefinitionEntity) getDbEntityManager().selectOne("selectLatestProcessDefinitionByKeyWithoutTenantId", parameters);
@@ -125,8 +128,8 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
 
   public ProcessDefinitionEntity findProcessDefinitionByDeploymentAndKey(String deploymentId, String processDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("deploymentId", deploymentId);
-    parameters.put("processDefinitionKey", processDefinitionKey);
+    parameters.put(DEPLOYMENT_ID, deploymentId);
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
     return (ProcessDefinitionEntity) getDbEntityManager().selectOne("selectProcessDefinitionByDeploymentAndKey", parameters);
   }
 
@@ -142,12 +145,12 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
       String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     if (processDefinitionVersion != null) {
-      parameters.put("processDefinitionVersion", processDefinitionVersion);
+      parameters.put(PROCESS_DEFINITION_VERSION, processDefinitionVersion);
     } else if (processDefinitionVersionTag != null) {
-      parameters.put("processDefinitionVersionTag", processDefinitionVersionTag);
+      parameters.put(PROCESS_DEFINITION_VERSION_TAG, processDefinitionVersionTag);
     }
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(TENANT_ID, tenantId);
 
     @SuppressWarnings("unchecked")
     List<ProcessDefinitionEntity> results = getDbEntityManager().selectList("selectProcessDefinitionByKeyVersionAndTenantId", parameters);
@@ -176,7 +179,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
     Map<String, Object> params = new HashMap<>();
     params.put("key", processDefinitionKey);
     params.put("version", version);
-    params.put("tenantId", tenantId);
+    params.put(TENANT_ID, tenantId);
     return (String) getDbEntityManager().selectOne("selectPreviousProcessDefinitionId", params);
   }
 
@@ -193,9 +196,9 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
   @SuppressWarnings("unchecked")
   public List<ProcessDefinition> findDefinitionsByKeyAndTenantId(String processDefinitionKey, String tenantId, boolean isTenantIdSet) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isTenantIdSet", isTenantIdSet);
-    parameters.put("tenantId", tenantId);
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_TENANT_ID_SET, isTenantIdSet);
+    parameters.put(TENANT_ID, tenantId);
 
     return getDbEntityManager().selectList("selectProcessDefinitions", parameters);
   }
@@ -203,8 +206,8 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
   @SuppressWarnings("unchecked")
   public List<ProcessDefinition> findDefinitionsByIds(Set<String> processDefinitionIds) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionIds", processDefinitionIds);
-    parameters.put("isTenantIdSet", false);
+    parameters.put(PROCESS_DEFINITION_IDS, processDefinitionIds);
+    parameters.put(IS_TENANT_ID_SET, false);
 
     return getDbEntityManager().selectList("selectProcessDefinitions", parameters);
   }
@@ -213,25 +216,25 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
 
   public void updateProcessDefinitionSuspensionStateById(String processDefinitionId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionId", processDefinitionId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_ID, processDefinitionId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ProcessDefinitionEntity.class, "updateProcessDefinitionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateProcessDefinitionSuspensionStateByKey(String processDefinitionKey, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isTenantIdSet", false);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_TENANT_ID_SET, false);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ProcessDefinitionEntity.class, "updateProcessDefinitionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateProcessDefinitionSuspensionStateByKeyAndTenantId(String processDefinitionKey, String tenantId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isTenantIdSet", true);
-    parameters.put("tenantId", tenantId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_TENANT_ID_SET, true);
+    parameters.put(TENANT_ID, tenantId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ProcessDefinitionEntity.class, "updateProcessDefinitionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 

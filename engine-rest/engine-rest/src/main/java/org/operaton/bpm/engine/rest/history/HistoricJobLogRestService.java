@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.rest.sub.history.HistoricJobLogResource;
 @Produces(MediaType.APPLICATION_JSON)
 public interface HistoricJobLogRestService {
 
-  public static final String PATH = "/job-log";
+  String PATH = "/job-log";
 
   @Path("/{id}")
   HistoricJobLogResource getHistoricJobLog(@PathParam("id") String historicJobLogId);

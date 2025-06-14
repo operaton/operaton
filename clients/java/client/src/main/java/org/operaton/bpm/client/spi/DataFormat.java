@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ public interface DataFormat {
    * @param parameter the java object to check
    * @return true if this object can be mapped.
    */
-  public boolean canMap(Object value);
+  boolean canMap(Object value);
 
   /**
    * Writes a java object to a data format's internal data representation.
@@ -40,7 +40,7 @@ public interface DataFormat {
    * @param value object that is written into internal data representation
    * @return the data format's internal representation of that object
    */
-  public String writeValue(Object value);
+  String writeValue(Object value);
 
   /**
    * Reads the internal representation of a data format to a java object of the
@@ -51,7 +51,7 @@ public interface DataFormat {
    * @return a java object of the specified class that was populated with the input
    * parameter
    */
-  public <T> T readValue(String value, String typeIdentifier);
+  <T> T readValue(String value, String typeIdentifier);
 
   /**
    * Reads the internal representation of a data format to a java object of the
@@ -63,7 +63,7 @@ public interface DataFormat {
    * @return a java object of the specified class that was populated with the input
    * parameter
    */
-  public <T> T readValue(String value, Class<T> cls);
+  <T> T readValue(String value, Class<T> cls);
 
   /**
    * Returns a data-format-specific canonical type name.

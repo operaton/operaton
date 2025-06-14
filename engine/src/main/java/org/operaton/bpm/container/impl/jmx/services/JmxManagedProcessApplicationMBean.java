@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,26 +24,25 @@ import org.operaton.bpm.application.AbstractProcessApplication;
  * MBean interface for {@link AbstractProcessApplication ProcessApplications}. This
  * interface allows retrieving management information about process
  * applications.
- * 
+ *
  * @author Daniel Meyer
- * 
+ *
  */
 public interface JmxManagedProcessApplicationMBean {
-	
+
   /**
    * @return the name of the process application
    */
-	public String getProcessApplicationName();
-	
-	/** 
+  String getProcessApplicationName();
+
+	/**
 	 * @return the ids of the process engine deployments performed by this application
 	 */
-	public List<String> getDeploymentIds();
-	
+	List<String> getDeploymentIds();
+
 	/**
 	 * @return the names of the deployments performed by this application
 	 */
-	public List<String> getDeploymentNames();
-	
+  List<String> getDeploymentNames();
 
 }

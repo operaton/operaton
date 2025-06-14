@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,34 +38,34 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  */
 class RootProcessInstanceTest {
 
-  protected final String CALLED_PROCESS_KEY = "calledProcess";
-  protected final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  FormService formService;
+
+  static final String CALLED_PROCESS_KEY = "calledProcess";
+  static final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
     .startEvent()
       .userTask("userTask")
     .endEvent().done();
 
-  protected final String CALLED_AND_CALLING_PROCESS_KEY = "calledAndCallingProcess";
-  protected final BpmnModelInstance CALLED_AND_CALLING_PROCESS =
+  static final String CALLED_AND_CALLING_PROCESS_KEY = "calledAndCallingProcess";
+  static final BpmnModelInstance CALLED_AND_CALLING_PROCESS =
     Bpmn.createExecutableProcess(CALLED_AND_CALLING_PROCESS_KEY)
     .startEvent()
       .callActivity()
         .calledElement(CALLED_PROCESS_KEY)
     .endEvent().done();
 
-  protected final String CALLING_PROCESS_KEY = "callingProcess";
-  protected final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
+  static final String CALLING_PROCESS_KEY = "callingProcess";
+  static final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
     .startEvent()
       .callActivity()
         .calledElement(CALLED_AND_CALLING_PROCESS_KEY)
     .endEvent().done();
-
-  @RegisterExtension
-  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
-  @RegisterExtension
-  static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
-
-  RuntimeService runtimeService;
-  FormService formService;
 
   @Test
   void shouldPointToItself() {

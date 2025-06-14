@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,16 +20,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class EnvScriptCachingTest extends AbstractScriptEnvironmentTest {
+class EnvScriptCachingTest extends AbstractScriptEnvironmentTest {
 
   protected static final String SCRIPT_LANGUAGE = "groovy";
   protected static final String SCRIPT = "println 'hello world'";
@@ -46,7 +47,7 @@ public class EnvScriptCachingTest extends AbstractScriptEnvironmentTest {
   }
 
   @Test
-  public void testEnabledPaEnvScriptCaching() {
+  void testEnabledPaEnvScriptCaching() {
     // given
     ProcessApplicationDeployment deployment = repositoryService.createDeployment(processApplication.getReference())
         .addClasspathResource(processPath)
@@ -70,7 +71,7 @@ public class EnvScriptCachingTest extends AbstractScriptEnvironmentTest {
   }
 
   @Test
-  public void testDisabledPaEnvScriptCaching() {
+  void testDisabledPaEnvScriptCaching() {
     // given
     processEngineConfiguration.setEnableFetchScriptEngineFromProcessApplication(false);
 

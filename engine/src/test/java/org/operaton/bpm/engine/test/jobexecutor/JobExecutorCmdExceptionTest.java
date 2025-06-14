@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -47,16 +47,13 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 class JobExecutorCmdExceptionTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
-      // XXX disabled caching because tests got flaky. see https://github.com/operaton/operaton/issues/671
-    .cacheForConfigurationResource(false)
-    .build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected TweetExceptionHandler tweetExceptionHandler = new TweetExceptionHandler();
   protected TweetNestedCommandExceptionHandler nestedCommandExceptionHandler = new TweetNestedCommandExceptionHandler();
-  
+
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected ManagementService managementService;
   protected RuntimeService runtimeService;

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
@@ -34,29 +38,23 @@ import org.operaton.bpm.engine.history.HistoricDecisionOutputInstance;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.variables.JavaSerializable;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricDecisionInstanceInputOutputValueTest {
 
   protected static final String DECISION_PROCESS = "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.processWithBusinessRuleTask.bpmn20.xml";
   protected static final String DECISION_SINGLE_OUTPUT_DMN = "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.decisionSingleOutput.dmn11.xml";
 
-  @Parameters(name = "{index}: input({0}) = {1}")
+  @Parameters(name = "input({0}) = {1}")
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
       { "string", "a" },
@@ -74,16 +72,16 @@ public class HistoricDecisionInstanceInputOutputValueTest {
   @Parameter(1)
   public Object inputValue;
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.setCurrentTime(new Date());
   }
 
-  @Before
-  public void enableDmnFeelLegacyBehavior() {
+  @BeforeEach
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -93,8 +91,8 @@ public class HistoricDecisionInstanceInputOutputValueTest {
         .init();
   }
 
-  @After
-  public void disableDmnFeelLegacyBehavior() {
+  @AfterEach
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -105,9 +103,9 @@ public class HistoricDecisionInstanceInputOutputValueTest {
         .init();
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
-  public void decisionInputInstanceValue() throws ParseException {
+  void decisionInputInstanceValue() throws ParseException {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
     Date fixedDate = sdf.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
@@ -124,9 +122,9 @@ public class HistoricDecisionInstanceInputOutputValueTest {
     assertThat(inputInstance.getCreateTime()).isEqualTo(fixedDate);
   }
 
-  @Test
+  @TestTemplate
   @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
-  public void decisionOutputInstanceValue() throws ParseException {
+  void decisionOutputInstanceValue() throws ParseException {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
     Date fixedDate = sdf.parse("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);

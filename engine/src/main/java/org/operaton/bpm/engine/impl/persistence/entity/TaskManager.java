@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
@@ -29,6 +26,10 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.task.Task;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
@@ -36,6 +37,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tom Baeyens
  */
 public class TaskManager extends AbstractManager {
+
+  private static final String CASE_EXECUTION_ID = "caseExecutionId";
 
   public void insertTask(TaskEntity task) {
     getDbEntityManager().insert(task);
@@ -103,7 +106,6 @@ public class TaskManager extends AbstractManager {
     }
   }
 
-
   public TaskEntity findTaskById(String id) {
     ensureNotNull("Invalid task id", "id", id);
     return getDbEntityManager().selectById(TaskEntity.class, id);
@@ -123,8 +125,7 @@ public class TaskManager extends AbstractManager {
     return getDbEntityManager().selectList("selectTasksByProcessInstanceId", processInstanceId);
   }
 
-
-  @Deprecated
+  @Deprecated(since = "1.0")
   public List<Task> findTasksByQueryCriteria(TaskQueryImpl taskQuery, Page page) {
     taskQuery.setFirstResult(page.getFirstResult());
     taskQuery.setMaxResults(page.getMaxResults());
@@ -158,39 +159,39 @@ public class TaskManager extends AbstractManager {
 
   public void updateTaskSuspensionStateByProcessDefinitionId(String processDefinitionId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionId", processDefinitionId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_ID, processDefinitionId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(TaskEntity.class, "updateTaskSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateTaskSuspensionStateByProcessInstanceId(String processInstanceId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(TaskEntity.class, "updateTaskSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateTaskSuspensionStateByProcessDefinitionKey(String processDefinitionKey, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isProcessDefinitionTenantIdSet", false);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_PROCESS_DEFINITION_TENANT_ID_SET, false);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(TaskEntity.class, "updateTaskSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateTaskSuspensionStateByProcessDefinitionKeyAndTenantId(String processDefinitionKey, String processDefinitionTenantId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isProcessDefinitionTenantIdSet", true);
-    parameters.put("processDefinitionTenantId", processDefinitionTenantId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_PROCESS_DEFINITION_TENANT_ID_SET, true);
+    parameters.put(PROCESS_DEFINITION_TENANT_ID, processDefinitionTenantId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(TaskEntity.class, "updateTaskSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateTaskSuspensionStateByCaseExecutionId(String caseExecutionId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("caseExecutionId", caseExecutionId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(CASE_EXECUTION_ID, caseExecutionId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(TaskEntity.class, "updateTaskSuspensionStateByParameters", configureParameterizedQuery(parameters));
 
   }

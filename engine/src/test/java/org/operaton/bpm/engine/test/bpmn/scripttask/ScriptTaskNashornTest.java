@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,16 +17,18 @@
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import java.util.Date;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.Test;
 
-public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
+import java.util.Date;
+
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+class ScriptTaskNashornTest extends AbstractScriptTaskTest {
 
   private static final String NASHORN = "nashorn";
 
   @Test
-  public void testJavascriptProcessVarVisibility() {
+  void testJavascriptProcessVarVisibility() {
 
     deployProcess(NASHORN,
 
@@ -71,7 +73,7 @@ public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testJavascriptFunctionInvocation() {
+  void testJavascriptFunctionInvocation() {
 
     deployProcess(NASHORN,
 
@@ -101,7 +103,7 @@ public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testJsVariable() {
+  void testJsVariable() {
 
     String scriptText = "var foo = 1;";
 
@@ -114,7 +116,7 @@ public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void testJavascriptVariableSerialization() {
+  void testJavascriptVariableSerialization() {
     deployProcess(NASHORN, "execution.setVariable('date', new java.util.Date(0));");
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -131,7 +133,7 @@ public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
   }
 
   @Test
-  public void shouldLoadExternalScript() {
+  void shouldLoadExternalScript() {
     // GIVEN
     // an external JS file with a function
 

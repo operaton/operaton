@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -27,31 +30,25 @@ import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  *
  * @author Christopher Zell
  */
-public class MigrationHistoricProcessInstanceTest {
+class MigrationHistoricProcessInstanceTest {
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  protected RuntimeService runtimeService;
-  protected HistoryService historyService;
+  RuntimeService runtimeService;
+  HistoryService historyService;
 
   //============================================================================
   //===================================Migration================================
@@ -60,12 +57,8 @@ public class MigrationHistoricProcessInstanceTest {
   protected ProcessDefinition targetProcessDefinition;
   protected MigrationPlan migrationPlan;
 
-  @Before
-  public void initTest() {
-    runtimeService = rule.getRuntimeService();
-    historyService = rule.getHistoryService();
-
-
+  @BeforeEach
+  void initTest() {
     sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ModifiableBpmnModelInstance modifiedModel = modify(ProcessModels.ONE_TASK_PROCESS).changeElementId("Process", "Process2")
                                                                                       .changeElementId("userTask", "userTask2");
@@ -78,7 +71,7 @@ public class MigrationHistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void testMigrateHistoryProcessInstance() {
+  void testMigrateHistoryProcessInstance() {
     //given
     HistoricProcessInstanceQuery sourceHistoryProcessInstanceQuery =
         historyService.createHistoricProcessInstanceQuery()
@@ -106,7 +99,7 @@ public class MigrationHistoricProcessInstanceTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void testMigrateHistoryProcessInstanceState() {
+  void testMigrateHistoryProcessInstanceState() {
     //given
     HistoricProcessInstanceQuery sourceHistoryProcessInstanceQuery =
         historyService.createHistoricProcessInstanceQuery()

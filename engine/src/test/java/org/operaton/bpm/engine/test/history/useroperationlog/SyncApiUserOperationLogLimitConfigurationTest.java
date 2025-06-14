@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,29 +19,30 @@ package org.operaton.bpm.engine.test.history.useroperationlog;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.junit.After;
-import org.junit.Test;
 
-public class SyncApiUserOperationLogLimitConfigurationTest {
+class SyncApiUserOperationLogLimitConfigurationTest {
 
   ProcessEngine engine;
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     if(engine != null) {
       engine.close();
     }
   }
 
   @Test
-  public void shouldConfigureDefault() {
+  void shouldConfigureDefault() {
     // given standard configuration
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("operaton.cfg.xml");
+    processEngineConfiguration.setProcessEngineName("secondDefault"); // different name is needed to avoid issues with cached engines
 
     // when engine startup
     startEngineManaged(processEngineConfiguration);
@@ -51,7 +52,7 @@ public class SyncApiUserOperationLogLimitConfigurationTest {
   }
 
   @Test
-  public void shouldAllowToConfigureNegativeOne() {
+  void shouldAllowToConfigureNegativeOne() {
     // given configuration with logEntriesPerSyncOperationLimit=-1
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource(
@@ -65,7 +66,7 @@ public class SyncApiUserOperationLogLimitConfigurationTest {
   }
 
   @Test
-  public void shouldAllowToConfigurePositiveValue() {
+  void shouldAllowToConfigurePositiveValue() {
     // given configuration with logEntriesPerSyncOperationLimit=17000
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource(
@@ -79,7 +80,7 @@ public class SyncApiUserOperationLogLimitConfigurationTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenConfigureZero() {
+  void shouldThrowExceptionWhenConfigureZero() {
     // given configuration with logEntriesPerSyncOperationLimit=0
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource(
@@ -93,7 +94,7 @@ public class SyncApiUserOperationLogLimitConfigurationTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenConfigureLowNegativeValue() {
+  void shouldThrowExceptionWhenConfigureLowNegativeValue() {
     // given configuration with logEntriesPerSyncOperationLimit=-10
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource(

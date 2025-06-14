@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,7 +44,10 @@ public enum Resources implements Resource {
   REPORT(EntityTypes.REPORT, 15),
   DASHBOARD(EntityTypes.DASHBOARD, 16),
   OPERATION_LOG_CATEGORY(EntityTypes.OPERATION_LOG_CATEGORY, 17),
-  @Deprecated
+  /*
+   * @deprecated Operaton does not support Optimize.
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   OPTIMIZE(EntityTypes.OPTIMIZE, 18),
   HISTORIC_TASK(EntityTypes.HISTORIC_TASK, 19),
   HISTORIC_PROCESS_INSTANCE(EntityTypes.HISTORIC_PROCESS_INSTANCE, 20),

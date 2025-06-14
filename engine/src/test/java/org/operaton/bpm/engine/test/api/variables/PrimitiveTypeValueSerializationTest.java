@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,26 +22,24 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Philipp Ossler
  */
-@RunWith(Parameterized.class)
+@Parameterized
 public class PrimitiveTypeValueSerializationTest {
 
   protected static final String BPMN_FILE = "org/operaton/bpm/engine/test/api/variables/oneTaskProcess.bpmn20.xml";
@@ -49,7 +47,7 @@ public class PrimitiveTypeValueSerializationTest {
 
   protected static final String VARIABLE_NAME = "variable";
 
-  @Parameters(name = "{index}: variable = {0}")
+  @Parameters(name = "variable = {0}")
   public static Collection<Object[]> data() {
     return Arrays
         .asList(new Object[][] {
@@ -73,24 +71,21 @@ public class PrimitiveTypeValueSerializationTest {
   private RepositoryService repositoryService;
   private String deploymentId;
 
-  @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
 
-  @Before
-  public void setup() {
-    runtimeService = rule.getRuntimeService();
-    repositoryService = rule.getRepositoryService();
-
+  @BeforeEach
+  void setup() {
     deploymentId = repositoryService.createDeployment().addClasspathResource(BPMN_FILE).deploy().getId();
   }
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     repositoryService.deleteDeployment(deploymentId, true);
   }
 
-  @Test
-  public void shouldGetUntypedVariable() {
+  @TestTemplate
+  void shouldGetUntypedVariable() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, typedValue);
@@ -99,8 +94,8 @@ public class PrimitiveTypeValueSerializationTest {
     assertThat(variableValue).isEqualTo(typedValue.getValue());
   }
 
-  @Test
-  public void shouldGetTypedVariable() {
+  @TestTemplate
+  void shouldGetTypedVariable() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, typedValue);
@@ -110,8 +105,8 @@ public class PrimitiveTypeValueSerializationTest {
     assertThat(typedVariableValue.getValue()).isEqualTo(typedValue.getValue());
   }
 
-  @Test
-  public void shouldGetTypedNullVariable() {
+  @TestTemplate
+  void shouldGetTypedNullVariable() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, nullValue);

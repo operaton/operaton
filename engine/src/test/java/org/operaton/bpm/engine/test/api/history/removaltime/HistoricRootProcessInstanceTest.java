@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -66,9 +66,9 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  */
 class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
 
-  protected final String CALLED_PROCESS_KEY = "calledProcess";
+  static final String CALLED_PROCESS_KEY = "calledProcess";
 
-  protected final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
+  static final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
       .operatonHistoryTimeToLive(180)
       .startEvent()
       .userTask("userTask")
@@ -80,8 +80,8 @@ class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
       .endEvent()
       .done();
 
-  protected final String CALLING_PROCESS_KEY = "callingProcess";
-  protected final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
+  static final String CALLING_PROCESS_KEY = "callingProcess";
+  static final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
     .startEvent()
       .callActivity()
         .calledElement(CALLED_PROCESS_KEY)

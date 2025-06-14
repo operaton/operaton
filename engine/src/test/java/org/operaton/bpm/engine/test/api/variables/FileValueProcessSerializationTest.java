@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,28 +21,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Scanner;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Test;
 
 /**
  * @author Ronny Bräunlich
  *
  */
-public class FileValueProcessSerializationTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class FileValueProcessSerializationTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/variables/oneTaskProcess.bpmn20.xml";
 
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+
   @Test
-  public void testSerializeFileVariable() {
+  void testSerializeFileVariable() {
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process").startEvent().userTask().endEvent().done();
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance).deploy();
     VariableMap variables = Variables.createVariables();
@@ -69,7 +78,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializeNullMimeType() {
+  void testSerializeNullMimeType() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").file("ABC".getBytes()).encoding(UTF_8.name()).create()));
 
@@ -79,7 +88,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializeNullMimeTypeAndNullEncoding() {
+  void testSerializeNullMimeTypeAndNullEncoding() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").file("ABC".getBytes()).create()));
 
@@ -90,7 +99,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializeNullEncoding() {
+  void testSerializeNullEncoding() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").mimeType("some mimetype").file("ABC".getBytes()).create()));
 
@@ -100,7 +109,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializeNullValue() {
+  void testSerializeNullValue() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").create()));
 
@@ -110,7 +119,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializeEmptyFileName() {
+  void testSerializeEmptyFileName() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("fileVar", Variables.fileValue("").create()));
 

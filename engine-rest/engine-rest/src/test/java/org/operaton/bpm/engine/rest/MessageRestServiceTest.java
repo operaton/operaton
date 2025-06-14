@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -259,6 +259,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     //process instance should be filled and execution should be null
     assertThat(from(content).<String>get("[" + idx + "].processInstance.id")).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     assertThat(from(content).<String>get("[" + idx + "].processInstance.definitionId")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(from(content).<String>get("[" + idx + "].processInstance.definitionKey")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
     assertThat(from(content).<String>get("[" + idx + "].execution")).isNull();
   }
 

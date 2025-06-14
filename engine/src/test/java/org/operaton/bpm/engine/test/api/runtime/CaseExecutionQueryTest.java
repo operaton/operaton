@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,11 +17,13 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExecutionByDefinitionId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExecutionByDefinitionKey;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExecutionById;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,7 +57,7 @@ class CaseExecutionQueryTest {
 
   private static final String CASE_DEFINITION_KEY = "oneTaskCase";
   private static final String CASE_DEFINITION_KEY_2 = "twoTaskCase";
-  
+
   ProcessEngine processEngine;
   RepositoryService repositoryService;
   CaseService caseService;
@@ -92,29 +94,9 @@ class CaseExecutionQueryTest {
 
   }
 
-  private void verifyQueryResults(CaseExecutionQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
   protected void verifyQueryWithOrdering(CaseExecutionQuery query, int countExpected, NullTolerantComparator<CaseExecution> expectedOrdering) {
     verifyQueryResults(query, countExpected);
     TestOrderingUtil.verifySorting(query.list(), expectedOrdering);
-  }
-
-  private void verifySingleResultFails(CaseExecutionQuery query) {
-    try {
-      query.singleResult();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
   }
 
   @Test
@@ -145,11 +127,9 @@ class CaseExecutionQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseDefinitionKey(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
-
+    assertThatThrownBy(() -> query.caseDefinitionKey(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("caseDefinitionKey is null");
   }
 
   @Test
@@ -185,11 +165,9 @@ class CaseExecutionQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseDefinitionId(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
-
+    assertThatThrownBy(() -> query.caseDefinitionId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("caseDefinitionId is null");
   }
 
   @Test
@@ -225,11 +203,9 @@ class CaseExecutionQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseInstanceId(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
-
+    assertThatThrownBy(() -> query.caseInstanceId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("caseInstanceId is null");
   }
 
   @Test
@@ -249,11 +225,9 @@ class CaseExecutionQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseInstanceBusinessKey(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
-
+    assertThatThrownBy(() -> query.caseInstanceBusinessKey(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("caseInstanceBusinessKey is null");
   }
 
   @Test
@@ -317,11 +291,9 @@ class CaseExecutionQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.caseExecutionId(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
-
+    assertThatThrownBy(() -> query.caseExecutionId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("caseExecutionId is null");
   }
 
   @Test
@@ -346,11 +318,9 @@ class CaseExecutionQueryTest {
 
     verifyQueryResults(query, 0);
 
-    try {
-      query.activityId(null);
-      fail("Exception expected");
-    } catch (NotValidException e) {}
-
+    assertThatThrownBy(() -> query.activityId(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("activityId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
@@ -535,10 +505,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueEquals("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -556,10 +525,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueEquals("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -676,10 +644,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueNotEquals("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -697,10 +664,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueNotEquals("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -841,10 +807,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueGreaterThan("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -862,10 +827,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueGreaterThan("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -1044,10 +1008,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueGreaterThanOrEqual("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -1065,10 +1028,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueGreaterThanOrEqual("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -1210,10 +1172,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueLessThan("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -1231,10 +1192,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueLessThan("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -1413,10 +1373,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueLessThanOrEqual("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -1434,10 +1393,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.variableValueLessThanOrEqual("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -1609,10 +1567,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueEquals("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -1630,10 +1587,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueEquals("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -1750,10 +1706,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueNotEquals("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -1771,10 +1726,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueNotEquals("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -1917,10 +1871,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueGreaterThan("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -1938,10 +1891,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueGreaterThan("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -2121,10 +2073,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueGreaterThanOrEqual("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -2142,10 +2093,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueGreaterThanOrEqual("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -2288,10 +2238,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueLessThan("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -2309,10 +2258,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueLessThan("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test
@@ -2491,10 +2439,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueLessThanOrEqual("aByteArrayValue", bytes);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Variables of type ByteArray cannot be used to query");
   }
 
   @Test
@@ -2512,10 +2459,9 @@ class CaseExecutionQueryTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
     var caseExecutionQuery = query.caseInstanceVariableValueLessThanOrEqual("aSerializableValue", serializable);
 
-    try {
-      caseExecutionQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {}
+    assertThatThrownBy(caseExecutionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Object values cannot be used to query");
   }
 
   @Test

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,22 +31,22 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tijs Rademakers
  */
 public class AddIdentityLinkForProcessDefinitionCmd implements Command<Void>, Serializable {
-  
+
   private static final long serialVersionUID = 1L;
 
   protected String processDefinitionId;
-  
+
   protected String userId;
-  
+
   protected String groupId;
-  
+
   public AddIdentityLinkForProcessDefinitionCmd(String processDefinitionId, String userId, String groupId) {
     validateParams(userId, groupId, processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     this.userId = userId;
     this.groupId = groupId;
   }
-  
+
   protected void validateParams(String userId, String groupId, String processDefinitionId) {
     ensureNotNull("processDefinitionId", processDefinitionId);
 
@@ -67,5 +67,5 @@ public class AddIdentityLinkForProcessDefinitionCmd implements Command<Void>, Se
     processDefinition.addIdentityLink(userId, groupId);
     return null;
   }
-  
+
 }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,14 +25,13 @@ import org.operaton.bpm.engine.history.UserOperationLogQuery;
 
 /** Exposes twitter-like feeds for tasks and process instances.
  *
- * <p><strong>Deprecation</strong>
- * This class has been deprecated as of Operaton.1. It has been replaced with
- * the operation log. See {@link UserOperationLogEntry} and {@link UserOperationLogQuery}.</p>
+ * @deprecated It has been replaced with the operation log. See {@link UserOperationLogEntry}
+ * and {@link UserOperationLogQuery}.
  *
  * @see {@link TaskService#getTaskEvents(String)
  * @author Tom Baeyens
  */
-@Deprecated
+@Deprecated(forRemoval = true, since = "1.0")
 public interface Event {
 
   /** A user identity link was added with following message parts:

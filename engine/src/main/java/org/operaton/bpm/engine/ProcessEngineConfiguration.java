@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -120,9 +120,9 @@ public abstract class ProcessEngineConfiguration {
   /**
    * Value for {@link #setHistory(String)} to ensure that only historic process instances,
    * historic activity instances and last process variable values are being recorded.
-   * <p><strong>NOTE:</strong> This history level has been deprecated. Use level {@link #HISTORY_ACTIVITY} instead.</p>
+   * @deprecated Use level {@link #HISTORY_ACTIVITY} instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String HISTORY_VARIABLE = "variable";
   /**
    * Value for {@link #setHistory(String)} to ensure that only historic process instances,
@@ -200,6 +200,7 @@ public abstract class ProcessEngineConfiguration {
    * effectively unusable on most databases.
    */
   public static final String AUTHORIZATION_CHECK_REVOKE_AUTO = "auto";
+  private static final String BEAN_PROCESS_ENGINE_CONFIGURATION = "processEngineConfiguration";
 
   protected String processEngineName = ProcessEngines.NAME_DEFAULT;
   protected int idBlockSize = 100;
@@ -417,7 +418,8 @@ public abstract class ProcessEngineConfiguration {
    */
   protected boolean skipOutputMappingOnCanceledActivities = false;
 
-  /** use one of the static createXxxx methods instead */
+  /** @deprecated Use one of the static createXxxx methods instead */
+  @Deprecated(forRemoval = true, since = "1.0")
   protected ProcessEngineConfiguration() {
   }
 
@@ -426,15 +428,17 @@ public abstract class ProcessEngineConfiguration {
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResourceDefault() {
     ProcessEngineConfiguration processEngineConfiguration = null;
     try {
-      processEngineConfiguration = createProcessEngineConfigurationFromResource("operaton.cfg.xml", "processEngineConfiguration");
+      processEngineConfiguration = createProcessEngineConfigurationFromResource("operaton.cfg.xml",
+              BEAN_PROCESS_ENGINE_CONFIGURATION);
     } catch (RuntimeException ex) {
-      processEngineConfiguration = createProcessEngineConfigurationFromResource("activiti.cfg.xml", "processEngineConfiguration");
+      processEngineConfiguration = createProcessEngineConfigurationFromResource("activiti.cfg.xml",
+              BEAN_PROCESS_ENGINE_CONFIGURATION);
     }
     return processEngineConfiguration;
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResource(String resource) {
-    return createProcessEngineConfigurationFromResource(resource, "processEngineConfiguration");
+    return createProcessEngineConfigurationFromResource(resource, BEAN_PROCESS_ENGINE_CONFIGURATION);
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResource(String resource, String beanName) {
@@ -442,7 +446,7 @@ public abstract class ProcessEngineConfiguration {
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromInputStream(InputStream inputStream) {
-    return createProcessEngineConfigurationFromInputStream(inputStream, "processEngineConfiguration");
+    return createProcessEngineConfigurationFromInputStream(inputStream, BEAN_PROCESS_ENGINE_CONFIGURATION);
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromInputStream(InputStream inputStream, String beanName) {

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,23 +32,23 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
-public class DmnDecisionTaskTest extends CmmnTest {
+class DmnDecisionTaskTest extends CmmnTest {
 
-  public static final String CMMN_CALL_DECISION_CONSTANT = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstant.cmmn";
-  public static final String CMMN_CALL_DECISION_CONSTANT_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstantWithManualActiovation.cmmn";
-  public static final String CMMN_CALL_DECISION_EXPRESSION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithDollar.cmmn";
-  public static final String CMMN_CALL_DECISION_EXPRESSION_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithDollarWithManualActiovation.cmmn";
+  static final String CMMN_CALL_DECISION_CONSTANT = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstant.cmmn";
+  static final String CMMN_CALL_DECISION_CONSTANT_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsConstantWithManualActiovation.cmmn";
+  static final String CMMN_CALL_DECISION_EXPRESSION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithDollar.cmmn";
+  static final String CMMN_CALL_DECISION_EXPRESSION_WITH_MANUAL_ACTIVATION = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionAsExpressionStartsWithDollarWithManualActiovation.cmmn";
 
-  public static final String DECISION_OKAY_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testDecisionOkay.dmn11.xml";
-  public static final String DECISION_NOT_OKAY_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testDecisionNotOkay.dmn11.xml";
-  public static final String DECISION_POJO_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testPojo.dmn11.xml";
+  static final String DECISION_OKAY_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testDecisionOkay.dmn11.xml";
+  static final String DECISION_NOT_OKAY_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testDecisionNotOkay.dmn11.xml";
+  static final String DECISION_POJO_DMN = "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testPojo.dmn11.xml";
 
-  public static final String DECISION_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/engine/test/dmn/deployment/DecisionWithLiteralExpression.dmn";
-  public static final String DRD_DISH_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
+  static final String DECISION_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/engine/test/dmn/deployment/DecisionWithLiteralExpression.dmn";
+  static final String DRD_DISH_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
 
-  protected final String CASE_KEY = "case";
-  protected final String DECISION_TASK = "PI_DecisionTask_1";
-  protected final String DECISION_KEY = "testDecision";
+  static final String CASE_KEY = "case";
+  static final String DECISION_TASK = "PI_DecisionTask_1";
+  static final String DECISION_KEY = "testDecision";
 
   @Deployment(resources = {CMMN_CALL_DECISION_CONSTANT, DECISION_OKAY_DMN})
   @Test

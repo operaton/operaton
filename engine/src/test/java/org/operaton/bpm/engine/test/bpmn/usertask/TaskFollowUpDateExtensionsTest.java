@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,22 +23,29 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.Period;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.joda.time.Period;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class TaskFollowUpDateExtensionsTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class TaskFollowUpDateExtensionsTest {
+
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/usertask/TaskFollowUpDateExtensionsTest.testUserTaskFollowUpDate.bpmn20.xml"})
   @Test
-  public void testUserTaskFollowUpDateExtension() throws Exception {
+  void testUserTaskFollowUpDateExtension() throws Exception {
 
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("01-01-2015 12:10:00");
     Map<String, Object> variables = new HashMap<>();
@@ -55,7 +62,7 @@ public class TaskFollowUpDateExtensionsTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/usertask/TaskFollowUpDateExtensionsTest.testUserTaskFollowUpDate.bpmn20.xml"})
   @Test
-  public void testUserTaskFollowUpDateStringExtension() throws Exception {
+  void testUserTaskFollowUpDateStringExtension() throws Exception {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "2015-01-01T12:10:00");
@@ -72,7 +79,7 @@ public class TaskFollowUpDateExtensionsTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/usertask/TaskFollowUpDateExtensionsTest.testUserTaskFollowUpDate.bpmn20.xml"})
   @Test
-  public void testUserTaskRelativeFollowUpDate() {
+  void testUserTaskRelativeFollowUpDate() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "P2DT2H30M");
 

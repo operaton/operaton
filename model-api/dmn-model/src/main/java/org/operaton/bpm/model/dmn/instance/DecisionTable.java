@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,15 +25,15 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 public interface DecisionTable extends Expression {
 
   HitPolicy getHitPolicy();
-  
+
   void setHitPolicy(HitPolicy hitPolicy);
-  
+
   BuiltinAggregator getAggregation();
-  
+
   void setAggregation(BuiltinAggregator aggregation);
-  
+
   DecisionTableOrientation getPreferredOrientation();
-  
+
   void setPreferredOrientation(DecisionTableOrientation preferredOrientation);
 
   String getOutputLabel();

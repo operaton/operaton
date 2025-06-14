@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,37 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_TASK;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
-import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.READ_INSTANCE_VARIABLE;
-import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
-import static org.operaton.bpm.engine.authorization.Resources.BATCH;
-import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.DECISION_REQUIREMENTS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.Consumer;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -106,6 +75,38 @@ import org.operaton.bpm.engine.impl.persistence.entity.util.AuthManagerUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.util.AuthManagerUtil.VariablePermissions;
 import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Consumer;
+
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_TASK;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
+import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.READ_INSTANCE_VARIABLE;
+import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
+import static org.operaton.bpm.engine.authorization.Resources.BATCH;
+import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.DECISION_REQUIREMENTS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
+import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
+
 /**
  * @author Daniel Meyer
  *
@@ -118,6 +119,34 @@ public class AuthorizationManager extends AbstractManager {
   // Used instead of Collections.emptyList() as mybatis uses reflection to call methods
   // like size() which can lead to problems as Collections.EmptyList is a private implementation
   protected static final List<String> EMPTY_LIST = new ArrayList<>();
+  private static final String GROUP_ID = "groupId";
+  private static final String RESOURCE_ID = "resourceId";
+  private static final String RESOURCE_TYPE = "resourceType";
+  private static final String TYPE = "type";
+  private static final String USER_ID = "userId";
+
+  private static final String QUERYPARAM_D_KEY = "D.KEY_";
+  private static final String QUERYPARAM_EXECUTION_PROC_INST_ID = "EXECUTION.PROC_INST_ID_";
+  private static final String QUERYPARAM_E_PROC_INST_ID = "E.PROC_INST_ID_";
+  private static final String QUERYPARAM_INC_PROC_INST_ID = "INC.PROC_INST_ID_";
+  private static final String QUERYPARAM_I_PROC_INST_ID = "I.PROC_INST_ID_";
+  private static final String QUERYPARAM_JOB_PROCESS_DEF_KEY = "JOB.PROCESS_DEF_KEY_";
+  private static final String QUERYPARAM_JOB_PROCESS_INSTANCE_ID = "JOB.PROCESS_INSTANCE_ID_";
+  private static final String QUERYPARAM_PROCDEF_KEY = "PROCDEF.KEY_";
+  private static final String QUERYPARAM_P_KEY = "P.KEY_";
+  private static final String QUERYPARAM_RES_CATEGORY = "RES.CATEGORY_";
+  private static final String QUERYPARAM_RES_DEC_DEF_KEY = "RES.DEC_DEF_KEY_";
+  private static final String QUERYPARAM_RES_ID = "RES.ID_";
+  private static final String QUERYPARAM_RES_KEY = "RES.KEY_";
+  private static final String QUERYPARAM_RES_PROCESS_DEF_KEY = "RES.PROCESS_DEF_KEY_";
+  private static final String QUERYPARAM_RES_PROCESS_INSTANCE_ID = "RES.PROCESS_INSTANCE_ID_";
+  private static final String QUERYPARAM_RES_PROC_DEF_KEY = "RES.PROC_DEF_KEY_";
+  private static final String QUERYPARAM_RES_PROC_INST_ID = "RES.PROC_INST_ID_";
+  private static final String QUERYPARAM_RES_TASK_ID = "RES.TASK_ID_";
+  private static final String QUERYPARAM_SELF_ID = "SELF.ID_";
+  private static final String QUERYPARAM_SELF_PROC_DEF_KEY = "SELF.PROC_DEF_KEY_";
+  private static final String QUERYPARAM_TI_ID = "TI.ID_";
+  private static final String QUERYPARAM_TI_PROC_INST_ID = "TI.PROC_INST_ID_";
 
   /**
    * Group ids for which authorizations exist in the database.
@@ -166,13 +195,13 @@ public class AuthorizationManager extends AbstractManager {
   public AuthorizationEntity findAuthorization(int type, String userId, String groupId, Resource resource, String resourceId) {
     Map<String, Object> params = new HashMap<>();
 
-    params.put("type", type);
-    params.put("userId", userId);
-    params.put("groupId", groupId);
-    params.put("resourceId", resourceId);
+    params.put(TYPE, type);
+    params.put(USER_ID, userId);
+    params.put(GROUP_ID, groupId);
+    params.put(RESOURCE_ID, resourceId);
 
     if (resource != null) {
-      params.put("resourceType", resource.resourceType());
+      params.put(RESOURCE_TYPE, resource.resourceType());
     }
 
     return (AuthorizationEntity) getDbEntityManager().selectOne("selectAuthorizationByParameters", params);
@@ -296,7 +325,7 @@ public class AuthorizationManager extends AbstractManager {
       }
       else {
         final Map<String, Object> params = new HashMap<>();
-        params.put("userId", userId);
+        params.put(USER_ID, userId);
         params.put("authGroupIds", filterAuthenticatedGroupIds(groupIds));
         isRevokeAuthCheckEnabled = getDbEntityManager().selectBoolean("selectRevokeAuthorization", params);
       }
@@ -379,8 +408,8 @@ public class AuthorizationManager extends AbstractManager {
 
     CompositePermissionCheck compositePermissionCheck = new PermissionCheckBuilder()
       .conjunctive()
-        .atomicCheck(resource, "RES.KEY_", READ)
-        .atomicCheck(resource, "RES.KEY_", READ_HISTORY)
+        .atomicCheck(resource, QUERYPARAM_RES_KEY, READ)
+        .atomicCheck(resource, QUERYPARAM_RES_KEY, READ_HISTORY)
       .build();
 
     query.getAuthCheck().setPermissionChecks(compositePermissionCheck);
@@ -397,7 +426,7 @@ public class AuthorizationManager extends AbstractManager {
 
   @Override
   public void configureQuery(AbstractQuery query, Resource resource) {
-    configureQuery(query, resource, "RES.ID_");
+    configureQuery(query, resource, QUERYPARAM_RES_ID);
   }
 
   public void configureQuery(AbstractQuery query, Resource resource, String queryParam) {
@@ -453,8 +482,8 @@ public class AuthorizationManager extends AbstractManager {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
-      deleteParams.put("resourceType", resource.resourceType());
-      deleteParams.put("resourceId", resourceId);
+      deleteParams.put(RESOURCE_TYPE, resource.resourceType());
+      deleteParams.put(RESOURCE_ID, resourceId);
       getDbEntityManager().delete(AuthorizationEntity.class, "deleteAuthorizationsForResourceId", deleteParams);
     }
 
@@ -468,9 +497,9 @@ public class AuthorizationManager extends AbstractManager {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
-      deleteParams.put("resourceType", resource.resourceType());
-      deleteParams.put("resourceId", resourceId);
-      deleteParams.put("userId", userId);
+      deleteParams.put(RESOURCE_TYPE, resource.resourceType());
+      deleteParams.put(RESOURCE_ID, resourceId);
+      deleteParams.put(USER_ID, userId);
       getDbEntityManager().delete(AuthorizationEntity.class, "deleteAuthorizationsForResourceIdAndUserId", deleteParams);
     }
 
@@ -484,9 +513,9 @@ public class AuthorizationManager extends AbstractManager {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
-      deleteParams.put("resourceType", resource.resourceType());
-      deleteParams.put("resourceId", resourceId);
-      deleteParams.put("groupId", groupId);
+      deleteParams.put(RESOURCE_TYPE, resource.resourceType());
+      deleteParams.put(RESOURCE_ID, resourceId);
+      deleteParams.put(GROUP_ID, groupId);
       getDbEntityManager().delete(AuthorizationEntity.class, "deleteAuthorizationsForResourceIdAndGroupId", deleteParams);
     }
 
@@ -580,14 +609,14 @@ public class AuthorizationManager extends AbstractManager {
   // process definition query ////////////////////////////////
 
   public void configureProcessDefinitionQuery(ProcessDefinitionQueryImpl query) {
-    configureQuery(query, PROCESS_DEFINITION, "RES.KEY_");
+    configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_KEY);
 
     if (query.isStartablePermissionCheck()) {
       AuthorizationCheck authorizationCheck = query.getAuthCheck();
 
       if (!authorizationCheck.isRevokeAuthorizationCheckEnabled()) {
         CompositePermissionCheck permCheck = new PermissionCheckBuilder()
-            .atomicCheck(PROCESS_DEFINITION, "RES.KEY_", Permissions.CREATE_INSTANCE)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_KEY, Permissions.CREATE_INSTANCE)
             .build();
 
         query.addProcessDefinitionCreatePermissionCheck(permCheck);
@@ -595,8 +624,8 @@ public class AuthorizationManager extends AbstractManager {
       } else {
         CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
             .conjunctive()
-            .atomicCheck(PROCESS_DEFINITION, "RES.KEY_", READ)
-            .atomicCheck(PROCESS_DEFINITION, "RES.KEY_", Permissions.CREATE_INSTANCE)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_KEY, READ)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_KEY, Permissions.CREATE_INSTANCE)
             .build();
         addPermissionCheck(authorizationCheck, permissionCheck);
       }
@@ -611,8 +640,8 @@ public class AuthorizationManager extends AbstractManager {
     configureQuery(query);
     CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
         .disjunctive()
-        .atomicCheck(PROCESS_INSTANCE, "RES.PROC_INST_ID_", READ)
-        .atomicCheck(PROCESS_DEFINITION, "P.KEY_", READ_INSTANCE)
+        .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID, READ)
+        .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_P_KEY, READ_INSTANCE)
         .build();
     addPermissionCheck(query.getAuthCheck(), permissionCheck);
   }
@@ -629,8 +658,8 @@ public class AuthorizationManager extends AbstractManager {
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
               .disjunctive()
-              .atomicCheck(TASK, "RES.ID_", READ)
-              .atomicCheck(PROCESS_DEFINITION, "D.KEY_", READ_TASK)
+              .atomicCheck(TASK, QUERYPARAM_RES_ID, READ)
+              .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_D_KEY, READ_TASK)
               .build();
         addPermissionCheck(query.getAuthCheck(), permissionCheck);
     }
@@ -642,8 +671,8 @@ public class AuthorizationManager extends AbstractManager {
     configureQuery(query);
     CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
             .disjunctive()
-            .atomicCheck(PROCESS_INSTANCE, "RES.PROC_INST_ID_", READ)
-            .atomicCheck(PROCESS_DEFINITION, "PROCDEF.KEY_", READ_INSTANCE)
+            .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID, READ)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_PROCDEF_KEY, READ_INSTANCE)
             .build();
     addPermissionCheck(query.getAuthCheck(), permissionCheck);
   }
@@ -651,7 +680,7 @@ public class AuthorizationManager extends AbstractManager {
   public void configureConditionalEventSubscriptionQuery(ListQueryParameterObject query) {
     configureQuery(query);
     CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
-        .atomicCheck(PROCESS_DEFINITION, "P.KEY_", READ)
+        .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_P_KEY, READ)
         .build();
     addPermissionCheck(query.getAuthCheck(), permissionCheck);
   }
@@ -662,8 +691,8 @@ public class AuthorizationManager extends AbstractManager {
     configureQuery(query);
     CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
             .disjunctive()
-            .atomicCheck(PROCESS_INSTANCE, "RES.PROC_INST_ID_", READ)
-            .atomicCheck(PROCESS_DEFINITION, "PROCDEF.KEY_", READ_INSTANCE)
+            .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID, READ)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_PROCDEF_KEY, READ_INSTANCE)
             .build();
     addPermissionCheck(query.getAuthCheck(), permissionCheck);
   }
@@ -679,15 +708,15 @@ public class AuthorizationManager extends AbstractManager {
       if (isEnsureSpecificVariablePermission()) {
         permissionCheck = new PermissionCheckBuilder()
             .disjunctive()
-            .atomicCheck(PROCESS_DEFINITION, "PROCDEF.KEY_", READ_INSTANCE_VARIABLE)
-            .atomicCheck(TASK, "RES.TASK_ID_", READ_VARIABLE)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_PROCDEF_KEY, READ_INSTANCE_VARIABLE)
+            .atomicCheck(TASK, QUERYPARAM_RES_TASK_ID, READ_VARIABLE)
             .build();
       } else {
         permissionCheck = new PermissionCheckBuilder()
               .disjunctive()
-              .atomicCheck(PROCESS_INSTANCE, "RES.PROC_INST_ID_", READ)
-              .atomicCheck(PROCESS_DEFINITION, "PROCDEF.KEY_", READ_INSTANCE)
-              .atomicCheck(TASK, "RES.TASK_ID_", READ)
+              .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID, READ)
+              .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_PROCDEF_KEY, READ_INSTANCE)
+              .atomicCheck(TASK, QUERYPARAM_RES_TASK_ID, READ)
               .build();
       }
         addPermissionCheck(query.getAuthCheck(), permissionCheck);
@@ -697,7 +726,7 @@ public class AuthorizationManager extends AbstractManager {
   // job definition query ////////////////////////////////////////////////
 
   public void configureJobDefinitionQuery(JobDefinitionQueryImpl query) {
-    configureQuery(query, PROCESS_DEFINITION, "RES.PROC_DEF_KEY_");
+    configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY);
   }
 
   // job query //////////////////////////////////////////////////////////
@@ -706,8 +735,8 @@ public class AuthorizationManager extends AbstractManager {
     configureQuery(query);
     CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
         .disjunctive()
-        .atomicCheck(PROCESS_INSTANCE, "RES.PROCESS_INSTANCE_ID_", READ)
-        .atomicCheck(PROCESS_DEFINITION, "RES.PROCESS_DEF_KEY_", READ_INSTANCE)
+        .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_RES_PROCESS_INSTANCE_ID, READ)
+        .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROCESS_DEF_KEY, READ_INSTANCE)
         .build();
     addPermissionCheck(query.getAuthCheck(), permissionCheck);
   }
@@ -723,15 +752,15 @@ public class AuthorizationManager extends AbstractManager {
     authCheck.setHistoricInstancePermissionsEnabled(isHistoricInstancePermissionsEnabled);
 
     if (!isHistoricInstancePermissionsEnabled) {
-      configureQuery(query, PROCESS_DEFINITION, "SELF.PROC_DEF_KEY_", READ_HISTORY);
+      configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_SELF_PROC_DEF_KEY, READ_HISTORY);
 
     } else {
       configureQuery(query);
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-          .atomicCheck(PROCESS_DEFINITION, "SELF.PROC_DEF_KEY_", READ_HISTORY)
-          .atomicCheck(HISTORIC_PROCESS_INSTANCE, "SELF.ID_",
+          .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_SELF_PROC_DEF_KEY, READ_HISTORY)
+          .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_SELF_ID,
               HistoricProcessInstancePermissions.READ)
           .build();
 
@@ -749,15 +778,15 @@ public class AuthorizationManager extends AbstractManager {
     authCheck.setHistoricInstancePermissionsEnabled(isHistoricInstancePermissionsEnabled);
 
     if (!isHistoricInstancePermissionsEnabled) {
-      configureQuery(query, PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY);
+      configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY);
 
     } else {
       configureQuery(query);
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-          .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY)
-          .atomicCheck(HISTORIC_PROCESS_INSTANCE, "RES.PROC_INST_ID_",
+          .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY)
+          .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID,
               HistoricProcessInstancePermissions.READ)
           .build();
 
@@ -775,17 +804,17 @@ public class AuthorizationManager extends AbstractManager {
     authCheck.setHistoricInstancePermissionsEnabled(isHistoricInstancePermissionsEnabled);
 
     if (!isHistoricInstancePermissionsEnabled) {
-      configureQuery(query, PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY);
+      configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY);
 
     } else {
       configureQuery(query);
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-          .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY)
-          .atomicCheck(HISTORIC_PROCESS_INSTANCE, "RES.PROC_INST_ID_",
+          .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY)
+          .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID,
               HistoricProcessInstancePermissions.READ)
-          .atomicCheck(HISTORIC_TASK, "RES.ID_", HistoricTaskPermissions.READ)
+          .atomicCheck(HISTORIC_TASK, QUERYPARAM_RES_ID, HistoricTaskPermissions.READ)
           .build();
 
       addPermissionCheck(query.getAuthCheck(), permissionCheck);
@@ -819,7 +848,7 @@ public class AuthorizationManager extends AbstractManager {
     authCheck.setHistoricInstancePermissionsEnabled(isHistoricInstancePermissionsEnabled);
 
     if (!isHistoricInstancePermissionsEnabled) {
-      configureQuery(query, PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", processDefinitionPermission);
+      configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, processDefinitionPermission);
 
     } else {
       configureQuery(query);
@@ -828,10 +857,10 @@ public class AuthorizationManager extends AbstractManager {
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-          .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", processDefinitionPermission)
-          .atomicCheck(HISTORIC_PROCESS_INSTANCE, "RES.PROC_INST_ID_",
+          .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, processDefinitionPermission)
+          .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID,
               HistoricProcessInstancePermissions.READ)
-          .atomicCheck(HISTORIC_TASK, "TI.ID_", historicTaskPermission)
+          .atomicCheck(HISTORIC_TASK, QUERYPARAM_TI_ID, historicTaskPermission)
           .build();
 
       addPermissionCheck(authCheck, permissionCheck);
@@ -848,15 +877,15 @@ public class AuthorizationManager extends AbstractManager {
     authCheck.setHistoricInstancePermissionsEnabled(isHistoricInstancePermissionsEnabled);
 
     if (!isHistoricInstancePermissionsEnabled) {
-      configureQuery(query, PROCESS_DEFINITION, "RES.PROCESS_DEF_KEY_", READ_HISTORY);
+      configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_PROCESS_DEF_KEY, READ_HISTORY);
 
     } else {
       configureQuery(query);
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-            .atomicCheck(PROCESS_DEFINITION, "RES.PROCESS_DEF_KEY_", READ_HISTORY)
-            .atomicCheck(HISTORIC_PROCESS_INSTANCE, "RES.PROCESS_INSTANCE_ID_",
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROCESS_DEF_KEY, READ_HISTORY)
+            .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_RES_PROCESS_INSTANCE_ID,
                 HistoricProcessInstancePermissions.READ)
           .build();
 
@@ -874,15 +903,15 @@ public class AuthorizationManager extends AbstractManager {
     authCheck.setHistoricInstancePermissionsEnabled(isHistoricInstancePermissionsEnabled);
 
     if (!isHistoricInstancePermissionsEnabled) {
-      configureQuery(query, PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY);
+      configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY);
 
     } else {
       configureQuery(query);
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-            .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY)
-            .atomicCheck(HISTORIC_PROCESS_INSTANCE, "RES.PROC_INST_ID_",
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY)
+            .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID,
                 HistoricProcessInstancePermissions.READ)
           .build();
 
@@ -900,17 +929,17 @@ public class AuthorizationManager extends AbstractManager {
     authCheck.setHistoricInstancePermissionsEnabled(isHistoricInstancePermissionsEnabled);
 
     if (!isHistoricInstancePermissionsEnabled) {
-      configureQuery(query, PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY);
+      configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY);
 
     } else {
       configureQuery(query);
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-          .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY)
-          .atomicCheck(HISTORIC_PROCESS_INSTANCE, "TI.PROC_INST_ID_",
+          .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY)
+          .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_TI_PROC_INST_ID,
               HistoricProcessInstancePermissions.READ)
-          .atomicCheck(HISTORIC_TASK, "RES.TASK_ID_", HistoricTaskPermissions.READ)
+          .atomicCheck(HISTORIC_TASK, QUERYPARAM_RES_TASK_ID, HistoricTaskPermissions.READ)
           .build();
 
       addPermissionCheck(authCheck, permissionCheck);
@@ -919,7 +948,7 @@ public class AuthorizationManager extends AbstractManager {
   }
 
   public void configureHistoricDecisionInstanceQuery(HistoricDecisionInstanceQueryImpl query) {
-    configureQuery(query, DECISION_DEFINITION, "RES.DEC_DEF_KEY_", READ_HISTORY);
+    configureQuery(query, DECISION_DEFINITION, QUERYPARAM_RES_DEC_DEF_KEY, READ_HISTORY);
   }
 
   // historic external task log query /////////////////////////////////
@@ -931,15 +960,15 @@ public class AuthorizationManager extends AbstractManager {
     authCheck.setHistoricInstancePermissionsEnabled(isHistoricInstancePermissionsEnabled);
 
     if (!isHistoricInstancePermissionsEnabled) {
-      configureQuery(query, PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY);
+      configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY);
 
     } else {
       configureQuery(query);
 
       CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-            .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY)
-            .atomicCheck(HISTORIC_PROCESS_INSTANCE, "RES.PROC_INST_ID_",
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY)
+            .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID,
                 HistoricProcessInstancePermissions.READ)
           .build();
 
@@ -954,8 +983,8 @@ public class AuthorizationManager extends AbstractManager {
     configureQuery(query);
     PermissionCheckBuilder permissionCheckBuilder = new PermissionCheckBuilder()
         .disjunctive()
-          .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_HISTORY)
-          .atomicCheck(Resources.OPERATION_LOG_CATEGORY, "RES.CATEGORY_", READ);
+          .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_HISTORY)
+          .atomicCheck(Resources.OPERATION_LOG_CATEGORY, QUERYPARAM_RES_CATEGORY, READ);
 
     AuthorizationCheck authCheck = query.getAuthCheck();
 
@@ -964,9 +993,9 @@ public class AuthorizationManager extends AbstractManager {
 
     if (isHistoricInstancePermissionsEnabled) {
       permissionCheckBuilder
-          .atomicCheck(HISTORIC_PROCESS_INSTANCE, "RES.PROC_INST_ID_",
+          .atomicCheck(HISTORIC_PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID,
               HistoricProcessInstancePermissions.READ)
-          .atomicCheck(HISTORIC_TASK, "RES.TASK_ID_",
+          .atomicCheck(HISTORIC_TASK, QUERYPARAM_RES_TASK_ID,
               HistoricTaskPermissions.READ);
     }
 
@@ -978,13 +1007,13 @@ public class AuthorizationManager extends AbstractManager {
   // batch
 
   public void configureHistoricBatchQuery(HistoricBatchQueryImpl query) {
-    configureQuery(query, BATCH, "RES.ID_", READ_HISTORY);
+    configureQuery(query, BATCH, QUERYPARAM_RES_ID, READ_HISTORY);
   }
 
   /* STATISTICS QUERY */
 
   public void configureDeploymentStatisticsQuery(DeploymentStatisticsQueryImpl query) {
-    configureQuery(query, DEPLOYMENT, "RES.ID_");
+    configureQuery(query, DEPLOYMENT, QUERYPARAM_RES_ID);
 
     query.getProcessInstancePermissionChecks().clear();
     query.getJobPermissionChecks().clear();
@@ -994,8 +1023,8 @@ public class AuthorizationManager extends AbstractManager {
 
       CompositePermissionCheck processInstancePermissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-          .atomicCheck(PROCESS_INSTANCE, "EXECUTION.PROC_INST_ID_", READ)
-          .atomicCheck(PROCESS_DEFINITION, "PROCDEF.KEY_", READ_INSTANCE)
+          .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_EXECUTION_PROC_INST_ID, READ)
+          .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_PROCDEF_KEY, READ_INSTANCE)
           .build();
 
       query.addProcessInstancePermissionCheck(processInstancePermissionCheck.getAllPermissionChecks());
@@ -1003,8 +1032,8 @@ public class AuthorizationManager extends AbstractManager {
       if (query.isFailedJobsToInclude()) {
         CompositePermissionCheck jobPermissionCheck = new PermissionCheckBuilder()
             .disjunctive()
-            .atomicCheck(PROCESS_INSTANCE, "JOB.PROCESS_INSTANCE_ID_", READ)
-            .atomicCheck(PROCESS_DEFINITION, "JOB.PROCESS_DEF_KEY_", READ_INSTANCE)
+            .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_JOB_PROCESS_INSTANCE_ID, READ)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_JOB_PROCESS_DEF_KEY, READ_INSTANCE)
             .build();
 
         query.addJobPermissionCheck(jobPermissionCheck.getAllPermissionChecks());
@@ -1013,8 +1042,8 @@ public class AuthorizationManager extends AbstractManager {
       if (query.isIncidentsToInclude()) {
         CompositePermissionCheck incidentPermissionCheck = new PermissionCheckBuilder()
             .disjunctive()
-            .atomicCheck(PROCESS_INSTANCE, "INC.PROC_INST_ID_", READ)
-            .atomicCheck(PROCESS_DEFINITION, "PROCDEF.KEY_", READ_INSTANCE)
+            .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_INC_PROC_INST_ID, READ)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_PROCDEF_KEY, READ_INSTANCE)
             .build();
 
         query.addIncidentPermissionCheck(incidentPermissionCheck.getAllPermissionChecks());
@@ -1024,7 +1053,7 @@ public class AuthorizationManager extends AbstractManager {
   }
 
   public void configureProcessDefinitionStatisticsQuery(ProcessDefinitionStatisticsQueryImpl query) {
-    configureQuery(query, PROCESS_DEFINITION, "RES.KEY_");
+    configureQuery(query, PROCESS_DEFINITION, QUERYPARAM_RES_KEY);
   }
 
   public void configureActivityStatisticsQuery(ActivityStatisticsQueryImpl query) {
@@ -1038,8 +1067,8 @@ public class AuthorizationManager extends AbstractManager {
 
       CompositePermissionCheck processInstancePermissionCheck = new PermissionCheckBuilder()
           .disjunctive()
-          .atomicCheck(PROCESS_INSTANCE, "E.PROC_INST_ID_", READ)
-          .atomicCheck(PROCESS_DEFINITION, "P.KEY_", READ_INSTANCE)
+          .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_E_PROC_INST_ID, READ)
+          .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_P_KEY, READ_INSTANCE)
           .build();
 
       // the following is need in order to evaluate whether to perform authCheck or not
@@ -1050,8 +1079,8 @@ public class AuthorizationManager extends AbstractManager {
       if (query.isFailedJobsToInclude()) {
         CompositePermissionCheck jobPermissionCheck = new PermissionCheckBuilder()
             .disjunctive()
-            .atomicCheck(PROCESS_INSTANCE, "JOB.PROCESS_INSTANCE_ID_", READ)
-            .atomicCheck(PROCESS_DEFINITION, "JOB.PROCESS_DEF_KEY_", READ_INSTANCE)
+            .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_JOB_PROCESS_INSTANCE_ID, READ)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_JOB_PROCESS_DEF_KEY, READ_INSTANCE)
             .build();
 
         // the following is need in order to evaluate whether to perform authCheck or not
@@ -1063,8 +1092,8 @@ public class AuthorizationManager extends AbstractManager {
       if (query.isIncidentsToInclude()) {
         CompositePermissionCheck incidentPermissionCheck = new PermissionCheckBuilder()
             .disjunctive()
-            .atomicCheck(PROCESS_INSTANCE, "I.PROC_INST_ID_", READ)
-            .atomicCheck(PROCESS_DEFINITION, "PROCDEF.KEY_", READ_INSTANCE)
+            .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_I_PROC_INST_ID, READ)
+            .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_PROCDEF_KEY, READ_INSTANCE)
             .build();
 
         // the following is need in order to evaluate whether to perform authCheck or not
@@ -1080,8 +1109,8 @@ public class AuthorizationManager extends AbstractManager {
     configureQuery(query);
     CompositePermissionCheck permissionCheck = new PermissionCheckBuilder()
         .disjunctive()
-        .atomicCheck(PROCESS_INSTANCE, "RES.PROC_INST_ID_", READ)
-        .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_INSTANCE)
+        .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID, READ)
+        .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_INSTANCE)
         .build();
     addPermissionCheck(query.getAuthCheck(), permissionCheck);
   }
@@ -1093,13 +1122,13 @@ public class AuthorizationManager extends AbstractManager {
       .conjunctive()
       .composite()
         .disjunctive()
-        .atomicCheck(PROCESS_INSTANCE, "RES.PROC_INST_ID_", READ)
-        .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", READ_INSTANCE)
+        .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID, READ)
+        .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, READ_INSTANCE)
         .done()
       .composite()
         .disjunctive()
-        .atomicCheck(PROCESS_INSTANCE, "RES.PROC_INST_ID_", UPDATE)
-        .atomicCheck(PROCESS_DEFINITION, "RES.PROC_DEF_KEY_", UPDATE_INSTANCE)
+        .atomicCheck(PROCESS_INSTANCE, QUERYPARAM_RES_PROC_INST_ID, UPDATE)
+        .atomicCheck(PROCESS_DEFINITION, QUERYPARAM_RES_PROC_DEF_KEY, UPDATE_INSTANCE)
         .done()
       .build();
 
@@ -1107,19 +1136,19 @@ public class AuthorizationManager extends AbstractManager {
   }
 
   public void configureDecisionDefinitionQuery(DecisionDefinitionQueryImpl query) {
-    configureQuery(query, DECISION_DEFINITION, "RES.KEY_");
+    configureQuery(query, DECISION_DEFINITION, QUERYPARAM_RES_KEY);
   }
 
   public void configureDecisionRequirementsDefinitionQuery(DecisionRequirementsDefinitionQueryImpl query) {
-    configureQuery(query, DECISION_REQUIREMENTS_DEFINITION, "RES.KEY_");
+    configureQuery(query, DECISION_REQUIREMENTS_DEFINITION, QUERYPARAM_RES_KEY);
   }
 
   public void configureBatchQuery(BatchQueryImpl query) {
-    configureQuery(query, BATCH, "RES.ID_", READ);
+    configureQuery(query, BATCH, QUERYPARAM_RES_ID, READ);
   }
 
   public void configureBatchStatisticsQuery(BatchStatisticsQueryImpl query) {
-    configureQuery(query, BATCH, "RES.ID_", READ);
+    configureQuery(query, BATCH, QUERYPARAM_RES_ID, READ);
   }
 
   public List<String> filterAuthenticatedGroupIds(List<String> authenticatedGroupIds) {
@@ -1169,9 +1198,9 @@ public class AuthorizationManager extends AbstractManager {
   public DbOperation addRemovalTimeToAuthorizationsByRootProcessInstanceId(String rootProcessInstanceId,
                                                                     Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("rootProcessInstanceId", rootProcessInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
         .updatePreserveOrder(AuthorizationEntity.class,
@@ -1181,9 +1210,9 @@ public class AuthorizationManager extends AbstractManager {
   public DbOperation addRemovalTimeToAuthorizationsByProcessInstanceId(String processInstanceId,
                                                                 Date removalTime, Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("removalTime", removalTime);
-    parameters.put("maxResults", batchSize);
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(REMOVAL_TIME, removalTime);
+    parameters.put(MAX_RESULTS, batchSize);
 
     return getDbEntityManager()
         .updatePreserveOrder(AuthorizationEntity.class,
@@ -1193,12 +1222,12 @@ public class AuthorizationManager extends AbstractManager {
   public DbOperation deleteAuthorizationsByRemovalTime(Date removalTime, int minuteFrom,
                                                       int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("removalTime", removalTime);
+    parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
-      parameters.put("minuteFrom", minuteFrom);
-      parameters.put("minuteTo", minuteTo);
+      parameters.put(MINUTE_FROM, minuteFrom);
+      parameters.put(MINUTE_TO, minuteTo);
     }
-    parameters.put("batchSize", batchSize);
+    parameters.put(BATCH_SIZE, batchSize);
 
     return getDbEntityManager()
         .deletePreserveOrder(AuthorizationEntity.class, "deleteAuthorizationsByRemovalTime",

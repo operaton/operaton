@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,14 +16,16 @@
  */
 package org.operaton.bpm.engine.test.errorcode.conf;
 
-import ch.qos.logback.classic.Level;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.catchThrowable;
+
+import java.sql.SQLException;
+
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -32,68 +34,56 @@ import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
 import org.operaton.bpm.engine.test.errorcode.FailingJavaDelegateWithCustomException;
 import org.operaton.bpm.engine.test.errorcode.FailingJavaDelegateWithErrorCode;
 import org.operaton.bpm.engine.test.errorcode.FailingJavaDelegateWithOleAndErrorCode;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
 
-import java.sql.SQLException;
+import ch.qos.logback.classic.Level;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.catchThrowable;
-
-public class CustomErrorCodeProviderTest {
+class CustomErrorCodeProviderTest {
 
   protected static final int PROVIDED_CUSTOM_CODE = 33_333;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(c -> {
-    c.setCustomExceptionCodeProvider(new ExceptionCodeProvider() {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(c -> {
+      c.setCustomExceptionCodeProvider(new ExceptionCodeProvider() {
+        
+        @Override
+        public Integer provideCode(SQLException sqlException) {
+          return PROVIDED_CUSTOM_CODE;
+        }
+        
+        @Override
+        public Integer provideCode(ProcessEngineException processEngineException) {
+          return PROVIDED_CUSTOM_CODE;
+        }
+        
+      });
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-      @Override
-      public Integer provideCode(SQLException sqlException) {
-        return PROVIDED_CUSTOM_CODE;
-      }
-
-      @Override
-      public Integer provideCode(ProcessEngineException processEngineException) {
-        return PROVIDED_CUSTOM_CODE;
-      }
-
-    });
-  });
-
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
       .watch("org.operaton.bpm.engine.cmd")
       .level(Level.WARN);
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  RuntimeService runtimeService;
+  IdentityService identityService;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
-  protected RuntimeService runtimeService;
-  protected IdentityService identityService;
-
-  @Before
-  public void assignServices() {
-    runtimeService = engineRule.getRuntimeService();
-    identityService = engineRule.getIdentityService();
-  }
-
-  @After
-  public void clear() {
+  @AfterEach
+  void clear() {
     engineRule.getIdentityService().deleteUser("kermit");
   }
 
   @Test
-  public void shouldOverrideProvidedExceptionCode1() {
+  void shouldOverrideProvidedExceptionCode1() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -113,7 +103,7 @@ public class CustomErrorCodeProviderTest {
   }
 
   @Test
-  public void shouldOverrideProvidedExceptionCode2() {
+  void shouldOverrideProvidedExceptionCode2() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -133,7 +123,7 @@ public class CustomErrorCodeProviderTest {
   }
 
   @Test
-  public void shouldOverrideProvidedExceptionCode3() {
+  void shouldOverrideProvidedExceptionCode3() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -159,7 +149,7 @@ public class CustomErrorCodeProviderTest {
    * code. This ensures consistent behavior when we add non-SQL exception related built-in codes in the future.
    */
   @Test
-  public void shouldOverrideCodeFromDelegationCodeWithBuiltinCode() {
+  void shouldOverrideCodeFromDelegationCodeWithBuiltinCode() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -184,7 +174,7 @@ public class CustomErrorCodeProviderTest {
   }
 
   @Test
-  public void shouldOverrideCodeZeroWithCustomCode() {
+  void shouldOverrideCodeZeroWithCustomCode() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -207,7 +197,7 @@ public class CustomErrorCodeProviderTest {
   }
 
   @Test
-  public void shouldResetReservedCodeFromDelegationCode1() {
+  void shouldResetReservedCodeFromDelegationCode1() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -232,7 +222,7 @@ public class CustomErrorCodeProviderTest {
   }
 
   @Test
-  public void shouldResetReservedCodeFromDelegationCode2() {
+  void shouldResetReservedCodeFromDelegationCode2() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -257,7 +247,7 @@ public class CustomErrorCodeProviderTest {
   }
 
   @Test
-  public void shouldResetReservedCodeFromDelegationCode3() {
+  void shouldResetReservedCodeFromDelegationCode3() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -282,7 +272,7 @@ public class CustomErrorCodeProviderTest {
   }
 
   @Test
-  public void shouldProvideCustomCodeFromDelegationCodeWithCustomException() {
+  void shouldProvideCustomCodeFromDelegationCodeWithCustomException() {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -305,7 +295,7 @@ public class CustomErrorCodeProviderTest {
   }
 
   @Test
-  public void shouldHaveSubordinationToBuiltinCode() {
+  void shouldHaveSubordinationToBuiltinCode() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()

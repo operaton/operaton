@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.FilterService;
@@ -29,14 +32,8 @@ import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
@@ -51,29 +48,25 @@ public class TaskQueryDisabledStoredExpressionsTest {
 
   public static long mutableField = 0;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/api/task/task-query-disabled-stored-expressions-test.operaton.cfg.xml");
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurationResource("org/operaton/bpm/engine/test/api/task/task-query-disabled-stored-expressions-test.operaton.cfg.xml")
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  TaskService taskService;
+  FilterService filterService;
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected TaskService taskService;
-  protected FilterService filterService;
-
-  @Before
-  public void setUp() {
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    taskService = engineRule.getTaskService();
-    filterService = engineRule.getFilterService();
+  @BeforeEach
+  void setUp() {
     mutableField = 0;
   }
 
   @Test
-  public void testStoreFilterWithoutExpression() {
+  void testStoreFilterWithoutExpression() {
     TaskQuery taskQuery = taskService.createTaskQuery().dueAfter(new Date());
     Filter filter = filterService.newTaskFilter("filter");
     filter.setQuery(taskQuery);
@@ -87,7 +80,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
   }
 
   @Test
-  public void testStoreFilterWithExpression() {
+  void testStoreFilterWithExpression() {
     TaskQuery taskQuery = taskService.createTaskQuery().dueAfterExpression(STATE_MANIPULATING_EXPRESSION);
     Filter filter = filterService.newTaskFilter("filter");
     filter.setQuery(taskQuery);
@@ -101,7 +94,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
   }
 
   @Test
-  public void testUpdateFilterWithExpression() {
+  void testUpdateFilterWithExpression() {
     // given a stored filter
     TaskQuery taskQuery = taskService.createTaskQuery().dueAfter(new Date());
     Filter filter = filterService.newTaskFilter("filter");
@@ -124,7 +117,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
   }
 
   @Test
-  public void testCannotExecuteStoredFilter() {
+  void testCannotExecuteStoredFilter() {
     final TaskQuery filterQuery = taskService.createTaskQuery().dueAfterExpression(STATE_MANIPULATING_EXPRESSION);
 
     // store a filter bypassing validation

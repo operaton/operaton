@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,14 +51,15 @@ class FallbackSerializationTest {
       .objectTypeName("org.operaton.Foo")
       .create();
 
-    runtimeService.setVariable(instance.getId(), "var", objectValue);
+    String processInstanceId = instance.getId();
+    runtimeService.setVariable(processInstanceId, "var", objectValue);
 
     // then
-    assertThatThrownBy(() -> runtimeService.getVariable(instance.getId(), "var"))
+    assertThatThrownBy(() -> runtimeService.getVariable(processInstanceId, "var"))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("Fallback serializer cannot handle deserialized objects");
 
-    ObjectValue returnedValue = runtimeService.getVariableTyped(instance.getId(), "var", false);
+    ObjectValue returnedValue = runtimeService.getVariableTyped(processInstanceId, "var", false);
     assertFalse(returnedValue.isDeserialized());
     assertEquals("application/foo", returnedValue.getSerializationDataFormat());
     assertEquals("foo", returnedValue.getValueSerialized());

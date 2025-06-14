@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,49 +23,43 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class UpdateDuedateOnRecurringTimerTest {
+class UpdateDuedateOnRecurringTimerTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   RuntimeService runtimeService;
   ManagementService managementService;
   Date t0;
 
-  @Before
-  public void init() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-
+  @BeforeEach
+  void init() {
     t0 = new Date(0);
     ClockUtil.setCurrentTime(t0);
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.resetClock();
   }
 
   @Test
-  public void testCascadeChangeToRecurringTimerAddToDuedate() {
+  void testCascadeChangeToRecurringTimerAddToDuedate() {
     // given timer R2/PT30M
     BpmnModelInstance process = Bpmn.createExecutableProcess("process").startEvent().userTask("userTask").boundaryEvent().cancelActivity(false)
         .timerWithCycle("R2/PT30M").endEvent().moveToActivity("userTask").endEvent().done();
@@ -98,7 +92,7 @@ public class UpdateDuedateOnRecurringTimerTest {
   }
 
   @Test
-  public void testCascadeChangeToRecurringTimerAddToDuedateMultipleTimes() {
+  void testCascadeChangeToRecurringTimerAddToDuedateMultipleTimes() {
     // given timer R3/PT30M
     BpmnModelInstance process = Bpmn.createExecutableProcess("process").startEvent().userTask("userTask").boundaryEvent().cancelActivity(false)
         .timerWithCycle("R3/PT30M").endEvent().moveToActivity("userTask").endEvent().done();
@@ -148,7 +142,7 @@ public class UpdateDuedateOnRecurringTimerTest {
   }
 
   @Test
-  public void testCascadeChangeToRecurringTimerSubstractFromDuedate() {
+  void testCascadeChangeToRecurringTimerSubstractFromDuedate() {
     // given timer R2/PT30M
     BpmnModelInstance process = Bpmn.createExecutableProcess("process").startEvent().userTask("userTask").boundaryEvent().cancelActivity(false)
         .timerWithCycle("R2/PT30M").endEvent().moveToActivity("userTask").endEvent().done();
@@ -181,7 +175,7 @@ public class UpdateDuedateOnRecurringTimerTest {
   }
 
   @Test
-  public void testCascadeMixedChangesToRecurringTimerDuedate() {
+  void testCascadeMixedChangesToRecurringTimerDuedate() {
     // given timer R3/PT30M
     BpmnModelInstance process = Bpmn.createExecutableProcess("process").startEvent().userTask("userTask").boundaryEvent().cancelActivity(false)
         .timerWithCycle("R3/PT30M").endEvent().moveToActivity("userTask").endEvent().done();
@@ -226,7 +220,7 @@ public class UpdateDuedateOnRecurringTimerTest {
   }
 
   @Test
-  public void testChangesToRecurringTimerDuedateShouldNotCascade() {
+  void testChangesToRecurringTimerDuedateShouldNotCascade() {
     // given timer R3/PT30M
     BpmnModelInstance process = Bpmn.createExecutableProcess("process").startEvent().userTask("userTask").boundaryEvent().cancelActivity(false)
         .timerWithCycle("R3/PT30M").endEvent().moveToActivity("userTask").endEvent().done();

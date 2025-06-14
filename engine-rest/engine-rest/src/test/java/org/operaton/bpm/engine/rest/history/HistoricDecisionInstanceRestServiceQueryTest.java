@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,6 +31,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,6 @@ import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
@@ -670,7 +670,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   protected void verifyByteArrayValue(Map<String, Object> byteArrayValue) {
     BytesValue exampleValue = MockProvider.EXAMPLE_HISTORIC_DECISION_BYTE_ARRAY_VALUE;
     assertThat(byteArrayValue).containsEntry("type", VariableValueDto.toRestApiTypeName(exampleValue.getType().getName()));
-    String byteString = Base64.encodeBase64String(exampleValue.getValue()).trim();
+    String byteString = Base64.getEncoder().encodeToString(exampleValue.getValue()).trim();
     assertThat(byteArrayValue)
             .containsEntry("value", byteString)
             .containsEntry("valueInfo", Collections.emptyMap());

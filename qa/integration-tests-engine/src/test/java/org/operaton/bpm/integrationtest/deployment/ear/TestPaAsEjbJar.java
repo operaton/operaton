@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,7 @@ import org.junit.runner.RunWith;
 import org.operaton.bpm.application.impl.ejb.DefaultEjbProcessApplication;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.integrationtest.deployment.ear.beans.NamedCdiBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
@@ -63,6 +64,7 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
       .addClass(DefaultEjbProcessApplication.class)
       .addClass(NamedCdiBean.class)
       .addClass(AbstractFoxPlatformIntegrationTest.class)
+      .addClass(JobExecutorWaitUtils.class)
       .addClass(TestPaAsEjbJar.class)
       .addAsResource("org/operaton/bpm/integrationtest/deployment/ear/paAsEjbJar-process.bpmn20.xml")
       .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
@@ -71,7 +73,7 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
     return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
       .addAsLibrary(DeploymentHelper.getEngineCdi())
-      .addAsLibraries(DeploymentHelper.getAssertJ());
+      .addAsLibraries(DeploymentHelper.getTestingLibs());
   }
 
   @Test

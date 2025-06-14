@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,24 +20,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Roman Smirnov
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-public class HistoricActivityInstanceSequenceCounterTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class HistoricActivityInstanceSequenceCounterTest {
+  
+  RuntimeService runtimeService;
+  HistoryService historyService;
+  TaskService taskService;
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testSequence.bpmn20.xml"})
   @Test
-  public void testSequence() {
+  void testSequence() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()
@@ -53,7 +62,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testForkSameSequenceLengthWithoutWaitStates.bpmn20.xml"})
   @Test
-  public void testFork() {
+  void testFork() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
@@ -81,7 +90,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testForkAndJoinDifferentSequenceLength.bpmn20.xml"})
   @Test
-  public void testForkAndJoin() {
+  void testForkAndJoin() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()
@@ -124,7 +133,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testSequenceInsideSubProcess.bpmn20.xml"})
   @Test
-  public void testSequenceInsideSubProcess() {
+  void testSequenceInsideSubProcess() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()
@@ -156,7 +165,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testSequentialMultiInstance.bpmn20.xml"})
   @Test
-  public void testSequentialMultiInstance() {
+  void testSequentialMultiInstance() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()
@@ -189,7 +198,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testParallelMultiInstance.bpmn20.xml"})
   @Test
-  public void testParallelMultiInstance() {
+  void testParallelMultiInstance() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()
@@ -221,7 +230,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testLoop.bpmn20.xml"})
   @Test
-  public void testLoop() {
+  void testLoop() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()
@@ -238,7 +247,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testInterruptingBoundaryEvent.bpmn20.xml"})
   @Test
-  public void testInterruptingBoundaryEvent() {
+  void testInterruptingBoundaryEvent() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()
@@ -267,7 +276,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/standalone/entity/ExecutionSequenceCounterTest.testNonInterruptingBoundaryEvent.bpmn20.xml"})
   @Test
-  public void testNonInterruptingBoundaryEvent() {
+  void testNonInterruptingBoundaryEvent() {
     // given
     HistoricActivityInstanceQuery query = historyService
         .createHistoricActivityInstanceQuery()

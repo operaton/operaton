@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,8 +20,8 @@ import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.dmn.el.ProcessEngineJuelElProvider;
+import org.operaton.bpm.engine.impl.mock.MockElResolver;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
-import org.operaton.bpm.engine.test.mock.MockElResolver;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
 

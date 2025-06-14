@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -104,7 +104,7 @@ public class MockMigrationPlanBuilder {
     return this;
   }
 
-  public static interface JoinedMigrationPlanBuilderMock extends MigrationPlanBuilder, MigrationInstructionBuilder, MigrationInstructionsBuilder {
+  public interface JoinedMigrationPlanBuilderMock extends MigrationPlanBuilder, MigrationInstructionBuilder, MigrationInstructionsBuilder {
     // Just an empty interface joining all migration plan builder interfaces together.
     // Allows it to mock all three with one mock instance, which in turn makes invocation verification easier.
     // Quite a hack that may break if the interfaces become incompatible in the future.

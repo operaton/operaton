@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,83 +18,92 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class JobExecutorPriorityRangeConfigurationTest {
+class JobExecutorPriorityRangeConfigurationTest {
+
+  private static final String SOME_PROCESS_ENGINE_NAME = "testProcessEngine";
 
   ProcessEngineConfigurationImpl config;
 
   protected Long defaultJobExecutorPriorityRangeMin;
   protected Long defaultJobExecutorPriorityRangeMax;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     config = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("operaton.cfg.xml");
+    config.setProcessEngineName(SOME_PROCESS_ENGINE_NAME);
     defaultJobExecutorPriorityRangeMin = config.getJobExecutorPriorityRangeMin();
     defaultJobExecutorPriorityRangeMax = config.getJobExecutorPriorityRangeMax();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     config.setJobExecutorPriorityRangeMin(defaultJobExecutorPriorityRangeMin);
     config.setJobExecutorPriorityRangeMax(defaultJobExecutorPriorityRangeMax);
   }
 
   @Test
-  public void shouldAcceptValidPriorityRangeConfiguration() {
+  void shouldAcceptValidPriorityRangeConfiguration() {
     // given
     config.setJobExecutorPriorityRangeMin(10L);
     config.setJobExecutorPriorityRangeMax(10L);
 
     // when
-    config.buildProcessEngine();
+    ProcessEngine engine = config.buildProcessEngine();
 
-    // then
-    assertThat(config.getJobExecutorPriorityRangeMin()).isEqualTo(10L);
-    assertThat(config.getJobExecutorPriorityRangeMax()).isEqualTo(10L);
+    try {
+      // then
+      assertThat(config.getJobExecutorPriorityRangeMin()).isEqualTo(10L);
+      assertThat(config.getJobExecutorPriorityRangeMax()).isEqualTo(10L);
+    } finally {
+      engine.close();
+    }
   }
 
   @Test
-  public void shouldAllowNegativePriorityRangeConfiguration() {
+  void shouldAllowNegativePriorityRangeConfiguration() {
     // given
     config.setJobExecutorPriorityRangeMin(-10L);
     config.setJobExecutorPriorityRangeMax(-5);
 
     // when
-    assertDoesNotThrow(() -> config.buildProcessEngine());
+    assertDoesNotThrow(() -> {
+      ProcessEngine engine = config.buildProcessEngine();
+      engine.close();
+    });
   }
 
   @Test
-  public void shouldThrowExceptionOnNegativeMaxPriorityRangeConfiguration() {
+  void shouldThrowExceptionOnNegativeMaxPriorityRangeConfiguration() {
     // given
     config.setJobExecutorPriorityRangeMin(0L);
     config.setJobExecutorPriorityRangeMax(-10L);
 
     // then
-    assertThatThrownBy(() -> {
-      config.buildProcessEngine();
-    }).isInstanceOf(ProcessEngineException.class)
-    .hasMessage("ENGINE-14031 Invalid configuration for job executor priority range. Reason: jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
+    assertThatThrownBy(() -> config.buildProcessEngine())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-14031 Invalid configuration for job executor priority range. Reason: jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
   }
 
   @Test
-  public void shouldThrowExceptionJobExecutorPriorityMinLargerThanMax() {
+  void shouldThrowExceptionJobExecutorPriorityMinLargerThanMax() {
     // given
     config.setJobExecutorPriorityRangeMin(10L);
     config.setJobExecutorPriorityRangeMax(5L);
 
     // then
-    assertThatThrownBy(() -> {
-      config.buildProcessEngine();
-    }).isInstanceOf(ProcessEngineException.class)
-    .hasMessage("ENGINE-14031 Invalid configuration for job executor priority range. Reason: jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
+    assertThatThrownBy(() -> config.buildProcessEngine())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-14031 Invalid configuration for job executor priority range. Reason: jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
   }
 }

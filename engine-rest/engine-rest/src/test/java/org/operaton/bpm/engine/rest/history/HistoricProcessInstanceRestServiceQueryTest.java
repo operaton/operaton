@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -1078,6 +1078,43 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     Map<String, Set<String>> parameters = getCompleteProcessInstanceIdSetQueryParameters();
 
     verify(mockedQuery).processInstanceIds(parameters.get("processInstanceIds"));
+    verify(mockedQuery).list();
+  }
+
+  @Test
+  public void testQueryByProcessInstanceIdNotIn() {
+    given()
+        .queryParam("processInstanceIdNotIn", "firstProcessInstanceId,secondProcessInstanceId")
+        .then()
+        .expect()
+        .statusCode(Status.OK.getStatusCode())
+        .when()
+        .get(HISTORIC_PROCESS_INSTANCE_RESOURCE_URL);
+
+    verify(mockedQuery).processInstanceIdNotIn("firstProcessInstanceId", "secondProcessInstanceId");
+    verify(mockedQuery).list();
+  }
+
+  @Test
+  public void testQueryByProcessInstanceIdNotInAsPost() {
+    Map<String, Set<String>> parameters = new HashMap<String, Set<String>>();
+
+    Set<String> processInstanceIds = new HashSet<String>();
+    processInstanceIds.add("firstProcessInstanceId");
+    processInstanceIds.add("secondProcessInstanceId");
+
+    parameters.put("processInstanceIdNotIn", processInstanceIds);
+
+    given()
+        .contentType(POST_JSON_CONTENT_TYPE)
+        .body(parameters)
+        .then()
+        .expect()
+        .statusCode(Status.OK.getStatusCode())
+        .when()
+        .post(HISTORIC_PROCESS_INSTANCE_RESOURCE_URL);
+
+    verify(mockedQuery).processInstanceIdNotIn("firstProcessInstanceId", "secondProcessInstanceId");
     verify(mockedQuery).list();
   }
 

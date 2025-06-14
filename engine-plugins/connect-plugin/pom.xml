@@ -4,7 +4,7 @@
   <parent>
     <artifactId>operaton-engine-plugins</artifactId>
     <groupId>org.operaton.bpm</groupId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -16,6 +16,13 @@
     <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

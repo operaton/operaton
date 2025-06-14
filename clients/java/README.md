@@ -48,7 +48,7 @@ The following Maven coordinate needs to be added to the projects `pom.xml`:
 ### Server Logs
 
 The Tomcat instance logs can be found at 
-`clients/java/client/target/operaton-tomcat/server/apache-tomcat-10.1.30/logs/catalina.out`
+`clients/java/client/target/operaton-tomcat/server/apache-tomcat-10.1.39/logs/catalina.out`
 
 ### Remote Debugging
 

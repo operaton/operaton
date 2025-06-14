@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,17 +38,17 @@ public interface ContextAssociationManager {
    *
    * @throws ProcessEngineException if no process instance is currently associated
    */
-  public void disAssociate();
+  void disAssociate();
 
   /**
    * @return the id of the execution currently associated or null
    */
-  public String getExecutionId();
+  String getExecutionId();
 
   /**
    * get the current execution
    */
-  public Execution getExecution();
+  Execution getExecution();
 
   /**
    * associate with the provided execution
@@ -58,27 +58,27 @@ public interface ContextAssociationManager {
   /**
    * set a current task
    */
-  public void setTask(Task task);
+  void setTask(Task task);
 
   /**
    * get the current task
    */
-  public Task getTask();
+  Task getTask();
 
   /**
    * set a process variable
    */
-  public void setVariable(String variableName, Object value);
+  void setVariable(String variableName, Object value);
 
   /**
    * get a process variable
    */
-  public TypedValue getVariable(String variableName);
+  TypedValue getVariable(String variableName);
 
   /**
    * @return a {@link VariableMap} of process variables cached between flushes
    */
-  public VariableMap getCachedVariables();
+  VariableMap getCachedVariables();
 
   /**
    * set a local process variable
@@ -93,11 +93,11 @@ public interface ContextAssociationManager {
   /**
    * @return a {@link VariableMap} of local process variables cached between flushes
    */
-  public VariableMap getCachedLocalVariables();
+  VariableMap getCachedLocalVariables();
 
   /**
    * allows to flush the cached variables.
    */
-  public void flushVariableCache();
+  void flushVariableCache();
 
 }

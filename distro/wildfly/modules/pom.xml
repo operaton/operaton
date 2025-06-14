@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly</artifactId>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-wildfly-modules</artifactId>
@@ -359,6 +359,26 @@
         <configuration>
           <classesDirectory>${project.build.directory}/modules/</classesDirectory>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>validate-wildfly-modules</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <workingDirectory>${project.basedir}</workingDirectory>
+              <executable>bash</executable>
+              <arguments>
+                <argument>${project.basedir}/validate-modules.sh</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

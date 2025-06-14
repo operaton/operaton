@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,23 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.errorcode;
-
-import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
-import org.operaton.bpm.engine.impl.util.ExceptionUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.concurrent.CountDownLatch;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -42,22 +25,37 @@ import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.MSS
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.ORACLE;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.POSTGRES;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.concurrent.CountDownLatch;
+
+import javax.sql.DataSource;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
+import org.operaton.bpm.engine.impl.util.ExceptionUtil;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
 /**
  * HEADS-UP: If a test fails, please make sure to adjust the error code / sql state for the respective
  * database in {@link ExceptionUtil.DEADLOCK_CODES}.
  */
-public class DeadlockTest {
+class DeadlockTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected SQLException sqlException;
 
-  @Before
-  public void createTestTables() throws SQLException {
+  @BeforeEach
+  void createTestTables() throws SQLException {
     Connection conn = engineRule.getProcessEngineConfiguration().getDataSource().getConnection();
 
     conn.setAutoCommit(false);
@@ -73,8 +71,8 @@ public class DeadlockTest {
     sqlException = null;
   }
 
-  @After
-  public void cleanTables() throws SQLException {
+  @AfterEach
+  void cleanTables() throws SQLException {
     Connection conn = engineRule.getProcessEngineConfiguration().getDataSource().getConnection();
 
     conn.setAutoCommit(false);
@@ -87,7 +85,7 @@ public class DeadlockTest {
   }
 
   @Test
-  public void shouldProvokeDeadlock() throws InterruptedException {
+  void shouldProvokeDeadlock() throws InterruptedException {
     String databaseType = engineRule.getProcessEngineConfiguration().getDatabaseType();
     switch (databaseType) {
     case DbSqlSessionFactory.MARIADB,DbSqlSessionFactory.MYSQL:

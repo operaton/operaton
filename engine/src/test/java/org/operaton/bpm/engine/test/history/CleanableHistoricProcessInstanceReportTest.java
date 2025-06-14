@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,6 +24,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RepositoryService;
@@ -37,48 +41,36 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-public class CleanableHistoricProcessInstanceReportTest {
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+class CleanableHistoricProcessInstanceReportTest {
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(testRule).around(engineRule);
-
-  protected HistoryService historyService;
-  protected TaskService taskService;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
+  HistoryService historyService;
+  TaskService taskService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
 
   protected static final String PROCESS_DEFINITION_KEY = "HISTORIC_INST";
   protected static final String SECOND_PROCESS_DEFINITION_KEY = "SECOND_HISTORIC_INST";
   protected static final String THIRD_PROCESS_DEFINITION_KEY = "THIRD_HISTORIC_INST";
   protected static final String FOURTH_PROCESS_DEFINITION_KEY = "FOURTH_HISTORIC_INST";
 
-  @Before
-  public void setUp() {
-    historyService = engineRule.getHistoryService();
-    taskService = engineRule.getTaskService();
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-
+  @BeforeEach
+  void setUp() {
     testRule.deploy(createProcessWithUserTask(PROCESS_DEFINITION_KEY));
   }
 
-  @After
-  public void cleanUp() {
+  @AfterEach
+  void cleanUp() {
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().list();
     for (ProcessInstance processInstance : processInstances) {
       runtimeService.deleteProcessInstance(processInstance.getId(), null, true, true);
@@ -123,7 +115,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportComplex() {
+  void testReportComplex() {
     testRule.deploy(createProcessWithUserTask(SECOND_PROCESS_DEFINITION_KEY));
     testRule.deploy(createProcessWithUserTask(THIRD_PROCESS_DEFINITION_KEY));
     testRule.deploy(createProcessWithUserTask(FOURTH_PROCESS_DEFINITION_KEY));
@@ -163,7 +155,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportWithAllCleanableInstances() {
+  void testReportWithAllCleanableInstances() {
     // given
     prepareProcessInstances(PROCESS_DEFINITION_KEY, -6, 5, 10);
 
@@ -179,7 +171,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportWithPartiallyCleanableInstances() {
+  void testReportWithPartiallyCleanableInstances() {
     // given
     prepareProcessInstances(PROCESS_DEFINITION_KEY, -6, 5, 5);
     prepareProcessInstances(PROCESS_DEFINITION_KEY, 0, 5, 5);
@@ -194,7 +186,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportWithZeroHistoryTTL() {
+  void testReportWithZeroHistoryTTL() {
     // given
     prepareProcessInstances(PROCESS_DEFINITION_KEY, -6, 0, 5);
     prepareProcessInstances(PROCESS_DEFINITION_KEY, 0, 0, 5);
@@ -207,7 +199,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportWithNullHistoryTTL() {
+  void testReportWithNullHistoryTTL() {
     // given
     prepareProcessInstances(PROCESS_DEFINITION_KEY, -6, null, 5);
     prepareProcessInstances(PROCESS_DEFINITION_KEY, 0, null, 5);
@@ -222,7 +214,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportByInvalidProcessDefinitionId() {
+  void testReportByInvalidProcessDefinitionId() {
     CleanableHistoricProcessInstanceReport report = historyService.createCleanableHistoricProcessInstanceReport();
 
     try {
@@ -241,7 +233,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportByInvalidProcessDefinitionKey() {
+  void testReportByInvalidProcessDefinitionKey() {
     CleanableHistoricProcessInstanceReport report = historyService.createCleanableHistoricProcessInstanceReport();
 
     try {
@@ -260,7 +252,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportCompact() {
+  void testReportCompact() {
     // given
     List<ProcessDefinition> pdList = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).list();
     assertThat(pdList).hasSize(1);
@@ -278,7 +270,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportOrderByFinishedAsc() {
+  void testReportOrderByFinishedAsc() {
     testRule.deploy(createProcessWithUserTask(SECOND_PROCESS_DEFINITION_KEY));
     testRule.deploy(createProcessWithUserTask(THIRD_PROCESS_DEFINITION_KEY));
     // given
@@ -301,7 +293,7 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   @Test
-  public void testReportOrderByFinishedDesc() {
+  void testReportOrderByFinishedDesc() {
     testRule.deploy(createProcessWithUserTask(SECOND_PROCESS_DEFINITION_KEY));
     testRule.deploy(createProcessWithUserTask(THIRD_PROCESS_DEFINITION_KEY));
     // given

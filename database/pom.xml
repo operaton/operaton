@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
-    <version>1.0.0-beta-4-SNAPSHOT</version>
+    <version>1.0.0-beta-5-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-database-settings</artifactId>
@@ -23,11 +23,11 @@
     <version.mariadb>1.7.6</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
     <version.mysql>9.2.0</version.mysql>
-    <version.sqlserver>8.4.1.jre8</version.sqlserver>
+    <version.sqlserver>12.10.0.jre8</version.sqlserver>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.db2>${version.db2-11.5}</version.db2>
     <version.postgresql>42.5.5</version.postgresql>
-    <version.liquibase>4.31.1</version.liquibase>
+    <version.liquibase>4.32.0</version.liquibase>
     <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
 
     <!-- needed for sql script and backward compatibility checks -->
@@ -95,7 +95,7 @@
           <artifactId>liquibase-maven-plugin</artifactId>
           <configuration>
             <driver>${database.driver}</driver>
-            <url>${database.url}</url> 
+            <url>${database.url}</url>
             <username>${database.username}</username>
             <password>${database.password}</password>
             <hubMode>off</hubMode>
@@ -343,6 +343,8 @@
       <id>postgresql</id>
       <properties>
         <database.type>postgres</database.type>
+        <database.username>test</database.username>
+        <database.password>test</database.password>
         <database.driver>org.postgresql.Driver</database.driver>
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>

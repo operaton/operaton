@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,22 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -26,30 +41,30 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.event.error.ThrowBpmnErrorDelegate;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
  * @author Stefan Hentschel
  *
  */
-public class AsyncAfterTest extends PluggableProcessEngineTest {
+class AsyncAfterTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
+  TaskService taskService;
 
   @Test
-  public void testTransitionIdRequired() {
+  void testTransitionIdRequired() {
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/async/AsyncAfterTest.testTransitionIdRequired.bpmn20.xml");
 
@@ -66,7 +81,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterServiceTask() {
+  void testAsyncAfterServiceTask() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -85,7 +100,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterMultiInstanceUserTask() {
+  void testAsyncAfterMultiInstanceUserTask() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
@@ -104,7 +119,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterAndBeforeServiceTask() {
+  void testAsyncAfterAndBeforeServiceTask() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -134,7 +149,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterServiceTaskMultipleTransitions() {
+  void testAsyncAfterServiceTaskMultipleTransitions() {
 
     // start process instance
     Map<String, Object> varMap = new HashMap<>();
@@ -185,7 +200,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterServiceTaskMultipleTransitionsConcurrent() {
+  void testAsyncAfterServiceTaskMultipleTransitionsConcurrent() {
 
     // start process instance
     Map<String, Object> varMap = new HashMap<>();
@@ -210,7 +225,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterWithoutTransition() {
+  void testAsyncAfterWithoutTransition() {
 
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -235,7 +250,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterInNestedWithoutTransition() {
+  void testAsyncAfterInNestedWithoutTransition() {
 
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -260,7 +275,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterManualTask() {
+  void testAsyncAfterManualTask() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testManualTask");
 
@@ -279,7 +294,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterAndBeforeManualTask() {
+  void testAsyncAfterAndBeforeManualTask() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testManualTask");
 
@@ -308,7 +323,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterIntermediateCatchEvent() {
+  void testAsyncAfterIntermediateCatchEvent() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testIntermediateCatchEvent");
 
@@ -330,7 +345,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterAndBeforeIntermediateCatchEvent() {
+  void testAsyncAfterAndBeforeIntermediateCatchEvent() {
 
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testIntermediateCatchEvent");
@@ -364,7 +379,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterIntermediateThrowEvent() {
+  void testAsyncAfterIntermediateThrowEvent() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testIntermediateThrowEvent");
 
@@ -383,7 +398,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterAndBeforeIntermediateThrowEvent() {
+  void testAsyncAfterAndBeforeIntermediateThrowEvent() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testIntermediateThrowEvent");
 
@@ -412,7 +427,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterInclusiveGateway() {
+  void testAsyncAfterInclusiveGateway() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInclusiveGateway");
 
@@ -441,7 +456,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterAndBeforeInclusiveGateway() {
+  void testAsyncAfterAndBeforeInclusiveGateway() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInclusiveGateway");
 
@@ -467,7 +482,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterExclusiveGateway() {
+  void testAsyncAfterExclusiveGateway() {
     // start process instance with variables
     Map<String, Object> variables = new HashMap<>();
     variables.put("flow", false);
@@ -498,7 +513,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterAndBeforeExclusiveGateway() {
+  void testAsyncAfterAndBeforeExclusiveGateway() {
     // start process instance with variables
     Map<String, Object> variables = new HashMap<>();
     variables.put("flow", false);
@@ -523,6 +538,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
     // and we will wait *after* the gateway:
     assertThat(managementService.createJobQuery().active().count()).isEqualTo(1);
   }
+
   /**
    * Test for CAM-2518: Fixes an issue that creates an infinite loop when using
    * asyncAfter together with an execution listener on sequence flow event "take".
@@ -530,7 +546,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testAsyncAfterWithExecutionListener() {
+  void testAsyncAfterWithExecutionListener() {
     // given an async after job and an execution listener on that task
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -554,7 +570,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterOnParallelGatewayFork() {
+  void testAsyncAfterOnParallelGatewayFork() {
     String configuration = PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE.getCanonicalName();
     String config1 = configuration + "$afterForkFlow1";
     String config2 = configuration + "$afterForkFlow2";
@@ -585,7 +601,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterParallelMultiInstanceWithServiceTask() {
+  void testAsyncAfterParallelMultiInstanceWithServiceTask() {
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -602,7 +618,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterServiceWrappedInParallelMultiInstance(){
+  void testAsyncAfterServiceWrappedInParallelMultiInstance(){
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -621,7 +637,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterServiceWrappedInSequentialMultiInstance(){
+  void testAsyncAfterServiceWrappedInSequentialMultiInstance(){
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -647,9 +663,9 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
   }
 
   @Deployment
-  @Ignore
+  @Disabled
   @Test
-  public void testAsyncAfterOnParallelGatewayJoin() {
+  void testAsyncAfterOnParallelGatewayJoin() {
     String configuration = PvmAtomicOperation.ACTIVITY_END.getCanonicalName();
 
     runtimeService.startProcessInstanceByKey("process");
@@ -679,7 +695,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncAfterBoundaryEvent() {
+  void testAsyncAfterBoundaryEvent() {
     // given process instance
     runtimeService.startProcessInstanceByKey("Process");
 
@@ -700,7 +716,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testAsyncBeforeBoundaryEvent() {
+  void testAsyncBeforeBoundaryEvent() {
     // given process instance
     runtimeService.startProcessInstanceByKey("Process");
 
@@ -720,7 +736,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testAsyncAfterErrorEvent() {
+  void testAsyncAfterErrorEvent() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("process")
       .startEvent()

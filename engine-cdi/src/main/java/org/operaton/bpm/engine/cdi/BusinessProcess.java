@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -481,9 +481,9 @@ public class BusinessProcess implements Serializable {
    * Get the map of cached variables and clear the internal variable cache.
    *
    * @return the map of cached variables
-   * @deprecated use {@link #getAndClearCachedVariableMap()} instead
+   * @deprecated Use {@link #getAndClearCachedVariableMap()} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> getAndClearVariableCache() {
     return getAndClearCachedVariableMap();
   }
@@ -503,9 +503,9 @@ public class BusinessProcess implements Serializable {
    * Get a copy of the map of cached variables.
    *
    * @return a copy of the map of cached variables.
-   * @deprecated use {@link #getCachedVariableMap()} instead
+   * @deprecated Use {@link #getCachedVariableMap()} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> getVariableCache() {
     return getCachedVariableMap();
   }
@@ -580,9 +580,9 @@ public class BusinessProcess implements Serializable {
    * Get the map of local cached variables and clear the internal variable cache.
    *
    * @return the map of cached variables
-   * @deprecated use {@link #getAndClearCachedLocalVariableMap()} instead
+   * @deprecated Use {@link #getAndClearCachedLocalVariableMap()} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> getAndClearVariableLocalCache() {
     return getAndClearCachedLocalVariableMap();
   }
@@ -602,9 +602,9 @@ public class BusinessProcess implements Serializable {
    * Get a copy of the map of local cached variables.
    *
    * @return a copy of the map of local cached variables.
-   * @deprecated use {@link #getCachedLocalVariableMap()} instead
+   * @deprecated Use {@link #getCachedLocalVariableMap()} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> getVariableLocalCache() {
     return getCachedLocalVariableMap();
   }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -50,9 +50,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 class MultiTenancyHistoricExternalTaskLogTest {
 
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected HistoryService historyService;
   protected RuntimeService runtimeService;
@@ -60,13 +60,13 @@ class MultiTenancyHistoricExternalTaskLogTest {
   protected IdentityService identityService;
   protected ExternalTaskService externalTaskService;
 
-  protected final String TENANT_NULL = null;
-  protected final String TENANT_ONE = "tenant1";
-  protected final String TENANT_TWO = "tenant2";
+  static final String TENANT_NULL = null;
+  static final String TENANT_ONE = "tenant1";
+  static final String TENANT_TWO = "tenant2";
 
-  protected final String WORKER_ID = "aWorkerId";
-  protected final String ERROR_DETAILS = "These are the error details!";
-  protected final long LOCK_DURATION = 5 * 60L * 1000L;
+  static final String WORKER_ID = "aWorkerId";
+  static final String ERROR_DETAILS = "These are the error details!";
+  static final long LOCK_DURATION = 5 * 60L * 1000L;
 
 
   @BeforeEach

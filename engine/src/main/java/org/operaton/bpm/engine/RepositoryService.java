@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -96,10 +96,12 @@ public interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#DEPLOYMENT}.
    *
-   * @deprecated use {@link #deleteDeployment(String, boolean)}. This methods may be deleted from 5.3.
+   * @deprecated Use {@link #deleteDeployment(String, boolean)} instead.
    */
-  @Deprecated
-  void deleteDeploymentCascade(String deploymentId);
+  @Deprecated(forRemoval = true, since = "1.0")
+  default void deleteDeploymentCascade(String deploymentId) {
+    deleteDeployment(deploymentId, true);
+  }
 
   /**
    * Deletes the given deployment and cascade deletion to process instances,
@@ -633,9 +635,8 @@ public interface RepositoryService {
    *          When the process definition or user doesn't exist.
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void addCandidateStarterUser(String processDefinitionId, String userId);
 
   /**
@@ -648,9 +649,8 @@ public interface RepositoryService {
    *          When the process definition or group doesn't exist.
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void addCandidateStarterGroup(String processDefinitionId, String groupId);
 
   /**
@@ -663,9 +663,8 @@ public interface RepositoryService {
    *          When the process definition or user doesn't exist.
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteCandidateStarterUser(String processDefinitionId, String userId);
 
   /**
@@ -678,9 +677,8 @@ public interface RepositoryService {
    *          When the process definition or group doesn't exist.
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   void deleteCandidateStarterGroup(String processDefinitionId, String groupId);
 
   /**
@@ -689,9 +687,8 @@ public interface RepositoryService {
    * is authorized for a certain process definition
    *
    * @deprecated Use authorization mechanism instead.
-   *
    */
-  @Deprecated
+  @Deprecated(forRemoval = true, since = "1.0")
   List<IdentityLink> getIdentityLinksForProcessDefinition(String processDefinitionId);
 
   /**

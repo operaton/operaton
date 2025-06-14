@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -287,6 +287,7 @@ import org.operaton.bpm.engine.impl.migration.validation.instruction.SameBehavio
 import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventScopeInstructionValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventTypeValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.UpdateEventTriggersValidator;
+import org.operaton.bpm.engine.impl.mock.MocksResolverFactory;
 import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.GenericManagerFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
@@ -385,7 +386,6 @@ import org.operaton.bpm.engine.repository.DeploymentHandlerFactory;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
 import org.operaton.bpm.engine.task.TaskQuery;
-import org.operaton.bpm.engine.test.mock.MocksResolverFactory;
 import org.operaton.bpm.engine.variable.Variables;
 
 /**
@@ -425,19 +425,19 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   // SERVICES /////////////////////////////////////////////////////////////////
 
-  protected RepositoryService repositoryService = new RepositoryServiceImpl();
-  protected RuntimeService runtimeService = new RuntimeServiceImpl();
-  protected HistoryService historyService = new HistoryServiceImpl();
-  protected IdentityService identityService = new IdentityServiceImpl();
-  protected TaskService taskService = new TaskServiceImpl();
-  protected FormService formService = new FormServiceImpl();
-  protected ManagementService managementService = new ManagementServiceImpl(this);
-  protected AuthorizationService authorizationService = new AuthorizationServiceImpl();
-  protected CaseService caseService = new CaseServiceImpl();
-  protected FilterService filterService = new FilterServiceImpl();
-  protected ExternalTaskService externalTaskService = new ExternalTaskServiceImpl();
-  protected DecisionService decisionService = new DecisionServiceImpl();
-  protected OptimizeService optimizeService = new OptimizeService();
+  protected volatile RepositoryService repositoryService = new RepositoryServiceImpl();
+  protected volatile RuntimeService runtimeService = new RuntimeServiceImpl();
+  protected volatile HistoryService historyService = new HistoryServiceImpl();
+  protected volatile IdentityService identityService = new IdentityServiceImpl();
+  protected volatile TaskService taskService = new TaskServiceImpl();
+  protected volatile FormService formService = new FormServiceImpl();
+  protected volatile ManagementService managementService = new ManagementServiceImpl(this);
+  protected volatile AuthorizationService authorizationService = new AuthorizationServiceImpl();
+  protected volatile CaseService caseService = new CaseServiceImpl();
+  protected volatile FilterService filterService = new FilterServiceImpl();
+  protected volatile ExternalTaskService externalTaskService = new ExternalTaskServiceImpl();
+  protected volatile DecisionService decisionService = new DecisionServiceImpl();
+  protected volatile OptimizeService optimizeService = new OptimizeService();
 
   // COMMAND EXECUTORS ////////////////////////////////////////////////////////
 
@@ -445,63 +445,63 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * the configurable list which will be {@link #initInterceptorChain(java.util.List) processed} to build the {@link #commandExecutorTxRequired}
    */
-  protected List<CommandInterceptor> customPreCommandInterceptorsTxRequired;
-  protected List<CommandInterceptor> customPostCommandInterceptorsTxRequired;
+  protected volatile List<CommandInterceptor> customPreCommandInterceptorsTxRequired;
+  protected volatile List<CommandInterceptor> customPostCommandInterceptorsTxRequired;
 
-  protected List<CommandInterceptor> commandInterceptorsTxRequired;
+  protected volatile List<CommandInterceptor> commandInterceptorsTxRequired;
 
   /**
    * this will be initialized during the configurationComplete()
    */
-  protected CommandExecutor commandExecutorTxRequired;
+  protected volatile CommandExecutor commandExecutorTxRequired;
 
   /**
    * the configurable list which will be {@link #initInterceptorChain(List) processed} to build the {@link #commandExecutorTxRequiresNew}
    */
-  protected List<CommandInterceptor> customPreCommandInterceptorsTxRequiresNew;
-  protected List<CommandInterceptor> customPostCommandInterceptorsTxRequiresNew;
+  protected volatile List<CommandInterceptor> customPreCommandInterceptorsTxRequiresNew;
+  protected volatile List<CommandInterceptor> customPostCommandInterceptorsTxRequiresNew;
 
-  protected List<CommandInterceptor> commandInterceptorsTxRequiresNew;
+  protected volatile List<CommandInterceptor> commandInterceptorsTxRequiresNew;
 
   /**
    * this will be initialized during the configurationComplete()
    */
-  protected CommandExecutor commandExecutorTxRequiresNew;
+  protected volatile CommandExecutor commandExecutorTxRequiresNew;
 
   /**
    * Separate command executor to be used for db schema operations. Must always use NON-JTA transactions
    */
-  protected CommandExecutor commandExecutorSchemaOperations;
+  protected volatile CommandExecutor commandExecutorSchemaOperations;
 
   // SESSION FACTORIES ////////////////////////////////////////////////////////
 
-  protected List<SessionFactory> customSessionFactories;
-  protected DbSqlSessionFactory dbSqlSessionFactory;
-  protected Map<Class<?>, SessionFactory> sessionFactories;
+  protected volatile List<SessionFactory> customSessionFactories;
+  protected volatile DbSqlSessionFactory dbSqlSessionFactory;
+  protected volatile Map<Class<?>, SessionFactory> sessionFactories;
 
   // DEPLOYERS ////////////////////////////////////////////////////////////////
 
-  protected List<Deployer> customPreDeployers;
-  protected List<Deployer> customPostDeployers;
-  protected List<Deployer> deployers;
-  protected DeploymentCache deploymentCache;
+  protected volatile List<Deployer> customPreDeployers;
+  protected volatile List<Deployer> customPostDeployers;
+  protected volatile List<Deployer> deployers;
+  protected volatile DeploymentCache deploymentCache;
 
   // CACHE ////////////////////////////////////////////////////////////////////
 
-  protected CacheFactory cacheFactory;
-  protected int cacheCapacity = 1000;
-  protected boolean enableFetchProcessDefinitionDescription = true;
+  protected volatile CacheFactory cacheFactory;
+  protected volatile int cacheCapacity = 1000;
+  protected volatile boolean enableFetchProcessDefinitionDescription = true;
 
   // JOB EXECUTOR /////////////////////////////////////////////////////////////
 
-  protected List<JobHandler> customJobHandlers;
-  protected Map<String, JobHandler> jobHandlers;
-  protected JobExecutor jobExecutor;
+  protected volatile List<JobHandler> customJobHandlers;
+  protected volatile Map<String, JobHandler> jobHandlers;
+  protected volatile JobExecutor jobExecutor;
 
-  protected PriorityProvider<JobDeclaration<?, ?>> jobPriorityProvider;
+  protected volatile PriorityProvider<JobDeclaration<?, ?>> jobPriorityProvider;
 
-  protected long jobExecutorPriorityRangeMin = Long.MIN_VALUE;
-  protected long jobExecutorPriorityRangeMax = Long.MAX_VALUE;
+  protected volatile long jobExecutorPriorityRangeMin = Long.MIN_VALUE;
+  protected volatile long jobExecutorPriorityRangeMax = Long.MAX_VALUE;
 
   /**
    * When set to false, exclusivity (no parallel execution) of tasks is applied per process instance.
@@ -520,97 +520,97 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * <p>
    * Default value: false; to keep the legacy behaviour backwards compatible.
    */
-  protected boolean jobExecutorAcquireExclusiveOverProcessHierarchies = false;
+  protected volatile boolean jobExecutorAcquireExclusiveOverProcessHierarchies = false;
 
   // EXTERNAL TASK /////////////////////////////////////////////////////////////
-  protected PriorityProvider<ExternalTaskActivityBehavior> externalTaskPriorityProvider;
+  protected volatile PriorityProvider<ExternalTaskActivityBehavior> externalTaskPriorityProvider;
 
   // MYBATIS SQL SESSION FACTORY //////////////////////////////////////////////
 
-  protected SqlSessionFactory sqlSessionFactory;
-  protected TransactionFactory transactionFactory;
+  protected volatile SqlSessionFactory sqlSessionFactory;
+  protected volatile TransactionFactory transactionFactory;
 
 
   // ID GENERATOR /////////////////////////////////////////////////////////////
-  protected IdGenerator idGenerator;
-  protected DataSource idGeneratorDataSource;
-  protected String idGeneratorDataSourceJndiName;
+  protected volatile IdGenerator idGenerator;
+  protected volatile DataSource idGeneratorDataSource;
+  protected volatile String idGeneratorDataSourceJndiName;
 
   // INCIDENT HANDLER /////////////////////////////////////////////////////////
 
-  protected Map<String, IncidentHandler> incidentHandlers;
-  protected List<IncidentHandler> customIncidentHandlers;
+  protected volatile Map<String, IncidentHandler> incidentHandlers;
+  protected volatile List<IncidentHandler> customIncidentHandlers;
 
   // BATCH ////////////////////////////////////////////////////////////////////
 
-  protected Map<String, BatchJobHandler<?>> batchHandlers;
-  protected List<BatchJobHandler<?>> customBatchJobHandlers;
+  protected volatile Map<String, BatchJobHandler<?>> batchHandlers;
+  protected volatile List<BatchJobHandler<?>> customBatchJobHandlers;
 
   /**
    * Number of jobs created by a batch seed job invocation
    */
-  protected int batchJobsPerSeed = 100;
+  protected volatile int batchJobsPerSeed = 100;
   /**
    * Number of invocations executed by a single batch job
    */
-  protected int invocationsPerBatchJob = DEFAULT_INVOCATIONS_PER_BATCH_JOB;
+  protected volatile int invocationsPerBatchJob = DEFAULT_INVOCATIONS_PER_BATCH_JOB;
 
   /**
    * Map to set an individual value for each batch type to
    * control the invocations per batch job. Unless specified
    * in this map, value of 'invocationsPerBatchJob' is used.
    */
-  protected Map<String, Integer> invocationsPerBatchJobByBatchType;
+  protected volatile Map<String, Integer> invocationsPerBatchJobByBatchType;
 
   /**
    * seconds to wait between polling for batch completion
    */
-  protected int batchPollTime = 30;
+  protected volatile int batchPollTime = 30;
   /**
    * default priority for batch jobs
    */
-  protected long batchJobPriority = DefaultPriorityProvider.DEFAULT_PRIORITY;
+  protected volatile long batchJobPriority = DefaultPriorityProvider.DEFAULT_PRIORITY;
 
   // OTHER ////////////////////////////////////////////////////////////////////
-  protected List<FormEngine> customFormEngines;
-  protected Map<String, FormEngine> formEngines;
+  protected volatile List<FormEngine> customFormEngines;
+  protected volatile Map<String, FormEngine> formEngines;
 
-  protected List<AbstractFormFieldType> customFormTypes;
-  protected FormTypes formTypes;
-  protected FormValidators formValidators;
-  protected Map<String, Class<? extends FormFieldValidator>> customFormFieldValidators;
+  protected volatile List<AbstractFormFieldType> customFormTypes;
+  protected volatile FormTypes formTypes;
+  protected volatile FormValidators formValidators;
+  protected volatile Map<String, Class<? extends FormFieldValidator>> customFormFieldValidators;
 
   /** don't throw parsing exceptions for Operaton Forms if set to true*/
-  protected boolean disableStrictOperatonFormParsing = false;
+  protected volatile boolean disableStrictOperatonFormParsing = false;
 
-  protected List<TypedValueSerializer> customPreVariableSerializers;
-  protected List<TypedValueSerializer> customPostVariableSerializers;
-  protected VariableSerializers variableSerializers;
-  protected VariableSerializerFactory fallbackSerializerFactory;
-  protected boolean implicitVariableUpdateDetectionEnabled = true;
+  protected volatile List<TypedValueSerializer> customPreVariableSerializers;
+  protected volatile List<TypedValueSerializer> customPostVariableSerializers;
+  protected volatile VariableSerializers variableSerializers;
+  protected volatile VariableSerializerFactory fallbackSerializerFactory;
+  protected volatile boolean implicitVariableUpdateDetectionEnabled = true;
 
-  protected String defaultSerializationFormat = Variables.SerializationDataFormats.JAVA.getName();
-  protected boolean javaSerializationFormatEnabled = false;
-  protected String defaultCharsetName = null;
-  protected Charset defaultCharset = null;
+  protected volatile String defaultSerializationFormat = Variables.SerializationDataFormats.JAVA.getName();
+  protected volatile boolean javaSerializationFormatEnabled = false;
+  protected volatile String defaultCharsetName = null;
+  protected volatile Charset defaultCharset = null;
 
-  protected ExpressionManager expressionManager;
-  protected ElProvider dmnElProvider;
-  protected ScriptingEngines scriptingEngines;
-  protected List<ResolverFactory> resolverFactories;
-  protected ScriptingEnvironment scriptingEnvironment;
-  protected List<ScriptEnvResolver> scriptEnvResolvers;
-  protected ScriptFactory scriptFactory;
-  protected ScriptEngineResolver scriptEngineResolver;
-  protected String scriptEngineNameJavaScript;
-  protected boolean autoStoreScriptVariables = false;
-  protected boolean enableScriptCompilation = true;
-  protected boolean enableScriptEngineCaching = true;
-  protected boolean enableFetchScriptEngineFromProcessApplication = true;
-  protected boolean enableScriptEngineLoadExternalResources = false;
-  protected boolean enableScriptEngineNashornCompatibility = false;
-  protected boolean configureScriptEngineHostAccess = true;
-  protected boolean skipIsolationLevelCheck = false;
+  protected volatile ExpressionManager expressionManager;
+  protected volatile ElProvider dmnElProvider;
+  protected volatile ScriptingEngines scriptingEngines;
+  protected volatile List<ResolverFactory> resolverFactories;
+  protected volatile ScriptingEnvironment scriptingEnvironment;
+  protected volatile List<ScriptEnvResolver> scriptEnvResolvers;
+  protected volatile ScriptFactory scriptFactory;
+  protected volatile ScriptEngineResolver scriptEngineResolver;
+  protected volatile String scriptEngineNameJavaScript;
+  protected volatile boolean autoStoreScriptVariables = false;
+  protected volatile boolean enableScriptCompilation = true;
+  protected volatile boolean enableScriptEngineCaching = true;
+  protected volatile boolean enableFetchScriptEngineFromProcessApplication = true;
+  protected volatile boolean enableScriptEngineLoadExternalResources = false;
+  protected volatile boolean enableScriptEngineNashornCompatibility = false;
+  protected volatile boolean configureScriptEngineHostAccess = true;
+  protected volatile boolean skipIsolationLevelCheck = false;
 
   /**
    * When set to false, the following behavior changes:
@@ -621,7 +621,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * <li>Tasks from CMMN cases are not returned by the {@link TaskQuery}.</li>
    * </ul>
    */
-  protected boolean cmmnEnabled = true;
+  protected volatile boolean cmmnEnabled = true;
 
     /**
    * When set to false, the following behavior changes:
@@ -632,7 +632,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    *   {@link DecisionRequirementsDefinition} to the engine.</li>
    * </ul>
    */
-  protected boolean dmnEnabled = true;
+  protected volatile boolean dmnEnabled = true;
   /**
    * When set to <code>false</code>, the following behavior changes:
    * <ul>
@@ -640,42 +640,42 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    *   <li>Standalone tasks are not returned by the TaskQuery.</li>
    * </ul>
    */
-  protected boolean standaloneTasksEnabled = true;
+  protected volatile boolean standaloneTasksEnabled = true;
 
-  protected boolean enableGracefulDegradationOnContextSwitchFailure = true;
+  protected volatile boolean enableGracefulDegradationOnContextSwitchFailure = true;
 
-  protected BusinessCalendarManager businessCalendarManager;
+  protected volatile BusinessCalendarManager businessCalendarManager;
 
-  protected String wsSyncFactoryClassName = DEFAULT_WS_SYNC_FACTORY;
+  protected volatile String wsSyncFactoryClassName = DEFAULT_WS_SYNC_FACTORY;
 
-  protected CommandContextFactory commandContextFactory;
-  protected TransactionContextFactory transactionContextFactory;
-  protected BpmnParseFactory bpmnParseFactory;
+  protected volatile CommandContextFactory commandContextFactory;
+  protected volatile TransactionContextFactory transactionContextFactory;
+  protected volatile BpmnParseFactory bpmnParseFactory;
 
   // cmmn
-  protected CmmnTransformFactory cmmnTransformFactory;
-  protected DefaultCmmnElementHandlerRegistry cmmnElementHandlerRegistry;
+  protected volatile CmmnTransformFactory cmmnTransformFactory;
+  protected volatile DefaultCmmnElementHandlerRegistry cmmnElementHandlerRegistry;
 
   // dmn
-  protected DefaultDmnEngineConfiguration dmnEngineConfiguration;
-  protected DmnEngine dmnEngine;
+  protected volatile DefaultDmnEngineConfiguration dmnEngineConfiguration;
+  protected volatile DmnEngine dmnEngine;
 
   /**
    * a list of DMN FEEL custom function providers
    */
-  protected List<FeelCustomFunctionProvider> dmnFeelCustomFunctionProviders;
+  protected volatile List<FeelCustomFunctionProvider> dmnFeelCustomFunctionProviders;
 
   /**
    * Enable DMN FEEL legacy behavior
    */
-  protected boolean dmnFeelEnableLegacyBehavior = false;
+  protected volatile boolean dmnFeelEnableLegacyBehavior = false;
 
   /**
    * Controls whether blank DMN table outputs are swallowed or returned as {@code null}.
    */
-  protected boolean dmnReturnBlankTableOutputAsNull = false;
+  protected volatile boolean dmnReturnBlankTableOutputAsNull = false;
 
-  protected HistoryLevel historyLevel;
+  protected volatile HistoryLevel historyLevel;
 
   /**
    * a list of supported history levels
@@ -685,95 +685,95 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /**
    * a list of supported custom history levels
    */
-  protected List<HistoryLevel> customHistoryLevels;
+  protected volatile List<HistoryLevel> customHistoryLevels;
 
-  protected List<BpmnParseListener> preParseListeners;
-  protected List<BpmnParseListener> postParseListeners;
+  protected volatile List<BpmnParseListener> preParseListeners;
+  protected volatile List<BpmnParseListener> postParseListeners;
 
-  protected List<CmmnTransformListener> customPreCmmnTransformListeners;
-  protected List<CmmnTransformListener> customPostCmmnTransformListeners;
+  protected volatile List<CmmnTransformListener> customPreCmmnTransformListeners;
+  protected volatile List<CmmnTransformListener> customPostCmmnTransformListeners;
 
-  protected Map<Object, Object> beans;
+  protected volatile Map<Object, Object> beans;
 
-  protected boolean isDbIdentityUsed = true;
-  protected boolean isDbHistoryUsed = true;
+  protected volatile boolean isDbIdentityUsed = true;
+  protected volatile boolean isDbHistoryUsed = true;
 
-  protected DelegateInterceptor delegateInterceptor;
+  protected volatile DelegateInterceptor delegateInterceptor;
 
-  protected CommandInterceptor actualCommandExecutor;
+  protected volatile CommandInterceptor actualCommandExecutor;
 
-  protected RejectedJobsHandler customRejectedJobsHandler;
+  protected volatile RejectedJobsHandler customRejectedJobsHandler;
 
-  protected Map<String, EventHandler> eventHandlers;
-  protected List<EventHandler> customEventHandlers;
+  protected volatile Map<String, EventHandler> eventHandlers;
+  protected volatile List<EventHandler> customEventHandlers;
 
-  protected FailedJobCommandFactory failedJobCommandFactory;
+  protected volatile FailedJobCommandFactory failedJobCommandFactory;
 
-  protected String databaseTablePrefix = "";
+  protected volatile String databaseTablePrefix = "";
 
   /**
    * In some situations you want to set the schema to use for table checks / generation if the database metadata
    * doesn't return that correctly, see https://jira.codehaus.org/browse/ACT-1220,
    * https://jira.codehaus.org/browse/ACT-1062
    */
-  protected String databaseSchema = null;
+  protected volatile String databaseSchema = null;
 
-  protected boolean isCreateDiagramOnDeploy = false;
+  protected volatile boolean isCreateDiagramOnDeploy = false;
 
-  protected ProcessApplicationManager processApplicationManager;
+  protected volatile ProcessApplicationManager processApplicationManager;
 
-  protected CorrelationHandler correlationHandler;
+  protected volatile CorrelationHandler correlationHandler;
 
-  protected ConditionHandler conditionHandler;
+  protected volatile ConditionHandler conditionHandler;
 
   /**
    * session factory to be used for obtaining identity provider sessions
    */
-  protected SessionFactory identityProviderSessionFactory;
+  protected volatile SessionFactory identityProviderSessionFactory;
 
-  protected PasswordEncryptor passwordEncryptor;
+  protected volatile PasswordEncryptor passwordEncryptor;
 
-  protected List<PasswordEncryptor> customPasswordChecker;
+  protected volatile List<PasswordEncryptor> customPasswordChecker;
 
-  protected PasswordManager passwordManager;
+  protected volatile PasswordManager passwordManager;
 
-  protected SaltGenerator saltGenerator;
+  protected volatile SaltGenerator saltGenerator;
 
-  protected Set<String> registeredDeployments;
+  protected volatile Set<String> registeredDeployments;
 
-  protected DeploymentHandlerFactory deploymentHandlerFactory;
+  protected volatile DeploymentHandlerFactory deploymentHandlerFactory;
 
-  protected ResourceAuthorizationProvider resourceAuthorizationProvider;
+  protected volatile ResourceAuthorizationProvider resourceAuthorizationProvider;
 
-  protected List<ProcessEnginePlugin> processEnginePlugins = new ArrayList<>();
+  protected volatile List<ProcessEnginePlugin> processEnginePlugins = new ArrayList<>();
 
-  protected HistoryEventProducer historyEventProducer;
+  protected volatile HistoryEventProducer historyEventProducer;
 
-  protected CmmnHistoryEventProducer cmmnHistoryEventProducer;
+  protected volatile CmmnHistoryEventProducer cmmnHistoryEventProducer;
 
-  protected DmnHistoryEventProducer dmnHistoryEventProducer;
+  protected volatile DmnHistoryEventProducer dmnHistoryEventProducer;
 
   /**
    * As an instance of {@link org.operaton.bpm.engine.impl.history.handler.CompositeHistoryEventHandler}
    * it contains all the provided history event handlers that process history events.
    */
-  protected HistoryEventHandler historyEventHandler;
+  protected volatile HistoryEventHandler historyEventHandler;
 
   /**
    *  Allows users to add additional {@link HistoryEventHandler}
    *  instances to process history events.
    */
-  protected List<HistoryEventHandler> customHistoryEventHandlers = new ArrayList<>();
+  protected volatile List<HistoryEventHandler> customHistoryEventHandlers = new ArrayList<>();
 
   /**
    * If true, the default {@link DbHistoryEventHandler} will be included in the list
    * of history event handlers.
    */
-  protected boolean enableDefaultDbHistoryEventHandler = true;
+  protected volatile boolean enableDefaultDbHistoryEventHandler = true;
 
-  protected PermissionProvider permissionProvider;
+  protected volatile PermissionProvider permissionProvider;
 
-  protected boolean isExecutionTreePrefetchEnabled = true;
+  protected volatile boolean isExecutionTreePrefetchEnabled = true;
 
   /**
    * If true, the incident handlers init as {@link CompositeIncidentHandler} and
@@ -789,76 +789,76 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * @see CompositeIncidentHandler
    * @see #initIncidentHandlers
    */
-  protected boolean isCompositeIncidentHandlersEnabled = false;
+  protected volatile boolean isCompositeIncidentHandlersEnabled = false;
 
   /**
    * If true the process engine will attempt to acquire an exclusive lock before
    * creating a deployment.
    */
-  protected boolean isDeploymentLockUsed = true;
+  protected volatile boolean isDeploymentLockUsed = true;
 
   /**
    * If true then several deployments will be processed strictly sequentially. When false they may be processed in parallel.
    */
-  protected boolean isDeploymentSynchronized = true;
+  protected volatile boolean isDeploymentSynchronized = true;
 
   /**
    * Allows setting whether the process engine should try reusing the first level entity cache.
    * Default setting is false, enabling it improves performance of asynchronous continuations.
    */
-  protected boolean isDbEntityCacheReuseEnabled = false;
+  protected volatile boolean isDbEntityCacheReuseEnabled = false;
 
-  protected boolean isInvokeCustomVariableListeners = true;
+  protected volatile boolean isInvokeCustomVariableListeners = true;
 
   /**
    * The process engine created by this configuration.
    */
-  protected ProcessEngineImpl processEngine;
+  protected volatile ProcessEngineImpl processEngine;
 
   /**
    * used to create instances for listeners, JavaDelegates, etc
    */
-  protected ArtifactFactory artifactFactory;
+  protected volatile ArtifactFactory artifactFactory;
 
-  protected DbEntityCacheKeyMapping dbEntityCacheKeyMapping = DbEntityCacheKeyMapping.defaultEntityCacheKeyMapping();
+  protected volatile DbEntityCacheKeyMapping dbEntityCacheKeyMapping = DbEntityCacheKeyMapping.defaultEntityCacheKeyMapping();
 
   /**
    * the metrics registry
    */
-  protected MetricsRegistry metricsRegistry;
+  protected volatile MetricsRegistry metricsRegistry;
 
-  protected DbMetricsReporter dbMetricsReporter;
+  protected volatile DbMetricsReporter dbMetricsReporter;
 
-  protected boolean isMetricsEnabled = true;
-  protected boolean isDbMetricsReporterActivate = true;
+  protected volatile boolean isMetricsEnabled = true;
+  protected volatile boolean isDbMetricsReporterActivate = true;
 
-  protected MetricsReporterIdProvider metricsReporterIdProvider;
+  protected volatile MetricsReporterIdProvider metricsReporterIdProvider;
 
-  protected boolean isTaskMetricsEnabled = true;
+  protected volatile boolean isTaskMetricsEnabled = true;
 
   /**
    * the historic job log host name
    */
-  protected String hostname;
-  protected HostnameProvider hostnameProvider;
+  protected volatile String hostname;
+  protected volatile HostnameProvider hostnameProvider;
 
   /**
    * handling of expressions submitted via API; can be used as guards against remote code execution
    */
-  protected boolean enableExpressionsInAdhocQueries = false;
-  protected boolean enableExpressionsInStoredQueries = true;
+  protected volatile boolean enableExpressionsInAdhocQueries = false;
+  protected volatile boolean enableExpressionsInStoredQueries = true;
 
   /**
    * If false, disables XML eXternal Entity (XXE) Processing. This provides protection against XXE Processing attacks.
    */
-  protected boolean enableXxeProcessing = false;
+  protected volatile boolean enableXxeProcessing = false;
 
   /**
    * If true, user operation log entries are only written if there is an
    * authenticated user present in the context. If false, user operation log
    * entries are written regardless of authentication state.
    */
-  protected boolean restrictUserOperationLogToAuthenticatedUsers = true;
+  protected volatile boolean restrictUserOperationLogToAuthenticatedUsers = true;
 
   /**
    * Maximum number of operation log entries written per synchronous operation.
@@ -870,200 +870,200 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    *   <li>1<x<=Long.MAX_VALUE: Write at most x operation logs per synchronous operation. If an operation exceeds x, a {@link ProcessEngineException} is thrown.</li>
    * </ul>
    */
-  protected long logEntriesPerSyncOperationLimit = 1L;
+  protected volatile long logEntriesPerSyncOperationLimit = 1L;
 
-  protected boolean disableStrictCallActivityValidation = false;
+  protected volatile boolean disableStrictCallActivityValidation = false;
 
-  protected boolean isBpmnStacktraceVerbose = false;
+  protected volatile boolean isBpmnStacktraceVerbose = false;
 
-  protected boolean forceCloseMybatisConnectionPool = true;
+  protected volatile boolean forceCloseMybatisConnectionPool = true;
 
-  protected TenantIdProvider tenantIdProvider = null;
+  protected volatile TenantIdProvider tenantIdProvider = null;
 
-  protected List<CommandChecker> commandCheckers = null;
+  protected volatile List<CommandChecker> commandCheckers = null;
 
-  protected List<String> adminGroups;
+  protected volatile List<String> adminGroups;
 
-  protected List<String> adminUsers;
+  protected volatile List<String> adminUsers;
 
   // Migration
-  protected MigrationActivityMatcher migrationActivityMatcher;
+  protected volatile MigrationActivityMatcher migrationActivityMatcher;
 
-  protected List<MigrationActivityValidator> customPreMigrationActivityValidators;
-  protected List<MigrationActivityValidator> customPostMigrationActivityValidators;
-  protected MigrationInstructionGenerator migrationInstructionGenerator;
+  protected volatile List<MigrationActivityValidator> customPreMigrationActivityValidators;
+  protected volatile List<MigrationActivityValidator> customPostMigrationActivityValidators;
+  protected volatile MigrationInstructionGenerator migrationInstructionGenerator;
 
-  protected List<MigrationInstructionValidator> customPreMigrationInstructionValidators;
-  protected List<MigrationInstructionValidator> customPostMigrationInstructionValidators;
-  protected List<MigrationInstructionValidator> migrationInstructionValidators;
+  protected volatile List<MigrationInstructionValidator> customPreMigrationInstructionValidators;
+  protected volatile List<MigrationInstructionValidator> customPostMigrationInstructionValidators;
+  protected volatile List<MigrationInstructionValidator> migrationInstructionValidators;
 
-  protected List<MigratingActivityInstanceValidator> customPreMigratingActivityInstanceValidators;
-  protected List<MigratingActivityInstanceValidator> customPostMigratingActivityInstanceValidators;
-  protected List<MigratingActivityInstanceValidator> migratingActivityInstanceValidators;
-  protected List<MigratingTransitionInstanceValidator> migratingTransitionInstanceValidators;
-  protected List<MigratingCompensationInstanceValidator> migratingCompensationInstanceValidators;
+  protected volatile List<MigratingActivityInstanceValidator> customPreMigratingActivityInstanceValidators;
+  protected volatile List<MigratingActivityInstanceValidator> customPostMigratingActivityInstanceValidators;
+  protected volatile List<MigratingActivityInstanceValidator> migratingActivityInstanceValidators;
+  protected volatile List<MigratingTransitionInstanceValidator> migratingTransitionInstanceValidators;
+  protected volatile List<MigratingCompensationInstanceValidator> migratingCompensationInstanceValidators;
 
   // Default user permission for task
-  protected Permission defaultUserPermissionForTask;
+  protected volatile Permission defaultUserPermissionForTask;
 
   /**
    * Historic instance permissions are disabled by default
    */
-  protected boolean enableHistoricInstancePermissions = false;
+  protected volatile boolean enableHistoricInstancePermissions = false;
 
-  protected boolean isUseSharedSqlSessionFactory = false;
+  protected volatile boolean isUseSharedSqlSessionFactory = false;
 
   //History cleanup configuration
-  protected String historyCleanupBatchWindowStartTime;
-  protected String historyCleanupBatchWindowEndTime = "00:00";
+  protected volatile String historyCleanupBatchWindowStartTime;
+  protected volatile String historyCleanupBatchWindowEndTime = "00:00";
 
-  protected Date historyCleanupBatchWindowStartTimeAsDate;
-  protected Date historyCleanupBatchWindowEndTimeAsDate;
+  protected volatile Date historyCleanupBatchWindowStartTimeAsDate;
+  protected volatile Date historyCleanupBatchWindowEndTimeAsDate;
 
-  protected Map<Integer, BatchWindowConfiguration> historyCleanupBatchWindows = new HashMap<>();
+  protected volatile Map<Integer, BatchWindowConfiguration> historyCleanupBatchWindows = new HashMap<>();
 
   //shortcuts for batch windows configuration available to be configured from XML
-  protected String mondayHistoryCleanupBatchWindowStartTime;
-  protected String mondayHistoryCleanupBatchWindowEndTime;
-  protected String tuesdayHistoryCleanupBatchWindowStartTime;
-  protected String tuesdayHistoryCleanupBatchWindowEndTime;
-  protected String wednesdayHistoryCleanupBatchWindowStartTime;
-  protected String wednesdayHistoryCleanupBatchWindowEndTime;
-  protected String thursdayHistoryCleanupBatchWindowStartTime;
-  protected String thursdayHistoryCleanupBatchWindowEndTime;
-  protected String fridayHistoryCleanupBatchWindowStartTime;
-  protected String fridayHistoryCleanupBatchWindowEndTime;
-  protected String saturdayHistoryCleanupBatchWindowStartTime;
-  protected String saturdayHistoryCleanupBatchWindowEndTime;
-  protected String sundayHistoryCleanupBatchWindowStartTime;
-  protected String sundayHistoryCleanupBatchWindowEndTime;
+  protected volatile String mondayHistoryCleanupBatchWindowStartTime;
+  protected volatile String mondayHistoryCleanupBatchWindowEndTime;
+  protected volatile String tuesdayHistoryCleanupBatchWindowStartTime;
+  protected volatile String tuesdayHistoryCleanupBatchWindowEndTime;
+  protected volatile String wednesdayHistoryCleanupBatchWindowStartTime;
+  protected volatile String wednesdayHistoryCleanupBatchWindowEndTime;
+  protected volatile String thursdayHistoryCleanupBatchWindowStartTime;
+  protected volatile String thursdayHistoryCleanupBatchWindowEndTime;
+  protected volatile String fridayHistoryCleanupBatchWindowStartTime;
+  protected volatile String fridayHistoryCleanupBatchWindowEndTime;
+  protected volatile String saturdayHistoryCleanupBatchWindowStartTime;
+  protected volatile String saturdayHistoryCleanupBatchWindowEndTime;
+  protected volatile String sundayHistoryCleanupBatchWindowStartTime;
+  protected volatile String sundayHistoryCleanupBatchWindowEndTime;
 
-  protected int historyCleanupDegreeOfParallelism = 1;
+  protected volatile int historyCleanupDegreeOfParallelism = 1;
 
-  protected String historyTimeToLive;
+  protected volatile String historyTimeToLive;
 
   /**
    * Feature flag that fails the deployment of process, decision, and case resources if their historyTimeToLive is {@code null}.
    */
-  protected boolean enforceHistoryTimeToLive = true;
+  protected volatile boolean enforceHistoryTimeToLive = true;
 
-  protected String batchOperationHistoryTimeToLive;
-  protected Map<String, String> batchOperationsForHistoryCleanup;
-  protected Map<String, Integer> parsedBatchOperationsForHistoryCleanup;
+  protected volatile String batchOperationHistoryTimeToLive;
+  protected volatile Map<String, String> batchOperationsForHistoryCleanup;
+  protected volatile Map<String, Integer> parsedBatchOperationsForHistoryCleanup;
 
   /**
    * Default priority for history cleanup jobs. */
-  protected long historyCleanupJobPriority = DefaultPriorityProvider.DEFAULT_PRIORITY;
+  protected volatile long historyCleanupJobPriority = DefaultPriorityProvider.DEFAULT_PRIORITY;
 
   /**
    * Specifies how often a cleanup job will be executed before an incident is raised.
    * This property overrides the global {@code defaultNumberOfRetries} property which has a default value of {@code 3}.
    */
-  protected int historyCleanupDefaultNumberOfRetries = Integer.MIN_VALUE;
+  protected volatile int historyCleanupDefaultNumberOfRetries = Integer.MIN_VALUE;
 
   /**
    * Time to live for historic job log entries written by history cleanup jobs.
    * Must be an ISO-8601 conform String specifying only a number of days. Only
    * works in conjunction with removal-time-based cleanup strategy.
    */
-  protected String historyCleanupJobLogTimeToLive;
+  protected volatile String historyCleanupJobLogTimeToLive;
 
-  protected String taskMetricsTimeToLive;
-  protected Integer parsedTaskMetricsTimeToLive;
+  protected volatile String taskMetricsTimeToLive;
+  protected volatile Integer parsedTaskMetricsTimeToLive;
 
-  protected BatchWindowManager batchWindowManager = new DefaultBatchWindowManager();
+  protected volatile BatchWindowManager batchWindowManager = new DefaultBatchWindowManager();
 
-  protected HistoryRemovalTimeProvider historyRemovalTimeProvider;
+  protected volatile HistoryRemovalTimeProvider historyRemovalTimeProvider;
 
-  protected String historyRemovalTimeStrategy;
+  protected volatile String historyRemovalTimeStrategy;
 
-  protected String historyCleanupStrategy;
+  protected volatile String historyCleanupStrategy;
 
   /**
    * Size of batch in which history cleanup data will be deleted. {@link HistoryCleanupBatch#MAX_BATCH_SIZE} must be respected.
    */
-  private int historyCleanupBatchSize = 500;
+  private volatile int historyCleanupBatchSize = 500;
   /**
    * Indicates the minimal amount of data to trigger the history cleanup.
    */
-  private int historyCleanupBatchThreshold = 10;
+  private volatile int historyCleanupBatchThreshold = 10;
 
-  private boolean historyCleanupMetricsEnabled = true;
+  private volatile boolean historyCleanupMetricsEnabled = true;
 
   /**
    * Controls whether engine participates in history cleanup or not.
    */
-  protected boolean historyCleanupEnabled = true;
+  protected volatile boolean historyCleanupEnabled = true;
 
-  private int failedJobListenerMaxRetries = DEFAULT_FAILED_JOB_LISTENER_MAX_RETRIES;
+  private volatile int failedJobListenerMaxRetries = DEFAULT_FAILED_JOB_LISTENER_MAX_RETRIES;
 
-  protected String failedJobRetryTimeCycle;
+  protected volatile String failedJobRetryTimeCycle;
 
   // login attempts ///////////////////////////////////////////////////////
-  protected int loginMaxAttempts = 10;
-  protected int loginDelayFactor = 2;
-  protected int loginDelayMaxTime = 60;
-  protected int loginDelayBase = 3;
+  protected volatile int loginMaxAttempts = 10;
+  protected volatile int loginDelayFactor = 2;
+  protected volatile int loginDelayMaxTime = 60;
+  protected volatile int loginDelayBase = 3;
 
   // webapps logging
-  protected boolean webappsAuthenticationLoggingEnabled = false;
+  protected volatile boolean webappsAuthenticationLoggingEnabled = false;
 
   // max results limit
-  protected int queryMaxResultsLimit = Integer.MAX_VALUE;
+  protected volatile int queryMaxResultsLimit = Integer.MAX_VALUE;
 
   // logging context property names (with default values)
-  protected String loggingContextActivityId = "activityId";
-  protected String loggingContextActivityName = "activityName";
-  protected String loggingContextApplicationName = "applicationName";
-  protected String loggingContextBusinessKey;// default == null => disabled by default
-  protected String loggingContextProcessDefinitionId = "processDefinitionId";
-  protected String loggingContextProcessDefinitionKey;// default == null => disabled by default
-  protected String loggingContextProcessInstanceId = "processInstanceId";
-  protected String loggingContextTenantId = "tenantId";
-  protected String loggingContextEngineName = "engineName";
+  protected volatile String loggingContextActivityId = "activityId";
+  protected volatile String loggingContextActivityName = "activityName";
+  protected volatile String loggingContextApplicationName = "applicationName";
+  protected volatile String loggingContextBusinessKey;// default == null => disabled by default
+  protected volatile String loggingContextProcessDefinitionId = "processDefinitionId";
+  protected volatile String loggingContextProcessDefinitionKey;// default == null => disabled by default
+  protected volatile String loggingContextProcessInstanceId = "processInstanceId";
+  protected volatile String loggingContextTenantId = "tenantId";
+  protected volatile String loggingContextEngineName = "engineName";
 
   // logging levels (with default values)
-  protected String logLevelBpmnStackTrace = "DEBUG";
+  protected volatile String logLevelBpmnStackTrace = "DEBUG";
 
   // OLEs for foreign key constraint violations on databases that rollback on SQL exceptions, e.g. PostgreSQL
-  protected boolean enableOptimisticLockingOnForeignKeyViolation = true;
+  protected volatile boolean enableOptimisticLockingOnForeignKeyViolation = true;
 
-  protected int telemetryRequestTimeout;
-  protected TelemetryDataImpl telemetryData;
-  protected DiagnosticsRegistry diagnosticsRegistry;
-  protected DiagnosticsCollector diagnosticsCollector;
+  protected volatile int telemetryRequestTimeout;
+  protected volatile TelemetryDataImpl telemetryData;
+  protected volatile DiagnosticsRegistry diagnosticsRegistry;
+  protected volatile DiagnosticsCollector diagnosticsCollector;
 
   // Exception Codes ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   /**
    * Disables the {@link ExceptionCodeInterceptor} and therefore the whole exception code feature.
    */
-  protected boolean disableExceptionCode;
+  protected volatile boolean disableExceptionCode;
 
   /**
    * Disables the default implementation of {@link ExceptionCodeProvider} which allows overriding the reserved
    * exception codes > {@link ExceptionCodeInterceptor#MAX_CUSTOM_CODE} or < {@link ExceptionCodeInterceptor#MIN_CUSTOM_CODE}.
    */
-  protected boolean disableBuiltinExceptionCodeProvider;
+  protected volatile boolean disableBuiltinExceptionCodeProvider;
 
   /**
    * Allows registering a custom implementation of a {@link ExceptionCodeProvider}
    * allowing to provide custom exception codes.
    */
-  protected ExceptionCodeProvider customExceptionCodeProvider;
+  protected volatile ExceptionCodeProvider customExceptionCodeProvider;
 
   /**
    * Holds the default implementation of {@link ExceptionCodeProvider}.
    */
-  protected ExceptionCodeProvider builtinExceptionCodeProvider;
+  protected volatile ExceptionCodeProvider builtinExceptionCodeProvider;
 
   /** Controls whether the time cycle is re-evaluated when due. */
-  protected boolean reevaluateTimeCycleWhenDue = false;
+  protected volatile boolean reevaluateTimeCycleWhenDue = false;
 
   /**
    * Size of batch in which removal time data will be updated. {@link ProcessSetRemovalTimeJobHandler#MAX_CHUNK_SIZE} must be respected.
    */
-  protected int removalTimeUpdateChunkSize = 500;
+  protected volatile int removalTimeUpdateChunkSize = 500;
 
   /**
    * @return {@code true} if the exception code feature is disabled and vice-versa.
@@ -1721,13 +1721,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected static Properties databaseTypeMappings = getDefaultDatabaseTypeMappings();
   protected static final String MY_SQL_PRODUCT_NAME = "MySQL";
   protected static final String MARIA_DB_PRODUCT_NAME = "MariaDB";
+  protected static final String MARIA_DB_IDENTIFIER = "mariadb";
   protected static final String POSTGRES_DB_PRODUCT_NAME = "PostgreSQL";
 
   protected static Properties getDefaultDatabaseTypeMappings() {
     Properties databaseTypeMappings = new Properties();
     databaseTypeMappings.setProperty("H2", "h2");
     databaseTypeMappings.setProperty(MY_SQL_PRODUCT_NAME, "mysql");
-    databaseTypeMappings.setProperty(MARIA_DB_PRODUCT_NAME, "mariadb");
+    databaseTypeMappings.setProperty(MARIA_DB_PRODUCT_NAME, MARIA_DB_IDENTIFIER);
     databaseTypeMappings.setProperty("Oracle", "oracle");
     databaseTypeMappings.setProperty(POSTGRES_DB_PRODUCT_NAME, "postgres");
     databaseTypeMappings.setProperty("Microsoft SQL Server", "mssql");
@@ -1793,7 +1794,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected String checkForMariaDb(DatabaseMetaData databaseMetaData, String databaseName) {
     try {
       String databaseProductVersion = databaseMetaData.getDatabaseProductVersion();
-      if (databaseProductVersion != null && databaseProductVersion.toLowerCase().contains("mariadb")) {
+      if (databaseProductVersion != null && databaseProductVersion.toLowerCase().contains(MARIA_DB_IDENTIFIER)) {
         return MARIA_DB_PRODUCT_NAME;
       }
     } catch (SQLException ignore) {
@@ -1801,14 +1802,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     try {
       String driverName = databaseMetaData.getDriverName();
-      if (driverName != null && driverName.toLowerCase().contains("mariadb")) {
+      if (driverName != null && driverName.toLowerCase().contains(MARIA_DB_IDENTIFIER)) {
         return MARIA_DB_PRODUCT_NAME;
       }
     } catch (SQLException ignore) {
     }
 
     String metaDataClassName = databaseMetaData.getClass().getName();
-    if (metaDataClassName != null && metaDataClassName.toLowerCase().contains("mariadb")) {
+    if (metaDataClassName != null && metaDataClassName.toLowerCase().contains(MARIA_DB_IDENTIFIER)) {
       return MARIA_DB_PRODUCT_NAME;
     }
 
@@ -1883,6 +1884,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
   }
 
+  @SuppressWarnings("unused")
   public static void initSqlSessionFactoryProperties(Properties properties, String databaseTablePrefix, String databaseType) {
 
     if (databaseType != null) {
@@ -3512,33 +3514,33 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   /**
-   * @deprecated use {@link #getCustomPreBPMNParseListeners} instead.
+   * @deprecated Use {@link #getCustomPreBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public List<BpmnParseListener> getPreParseListeners() {
     return preParseListeners;
   }
 
   /**
-   * @deprecated use {@link #setCustomPreBPMNParseListeners} instead.
+   * @deprecated Use {@link #setCustomPreBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public void setPreParseListeners(List<BpmnParseListener> preParseListeners) {
     this.preParseListeners = preParseListeners;
   }
 
   /**
-   * @deprecated use {@link #getCustomPostBPMNParseListeners} instead.
+   * @deprecated Use {@link #getCustomPostBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public List<BpmnParseListener> getPostParseListeners() {
     return postParseListeners;
   }
 
   /**
-   * @deprecated use {@link #setCustomPostBPMNParseListeners} instead.
+   * @deprecated Use {@link #setCustomPostBPMNParseListeners} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public void setPostParseListeners(List<BpmnParseListener> postParseListeners) {
     this.postParseListeners = postParseListeners;
   }
@@ -4451,17 +4453,17 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   /**
-   * @deprecated use {@link #getHostnameProvider()} instead.
+   * @deprecated Use {@link #getHostnameProvider()} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public MetricsReporterIdProvider getMetricsReporterIdProvider() {
     return metricsReporterIdProvider;
   }
 
   /**
-   * @deprecated use {@link #setHostnameProvider(HostnameProvider)} instead.
+   * @deprecated Use {@link #setHostnameProvider(HostnameProvider)} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public ProcessEngineConfigurationImpl setMetricsReporterIdProvider(MetricsReporterIdProvider metricsReporterIdProvider) {
     this.metricsReporterIdProvider = metricsReporterIdProvider;
     return this;

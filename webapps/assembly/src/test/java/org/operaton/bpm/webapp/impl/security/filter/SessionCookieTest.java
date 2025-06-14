@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,7 +18,6 @@ package org.operaton.bpm.webapp.impl.security.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Ignore;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.util.HeaderRule;
 import org.junit.Rule;
@@ -156,9 +155,8 @@ public class SessionCookieTest {
     // then
     assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "Lax", true));
   }
-  
+
   @Test
-  @Ignore("Cookie JSESSIONID changed instead of MYCOOKIENAME")
   public void shouldConfigureCookieName() {
     // given
     headerRule.startServer("changed_cookie_name_web.xml", "session");
@@ -181,5 +179,5 @@ public class SessionCookieTest {
     // then
     assertThat(headerRule.getCookieHeader()).matches(headerRule.getSessionCookieRegex("operaton", "Lax", false));
   }
-  
+
 }

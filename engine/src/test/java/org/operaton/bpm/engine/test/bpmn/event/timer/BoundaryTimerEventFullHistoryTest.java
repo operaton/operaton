@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,38 +16,30 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Frederik Heremans
  */
-public class BoundaryTimerEventFullHistoryTest {
+class BoundaryTimerEventFullHistoryTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(
-      "org/operaton/bpm/engine/test/standalone/history/fullhistory.operaton.cfg.xml");
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .configurationResource("org/operaton/bpm/engine/test/standalone/history/fullhistory.operaton.cfg.xml").build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-  }
+  RuntimeService runtimeService;
 
   @Deployment
   @Test
-  public void testSetProcessVariablesFromTaskWhenTimerOnTask() {
+  void testSetProcessVariablesFromTaskWhenTimerOnTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerVariablesProcess");
     runtimeService.setVariable(processInstance.getId(), "myVar", 123456L);
   }

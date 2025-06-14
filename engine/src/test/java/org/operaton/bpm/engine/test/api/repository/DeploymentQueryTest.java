@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Date;
 import java.util.List;
@@ -63,13 +63,10 @@ class DeploymentQueryTest {
       .addClasspathResource("org/operaton/bpm/engine/test/repository/two.bpmn20.xml")
       .deploy()
       .getId();
-
-
   }
 
   @AfterEach
   void tearDown() {
-
     repositoryService.deleteDeployment(deploymentOneId, true);
     repositoryService.deleteDeployment(deploymentTwoId, true);
   }
@@ -80,12 +77,9 @@ class DeploymentQueryTest {
     assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
 
-    try {
-      query.singleResult();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Query return 2 results instead of max 1");
-    }
+    assertThatThrownBy(query::singleResult)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Query return 2 results instead of max 1");
   }
 
   @Test
@@ -104,12 +98,9 @@ class DeploymentQueryTest {
     assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
-    try {
-      deploymentQuery.deploymentId(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Deployment id is null");
-    }
+    assertThatThrownBy(() -> deploymentQuery.deploymentId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Deployment id is null");
   }
 
   @Test
@@ -128,12 +119,9 @@ class DeploymentQueryTest {
     assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
-    try {
-      deploymentQuery.deploymentName(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("deploymentName is null");
-    }
+    assertThatThrownBy(() -> deploymentQuery.deploymentName(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("deploymentName is null");
   }
 
   @Test
@@ -156,12 +144,9 @@ class DeploymentQueryTest {
     assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
-    try {
-      deploymentQuery.deploymentNameLike(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("deploymentNameLike is null");
-    }
+    assertThatThrownBy(() -> deploymentQuery.deploymentNameLike(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("deploymentNameLike is null");
   }
 
   @Test
@@ -176,12 +161,9 @@ class DeploymentQueryTest {
     assertThat(count).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
-    try {
-      deploymentQuery.deploymentBefore(null);
-      fail("Exception expected");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentQuery.deploymentBefore(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessage("deploymentBefore is null");
   }
 
   @Test
@@ -196,12 +178,8 @@ class DeploymentQueryTest {
     assertThat(count).isEqualTo(2);
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
-    try {
-      deploymentQuery.deploymentAfter(null);
-      fail("Exception expected");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> deploymentQuery.deploymentAfter(null))
+      .isInstanceOf(NullValueException.class);
   }
 
   @Test

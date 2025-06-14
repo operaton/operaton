@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.jboss.logging.MDC;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -37,27 +42,19 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.logging.MdcAccess;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
-import org.jboss.logging.MDC;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
-public class ProcessDataLoggingContextTest {
+class ProcessDataLoggingContextTest {
 
   private static final String PROCESS = "process";
   private static final String B_KEY = "businessKey1";
@@ -75,47 +72,45 @@ public class ProcessDataLoggingContextTest {
   private final RuntimeContainerDelegate runtimeContainerDelegate = RuntimeContainerDelegate.INSTANCE.get();
   private boolean defaultEngineRegistered;
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setLoggingContextBusinessKey("businessKey"));
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(configuration -> {
+      configuration.setProcessEngineName("reusableEngine");
+      configuration.setLoggingContextBusinessKey("businessKey");
+    })
+    .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  RuntimeService runtimeService;
+  TaskService taskService;
 
-  @Rule
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  TestMdcFacade testMDCFacade;
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
-
-  private RuntimeService runtimeService;
-  private TaskService taskService;
-
-  private TestMdcFacade testMDCFacade;
-
-  @Before
-  public void setupServices() {
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
+  @BeforeEach
+  void setupServices() {
     defaultEngineRegistered = false;
     testMDCFacade = TestMdcFacade.empty();
   }
 
-  @After
-  public void resetClock() {
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
     testMDCFacade.clear();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     if (defaultEngineRegistered) {
       runtimeContainerDelegate.unregisterProcessEngine(engineRule.getProcessEngine());
     }
   }
 
-  @After
-  public void resetLogConfiguration() {
+  @AfterEach
+  void resetLogConfiguration() {
     engineRule.getProcessEngineConfiguration()
       .setLoggingContextActivityId("activityId")
       .setLoggingContextApplicationName("applicationName")
@@ -128,7 +123,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = PVM_LOGGER, level = "DEBUG")
-  public void shouldNotLogBusinessKeyIfNotConfigured() {
+  void shouldNotLogBusinessKeyIfNotConfigured() {
     // given
     engineRule.getProcessEngineConfiguration().setLoggingContextBusinessKey(null);
     manageDeployment(modelOneTaskProcess());
@@ -136,12 +131,12 @@ public class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then
-    assertActivityLogs(instance, "ENGINE-200", Arrays.asList("start", "waitState", "end"), true, false, true, true, "default");
+    assertActivityLogs(instance, "ENGINE-200", Arrays.asList("start", "waitState", "end"), true, false, true, true, engineRule.getProcessEngine().getName());
   }
 
   @Test
   @WatchLogger(loggerNames = PVM_LOGGER, level = "DEBUG")
-  public void shouldNotLogDisabledProperties() {
+  void shouldNotLogDisabledProperties() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setLoggingContextActivityId(null)
@@ -158,7 +153,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = {PVM_LOGGER, CMD_LOGGER}, level = "DEBUG")
-  public void shouldLogMdcPropertiesOnlyInActivityContext() {
+  void shouldLogMdcPropertiesOnlyInActivityContext() {
     // given
     manageDeployment(modelOneTaskProcess());
     // when
@@ -172,7 +167,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = {PVM_LOGGER, CMD_LOGGER}, level = "DEBUG")
-  public void shouldPreserveMDCExternalPropertiesAfterJobCompletion() {
+  void shouldPreserveMDCExternalPropertiesAfterJobCompletion() {
     // given
 
     // a set of custom Logging Context parameters that populate the MDC prior to any process instance execution
@@ -198,9 +193,9 @@ public class ProcessDataLoggingContextTest {
     // then the activity log events should use the process instance specific values (not their external property counterparts)
     assertThat(loggingRule.getFilteredLog("ENGINE-200")).hasSize(13);
 
-    assertActivityLogsAtRange(0, 3, "start", "process:(.*):(.*)", "(\\d)+", "start", "testTenant", "businessKey1", "default");
-    assertActivityLogsAtRange(4, 7, "waitState", "process:(.*):(.*)", "(\\d)+", "waitState", "testTenant", "businessKey1", "default");
-    assertActivityLogsAtRange(8, 12, "end", "process:(.*):(.*)", "(\\d)+", "end", "testTenant", "businessKey1", "default");
+    assertActivityLogsAtRange(0, 3, "start", "process:(.*):(.*)", "(\\d)+", "start", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
+    assertActivityLogsAtRange(4, 7, "waitState", "process:(.*):(.*)", "(\\d)+", "waitState", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
+    assertActivityLogsAtRange(8, 12, "end", "process:(.*):(.*)", "(\\d)+", "end", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
 
     // And the MDC External Properties are in the same state as prior to the commands execution
     testMDCFacade.assertAllInsertedPropertiesAreInMdc();
@@ -208,7 +203,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = {NestedLoggingDelegate.LOGGER_NAME}, level = "DEBUG")
-  public void shouldPreserveMDCExternalPropertiesInFlowsWithInnerCommands() {
+  void shouldPreserveMDCExternalPropertiesInFlowsWithInnerCommands() {
     // given
 
     // a set of custom Logging Context parameters that populate the MDC prior to any process instance execution
@@ -254,7 +249,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = {PVM_LOGGER, CMD_LOGGER}, level = "DEBUG")
-  public void shouldPreserveThirdPartyMDCProperties() {
+  void shouldPreserveThirdPartyMDCProperties() {
     // given
 
     // Logging Context Properties
@@ -283,9 +278,9 @@ public class ProcessDataLoggingContextTest {
     // then the activity log events should use the process instance specific values (not their external property counterparts)
     assertThat(loggingRule.getFilteredLog("ENGINE-200")).hasSize(13);
 
-    assertActivityLogsAtRange(0, 3, "start", "process:(.*):(.*)", "(\\d)+", "start", "testTenant", "businessKey1", "default");
-    assertActivityLogsAtRange(4, 7, "waitState", "process:(.*):(.*)", "(\\d)+", "waitState", "testTenant", "businessKey1", "default");
-    assertActivityLogsAtRange(8, 12, "end", "process:(.*):(.*)", "(\\d)+", "end", "testTenant", "businessKey1", "default");
+    assertActivityLogsAtRange(0, 3, "start", "process:(.*):(.*)", "(\\d)+", "start", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
+    assertActivityLogsAtRange(4, 7, "waitState", "process:(.*):(.*)", "(\\d)+", "waitState", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
+    assertActivityLogsAtRange(8, 12, "end", "process:(.*):(.*)", "(\\d)+", "end", "testTenant", "businessKey1", engineRule.getProcessEngine().getName());
 
     // and the MDC should contain both the logging context properties & the third party property prior to any command execution
     Map<String, Object> mdcMap = MDC.getMap();
@@ -297,7 +292,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = {PVM_LOGGER, CMD_LOGGER}, level = "DEBUG")
-  public void shouldLogCustomMdcPropertiesOnlyInActivityContext() {
+  void shouldLogCustomMdcPropertiesOnlyInActivityContext() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setLoggingContextActivityId("actId")
@@ -317,7 +312,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = {NestedLoggingDelegate.LOGGER_NAME}, level = "DEBUG")
-  public void shouldLogCustomMdcPropertiesWithNestedCommand() {
+  void shouldLogCustomMdcPropertiesWithNestedCommand() {
     // given
     engineRule.getProcessEngineConfiguration()
       .setLoggingContextActivityId("actId")
@@ -351,7 +346,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = PVM_LOGGER, level = "DEBUG")
-  public void shouldLogMdcPropertiesForAsyncBeforeInTaskContext() {
+  void shouldLogMdcPropertiesForAsyncBeforeInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -368,7 +363,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = PVM_LOGGER, level = "DEBUG")
-  public void shouldLogMdcPropertiesForAsyncAfterInTaskContext() {
+  void shouldLogMdcPropertiesForAsyncAfterInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -385,7 +380,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = {JOBEXEC_LOGGER, PVM_LOGGER}, level = "DEBUG")
-  public void shouldLogMdcPropertiesForTimerInTaskContext() {
+  void shouldLogMdcPropertiesForTimerInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -406,7 +401,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromDelegateInTaskContext() {
+  void shouldLogFailureFromDelegateInTaskContext() {
     // given
     manageDeployment(modelDelegateFailure());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
@@ -424,7 +419,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromDelegateInTaskContextWithChangedBusinessKey() {
+  void shouldLogFailureFromDelegateInTaskContextWithChangedBusinessKey() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -450,7 +445,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromCreateTaskListenerInTaskContext() {
+  void shouldLogFailureFromCreateTaskListenerInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -473,7 +468,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromAssignTaskListenerInTaskContext() {
+  void shouldLogFailureFromAssignTaskListenerInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -495,7 +490,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromCompleteTaskListenerInTaskContext() {
+  void shouldLogFailureFromCompleteTaskListenerInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -517,7 +512,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromDeleteTaskListenerInTaskContext() {
+  void shouldLogFailureFromDeleteTaskListenerInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -539,7 +534,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromExecutionListenerInTaskContext() {
+  void shouldLogFailureFromExecutionListenerInTaskContext() {
     // given
     manageDeployment(modelExecutionListenerFailure());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
@@ -557,7 +552,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = {CONTEXT_LOGGER, JOBEXEC_LOGGER}, level = "WARN")
-  public void shouldLogFailureFromTimeoutTaskListenerInTaskContext() {
+  void shouldLogFailureFromTimeoutTaskListenerInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -576,7 +571,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromParallelTasksInCorrectTaskContext() {
+  void shouldLogFailureFromParallelTasksInCorrectTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -605,7 +600,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "DEBUG")
-  public void shouldLogFailureFromNestedDelegateInOuterContext() {
+  void shouldLogFailureFromNestedDelegateInOuterContext() {
     // given
     manageDeployment("failing.bpmn", Bpmn.createExecutableProcess(FAILING_PROCESS)
         .startEvent("failing_start")
@@ -636,7 +631,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "DEBUG")
-  public void shouldLogFailureFromNestedExecutionListenerInOuterContext() {
+  void shouldLogFailureFromNestedExecutionListenerInOuterContext() {
     // given
     manageDeployment("failing.bpmn", Bpmn.createExecutableProcess(FAILING_PROCESS)
         .startEvent("failing_start")
@@ -668,7 +663,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromMessageCorrelationListenerInEventContext() {
+  void shouldLogFailureFromMessageCorrelationListenerInEventContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -691,7 +686,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromEventSubprocessInSubprocessTaskContext() {
+  void shouldLogFailureFromEventSubprocessInSubprocessTaskContext() {
     // given
     testRule.deployForTenant(TENANT_ID, "org/operaton/bpm/engine/test/logging/ProcessDataLoggingContextTest.shouldLogFailureFromEventSubprocessInSubprocessTaskContext.bpmn20.xml");
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS);
@@ -708,7 +703,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogInternalFailureInTaskContext() {
+  void shouldLogInternalFailureInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -732,7 +727,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogInputOutputMappingFailureInTaskContext() {
+  void shouldLogInputOutputMappingFailureInTaskContext() {
     // given
     manageDeployment(Bpmn.createExecutableProcess(PROCESS)
         .startEvent("start")
@@ -757,7 +752,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromDelegateInTaskContextInPa() {
+  void shouldLogFailureFromDelegateInTaskContextInPa() {
     // given
     registerProcessEngine();
     TestApplicationReusingExistingEngine application = new TestApplicationReusingExistingEngine() {
@@ -782,7 +777,7 @@ public class ProcessDataLoggingContextTest {
 
   @Test
   @WatchLogger(loggerNames = CONTEXT_LOGGER, level = "ERROR")
-  public void shouldLogFailureFromExecutionListenerInTaskContextInPa() {
+  void shouldLogFailureFromExecutionListenerInTaskContextInPa() {
     // given
     registerProcessEngine();
     TestApplicationReusingExistingEngine application = new TestApplicationReusingExistingEngine() {
@@ -839,11 +834,11 @@ public class ProcessDataLoggingContextTest {
   }
 
   protected void assertActivityLogsPresent(ProcessInstance instance, List<String> expectedActivities) {
-    assertActivityLogs(instance, "ENGINE-200", expectedActivities, true, true, true, true, "default");
+    assertActivityLogs(instance, "ENGINE-200", expectedActivities, true, true, true, true, engineRule.getProcessEngine().getName());
   }
 
   protected void assertActivityLogsPresentWithoutMdc(String filter) {
-    assertActivityLogs(null, filter, null, false, false, false, false, "default");
+    assertActivityLogs(null, filter, null, false, false, false, false, engineRule.getProcessEngine().getName());
   }
 
   protected void assertActivityLogs(ProcessInstance instance, String filter, List<String> expectedActivities, boolean isMdcPresent,
@@ -855,7 +850,7 @@ public class ProcessDataLoggingContextTest {
 
   protected void assertActivityLogsPresent(ProcessInstance instance, List<String> expectedActivities, String activityIdProperty,
       String appNameProperty, String businessKeyProperty, String definitionIdProperty, String instanceIdProperty, String tenantIdProperty, String engineNameProperty) {
-    assertLogs(instance, "ENGINE-200", expectedActivities, null, instance.getBusinessKey(), instance.getProcessDefinitionId(), "default", true, null,
+    assertLogs(instance, "ENGINE-200", expectedActivities, null, instance.getBusinessKey(), instance.getProcessDefinitionId(), engineRule.getProcessEngine().getName(), true, null,
         activityIdProperty, appNameProperty, businessKeyProperty, definitionIdProperty, instanceIdProperty, tenantIdProperty, engineNameProperty);
   }
 
@@ -873,7 +868,7 @@ public class ProcessDataLoggingContextTest {
 
   protected void assertFailureLogPresent(ProcessInstance instance, String filter, String activityId, String appName,
       String businessKey, int numberOfFailureLogs) {
-    assertActivityLogs(instance, filter, Arrays.asList(activityId), appName, businessKey, instance.getProcessDefinitionId(), "default", true,
+    assertActivityLogs(instance, filter, Arrays.asList(activityId), appName, businessKey, instance.getProcessDefinitionId(), engineRule.getProcessEngine().getName(), true,
         numberOfFailureLogs);
   }
 

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,7 @@ package org.operaton.bpm.engine.authorization;
  *
  */
 public enum UserOperationLogCategoryPermissions implements Permission {
-  
+
   /** The none permission means 'no action', 'doing nothing'.
    * It does not mean that no permissions are granted. */
   NONE("NONE", 0),
@@ -46,7 +46,7 @@ public enum UserOperationLogCategoryPermissions implements Permission {
 
   /** Indicates that UPDATE interactions on defined categories are permitted. */
   UPDATE("UPDATE", 4),
-  
+
   /** Indicates that DELETE interactions on defined categories are permitted. */
   DELETE("DELETE", 16);
 
@@ -55,7 +55,7 @@ public enum UserOperationLogCategoryPermissions implements Permission {
   private final String name;
   private final int id;
 
-  private UserOperationLogCategoryPermissions(String name, int id) {
+  UserOperationLogCategoryPermissions(String name, int id) {
     this.name = name;
     this.id = id;
   }

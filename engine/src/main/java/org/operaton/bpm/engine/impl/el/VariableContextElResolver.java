@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,9 +20,6 @@ import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
 
 /**
  * @author Daniel Meyer
@@ -64,10 +61,6 @@ public class VariableContextElResolver extends ELResolver {
 
   public Class< ? > getCommonPropertyType(ELContext arg0, Object arg1) {
     return Object.class;
-  }
-
-  public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext arg0, Object arg1) {
-    return null;
   }
 
   public Class< ? > getType(ELContext arg0, Object arg1, Object arg2) {

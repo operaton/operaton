@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,13 +16,19 @@
  */
 package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.BaseElement;
@@ -42,13 +48,12 @@ import org.operaton.bpm.model.bpmn.instance.Task;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
  */
-public class ExecutionListenerBpmnModelExecutionContextTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+class ExecutionListenerBpmnModelExecutionContextTest {
 
   private static final String PROCESS_ID = "process";
   private static final String START_ID = "start";
@@ -60,10 +65,14 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   private static final String MESSAGE_ID = "messageId";
   private static final String MESSAGE_NAME = "messageName";
 
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  TaskService taskService;
+
   private String deploymentId;
 
   @Test
-  public void testProcessStartEvent() {
+  void testProcessStartEvent() {
     deployAndStartTestProcess(PROCESS_ID, ExecutionListener.EVENTNAME_START);
     assertFlowElementIs(StartEvent.class);
     sendMessage();
@@ -71,7 +80,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testStartEventEndEvent() {
+  void testStartEventEndEvent() {
     deployAndStartTestProcess(START_ID, ExecutionListener.EVENTNAME_END);
     assertFlowElementIs(StartEvent.class);
     sendMessage();
@@ -79,7 +88,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testSequenceFlowTakeEvent() {
+  void testSequenceFlowTakeEvent() {
     deployAndStartTestProcess(SEQUENCE_FLOW_ID, ExecutionListener.EVENTNAME_TAKE);
     assertFlowElementIs(SequenceFlow.class);
     sendMessage();
@@ -87,7 +96,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testIntermediateCatchEventStartEvent() {
+  void testIntermediateCatchEventStartEvent() {
     deployAndStartTestProcess(CATCH_EVENT_ID, ExecutionListener.EVENTNAME_START);
     assertFlowElementIs(IntermediateCatchEvent.class);
     sendMessage();
@@ -95,7 +104,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testIntermediateCatchEventEndEvent() {
+  void testIntermediateCatchEventEndEvent() {
     deployAndStartTestProcess(CATCH_EVENT_ID, ExecutionListener.EVENTNAME_END);
     assertNotNotified();
     sendMessage();
@@ -104,7 +113,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testGatewayStartEvent() {
+  void testGatewayStartEvent() {
     deployAndStartTestProcess(GATEWAY_ID, ExecutionListener.EVENTNAME_START);
     assertNotNotified();
     sendMessage();
@@ -113,7 +122,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testGatewayEndEvent() {
+  void testGatewayEndEvent() {
     deployAndStartTestProcess(GATEWAY_ID, ExecutionListener.EVENTNAME_END);
     assertNotNotified();
     sendMessage();
@@ -122,7 +131,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testUserTaskStartEvent() {
+  void testUserTaskStartEvent() {
     deployAndStartTestProcess(USER_TASK_ID, ExecutionListener.EVENTNAME_START);
     assertNotNotified();
     sendMessage();
@@ -131,7 +140,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testUserTaskEndEvent() {
+  void testUserTaskEndEvent() {
     deployAndStartTestProcess(USER_TASK_ID, ExecutionListener.EVENTNAME_END);
     assertNotNotified();
     sendMessage();
@@ -140,7 +149,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testEndEventStartEvent() {
+  void testEndEventStartEvent() {
     deployAndStartTestProcess(END_ID, ExecutionListener.EVENTNAME_START);
     assertNotNotified();
     sendMessage();
@@ -149,7 +158,7 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   @Test
-  public void testProcessEndEvent() {
+  void testProcessEndEvent() {
     deployAndStartTestProcess(PROCESS_ID, ExecutionListener.EVENTNAME_END);
     assertNotNotified();
     sendMessage();
@@ -227,8 +236,8 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
     runtimeService.startProcessInstanceByKey(PROCESS_ID);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ModelExecutionContextExecutionListener.clear();
     repositoryService.deleteDeployment(deploymentId, true);
   }

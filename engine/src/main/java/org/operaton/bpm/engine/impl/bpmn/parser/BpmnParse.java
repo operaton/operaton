@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,19 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -154,6 +141,20 @@ import org.operaton.bpm.engine.impl.util.xml.Parse;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.findOperatonExtensionElement;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseInputOutput;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseOperatonExtensionProperties;
@@ -241,15 +242,15 @@ public class BpmnParse extends Parse {
   );
 
   /**
-   * @deprecated use {@link BpmnProperties#TYPE}
+   * @deprecated Use {@link BpmnProperties#TYPE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String PROPERTYNAME_TYPE = BpmnProperties.TYPE.getName();
 
   /**
-   * @deprecated use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS}
+   * @deprecated Use {@link BpmnProperties#ERROR_EVENT_DEFINITIONS} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String PROPERTYNAME_ERROR_EVENT_DEFINITIONS = BpmnProperties.ERROR_EVENT_DEFINITIONS.getName();
 
   /* process start authorization specific finals */
@@ -280,7 +281,8 @@ public class BpmnParse extends Parse {
   private static final String ERROR_REF_ATTRIBUTE = "errorRef";
   private static final String DEFAULT_ATTRIBUTE = "default";
   private static final String BPMN_ELEMENT_ATTRIBUTE = "bpmnElement";
-
+  private static final String ATTR_DECISION_REF_BINDING = "decisionRefBinding";
+  private static final String ATTR_DECISION_REF_TENANT_ID = "decisionRefTenantId";
 
   /** The deployment to which the parsed process definitions will be added. */
   protected DeploymentEntity deployment;
@@ -791,6 +793,7 @@ public class BpmnParse extends Parse {
     return compensationHandlers;
   }
 
+  @SuppressWarnings("unused")
   protected void parseIntermediateCatchEvents(Element scopeElement, ScopeImpl parentScope, Map<String, Element> intermediateCatchEventElements) {
     for (Element intermediateCatchEventElement : intermediateCatchEventElements.values()) {
 
@@ -1023,6 +1026,7 @@ public class BpmnParse extends Parse {
     processDefinition.setInitial(initial);
   }
 
+  @SuppressWarnings("unused")
   protected void parseProcessDefinitionStartEvent(ActivityImpl startEventActivity, Element startEventElement, Element parentElement, ScopeImpl scope) {
     ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) scope;
 
@@ -1437,7 +1441,7 @@ public class BpmnParse extends Parse {
       addWarning("Ignoring unsupported activity type", activityElement);
     }
 
-    if (isMultiInstance) {
+    if (isMultiInstance && activity != null) {
       activity.setProperty(PROPERTYNAME_IS_MULTI_INSTANCE, true);
     }
 
@@ -2035,7 +2039,7 @@ public class BpmnParse extends Parse {
   }
 
   public String parseDocumentation(Element element) {
-    List<Element> docElements = element.elements("documentation");
+    List<Element> docElements = element.elements(PROPERTYNAME_DOCUMENTATION);
     List<String> docStrings = new ArrayList<>();
     for (Element e : docElements) {
       docStrings.add(e.getText());
@@ -2062,7 +2066,7 @@ public class BpmnParse extends Parse {
   }
 
   protected boolean isCompensationHandler(Element activityElement) {
-    String isForCompensation = activityElement.attribute("isForCompensation");
+    String isForCompensation = activityElement.attribute(PROPERTYNAME_IS_FOR_COMPENSATION);
     return isForCompensation != null && isForCompensation.equalsIgnoreCase(TRUE);
   }
 
@@ -2376,10 +2380,10 @@ public class BpmnParse extends Parse {
     ParameterValueProvider definitionKeyProvider = createParameterValueProvider(decisionRef, expressionManager);
     callableElement.setDefinitionKeyValueProvider(definitionKeyProvider);
 
-    parseBinding(businessRuleTaskElement, activity, callableElement, "decisionRefBinding");
-    parseVersion(businessRuleTaskElement, activity, callableElement, "decisionRefBinding", "decisionRefVersion");
-    parseVersionTag(businessRuleTaskElement, activity, callableElement, "decisionRefBinding", "decisionRefVersionTag");
-    parseTenantId(businessRuleTaskElement, activity, callableElement, "decisionRefTenantId");
+    parseBinding(businessRuleTaskElement, activity, callableElement, ATTR_DECISION_REF_BINDING);
+    parseVersion(businessRuleTaskElement, activity, callableElement, ATTR_DECISION_REF_BINDING, "decisionRefVersion");
+    parseVersionTag(businessRuleTaskElement, activity, callableElement, ATTR_DECISION_REF_BINDING, "decisionRefVersionTag");
+    parseTenantId(businessRuleTaskElement, activity, callableElement, ATTR_DECISION_REF_TENANT_ID);
 
     String resultVariable = parseResultVariable(businessRuleTaskElement);
     DecisionResultMapper decisionResultMapper = parseDecisionResultMapper(businessRuleTaskElement);
@@ -3095,6 +3099,7 @@ public class BpmnParse extends Parse {
     return taskListener;
   }
 
+  @SuppressWarnings("unused")
   protected TaskListener parseTimeoutTaskListener(Element taskListenerElement, ActivityImpl timerActivity, TaskDefinition taskDefinition) {
     String listenerId = taskListenerElement.attribute("id");
     String timerActivityId = timerActivity.getId();
@@ -3372,7 +3377,7 @@ public class BpmnParse extends Parse {
         String errorRef = errorEventDefinitionElement.attribute(ERROR_REF_ATTRIBUTE);
         Error error = null;
         if (errorRef != null) {
-          String operatonExpression = errorEventDefinitionElement.attribute("expression");
+          String operatonExpression = errorEventDefinitionElement.attribute(PROPERTYNAME_EXPRESSION);
           error = bpmnParseErrors.get(errorRef);
           OperatonErrorEventDefinition definition = new OperatonErrorEventDefinition(activity.getId(), expressionManager.createExpression(operatonExpression));
           definition.setErrorCode(error == null ? errorRef : error.getErrorCode());
@@ -3752,7 +3757,7 @@ public class BpmnParse extends Parse {
     }
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings( {"unchecked", "deprecation" })
   protected void addVariableDeclaration(ScopeImpl scope, VariableDeclaration variableDeclaration) {
     List<VariableDeclaration> variableDeclarations = (List<VariableDeclaration>) scope.getProperty(PROPERTYNAME_VARIABLE_DECLARATIONS);
     if (variableDeclarations == null) {
@@ -4016,6 +4021,7 @@ public class BpmnParse extends Parse {
     return activity;
   }
 
+  @SuppressWarnings("unused")
   protected void parseBinding(Element callActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName) {
     String binding = callActivityElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, bindingAttributeName);
 
@@ -4030,6 +4036,7 @@ public class BpmnParse extends Parse {
     }
   }
 
+  @SuppressWarnings("unused")
   protected void parseTenantId(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String attrName) {
     ParameterValueProvider tenantIdValueProvider = null;
 
@@ -4041,6 +4048,7 @@ public class BpmnParse extends Parse {
     callableElement.setTenantIdProvider(tenantIdValueProvider);
   }
 
+  @SuppressWarnings("unused")
   protected void parseVersion(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName, String versionAttributeName) {
     String version = null;
 
@@ -4056,6 +4064,7 @@ public class BpmnParse extends Parse {
     callableElement.setVersionValueProvider(versionProvider);
   }
 
+  @SuppressWarnings("unused")
   protected void parseVersionTag(Element callingActivityElement, ActivityImpl activity, BaseCallableElement callableElement, String bindingAttributeName, String versionTagAttributeName) {
     String versionTag = null;
 
@@ -4591,7 +4600,7 @@ public class BpmnParse extends Parse {
           parseDIBounds(bpmnShapeElement, activity);
 
           // collapsed or expanded
-          String isExpanded = bpmnShapeElement.attribute("isExpanded");
+          String isExpanded = bpmnShapeElement.attribute(PROPERTYNAME_ISEXPANDED);
           if (isExpanded != null) {
             activity.setProperty(PROPERTYNAME_ISEXPANDED, parseBooleanAttribute(isExpanded));
           }

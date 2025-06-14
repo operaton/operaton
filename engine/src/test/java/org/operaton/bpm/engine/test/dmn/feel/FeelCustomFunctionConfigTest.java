@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,46 +21,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.dmn.feel.helper.CustomFunctionProvider;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-public class FeelCustomFunctionConfigTest {
+class FeelCustomFunctionConfigTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration -> {
-    List<FeelCustomFunctionProvider> customFunctionProviders = new ArrayList<>();
-    customFunctionProviders.add(new CustomFunctionProvider("myFunctionOne", "foo"));
-    customFunctionProviders.add(new CustomFunctionProvider("myFunctionTwo", "bar"));
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder()
+    .randomEngineName().closeEngineAfterAllTests()
+    .configurator(config -> {
+      List<FeelCustomFunctionProvider> customFunctionProviders = new ArrayList<>();
+      customFunctionProviders.add(new CustomFunctionProvider("myFunctionOne", "foo"));
+      customFunctionProviders.add(new CustomFunctionProvider("myFunctionTwo", "bar"));
+      config.setDmnFeelCustomFunctionProviders(customFunctionProviders);
+    })
+    .build();
 
-    configuration.setDmnFeelCustomFunctionProviders(customFunctionProviders);
-  });
-
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-
-  protected ProcessEngine processEngine;
-  protected RepositoryService repositoryService;
-  protected String deploymentId;
-
-  @Before
-  public void setup() {
-    processEngine = engineRule.getProcessEngine();
-    repositoryService = processEngine.getRepositoryService();
-  }
+  ProcessEngine processEngine;
+  RepositoryService repositoryService;
+  String deploymentId;
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/custom_function.dmn"})
-  public void shouldRegisterCustomFunctions() {
+  void shouldRegisterCustomFunctions() {
     // given
     DecisionService decisionService = processEngine.getDecisionService();
 

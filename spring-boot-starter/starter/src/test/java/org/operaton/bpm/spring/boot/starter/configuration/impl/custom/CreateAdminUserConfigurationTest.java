@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,9 +38,6 @@ class CreateAdminUserConfigurationTest {
   static final ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
     .watch(SpringBootProcessEngineLogger.PACKAGE, Level.DEBUG);
 
-  @RegisterExtension
-  static final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration().extension();
-
   static CreateAdminUserConfiguration createAdminUserConfiguration() {
     OperatonBpmProperties properties = new OperatonBpmProperties();
     properties.getAdminUser().setId("admin");
@@ -55,6 +52,7 @@ class CreateAdminUserConfigurationTest {
 
   @Test
   void createAdminUser() {
+    ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration()).extension();
     User user = processEngineExtension.getIdentityService().createUserQuery().userId("admin").singleResult();
     assertThat(user).isNotNull();
     assertThat(user.getEmail()).isEqualTo("admin@localhost");

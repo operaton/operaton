@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
-import static org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory.POSTGRES;
-import static org.operaton.bpm.engine.impl.util.DatabaseUtil.checkDatabaseType;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.impl.ExternalTaskQueryImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -37,6 +28,16 @@ import org.operaton.bpm.engine.impl.externaltask.TopicFetchInstruction;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
+import static org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory.POSTGRES;
+import static org.operaton.bpm.engine.impl.util.DatabaseUtil.checkDatabaseType;
 
 /**
  * @author Thorben Lindhauer
@@ -126,11 +127,11 @@ public class ExternalTaskManager extends AbstractManager {
                                                    String processDefinitionKey,
                                                    SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processInstanceId", processInstanceId);
-    parameters.put("processDefinitionId", processDefinitionId);
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isProcessDefinitionTenantIdSet", false);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+    parameters.put(PROCESS_DEFINITION_ID, processDefinitionId);
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_PROCESS_DEFINITION_TENANT_ID_SET, false);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ExternalTaskEntity.class, "updateExternalTaskSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
@@ -148,10 +149,10 @@ public class ExternalTaskManager extends AbstractManager {
 
   public void updateExternalTaskSuspensionStateByProcessDefinitionKeyAndTenantId(String processDefinitionKey, String processDefinitionTenantId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put("processDefinitionKey", processDefinitionKey);
-    parameters.put("isProcessDefinitionTenantIdSet", true);
-    parameters.put("processDefinitionTenantId", processDefinitionTenantId);
-    parameters.put("suspensionState", suspensionState.getStateCode());
+    parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
+    parameters.put(IS_PROCESS_DEFINITION_TENANT_ID_SET, true);
+    parameters.put(PROCESS_DEFINITION_TENANT_ID, processDefinitionTenantId);
+    parameters.put(SUSPENSION_STATE, suspensionState.getStateCode());
     getDbEntityManager().update(ExternalTaskEntity.class, "updateExternalTaskSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 

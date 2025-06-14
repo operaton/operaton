@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,7 @@ import jakarta.el.ValueReference;
 /**
  * Expression node interface. This interface provides all the methods needed for value expressions
  * and method expressions.
- * 
+ *
  * @see Tree
  * @author Christoph Beck
  */
@@ -30,22 +30,22 @@ public interface ExpressionNode extends Node {
 	/**
 	 * @return <code>true</code> if this node represents literal text
 	 */
-	public boolean isLiteralText();
+	boolean isLiteralText();
 
 	/**
 	 * @return <code>true</code> if the subtree rooted at this node could be used as an lvalue
 	 *         expression (identifier or property sequence with non-literal prefix).
 	 */
-	public boolean isLeftValue();
+	boolean isLeftValue();
 
 	/**
 	 * @return <code>true</code> if the subtree rooted at this node is a method invocation.
 	 */
-	public boolean isMethodInvocation();
+	boolean isMethodInvocation();
 
 	/**
 	 * Evaluate node.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -54,43 +54,43 @@ public interface ExpressionNode extends Node {
 	 *            result type
 	 * @return evaluated node, coerced to the expected type
 	 */
-	public Object getValue(Bindings bindings, ELContext context, Class<?> expectedType);
+	Object getValue(Bindings bindings, ELContext context, Class<?> expectedType);
 
 	/**
 	 * Get value reference.
-	 * 
+	 *
 	 * @param bindings
 	 * @param context
 	 * @return value reference
 	 */
-	public ValueReference getValueReference(Bindings bindings, ELContext context);
+	ValueReference getValueReference(Bindings bindings, ELContext context);
 
 	/**
 	 * Get the value type accepted in {@link #setValue(Bindings, ELContext, Object)}.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
 	 *            evaluation context
 	 * @return accepted type or <code>null</code> for non-lvalue nodes
 	 */
-	public Class<?> getType(Bindings bindings, ELContext context);
+	Class<?> getType(Bindings bindings, ELContext context);
 
 	/**
 	 * Determine whether {@link #setValue(Bindings, ELContext, Object)} will throw a
 	 * {@link jakarta.el.PropertyNotWritableException}.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
 	 *            evaluation context
 	 * @return <code>true</code> if this a read-only expression node
 	 */
-	public boolean isReadOnly(Bindings bindings, ELContext context);
+	boolean isReadOnly(Bindings bindings, ELContext context);
 
 	/**
 	 * Assign value.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -98,11 +98,11 @@ public interface ExpressionNode extends Node {
 	 * @param value
 	 *            value to set
 	 */
-	public void setValue(Bindings bindings, ELContext context, Object value);
+	void setValue(Bindings bindings, ELContext context, Object value);
 
 	/**
 	 * Get method information. If this is a non-lvalue node, answer <code>null</code>.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -113,11 +113,11 @@ public interface ExpressionNode extends Node {
 	 *            expected method argument types
 	 * @return method information or <code>null</code>
 	 */
-	public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes);
+  MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes);
 
 	/**
 	 * Invoke method.
-	 * 
+	 *
 	 * @param bindings
 	 *            bindings containing variables and functions
 	 * @param context
@@ -130,7 +130,7 @@ public interface ExpressionNode extends Node {
 	 *            parameter values
 	 * @return result of the method invocation
 	 */
-	public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues);
+  Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues);
 
 	/**
 	 * Get the canonical expression string for this node. Variable and funtion names will be
@@ -143,5 +143,5 @@ public interface ExpressionNode extends Node {
 	 * <p/>
 	 * If the bindings is <code>null</code>, the full canonical subexpression is returned.
 	 */
-	public String getStructuralId(Bindings bindings);
+  String getStructuralId(Bindings bindings);
 }

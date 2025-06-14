@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,78 +52,78 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
   // constants deprecated since 7.2
 
   /**
-   * @deprecated use {@link HistoryEventTypes#ACTIVITY_INSTANCE_START} instead.
+   * @deprecated Use {@link HistoryEventTypes#ACTIVITY_INSTANCE_START} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String ACTIVITY_EVENT_TYPE_START = HistoryEventTypes.ACTIVITY_INSTANCE_START.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#ACTIVITY_INSTANCE_END} instead.
+   * @deprecated Use {@link HistoryEventTypes#ACTIVITY_INSTANCE_END} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String ACTIVITY_EVENT_TYPE_UPDATE = HistoryEventTypes.ACTIVITY_INSTANCE_END.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#ACTIVITY_INSTANCE_END} instead.
+   * @deprecated Use {@link HistoryEventTypes#ACTIVITY_INSTANCE_END} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String ACTIVITY_EVENT_TYPE_END = HistoryEventTypes.ACTIVITY_INSTANCE_END.getEventName();
 
   /**
-   * @deprecated use {@link HistoryEventTypes#TASK_INSTANCE_CREATE} instead.
+   * @deprecated Use {@link HistoryEventTypes#TASK_INSTANCE_CREATE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String TASK_EVENT_TYPE_CREATE = HistoryEventTypes.TASK_INSTANCE_CREATE.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#TASK_INSTANCE_UPDATE} instead.
+   * @deprecated Use {@link HistoryEventTypes#TASK_INSTANCE_UPDATE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String TASK_EVENT_TYPE_UPDATE = HistoryEventTypes.TASK_INSTANCE_UPDATE.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#TASK_INSTANCE_COMPLETE} instead.
+   * @deprecated Use {@link HistoryEventTypes#TASK_INSTANCE_COMPLETE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String TASK_EVENT_TYPE_COMPLETE = HistoryEventTypes.TASK_INSTANCE_COMPLETE.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#TASK_INSTANCE_DELETE} instead.
+   * @deprecated Use {@link HistoryEventTypes#TASK_INSTANCE_DELETE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String TASK_EVENT_TYPE_DELETE = HistoryEventTypes.TASK_INSTANCE_DELETE.getEventName();
 
   /**
-   * @deprecated use {@link HistoryEventTypes#VARIABLE_INSTANCE_CREATE} instead.
+   * @deprecated Use {@link HistoryEventTypes#VARIABLE_INSTANCE_CREATE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String VARIABLE_EVENT_TYPE_CREATE = HistoryEventTypes.VARIABLE_INSTANCE_CREATE.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#VARIABLE_INSTANCE_UPDATE} instead.
+   * @deprecated Use {@link HistoryEventTypes#VARIABLE_INSTANCE_UPDATE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String VARIABLE_EVENT_TYPE_UPDATE = HistoryEventTypes.VARIABLE_INSTANCE_UPDATE.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#VARIABLE_INSTANCE_DELETE} instead.
+   * @deprecated Use {@link HistoryEventTypes#VARIABLE_INSTANCE_DELETE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String VARIABLE_EVENT_TYPE_DELETE = HistoryEventTypes.VARIABLE_INSTANCE_DELETE.getEventName();
 
   /**
-   * @deprecated use {@link HistoryEventTypes#FORM_PROPERTY_UPDATE} instead.
+   * @deprecated Use {@link HistoryEventTypes#FORM_PROPERTY_UPDATE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String FORM_PROPERTY_UPDATE = HistoryEventTypes.FORM_PROPERTY_UPDATE.getEventName();
 
   /**
-   * @deprecated use {@link HistoryEventTypes#INCIDENT_CREATE} instead.
+   * @deprecated Use {@link HistoryEventTypes#INCIDENT_CREATE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String INCIDENT_CREATE = HistoryEventTypes.INCIDENT_CREATE.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#INCIDENT_DELETE} instead.
+   * @deprecated Use {@link HistoryEventTypes#INCIDENT_DELETE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String INCIDENT_DELETE = HistoryEventTypes.INCIDENT_DELETE.getEventName();
   /**
-   * @deprecated use {@link HistoryEventTypes#INCIDENT_RESOLVE} instead.
+   * @deprecated Use {@link HistoryEventTypes#INCIDENT_RESOLVE} instead.
    */
-  @Deprecated(forRemoval = true)
+  @Deprecated(forRemoval = true, since = "1.0")
   public static final String INCIDENT_RESOLVE = HistoryEventTypes.INCIDENT_RESOLVE.getEventName();
 
   public static final String IDENTITY_LINK_ADD = HistoryEventTypes.IDENTITY_LINK_ADD.getEventName();

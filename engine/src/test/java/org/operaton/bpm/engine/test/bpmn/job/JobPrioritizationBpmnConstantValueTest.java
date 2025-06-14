@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,30 +16,43 @@
  */
 package org.operaton.bpm.engine.test.bpmn.job;
 
-import org.operaton.bpm.engine.ParseException;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngineTest {
+class JobPrioritizationBpmnConstantValueTest {
 
   protected static final long EXPECTED_DEFAULT_PRIORITY = 0;
 
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  ManagementService managementService;
+
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDefaultPrioritizationAsyncBefore() {
+  void testDefaultPrioritizationAsyncBefore() {
     // when
     runtimeService
       .createProcessInstanceByKey("oneTaskProcess")
@@ -54,7 +67,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testDefaultPrioritizationAsyncAfter() {
+  void testDefaultPrioritizationAsyncAfter() {
     // given
     runtimeService
       .createProcessInstanceByKey("oneTaskProcess")
@@ -72,7 +85,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/oneTimerProcess.bpmn20.xml")
   @Test
-  public void testDefaultPrioritizationTimer() {
+  void testDefaultPrioritizationTimer() {
     // when
     runtimeService
       .createProcessInstanceByKey("oneTimerProcess")
@@ -87,7 +100,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testProcessDefinitionPrioritizationAsyncBefore() {
+  void testProcessDefinitionPrioritizationAsyncBefore() {
     // when
     runtimeService
       .createProcessInstanceByKey("jobPrioProcess")
@@ -102,7 +115,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testProcessDefinitionPrioritizationAsyncAfter() {
+  void testProcessDefinitionPrioritizationAsyncAfter() {
     // given
     runtimeService
       .createProcessInstanceByKey("jobPrioProcess")
@@ -120,7 +133,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/intermediateTimerJobPrioProcess.bpmn20.xml")
   @Test
-  public void testProcessDefinitionPrioritizationTimer() {
+  void testProcessDefinitionPrioritizationTimer() {
     // when
     runtimeService
       .createProcessInstanceByKey("intermediateTimerJobPrioProcess")
@@ -135,7 +148,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testActivityPrioritizationAsyncBefore() {
+  void testActivityPrioritizationAsyncBefore() {
     // when
     runtimeService
       .createProcessInstanceByKey("jobPrioProcess")
@@ -150,7 +163,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
   @Test
-  public void testActivityPrioritizationAsyncAfter() {
+  void testActivityPrioritizationAsyncAfter() {
     // given
     runtimeService
       .createProcessInstanceByKey("jobPrioProcess")
@@ -168,7 +181,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/intermediateTimerJobPrioProcess.bpmn20.xml")
   @Test
-  public void testActivityPrioritizationTimer() {
+  void testActivityPrioritizationTimer() {
     // when
     runtimeService
       .createProcessInstanceByKey("intermediateTimerJobPrioProcess")
@@ -183,7 +196,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/subProcessJobPrioProcess.bpmn20.xml")
   @Test
-  public void testSubProcessPriorityIsNotDefaultForContainedActivities() {
+  void testSubProcessPriorityIsNotDefaultForContainedActivities() {
     // when starting an activity contained in the sub process where the
     // sub process has job priority 20
     runtimeService
@@ -198,7 +211,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testFailOnMalformedInput() {
+  void testFailOnMalformedInput() {
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/invalidPrioProcess.bpmn20.xml");
@@ -213,7 +226,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testParsePriorityOnNonAsyncActivity() {
+  void testParsePriorityOnNonAsyncActivity() {
 
     // deploying a process definition where the activity
     // has a priority but defines no jobs succeeds
@@ -227,7 +240,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testTimerStartEventPriorityOnProcessDefinition() {
+  void testTimerStartEventPriorityOnProcessDefinition() {
     // given a timer start job
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
         .createDeployment()
@@ -244,7 +257,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testTimerStartEventPriorityOnActivity() {
+  void testTimerStartEventPriorityOnActivity() {
     // given a timer start job
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
         .createDeployment()
@@ -262,7 +275,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/boundaryTimerJobPrioProcess.bpmn20.xml")
   @Test
-  public void testBoundaryTimerEventPriority() {
+  void testBoundaryTimerEventPriority() {
     // given an active boundary event timer
     runtimeService.startProcessInstanceByKey("boundaryTimerJobPrioProcess");
 
@@ -274,7 +287,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/eventSubprocessTimerJobPrioProcess.bpmn20.xml")
   @Test
-  public void testEventSubprocessTimerPriority() {
+  void testEventSubprocessTimerPriority() {
     // given an active event subprocess timer
     runtimeService.startProcessInstanceByKey("eventSubprocessTimerJobPrioProcess");
 
@@ -288,7 +301,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
       "org/operaton/bpm/engine/test/bpmn/job/intermediateSignalAsyncProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/job/intermediateSignalCatchJobPrioProcess.bpmn20.xml"})
   @Test
-  public void testAsyncSignalThrowingEventActivityPriority() {
+  void testAsyncSignalThrowingEventActivityPriority() {
     // given a receiving process instance with two subscriptions
     runtimeService.startProcessInstanceByKey("intermediateSignalCatchJobPrioProcess");
 
@@ -311,7 +324,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
       "org/operaton/bpm/engine/test/bpmn/job/intermediateSignalAsyncProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/job/signalStartJobPrioProcess.bpmn20.xml"})
   @Test
-  public void testAsyncSignalThrowingEventSignalStartActivityPriority() {
+  void testAsyncSignalThrowingEventSignalStartActivityPriority() {
     // given a process instance that executes an async signal throwing event
     runtimeService.startProcessInstanceByKey("intermediateSignalJobPrioProcess");
 
@@ -336,7 +349,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/miInnerAsyncProcess.bpmn20.xml")
   @Test
-  public void testMultiInstanceInnerActivityPriority() {
+  void testMultiInstanceInnerActivityPriority() {
     // given a process instance that executes an async mi inner activity
     runtimeService.startProcessInstanceByKey("miBodyAsyncPriorityProcess");
 

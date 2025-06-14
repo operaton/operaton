@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,7 +31,7 @@ import java.util.Set;
 @Produces(MediaType.APPLICATION_JSON)
 public interface DeploymentRestService {
 
-  public static final String PATH = "/deployment";
+  String PATH = "/deployment";
 
   @Path("/{id}")
   DeploymentResource getDeployment(@PathParam("id") String deploymentId);

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -35,34 +38,27 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.AsyncProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationVariablesTest {
+class MigrationVariablesTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setJavaSerializationFormatEnabled(true));
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().randomEngineName().closeEngineAfterAllTests()
+      .configurator(config -> config.setJavaSerializationFormatEnabled(true)).build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   protected static final BpmnModelInstance ONE_BOUNDARY_TASK = ModifiableBpmnModelInstance.modify(ProcessModels.ONE_TASK_PROCESS)
       .activityBuilder("userTask")
@@ -88,20 +84,11 @@ public class MigrationVariablesTest {
       .message("Message")
       .done();
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
-
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-
-  @Before
-  public void initServices() {
-    runtimeService = rule.getRuntimeService();
-    taskService = rule.getTaskService();
-  }
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Test
-  public void testVariableAtScopeExecutionInScopeActivity() {
+  void testVariableAtScopeExecutionInScopeActivity() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ONE_BOUNDARY_TASK);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ONE_BOUNDARY_TASK);
@@ -130,7 +117,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionInScopeActivity() {
+  void testVariableAtConcurrentExecutionInScopeActivity() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CONCURRENT_BOUNDARY_TASKS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CONCURRENT_BOUNDARY_TASKS);
@@ -159,7 +146,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtScopeExecutionInNonScopeActivity() {
+  void testVariableAtScopeExecutionInNonScopeActivity() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -182,7 +169,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionInNonScopeActivity() {
+  void testVariableAtConcurrentExecutionInNonScopeActivity() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
@@ -211,7 +198,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionInScopeActivityAddParentScope() {
+  void testVariableAtConcurrentExecutionInScopeActivityAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CONCURRENT_BOUNDARY_TASKS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(SUBPROCESS_CONCURRENT_BOUNDARY_TASKS);
@@ -253,7 +240,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionInScopeActivityRemoveParentScope() {
+  void testVariableAtConcurrentExecutionInScopeActivityRemoveParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(SUBPROCESS_CONCURRENT_BOUNDARY_TASKS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CONCURRENT_BOUNDARY_TASKS);
@@ -294,7 +281,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionInNonScopeActivityAddParentScope() {
+  void testVariableAtConcurrentExecutionInNonScopeActivityAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
@@ -331,7 +318,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionInNonScopeActivityRemoveParentScope() {
+  void testVariableAtConcurrentExecutionInNonScopeActivityRemoveParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
@@ -368,7 +355,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtScopeExecutionInScopeActivityAddParentScope() {
+  void testVariableAtScopeExecutionInScopeActivityAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ONE_BOUNDARY_TASK);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(SUBPROCESS_CONCURRENT_BOUNDARY_TASKS);
@@ -397,7 +384,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtTask() {
+  void testVariableAtTask() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -422,7 +409,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtTaskAddParentScope() {
+  void testVariableAtTaskAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
@@ -452,7 +439,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtTaskAndConcurrentExecutionAddParentScope() {
+  void testVariableAtTaskAndConcurrentExecutionAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
@@ -483,7 +470,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtScopeExecutionBecomeNonScope() {
+  void testVariableAtScopeExecutionBecomeNonScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ONE_BOUNDARY_TASK);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -518,12 +505,12 @@ public class MigrationVariablesTest {
 
     VariableInstance variableAfterExpansion = runtimeService.createVariableInstanceQuery().singleResult();
     assertThat(variableAfterExpansion).isNotNull();
-    Assert.assertNotSame(processInstance.getId(), variableAfterExpansion.getExecutionId());
+    Assertions.assertNotSame(processInstance.getId(), variableAfterExpansion.getExecutionId());
 
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionBecomeScope() {
+  void testVariableAtConcurrentExecutionBecomeScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SCOPE_TASKS);
@@ -557,7 +544,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentAndScopeExecutionBecomeNonScope() {
+  void testVariableAtConcurrentAndScopeExecutionBecomeNonScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CONCURRENT_BOUNDARY_TASKS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
@@ -589,7 +576,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtParentScopeExecutionAndScopeExecutionBecomeNonScope() {
+  void testVariableAtParentScopeExecutionAndScopeExecutionBecomeNonScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ONE_BOUNDARY_TASK);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -620,7 +607,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionAddParentScopeBecomeNonConcurrent() {
+  void testVariableAtConcurrentExecutionAddParentScopeBecomeNonConcurrent() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(
@@ -662,7 +649,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testAddScopeWithInputMappingAndVariableOnConcurrentExecutions() {
+  void testAddScopeWithInputMappingAndVariableOnConcurrentExecutions() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(
@@ -712,7 +699,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtScopeAndConcurrentExecutionAddParentScope() {
+  void testVariableAtScopeAndConcurrentExecutionAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
@@ -765,7 +752,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtScopeAndConcurrentExecutionRemoveParentScope() {
+  void testVariableAtScopeAndConcurrentExecutionRemoveParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
@@ -815,7 +802,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionInTransition() {
+  void testVariableAtConcurrentExecutionInTransition() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(AsyncProcessModels.ASYNC_BEFORE_USER_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(AsyncProcessModels.ASYNC_BEFORE_USER_TASK_PROCESS);
@@ -848,7 +835,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testVariableAtConcurrentExecutionInTransitionAddParentScope() {
+  void testVariableAtConcurrentExecutionInTransitionAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(AsyncProcessModels.ASYNC_BEFORE_USER_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(AsyncProcessModels.ASYNC_BEFORE_SUBPROCESS_USER_TASK_PROCESS);
@@ -881,7 +868,7 @@ public class MigrationVariablesTest {
   }
 
   @Test
-  public void testCanMigrateWithObjectVariableThatFailsOnDeserialization()
+  void testCanMigrateWithObjectVariableThatFailsOnDeserialization()
   {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);

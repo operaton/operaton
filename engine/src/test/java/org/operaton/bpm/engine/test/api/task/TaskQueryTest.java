@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,16 +16,61 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertThrows;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByAssignee;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCaseExecutionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCaseInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCreateTime;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByDescription;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByDueDate;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByExecutionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByFollowUpDate;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskById;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByName;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByPriority;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
+import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -39,28 +84,34 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertThrows;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
-
 /**
  * @author Joram Barrez
  * @author Frederik Heremans
  * @author Falko Menge
  */
-public class TaskQueryTest extends PluggableProcessEngineTest {
+class TaskQueryTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  IdentityService identityService;
+  TaskService taskService;
+  RuntimeService runtimeService;
+  CaseService caseService;
+  RepositoryService repositoryService;
+  FilterService filterService;
+  ManagementService managementService;
 
   private List<String> taskIds;
 
@@ -69,8 +120,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   // max value
   protected static final double MAX_DOUBLE_VALUE = 10E+124;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
 
     identityService.saveUser(identityService.newUser("kermit"));
     identityService.saveUser(identityService.newUser("gonzo"));
@@ -86,8 +137,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     taskIds = generateTestTasks();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     identityService.deleteGroup("accountancy");
     identityService.deleteGroup("management");
     identityService.deleteUser("fozzie");
@@ -97,7 +148,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void tesBasicTaskPropertiesNotNull() {
+  void tesBasicTaskPropertiesNotNull() {
     Task task = taskService.createTaskQuery().taskId(taskIds.get(0)).singleResult();
     assertThat(task.getDescription()).isNotNull();
     assertThat(task.getId()).isNotNull();
@@ -106,7 +157,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryNoCriteria() {
+  void testQueryNoCriteria() {
     TaskQuery query = taskService.createTaskQuery();
     assertThat(query.count()).isEqualTo(12);
     assertThat(query.list()).hasSize(12);
@@ -119,7 +170,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByTaskId() {
+  void testQueryByTaskId() {
     String taskId = taskIds.get(0);
     TaskQuery query = taskService.createTaskQuery().taskId(taskId);
     assertThat(query.singleResult()).isNotNull();
@@ -131,7 +182,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByTaskIdIn() {
+  void testQueryByTaskIdIn() {
     String task0Id = taskIds.get(0);
     String task1Id = taskIds.get(1);
     TaskQuery query = taskService.createTaskQuery().taskIdIn(task0Id, task1Id);
@@ -143,7 +194,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidTaskId() {
+  void testQueryByInvalidTaskId() {
     TaskQuery query = taskService.createTaskQuery().taskId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -159,7 +210,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByName() {
+  void testQueryByName() {
     TaskQuery query = taskService.createTaskQuery().taskName("testTask");
     assertThat(query.list()).hasSize(6);
     assertThat(query.count()).isEqualTo(6);
@@ -173,7 +224,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidName() {
+  void testQueryByInvalidName() {
     TaskQuery query = taskService.createTaskQuery().taskName("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -189,7 +240,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByNameLike() {
+  void testQueryByNameLike() {
     TaskQuery query = taskService.createTaskQuery().taskNameLike("gonzo\\_%");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
@@ -197,7 +248,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidNameLike() {
+  void testQueryByInvalidNameLike() {
     TaskQuery query = taskService.createTaskQuery().taskName("1");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -213,7 +264,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByDescription() {
+  void testQueryByDescription() {
     TaskQuery query = taskService.createTaskQuery().taskDescription("testTask description");
     assertThat(query.list()).hasSize(6);
     assertThat(query.count()).isEqualTo(6);
@@ -227,7 +278,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidDescription() {
+  void testQueryByInvalidDescription() {
     TaskQuery query = taskService.createTaskQuery().taskDescription("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -250,7 +301,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
    * </p>
    */
   @Test
-  public void testTaskQueryLookupByNameCaseInsensitive() {
+  void testTaskQueryLookupByNameCaseInsensitive() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskName("testTask");
 
@@ -276,7 +327,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
    * </p>
    */
   @Test
-  public void testTaskQueryLookupByNameLikeCaseInsensitive() {
+  void testTaskQueryLookupByNameLikeCaseInsensitive() {
     TaskQuery query = taskService.createTaskQuery();
     query.taskNameLike("%task%");
 
@@ -296,7 +347,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByDescriptionLike() {
+  void testQueryByDescriptionLike() {
     TaskQuery query = taskService.createTaskQuery().taskDescriptionLike("%gonzo\\_%");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
@@ -304,7 +355,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidDescriptionLike() {
+  void testQueryByInvalidDescriptionLike() {
     TaskQuery query = taskService.createTaskQuery().taskDescriptionLike("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
@@ -320,7 +371,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByPriority() {
+  void testQueryByPriority() {
     TaskQuery query = taskService.createTaskQuery().taskPriority(10);
     assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
@@ -363,7 +414,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidPriority() {
+  void testQueryByInvalidPriority() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.taskPriority(null);
@@ -374,7 +425,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssignee() {
+  void testQueryByAssignee() {
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo_");
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
@@ -387,7 +438,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeLike() {
+  void testQueryByAssigneeLike() {
     TaskQuery query = taskService.createTaskQuery().taskAssigneeLike("gonz%\\_");
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
@@ -400,7 +451,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByNullAssignee() {
+  void testQueryByNullAssignee() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.taskAssignee(null);
@@ -411,7 +462,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeInPositive() {
+  void testQueryByAssigneeInPositive() {
     // given
     String[] assignees = {"fozzie", "john", "mary"};
 
@@ -424,7 +475,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeInNegative() {
+  void testQueryByAssigneeInNegative() {
     // given
     String[] assignees = {"kermit", "gonzo"};
 
@@ -437,7 +488,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeAndAssigneeIn () {
+  void testQueryByAssigneeAndAssigneeIn() {
     // given
     String assignee = "fozzie";
     String[] assignees = {"fozzie", "john", "mary"};
@@ -452,7 +503,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeInNull() {
+  void testQueryByAssigneeInNull() {
     // given
     String[] assignees = null;
 
@@ -469,7 +520,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeNotInPositive() {
+  void testQueryByAssigneeNotInPositive() {
     // given
     String[] assignees = {"fozzie", "john", "mary"};
 
@@ -482,7 +533,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeNotInNegative() {
+  void testQueryByAssigneeNotInNegative() {
     // given
     String[] assignees = {"gonzo_", "fozzie"};
 
@@ -495,7 +546,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeInAndAssigneeNotIn () {
+  void testQueryByAssigneeInAndAssigneeNotIn() {
     // given
     String[] assigneesIn = {"fozzie", "gonzo"};
     String[] assigneesNotIn = {"john", "mary"};
@@ -510,7 +561,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByAssigneeNotInNull() {
+  void testQueryByAssigneeNotInNull() {
     // given
     String[] assignees = null;
 
@@ -527,21 +578,21 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByUnassigned() {
+  void testQueryByUnassigned() {
     TaskQuery query = taskService.createTaskQuery().taskUnassigned();
     assertThat(query.count()).isEqualTo(10);
     assertThat(query.list()).hasSize(10);
   }
 
   @Test
-  public void testQueryByAssigned() {
+  void testQueryByAssigned() {
     TaskQuery query = taskService.createTaskQuery().taskAssigned();
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
   }
 
   @Test
-  public void testQueryByCandidateUser() {
+  void testQueryByCandidateUser() {
     // kermit is candidate for 12 tasks, two of them are already assigned
     TaskQuery query = taskService.createTaskQuery().taskCandidateUser("kermit");
     assertThat(query.count()).isEqualTo(10);
@@ -586,7 +637,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByNullCandidateUser() {
+  void testQueryByNullCandidateUser() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.taskCandidateUser(null);
@@ -597,7 +648,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByIncludeAssignedTasksWithMissingCandidateUserOrGroup() {
+  void testQueryByIncludeAssignedTasksWithMissingCandidateUserOrGroup() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.includeAssignedTasks();
@@ -608,7 +659,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByIncludeAssignedTasksWithoutMissingCandidateUserOrGroup() {
+  void testQueryByIncludeAssignedTasksWithoutMissingCandidateUserOrGroup() {
     // We expect no exceptions when the there is at least 1 candidate user or group present
     try {
       taskService.createTaskQuery().taskCandidateUser("user").includeAssignedTasks();
@@ -672,7 +723,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByCandidateGroup() {
+  void testQueryByCandidateGroup() {
     // management group is candidate for 3 tasks, one of them is already assigned
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroup("management");
     assertThat(query.count()).isEqualTo(2);
@@ -712,7 +763,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByCandidateGroupLike() {
+  void testQueryByCandidateGroupLike() {
     // management group is candidate for 3 tasks, one of them is already assigned
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupLike("management");
     assertThat(query.count()).isEqualTo(2);
@@ -764,7 +815,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryWithCandidateGroups() {
+  void testQueryWithCandidateGroups() {
     // test withCandidateGroups
     TaskQuery query = taskService.createTaskQuery().withCandidateGroups();
     assertThat(query.count()).isEqualTo(4);
@@ -775,7 +826,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryWithoutCandidateGroups() {
+  void testQueryWithoutCandidateGroups() {
     // test withoutCandidateGroups
     TaskQuery query = taskService.createTaskQuery().withoutCandidateGroups();
     assertThat(query.count()).isEqualTo(6);
@@ -786,7 +837,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldQueryWithoutCandidateGroupsAndUsers() {
+  void shouldQueryWithoutCandidateGroupsAndUsers() {
     // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
@@ -802,7 +853,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByNullCandidateGroup() {
+  void testQueryByNullCandidateGroup() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.taskCandidateGroup(null);
@@ -813,7 +864,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByCandidateGroupIn() {
+  void testQueryByCandidateGroupIn() {
     List<String> groups = Arrays.asList("management", "accountancy");
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups);
     assertThat(query.count()).isEqualTo(4);
@@ -843,7 +894,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByCandidateGroupInAndCandidateGroup() {
+  void testQueryByCandidateGroupInAndCandidateGroup() {
     List<String> groups = Arrays.asList("management", "accountancy");
     String candidateGroup = "management";
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
@@ -890,7 +941,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByCandidateGroupInAndCandidateGroupNotIntersected() {
+  void testQueryByCandidateGroupInAndCandidateGroupNotIntersected() {
     List<String> groups = List.of("accountancy");
     String candidateGroup = "management";
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
@@ -899,7 +950,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByNullCandidateGroupIn() {
+  void testQueryByNullCandidateGroupIn() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.taskCandidateGroupIn(null);
@@ -917,7 +968,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByDelegationState() {
+  void testQueryByDelegationState() {
     TaskQuery query = taskService.createTaskQuery().taskDelegationState(null);
     assertThat(query.count()).isEqualTo(12);
     assertThat(query.list()).hasSize(12);
@@ -955,7 +1006,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryCreatedOn() throws Exception {
+  void testQueryCreatedOn() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
     // Exact matching of createTime, should result in 6 tasks
@@ -967,7 +1018,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryCreatedBefore() throws Exception {
+  void testQueryCreatedBefore() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
     // Should result in 7 tasks
@@ -984,7 +1035,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryCreatedAfter() throws Exception {
+  void testQueryCreatedAfter() throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
     // Should result in 3 tasks
@@ -1001,7 +1052,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCreateTimeCombinations() throws ParseException {
+  void testCreateTimeCombinations() throws ParseException {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
 
     // Exact matching of createTime, should result in 6 tasks
@@ -1020,9 +1071,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .taskCreatedOn(createTime).taskCreatedBefore(oneHourAgo).count()).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
   @Test
-  public void testTaskDefinitionKey() {
+  void testTaskDefinitionKey() {
 
     // Start process instance, 2 tasks will be available
     runtimeService.startProcessInstanceByKey("taskDefinitionKeyProcess");
@@ -1040,9 +1091,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(count).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
   @Test
-  public void testTaskDefinitionKeyLike() {
+  void testTaskDefinitionKeyLike() {
 
     // Start process instance, 2 tasks will be available
     runtimeService.startProcessInstanceByKey("taskDefinitionKeyProcess");
@@ -1078,9 +1129,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(count).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
   @Test
-  public void testTaskDefinitionKeyIn() {
+  void testTaskDefinitionKeyIn() {
 
     // Start process instance, 2 tasks will be available
     runtimeService.startProcessInstanceByKey("taskDefinitionKeyProcess");
@@ -1119,9 +1170,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(count).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testTaskVariableNameEqualsIgnoreCase() {
+  void testTaskVariableNameEqualsIgnoreCase() {
     String variableName = "someVariable";
     String variableValue = "someCamelCaseValue";
 
@@ -1139,7 +1190,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTaskVariableValueEquals() {
+  void testTaskVariableValueEquals() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1187,9 +1238,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("booleanVar", false).count()).isEqualTo(1);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
   @Test
-  public void testTaskVariableValueEqualsIgnoreCase() {
+  void testTaskVariableValueEqualsIgnoreCase() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1222,9 +1273,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue.toLowerCase()).matchVariableValuesIgnoreCase().count()).isEqualTo(1);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testTaskVariableValueNameEqualsIgnoreCase() {
+  void testTaskVariableValueNameEqualsIgnoreCase() {
     String variableName = "someVariable";
     String variableValue = "someCamelCaseValue";
 
@@ -1240,9 +1291,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
   @Test
-  public void testTaskVariableValueLike() {
+  void testTaskVariableValueLike() {
 
   	ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
   	Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -1271,9 +1322,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     } catch (final ProcessEngineException e) {/*OK*/}
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
   @Test
-  public void testTaskVariableValueLikeIgnoreCase() {
+  void testTaskVariableValueLikeIgnoreCase() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -1303,9 +1354,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     } catch (final ProcessEngineException e) {/*OK*/}
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
   @Test
-  public void testTaskVariableValueCompare() {
+  void testTaskVariableValueCompare() {
 
   	ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
   	Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -1428,7 +1479,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testProcessVariableValueEquals() {
+  void testProcessVariableValueEquals() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 928374L);
     variables.put("shortVar", (short) 123);
@@ -1497,9 +1548,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .count()).isEqualTo(1);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableNameEqualsIgnoreCase() {
+  void testProcessVariableNameEqualsIgnoreCase() {
     String variableName = "someVariable";
     String variableValue = "someCamelCaseValue";
     Map<String, Object> variables = new HashMap<>();
@@ -1515,9 +1566,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testTaskVariableValueEquals.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsIgnoreCase() {
+  void testProcessVariableValueEqualsIgnoreCase() {
     String variableName = "someVariable";
     String variableValue = "someCamelCaseValue";
     Map<String, Object> variables = new HashMap<>();
@@ -1546,9 +1597,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isZero();
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLike() {
+  void testProcessVariableValueLike() {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "stringValue");
@@ -1573,9 +1624,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     } catch (final ProcessEngineException e) {/*OK*/}
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLikeIgnoreCase() {
+  void testProcessVariableValueLikeIgnoreCase() {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "stringValue");
@@ -1601,9 +1652,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     } catch (final ProcessEngineException e) {/*OK*/}
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNotLike() {
+  void testProcessVariableValueNotLike() {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "stringValue");
@@ -1629,9 +1680,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .isInstanceOf(ProcessEngineException.class);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNotLikeIgnoreCase() {
+  void testProcessVariableValueNotLikeIgnoreCase() {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "stringValue");
@@ -1655,9 +1706,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .isInstanceOf(ProcessEngineException.class);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
   @Test
-  public void testProcessVariableValueCompare() {
+  void testProcessVariableValueCompare() {
 
   	Map<String, Object> variables = new HashMap<>();
   	variables.put("numericVar", 928374);
@@ -1777,7 +1828,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsNumber() {
+  void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", 123L));
@@ -1819,7 +1870,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNumberComparison() {
+  void testProcessVariableValueNumberComparison() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", 123L));
@@ -1860,7 +1911,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testTaskVariableValueEqualsNumber() {
+  void testTaskVariableValueEqualsNumber() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -1891,7 +1942,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testVariableEqualsNumberMax() {
+  void testVariableEqualsNumberMax() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", MAX_DOUBLE_VALUE));
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
@@ -1903,7 +1954,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testVariableEqualsNumberLongValueOverflow() {
+  void testVariableEqualsNumberLongValueOverflow() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", MAX_DOUBLE_VALUE));
 
@@ -1917,7 +1968,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testVariableEqualsNumberNonIntegerDoubleShouldNotMatchInteger() {
+  void testVariableEqualsNumberNonIntegerDoubleShouldNotMatchInteger() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("var", 42).putValue("var2", 52.4d));
 
@@ -1931,9 +1982,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(52)).count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionId() {
+  void testProcessDefinitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionId(processInstance.getProcessDefinitionId()).list();
@@ -1944,9 +1995,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionKey() {
+  void testProcessDefinitionKey() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("oneTaskProcess").list();
@@ -1957,11 +2008,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Deployment(resources = {
-    "org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml",
-    "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
+      "org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"
   })
   @Test
-  public void testProcessDefinitionKeyIn() {
+  void testProcessDefinitionKeyIn() {
 
     // Start for each deployed process definition a process instance
     runtimeService.startProcessInstanceByKey("taskDefinitionKeyProcess");
@@ -2006,9 +2057,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(count).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionName() {
+  void testProcessDefinitionName() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").list();
@@ -2018,9 +2069,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processDefinitionName("unexisting").count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testProcessDefinitionNameLike() {
+  void testProcessDefinitionNameLike() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionNameLike("The\\%One\\%Task%").list();
@@ -2031,9 +2082,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processDefinitionNameLike("The Other Task%").count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testProcessInstanceBusinessKey() {
+  void testProcessInstanceBusinessKey() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", "BUSINESS-KEY-1");
 
     assertThat(taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(1);
@@ -2041,9 +2092,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processInstanceBusinessKey("NON-EXISTING").count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testProcessInstanceBusinessKeyIn() {
+  void testProcessInstanceBusinessKeyIn() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", "BUSINESS-KEY-1");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", "BUSINESS-KEY-2");
 
@@ -2080,9 +2131,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(count).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testProcessInstanceBusinessKeyLike() {
+  void testProcessInstanceBusinessKeyLike() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", "BUSINESS-KEY-1");
 
     assertThat(taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(1);
@@ -2091,9 +2142,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUZINESS-KEY%").count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testTaskDueDate() throws Exception {
+  void testTaskDueDate() throws Exception {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2118,9 +2169,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .dueBefore(otherDate.getTime()).count()).isEqualTo(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testTaskDueBefore() {
+  void testTaskDueBefore() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2149,9 +2200,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().dueBefore(oneHourAgo.getTime()).count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testTaskDueAfter() {
+  void testTaskDueAfter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2180,9 +2231,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().dueAfter(oneHourAgo.getTime()).count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testTaskDueDateCombinations() throws ParseException {
+  void testTaskDueDateCombinations() throws ParseException {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2204,9 +2255,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .dueDate(dueDate).dueBefore(oneHourAgo).count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void shouldQueryForTasksWithoutDueDate() {
+  void shouldQueryForTasksWithoutDueDate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -2218,7 +2269,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldRejectDueDateAndWithoutDueDateCombination() {
+  void shouldRejectDueDateAndWithoutDueDateCombination() {
     var taskQuery = taskService.createTaskQuery().dueDate(ClockUtil.now());
     assertThatThrownBy(taskQuery::withoutDueDate)
       .isInstanceOf(ProcessEngineException.class)
@@ -2226,7 +2277,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldRejectWithoutDueDateAndDueDateCombination() {
+  void shouldRejectWithoutDueDateAndDueDateCombination() {
     var taskQuery = taskService.createTaskQuery().withoutDueDate();
     Date now = ClockUtil.now();
     assertThatThrownBy(() -> taskQuery.dueDate(now))
@@ -2235,7 +2286,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldRejectDueBeforeAndWithoutDueDateCombination() {
+  void shouldRejectDueBeforeAndWithoutDueDateCombination() {
     var taskQuery = taskService.createTaskQuery().dueBefore(ClockUtil.now());
     assertThatThrownBy(taskQuery::withoutDueDate)
       .isInstanceOf(ProcessEngineException.class)
@@ -2243,7 +2294,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldRejectWithoutDueDateAndDueBeforeCombination() {
+  void shouldRejectWithoutDueDateAndDueBeforeCombination() {
     var taskQuery = taskService.createTaskQuery().withoutDueDate();
     Date now = ClockUtil.now();
     assertThatThrownBy(() -> taskQuery.dueBefore(now))
@@ -2252,7 +2303,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldRejectDueAfterAndWithoutDueDateCombination() {
+  void shouldRejectDueAfterAndWithoutDueDateCombination() {
     var taskQuery = taskService.createTaskQuery().dueAfter(ClockUtil.now());
     assertThatThrownBy(taskQuery::withoutDueDate)
       .isInstanceOf(ProcessEngineException.class)
@@ -2260,7 +2311,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldRejectWithoutDueDateAndDueAfterCombination() {
+  void shouldRejectWithoutDueDateAndDueAfterCombination() {
     var taskQuery = taskService.createTaskQuery().withoutDueDate();
     Date now = ClockUtil.now();
     assertThatThrownBy(() -> taskQuery.dueAfter(now))
@@ -2268,9 +2319,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .hasMessageContaining("Invalid query usage");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testFollowUpDate() throws Exception {
+  void testFollowUpDate() throws Exception {
     Calendar otherDate = Calendar.getInstance();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -2309,9 +2360,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testFollowUpDateCombinations() throws ParseException {
+  void testFollowUpDateCombinations() throws ParseException {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -2333,9 +2384,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .followUpDate(dueDate).followUpBefore(oneHourAgo).count()).isZero();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testQueryByActivityInstanceId() {
+  void testQueryByActivityInstanceId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     String activityInstanceId = runtimeService.getActivityInstance(processInstance.getId())
@@ -2344,9 +2395,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().activityInstanceIdIn(activityInstanceId).list()).hasSize(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testQueryByMultipleActivityInstanceIds() {
+  void testQueryByMultipleActivityInstanceIds() {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     String activityInstanceId1 = runtimeService.getActivityInstance(processInstance1.getId())
@@ -2368,16 +2419,16 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().activityInstanceIdIn(activityInstanceId1, activityInstanceId2).list()).hasSize(2);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
   @Test
-  public void testQueryByInvalidActivityInstanceId() {
+  void testQueryByInvalidActivityInstanceId() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     assertThat(taskService.createTaskQuery().activityInstanceIdIn("anInvalidActivityInstanceId").list()).isEmpty();
   }
 
   @Test
-  public void testQueryPaging() {
+  void testQueryPaging() {
     TaskQuery query = taskService.createTaskQuery().taskCandidateUser("kermit");
 
     assertThat(query.listPage(0, Integer.MAX_VALUE)).hasSize(10);
@@ -2400,7 +2451,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQuerySorting() {
+  void testQuerySorting() {
     // default ordering is by id
     int expectedCount = 12;
     verifySortingAndCount(taskService.createTaskQuery(), expectedCount, taskById());
@@ -2435,7 +2486,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQuerySortingByNameShouldBeCaseInsensitive() {
+  void testQuerySortingByNameShouldBeCaseInsensitive() {
     // create task with capitalized name
     Task task = taskService.newTask("caseSensitiveTestTask");
     task.setName("CaseSensitiveTestTask");
@@ -2478,7 +2529,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryOrderByTaskName() {
+  void testQueryOrderByTaskName() {
 
     // asc
     List<Task> tasks = taskService.createTaskQuery()
@@ -2533,7 +2584,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testNativeQuery() {
+  void testNativeQuery() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     assertThat(managementService.getTableName(Task.class)).isEqualTo(tablePrefix + "ACT_RU_TASK");
     assertThat(managementService.getTableName(TaskEntity.class)).isEqualTo(tablePrefix + "ACT_RU_TASK");
@@ -2559,7 +2610,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testNativeQueryPaging() {
+  void testNativeQueryPaging() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     assertThat(managementService.getTableName(Task.class)).isEqualTo(tablePrefix + "ACT_RU_TASK");
     assertThat(managementService.getTableName(TaskEntity.class)).isEqualTo(tablePrefix + "ACT_RU_TASK");
@@ -2567,9 +2618,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class)).listPage(10, 12)).hasSize(2);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByCaseDefinitionId() {
+  void testQueryByCaseDefinitionId() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -2584,7 +2635,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseDefinitionId() {
+  void testQueryByInvalidCaseDefinitionId() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.caseDefinitionId("invalid");
@@ -2599,9 +2650,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByCaseDefinitionKey() {
+  void testQueryByCaseDefinitionKey() {
     String caseDefinitionKey = repositoryService
         .createCaseDefinitionQuery()
         .singleResult()
@@ -2619,7 +2670,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseDefinitionKey() {
+  void testQueryByInvalidCaseDefinitionKey() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.caseDefinitionKey("invalid");
@@ -2634,9 +2685,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByCaseDefinitionName() {
+  void testQueryByCaseDefinitionName() {
     CaseDefinition caseDefinition = repositoryService
         .createCaseDefinitionQuery()
         .singleResult();
@@ -2656,7 +2707,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseDefinitionName() {
+  void testQueryByInvalidCaseDefinitionName() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.caseDefinitionName("invalid");
@@ -2671,9 +2722,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn", "org/operaton/bpm/engine/test/api/repository/three_.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn", "org/operaton/bpm/engine/test/api/repository/three_.cmmn"})
   @Test
-  public void testQueryByCaseDefinitionNameLike() {
+  void testQueryByCaseDefinitionNameLike() {
     List<String> caseDefinitionIds = getCaseDefinitionIds();
 
     for (String caseDefinitionId : caseDefinitionIds) {
@@ -2697,7 +2748,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseDefinitionNameLike() {
+  void testQueryByInvalidCaseDefinitionNameLike() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.caseDefinitionNameLike("invalid");
@@ -2712,9 +2763,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByCaseInstanceId() {
+  void testQueryByCaseInstanceId() {
     String caseDefinitionId = getCaseDefinitionId();
 
     String caseInstanceId = caseService
@@ -2729,13 +2780,13 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources=
-    {
-      "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testQueryByCaseInstanceIdHierarchy.cmmn",
-      "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testQueryByCaseInstanceIdHierarchy.bpmn20.xml"
+  @Deployment(resources =
+      {
+          "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testQueryByCaseInstanceIdHierarchy.cmmn",
+          "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testQueryByCaseInstanceIdHierarchy.bpmn20.xml"
       })
   @Test
-  public void testQueryByCaseInstanceIdHierarchy() {
+  void testQueryByCaseInstanceIdHierarchy() {
     // given
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
@@ -2771,7 +2822,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseInstanceId() {
+  void testQueryByInvalidCaseInstanceId() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.caseInstanceId("invalid");
@@ -2786,9 +2837,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByCaseInstanceBusinessKey() {
+  void testQueryByCaseInstanceBusinessKey() {
     String caseDefinitionId = getCaseDefinitionId();
 
     String businessKey = "aBusinessKey";
@@ -2806,7 +2857,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseInstanceBusinessKey() {
+  void testQueryByInvalidCaseInstanceBusinessKey() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.caseInstanceBusinessKey("invalid");
@@ -2821,9 +2872,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByCaseInstanceBusinessKeyLike() {
+  void testQueryByCaseInstanceBusinessKeyLike() {
     String caseDefinitionId = getCaseDefinitionId();
 
     String businessKey = "aBusiness_Key";
@@ -2849,7 +2900,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseInstanceBusinessKeyLike() {
+  void testQueryByInvalidCaseInstanceBusinessKeyLike() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.caseInstanceBusinessKeyLike("invalid");
@@ -2864,9 +2915,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testQueryByCaseExecutionId() {
+  void testQueryByCaseExecutionId() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -2883,7 +2934,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidCaseExecutionId() {
+  void testQueryByInvalidCaseExecutionId() {
     TaskQuery query = taskService.createTaskQuery();
 
     query.caseExecutionId("invalid");
@@ -2898,9 +2949,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByNullCaseInstanceVariableValueEquals() {
+  void testQueryByNullCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -2915,9 +2966,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueEquals() {
+  void testQueryByStringCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -2932,9 +2983,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testCaseInstanceVariableNameEqualsIgnoreCase() {
+  void testCaseInstanceVariableNameEqualsIgnoreCase() {
     String caseDefinitionId = getCaseDefinitionId();
 
     String variableName = "someVariable";
@@ -2950,9 +3001,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueEqualsIgnoreCase() {
+  void testQueryByStringCaseInstanceVariableValueEqualsIgnoreCase() {
     String caseDefinitionId = getCaseDefinitionId();
 
     String variableName = "someVariable";
@@ -2986,9 +3037,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByBooleanCaseInstanceVariableValueEquals() {
+  void testQueryByBooleanCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3003,9 +3054,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByShortCaseInstanceVariableValueEquals() {
+  void testQueryByShortCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3020,9 +3071,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByIntegerCaseInstanceVariableValueEquals() {
+  void testQueryByIntegerCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3037,9 +3088,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByLongCaseInstanceVariableValueEquals() {
+  void testQueryByLongCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3054,9 +3105,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDateCaseInstanceVariableValueEquals() {
+  void testQueryByDateCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     Date now = new Date();
@@ -3073,9 +3124,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDoubleCaseInstanceVariableValueEquals() {
+  void testQueryByDoubleCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3090,9 +3141,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByByteArrayCaseInstanceVariableValueEquals() {
+  void testQueryByByteArrayCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     byte[] bytes = "somebytes".getBytes();
@@ -3113,9 +3164,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryBySerializableCaseInstanceVariableValueEquals() {
+  void testQueryBySerializableCaseInstanceVariableValueEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     List<String> serializable = new ArrayList<>();
@@ -3139,9 +3190,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByFileCaseInstanceVariableValueEquals() {
+  void testQueryByFileCaseInstanceVariableValueEquals() {
     FileValue fileValue = createDefaultFileValue();
     String variableName = "aFileValue";
 
@@ -3195,9 +3246,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .create();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueNotEquals() {
+  void testQueryByStringCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3212,9 +3263,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByBooleanCaseInstanceVariableValueNotEquals() {
+  void testQueryByBooleanCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3229,9 +3280,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByShortCaseInstanceVariableValueNotEquals() {
+  void testQueryByShortCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3246,9 +3297,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByIntegerCaseInstanceVariableValueNotEquals() {
+  void testQueryByIntegerCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3263,9 +3314,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByLongCaseInstanceVariableValueNotEquals() {
+  void testQueryByLongCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3280,9 +3331,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDateCaseInstanceVariableValueNotEquals() {
+  void testQueryByDateCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     Date now = new Date();
@@ -3301,9 +3352,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDoubleCaseInstanceVariableValueNotEquals() {
+  void testQueryByDoubleCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3318,9 +3369,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByFileCaseInstanceVariableValueNotEquals() {
+  void testQueryByFileCaseInstanceVariableValueNotEquals() {
     FileValue fileValue = createDefaultFileValue();
     String variableName = "aFileValue";
 
@@ -3361,9 +3412,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     return humanTaskExecutionId;
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryBySerializableCaseInstanceVariableValueNotEquals() {
+  void testQueryBySerializableCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     List<String> serializable = new ArrayList<>();
@@ -3387,9 +3438,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByByteArrayCaseInstanceVariableValueNotEquals() {
+  void testQueryByByteArrayCaseInstanceVariableValueNotEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     byte[] bytes = "somebytes".getBytes();
@@ -3410,9 +3461,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByNullCaseInstanceVariableValueGreaterThan() {
+  void testQueryByNullCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3431,9 +3482,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueGreaterThan() {
+  void testQueryByStringCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3449,9 +3500,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByBooleanCaseInstanceVariableValueGreaterThan() {
+  void testQueryByBooleanCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3470,9 +3521,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByShortCaseInstanceVariableValueGreaterThan() {
+  void testQueryByShortCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3488,9 +3539,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByIntegerCaseInstanceVariableValueGreaterThan() {
+  void testQueryByIntegerCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3506,9 +3557,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByLongCaseInstanceVariableValueGreaterThan() {
+  void testQueryByLongCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3524,9 +3575,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDateCaseInstanceVariableValueGreaterThan() {
+  void testQueryByDateCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     Date now = new Date();
@@ -3546,9 +3597,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDoubleCaseInstanceVariableValueGreaterThan() {
+  void testQueryByDoubleCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3564,9 +3615,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByByteArrayCaseInstanceVariableValueGreaterThan() {
+  void testQueryByByteArrayCaseInstanceVariableValueGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     byte[] bytes = "somebytes".getBytes();
@@ -3587,9 +3638,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryBySerializableCaseInstanceVariableGreaterThan() {
+  void testQueryBySerializableCaseInstanceVariableGreaterThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     List<String> serializable = new ArrayList<>();
@@ -3613,9 +3664,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
   @Test
-  public void testQueryByFileCaseInstanceVariableValueGreaterThan() {
+  void testQueryByFileCaseInstanceVariableValueGreaterThan() {
     FileValue fileValue = createDefaultFileValue();
     String variableName = "aFileValue";
 
@@ -3632,9 +3683,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByNullCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByNullCaseInstanceVariableValueGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3653,9 +3704,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByStringCaseInstanceVariableValueGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3677,9 +3728,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByBooleanCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByBooleanCaseInstanceVariableValueGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3698,9 +3749,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByShortCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByShortCaseInstanceVariableValueGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3722,9 +3773,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByIntegerCaseInstanceVariableValueGreaterThanOrEquals() {
+  void testQueryByIntegerCaseInstanceVariableValueGreaterThanOrEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3746,9 +3797,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByLongCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByLongCaseInstanceVariableValueGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3770,9 +3821,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDateCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByDateCaseInstanceVariableValueGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     Date now = new Date();
@@ -3798,9 +3849,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDoubleCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByDoubleCaseInstanceVariableValueGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3822,9 +3873,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByByteArrayCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByByteArrayCaseInstanceVariableValueGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     byte[] bytes = "somebytes".getBytes();
@@ -3845,9 +3896,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryBySerializableCaseInstanceVariableGreaterThanOrEqual() {
+  void testQueryBySerializableCaseInstanceVariableGreaterThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     List<String> serializable = new ArrayList<>();
@@ -3871,9 +3922,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByFileCaseInstanceVariableValueGreaterThanOrEqual() {
+  void testQueryByFileCaseInstanceVariableValueGreaterThanOrEqual() {
     FileValue fileValue = createDefaultFileValue();
     String variableName = "aFileValue";
 
@@ -3889,9 +3940,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByNullCaseInstanceVariableValueLessThan() {
+  void testQueryByNullCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3910,9 +3961,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueLessThan() {
+  void testQueryByStringCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3928,9 +3979,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByBooleanCaseInstanceVariableValueLessThan() {
+  void testQueryByBooleanCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3949,9 +4000,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByShortCaseInstanceVariableValueLessThan() {
+  void testQueryByShortCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3967,9 +4018,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByIntegerCaseInstanceVariableValueLessThan() {
+  void testQueryByIntegerCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -3985,9 +4036,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByLongCaseInstanceVariableValueLessThan() {
+  void testQueryByLongCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4003,9 +4054,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDateCaseInstanceVariableValueLessThan() {
+  void testQueryByDateCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     Date now = new Date();
@@ -4025,9 +4076,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDoubleCaseInstanceVariableValueLessThan() {
+  void testQueryByDoubleCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4043,9 +4094,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByByteArrayCaseInstanceVariableValueLessThan() {
+  void testQueryByByteArrayCaseInstanceVariableValueLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     byte[] bytes = "somebytes".getBytes();
@@ -4066,9 +4117,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryBySerializableCaseInstanceVariableLessThan() {
+  void testQueryBySerializableCaseInstanceVariableLessThan() {
     String caseDefinitionId = getCaseDefinitionId();
 
     List<String> serializable = new ArrayList<>();
@@ -4092,9 +4143,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByFileCaseInstanceVariableValueLessThan() {
+  void testQueryByFileCaseInstanceVariableValueLessThan() {
     FileValue fileValue = createDefaultFileValue();
     String variableName = "aFileValue";
 
@@ -4109,9 +4160,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByNullCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByNullCaseInstanceVariableValueLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4130,9 +4181,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByStringCaseInstanceVariableValueLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4154,9 +4205,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByBooleanCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByBooleanCaseInstanceVariableValueLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4175,9 +4226,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByShortCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByShortCaseInstanceVariableValueLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4199,9 +4250,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByIntegerCaseInstanceVariableValueLessThanOrEquals() {
+  void testQueryByIntegerCaseInstanceVariableValueLessThanOrEquals() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4223,9 +4274,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByLongCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByLongCaseInstanceVariableValueLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4247,9 +4298,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDateCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByDateCaseInstanceVariableValueLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     Date now = new Date();
@@ -4275,9 +4326,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByDoubleCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByDoubleCaseInstanceVariableValueLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4299,9 +4350,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByByteArrayCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByByteArrayCaseInstanceVariableValueLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     byte[] bytes = "somebytes".getBytes();
@@ -4322,9 +4373,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryBySerializableCaseInstanceVariableLessThanOrEqual() {
+  void testQueryBySerializableCaseInstanceVariableLessThanOrEqual() {
     String caseDefinitionId = getCaseDefinitionId();
 
     List<String> serializable = new ArrayList<>();
@@ -4348,9 +4399,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByFileCaseInstanceVariableValueLessThanOrEqual() {
+  void testQueryByFileCaseInstanceVariableValueLessThanOrEqual() {
     FileValue fileValue = createDefaultFileValue();
     String variableName = "aFileValue";
 
@@ -4365,9 +4416,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByNullCaseInstanceVariableValueLike() {
+  void testQueryByNullCaseInstanceVariableValueLike() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4386,9 +4437,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByNullCaseInstanceVariableValueNotLike() {
+  void testQueryByNullCaseInstanceVariableValueNotLike() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4407,9 +4458,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueLike() {
+  void testQueryByStringCaseInstanceVariableValueLike() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4436,9 +4487,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueLikeIgnoreCase() {
+  void testQueryByStringCaseInstanceVariableValueLikeIgnoreCase() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4457,9 +4508,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueNotLike() {
+  void testQueryByStringCaseInstanceVariableValueNotLike() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4496,9 +4547,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 0);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
   @Test
-  public void testQueryByStringCaseInstanceVariableValueNotLikeIgnoreCase() {
+  void testQueryByStringCaseInstanceVariableValueNotLikeIgnoreCase() {
     String caseDefinitionId = getCaseDefinitionId();
 
     caseService
@@ -4538,7 +4589,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testQueryByVariableInParallelBranch() {
+  void testQueryByVariableInParallelBranch() {
     runtimeService.startProcessInstanceByKey("parallelGateway");
 
     // when there are two process variables of the same name but different types
@@ -4554,7 +4605,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByProcessVariables() {
+  void testQueryResultOrderingByProcessVariables() {
     // given three tasks with String process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", "bValue"));
@@ -4605,7 +4656,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testLocalExecutionVariable.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByExecutionVariables() {
+  void testQueryResultOrderingByExecutionVariables() {
     // given three tasks with String process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("parallelGateway",
       Collections.singletonMap("var", "aValue"));
@@ -4640,7 +4691,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByTaskVariables() {
+  void testQueryResultOrderingByTaskVariables() {
     // given three tasks with String process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
       Collections.singletonMap("var", "aValue"));
@@ -4675,7 +4726,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
   @Test
-  public void testQueryResultOrderingByCaseInstanceVariables() {
+  void testQueryResultOrderingByCaseInstanceVariables() {
     // given three tasks with String case instance variables
     CaseInstance instance1 = caseService.createCaseInstanceByKey("oneTaskCase",
         Collections.singletonMap("var", "cValue"));
@@ -4700,7 +4751,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn")
   @Test
-  public void testQueryResultOrderingByCaseExecutionVariables() {
+  void testQueryResultOrderingByCaseExecutionVariables() {
     // given three tasks with String case instance variables
     CaseInstance instance1 = caseService.createCaseInstanceByKey("oneTaskCase",
         Collections.singletonMap("var", "cValue"));
@@ -4756,7 +4807,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByVariablesWithNullValues() {
+  void testQueryResultOrderingByVariablesWithNullValues() {
     // given three tasks with String process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", "bValue"));
@@ -4791,7 +4842,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByVariablesWithMixedTypes() {
+  void testQueryResultOrderingByVariablesWithMixedTypes() {
     // given three tasks with String and Integer process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", 42));
@@ -4823,7 +4874,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByStringVariableWithMixedCase() {
+  void testQueryResultOrderingByStringVariableWithMixedCase() {
     // given three tasks with String and Integer process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", "a"));
@@ -4850,7 +4901,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByVariablesOfAllPrimitiveTypes() {
+  void testQueryResultOrderingByVariablesOfAllPrimitiveTypes() {
     // given three tasks with String and Integer process instance variables
     ProcessInstance booleanInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", true));
@@ -4926,7 +4977,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByUnsupportedValueTypes() {
+  void testQueryByUnsupportedValueTypes() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.orderByProcessVariable("var", ValueType.BYTES);
@@ -4987,7 +5038,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByVariablesWithMixedTypesAndSameColumn() {
+  void testQueryResultOrderingByVariablesWithMixedTypesAndSameColumn() {
     // given three tasks with Integer and Long process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", 42));
@@ -5022,7 +5073,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByTwoVariables() {
+  void testQueryResultOrderingByTwoVariables() {
     // given three tasks with String process instance variables
     ProcessInstance bInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("var", "b").putValue("var2", 14));
@@ -5090,7 +5141,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryResultOrderingByVariablesWithSecondaryOrderingByProcessInstanceId() {
+  void testQueryResultOrderingByVariablesWithSecondaryOrderingByProcessInstanceId() {
     // given three tasks with String process instance variables
     ProcessInstance bInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("var", "b"));
@@ -5131,7 +5182,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryResultOrderingWithInvalidParameters() {
+  void testQueryResultOrderingWithInvalidParameters() {
     var taskQuery = taskService.createTaskQuery();
     try {
       taskQuery.orderByProcessVariable(null, ValueType.STRING);
@@ -5217,31 +5268,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     }
   }
 
-  private void verifyQueryResults(TaskQuery query, int countExpected) {
-    assertThat(query.list()).hasSize(countExpected);
-    assertThat(query.count()).isEqualTo(countExpected);
-
-    if (countExpected == 1) {
-      assertThat(query.singleResult()).isNotNull();
-    } else if (countExpected > 1){
-      verifySingleResultFails(query);
-    } else if (countExpected == 0) {
-      assertThat(query.singleResult()).isNull();
-    }
-  }
-
-  private void verifySingleResultFails(TaskQuery query) {
-    try {
-      query.singleResult();
-      fail("");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
-  }
-
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/task/oneTaskWithFormKeyProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/oneTaskWithFormKeyProcess.bpmn20.xml"})
   @Test
-  public void testInitializeFormKeys() {
+  void testInitializeFormKeys() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     // if initializeFormKeys
@@ -5269,7 +5298,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment
-  public void testInitializeFormKeysOperatonFormRef() {
+  void testInitializeFormKeysOperatonFormRef() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("formRefProcess");
 
     // if initializeFormKeys
@@ -5293,9 +5322,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     .hasMessage("ENGINE-03052 The form key / form reference is not initialized. You must call initializeFormKeys() on the task query before you can retrieve the form key or the form reference.");
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithFormKey.cmmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithFormKey.cmmn"})
   @Test
-  public void testInitializeFormKeysForCaseInstance() {
+  void testInitializeFormKeysForCaseInstance() {
     String caseDefinitionId = getCaseDefinitionId();
 
     CaseInstance caseInstance = caseService
@@ -5309,7 +5338,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryOrderByProcessVariableInteger() {
+  void testQueryOrderByProcessVariableInteger() {
     ProcessInstance instance500 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables().putValue("var", 500));
     ProcessInstance instance1000 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
@@ -5344,7 +5373,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryOrderByTaskVariableInteger() {
+  void testQueryOrderByTaskVariableInteger() {
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -5384,7 +5413,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByParentTaskId() {
+  void testQueryByParentTaskId() {
     String parentTaskId = "parentTask";
     Task parent = taskService.newTask(parentTaskId);
     taskService.saveTask(parent);
@@ -5405,7 +5434,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testExtendTaskQueryList_ProcessDefinitionKeyIn() {
+  void testExtendTaskQueryList_ProcessDefinitionKeyIn() {
     // given
     String processDefinitionKey = "invoice";
     TaskQuery query = taskService
@@ -5424,7 +5453,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testExtendingTaskQueryList_ProcessDefinitionKeyIn() {
+  void testExtendingTaskQueryList_ProcessDefinitionKeyIn() {
     // given
     String processDefinitionKey = "invoice";
     TaskQuery query = taskService.createTaskQuery();
@@ -5443,7 +5472,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testExtendTaskQueryList_TaskDefinitionKeyIn() {
+  void testExtendTaskQueryList_TaskDefinitionKeyIn() {
     // given
     String taskDefinitionKey = "assigneApprover";
     TaskQuery query = taskService
@@ -5462,7 +5491,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testExtendingTaskQueryList_TaskDefinitionKeyIn() {
+  void testExtendingTaskQueryList_TaskDefinitionKeyIn() {
     // given
     String taskDefinitionKey = "assigneApprover";
     TaskQuery query = taskService.createTaskQuery();
@@ -5481,7 +5510,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryWithCandidateUsers() {
+  void testQueryWithCandidateUsers() {
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
         .startEvent()
@@ -5502,7 +5531,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryWithoutCandidateUsers() {
+  void testQueryWithoutCandidateUsers() {
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
         .startEvent()
@@ -5523,7 +5552,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryAssignedTasksWithCandidateUsers() {
+  void testQueryAssignedTasksWithCandidateUsers() {
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
         .startEvent()
@@ -5548,7 +5577,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
 
   @Test
-  public void testQueryAssignedTasksWithoutCandidateUsers() {
+  void testQueryAssignedTasksWithoutCandidateUsers() {
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
         .startEvent()
@@ -5572,13 +5601,13 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByNameNotEqual() {
+  void testQueryByNameNotEqual() {
     TaskQuery query = taskService.createTaskQuery().taskNameNotEqual("gonzo_Task");
     assertThat(query.list()).hasSize(11);
   }
 
   @Test
-  public void testQueryByNameNotLike() {
+  void testQueryByNameNotLike() {
     TaskQuery query = taskService.createTaskQuery().taskNameNotLike("management%");
     assertThat(query.list()).hasSize(9);
     assertThat(query.count()).isEqualTo(9);
@@ -5590,7 +5619,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryByProcessInstanceIdIn() {
+  void testQueryByProcessInstanceIdIn() {
     // given three process instances
     String instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
     String instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
@@ -5608,7 +5637,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml")
   @Test
-  public void testQueryByProcessInstanceIdInNonExisting() {
+  void testQueryByProcessInstanceIdInNonExisting() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -5621,7 +5650,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.shouldContainOperatonFormRefIfInitialized.bpmn")
   @Test
-  public void shouldContainOperatonFormRefIfInitialized() {
+  void shouldContainOperatonFormRefIfInitialized() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskFormRefVersion").getId();
 
@@ -5648,7 +5677,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldFindTaskLastUpdatedNullUseCreateDate() {
+  void shouldFindTaskLastUpdatedNullUseCreateDate() {
     // given
     Date beforeStart = getBeforeCurrentTime();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -5665,7 +5694,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldNotFindTaskLastUpdatedNullCreateDateBeforeQueryDate() {
+  void shouldNotFindTaskLastUpdatedNullCreateDateBeforeQueryDate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Date afterStart = getAfterCurrentTime();
@@ -5680,7 +5709,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldNotFindTaskLastUpdatedBeforeQueryDate() {
+  void shouldNotFindTaskLastUpdatedBeforeQueryDate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -5704,7 +5733,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldNotFindTaskLastUpdatedEqualsQueryDate() {
+  void shouldNotFindTaskLastUpdatedEqualsQueryDate() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -5723,7 +5752,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldReturnResultsOrderedByLastUpdatedAsc() {
+  void shouldReturnResultsOrderedByLastUpdatedAsc() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -5757,7 +5786,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldReturnResultsOrderedByLastUpdatedDesc() {
+  void shouldReturnResultsOrderedByLastUpdatedDesc() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -5790,7 +5819,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldFindStandaloneTaskWithoutUpdateByLastUpdated() {
+  void shouldFindStandaloneTaskWithoutUpdateByLastUpdated() {
     // given
     Date beforeCreateTask = getBeforeCurrentTime();
     Task task = taskService.newTask("myTask");
@@ -5809,7 +5838,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldFindStandaloneTaskWithUpdateByLastUpdated() {
+  void shouldFindStandaloneTaskWithUpdateByLastUpdated() {
     // given
     Task task = taskService.newTask("myTask");
     taskIds.add(task.getId());
@@ -5828,10 +5857,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskResult.getLastUpdated()).isAfter(beforeSave);
     assertThat(taskResult.getLastUpdated()).isAfter(taskResult.getCreateTime());
   }
+
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldNotFindAttachmentAndCommentInfoWithoutQueryParam() {
+  void shouldNotFindAttachmentAndCommentInfoWithoutQueryParam() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -5845,10 +5875,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskResult.hasComment()).isFalse();
     assertThat(taskResult.hasAttachment()).isFalse();
   }
+
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void shouldFindAttachmentAndCommentInfoWithQueryParam() {
+  void shouldFindAttachmentAndCommentInfoWithQueryParam() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();

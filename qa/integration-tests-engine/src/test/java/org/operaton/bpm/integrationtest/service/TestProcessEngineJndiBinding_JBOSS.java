@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 /**
  * <p>Makes sure that the process engine JNDI bindings are created</p>
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -40,24 +40,24 @@ import static org.assertj.core.api.Assertions.fail;
 public class TestProcessEngineJndiBinding_JBOSS extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive app1() {    
+  public static WebArchive app1() {
     return initWebArchiveDeployment();
   }
-  
+
   @Test
   public void testDefaultProcessEngineBindingCreated() {
-    
+
     try {
       ProcessEngine processEngine = InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default");
       assertThat(processEngine).as("Process engine must not be null").isNotNull();
-      
+
     } catch(Exception e) {
       fail("Process Engine not bound in JNDI.");
-      
+
     }
-        
+
   }
-  
-  
+
+
 
 }

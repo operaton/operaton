@@ -6,7 +6,7 @@
 -- Version 2.0; you may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
 --
---     http://www.apache.org/licenses/LICENSE-2.0
+--     https://www.apache.org/licenses/LICENSE-2.0
 --
 -- Unless required by applicable law or agreed to in writing, software
 -- distributed under the License is distributed on an "AS IS" BASIS,
@@ -98,6 +98,7 @@ create table ACT_RU_EXECUTION (
     CACHED_ENT_STATE_ INTEGER,
     SEQUENCE_COUNTER_ NUMBER(19,0),
     TENANT_ID_ NVARCHAR2(64),
+    PROC_DEF_KEY_ NVARCHAR2(255),
     primary key (ID_)
 );
 

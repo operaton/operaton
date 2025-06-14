@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -53,6 +53,7 @@ import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
 import org.operaton.bpm.engine.impl.VariableOrderProperty;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.json.JsonTaskQueryConverter;
+import org.operaton.bpm.engine.impl.mock.Mocks;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -63,7 +64,6 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
-import org.operaton.bpm.engine.test.mock.Mocks;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -75,11 +75,11 @@ import com.google.gson.JsonObject;
  * @author Sebastian Menski
  */
 class FilterTaskQueryTest {
-  
+
   @RegisterExtension
   protected static ProcessEngineExtension engine = ProcessEngineExtension.builder().build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engine);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engine);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected FilterService filterService;

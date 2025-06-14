@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,30 +33,30 @@ public interface UserResource {
 
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  public void deleteUser();
+  void deleteUser();
 
   @POST
   @Path("/unlock")
-  public void unlockUser();
+  void unlockUser();
 
   // profile ///////////////////
 
   @GET
   @Path("/profile")
   @Produces(MediaType.APPLICATION_JSON)
-  public UserProfileDto getUserProfile(@Context UriInfo context);
+  UserProfileDto getUserProfile(@Context UriInfo context);
 
   @PUT
   @Path("/profile")
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateProfile(UserProfileDto profile);
+  void updateProfile(UserProfileDto profile);
 
   // credentials //////////////
 
   @PUT
   @Path("/credentials")
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateCredentials(UserCredentialsDto account);
+  void updateCredentials(UserCredentialsDto account);
 
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)

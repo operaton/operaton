@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,8 +68,10 @@ class IdentityServiceTest {
   private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
+  private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
+
   @RegisterExtension
-  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected static ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
@@ -99,10 +102,9 @@ class IdentityServiceTest {
       for (Authorization authorization : processEngine.getAuthorizationService().createAuthorizationQuery().list()) {
         processEngine.getAuthorizationService().deleteAuthorization(authorization.getId());
       }
-
-      processEngine.close();
-      ProcessEngines.unregister(processEngine);
-      processEngine = null;
+      if (processEngine != ProcessEngines.getDefaultProcessEngine()) {
+        processEngine.close();
+      }
     }
   }
 
@@ -596,6 +598,7 @@ class IdentityServiceTest {
   void testSaveUserWithGenericResourceId() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
 
     User user = identityService.newUser("*");
@@ -611,6 +614,7 @@ class IdentityServiceTest {
   void testSaveGroupWithGenericResourceId() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
 
     Group group = identityService.newGroup("*");
@@ -988,6 +992,7 @@ class IdentityServiceTest {
   void testCustomResourceWhitelist() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/custom.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
 
     IdentityService processEngineIdentityService = processEngine.getIdentityService();
@@ -1027,6 +1032,7 @@ class IdentityServiceTest {
   void testSeparateResourceWhitelistPatterns() {
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/custom.resource.whitelist.operaton.cfg.xml")
+      .setProcessEngineName(PROCESS_ENGINE_NAME)
       .buildProcessEngine();
 
     IdentityService processEngineIdentityService = processEngine.getIdentityService();

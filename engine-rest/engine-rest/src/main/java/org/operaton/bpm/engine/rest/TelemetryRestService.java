@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,26 +26,21 @@ import jakarta.ws.rs.core.MediaType;
 import org.operaton.bpm.engine.rest.dto.TelemetryConfigurationDto;
 import org.operaton.bpm.engine.rest.dto.telemetry.TelemetryDataDto;
 
+/**
+ * @deprecated The sending telemetry feature is removed.
+ * Please remove the endpoint usages as they are no longer needed.
+ */
+@Deprecated(forRemoval = true, since = "1.0")
 @Produces(MediaType.APPLICATION_JSON)
 public interface TelemetryRestService {
 
   String PATH = "/telemetry";
 
-  /**
-   * @deprecated The sending telemetry feature is removed.
-   * Please remove the endpoint usages as they are no longer needed.
-   */
-  @Deprecated
   @POST
   @Path("/configuration")
   @Consumes(MediaType.APPLICATION_JSON)
   void configureTelemetry(TelemetryConfigurationDto dto);
 
-  /**
-   * @deprecated The sending telemetry feature is removed.
-   * Please remove the endpoint usages as they are no longer needed.
-   */
-  @Deprecated
   @GET
   @Path("/configuration")
   @Produces(MediaType.APPLICATION_JSON)

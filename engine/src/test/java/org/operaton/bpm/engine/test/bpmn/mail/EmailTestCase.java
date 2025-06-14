@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,14 @@
  */
 package org.operaton.bpm.engine.test.bpmn.mail;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.test.TestLogger;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Before;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.slf4j.Logger;
 import org.subethamail.wiser.Wiser;
 
@@ -27,16 +31,22 @@ import org.subethamail.wiser.Wiser;
 /**
  * @author Joram Barrez
  */
-public abstract class EmailTestCase extends PluggableProcessEngineTest {
+public abstract class EmailTestCase {
+
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private static final Logger LOG = TestLogger.TEST_LOGGER.getLogger();
 
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected RuntimeService runtimeService;
+
   protected Wiser wiser;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
-
-
     int port = processEngineConfiguration.getMailServerPort();
 
     boolean serverUpAndRunning = false;
@@ -57,14 +67,12 @@ public abstract class EmailTestCase extends PluggableProcessEngineTest {
     }
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     wiser.stop();
 
     // Fix for slow Jenkins
     Thread.sleep(250L);
-
-
   }
 
 }

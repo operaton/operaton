@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.migration.MigratingProcessInstanceValidationException;
@@ -35,15 +37,11 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ExternalTaskModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ServiceTaskModels;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 /**
  * @author Thorben Lindhauer
@@ -53,14 +51,13 @@ public class MigrationExternalTaskTest {
 
   public static final String WORKER_ID = "foo";
 
-  protected ProcessEngineRule rule = new ProvidedProcessEngineRule();
-  protected MigrationTestRule testHelper = new MigrationTestRule(rule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(rule).around(testHelper);
+  @RegisterExtension
+  static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @Test
-  public void testTrees() {
+  void testTrees() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
@@ -91,7 +88,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testProperties() {
+  void testProperties() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS)
@@ -132,7 +129,7 @@ public class MigrationExternalTaskTest {
 
 
   @Test
-  public void testContinueProcess() {
+  void testContinueProcess() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
@@ -155,7 +152,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testChangeTaskConfiguration() {
+  void testChangeTaskConfiguration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS)
@@ -182,7 +179,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testChangeTaskType() {
+  void testChangeTaskType() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.newModel()
@@ -213,7 +210,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testLockedTaskProperties() {
+  void testLockedTaskProperties() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS)
@@ -241,7 +238,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testLockedTaskContinueProcess() {
+  void testLockedTaskContinueProcess() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS)
@@ -267,7 +264,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void cannotMigrateFromExternalToClassDelegateServiceTask() {
+  void cannotMigrateFromExternalToClassDelegateServiceTask() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ServiceTaskModels.oneClassDelegateServiceTask("foo.Bar"));
     var runtimeService = rule.getRuntimeService()
@@ -288,7 +285,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testAddParentScope() {
+  void testAddParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.SUBPROCESS_PROCESS);
@@ -311,7 +308,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testRemoveParentScope() {
+  void testRemoveParentScope() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
@@ -334,7 +331,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testIncident() {
+  void testIncident() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS)
@@ -377,7 +374,7 @@ public class MigrationExternalTaskTest {
   }
 
   @Test
-  public void testIncidentWithoutMapExternalTask() {
+  void testIncidentWithoutMapExternalTask() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS)
@@ -404,7 +401,7 @@ public class MigrationExternalTaskTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskWithoutIdTest.bpmn"})
-  public void testProcessDefinitionWithoutIdField() {
+  void testProcessDefinitionWithoutIdField() {
      // given
 
     ProcessDefinition sourceProcessDefinition = testHelper.deploy("org/operaton/bpm/engine/test/api/externaltask/ExternalTaskWithoutIdTest.bpmn").getDeployedProcessDefinitions().get(0);
@@ -424,7 +421,7 @@ public class MigrationExternalTaskTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskWithoutIdTest.bpmn"})
-  public void testProcessDefinitionWithIdField() {
+  void testProcessDefinitionWithIdField() {
      // given
 
     ProcessDefinition sourceProcessDefinition = testHelper.deploy("org/operaton/bpm/engine/test/api/externaltask/ExternalTaskWithIdTest.bpmn").getDeployedProcessDefinitions().get(0);

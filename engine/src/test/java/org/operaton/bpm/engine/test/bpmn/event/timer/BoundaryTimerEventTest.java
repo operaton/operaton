@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,6 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.joda.time.LocalDateTime;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
@@ -30,14 +36,22 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.joda.time.LocalDateTime;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 /**
  * @author Joram Barrez
  */
-public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
+class BoundaryTimerEventTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
 
   /*
    * Test for when multiple boundary timer events are defined on the same user
@@ -50,7 +64,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testMultipleTimersOnUserTask() {
+  void testMultipleTimersOnUserTask() {
 
     // Set the clock fixed
     Date startTime = new Date();
@@ -73,7 +87,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTimerOnNestingOfSubprocesses() {
+  void testTimerOnNestingOfSubprocesses() {
 
     runtimeService.startProcessInstanceByKey("timerOnNestedSubprocesses");
     List<Task> tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
@@ -90,7 +104,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testExpressionOnTimer(){
+  void testExpressionOnTimer(){
     // Set the clock fixed
     Date startTime = new Date();
 
@@ -115,7 +129,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testRecalculateUnchangedExpressionOnTimerCurrentDateBased(){
+  void testRecalculateUnchangedExpressionOnTimerCurrentDateBased(){
     // Set the clock fixed
     Date startTime = new Date();
 
@@ -153,7 +167,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/BoundaryTimerEventTest.testRecalculateUnchangedExpressionOnTimerCurrentDateBased.bpmn20.xml")
   @Test
-  public void testRecalculateUnchangedExpressionOnTimerCreationDateBased(){
+  void testRecalculateUnchangedExpressionOnTimerCreationDateBased(){
     // Set the clock fixed
     Date startTime = new Date();
 
@@ -187,7 +201,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/BoundaryTimerEventTest.testRecalculateUnchangedExpressionOnTimerCurrentDateBased.bpmn20.xml")
   @Test
-  public void testRecalculateChangedExpressionOnTimerCurrentDateBased(){
+  void testRecalculateChangedExpressionOnTimerCurrentDateBased(){
     // Set the clock fixed
     Date startTime = new Date();
 
@@ -222,7 +236,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/BoundaryTimerEventTest.testRecalculateUnchangedExpressionOnTimerCurrentDateBased.bpmn20.xml")
   @Test
-  public void testRecalculateChangedExpressionOnTimerCreationDateBased(){
+  void testRecalculateChangedExpressionOnTimerCreationDateBased(){
     // Set the clock fixed
     Date startTime = new Date();
 
@@ -257,7 +271,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testTimerInSingleTransactionProcess() {
+  void testTimerInSingleTransactionProcess() {
     // make sure that if a PI completes in single transaction, JobEntities associated with the execution are deleted.
     // broken before 5.10, see ACT-1133
     runtimeService.startProcessInstanceByKey("timerOnSubprocesses");
@@ -266,7 +280,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testRepeatingTimerWithCancelActivity() {
+  void testRepeatingTimerWithCancelActivity() {
     runtimeService.startProcessInstanceByKey("repeatingTimerAndCallActivity");
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
@@ -282,7 +296,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleOutgoingSequenceFlows() {
+  void testMultipleOutgoingSequenceFlows() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("interruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -304,7 +318,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleOutgoingSequenceFlowsOnSubprocess() {
+  void testMultipleOutgoingSequenceFlowsOnSubprocess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("interruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -326,7 +340,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMultipleOutgoingSequenceFlowsOnSubprocessMi() {
+  void testMultipleOutgoingSequenceFlowsOnSubprocessMi() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("interruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
@@ -348,7 +362,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testInterruptingTimerDuration() {
+  void testInterruptingTimerDuration() {
 
     // Start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("escalationExample");

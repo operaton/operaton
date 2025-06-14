@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,6 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,15 +38,14 @@ import java.util.Map;
  */
 public class HttpHeaderSecurityFilter implements Filter {
 
-  protected final List<HeaderSecurityProvider> headerSecurityProviders = new ArrayList<>() {{
+  protected final List<HeaderSecurityProvider> headerSecurityProviders = List.of(
+          new XssProtectionProvider(),
+          new ContentSecurityPolicyProvider(),
+          new ContentTypeOptionsProvider(),
+          new StrictTransportSecurityProvider()
+  );
 
-    add(new XssProtectionProvider());
-    add(new ContentSecurityPolicyProvider());
-    add(new ContentTypeOptionsProvider());
-    add(new StrictTransportSecurityProvider());
-
-  }};
-
+  @Override
   public void init(FilterConfig filterConfig) {
 
     for (HeaderSecurityProvider provider : headerSecurityProviders) {
@@ -86,7 +84,9 @@ public class HttpHeaderSecurityFilter implements Filter {
     chain.doFilter(request, response);
   }
 
+  @Override
   public void destroy() {
+    // No specific cleanup required
   }
 
 }

@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,27 +20,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.Serializable;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 
 /**
  *
  * @author Daniel Meyer
  */
-public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
-  
+class ServiceTaskVariablesTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  RuntimeService runtimeService;
+
   static boolean isNullInDelegate2;
   static boolean isNullInDelegate3;
-  
+
   public static class Variable implements Serializable {
     private static final long serialVersionUID = 1L;
-    public String value;    
+    public String value;
   }
-  
+
   public static class Delegate1 implements JavaDelegate {
 
     @Override
@@ -49,9 +59,9 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
       execution.setVariable("variable", v);
       v.value = "delegate1";
     }
-    
+
   }
-  
+
   public static class Delegate2 implements JavaDelegate {
 
     @Override
@@ -59,13 +69,13 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
       Variable v = (Variable) execution.getVariable("variable");
       synchronized (ServiceTaskVariablesTest.class) {
         // we expect this to be 'true'
-        isNullInDelegate2 = (v.value != null && v.value.equals("delegate1"));         
+        isNullInDelegate2 = (v.value != null && v.value.equals("delegate1"));
       }
-      v.value = "delegate2";      
+      v.value = "delegate2";
     }
-    
+
   }
-  
+
   public static class Delegate3 implements JavaDelegate {
 
     @Override
@@ -73,42 +83,42 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
       Variable v = (Variable) execution.getVariable("variable");
       synchronized (ServiceTaskVariablesTest.class) {
         // we expect this to be 'true' as well
-        isNullInDelegate3 = (v.value != null && v.value.equals("delegate2"));  
+        isNullInDelegate3 = (v.value != null && v.value.equals("delegate2"));
       }
     }
-    
+
   }
-  
+
   @Deployment
   @Test
-  public void testSerializedVariablesBothAsync() {
-    
+  void testSerializedVariablesBothAsync() {
+
     // in this test, there is an async cont. both before the second and the
     // third service task in the sequence
-    
+
     runtimeService.startProcessInstanceByKey("process");
     testRule.waitForJobExecutorToProcessAllJobs(10000);
-    
+
     synchronized (ServiceTaskVariablesTest.class) {
       assertThat(isNullInDelegate2).isTrue();
-      assertThat(isNullInDelegate3).isTrue(); 
+      assertThat(isNullInDelegate3).isTrue();
     }
   }
 
   @Deployment
   @Test
-  public void testSerializedVariablesThirdAsync() {
-    
+  void testSerializedVariablesThirdAsync() {
+
     // in this test, only the third service task is async
-        
+
     runtimeService.startProcessInstanceByKey("process");
     testRule.waitForJobExecutorToProcessAllJobs(10000);
-    
+
     synchronized (ServiceTaskVariablesTest.class) {
       assertThat(isNullInDelegate2).isTrue();
-      assertThat(isNullInDelegate3).isTrue(); 
+      assertThat(isNullInDelegate3).isTrue();
     }
-    
+
   }
 
 }

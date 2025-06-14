@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,8 +16,24 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
@@ -27,119 +43,118 @@ import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.MessageEventDefinition;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+class FoxJobRetryCmdTest {
 
-import org.junit.Test;
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+  ManagementService managementService;
+  TaskService taskService;
 
   SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml"})
   @Test
-  public void testFailedServiceTask() {
+  void testFailedServiceTask() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedServiceTask");
 
     assertJobRetriesForActivity(pi, "failingServiceTask");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedUserTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedUserTask.bpmn20.xml"})
   @Test
-  public void testFailedUserTask() {
+  void testFailedUserTask() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedUserTask");
 
     assertJobRetriesForActivity(pi, "failingUserTask");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedBusinessRuleTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedBusinessRuleTask.bpmn20.xml"})
   @Test
-  public void testFailedBusinessRuleTask() {
+  void testFailedBusinessRuleTask() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedBusinessRuleTask");
 
     assertJobRetriesForActivity(pi, "failingBusinessRuleTask");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedCallActivity.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedCallActivity.bpmn20.xml"})
   @Test
-  public void testFailedCallActivity() {
+  void testFailedCallActivity() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedCallActivity");
 
     assertJobRetriesForActivity(pi, "failingCallActivity");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedScriptTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedScriptTask.bpmn20.xml"})
   @Test
-  public void testFailedScriptTask() {
+  void testFailedScriptTask() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedScriptTask");
 
     assertJobRetriesForActivity(pi, "failingScriptTask");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedSendTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedSendTask.bpmn20.xml"})
   @Test
-  public void testFailedSendTask() {
+  void testFailedSendTask() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedSendTask");
 
     assertJobRetriesForActivity(pi, "failingSendTask");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedSubProcess.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedSubProcess.bpmn20.xml"})
   @Test
-  public void testFailedSubProcess() {
+  void testFailedSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedSubProcess");
 
     assertJobRetriesForActivity(pi, "failingSubProcess");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedTask.bpmn20.xml"})
   @Test
-  public void testFailedTask() {
+  void testFailedTask() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedTask");
 
     assertJobRetriesForActivity(pi, "failingTask");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedTransaction.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedTransaction.bpmn20.xml"})
   @Test
-  public void testFailedTransaction() {
+  void testFailedTransaction() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedTask");
 
     assertJobRetriesForActivity(pi, "failingTransaction");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedReceiveTask.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedReceiveTask.bpmn20.xml"})
   @Test
-  public void testFailedReceiveTask() {
+  void testFailedReceiveTask() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedReceiveTask");
 
     assertJobRetriesForActivity(pi, "failingReceiveTask");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedBoundaryTimerEvent.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedBoundaryTimerEvent.bpmn20.xml"})
   @Test
-  public void testFailedBoundaryTimerEvent() {
+  void testFailedBoundaryTimerEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedBoundaryTimerEvent");
 
     assertJobRetriesForActivity(pi, "userTask");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedIntermediateCatchingTimerEvent.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedIntermediateCatchingTimerEvent.bpmn20.xml"})
   @Test
-  public void testFailedIntermediateCatchingTimerEvent() {
+  void testFailedIntermediateCatchingTimerEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedIntermediateCatchingTimerEvent");
 
     assertJobRetriesForActivity(pi, "failingTimerEvent");
@@ -147,7 +162,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testFailingMultiInstanceBody() {
+  void testFailingMultiInstanceBody() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failingMultiInstance");
 
     // multi-instance body of task
@@ -156,16 +171,16 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testFailingMultiInstanceInnerActivity() {
+  void testFailingMultiInstanceInnerActivity() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failingMultiInstance");
 
     // inner activity of multi-instance body
     assertJobRetriesForActivity(pi, "task");
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testBrokenFoxJobRetryValue.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testBrokenFoxJobRetryValue.bpmn20.xml"})
   @Test
-  public void testBrokenFoxJobRetryValue() {
+  void testBrokenFoxJobRetryValue() {
     Job job = managementService.createJobQuery().list().get(0);
     assertThat(job).isNotNull();
     assertThat(job.getRetries()).isEqualTo(3);
@@ -176,9 +191,9 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);
   }
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedStartTimerEvent.bpmn20.xml" })
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedStartTimerEvent.bpmn20.xml"})
   @Test
-  public void testFailedTimerStartEvent() {
+  void testFailedTimerStartEvent() {
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
     assertThat(jobQuery.count()).isEqualTo(1);
@@ -232,7 +247,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testRetryOnTimerStartEventInEventSubProcess() {
+  void testRetryOnTimerStartEventInEventSubProcess() {
     runtimeService.startProcessInstanceByKey("process").getId();
 
     Job job = managementService.createJobQuery().singleResult();
@@ -253,7 +268,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRetryOnServiceTaskLikeMessageThrowEvent() {
+  void testRetryOnServiceTaskLikeMessageThrowEvent() {
     // given
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
@@ -338,7 +353,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFailedJobRetryTimeCycleWithExpression() {
+  void testFailedJobRetryTimeCycleWithExpression() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -367,7 +382,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFailedJobRetryTimeCycleWithUndefinedVar() {
+  void testFailedJobRetryTimeCycleWithUndefinedVar() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -396,7 +411,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFailedJobRetryTimeCycleWithChangingExpression() throws ParseException {
+  void testFailedJobRetryTimeCycleWithChangingExpression() throws ParseException {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()
@@ -446,7 +461,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRetryOnTimerStartEventWithExpression() {
+  void testRetryOnTimerStartEventWithExpression() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
           .operatonFailedJobRetryTimeCycle("${var}")
@@ -473,7 +488,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRetryOnAsyncStartEvent() throws Exception {
+  void testRetryOnAsyncStartEvent() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
           .operatonAsyncBefore()
@@ -510,7 +525,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testIntermediateCatchEvent() throws Exception {
+  void testIntermediateCatchEvent() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .intermediateCatchEvent()
@@ -548,7 +563,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testEndEvent() throws Exception {
+  void testEndEvent() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .endEvent()
@@ -584,7 +599,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testExclusiveGateway() throws Exception {
+  void testExclusiveGateway() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .exclusiveGateway()
@@ -621,7 +636,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testInclusiveGateway() throws Exception {
+  void testInclusiveGateway() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .inclusiveGateway()
@@ -658,7 +673,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testEventBasedGateway() throws Exception {
+  void testEventBasedGateway() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .eventBasedGateway()
@@ -697,7 +712,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testParallelGateway() throws Exception {
+  void testParallelGateway() throws Exception {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .parallelGateway()
@@ -734,7 +749,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFailingIntermediateBoundaryTimerJobWithCustomRetries() throws ParseException {
+  void testFailingIntermediateBoundaryTimerJobWithCustomRetries() throws ParseException {
     try {
       // given
       BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
@@ -788,7 +803,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testExecuteSecondJobWhenJobFailedWithCustomJobRetriesInSameProcess() {
+  void testExecuteSecondJobWhenJobFailedWithCustomJobRetriesInSameProcess() {
     // given
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
       .startEvent()

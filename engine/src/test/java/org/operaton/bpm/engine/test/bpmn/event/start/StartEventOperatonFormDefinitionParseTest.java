@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.test.bpmn.event.start;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -27,34 +30,21 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class StartEventOperatonFormDefinitionParseTest {
+class StartEventOperatonFormDefinitionParseTest {
 
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testRule);
+  RepositoryService repositoryService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  public RepositoryService repositoryService;
-  public ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Before
-  public void setup() {
-    repositoryService = engineRule.getRepositoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-  }
-
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }
@@ -64,15 +54,15 @@ public class StartEventOperatonFormDefinitionParseTest {
     return getProcessDefinition().getStartFormDefinition();
   }
 
-private ProcessDefinitionEntity getProcessDefinition() {
-  ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-  return processEngineConfiguration.getDeploymentCache()
-      .getProcessDefinitionCache().get(processDefinition.getId());
-}
+  private ProcessDefinitionEntity getProcessDefinition() {
+    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
+    return processEngineConfiguration.getDeploymentCache()
+        .getProcessDefinitionCache().get(processDefinition.getId());
+  }
 
   @Test
   @Deployment
-  public void shouldParseOperatonFormDefinitionVersionBinding() {
+  void shouldParseOperatonFormDefinitionVersionBinding() {
     // given a deployed process with a StartEvent containing an Operaton Form definition with version binding
     // then
     FormDefinition startFormDefinition = getStartFormDefinition();
@@ -84,7 +74,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
 
   @Test
   @Deployment
-  public void shouldParseOperatonFormDefinitionLatestBinding() {
+  void shouldParseOperatonFormDefinitionLatestBinding() {
     // given a deployed process with a StartEvent containing an Operaton Form definition with latest binding
     // then
     FormDefinition startFormDefinition = getStartFormDefinition();
@@ -95,7 +85,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
 
   @Test
   @Deployment
-  public void shouldParseOperatonFormDefinitionMultipleStartEvents() {
+  void shouldParseOperatonFormDefinitionMultipleStartEvents() {
     // given a deployed process with a StartEvent containing an Operaton Form definition with latest binding and another StartEvent inside a subprocess
     // then
     FormDefinition startFormDefinition = getStartFormDefinition();
@@ -106,7 +96,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
 
   @Test
   @Deployment
-  public void shouldParseOperatonFormDefinitionDeploymentBinding() {
+  void shouldParseOperatonFormDefinitionDeploymentBinding() {
     // given a deployed process with a StartEvent containing an Operaton Form definition with deployment binding
     // then
     FormDefinition startFormDefinition = getStartFormDefinition();
@@ -116,7 +106,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
   }
 
   @Test
-  public void shouldNotParseOperatonFormDefinitionUnsupportedBinding() {
+  void shouldNotParseOperatonFormDefinitionUnsupportedBinding() {
     // given a deployed process with a UserTask containing an Operaton Form definition with unsupported binding
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "shouldNotParseOperatonFormDefinitionUnsupportedBinding");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
@@ -128,7 +118,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
   }
 
   @Test
-  public void shouldNotParseOperatonFormDefinitionAndFormKey() {
+  void shouldNotParseOperatonFormDefinitionAndFormKey() {
     // given a deployed process with a UserTask containing an Operaton Form definition and formKey
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "shouldNotParseOperatonFormDefinitionAndFormKey");
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);

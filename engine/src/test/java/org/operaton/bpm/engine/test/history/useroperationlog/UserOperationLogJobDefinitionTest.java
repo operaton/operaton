@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,23 +20,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogTest {
+class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetOverridingPriority() {
+  void testSetOverridingPriority() {
     // For a given deployment
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
 
@@ -70,7 +70,7 @@ public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogT
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testOverwriteOverridingPriority() {
+  void testOverwriteOverridingPriority() {
     // given a job definition
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
 
@@ -101,7 +101,7 @@ public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogT
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testClearOverridingPriority() {
+  void testClearOverridingPriority() {
     // for a given deployment
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
 
@@ -141,7 +141,7 @@ public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogT
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetOverridingPriorityCascadeToJobs() {
+  void testSetOverridingPriorityCascadeToJobs() {
     // given a job definition and job
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");

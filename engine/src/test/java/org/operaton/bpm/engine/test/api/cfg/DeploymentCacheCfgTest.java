@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,14 +56,15 @@ class DeploymentCacheCfgTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension cacheFactoryEngineRule = ProcessEngineExtension.builder()
-      .cacheForConfigurationResource(false)
+      .closeEngineAfterAllTests()
+      .randomEngineName()
       .configurator(configuration -> {
           configuration.setCacheCapacity(2);
           configuration.setCacheFactory(new MyCacheFactory());
           configuration.setEnableFetchProcessDefinitionDescription(false);
       }).build();
   @RegisterExtension
-  protected static ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(cacheFactoryEngineRule);
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(cacheFactoryEngineRule);
 
   RepositoryService repositoryService;
   ProcessEngineConfigurationImpl processEngineConfiguration;

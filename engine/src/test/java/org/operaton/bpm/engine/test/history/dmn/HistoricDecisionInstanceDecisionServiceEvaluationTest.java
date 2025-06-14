@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -29,23 +33,17 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.history.DecisionServiceDelegate;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
-@RunWith(Parameterized.class)
+@Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricDecisionInstanceDecisionServiceEvaluationTest {
 
@@ -78,27 +76,22 @@ public class HistoricDecisionInstanceDecisionServiceEvaluationTest {
   @Parameter(1)
   public String activityId;
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  RuntimeService runtimeService;
+  RepositoryService repositoryService;
+  HistoryService historyService;
 
-  protected RuntimeService runtimeService;
-  protected RepositoryService repositoryService;
-  protected HistoryService historyService;
-
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     testRule.deploy(DECISION_DMN, process);
-
-    runtimeService = engineRule.getRuntimeService();
-    repositoryService = engineRule.getRepositoryService();
-    historyService = engineRule.getHistoryService();
   }
 
-  @Before
-  public void enableDmnFeelLegacyBehavior() {
+  @BeforeEach
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -108,8 +101,8 @@ public class HistoricDecisionInstanceDecisionServiceEvaluationTest {
         .init();
   }
 
-  @After
-  public void disableDmnFeelLegacyBehavior() {
+  @AfterEach
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -120,8 +113,8 @@ public class HistoricDecisionInstanceDecisionServiceEvaluationTest {
         .init();
   }
 
-  @Test
-  public void evaluateDecisionWithDecisionService() {
+  @TestTemplate
+  void evaluateDecisionWithDecisionService() {
 
     runtimeService.startProcessInstanceByKey("testProcess", Variables.createVariables()
         .putValue("input1", null)

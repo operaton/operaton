@@ -6,7 +6,7 @@
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,8 +18,11 @@ package org.operaton.spin.json.tree;
 
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonException;
+import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.mapping.Order;
 import org.operaton.spin.json.mapping.RegularCustomer;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.json.JsonTestConstants.*;
 
@@ -31,7 +34,6 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class JsonTreeMapJsonToJavaTest {
@@ -44,12 +46,10 @@ class JsonTreeMapJsonToJavaTest {
 
   @Test
   void shouldFailMappingToMismatchingClass() {
-    try {
-      JSON(EXAMPLE_JSON).mapTo(RegularCustomer.class);
-      fail("Expected SpinJsonTreeNodeException");
-    } catch (SpinJsonException e) {
-      // happy path
-    }
+    SpinJsonNode jsonNode = JSON(EXAMPLE_JSON);
+    assertThatThrownBy(() -> jsonNode.mapTo(RegularCustomer.class))
+        .isInstanceOf(SpinJsonException.class)
+        .hasMessageMatching("SPIN/JACKSON-JSON-01006 Cannot deserialize .* to java type .*");
   }
 
   @Test
@@ -71,7 +71,8 @@ class JsonTreeMapJsonToJavaTest {
 
   @Test
   void shouldFailForMalformedTypeString() {
-    assertThrows(SpinJsonDataFormatException.class, () -> JSON(EXAMPLE_JSON_COLLECTION).mapTo("rubbish"));
+    SpinJsonNode jsonNode = JSON(EXAMPLE_JSON_COLLECTION);
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.mapTo("rubbish"));
   }
 
 }

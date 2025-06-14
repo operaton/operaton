@@ -38,4 +38,4 @@ out/jreleaser
 *.gz
 *.class
 *.zip
-
+sloc.txt

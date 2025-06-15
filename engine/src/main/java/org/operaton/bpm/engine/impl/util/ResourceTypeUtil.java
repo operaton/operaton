@@ -43,8 +43,7 @@ public class ResourceTypeUtil {
             TASK.resourceType(), TaskPermissions.class,
             HISTORIC_TASK.resourceType(), HistoricTaskPermissions.class,
             HISTORIC_PROCESS_INSTANCE.resourceType(), HistoricProcessInstancePermissions.class,
-            OPERATION_LOG_CATEGORY.resourceType(), UserOperationLogCategoryPermissions.class,
-            OPTIMIZE.resourceType(), OptimizePermissions.class, SYSTEM.resourceType(), SystemPermissions.class
+            OPERATION_LOG_CATEGORY.resourceType(), UserOperationLogCategoryPermissions.class
     ));
 
     // the rest

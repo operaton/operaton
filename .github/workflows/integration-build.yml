@@ -71,6 +71,27 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  detect-recent-changes:
+    name: Detect recent changes
+    runs-on: ubuntu-24.04
+    outputs:
+      recent_changes: ${{steps.check-commits.outputs.commits}}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check for recent commits
+        id: check-commits
+        run: |
+          COMMITS=$(git rev-list --since="24 hours ago" HEAD)
+          if [ -z "$COMMITS" ]; then
+            echo "No commits in the last 24 hours."
+            echo "commits=false" >> $GITHUB_OUTPUT
+          else
+            echo "commits=true" >> $GITHUB_OUTPUT
+
+
   build:
     name: Build
     strategy:
@@ -78,7 +99,8 @@ jobs:
       matrix:
         java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
     runs-on: ubuntu-24.04
-    if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_build == 'false' }}
+    needs: detect-recent-changes
+    if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.skip_build == 'false' }}
     outputs:
       version: ${{steps.maven-build.outputs.version}}
       project_version: ${{steps.maven-build.outputs.project_version}}
@@ -141,7 +163,8 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-24.04
-    if: ${{ github.event_name == 'schedule' || github.event.inputs.integration_tests == 'true' }}
+    needs: detect-recent-changes
+    if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.integration_tests == 'true' }}
     strategy:
       fail-fast: false
       matrix:
@@ -198,9 +221,10 @@ jobs:
   release:
     name: Release
     needs:
+      - detect-recent-changes
       - build
     runs-on: ubuntu-24.04
-    if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_build == 'false' }}
+    if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.skip_build == 'false' }}
     steps:
       - name: Check out the code
         uses: actions/checkout@v4
@@ -263,9 +287,10 @@ jobs:
     name: Post-Release
     runs-on: ubuntu-24.04
     needs:
+      - detect-recent-changes
       - build
       - release
-    if: ${{ github.event_name == 'schedule' || github.event.inputs.dry_run == 'false' }}
+    if: ${{ (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') || github.event.inputs.dry_run == 'false' }}
     steps:
       - name: Notify Docker Repository
         run: |

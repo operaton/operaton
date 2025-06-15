@@ -16,30 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.operaton.bpm.engine.authorization.Resources.BATCH;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
-import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.SYSTEM;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.authorization.*;
+import static org.operaton.bpm.engine.authorization.Resources.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.authorization.BatchPermissions;
-import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
-import org.operaton.bpm.engine.authorization.Permission;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.Resource;
-import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.authorization.SystemPermissions;
-import org.operaton.bpm.engine.authorization.TaskPermissions;
-import org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions;
 
 public class ResourceTypeUtil {
 
@@ -54,16 +36,15 @@ public class ResourceTypeUtil {
   protected static final Map<Integer, Class<? extends Enum<? extends Permission>>> PERMISSION_ENUMS;
 
   static {
-    PERMISSION_ENUMS = new HashMap<>() {{
-      put(BATCH.resourceType(), BatchPermissions.class);
-      put(PROCESS_DEFINITION.resourceType(), ProcessDefinitionPermissions.class);
-      put(PROCESS_INSTANCE.resourceType(), ProcessInstancePermissions.class);
-      put(TASK.resourceType(), TaskPermissions.class);
-      put(HISTORIC_TASK.resourceType(), HistoricTaskPermissions.class);
-      put(HISTORIC_PROCESS_INSTANCE.resourceType(), HistoricProcessInstancePermissions.class);
-      put(OPERATION_LOG_CATEGORY.resourceType(), UserOperationLogCategoryPermissions.class);
-      put(SYSTEM.resourceType(), SystemPermissions.class);
-    }};
+    PERMISSION_ENUMS = new HashMap<>(Map.of(
+            BATCH.resourceType(), BatchPermissions.class,
+            PROCESS_DEFINITION.resourceType(), ProcessDefinitionPermissions.class,
+            PROCESS_INSTANCE.resourceType(), ProcessInstancePermissions.class,
+            TASK.resourceType(), TaskPermissions.class,
+            HISTORIC_TASK.resourceType(), HistoricTaskPermissions.class,
+            HISTORIC_PROCESS_INSTANCE.resourceType(), HistoricProcessInstancePermissions.class,
+            OPERATION_LOG_CATEGORY.resourceType(), UserOperationLogCategoryPermissions.class
+    ));
 
     // the rest
     for (Permission permission : Permissions.values()) {

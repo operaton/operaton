@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * HEADS-UP: If a test fails, please make sure to adjust the error code / sql state for the respective
  * database in {@link ExceptionUtil.DEADLOCK_CODES}.
  */
-public class DeadlockTest {
+class DeadlockTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

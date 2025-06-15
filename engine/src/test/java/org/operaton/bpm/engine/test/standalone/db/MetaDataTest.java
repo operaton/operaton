@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
  * @author Tom Baeyens
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class MetaDataTest {
+class MetaDataTest {
 
   ProcessEngineConfigurationImpl processEngineConfiguration;
 

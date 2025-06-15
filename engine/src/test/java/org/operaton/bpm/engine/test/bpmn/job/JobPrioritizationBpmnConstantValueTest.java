@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  * @author Thorben Lindhauer
  *
  */
-public class JobPrioritizationBpmnConstantValueTest {
+class JobPrioritizationBpmnConstantValueTest {
 
   protected static final long EXPECTED_DEFAULT_PRIORITY = 0;
 

@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
  * @author Joram Barrez
  * @author Falko Menge
  */
-public class SubProcessTest {
+class SubProcessTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

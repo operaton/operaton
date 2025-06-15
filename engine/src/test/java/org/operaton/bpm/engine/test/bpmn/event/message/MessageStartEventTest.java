@@ -184,6 +184,7 @@ class MessageStartEventTest {
     taskService.complete(task.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
+    assertThat(processInstance.getProcessDefinitionKey()).isEqualTo("singleMessageStartEvent");
 
     // using startProcessInstanceByKey also triggers the message event, if there is a single start event
 
@@ -197,7 +198,7 @@ class MessageStartEventTest {
     taskService.complete(task.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-
+    assertThat(processInstance.getProcessDefinitionKey()).isEqualTo("singleMessageStartEvent");
   }
 
 
@@ -230,7 +231,6 @@ class MessageStartEventTest {
     taskService.complete(task.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-
   }
 
   @Deployment

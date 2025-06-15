@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
 @ExtendWith(ProcessEngineExtension.class)
-public class TaskLastUpdatedTest {
+class TaskLastUpdatedTest {
 
   TaskService taskService;
   RuntimeService runtimeService;

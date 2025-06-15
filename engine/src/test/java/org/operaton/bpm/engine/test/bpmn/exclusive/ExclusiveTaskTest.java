@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
  *
  * @author Daniel Meyer
  */
-public class ExclusiveTaskTest {
+class ExclusiveTaskTest {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

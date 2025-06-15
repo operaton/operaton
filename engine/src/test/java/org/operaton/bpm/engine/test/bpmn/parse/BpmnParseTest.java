@@ -71,7 +71,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  *
  * @author Joram Barrez
  */
-public class BpmnParseTest {
+class BpmnParseTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

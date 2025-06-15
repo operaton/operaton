@@ -97,7 +97,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * @author Frederik Heremans
  * @author Falko Menge
  */
-public class TaskQueryTest {
+class TaskQueryTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

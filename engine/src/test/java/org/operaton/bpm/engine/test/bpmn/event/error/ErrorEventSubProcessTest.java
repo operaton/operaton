@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.variable.Variables;
 /**
  * @author Falko Menge
  */
-public class ErrorEventSubProcessTest  {
+class ErrorEventSubProcessTest  {
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

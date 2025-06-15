@@ -32,24 +32,22 @@ import jakarta.el.ResourceBundleELResolver;
  * @author Christoph Beck
  */
 public class SimpleResolver extends ELResolver {
-	private static final ELResolver DEFAULT_RESOLVER_READ_ONLY = new CompositeELResolver() {
-		{
-			add(new ArrayELResolver(true));
-			add(new ListELResolver(true));
-			add(new MapELResolver(true));
-			add(new ResourceBundleELResolver());
-			add(new BeanELResolver(true));
-		}
-	};
-	private static final ELResolver DEFAULT_RESOLVER_READ_WRITE = new CompositeELResolver() {
-		{
-			add(new ArrayELResolver(false));
-			add(new ListELResolver(false));
-			add(new MapELResolver(false));
-			add(new ResourceBundleELResolver());
-			add(new BeanELResolver(false));
-		}
-	};
+	private static final CompositeELResolver DEFAULT_RESOLVER_READ_ONLY = new CompositeELResolver();
+	private static final CompositeELResolver DEFAULT_RESOLVER_READ_WRITE = new CompositeELResolver();
+
+	static {
+		DEFAULT_RESOLVER_READ_ONLY.add(new ArrayELResolver(true));
+		DEFAULT_RESOLVER_READ_ONLY.add(new ListELResolver(true));
+		DEFAULT_RESOLVER_READ_ONLY.add(new MapELResolver(true));
+		DEFAULT_RESOLVER_READ_ONLY.add(new ResourceBundleELResolver());
+		DEFAULT_RESOLVER_READ_ONLY.add(new BeanELResolver(true));
+
+		DEFAULT_RESOLVER_READ_WRITE.add(new ArrayELResolver(false));
+		DEFAULT_RESOLVER_READ_WRITE.add(new ListELResolver(false));
+		DEFAULT_RESOLVER_READ_WRITE.add(new MapELResolver(false));
+		DEFAULT_RESOLVER_READ_WRITE.add(new ResourceBundleELResolver());
+		DEFAULT_RESOLVER_READ_WRITE.add(new BeanELResolver(false));
+	}
 
 	private final RootPropertyResolver root;
 	private final CompositeELResolver delegate;

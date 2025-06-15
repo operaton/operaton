@@ -23,6 +23,6 @@ package org.operaton.bpm.integrationtest.functional.ejb.local.bean;
  */
 public interface BusinessInterface {
 
-  public boolean doBusiness();
+  boolean doBusiness();
 
 }

@@ -20,7 +20,6 @@ import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
-import org.operaton.bpm.application.impl.ServletProcessApplication;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 

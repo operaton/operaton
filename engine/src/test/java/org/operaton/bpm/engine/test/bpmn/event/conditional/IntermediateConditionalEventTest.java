@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.fail;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class IntermediateConditionalEventTest extends AbstractConditionalEventTestCase {
+class IntermediateConditionalEventTest extends AbstractConditionalEventTestCase {
 
   protected static final String EVENT_BASED_GATEWAY_ID = "egw";
   protected static final String PARALLEL_GATEWAY_ID = "parallelGateway";

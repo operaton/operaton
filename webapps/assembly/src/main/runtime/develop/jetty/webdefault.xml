@@ -17,13 +17,8 @@
   <!-- by the jetty.xml file.                                                -->
   <!--                                                                       -->
   <!-- ===================================================================== -->
-<web-app
-  xmlns="http://java.sun.com/xml/ns/javaee"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-  metadata-complete="true"
-  version="2.5"
->
+<web-app version="6.0" metadata-complete="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
 
   <description>
     Default web.xml file.  

@@ -107,6 +107,7 @@ class ExecutionEntityTest {
     // when
     assertThat(execution).isNotNull();
     assertThat(execution.getProcessInstanceId()).isEqualTo(pi.getId());
+    assertThat(pi.getProcessDefinitionKey()).isEqualTo("singleTaskProcess");
     processEngineRule.getRuntimeService().signal(execution.getId());
 
     // then (see #TestLocalVariableTaskListener::notify)

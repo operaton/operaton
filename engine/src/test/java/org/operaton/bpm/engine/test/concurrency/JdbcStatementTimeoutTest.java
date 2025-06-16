@@ -30,46 +30,43 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
+
 
 /**
  *  @author Philipp Ossler
  */
-public class JdbcStatementTimeoutTest extends ConcurrencyTestHelper {
+class JdbcStatementTimeoutTest extends ConcurrencyTestHelper {
 
   private static final int STATEMENT_TIMEOUT_IN_SECONDS = 1;
   // some databases (like mysql and oracle) need more time to cancel the statement
   private static final int TEST_TIMEOUT_IN_MILLIS = 10000;
   private static final String JOB_ENTITY_ID = "42";
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-          configuration.setJdbcStatementTimeout(STATEMENT_TIMEOUT_IN_SECONDS));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .configurator(configuration -> configuration.setJdbcStatementTimeout(STATEMENT_TIMEOUT_IN_SECONDS))
+      .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   private ConcurrencyTestHelper.ThreadControl thread1;
   private ConcurrencyTestHelper.ThreadControl thread2;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
   }
 
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     if (thread1 != null) {
       thread1.waitUntilDone();
       deleteJobEntities();
@@ -87,10 +84,10 @@ public class JdbcStatementTimeoutTest extends ConcurrencyTestHelper {
   }
 
   @Test
-  @RequiredDatabase(excludes = { DbSqlSessionFactory.MARIADB,
-      DbSqlSessionFactory.DB2,
-      DbSqlSessionFactory.H2})
-  public void testTimeoutOnUpdate() {
+  @RequiredDatabase(excludes = {DbSqlSessionFactory.MARIADB,
+    DbSqlSessionFactory.DB2,
+    DbSqlSessionFactory.H2})
+  void testTimeoutOnUpdate() {
     createJobEntity();
 
     thread1 = executeControllableCommand(new UpdateJobCommand("p1"));

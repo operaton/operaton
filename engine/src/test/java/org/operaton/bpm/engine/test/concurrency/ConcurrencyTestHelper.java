@@ -23,20 +23,20 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 public abstract class ConcurrencyTestHelper {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected List<ControllableCommand<?>> controllableCommands;
 
-  @Before
+  @BeforeEach
   public void init() {
     controllableCommands = new ArrayList<>();
   }
 
-  @After
+  @AfterEach
   public void cleanUp() throws Exception {
 
     // wait for all spawned threads to end

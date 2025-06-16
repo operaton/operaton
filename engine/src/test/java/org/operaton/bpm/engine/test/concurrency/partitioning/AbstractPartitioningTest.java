@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestCase;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * @author Tassilo Weidner
@@ -36,7 +36,7 @@ public abstract class AbstractPartitioningTest extends ConcurrencyTestCase {
 
   protected CommandExecutor commandExecutor;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     this.commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     processEngine.getProcessEngineConfiguration().setSkipHistoryOptimisticLockingExceptions(true);

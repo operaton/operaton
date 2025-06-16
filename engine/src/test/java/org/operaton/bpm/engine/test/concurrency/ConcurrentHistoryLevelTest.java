@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.test.util.DatabaseHelper;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>Tests cluster scenario with two nodes trying to write the history level property in parallel.</p>
@@ -38,16 +38,16 @@ import org.junit.Test;
  * exclusive lock on table.</p>
  *
  */
-public class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
+class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     TestHelper.deleteHistoryLevel(processEngineConfiguration);
   }
 
   @Test
-  @RequiredDatabase(excludes = { DbSqlSessionFactory.H2, DbSqlSessionFactory.MARIADB })
-  public void test() throws InterruptedException {
+  @RequiredDatabase(excludes = {DbSqlSessionFactory.H2, DbSqlSessionFactory.MARIADB})
+  void test() throws InterruptedException {
     Integer transactionIsolationLevel = DatabaseHelper.getTransactionIsolationLevel(processEngineConfiguration);
     assumeThat((transactionIsolationLevel != null && !transactionIsolationLevel.equals(Connection.TRANSACTION_READ_COMMITTED)));
     ThreadControl thread1 = executeControllableCommand(new ControllableUpdateHistoryLevelCommand());

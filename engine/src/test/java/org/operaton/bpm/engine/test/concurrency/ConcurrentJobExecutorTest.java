@@ -45,30 +45,29 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ConcurrentJobExecutorTest {
+class ConcurrentJobExecutorTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
@@ -85,16 +84,16 @@ public class ConcurrentJobExecutorTest {
       .endEvent()
       .done();
 
-  @Before
-  public void initServices() {
+  @BeforeEach
+  void initServices() {
     runtimeService = engineRule.getRuntimeService();
     repositoryService = engineRule.getRepositoryService();
     managementService = engineRule.getManagementService();
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ClockUtil.reset();
     for(final Job job : managementService.createJobQuery().list()) {
 
@@ -106,7 +105,7 @@ public class ConcurrentJobExecutorTest {
   }
 
   @Test
-  public void testCompetingJobExecutionDeleteJobDuringExecution() {
+  void testCompetingJobExecutionDeleteJobDuringExecution() {
     //given a simple process with a async service task
     testRule.deploy(Bpmn
             .createExecutableProcess("process")
@@ -132,7 +131,7 @@ public class ConcurrentJobExecutorTest {
   }
 
   @Test
-  public void shouldCompleteTimeoutRetryWhenTimeoutedJobCompletesInbetween() {
+  void shouldCompleteTimeoutRetryWhenTimeoutedJobCompletesInbetween() {
     // given a simple process with an async service task
     testRule.deploy(Bpmn
         .createExecutableProcess("process")
@@ -178,7 +177,7 @@ public class ConcurrentJobExecutorTest {
 
   @Test
   @Deployment
-  public void testCompetingJobExecutionDefaultRetryStrategy() {
+  void testCompetingJobExecutionDefaultRetryStrategy() {
     // given an MI subprocess with two instances
     runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
@@ -217,7 +216,7 @@ public class ConcurrentJobExecutorTest {
 
   @Test
   @Deployment
-  public void testCompetingJobExecutionFoxRetryStrategy() {
+  void testCompetingJobExecutionFoxRetryStrategy() {
     // given an MI subprocess with two instances
     runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
@@ -256,7 +255,7 @@ public class ConcurrentJobExecutorTest {
   }
 
   @Test
-  public void testCompletingJobExecutionSuspendDuringExecution() {
+  void testCompletingJobExecutionSuspendDuringExecution() {
     testRule.deploy(SIMPLE_ASYNC_PROCESS);
 
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
@@ -296,7 +295,7 @@ public class ConcurrentJobExecutorTest {
   }
 
   @Test
-  public void testCompletingSuspendJobDuringAcquisition() {
+  void testCompletingSuspendJobDuringAcquisition() {
     testRule.deploy(SIMPLE_ASYNC_PROCESS);
 
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
@@ -338,7 +337,7 @@ public class ConcurrentJobExecutorTest {
   }
 
   @Test
-  public void testCompletingSuspendedJobDuringRunningInstance() {
+  void testCompletingSuspendedJobDuringRunningInstance() {
     testRule.deploy(Bpmn.createExecutableProcess("process")
         .startEvent()
         .receiveTask()
@@ -373,7 +372,7 @@ public class ConcurrentJobExecutorTest {
   }
 
   @Test
-  public void testCompletingUpdateJobDefinitionPriorityDuringExecution() {
+  void testCompletingUpdateJobDefinitionPriorityDuringExecution() {
     testRule.deploy(SIMPLE_ASYNC_PROCESS);
 
     // given
@@ -415,7 +414,7 @@ public class ConcurrentJobExecutorTest {
   }
 
   @Test
-  public void testCompletingSuspensionJobDuringPriorityUpdate() {
+  void testCompletingSuspensionJobDuringPriorityUpdate() {
     testRule.deploy(SIMPLE_ASYNC_PROCESS);
 
     // given

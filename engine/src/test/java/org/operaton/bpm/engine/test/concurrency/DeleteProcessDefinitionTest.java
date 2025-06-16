@@ -20,23 +20,23 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.EventSubscription;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
+class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     repositoryService.createDeploymentQuery().list().forEach(deployment -> repositoryService.deleteDeployment(deployment.getId(), true));
     processEngineConfiguration.getDeploymentCache().purgeCache();
   }
 
   @Test
-  public void testDeploymentOfProcessDefinitionWithOrphanMessageEvent() {
+  void testDeploymentOfProcessDefinitionWithOrphanMessageEvent() {
     // given
     String resource = "org/operaton/bpm/engine/test/api/repository/processWithNewInvoiceMessage.bpmn20.xml";
     List<ProcessDefinition> processDefinitions = deployProcessDefinitionTwice(resource);
@@ -55,7 +55,7 @@ public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
   }
 
   @Test
-  public void testDeploymentOfProcessDefinitionWithOrphanJob() {
+  void testDeploymentOfProcessDefinitionWithOrphanJob() {
     // given
     String resource = "org/operaton/bpm/engine/test/bpmn/event/timer/StartTimerEventTest.testTimeCycle.bpmn20.xml";
     List<ProcessDefinition> processDefinitions = deployProcessDefinitionTwice(resource);
@@ -74,7 +74,7 @@ public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
   }
 
   @Test
-  public void testDeploymentOfProcessDefinitionWithOrphanSignalEvent() {
+  void testDeploymentOfProcessDefinitionWithOrphanSignalEvent() {
     // given
     String resource = "org/operaton/bpm/engine/test/api/repository/processWithStartSignalEvent.bpmn20.xml";
     List<ProcessDefinition> processDefinitions = deployProcessDefinitionTwice(resource);
@@ -93,7 +93,7 @@ public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
   }
 
   @Test
-  public void testDeploymentOfProcessDefinitionWithOrphanEventAndPreviousVersion() {
+  void testDeploymentOfProcessDefinitionWithOrphanEventAndPreviousVersion() {
     // given
     String resource = "org/operaton/bpm/engine/test/api/repository/processWithNewInvoiceMessage.bpmn20.xml";
     repositoryService.createDeployment().addClasspathResource(resource).deploy();
@@ -116,7 +116,7 @@ public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
   }
 
   @Test
-  public void testDeploymentOfProcessDefinitionWithOrphanConditionalEvent() {
+  void testDeploymentOfProcessDefinitionWithOrphanConditionalEvent() {
     // given
     String resource = "org/operaton/bpm/engine/test/api/repository/processWithConditionalStartEvent.bpmn20.xml";
     List<ProcessDefinition> definitions = deployProcessDefinitionTwice(resource);

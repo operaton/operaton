@@ -22,20 +22,20 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Tassilo Weidner
  */
 
-public class CompetingHistoricVariableInstancePartitioningTest extends AbstractPartitioningTest {
+class CompetingHistoricVariableInstancePartitioningTest extends AbstractPartitioningTest {
 
   static final String VARIABLE_NAME = "aVariableName";
   static final String VARIABLE_VALUE = "aVariableValue";
   static final String ANOTHER_VARIABLE_VALUE = "anotherVariableValue";
 
   @Test
-  public void shouldSuppressOleOnConcurrentFetchAndDelete() {
+  void shouldSuppressOleOnConcurrentFetchAndDelete() {
     // given
     String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK,
       Variables.createVariables().putValue(VARIABLE_NAME, VARIABLE_VALUE)).getId();

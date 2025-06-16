@@ -25,49 +25,49 @@ import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyTestHelper {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setHistoryCleanupBatchWindowStartTime("00:00"));
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyTestHelper {
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .configurator(configuration -> configuration.setHistoryCleanupBatchWindowStartTime("00:00"))
+      .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected HistoryService historyService;
   protected ManagementService managementService;
   protected int retries = 5;
 
-  @Before
-  public void initializeProcessEngine() {
+  @BeforeEach
+  void initializeProcessEngine() {
     processEngineConfiguration =engineRule.getProcessEngineConfiguration();
     managementService = engineRule.getManagementService();
     historyService = engineRule.getHistoryService();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     testRule.deleteHistoryCleanupJobs();
   }
 
   @Test
-  public void testFailedHistoryCleanupJobUpdate() throws InterruptedException {
+  void testFailedHistoryCleanupJobUpdate() throws InterruptedException {
     // given configured History cleanup
 
-    String cleanUpJobId = historyService.findHistoryCleanupJobs().get(0).getId();
+    String cleanUpJobId;
+    if (historyService.findHistoryCleanupJobs().isEmpty()) {
+      cleanUpJobId = historyService.cleanUpHistoryAsync(true).getId();
+    } else {
+      cleanUpJobId = historyService.findHistoryCleanupJobs().get(0).getId();
+    }
 
     processEngineConfiguration.getCommandExecutorTxRequired().<Void>execute(c -> {
       // add failure to the history cleanup job

@@ -23,15 +23,13 @@ import org.operaton.bpm.engine.impl.BootstrapEngineCommand;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
+
 
 /**
  * The test covers the following scenario:
@@ -47,33 +45,31 @@ import org.junit.rules.RuleChain;
  * 5.2 An OptimisticLockingException is thrown, and the OptimisticLockingListener ignores it.
  * 6. The second Process Engine successfully reconfigures the HistoryCleanupJob.
  */
-public class ConcurrentHistoryCleanupReconfigureTest extends ConcurrencyTestHelper {
+class ConcurrentHistoryCleanupReconfigureTest extends ConcurrencyTestHelper {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configuration.setHistoryCleanupBatchWindowStartTime("12:00"));
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
+      .configurator(configuration -> configuration.setHistoryCleanupBatchWindowStartTime("12:00"))
+      .build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected HistoryService historyService;
 
-  @Before
-  public void initializeProcessEngine() {
+  @BeforeEach
+  void initializeProcessEngine() {
     processEngineConfiguration =engineRule.getProcessEngineConfiguration();
     historyService = engineRule.getHistoryService();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     testRule.deleteHistoryCleanupJobs();
     clearDatabase();
   }
 
   @Test
-  public void testReconfigureCleanupJobs() {
+  void testReconfigureCleanupJobs() {
     // given
     // create cleanup job
     String jobId = historyService.cleanUpHistoryAsync(true).getId();

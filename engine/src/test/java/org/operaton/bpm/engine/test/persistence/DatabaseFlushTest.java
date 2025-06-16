@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DatabaseFlushTest extends ConcurrencyTestCase {
 
@@ -63,7 +63,7 @@ public class DatabaseFlushTest extends ConcurrencyTestCase {
    */
   @RequiredDatabase(excludes = DbSqlSessionFactory.DB2)
   @Test
-  public void testNoIncompleteFlushOnConstraintViolation()
+  void testNoIncompleteFlushOnConstraintViolation()
   {
     // given
    testRule.deploy(GW_PROCESS);

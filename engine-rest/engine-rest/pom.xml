@@ -12,7 +12,7 @@
 
   <properties>
     <!-- pin tomcat version for engine-rest -->
-    <version.tomcat>10.1.41</version.tomcat>
+    <version.tomcat>10.1.42</version.tomcat>
     <rest.http.port>38080</rest.http.port>
     <surefire.memArgs>-Xmx2g</surefire.memArgs>
   </properties>

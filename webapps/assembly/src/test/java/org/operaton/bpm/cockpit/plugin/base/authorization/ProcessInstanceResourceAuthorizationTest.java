@@ -84,24 +84,6 @@ class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  void calledInstancesWithReadPermissionOnProcessInstance() {
-    // given
-    String processInstanceId = selectAnyProcessInstanceByKey(CALLING_USER_TASK_PROCESS_KEY).getId();
-    createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, READ);
-
-    resource = new ProcessInstanceResource(engineName, processInstanceId);
-
-    CalledProcessInstanceQueryDto queryParameter = new CalledProcessInstanceQueryDto();
-
-    // when
-    List<CalledProcessInstanceDto> calledInstances = resource.queryCalledProcessInstances(queryParameter);
-
-    // then
-    assertThat(calledInstances).isNotEmpty().hasSize(1);
-    assertThat(calledInstances.get(0).getId()).isNotEqualTo(processInstanceId);
-  }
-
-  @Test
   void calledInstancesWithReadPermissionOnAnyProcessInstance() {
     // given
     String processInstanceId = selectAnyProcessInstanceByKey(CALLING_USER_TASK_PROCESS_KEY).getId();

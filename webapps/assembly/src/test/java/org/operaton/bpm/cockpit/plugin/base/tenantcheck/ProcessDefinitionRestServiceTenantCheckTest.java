@@ -187,6 +187,7 @@ class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginT
 
     // then
     assertThat(actual.getCount()).isEqualTo(2);
+    assertThat(actualDtos).hasSize(2);
   }
 
   @Test

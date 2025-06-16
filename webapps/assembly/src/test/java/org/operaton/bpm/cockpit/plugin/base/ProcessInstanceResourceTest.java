@@ -108,7 +108,7 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn",
       "processes/another-user-task-process.bpmn"
   })
-  public void testGetCalledProcessInstancesByParentProcessInstanceIdContainsBusinessKey() {
+  void testGetCalledProcessInstancesByParentProcessInstanceIdContainsBusinessKey() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TwoParallelCallActivitiesCallingDifferentProcess", "myBusinessKey");
 
     resource = new ProcessInstanceResource(getProcessEngine().getName(), processInstance.getId());
@@ -117,7 +117,6 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
     CalledProcessInstanceQueryDto queryParameter = new CalledProcessInstanceQueryDto();
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
-    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
     assertThat(result.get(0).getBusinessKey()).isEqualTo("firstCall:myBusinessKey");
     assertThat(result.get(1).getBusinessKey()).isEqualTo("secondCall:myBusinessKey");

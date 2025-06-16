@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
-import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.sub.resources.ProcessDefinitionResource;
 import org.operaton.bpm.cockpit.plugin.test.AbstractCockpitPluginTest;
-import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.repository.ProcessDefinition;

@@ -193,7 +193,7 @@ class UserAuthenticationResourceTest {
   }
 
   @Test
-  public void shouldReturnUnauthorizedOnNullAuthentication() {
+  void shouldReturnUnauthorizedOnNullAuthentication() {
     // given
     User jonny = identityService.newUser("jonny");
     jonny.setPassword("jonnyspassword");

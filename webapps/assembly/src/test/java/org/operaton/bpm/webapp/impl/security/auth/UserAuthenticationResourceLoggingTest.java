@@ -39,7 +39,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserAuthenticationResourceLoggingTest {
+class UserAuthenticationResourceLoggingTest {
 
   @RegisterExtension
   static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().configurationResource("operaton-test-engine.cfg.xml").build();

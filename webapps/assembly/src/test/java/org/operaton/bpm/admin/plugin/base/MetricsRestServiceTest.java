@@ -26,7 +26,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.operaton.bpm.admin.impl.plugin.resources.MetricsRestService;
-import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskMeterLogEntity;
@@ -47,7 +46,6 @@ class MetricsRestServiceTest extends AbstractAdminPluginTest {
   private final MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
   private MetricsRestService resource;
   private UriInfo uriInfo;
-  private ManagementService managementService;
   private DbMetricsReporter dbMetricsReporter;
   private MetricsRegistry metricsRegistry;
 
@@ -57,7 +55,6 @@ class MetricsRestServiceTest extends AbstractAdminPluginTest {
 
     dbMetricsReporter = processEngineConfiguration.getDbMetricsReporter();
     metricsRegistry = processEngineConfiguration.getMetricsRegistry();
-    managementService = processEngine.getManagementService();
 
     resource = new MetricsRestService(processEngine.getName());
 

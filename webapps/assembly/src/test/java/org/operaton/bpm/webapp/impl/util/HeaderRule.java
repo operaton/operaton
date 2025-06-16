@@ -18,6 +18,7 @@ package org.operaton.bpm.webapp.impl.util;
 
 import org.eclipse.jetty.ee10.webapp.WebAppContext;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.resource.URLResourceFactory;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -71,7 +72,7 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
   private void startServer(String webDescriptor, String scope, String contextPath, int startUpRetries) {
     webAppContext.setContextPath(contextPath);
-    webAppContext.setBaseResourceAsString("/");
+    webAppContext.setBaseResource(new URLResourceFactory().newResource("/"));
     webAppContext.setDescriptor("src/test/resources/WEB-INF/" + scope + "/" + webDescriptor);
 
     server.setHandler(webAppContext);
@@ -126,7 +127,6 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
     try {
       connection.connect();
-      connection.getResponseCode(); // Trigger the connection and response
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

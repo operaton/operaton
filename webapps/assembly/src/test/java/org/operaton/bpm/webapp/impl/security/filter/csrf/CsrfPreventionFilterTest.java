@@ -119,7 +119,7 @@ public class CsrfPreventionFilterTest {
     String regex = CSRF_COOKIE_NAME + "=[A-Z0-9]{32}" + CSRF_PATH_FIELD_NAME + getCookiePath(SERVICE_PATH) + ";SameSite=Lax";
     assertThat(cookieToken).matches(regex.replace(";", ";\\s*"));
 
-    assertThat(headerToken.isEmpty()).as("No HTTP Header Token!").isFalse();
+    assertThat(headerToken).as("No HTTP Header Token!").isNotEmpty();
     assertThat(cookieToken).contains(headerToken);
   }
 
@@ -153,7 +153,7 @@ public class CsrfPreventionFilterTest {
     String regex = CSRF_COOKIE_NAME + "=[A-Z0-9]{32}" + CSRF_PATH_FIELD_NAME + getCookiePath("") + ";SameSite=Lax";
     assertThat(cookieToken).matches(regex.replace(";", ";\\s*"));
 
-    assertThat(headerToken.isEmpty()).as("No HTTP Header Token!").isFalse();
+    assertThat(headerToken).as("No HTTP Header Token!").isNotEmpty();
     assertThat(cookieToken).contains(headerToken);
   }
 

@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME;
@@ -1394,7 +1395,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -1418,7 +1419,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -1442,7 +1443,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -1466,7 +1467,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -1950,7 +1951,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -1974,7 +1975,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -1998,7 +1999,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -2022,7 +2023,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -2506,7 +2507,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -2530,7 +2531,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -2554,7 +2555,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -2578,7 +2579,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Disabled
+  @Disabled("FIXME")
   @Deployment(resources = {
     "processes/user-task-process.bpmn"
   })
@@ -3261,15 +3262,12 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
     identityService.setAuthenticatedUserId("foo");
+    var processInstanceQueryDto = new ProcessInstanceQueryDto();
 
-    try {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), 0, 11);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("Max results limit of 10 exceeded!");
-    }
+    // when
+    assertThatThrownBy(() -> resource.queryProcessInstances(processInstanceQueryDto, 0, 11))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 10 exceeded!");
   }
 
   @Test
@@ -3279,14 +3277,12 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
 
     identityService.setAuthenticatedUserId("foo");
 
-    try {
-      // when
-      resource.queryProcessInstances(new ProcessInstanceQueryDto(), null, null);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("An unbound number of results is forbidden!");
-    }
+    var processInstanceQueryDto = new ProcessInstanceQueryDto();
+
+    // when
+    assertThatThrownBy(() -> resource.queryProcessInstances(processInstanceQueryDto, null, null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("An unbound number of results is forbidden!");
   }
 
   @Test

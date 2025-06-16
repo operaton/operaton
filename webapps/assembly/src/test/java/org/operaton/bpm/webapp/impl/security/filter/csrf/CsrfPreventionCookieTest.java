@@ -25,7 +25,6 @@ import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("temporarily disabled due to issues with the test setup")
 class CsrfPreventionCookieTest {
 
   @RegisterExtension

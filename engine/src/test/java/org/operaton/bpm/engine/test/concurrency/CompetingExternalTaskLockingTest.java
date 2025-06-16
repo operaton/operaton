@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.cmd.LockExternalTaskCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test covers the use-case where two competing transactions
@@ -39,15 +39,15 @@ import org.junit.Test;
  * 6. TX2 attempts to flush the result and receives
  *    an OLE since the lock was already updated by TX1.
  */
-public class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
+class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
 
   protected static final String WORKER_ID_1 = "WORKER_1";
   protected static final String WORKER_ID_2 = "WORKER_2";
   protected static final long LOCK_DURATION = 10000L;
 
-  @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  public void shouldThrowOleOnConcurrentLockingAttempt() throws InterruptedException {
+  void shouldThrowOleOnConcurrentLockingAttempt() throws InterruptedException {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     String externalTaskId = externalTaskService.createExternalTaskQuery()

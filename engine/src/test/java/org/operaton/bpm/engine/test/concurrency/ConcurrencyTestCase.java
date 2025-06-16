@@ -23,11 +23,10 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 /**
  * @author Daniel Meyer
@@ -35,11 +34,10 @@ import org.junit.rules.RuleChain;
  */
 public abstract class ConcurrencyTestCase extends ConcurrencyTestHelper {
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngine processEngine;
   protected RepositoryService repositoryService;
@@ -48,20 +46,5 @@ public abstract class ConcurrencyTestCase extends ConcurrencyTestHelper {
   protected HistoryService historyService;
   protected ManagementService managementService;
   protected ExternalTaskService externalTaskService;
-
-  @Before
-  @Override
-  public void init() {
-    processEngine = engineRule.getProcessEngine();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    taskService = engineRule.getTaskService();
-    historyService = engineRule.getHistoryService();
-    historyService = engineRule.getHistoryService();
-    managementService = engineRule.getManagementService();
-    externalTaskService = engineRule.getExternalTaskService();
-    super.init();
-  }
 
 }

@@ -32,8 +32,8 @@ import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>Tests the deployment from two threads simultaneously.</p>
@@ -44,7 +44,7 @@ import org.junit.Test;
  * @author Daniel Meyer
  */
 @RequiredDatabase(excludes = DbSqlSessionFactory.H2)
-public class ConcurrentDeploymentTest extends ConcurrencyTestCase {
+class ConcurrentDeploymentTest extends ConcurrencyTestCase {
 
   private static String processResource;
 
@@ -62,7 +62,7 @@ public class ConcurrentDeploymentTest extends ConcurrencyTestCase {
    * @see <a href="https://app.camunda.com/jira/browse/CAM-2128">https://app.camunda.com/jira/browse/CAM-2128</a>
    */
   @Test
-  public void testDuplicateFiltering() throws InterruptedException {
+  void testDuplicateFiltering() throws InterruptedException {
 
     deployOnTwoConcurrentThreads(
         createDeploymentBuilder().enableDuplicateFiltering(false),
@@ -75,7 +75,7 @@ public class ConcurrentDeploymentTest extends ConcurrencyTestCase {
   }
 
   @Test
-  public void testVersioning() throws InterruptedException {
+  void testVersioning() throws InterruptedException {
 
     deployOnTwoConcurrentThreads(
         createDeploymentBuilder(),
@@ -137,8 +137,8 @@ public class ConcurrentDeploymentTest extends ConcurrencyTestCase {
     thread2.waitUntilDone();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
 
     for(Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);

@@ -26,39 +26,34 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.CompleteTaskCmd;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CompetingForkTest {
+class CompetingForkTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule();
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;
   protected TaskService taskService;
 
 
-  @Before
-  public void initializeServices() {
+  @BeforeEach
+  void initializeServices() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     runtimeService = engineRule.getRuntimeService();
     taskService = engineRule.getTaskService();
@@ -99,7 +94,7 @@ public class CompetingForkTest {
 
   @Deployment
   @Test
-  public void testCompetingFork() {
+  void testCompetingFork() {
     runtimeService.startProcessInstanceByKey("process");
 
     TaskQuery query = taskService.createTaskQuery();

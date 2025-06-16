@@ -25,33 +25,32 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 
 
 /**
  * @author Tom Baeyens
  */
-public class CompetingSignalsTest {
+class CompetingSignalsTest {
 
   protected static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected RuntimeService runtimeService;
   protected static ControllableThread activeThread;
 
-  @Before
-  public void initializeServices() {
+  @BeforeEach
+  void initializeServices() {
     runtimeService = engineRule.getRuntimeService();
   }
 
@@ -90,7 +89,7 @@ public class CompetingSignalsTest {
 
   @Deployment
   @Test
-  public void testCompetingSignals() {
+  void testCompetingSignals() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("CompetingSignalsProcess");
     String processInstanceId = processInstance.getId();
 

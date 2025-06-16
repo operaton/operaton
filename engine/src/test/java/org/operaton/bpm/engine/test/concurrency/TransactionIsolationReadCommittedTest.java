@@ -28,15 +28,15 @@ import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEn
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-public class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
+class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
 
   private ThreadControl thread1;
   private ThreadControl thread2;
@@ -61,7 +61,7 @@ public class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
    *
    */
   @Test
-  public void testTransactionIsolation() {
+  void testTransactionIsolation() {
 
     thread1 = executeControllableCommand(new TestCommand("p1"));
 
@@ -119,8 +119,8 @@ public class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
 
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
 
     // end interaction with Thread 2
     thread2.waitUntilDone();

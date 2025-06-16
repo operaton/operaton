@@ -29,27 +29,27 @@ import org.operaton.bpm.engine.impl.cmd.SetTaskVariablesCmd;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class ConcurrentVariableUpdateTest {
+class ConcurrentVariableUpdateTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;
@@ -58,8 +58,8 @@ public class ConcurrentVariableUpdateTest {
   protected static ControllableThread activeThread;
 
 
-  @Before
-  public void initializeServices() {
+  @BeforeEach
+  void initializeServices() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     runtimeService = engineRule.getRuntimeService();
     taskService = engineRule.getTaskService();
@@ -104,10 +104,10 @@ public class ConcurrentVariableUpdateTest {
 
   // Test is skipped when testing on DB2.
   // Please update the IF condition in #runTest, if the method name is changed.
-  @Deployment(resources="org/operaton/bpm/engine/test/concurrency/ConcurrentVariableUpdateTest.process.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/ConcurrentVariableUpdateTest.process.bpmn20.xml")
   @Test
   @RequiredDatabase(excludes = DbSqlSessionFactory.DB2)
-  public void testConcurrentVariableCreate() {
+  void testConcurrentVariableCreate() {
 
     runtimeService.startProcessInstanceByKey("testProcess", Collections.<String, Object>singletonMap("varName1", "someValue"));
 
@@ -133,9 +133,9 @@ public class ConcurrentVariableUpdateTest {
     taskService.complete(taskId);
   }
 
-  @Deployment(resources="org/operaton/bpm/engine/test/concurrency/ConcurrentVariableUpdateTest.process.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/ConcurrentVariableUpdateTest.process.bpmn20.xml")
   @Test
-  public void testConcurrentVariableUpdate() {
+  void testConcurrentVariableUpdate() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -162,9 +162,9 @@ public class ConcurrentVariableUpdateTest {
   }
 
 
-  @Deployment(resources="org/operaton/bpm/engine/test/concurrency/ConcurrentVariableUpdateTest.process.bpmn20.xml")
+  @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/ConcurrentVariableUpdateTest.process.bpmn20.xml")
   @Test
-  public void testConcurrentVariableUpdateTypeChange() {
+  void testConcurrentVariableUpdateTypeChange() {
 
     runtimeService.startProcessInstanceByKey("testProcess");
 

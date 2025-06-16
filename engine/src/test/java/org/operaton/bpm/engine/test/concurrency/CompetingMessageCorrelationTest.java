@@ -38,18 +38,18 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
+class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequiresNew().execute(commandContext -> {
 
       List<HistoricJobLog> jobLogs = processEngine.getHistoryService().createHistoricJobLogQuery().list();
@@ -66,7 +66,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
   @RequiredDatabase(excludes = DbSqlSessionFactory.H2)
-  public void testConcurrentExclusiveCorrelation() throws InterruptedException {
+  void testConcurrentExclusiveCorrelation() throws InterruptedException {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -118,7 +118,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
-  public void testConcurrentCorrelationFailsWithOptimisticLockingException() {
+  void testConcurrentCorrelationFailsWithOptimisticLockingException() {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -158,7 +158,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
-  public void testConcurrentExclusiveCorrelationToDifferentExecutions() {
+  void testConcurrentExclusiveCorrelationToDifferentExecutions() {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -209,7 +209,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
-  public void testConcurrentExclusiveCorrelationToDifferentExecutionsCase2() {
+  void testConcurrentExclusiveCorrelationToDifferentExecutionsCase2() {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -255,7 +255,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
-  public void testConcurrentMixedCorrelation() {
+  void testConcurrentMixedCorrelation() {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -308,7 +308,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Ignore("CAM-3636")
   @Test
-  public void testConcurrentMixedCorrelationCase2() throws InterruptedException {
+  void testConcurrentMixedCorrelationCase2() throws InterruptedException {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -358,7 +358,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.eventSubprocess.bpmn")
   @Test
-  public void testEventSubprocess() {
+  void testEventSubprocess() {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -393,7 +393,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment
   @Test
-  public void testConcurrentMessageCorrelationAndTreeCompaction() {
+  void testConcurrentMessageCorrelationAndTreeCompaction() {
     runtimeService.startProcessInstanceByKey("process");
 
     // trigger non-interrupting boundary event and wait before flush
@@ -422,7 +422,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.testConcurrentMessageCorrelationAndTreeCompaction.bpmn20.xml")
   @Test
-  public void testConcurrentTreeCompactionAndMessageCorrelation() {
+  void testConcurrentTreeCompactionAndMessageCorrelation() {
     runtimeService.startProcessInstanceByKey("process");
     List<Task> tasks = taskService.createTaskQuery().list();
 
@@ -447,7 +447,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment
   @Test
-  public void testConcurrentMessageCorrelationTwiceAndTreeCompaction() {
+  void testConcurrentMessageCorrelationTwiceAndTreeCompaction() {
     runtimeService.startProcessInstanceByKey("process");
 
     // trigger non-interrupting boundary event 1 that ends in a none end event immediately
@@ -479,7 +479,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment
   @Test
-  public void testConcurrentEndExecutionListener() {
+  void testConcurrentEndExecutionListener() {
     InvocationLogListener.reset();
 
     // given a process instance

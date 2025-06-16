@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test makes sure that if one thread loads a variable
@@ -67,17 +67,17 @@ import org.junit.Test;
  * |         |                 (this must not perform
  * |         v                 update to VarInst)
  * v  time
-
+ 
  *
  * @author Daniel Meyer
  *
  */
-public class CompetingVariableFetchingAndDeletionTest extends ConcurrencyTestCase {
+class CompetingVariableFetchingAndDeletionTest extends ConcurrencyTestCase {
 
   private ThreadControl asyncThread;
 
   @Test
-  public void testConcurrentFetchAndDelete() {
+  void testConcurrentFetchAndDelete() {
 
    testRule.deploy(createExecutableProcess("test")
         .startEvent()

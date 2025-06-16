@@ -25,13 +25,13 @@ import org.operaton.bpm.engine.impl.cmd.SetTaskVariablesCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Svetlana Dorokhova
  *
  */
-public class CompetingCompleteTaskSetVariableTest extends ConcurrencyTestCase {
+class CompetingCompleteTaskSetVariableTest extends ConcurrencyTestCase {
 
   protected static class ControllableCompleteTaskCommand extends ConcurrencyTestCase.ControllableCommand<Void> {
 
@@ -83,7 +83,7 @@ public class CompetingCompleteTaskSetVariableTest extends ConcurrencyTestCase {
 
   @Deployment
   @Test
-  public void testCompleteTaskSetLocalVariable() {
+  void testCompleteTaskSetLocalVariable() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     final String taskId = taskService.createTaskQuery().singleResult().getId();

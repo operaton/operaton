@@ -25,6 +25,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -35,29 +39,18 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.jobexecutor.ControllableJobExecutor;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
 
 /**
  * @author Tassilo Weidner
  */
 public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelper {
 
-  protected ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(this::configureEngine);
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(bootstrapRule).around(engineRule).around(testRule);
-
-  protected HistoryService historyService;
-  protected ManagementService managementService;
+  // Because of the way the concurrency/JobExecuter is handled we manage the process engine manually for this test case. 
+  static ProcessEngineExtension engineRule;
+  ProcessEngineTestExtension testRule;
 
   private static final Date CURRENT_DATE = new GregorianCalendar(2023, Calendar.MARCH, 18, 12, 0, 0).getTime();
 
@@ -65,12 +58,25 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
 
   protected static ThreadLocal<Boolean> syncBeforeFlush = new ThreadLocal<>();
 
-  protected ControllableJobExecutor jobExecutor;
+  protected static ControllableJobExecutor jobExecutor;
 
   protected ThreadControl acquisitionThread;
+  
+  HistoryService historyService;
+  ManagementService managementService;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() throws Exception {
+    engineRule = ProcessEngineExtension.builder()
+        .configurator(CompetingHistoryCleanupAcquisitionTest::configureEngine)
+        .randomEngineName()
+        .closeEngineAfterEachTest()
+        .build();
+    testRule = new ProcessEngineTestExtension(engineRule);
+    engineRule.initializeProcessEngine();
+    engineRule.initializeServices();
+    testRule.beforeEach(null);
+
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     historyService = engineRule.getHistoryService();
     managementService = engineRule.getManagementService();
@@ -81,8 +87,8 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
     ClockUtil.setCurrentTime(CURRENT_DATE);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     if (jobExecutor.isActive()) {
       jobExecutor.shutdown();
     }
@@ -92,9 +98,11 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
     clearDatabase();
 
     ClockUtil.reset();
+    
+    engineRule.getProcessEngine().close();
   }
 
-  public void configureEngine(ProcessEngineConfigurationImpl configuration) {
+  public static void configureEngine(ProcessEngineConfigurationImpl configuration) {
     jobExecutor = new ControllableJobExecutor();
     jobExecutor.setMaxJobsPerAcquisition(1);
     configuration.setJobExecutor(jobExecutor);
@@ -113,6 +121,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
       }
     }));
   }
+
   /**
    * Problem
    *
@@ -127,7 +136,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
    * The acquisition fails due to an Optimistic Locking Exception
    */
   @Test
-  public void testAcquiringEverLivingJobSucceeds() {
+  void testAcquiringEverLivingJobSucceeds() {
     // given
     jobExecutor.indicateOptimisticLockingException();
 
@@ -173,7 +182,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
    * The cleanup scheduler fails to reschedule the job due to an Optimistic Locking Exception
    */
   @Test
-  public void testReschedulingEverLivingJobSucceeds() {
+  void testReschedulingEverLivingJobSucceeds() {
     // given
     String jobId = historyService.cleanUpHistoryAsync(true).getId();
 

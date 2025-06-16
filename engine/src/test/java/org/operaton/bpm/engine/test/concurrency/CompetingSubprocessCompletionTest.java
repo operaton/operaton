@@ -28,27 +28,27 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.CompleteTaskCmd;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 
 
 /**
  * @author Tom Baeyens
  */
-public class CompetingSubprocessCompletionTest {
+class CompetingSubprocessCompletionTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;
@@ -57,8 +57,8 @@ public class CompetingSubprocessCompletionTest {
   static ControllableThread activeThread;
 
 
-  @Before
-  public void initializeServices() {
+  @BeforeEach
+  void initializeServices() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     runtimeService = engineRule.getRuntimeService();
     taskService = engineRule.getTaskService();
@@ -97,7 +97,7 @@ public class CompetingSubprocessCompletionTest {
    */
   @Deployment
   @Test
-  public void testCompetingSubprocessEnd() {
+  void testCompetingSubprocessEnd() {
     runtimeService.startProcessInstanceByKey("CompetingSubprocessEndProcess");
 
     List<Task> tasks = taskService.createTaskQuery().list();

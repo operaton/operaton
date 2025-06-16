@@ -22,16 +22,16 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.task.Attachment;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Tassilo Weidner
  */
 
-public class CompetingHistoricAttachmentPartitioningTest extends AbstractPartitioningTest {
+class CompetingHistoricAttachmentPartitioningTest extends AbstractPartitioningTest {
 
   @Test
-  public void shouldSuppressOleOnConcurrentFetchAndDelete() {
+  void shouldSuppressOleOnConcurrentFetchAndDelete() {
     // given
     String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 

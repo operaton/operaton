@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <pre>
@@ -44,10 +44,10 @@ import org.junit.Test;
  *
  * @author Thorben Lindhauer
  */
-public class CompetingByteVariableAccessTest extends ConcurrencyTestCase {
+class CompetingByteVariableAccessTest extends ConcurrencyTestCase {
 
   @Test
-  public void testConcurrentVariableRemoval() {
+  void testConcurrentVariableRemoval() {
    testRule.deploy(createExecutableProcess("test")
         .startEvent()
           .userTask()

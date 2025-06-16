@@ -35,9 +35,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandInvocationContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>Tests a concurrent attempt of a bootstrapping Process Engine to reconfigure
@@ -62,12 +62,12 @@ import org.junit.Test;
  *
  * @author Nikola Koevski
  */
-public class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends ConcurrencyTestCase {
+class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends ConcurrencyTestCase {
 
   private static final String PROCESS_ENGINE_NAME = "historyCleanupJobEngine";
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
 
     // Ensure that current time is outside batch window
     Calendar timeOfDay = Calendar.getInstance();
@@ -101,8 +101,8 @@ public class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Con
     }
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
 
       List<Job> jobs = processEngine.getManagementService().createJobQuery().list();
@@ -120,7 +120,7 @@ public class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Con
   }
 
   @Test
-  public void testConcurrentHistoryCleanupJobReconfigurationExecution() throws InterruptedException {
+  void testConcurrentHistoryCleanupJobReconfigurationExecution() throws InterruptedException {
 
     processEngine.getHistoryService().cleanUpHistoryAsync(true);
 

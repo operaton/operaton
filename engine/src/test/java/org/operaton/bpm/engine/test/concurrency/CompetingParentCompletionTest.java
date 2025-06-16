@@ -28,35 +28,34 @@ import org.operaton.bpm.engine.impl.cmmn.cmd.StateTransitionCaseExecutionCmd;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class CompetingParentCompletionTest {
+class CompetingParentCompletionTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected CaseService caseService;
 
   protected static ControllableThread activeThread;
 
-  @Before
-  public void initializeServices() {
+  @BeforeEach
+  void initializeServices() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     caseService = engineRule.getCaseService();
   }
@@ -127,7 +126,7 @@ public class CompetingParentCompletionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingParentCompletionTest.testComplete.cmmn"})
   @Test
-  public void testComplete() {
+  void testComplete() {
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
         .create()
@@ -168,7 +167,7 @@ public class CompetingParentCompletionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingParentCompletionTest.testDisable.cmmn"})
   @Test
-  public void testDisable() {
+  void testDisable() {
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
         .create()
@@ -209,7 +208,7 @@ public class CompetingParentCompletionTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingParentCompletionTest.testTerminate.cmmn"})
   @Test
-  public void testTerminate() {
+  void testTerminate() {
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
         .create()

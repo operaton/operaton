@@ -30,8 +30,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.util.DatabaseHelper;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>Tests the call to history cleanup simultaneously.</p>
@@ -41,10 +41,10 @@ import org.junit.Test;
  *
  * @author Svetlana Dorokhova
  */
-public class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
+class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
 
       List<Job> jobs = processEngine.getManagementService().createJobQuery().list();
@@ -60,8 +60,8 @@ public class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
   }
 
   @Test
-  @RequiredDatabase(excludes = { DbSqlSessionFactory.MARIADB, DbSqlSessionFactory.H2 })
-  public void testRunTwoHistoryCleanups() throws InterruptedException {
+  @RequiredDatabase(excludes = {DbSqlSessionFactory.MARIADB, DbSqlSessionFactory.H2})
+  void testRunTwoHistoryCleanups() throws InterruptedException {
     final Integer transactionIsolationLevel = DatabaseHelper.getTransactionIsolationLevel(processEngineConfiguration);
     assumeTrue((transactionIsolationLevel != null && !transactionIsolationLevel.equals(Connection.TRANSACTION_READ_COMMITTED)));
 

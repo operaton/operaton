@@ -40,7 +40,6 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.TestInstanceFactory;
-import org.junit.jupiter.api.extension.TestInstanceFactoryContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.junit.jupiter.api.extension.TestInstantiationException;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContext;
@@ -169,8 +168,8 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
 
     ParameterizedTestInvocationContext(Object parameters, String displayNameFormat) {
       this.displayNameFormat = displayNameFormat;
-      if (parameters instanceof Object[]) {
-        this.parameters = (Object[]) parameters;
+      if (parameters instanceof Object[] parametersArray) {
+        this.parameters = parametersArray;
       } else {
         this.parameters = new Object[] { parameters };
       }
@@ -208,21 +207,17 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
             }
           },
           // TestInstanceFactory to create a new test instance using the parameters
-          new TestInstanceFactory() {
-            @Override
-            public Object createTestInstance(TestInstanceFactoryContext factoryContext,
-                ExtensionContext extensionContext) throws TestInstantiationException {
-              try {
-                Class<?> testClass = extensionContext.getRequiredTestClass();
-                // assume the test class has a single constructor.
-                Constructor<?> constructor = testClass.getDeclaredConstructors()[0];
-                constructor.setAccessible(true);
-                return constructor.newInstance(parameters);
-              } catch (Exception e) {
-                throw new TestInstantiationException("Could not create test instance", e);
-              }
-            }
-          },
+              (TestInstanceFactory) (factoryContext, extensionContext) -> {
+                try {
+                  Class<?> testClass = extensionContext.getRequiredTestClass();
+                  // assume the test class has a single constructor.
+                  Constructor<?> constructor = testClass.getDeclaredConstructors()[0];
+                  constructor.setAccessible(true);
+                  return constructor.newInstance(parameters);
+                } catch (Exception e) {
+                  throw new TestInstantiationException("Could not create test instance", e);
+                }
+              },
           // TestInstancePostProcessor for field injection using @Parameter(X)
           new TestInstancePostProcessor() {
             @Override

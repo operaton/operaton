@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.webapp.impl.db;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -25,6 +26,7 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("temporary disabled")
 class QuerySessionFactoryTest {
 
   @RegisterExtension

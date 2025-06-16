@@ -28,7 +28,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class QuerySessionFactoryTest {
 
   @RegisterExtension
-  static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().configurationResource("operaton-skip-check.cfg.xml").build();
+  static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder()
+          .randomEngineName()
+          .configurationResource("operaton-skip-check.cfg.xml").build();
 
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 

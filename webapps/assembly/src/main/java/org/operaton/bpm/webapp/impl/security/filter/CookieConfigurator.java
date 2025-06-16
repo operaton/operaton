@@ -38,39 +38,39 @@ public class CookieConfigurator {
 
   public void parseParams(FilterConfig filterConfig) {
 
-    String enableSecureCookie = filterConfig.getInitParameter(ENABLE_SECURE_PARAM);
-    if (!ServletFilterUtil.isEmpty(enableSecureCookie)) {
-      isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookie);
+    String enableSecureCookieInitParam = filterConfig.getInitParameter(ENABLE_SECURE_PARAM);
+    if (!ServletFilterUtil.isEmpty(enableSecureCookieInitParam)) {
+      isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookieInitParam);
     }
 
-    String cookieNameInput = filterConfig.getServletContext().getSessionCookieConfig().getName();
-    if (!isBlank(cookieNameInput) && !CookieConstants.JSESSION_ID.equals(cookieNameInput)) {
-      cookieName = cookieNameInput;
+    String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
+    if (!isBlank(sessionCookieName) && !CookieConstants.JSESSION_ID.equals(sessionCookieName)) {
+      cookieName = sessionCookieName;
     }
 
-    String enableSameSiteCookie = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);
-    if (!ServletFilterUtil.isEmpty(enableSameSiteCookie)) {
-      isSameSiteCookieEnabled = Boolean.parseBoolean(enableSameSiteCookie);
+    String enableSameSiteCookieInitParam = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);
+    if (!ServletFilterUtil.isEmpty(enableSameSiteCookieInitParam)) {
+      isSameSiteCookieEnabled = Boolean.parseBoolean(enableSameSiteCookieInitParam);
     } else {
       isSameSiteCookieEnabled = true; // default
     }
 
-    String sameSiteCookieValue = filterConfig.getInitParameter(SAME_SITE_VALUE_PARAM);
-    String sameSiteCookieOption = filterConfig.getInitParameter(SAME_SITE_OPTION_PARAM);
+    String sameSiteCookieValueInitParam = filterConfig.getInitParameter(SAME_SITE_VALUE_PARAM);
+    String sameSiteCookieOptionInitParam = filterConfig.getInitParameter(SAME_SITE_OPTION_PARAM);
 
-    if (!ServletFilterUtil.isEmpty(sameSiteCookieValue) && !ServletFilterUtil.isEmpty(sameSiteCookieOption)) {
+    if (!ServletFilterUtil.isEmpty(sameSiteCookieValueInitParam) && !ServletFilterUtil.isEmpty(sameSiteCookieOptionInitParam)) {
       throw new ProcessEngineException("Please either configure " + SAME_SITE_OPTION_PARAM +
         " or " + SAME_SITE_VALUE_PARAM + ".");
 
-    } else if (!ServletFilterUtil.isEmpty(sameSiteCookieValue)) {
-      this.sameSiteCookieValue = sameSiteCookieValue;
+    } else if (!ServletFilterUtil.isEmpty(sameSiteCookieValueInitParam)) {
+      this.sameSiteCookieValue = sameSiteCookieValueInitParam;
 
-    } else if (!ServletFilterUtil.isEmpty(sameSiteCookieOption)) {
+    } else if (!ServletFilterUtil.isEmpty(sameSiteCookieOptionInitParam)) {
 
-      if (SameSiteOption.LAX.compareTo(sameSiteCookieOption)) {
+      if (SameSiteOption.LAX.compareTo(sameSiteCookieOptionInitParam)) {
         this.sameSiteCookieValue = SameSiteOption.LAX.getValue();
 
-      } else if (SameSiteOption.STRICT.compareTo(sameSiteCookieOption)) {
+      } else if (SameSiteOption.STRICT.compareTo(sameSiteCookieOptionInitParam)) {
         this.sameSiteCookieValue = SameSiteOption.STRICT.getValue();
 
       } else {

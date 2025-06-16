@@ -2113,5 +2113,11 @@
                 <extension module="org.wildfly.extension.jakarta.data"/>
             </excluded-extensions>
         </host-exclude>
+        <host-exclude name="WildFly35.0">
+            <host-api-version major-version="28" minor-version="0"/>
+            <excluded-extensions>
+                <extension module="org.wildfly.extension.jakarta.data"/>
+            </excluded-extensions>
+        </host-exclude>
     </host-excludes>
 </domain>

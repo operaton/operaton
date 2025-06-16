@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
@@ -69,7 +69,7 @@ class JobExecutorAcquireCleanupJobsTest extends AbstractJobExecutorAcquireJobsTe
     assertThat(acquirableJobs).isNotEmpty();
   }
 
-  @After
+  @AfterEach
   public void resetDatabase() {
     configuration.getCommandExecutorTxRequired().execute(commandContext -> {
       String handlerType = "history-cleanup";

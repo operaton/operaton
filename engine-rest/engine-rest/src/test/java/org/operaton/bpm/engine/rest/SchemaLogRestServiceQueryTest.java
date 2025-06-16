@@ -34,10 +34,10 @@ import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.management.SchemaLogQuery;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
@@ -55,14 +55,14 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
   private static final String SCHEMA_LOG_ENTRY_MOCK_VERSION = "schema-log-entry-mock-version";
   private static final Date SCHEMA_LOG_ENTRY_MOCK_TIMESTAMP = new Date();
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   private SchemaLogQuery mockedQuery;
 
   private List<SchemaLogEntry> mockedSchemaLogEntries;
 
-  @Before
+  @BeforeEach
   public void init() {
     mockedQuery = Mockito.mock(SchemaLogQuery.class);
 

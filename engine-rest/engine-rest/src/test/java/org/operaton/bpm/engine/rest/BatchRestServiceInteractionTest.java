@@ -16,21 +16,23 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import static io.restassured.RestAssured.given;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
-import static io.restassured.RestAssured.given;
-import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 
-import jakarta.ws.rs.core.Response.Status;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.InOrder;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ManagementService;
@@ -39,19 +41,16 @@ import org.operaton.bpm.engine.batch.BatchQuery;
 import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.InOrder;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String BATCH_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/batch";
   protected static final String SINGLE_BATCH_RESOURCE_URL = BATCH_RESOURCE_URL + "/{id}";
@@ -60,7 +59,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   protected ManagementService managementServiceMock;
   protected BatchQuery queryMock;
 
-  @Before
+  @BeforeEach
   public void setUpBatchQueryMock() {
     Batch batchMock = MockProvider.createMockBatch();
 

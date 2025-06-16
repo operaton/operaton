@@ -81,16 +81,16 @@ import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.helper.FluentAnswer;
 import org.operaton.bpm.engine.rest.helper.MockMigrationPlanBuilder;
 import org.operaton.bpm.engine.rest.helper.MockMigrationPlanBuilder.JoinedMigrationPlanBuilderMock;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.rest.util.migration.MigrationExecutionDtoBuilder;
 import org.operaton.bpm.engine.rest.util.migration.MigrationPlanDtoBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -101,8 +101,8 @@ import org.operaton.bpm.engine.rest.util.migration.MigrationInstructionDtoBuilde
 
 public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String MIGRATION_URL = TEST_RESOURCE_ROOT_PATH + "/migration";
   protected static final String GENERATE_MIGRATION_URL = MIGRATION_URL + "/generate";
@@ -114,7 +114,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   protected JoinedMigrationPlanBuilderMock migrationPlanBuilderMock;
   protected MigrationPlanExecutionBuilder migrationPlanExecutionBuilderMock;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     runtimeServiceMock = mock(RuntimeService.class);
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);

@@ -46,11 +46,11 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.auth.DefaultPermissionProvider;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 import io.restassured.http.ContentType;
@@ -70,10 +70,10 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
   protected IdentityService identityServiceMock;
   protected ProcessEngineConfigurationImpl processEngineConfigurationMock;
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     authorizationServiceMock = mock(AuthorizationServiceImpl.class);
     identityServiceMock = mock(IdentityServiceImpl.class);
@@ -151,23 +151,23 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
     inOrder.verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> instances = from(content).getList("");
-    Assert.assertEquals("There should be one authorization returned.", 1, instances.size());
+    List<Map<String, Object>> instances = from(content).getList("");
+    Assertions.assertEquals(1, instances.size(), "There should be one authorization returned.");
     assertThat(instances.get(0)).as("The returned authorization should not be null.").isNotNull();
 
     Authorization mockAuthorization = mockAuthorizations.get(0);
 
-    Assert.assertEquals(mockAuthorization.getId(), from(content).getString("[0].id"));
-    Assert.assertEquals(mockAuthorization.getAuthorizationType(), from(content).getInt("[0].type"));
-    Assert.assertEquals(Permissions.READ.getName(), from(content).getString("[0].permissions[0]"));
-    Assert.assertEquals(Permissions.UPDATE.getName(), from(content).getString("[0].permissions[1]"));
-    Assert.assertEquals(mockAuthorization.getUserId(), from(content).getString("[0].userId"));
-    Assert.assertEquals(mockAuthorization.getGroupId(), from(content).getString("[0].groupId"));
-    Assert.assertEquals(mockAuthorization.getResourceType(), from(content).getInt("[0].resourceType"));
-    Assert.assertEquals(mockAuthorization.getResourceId(), from(content).getString("[0].resourceId"));
-    Assert.assertEquals(mockAuthorization.getRemovalTime(),
+    Assertions.assertEquals(mockAuthorization.getId(), from(content).getString("[0].id"));
+    Assertions.assertEquals(mockAuthorization.getAuthorizationType(), from(content).getInt("[0].type"));
+    Assertions.assertEquals(Permissions.READ.getName(), from(content).getString("[0].permissions[0]"));
+    Assertions.assertEquals(Permissions.UPDATE.getName(), from(content).getString("[0].permissions[1]"));
+    Assertions.assertEquals(mockAuthorization.getUserId(), from(content).getString("[0].userId"));
+    Assertions.assertEquals(mockAuthorization.getGroupId(), from(content).getString("[0].groupId"));
+    Assertions.assertEquals(mockAuthorization.getResourceType(), from(content).getInt("[0].resourceType"));
+    Assertions.assertEquals(mockAuthorization.getResourceId(), from(content).getString("[0].resourceId"));
+    Assertions.assertEquals(mockAuthorization.getRemovalTime(),
         DateTimeUtil.parseDate(from(content).getString("[0].removalTime")));
-    Assert.assertEquals(mockAuthorization.getRootProcessInstanceId(),
+    Assertions.assertEquals(mockAuthorization.getRootProcessInstanceId(),
         from(content).getString("[0].rootProcessInstanceId"));
 
   }

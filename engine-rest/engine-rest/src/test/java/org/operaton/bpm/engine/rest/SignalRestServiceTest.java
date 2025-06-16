@@ -25,11 +25,11 @@ import org.operaton.bpm.engine.impl.SignalEventReceivedBuilderImpl;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.SignalEventReceivedBuilder;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import jakarta.ws.rs.core.Response.Status;
@@ -51,15 +51,15 @@ import static org.mockito.Mockito.when;
  */
 public class SignalRestServiceTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String SIGNAL_URL = TEST_RESOURCE_ROOT_PATH +  SignalRestService.PATH;
 
   private RuntimeService runtimeServiceMock;
   private SignalEventReceivedBuilder signalBuilderMock;
 
-  @Before
+  @BeforeEach
   public void setupMocks() {
     runtimeServiceMock = mock(RuntimeService.class);
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);

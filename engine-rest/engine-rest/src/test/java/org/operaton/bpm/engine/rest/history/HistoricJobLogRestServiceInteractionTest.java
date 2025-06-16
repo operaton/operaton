@@ -34,11 +34,11 @@ import org.operaton.bpm.engine.history.HistoricJobLogQuery;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 import io.restassured.http.ContentType;
@@ -50,8 +50,8 @@ import io.restassured.response.Response;
  */
 public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORIC_JOB_LOG_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/history/job-log";
   protected static final String SINGLE_HISTORIC_JOB_LOG_RESOURCE_URL = HISTORIC_JOB_LOG_RESOURCE_URL + "/{id}";
@@ -62,7 +62,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
 
   protected HistoricJobLogQuery mockQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockQuery = mock(HistoricJobLogQuery.class);
 
@@ -154,7 +154,7 @@ public class HistoricJobLogRestServiceInteractionTest extends AbstractRestServic
       .get(HISTORIC_JOB_LOG_RESOURCE_GET_STACKTRACE_URL);
 
     String content = response.asString();
-    Assert.assertEquals(stacktrace, content);
+    Assertions.assertEquals(stacktrace, content);
   }
 
   @Test

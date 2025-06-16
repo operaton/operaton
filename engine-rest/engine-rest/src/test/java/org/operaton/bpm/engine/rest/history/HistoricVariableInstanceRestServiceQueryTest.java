@@ -27,13 +27,13 @@ import org.operaton.bpm.engine.rest.helper.MockObjectValue;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.helper.VariableTypeHelper;
 import org.operaton.bpm.engine.rest.util.OrderingBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -63,8 +63,8 @@ import static org.mockito.Mockito.anyString;
 
 public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORIC_VARIABLE_INSTANCE_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/history/variable-instance";
 
@@ -74,7 +74,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   protected HistoricVariableInstance mockInstance;
   protected MockHistoricVariableInstanceBuilder mockInstanceBuilder;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockInstanceBuilder = MockProvider.mockHistoricVariableInstance();
     mockInstance = mockInstanceBuilder.build();
@@ -771,7 +771,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -800,7 +800,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> executions = from(content).getList("");
+    List<Map<String, Object>> executions = from(content).getList("");
     assertThat(executions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -831,7 +831,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
@@ -861,7 +861,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> definitions = from(content).getList("");
+    List<Map<String, Object>> definitions = from(content).getList("");
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");

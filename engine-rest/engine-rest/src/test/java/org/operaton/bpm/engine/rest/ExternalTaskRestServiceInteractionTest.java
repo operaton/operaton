@@ -79,13 +79,13 @@ import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
 import org.operaton.bpm.engine.rest.impl.FetchAndLockContextListener;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -96,8 +96,8 @@ import org.mockito.Mockito;
  */
 public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String EXTERNAL_TASK_URL = TEST_RESOURCE_ROOT_PATH + "/external-task";
   protected static final String FETCH_EXTERNAL_TASK_URL = EXTERNAL_TASK_URL + "/fetchAndLock";
@@ -128,7 +128,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
 
   protected UpdateExternalTaskRetriesBuilder updateRetriesBuilder;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     externalTaskService = mock(ExternalTaskService.class);
     when(processEngine.getExternalTaskService()).thenReturn(externalTaskService);

@@ -16,40 +16,42 @@
  */
 package org.operaton.bpm.engine.rest.converter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
-import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
-import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.junit.Before;
-import org.junit.Test;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Date;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
+import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
+import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DateConverterTest {
   private DateConverter converter;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     converter = new DateConverter();
   }
 
-  @Test(expected = InvalidRequestException.class)
+  @Test
   public void shouldFailForDoubleQuotedValue() {
     //when
-    converter.convertQueryParameterToType("\"pizza\"");
+    assertThrows(InvalidRequestException.class, () -> converter.convertQueryParameterToType("\"pizza\""));
   }
 
-  @Test(expected = InvalidRequestException.class)
+  @Test
   public void shouldFailForSingleDoubleQuotedValue() {
     //when
-    converter.convertQueryParameterToType("2014-01-01T00:00:00+0200\"");
+    assertThrows(InvalidRequestException.class, () -> converter.convertQueryParameterToType("2014-01-01T00:00:00+0200\""));
   }
 
   @Test

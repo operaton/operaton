@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.ClassRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 /**
  * @author Tassilo Weidner
  */
 public class NoServletEmptyBodyFilterTest extends AbstractEmptyBodyFilterTest {
 
-  @ClassRule
-  public static TestContainerRule testContainer = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension testContainer = new TestContainerExtension();
 
 }

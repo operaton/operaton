@@ -40,12 +40,12 @@ import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.util.OrderingBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -58,15 +58,15 @@ import io.restassured.response.Response;
  */
 public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String CASE_INSTANCE_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/case-instance";
   protected static final String CASE_INSTANCE_COUNT_QUERY_URL = CASE_INSTANCE_QUERY_URL + "/count";
 
   private CaseInstanceQuery mockedQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockedQuery = setUpMockCaseInstanceQuery(MockProvider.createMockCaseInstances());
   }
@@ -1098,7 +1098,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> caseInstances = from(content).getList("");
+    List<Map<String, Object>> caseInstances = from(content).getList("");
     assertThat(caseInstances).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -1123,7 +1123,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> caseInstances = from(content).getList("");
+    List<Map<String, Object>> caseInstances = from(content).getList("");
     assertThat(caseInstances).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -1149,7 +1149,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> caseInstances = from(content).getList("");
+    List<Map<String, Object>> caseInstances = from(content).getList("");
     assertThat(caseInstances).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -1178,7 +1178,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> caseInstances = from(content).getList("");
+    List<Map<String, Object>> caseInstances = from(content).getList("");
     assertThat(caseInstances).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");

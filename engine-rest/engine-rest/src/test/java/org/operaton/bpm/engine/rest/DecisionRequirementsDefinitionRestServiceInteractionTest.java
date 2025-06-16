@@ -45,10 +45,10 @@ import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -61,8 +61,8 @@ import io.restassured.response.Response;
 
 public class DecisionRequirementsDefinitionRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String DECISION_REQUIREMENTS_DEFINITION_URL = TEST_RESOURCE_ROOT_PATH + "/decision-requirements-definition";
   protected static final String SINGLE_DECISION_REQUIREMENTS_DEFINITION_ID_URL = DECISION_REQUIREMENTS_DEFINITION_URL + "/{id}";
@@ -77,7 +77,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   protected DecisionRequirementsDefinitionQuery decisionRequirementsDefinitionQueryMock;
   protected DecisionService decisionServiceMock;
 
-  @Before
+  @BeforeEach
   public void setUpRuntime() throws FileNotFoundException, URISyntaxException {
     DecisionRequirementsDefinition mockDecisionRequirementsDefinition = MockProvider.createMockDecisionRequirementsDefinition();
 

@@ -36,10 +36,10 @@ import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.rest.dto.identity.BasicUserCredentialsDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 import io.restassured.http.ContentType;
 
@@ -47,8 +47,8 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
 
   protected static final String TEST_USERNAME = "testUsername";
   protected static final String TEST_PASSWORD = "testPassword";
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String IDENTITY_URL = TEST_RESOURCE_ROOT_PATH + "/identity";
   protected static final String TASK_GROUPS_URL = IDENTITY_URL + "/groups";
@@ -56,7 +56,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
 
   private User mockUser;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     createMockIdentityQueries();
   }

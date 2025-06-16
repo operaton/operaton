@@ -18,8 +18,8 @@ package org.operaton.bpm.engine.rest.util;
 
 import static org.operaton.bpm.engine.rest.helper.NoIntermediaryInvocation.immediatelyAfter;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.exceptions.base.MockitoAssertionError;
@@ -34,7 +34,7 @@ public class NoIntermediaryInvocationTest {
 
   protected Foo foo;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     foo = Mockito.mock(Foo.class);
   }

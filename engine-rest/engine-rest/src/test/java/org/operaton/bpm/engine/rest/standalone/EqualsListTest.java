@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.rest.helper.EqualsList;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Thorben Lindhauer
@@ -34,7 +34,7 @@ public class EqualsListTest {
   protected List<String> list1;
   protected List<String> list2;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     list1 = new ArrayList<>();
     list2 = new ArrayList<>();

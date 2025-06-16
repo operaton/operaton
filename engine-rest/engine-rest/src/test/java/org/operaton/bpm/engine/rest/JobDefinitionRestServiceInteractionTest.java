@@ -59,16 +59,16 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockJobDefinitionBuilder;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 public class JobDefinitionRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String JOB_DEFINITION_RESOURCE_URL = TEST_RESOURCE_ROOT_PATH + "/job-definition";
   protected static final String SINGLE_JOB_DEFINITION_RESOURCE_URL = JOB_DEFINITION_RESOURCE_URL + "/{id}";
@@ -87,7 +87,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
 
   private SetJobRetriesBuilder mockSetJobRetriesBuilder;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockManagementService = mock(ManagementService.class);
 
@@ -1691,7 +1691,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobDefinitions = from(content).getList("");
+    List<Map<String, Object>> jobDefinitions = from(content).getList("");
     assertThat(jobDefinitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -1720,7 +1720,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
     verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> jobDefinitions = from(content).getList("");
+    List<Map<String, Object>> jobDefinitions = from(content).getList("");
     assertThat(jobDefinitions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");

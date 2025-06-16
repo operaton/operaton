@@ -36,18 +36,18 @@ import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.management.MetricsQuery;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Daniel Meyer
  */
 public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   public static final String METRICS_URL = TEST_RESOURCE_ROOT_PATH + MetricsRestService.PATH;
   public static final String DELETE_UTW_URL = METRICS_URL + "/task-worker";
@@ -57,7 +57,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   protected ManagementService managementServiceMock;
   private MetricsQuery meterQueryMock;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     managementServiceMock = mock(ManagementService.class);
 

@@ -42,10 +42,10 @@ import java.util.Map;
 import java.util.Set;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ExternalTaskService;
@@ -94,7 +94,7 @@ import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -117,8 +117,8 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 public class ProcessEngineRestServiceTest extends
     AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String ENGINES_URL = TEST_RESOURCE_ROOT_PATH + "/engine";
   protected static final String SINGLE_ENGINE_URL = ENGINES_URL + "/{name}";
@@ -175,7 +175,7 @@ public class ProcessEngineRestServiceTest extends
   private MessageCorrelationBuilder mockMessageCorrelationBuilder;
   private MessageCorrelationResult mockMessageCorrelationResult;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     namedProcessEngine = getProcessEngine(EXAMPLE_ENGINE_NAME);
     mockRepoService = mock(RepositoryService.class);
@@ -653,7 +653,7 @@ public class ProcessEngineRestServiceTest extends
     verifyNoInteractions(processEngine);
   }
 
-  @Ignore
+  @Disabled
   @Test
   public void testHistoryServiceEngineAccess_HistoricVariableInstanceBinaryFile() {
 
@@ -677,7 +677,7 @@ public class ProcessEngineRestServiceTest extends
         .header("Content-Disposition", "attachment; " +
                 "filename=\"" + filename + "\"; " +
                 "filename*=UTF-8''" + filename)
-        .contentType(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8"))
+        .contentType(equalTo(ContentType.TEXT.toString() + "; charset=UTF-8"))
       .when()
         .get(HISTORY_BINARY_VARIABLE_INSTANCE_URL);
 
@@ -728,7 +728,7 @@ public class ProcessEngineRestServiceTest extends
     verifyNoInteractions(processEngine);
   }
 
-  @Ignore
+  @Disabled
   @Test
   public void testHistoryServiceEngineAccess_HistoricDetailBinaryFile() {
     HistoricDetailQuery query = mock(HistoricDetailQuery.class);
@@ -750,7 +750,7 @@ public class ProcessEngineRestServiceTest extends
         .header("Content-Disposition", "attachment; " +
                 "filename=\"" + filename + "\"; " +
                 "filename*=UTF-8''" + filename)
-        .contentType(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8"))
+        .contentType(equalTo(ContentType.TEXT.toString() + " ; charset=UTF-8"))
       .when()
         .get(HISTORY_BINARY_DETAIL_URL);
 

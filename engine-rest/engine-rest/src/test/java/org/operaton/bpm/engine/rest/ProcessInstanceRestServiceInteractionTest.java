@@ -18,18 +18,10 @@ package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.given;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_FULL_MESSAGE;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_ID;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricProcessInstance;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -45,11 +37,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_FULL_MESSAGE;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricProcessInstance;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,8 +54,16 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response.Status;
+
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -104,7 +108,7 @@ import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
 import org.operaton.bpm.engine.rest.util.JsonPathUtil;
 import org.operaton.bpm.engine.rest.util.ModificationInstructionBuilder;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.MessageCorrelationAsyncBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceModificationInstantiationBuilder;
@@ -120,15 +124,14 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.LongValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServiceTest {
 
@@ -138,8 +141,8 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
   protected static final String DELETE_REASON = "deleteReason";
   protected static final String SKIP_IO_MAPPINGS = "skipIoMappings";
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String PROCESS_INSTANCE_URL = TEST_RESOURCE_ROOT_PATH + "/process-instance";
   protected static final String SINGLE_PROCESS_INSTANCE_URL = PROCESS_INSTANCE_URL + "/{id}";
@@ -197,7 +200,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
   private SetJobRetriesByProcessAsyncBuilder mockSetJobRetriesByProcessAsyncBuilder;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     runtimeServiceMock = mock(RuntimeServiceImpl.class);
     mockManagementService = mock(ManagementServiceImpl.class);
@@ -304,8 +307,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         .body("childTransitionInstances[0].incidents[0].activityId", Matchers.equalTo("anActivityId"))
         .when().get(PROCESS_INSTANCE_ACTIVIY_INSTANCES_URL);
 
-    Assert.assertEquals("Should return right number of properties", 13,
-        response.jsonPath().getMap("").size());
+    Assertions.assertEquals(13, response.jsonPath().getMap("").size(), "Should return right number of properties");
   }
 
   @Test
@@ -355,7 +357,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_VARIABLE_KEY + ".type", Matchers.equalTo(String.class.getSimpleName()))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    Assert.assertEquals("Should return exactly one variable", 1, response.jsonPath().getMap("").size());
+    Assertions.assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
   }
 
   @Test
@@ -808,7 +810,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_ANOTHER_VARIABLE_KEY + ".type", Matchers.equalTo("Null"))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    Assert.assertEquals("Should return exactly one variable", 1, response.jsonPath().getMap("").size());
+    Assertions.assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
   }
 
   @Test
@@ -1319,7 +1321,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .body(EXAMPLE_VARIABLE_KEY + ".valueInfo." + SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, Matchers.equalTo("application/json"))
       .when().get(PROCESS_INSTANCE_VARIABLES_URL);
 
-    Assert.assertEquals("Should return exactly one variable", 1, response.jsonPath().getMap("").size());
+    Assertions.assertEquals(1, response.jsonPath().getMap("").size(), "Should return exactly one variable");
   }
 
   @Test

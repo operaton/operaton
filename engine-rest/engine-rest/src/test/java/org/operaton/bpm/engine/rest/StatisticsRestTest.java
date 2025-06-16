@@ -40,10 +40,10 @@ import org.operaton.bpm.engine.management.ProcessDefinitionStatisticsQuery;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -51,8 +51,8 @@ import io.restassured.http.ContentType;
 
 public class StatisticsRestTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String PROCESS_DEFINITION_STATISTICS_URL = TEST_RESOURCE_ROOT_PATH + "/process-definition/statistics";
   protected static final String ACTIVITY_STATISTICS_URL = TEST_RESOURCE_ROOT_PATH + "/process-definition/{id}/statistics";
@@ -61,7 +61,7 @@ public class StatisticsRestTest extends AbstractRestServiceTest {
   private ActivityStatisticsQuery activityQueryMock;
   private ProcessDefinitionQuery processDefinitionQueryMock;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     setupProcessDefinitionStatisticsMock();
     setupActivityStatisticsMock();

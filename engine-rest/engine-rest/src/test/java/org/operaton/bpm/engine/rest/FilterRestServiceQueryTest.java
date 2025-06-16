@@ -38,10 +38,10 @@ import org.operaton.bpm.engine.filter.FilterQuery;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.rest.dto.runtime.FilterQueryDto;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 import io.restassured.response.Response;
@@ -51,8 +51,8 @@ import io.restassured.response.Response;
  */
 public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String FILTER_QUERY_URL = TEST_RESOURCE_ROOT_PATH + FilterRestService.PATH;
   protected static final String SINGLE_FILTER_URL = FILTER_QUERY_URL + "/{id}";
@@ -64,7 +64,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   protected Filter anotherMockedFilter;
   protected int anotherMockedFilterItemCount;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockedQuery = MockProvider.createMockFilterQuery();
     mockedFilter = MockProvider.createMockFilter(MockProvider.EXAMPLE_FILTER_ID);

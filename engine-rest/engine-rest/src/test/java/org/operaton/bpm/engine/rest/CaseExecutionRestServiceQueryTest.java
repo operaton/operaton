@@ -40,12 +40,12 @@ import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.util.OrderingBuilder;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -59,15 +59,15 @@ import io.restassured.response.Response;
 */
 public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String CASE_EXECUTION_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/case-execution";
   protected static final String CASE_EXECUTION_COUNT_QUERY_URL = CASE_EXECUTION_QUERY_URL + "/count";
 
   private CaseExecutionQuery mockedQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     mockedQuery = setUpMockCaseExecutionQuery(MockProvider.createMockCaseExecutions());
   }
@@ -1617,7 +1617,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> caseExecutions = from(content).getList("");
+    List<Map<String, Object>> caseExecutions = from(content).getList("");
     assertThat(caseExecutions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
@@ -1646,7 +1646,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockedQuery).list();
 
     String content = response.asString();
-    List<String> caseExecutions = from(content).getList("");
+    List<Map<String, Object>> caseExecutions = from(content).getList("");
     assertThat(caseExecutions).hasSize(2);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");

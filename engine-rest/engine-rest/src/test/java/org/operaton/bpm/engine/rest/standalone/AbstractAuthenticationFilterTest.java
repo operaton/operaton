@@ -38,8 +38,8 @@ import java.util.Collections;
 import java.util.List;
 
 import io.restassured.http.ContentType;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -62,7 +62,7 @@ public abstract class AbstractAuthenticationFilterTest extends AbstractRestServi
   protected List<String> groupIds;
   protected List<String> tenantIds;
 
-  @Before
+  @BeforeEach
   public void setup() {
     authorizationServiceMock = mock(AuthorizationServiceImpl.class);
     identityServiceMock = mock(IdentityServiceImpl.class);

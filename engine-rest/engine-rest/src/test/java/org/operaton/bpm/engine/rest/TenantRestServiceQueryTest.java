@@ -40,10 +40,10 @@ import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.TenantQuery;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -53,15 +53,15 @@ import io.restassured.specification.RequestSpecification;
 
 public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/tenant";
   protected static final String COUNT_QUERY_URL = QUERY_URL + "/count";
 
   private TenantQuery mockQuery;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     List<Tenant> tenants = Collections.singletonList(MockProvider.createMockTenant());
     mockQuery = setUpMockQuery(tenants);
@@ -107,7 +107,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
     inOrder.verify(mockQuery).list();
 
     String content = response.asString();
-    List<String> instances = from(content).getList("");
+    List<Map<String, Object>> instances = from(content).getList("");
     assertThat(instances).hasSize(1);
 
     String returnedId = from(content).getString("[0].id");

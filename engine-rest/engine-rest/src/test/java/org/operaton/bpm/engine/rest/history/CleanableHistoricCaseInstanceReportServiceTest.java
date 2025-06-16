@@ -40,11 +40,11 @@ import org.operaton.bpm.engine.history.CleanableHistoricCaseInstanceReport;
 import org.operaton.bpm.engine.history.CleanableHistoricCaseInstanceReportResult;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -66,8 +66,8 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   protected static final String ANOTHER_EXAMPLE_CD_KEY = "anotherCaseDefKey";
   protected static final String ANOTHER_EXAMPLE_TENANT_ID = "anotherTenantId";
 
-  @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  @RegisterExtension
+  public static TestContainerExtension rule = new TestContainerExtension();
 
   protected static final String HISTORY_URL = TEST_RESOURCE_ROOT_PATH + "/history/case-definition";
   protected static final String HISTORIC_REPORT_URL = HISTORY_URL + "/cleanable-case-instance-report";
@@ -75,7 +75,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
 
   private CleanableHistoricCaseInstanceReport historicCaseInstanceReport;
 
-  @Before
+  @BeforeEach
   public void setUpRuntimeData() {
     setupHistoryReportMock();
   }
@@ -146,8 +146,8 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
     inOrder.verify(historicCaseInstanceReport).list();
 
     String content = response.asString();
-    List<String> reportResults = from(content).getList("");
-    Assert.assertEquals("There should be two report results returned.", 2, reportResults.size());
+    List<Map<String, Object>> reportResults = from(content).getList("");
+    Assertions.assertEquals(2, reportResults.size(), "There should be two report results returned.");
     assertThat(reportResults.get(0)).isNotNull();
 
     String returnedDefinitionId = from(content).getString("[0].caseDefinitionId");
@@ -159,14 +159,14 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
     long returnedCleanableCount = from(content).getLong("[0].cleanableCaseInstanceCount");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    Assert.assertEquals(EXAMPLE_CD_ID, returnedDefinitionId);
-    Assert.assertEquals(EXAMPLE_CD_KEY, returnedDefinitionKey);
-    Assert.assertEquals(EXAMPLE_CD_NAME, returnedDefinitionName);
-    Assert.assertEquals(EXAMPLE_CD_VERSION, returnedDefinitionVersion);
-    Assert.assertEquals(EXAMPLE_TTL, returnedTTL);
-    Assert.assertEquals(EXAMPLE_FINISHED_CI_COUNT, returnedFinishedCount);
-    Assert.assertEquals(EXAMPLE_CLEANABLE_CI_COUNT, returnedCleanableCount);
-    Assert.assertEquals(EXAMPLE_TENANT_ID, returnedTenantId);
+    Assertions.assertEquals(EXAMPLE_CD_ID, returnedDefinitionId);
+    Assertions.assertEquals(EXAMPLE_CD_KEY, returnedDefinitionKey);
+    Assertions.assertEquals(EXAMPLE_CD_NAME, returnedDefinitionName);
+    Assertions.assertEquals(EXAMPLE_CD_VERSION, returnedDefinitionVersion);
+    Assertions.assertEquals(EXAMPLE_TTL, returnedTTL);
+    Assertions.assertEquals(EXAMPLE_FINISHED_CI_COUNT, returnedFinishedCount);
+    Assertions.assertEquals(EXAMPLE_CLEANABLE_CI_COUNT, returnedCleanableCount);
+    Assertions.assertEquals(EXAMPLE_TENANT_ID, returnedTenantId);
   }
 
   @Test

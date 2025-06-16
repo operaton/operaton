@@ -6,6 +6,8 @@ import jakarta.servlet.SessionCookieConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -15,8 +17,8 @@ import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.webapp.impl.security.filter.CookieConfigurator.getSameSiteCookieValueInitValue;
 
 @ExtendWith(MockitoExtension.class)
 class CookieConfiguratorTest {
@@ -69,54 +71,33 @@ class CookieConfiguratorTest {
     }
 
     @Test
-    void getSameSiteCookieValueInitValue_shouldThrow_whenBothParamsAreNull() {
+    void getSameSiteCookieValueInitValue_shouldThrow_whenBothParamsAreNonEmpty() {
         // given
-        String sameSiteCookieValueInitParam = null;
-        String sameSiteCookieOptionInitParam = null;
+        String sameSiteCookieValueInitParam = "value1";
+        String sameSiteCookieOptionInitParam = "value2";
 
         // when & then
-        assertThatThrownBy(() -> cookieConfigurator.getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam))
+        assertThatThrownBy(() -> getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam))
                 .isInstanceOf(ProcessEngineException.class)
                 .hasMessageContaining("Please either configure sameSiteCookieOption or sameSiteCookieValue.");
     }
 
-    @Test
-    void getSameSiteCookieValueInitValue_shouldReturnValue_whenSameSiteCookieValueInitParamIsSet() {
-        // given
-        String sameSiteCookieValueInitParam = "SomeValue";
-        String sameSiteCookieOptionInitParam = null;
-
+    @ParameterizedTest
+    @CsvSource({
+            // sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam, expectedResult
+            "SomeValue,,SomeValue",
+            ",Lax,Lax",
+            ",Strict,Strict"
+    })
+    void getSameSiteCookieValueInitValue_shouldReturnExpectedValue(
+            String sameSiteCookieValueInitParam,
+            String sameSiteCookieOptionInitParam,
+            String expectedResult) {
         // when
-        String result = cookieConfigurator.getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam);
+        String result = getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam);
 
         // then
-        assertThat(result).isEqualTo("SomeValue");
-    }
-
-    @Test
-    void getSameSiteCookieValueInitValue_shouldReturnLax_whenSameSiteCookieOptionInitParamIsLax() {
-        // given
-        String sameSiteCookieValueInitParam = null;
-        String sameSiteCookieOptionInitParam = "Lax";
-
-        // when
-        String result = cookieConfigurator.getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam);
-
-        // then
-        assertThat(result).isEqualTo("Lax");
-    }
-
-    @Test
-    void getSameSiteCookieValueInitValue_shouldReturnStrict_whenSameSiteCookieOptionInitParamIsStrict() {
-        // given
-        String sameSiteCookieValueInitParam = null;
-        String sameSiteCookieOptionInitParam = "Strict";
-
-        // when
-        String result = cookieConfigurator.getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam);
-
-        // then
-        assertThat(result).isEqualTo("Strict");
+        assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
@@ -126,8 +107,20 @@ class CookieConfiguratorTest {
         String sameSiteCookieOptionInitParam = "InvalidOption";
 
         // when & then
-        assertThatThrownBy(() -> cookieConfigurator.getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam))
+        assertThatThrownBy(() -> getSameSiteCookieValueInitValue(sameSiteCookieValueInitParam, sameSiteCookieOptionInitParam))
                 .isInstanceOf(ProcessEngineException.class)
                 .hasMessageContaining("For sameSiteCookieOption param, please configure one of the following options: [Lax, Strict]");
+    }
+
+    @Test
+    void shouldReturnDefaultSameSiteValue_whenNoParamsSet() {
+        // given
+        cookieConfigurator.parseParams(filterConfig);
+
+        // when
+        String result = cookieConfigurator.getConfig();
+
+        // then
+        assertThat(result).contains(CookieConstants.SAME_SITE_FIELD_NAME + "Lax");
     }
 }

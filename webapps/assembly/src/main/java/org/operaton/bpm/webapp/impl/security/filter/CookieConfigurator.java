@@ -21,9 +21,7 @@ import java.util.Arrays;
 import jakarta.servlet.FilterConfig;
 
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
-import org.operaton.bpm.webapp.impl.util.ServletFilterUtil;
 
 import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
 
@@ -91,6 +89,11 @@ public class CookieConfigurator {
   }
 
   static String getSameSiteCookieValueInitValue(String sameSiteCookieValueInitParam, String sameSiteCookieOptionInitParam) {
+    if (hasText(sameSiteCookieValueInitParam) && hasText(sameSiteCookieOptionInitParam)) {
+      throw new ProcessEngineException("Please either configure " + SAME_SITE_OPTION_PARAM +
+              " or " + SAME_SITE_VALUE_PARAM + ".");
+    }
+
     if (hasText(sameSiteCookieValueInitParam)) {
       return sameSiteCookieValueInitParam;
     } else if (hasText(sameSiteCookieOptionInitParam)) {
@@ -103,8 +106,7 @@ public class CookieConfigurator {
                 "following options: " + Arrays.toString(Arrays.stream(SameSiteOption.values()).map(SameSiteOption::getValue).toArray(String[]::new)));
       }
     } else { // default
-      throw new ProcessEngineException("Please either configure " + SAME_SITE_OPTION_PARAM +
-              " or " + SAME_SITE_VALUE_PARAM + ".");
+      return SameSiteOption.LAX.getValue();
     }
   }
 
@@ -113,7 +115,7 @@ public class CookieConfigurator {
     LAX("Lax"),
     STRICT("Strict");
 
-    protected final String value;
+    private final String value;
 
     SameSiteOption(String value) {
       this.value = value;

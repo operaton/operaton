@@ -142,7 +142,7 @@ class CsrfPreventionCookieTest {
     // then
     assertThat(expectedException)
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessage("For sameSiteCookieOption param, please configure one of the following options: [LAX, STRICT]");
+      .hasMessage("For sameSiteCookieOption param, please configure one of the following options: [Lax, Strict]");
   }
 
   @Test

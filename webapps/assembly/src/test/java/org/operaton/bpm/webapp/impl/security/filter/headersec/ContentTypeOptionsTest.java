@@ -18,7 +18,7 @@ package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.webapp.impl.util.HeaderExtension;
+import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,54 +28,54 @@ public class ContentTypeOptionsTest {
   public static final String HEADER_DEFAULT_VALUE = "nosniff";
 
   @RegisterExtension
-  HeaderExtension headerExtension = new HeaderExtension();
+  HeaderRule headerRule = new HeaderRule();
 
   @Test
   void shouldConfigureEnabledByDefault() {
     // given
-    headerExtension.startServer("web.xml", "headersec");
+    headerRule.startServer("web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.getHeader(HEADER_NAME)).isEqualTo(HEADER_DEFAULT_VALUE);
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo(HEADER_DEFAULT_VALUE);
   }
 
   @Test
   void shouldConfigureDisabled() {
     // given
-    headerExtension.startServer("cto/disabled_web.xml", "headersec");
+    headerRule.startServer("cto/disabled_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.headerExists(HEADER_NAME)).isFalse();
+    assertThat(headerRule.headerExists(HEADER_NAME)).isFalse();
   }
 
   @Test
   void shouldConfigureDisabledIgnoreCase() {
     // given
-    headerExtension.startServer("cto/disabled_ignore_case_web.xml", "headersec");
+    headerRule.startServer("cto/disabled_ignore_case_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.headerExists(HEADER_NAME)).isFalse();
+    assertThat(headerRule.headerExists(HEADER_NAME)).isFalse();
   }
 
   @Test
   void shouldConfigureCustomValue() {
     // given
-    headerExtension.startServer("cto/custom_value_web.xml", "headersec");
+    headerRule.startServer("cto/custom_value_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.getHeader(HEADER_NAME)).isEqualTo("aCustomValue");
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo("aCustomValue");
   }
 
 }

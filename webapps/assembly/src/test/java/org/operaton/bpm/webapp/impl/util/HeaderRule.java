@@ -44,7 +44,7 @@ import java.net.URL;
  * 
  * @author Tassilo Weidner
  */
-public class HeaderExtension implements BeforeEachCallback, AfterEachCallback {
+public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
     private static final int SERVER_PORT = 8085;
     private static final int RETRIES = 3;

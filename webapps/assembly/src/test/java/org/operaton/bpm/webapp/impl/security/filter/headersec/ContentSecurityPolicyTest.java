@@ -18,7 +18,7 @@ package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.webapp.impl.util.HeaderExtension;
+import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_DEFAULT_VALUE;
@@ -28,55 +28,55 @@ import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.im
 class ContentSecurityPolicyTest {
 
   @RegisterExtension
-  HeaderExtension headerExtension = new HeaderExtension();
+  HeaderRule headerRule = new HeaderRule();
 
   @Test
   void shouldConfigureEnabledByDefault() {
     // given
-    headerExtension.startServer("web.xml", "headersec");
+    headerRule.startServer("web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
     String expectedHeaderPattern = HEADER_DEFAULT_VALUE.replace(HEADER_NONCE_PLACEHOLDER, "'nonce-([-_a-zA-Z\\d]*)'");
-    assertThat(headerExtension.getHeader(HEADER_NAME)).matches(expectedHeaderPattern);
+    assertThat(headerRule.getHeader(HEADER_NAME)).matches(expectedHeaderPattern);
   }
 
   @Test
   void shouldConfigureDisabled() {
     // given
-    headerExtension.startServer("csp/disabled_web.xml", "headersec");
+    headerRule.startServer("csp/disabled_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.headerExists(HEADER_NAME)).isFalse();
+    assertThat(headerRule.headerExists(HEADER_NAME)).isFalse();
   }
 
   @Test
   void shouldConfigureDisabledIgnoreCase() {
     // given
-    headerExtension.startServer("csp/disabled_ignore_case_web.xml", "headersec");
+    headerRule.startServer("csp/disabled_ignore_case_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.headerExists(HEADER_NAME)).isFalse();
+    assertThat(headerRule.headerExists(HEADER_NAME)).isFalse();
   }
 
   @Test
   void shouldConfigureCustomValue() {
     // given
-    headerExtension.startServer("csp/custom_value_web.xml", "headersec");
+    headerRule.startServer("csp/custom_value_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.getHeader(HEADER_NAME))
+    assertThat(headerRule.getHeader(HEADER_NAME))
       .isEqualTo("base-uri 'self'; default-src 'self' 'unsafe-inline'; img-src 'self' data:; block-all-mixed-content");
   }
 

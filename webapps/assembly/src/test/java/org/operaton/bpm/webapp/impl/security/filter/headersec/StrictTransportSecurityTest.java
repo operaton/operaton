@@ -19,7 +19,7 @@ package org.operaton.bpm.webapp.impl.security.filter.headersec;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.webapp.impl.util.HeaderExtension;
+import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.StrictTransportSecurityProvider.HEADER_NAME;
@@ -27,65 +27,65 @@ import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.im
 class StrictTransportSecurityTest {
 
   @RegisterExtension
-  HeaderExtension headerExtension = new HeaderExtension();
+  HeaderRule headerRule = new HeaderRule();
 
   @Test
   void shouldConfigureDisabledByDefault() {
     // given
-    headerExtension.startServer("web.xml", "headersec");
+    headerRule.startServer("web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.getHeader(HEADER_NAME)).isNull();
+    assertThat(headerRule.getHeader(HEADER_NAME)).isNull();
   }
 
   @Test
   void shouldConfigureEnabled() {
     // given
-    headerExtension.startServer("hsts/enabled_web.xml", "headersec");
+    headerRule.startServer("hsts/enabled_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.headerExists(HEADER_NAME)).isTrue();
+    assertThat(headerRule.headerExists(HEADER_NAME)).isTrue();
   }
 
   @Test
   void shouldConfigureEnabledIgnoreCase() {
     // given
-    headerExtension.startServer("hsts/enabled_ignore_case_web.xml", "headersec");
+    headerRule.startServer("hsts/enabled_ignore_case_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.headerExists(HEADER_NAME)).isTrue();
+    assertThat(headerRule.headerExists(HEADER_NAME)).isTrue();
   }
 
   @Test
   void shouldConfigureCustomValue() {
     // given
-    headerExtension.startServer("hsts/custom_value_web.xml", "headersec");
+    headerRule.startServer("hsts/custom_value_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.getHeader(HEADER_NAME)).isEqualTo("aCustomValue");
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo("aCustomValue");
   }
 
   @Test
   void shouldThrowExceptionWhenConfiguringCustomValueAndMaxAge() {
     // given
-    headerExtension.startServer("hsts/max_age_and_value_web.xml", "headersec");
+    headerRule.startServer("hsts/max_age_and_value_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
-    Throwable expectedException = headerExtension.getException();
+    Throwable expectedException = headerRule.getException();
 
     // then
     assertThat(expectedException)
@@ -97,37 +97,37 @@ class StrictTransportSecurityTest {
   @Test
   void shouldConfigureIncludeSubdomains() {
     // given
-    headerExtension.startServer("hsts/include_subdomains_web.xml", "headersec");
+    headerRule.startServer("hsts/include_subdomains_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.getHeader(HEADER_NAME)).isEqualTo("max-age=31536000; includeSubDomains");
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo("max-age=31536000; includeSubDomains");
   }
 
   @Test
   void shouldConfigureIncludeSubdomainsAndMaxAge() {
     // given
-    headerExtension.startServer("hsts/include_subdomains_max_age_web.xml", "headersec");
+    headerRule.startServer("hsts/include_subdomains_max_age_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.getHeader(HEADER_NAME)).isEqualTo("max-age=47; includeSubDomains");
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo("max-age=47; includeSubDomains");
   }
 
   @Test
   void shouldConfigureMaxAge() {
     // given
-    headerExtension.startServer("hsts/max_age_web.xml", "headersec");
+    headerRule.startServer("hsts/max_age_web.xml", "headersec");
 
     // when
-    headerExtension.performRequest();
+    headerRule.performRequest();
 
     // then
-    assertThat(headerExtension.getHeader(HEADER_NAME)).isEqualTo("max-age=47");
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo("max-age=47");
   }
 
 }

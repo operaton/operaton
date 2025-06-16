@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import java.net.URI;
-
 import jakarta.ws.rs.Path;
-
+import java.net.URI;
 import org.operaton.bpm.engine.rest.AuthorizationRestService;
 import org.operaton.bpm.engine.rest.BatchRestService;
 import org.operaton.bpm.engine.rest.CaseDefinitionRestService;
@@ -52,7 +50,6 @@ import org.operaton.bpm.engine.rest.TenantRestService;
 import org.operaton.bpm.engine.rest.UserRestService;
 import org.operaton.bpm.engine.rest.VariableInstanceRestService;
 import org.operaton.bpm.engine.rest.history.HistoryRestService;
-import org.operaton.bpm.engine.rest.impl.optimize.OptimizeRestService;
 
 @Path(DefaultProcessEngineRestServiceImpl.PATH)
 public class DefaultProcessEngineRestServiceImpl extends AbstractProcessEngineRestServiceImpl {
@@ -202,11 +199,6 @@ public class DefaultProcessEngineRestServiceImpl extends AbstractProcessEngineRe
   @Path(ConditionRestService.PATH)
   public ConditionRestService getConditionRestService() {
     return super.getConditionRestService(null);
-  }
-
-  @Path(OptimizeRestService.PATH)
-  public OptimizeRestService getOptimizeRestService() {
-    return super.getOptimizeRestService(null);
   }
 
   @Path(VersionRestService.PATH)

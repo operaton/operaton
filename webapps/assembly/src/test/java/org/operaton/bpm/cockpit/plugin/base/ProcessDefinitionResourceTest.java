@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.EQUALS_OPERATOR_NAME;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_OPERATOR_NAME;
@@ -648,13 +649,10 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
     identityService.setAuthenticatedUserId("foo");
 
-    try {
-      // when
-      resource.queryCalledProcessDefinitions(new ProcessDefinitionQueryDto());
-      // then: no exception thrown
-    } catch (BadUserRequestException e) {
-      TestCase.fail("No exception expected");
-    }
+    ProcessDefinitionQueryDto dto = new ProcessDefinitionQueryDto();
+
+    // when + then
+    assertDoesNotThrow(() -> resource.queryCalledProcessDefinitions(dto));
   }
 
   private VariableQueryParameterDto createVariableParameter(String name, String operator, Object value) {

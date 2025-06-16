@@ -135,7 +135,7 @@ public class LegacyUserOperationLogTest {
     runtimeService.setVariable(processInstanceId, "aVariable", "aValue");
 
     // then
-    //assertThat(userOperationLogQuery().count()).isEqualTo(3);
+    assertThat(userOperationLogQuery().count()).isEqualTo(3);
     assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count()).isEqualTo(1);
     assertThat(userOperationLogQuery()
         .entityType(EntityTypes.DEPLOYMENT)

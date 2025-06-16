@@ -38,10 +38,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 import org.springframework.mock.web.MockHttpServletRequest;
 
-import java.util.Date;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author Thorben Lindhauer
  *

@@ -145,11 +145,8 @@ class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    Assertions.assertDoesNotThrow(() -> {
-      // when
-      resource.queryStatistics(uriInfo, null, null);
-      // then: no exception expected
-    }, "No exception expected");
+    // when + then
+    Assertions.assertDoesNotThrow(() -> resource.queryStatistics(uriInfo, null, null), "No exception expected");
   }
 
   protected void assertProcessDefinitionStatisticsDto(ProcessDefinitionStatisticsDto actual,

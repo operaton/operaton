@@ -249,11 +249,10 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
 
     identityService.setAuthenticatedUserId("foo");
 
-    Assertions.assertDoesNotThrow(() -> {
-      // when
-      resource.queryCalledProcessInstances(new CalledProcessInstanceQueryDto());
-      // then: no exception thrown
-    }, "No exception expected");
+    var calledProcessInstanceQueryDto = new CalledProcessInstanceQueryDto();
+
+    // when + then
+    Assertions.assertDoesNotThrow(() -> resource.queryCalledProcessInstances(calledProcessInstanceQueryDto), "No exception expected");
   }
 
 }

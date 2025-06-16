@@ -17,7 +17,6 @@
 package org.operaton.bpm.webapp.impl.security.filter.csrf;
 
 import jakarta.servlet.http.HttpServletResponse;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -25,7 +24,6 @@ import org.operaton.bpm.webapp.impl.util.HeaderExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("temporarily disabled due to issues with the test setup")
 class CsrfPreventionCookieTest {
 
   @RegisterExtension

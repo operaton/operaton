@@ -32,7 +32,9 @@ import org.operaton.bpm.engine.test.Deployment;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author roman.smirnov
@@ -434,7 +436,7 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
 
     identityService.setAuthenticatedUserId("foo");
 
-    Assertions.assertDoesNotThrow(() -> {
+    assertDoesNotThrow(() -> {
       // when
       resource.queryIncidents(new IncidentQueryDto(), 0, 10);
       // then: no exception expected
@@ -446,7 +448,7 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
 
-    Assertions.assertDoesNotThrow(() -> {
+    assertDoesNotThrow(() -> {
       // when
       resource.queryIncidents(new IncidentQueryDto(), null, null);
       // then: no exception expected
@@ -457,46 +459,38 @@ class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   void shouldReturnUnboundedResult_NoLimitConfigured() {
     // given
     identityService.setAuthenticatedUserId("foo");
+    var incidentQueryDto = new IncidentQueryDto();
 
-    Assertions.assertDoesNotThrow(() -> {
-      // when
-      resource.queryIncidents(new IncidentQueryDto(), null, null);
-      // then: no exception expected
-    }, "No exception expected");
+    // when + then
+    assertDoesNotThrow(() -> resource.queryIncidents(incidentQueryDto, null, null), "No exception expected");
   }
 
   @Test
   void shouldThrowExceptionWhenMaxResultsLimitExceeded() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
+    var incidentQueryDto = new IncidentQueryDto();
 
     identityService.setAuthenticatedUserId("foo");
 
-    try {
-      // when
-      resource.queryIncidents(new IncidentQueryDto(), 0, 11);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("Max results limit of 10 exceeded!");
-    }
+    // when + then
+    assertThatThrownBy(() -> resource.queryIncidents(incidentQueryDto, 0, 11))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 10 exceeded!");
   }
 
   @Test
   void shouldThrowExceptionWhenQueryUnbounded() {
     // given
     processEngineConfiguration.setQueryMaxResultsLimit(10);
+    var incidentQueryDto = new IncidentQueryDto();
 
     identityService.setAuthenticatedUserId("foo");
 
-    try {
-      // when
-      resource.queryIncidents(new IncidentQueryDto(), null, null);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("An unbound number of results is forbidden!");
-    }
+    // when + then
+    assertThatThrownBy(() -> resource.queryIncidents(incidentQueryDto, null, null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("An unbound number of results is forbidden!");
   }
 
   protected List<IncidentDto> queryIncidents(String sorting, String order)

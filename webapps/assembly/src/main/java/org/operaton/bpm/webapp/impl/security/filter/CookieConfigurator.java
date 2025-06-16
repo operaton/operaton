@@ -44,7 +44,7 @@ public class CookieConfigurator {
     }
 
     String cookieNameInput = filterConfig.getServletContext().getSessionCookieConfig().getName();
-    if (!isBlank(cookieNameInput)) {
+    if (!isBlank(cookieNameInput) && !CookieConstants.JSESSION_ID.equals(cookieNameInput)) {
       cookieName = cookieNameInput;
     }
 

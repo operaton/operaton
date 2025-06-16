@@ -17,7 +17,6 @@
 package org.operaton.bpm.webapp.impl.security.filter.csrf;
 
 import jakarta.servlet.http.HttpServletResponse;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;

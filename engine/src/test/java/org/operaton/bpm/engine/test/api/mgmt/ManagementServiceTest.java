@@ -982,24 +982,6 @@ class ManagementServiceTest {
     taskService.deleteTasks(taskIds, true);
   }
 
-  @Test
-  void shouldAlwaysReturnFalseWhenFetchingIsTelemetryEnabled() {
-    // given default configuration
-
-    // then
-    assertThat(managementService.isTelemetryEnabled()).isFalse();
-  }
-
-  @Test
-  void shouldReturnFalseWhenToggleTelemetry() {
-    // given default configuration
-
-    // when
-    managementService.toggleTelemetry(true);
-
-    // then
-    assertThat(managementService.isTelemetryEnabled()).isFalse();
-  }
 
   private void verifyTaskNames(String[] expectedTaskNames, List<Map<String, Object>> rowData) {
     assertThat(rowData).hasSize(expectedTaskNames.length);

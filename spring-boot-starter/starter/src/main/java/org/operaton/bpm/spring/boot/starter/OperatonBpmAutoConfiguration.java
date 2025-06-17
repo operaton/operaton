@@ -43,7 +43,6 @@ import org.springframework.context.annotation.Primary;
   OperatonBpmConfiguration.class,
   OperatonBpmActuatorConfiguration.class,
   OperatonBpmPluginConfiguration.class,
-  OperatonBpmTelemetryConfiguration.class,
   SpringProcessEngineServicesConfiguration.class
 })
 @Configuration

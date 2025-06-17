@@ -40,8 +40,7 @@ var authorizations = require('./authorizations'),
   tenantCreate = require('./tenantCreate'),
   tenantEdit = require('./tenantEdit'),
   tenantMembershipCreate = require('./tenantMembershipsCreate'),
-  executionMetrics = require('./execution-metrics'),
-  diagnostics = require('./diagnostics');
+  executionMetrics = require('./execution-metrics');
 
 var ngModule = angular.module('cam.admin.pages', ['ngRoute', 'cam.commons']);
 
@@ -67,6 +66,5 @@ ngModule.config(tenantCreate);
 ngModule.config(tenantEdit);
 ngModule.controller('TenantMembershipDialogController', tenantMembershipCreate);
 ngModule.config(executionMetrics);
-ngModule.config(diagnostics);
 
 module.exports = ngModule;

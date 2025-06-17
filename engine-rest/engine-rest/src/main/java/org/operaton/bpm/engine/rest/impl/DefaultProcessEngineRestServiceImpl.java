@@ -45,7 +45,6 @@ import org.operaton.bpm.engine.rest.ProcessInstanceRestService;
 import org.operaton.bpm.engine.rest.SchemaLogRestService;
 import org.operaton.bpm.engine.rest.SignalRestService;
 import org.operaton.bpm.engine.rest.TaskRestService;
-import org.operaton.bpm.engine.rest.TelemetryRestService;
 import org.operaton.bpm.engine.rest.TenantRestService;
 import org.operaton.bpm.engine.rest.UserRestService;
 import org.operaton.bpm.engine.rest.VariableInstanceRestService;
@@ -216,10 +215,6 @@ public class DefaultProcessEngineRestServiceImpl extends AbstractProcessEngineRe
     return super.getEventSubscriptionRestService(null);
   }
 
-  @Path(TelemetryRestService.PATH)
-  public TelemetryRestService getTelemetryRestService() {
-    return super.getTelemetryRestService(null);
-  }
 
   @Override
   protected URI getRelativeEngineUri(String engineName) {

@@ -144,7 +144,6 @@ import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityCacheKeyMappi
 import org.operaton.bpm.engine.impl.db.sql.DbSqlPersistenceProviderFactory;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.delegate.DefaultDelegateInterceptor;
-import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsCollector;
 import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.digest.Default16ByteSaltGenerator;
 import org.operaton.bpm.engine.impl.digest.PasswordEncryptor;
@@ -347,11 +346,6 @@ import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
 import org.operaton.bpm.engine.impl.scripting.engine.VariableScopeResolverFactory;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptingEnvironment;
-import org.operaton.bpm.engine.impl.telemetry.dto.DatabaseImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.InternalsImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.ProductImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
@@ -1022,10 +1016,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   // OLEs for foreign key constraint violations on databases that rollback on SQL exceptions, e.g. PostgreSQL
   protected volatile boolean enableOptimisticLockingOnForeignKeyViolation = true;
 
-  protected volatile int telemetryRequestTimeout;
-  protected volatile TelemetryDataImpl telemetryData;
   protected volatile DiagnosticsRegistry diagnosticsRegistry;
-  protected volatile DiagnosticsCollector diagnosticsCollector;
 
   // Exception Codes ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2907,34 +2898,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (diagnosticsRegistry == null) {
       diagnosticsRegistry = new DiagnosticsRegistry();
     }
-    if (telemetryData == null) {
-      initTelemetryData();
-    }
-    if (diagnosticsCollector == null) {
-      diagnosticsCollector = new DiagnosticsCollector(telemetryData, diagnosticsRegistry, metricsRegistry);
-    }
-  }
-
-  protected void initTelemetryData() {
-    DatabaseImpl database = new DatabaseImpl(databaseVendor, databaseVersion);
-
-    JdkImpl jdk = ParseUtil.parseJdkDetails();
-
-    InternalsImpl internals = new InternalsImpl(database, diagnosticsRegistry.getApplicationServer(), jdk);
-    internals.setDataCollectionStartDate(ClockUtil.getCurrentTime());
-
-    String operatonIntegration = diagnosticsRegistry.getOperatonIntegration();
-    if (operatonIntegration != null && !operatonIntegration.isEmpty()) {
-      internals.getOperatonIntegration().add(operatonIntegration);
-    }
-
-    ProcessEngineDetails engineInfo = ParseUtil
-        .parseProcessEngineVersion(true);
-
-    ProductImpl product = new ProductImpl(PRODUCT_NAME, engineInfo.getVersion(), engineInfo.getEdition(), internals);
-
-    // installationId=null, the id will be fetched later from database
-    telemetryData = new TelemetryDataImpl(null, product);
   }
 
   // getters and setters //////////////////////////////////////////////////////
@@ -5277,30 +5240,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public DiagnosticsCollector getDiagnosticsCollector() {
-    return diagnosticsCollector;
-  }
-  public void setDiagnosticsCollector(DiagnosticsCollector diagnosticsCollector) {
-    this.diagnosticsCollector = diagnosticsCollector;
-  }
-
-  public TelemetryDataImpl getTelemetryData() {
-    return telemetryData;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryData(TelemetryDataImpl telemetryData) {
-    this.telemetryData = telemetryData;
-    return this;
-  }
-
-  public int getTelemetryRequestTimeout() {
-    return telemetryRequestTimeout;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryRequestTimeout(int telemetryRequestTimeout) {
-    this.telemetryRequestTimeout = telemetryRequestTimeout;
-    return this;
-  }
 
   public boolean isReevaluateTimeCycleWhenDue() {
     return reevaluateTimeCycleWhenDue;

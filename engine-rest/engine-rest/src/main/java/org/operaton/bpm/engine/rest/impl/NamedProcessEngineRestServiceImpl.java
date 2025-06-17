@@ -55,7 +55,6 @@ import org.operaton.bpm.engine.rest.ProcessInstanceRestService;
 import org.operaton.bpm.engine.rest.SchemaLogRestService;
 import org.operaton.bpm.engine.rest.SignalRestService;
 import org.operaton.bpm.engine.rest.TaskRestService;
-import org.operaton.bpm.engine.rest.TelemetryRestService;
 import org.operaton.bpm.engine.rest.TenantRestService;
 import org.operaton.bpm.engine.rest.UserRestService;
 import org.operaton.bpm.engine.rest.VariableInstanceRestService;
@@ -261,11 +260,6 @@ public class NamedProcessEngineRestServiceImpl extends AbstractProcessEngineRest
     return super.getEventSubscriptionRestService(engineName);
   }
 
-  @Override
-  @Path("/{name}" + TelemetryRestService.PATH)
-  public TelemetryRestService getTelemetryRestService(@PathParam("name") String engineName) {
-    return super.getTelemetryRestService(engineName);
-  }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)

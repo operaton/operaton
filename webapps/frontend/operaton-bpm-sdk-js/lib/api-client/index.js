@@ -110,7 +110,6 @@ OperatonClient.HttpClient = require('./http-client');
     _resources['process-instance'] = require('./resources/process-instance');
     _resources['task'] = require('./resources/task');
     _resources['task-report'] = require('./resources/task-report');
-    _resources['telemetry'] = require('./resources/telemetry');
     _resources['variable'] = require('./resources/variable');
     _resources['case-execution'] = require('./resources/case-execution');
     _resources['case-instance'] = require('./resources/case-instance');

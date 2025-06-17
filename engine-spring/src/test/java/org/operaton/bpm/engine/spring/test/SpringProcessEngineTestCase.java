@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
@@ -107,7 +106,6 @@ public abstract class SpringProcessEngineTestCase implements ApplicationContextA
 
     TestHelper.resetIdGenerator(processEngineConfiguration);
     ClockUtil.reset();
-    PlatformDiagnosticsRegistry.clear();
 
     testContextManager.afterTestClass();
     applicationContext.close();

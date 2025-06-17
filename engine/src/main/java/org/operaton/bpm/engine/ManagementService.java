@@ -58,7 +58,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.telemetry.TelemetryData;
 
 
 
@@ -1392,31 +1391,5 @@ public interface ManagementService {
    */
   SchemaLogQuery createSchemaLogQuery();
 
-  /**
-   * @deprecated The sending telemetry feature is removed.
-   * Please remove the method references as they are no longer needed.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  void toggleTelemetry(boolean enabled);
-
-  /**
-   * @deprecated The sending telemetry feature is removed.
-   * Please remove the method references as they are no longer needed.
-   * @return always <code>false</code>
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  Boolean isTelemetryEnabled();
-
-  /**
-   * This method returns the current state of the collected telemetry data. For a
-   * detailed explanation on what is included, read the
-   * <a href="https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Telemetry</a>
-   * page in the Operaton docs.
-   *
-   * The engine collects information about multiple aspects of the installation.
-   *
-   * @see <a href="https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton Documentation: Telemetry</a>
-   */
-  TelemetryData getTelemetryData();
 
 }

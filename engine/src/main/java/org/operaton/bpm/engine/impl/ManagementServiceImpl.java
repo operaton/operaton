@@ -48,9 +48,7 @@ import org.operaton.bpm.engine.impl.cmd.GetPropertiesCmd;
 import org.operaton.bpm.engine.impl.cmd.GetTableCountCmd;
 import org.operaton.bpm.engine.impl.cmd.GetTableMetaDataCmd;
 import org.operaton.bpm.engine.impl.cmd.GetTableNameCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTelemetryDataCmd;
 import org.operaton.bpm.engine.impl.cmd.GetUniqueTaskWorkerCountCmd;
-import org.operaton.bpm.engine.impl.cmd.IsTelemetryEnabledCmd;
 import org.operaton.bpm.engine.impl.cmd.PurgeDatabaseAndCacheCmd;
 import org.operaton.bpm.engine.impl.cmd.RecalculateJobDuedateCmd;
 import org.operaton.bpm.engine.impl.cmd.RegisterDeploymentCmd;
@@ -61,7 +59,6 @@ import org.operaton.bpm.engine.impl.cmd.SetJobDuedateCmd;
 import org.operaton.bpm.engine.impl.cmd.SetJobPriorityCmd;
 import org.operaton.bpm.engine.impl.cmd.SetPropertyCmd;
 import org.operaton.bpm.engine.impl.cmd.SuspendBatchCmd;
-import org.operaton.bpm.engine.impl.cmd.TelemetryConfigureCmd;
 import org.operaton.bpm.engine.impl.cmd.UnregisterDeploymentCmd;
 import org.operaton.bpm.engine.impl.cmd.UnregisterProcessApplicationCmd;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -93,7 +90,6 @@ import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateSele
 import org.operaton.bpm.engine.management.UpdateJobSuspensionStateSelectBuilder;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.telemetry.TelemetryData;
 
 
 /**
@@ -632,56 +628,8 @@ public class ManagementServiceImpl extends ServiceImpl implements ManagementServ
   }
 
   /**
-   * @deprecated The sending telemetry feature is removed.
+   * Clears collected diagnostics data.
    */
-  @Deprecated(forRemoval = true, since = "1.0")
-  @Override
-  public void toggleTelemetry(boolean enabled) {
-    commandExecutor.execute(new TelemetryConfigureCmd(enabled));
-  }
-
-  /**
-   * @deprecated The sending telemetry feature is removed.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  @Override
-  public Boolean isTelemetryEnabled() {
-    return commandExecutor.execute(new IsTelemetryEnabledCmd());
-  }
-
-  @Override
-  public TelemetryData getTelemetryData() {
-    return commandExecutor.execute(new GetTelemetryDataCmd());
-  }
-
-  /**
-   * Adds the web application name to the telemetry data of the engine.
-   *
-   * @param webapp
-   *          the web application that is used with the engine
-   * @return whether the web application was successfully added or not
-   */
-  public boolean addWebappToTelemetry(String webapp) {
-    DiagnosticsRegistry telemetryRegistry = ((ProcessEngineConfigurationImpl) processEngineConfiguration).getDiagnosticsRegistry();
-    if (telemetryRegistry != null) {
-      telemetryRegistry.addWebapp(webapp);
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Adds the application server information to the telemetry data of the engine.
-   *
-   * @param appServerInfo
-   *          a String containing information about the application server
-   */
-  public void addApplicationServerInfoToTelemetry(String appServerInfo) {
-    DiagnosticsRegistry telemetryRegistry = ((ProcessEngineConfigurationImpl) processEngineConfiguration).getDiagnosticsRegistry();
-    if (telemetryRegistry != null) {
-      telemetryRegistry.setApplicationServer(appServerInfo);
-    }
-  }
 
   public void clearDiagnosticsData() {
     DiagnosticsRegistry diagnosticsRegistry = ((ProcessEngineConfigurationImpl) processEngineConfiguration).getDiagnosticsRegistry();

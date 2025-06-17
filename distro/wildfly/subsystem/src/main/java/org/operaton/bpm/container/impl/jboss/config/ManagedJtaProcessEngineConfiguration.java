@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.container.impl.jboss.config;
 
-import java.util.Set;
 import org.operaton.bpm.engine.impl.cfg.JakartaTransactionProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
-import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 
 /**
  *
@@ -40,11 +38,5 @@ public class ManagedJtaProcessEngineConfiguration extends JakartaTransactionProc
     }
   }
 
-  @Override
-  protected void initTelemetryData() {
-    super.initTelemetryData();
-    Set<String> operatonIntegration = telemetryData.getProduct().getInternals().getOperatonIntegration();
-    operatonIntegration.add(OperatonIntegration.WILDFLY_SUBSYSTEM);
-  }
 
 }

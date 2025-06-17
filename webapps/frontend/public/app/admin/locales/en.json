@@ -235,7 +235,7 @@
     "DESC": "Descending",
     "DIAGNOSTICS": "Diagnostics",
     "DIAGNOSTICS_DATA": "Diagnostics Data:",
-    "DIAGNOSTICS_FETCH_DATA_ERROR_MESSAGE": "Telemetry data fetching failed: {{msg}}",
+    "DIAGNOSTICS_FETCH_DATA_ERROR_MESSAGE": "Diagnostics data fetching failed: {{msg}}",
     "DIAGNOSTICS_INTRODUCTION": "The diagnostics data allows to understand the environment to aid problem diagnosis.",
     "DIRECTIVE_ENGINE_SELECT_MESSAGE_NOT_FOUND": "The process engine you are trying to access does not exist",
     "DIRECTIVE_ENGINE_SELECT_STATUS_NOT_FOUND": "Not found",

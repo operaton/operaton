@@ -48,7 +48,6 @@ import org.operaton.bpm.engine.rest.ProcessInstanceRestService;
 import org.operaton.bpm.engine.rest.SchemaLogRestService;
 import org.operaton.bpm.engine.rest.SignalRestService;
 import org.operaton.bpm.engine.rest.TaskRestService;
-import org.operaton.bpm.engine.rest.TelemetryRestService;
 import org.operaton.bpm.engine.rest.TenantRestService;
 import org.operaton.bpm.engine.rest.UserRestService;
 import org.operaton.bpm.engine.rest.VariableInstanceRestService;
@@ -296,12 +295,6 @@ public abstract class AbstractProcessEngineRestServiceImpl {
     return subResource;
   }
 
-  public TelemetryRestService getTelemetryRestService(String engineName) {
-    String rootResourcePath = getRelativeEngineUri(engineName).toASCIIString();
-    TelemetryRestServiceImpl subResource = new TelemetryRestServiceImpl(engineName, getObjectMapper());
-    subResource.setRelativeRootResourceUri(rootResourcePath);
-    return subResource;
-  }
 
   protected abstract URI getRelativeEngineUri(String engineName);
 

@@ -20,7 +20,6 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 
 import org.operaton.bpm.container.RuntimeContainerDelegate;
-import org.operaton.bpm.engine.rest.util.WebApplicationUtil;
 import org.operaton.bpm.tasklist.Tasklist;
 import org.operaton.bpm.tasklist.impl.DefaultTasklistRuntimeDelegate;
 
@@ -38,7 +37,6 @@ public class TasklistContainerBootstrap implements ServletContextListener {
     environment = createTasklistEnvironment();
     environment.setup();
 
-    WebApplicationUtil.setApplicationServer(sce.getServletContext().getServerInfo());
 
   }
 

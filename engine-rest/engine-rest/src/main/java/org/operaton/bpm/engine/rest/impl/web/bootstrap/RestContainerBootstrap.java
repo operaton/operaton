@@ -19,13 +19,11 @@ package org.operaton.bpm.engine.rest.impl.web.bootstrap;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 
-import org.operaton.bpm.engine.rest.util.WebApplicationUtil;
 
 public class RestContainerBootstrap implements ServletContextListener {
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
-    WebApplicationUtil.setApplicationServer(sce.getServletContext().getServerInfo());
   }
 
   @Override

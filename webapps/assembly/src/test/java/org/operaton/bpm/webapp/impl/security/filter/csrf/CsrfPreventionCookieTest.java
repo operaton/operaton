@@ -19,6 +19,8 @@ package org.operaton.bpm.webapp.impl.security.filter.csrf;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
@@ -30,18 +32,6 @@ class CsrfPreventionCookieTest {
   HeaderRule headerRule = new HeaderRule();
 
   @Test
-  void shouldConfigureDefault() {
-    // given
-    headerRule.startServer("web.xml", "csrf");
-
-    // when
-    headerRule.performRequest();
-
-    // then
-    assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax");
-  }
-
-  @Test
   void shouldConfigureRootContextPath() {
     // given
     headerRule.startServer("web.xml", "csrf", "/");
@@ -51,66 +41,6 @@ class CsrfPreventionCookieTest {
 
     // then
     assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/;SameSite=Lax");
-  }
-
-  @Test
-  void shouldConfigureSecureEnabled() {
-    // given
-    headerRule.startServer("secure_enabled_web.xml", "csrf");
-
-    // when
-    headerRule.performRequest();
-
-    // then
-    assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax;Secure");
-  }
-
-  @Test
-  void shouldConfigureSameSiteDisabled() {
-    // given
-    headerRule.startServer("same_site_disabled_web.xml", "csrf");
-
-    // when
-    headerRule.performRequest();
-
-    // then
-    assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton");
-  }
-
-  @Test
-  void shouldConfigureSameSiteOptionStrict() {
-    // given
-    headerRule.startServer("same_site_option_strict_web.xml", "csrf");
-
-    // when
-    headerRule.performRequest();
-
-    // then
-    assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Strict");
-  }
-
-  @Test
-  void shouldConfigureSameSiteOptionLax() {
-    // given
-    headerRule.startServer("same_site_option_lax_web.xml", "csrf");
-
-    // when
-    headerRule.performRequest();
-
-    // then
-    assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax");
-  }
-
-  @Test
-  void shouldConfigureSameSiteCustomValue() {
-    // given
-    headerRule.startServer("same_site_custom_value_web.xml", "csrf");
-
-    // when
-    headerRule.performRequest();
-
-    // then
-    assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=aCustomValue");
   }
 
   @Test
@@ -146,18 +76,6 @@ class CsrfPreventionCookieTest {
   }
 
   @Test
-  void shouldIgnoreCaseOfParamValues() {
-    // given
-    headerRule.startServer("ignore_case_web.xml", "csrf");
-
-    // when
-    headerRule.performRequest();
-
-    // then
-    assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax;Secure");
-  }
-
-  @Test
   void shouldConfigureWhenCookieIsSent() {
     // given
     headerRule.startServer("web.xml", "csrf");
@@ -167,19 +85,6 @@ class CsrfPreventionCookieTest {
 
     // then
     assertThat(headerRule.getCookieHeader()).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax");
-  }
-
-  @Test
-  void shouldConfigureCookieName() {
-    // given
-    headerRule.startServer("changed_cookie_name_web.xml", "csrf");
-
-    // when
-    headerRule.performRequest();
-
-    // then
-    assertThat(headerRule.getCookieHeader())
-      .matches("myCookieName=[A-Z0-9]{32};Path=/operaton;SameSite=Lax");
   }
 
   @Test
@@ -195,4 +100,21 @@ class CsrfPreventionCookieTest {
       .isEqualTo(HttpServletResponse.SC_FORBIDDEN);
   }
 
+  @ParameterizedTest
+  @CsvSource({
+          // webXml, servletName, expectedRegex
+          "web.xml, csrf, XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax",
+          "secure_enabled_web.xml, csrf, XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax;Secure",
+          "same_site_disabled_web.xml, csrf, XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton",
+          "same_site_option_strict_web.xml, csrf, XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Strict",
+          "same_site_option_lax_web.xml, csrf, XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax",
+          "same_site_custom_value_web.xml, csrf, XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=aCustomValue",
+          "ignore_case_web.xml, csrf, XSRF-TOKEN=[A-Z0-9]{32};Path=/operaton;SameSite=Lax;Secure",
+          "changed_cookie_name_web.xml, csrf, myCookieName=[A-Z0-9]{32};Path=/operaton;SameSite=Lax"
+  })
+  void testCookieConfiguration(String webXml, String servletName, String expectedRegex) {
+    headerRule.startServer(webXml, servletName);
+    headerRule.performRequest();
+    assertThat(headerRule.getCookieHeader()).matches(expectedRegex);
+  }
 }

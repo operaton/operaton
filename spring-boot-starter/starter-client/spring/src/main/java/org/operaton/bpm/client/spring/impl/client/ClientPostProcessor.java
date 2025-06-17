@@ -124,8 +124,4 @@ public class ClientPostProcessor implements BeanDefinitionRegistryPostProcessor 
     }
   }
 
-  @Override
-  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-  }
-
 }

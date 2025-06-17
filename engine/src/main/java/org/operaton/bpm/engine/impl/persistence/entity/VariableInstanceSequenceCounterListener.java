@@ -28,10 +28,6 @@ public class VariableInstanceSequenceCounterListener implements VariableInstance
   public static final VariableInstanceSequenceCounterListener INSTANCE = new VariableInstanceSequenceCounterListener();
 
   @Override
-  public void onCreate(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
-  }
-
-  @Override
   public void onDelete(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
     variableInstance.incrementSequenceCounter();
   }

@@ -95,8 +95,4 @@ public class SubscriptionPostProcessor implements BeanDefinitionRegistryPostProc
     return annotation;
   }
 
-  @Override
-  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-  }
-
 }

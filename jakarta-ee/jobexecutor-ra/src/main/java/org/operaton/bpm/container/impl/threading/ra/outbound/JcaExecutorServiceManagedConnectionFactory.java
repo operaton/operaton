@@ -44,9 +44,6 @@ public class JcaExecutorServiceManagedConnectionFactory implements ManagedConnec
   protected transient ResourceAdapter ra;
   protected transient PrintWriter logwriter;
 
-  public JcaExecutorServiceManagedConnectionFactory() {
-  }
-
   public Object createConnectionFactory(ConnectionManager cxManager) throws ResourceException {
     return new JcaExecutorServiceConnectionFactoryImpl(this, cxManager);
   }

@@ -18,9 +18,6 @@ package org.operaton.bpm.integrationtest.jobexecutor.classes;
 
 public class MyPojo {
 
-    public MyPojo() {
-    }
-
     public String name;
     public int prio;
 

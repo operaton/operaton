@@ -52,10 +52,6 @@ public class TablePage {
    */
   protected List<Map<String, Object>> rowData;
 
-  public TablePage() {
-
-  }
-
   public String getTableName() {
     return tableName;
   }

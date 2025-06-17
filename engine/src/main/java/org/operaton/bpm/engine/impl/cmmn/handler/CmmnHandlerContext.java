@@ -38,9 +38,6 @@ public class CmmnHandlerContext implements HandlerContext {
   protected CmmnActivity parent;
   protected Deployment deployment;
 
-  public CmmnHandlerContext() {
-  }
-
   public CmmnModelInstance getModel() {
     return model;
   }

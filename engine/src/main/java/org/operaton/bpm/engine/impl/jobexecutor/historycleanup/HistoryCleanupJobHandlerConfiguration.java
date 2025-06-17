@@ -52,9 +52,6 @@ public class HistoryCleanupJobHandlerConfiguration implements JobHandlerConfigur
 
   private int minuteTo = 59;
 
-  public HistoryCleanupJobHandlerConfiguration() {
-  }
-
   @Override
   public String toCanonicalString() {
     JsonObject json = JsonUtil.createObject();
